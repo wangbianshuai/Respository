@@ -1,0 +1,13 @@
+<view class="container2" bindtouchcanel="touchend" bindtouchmove="touchend" bindtouchend="touchend">
+  <view class="Operation">
+    <button class="button" bindtap="bindTapAdd">新增</button>
+  </view>
+  <block wx:for="{{ProductList}}" wx:key="Id" class="block">
+    <view class="ItemView" data-index="{{index}}" style="background-color:{{item.Selected?'#cccccc':'#ffffff'}}" id="{{item.ProductId}}" bindtouchstart="touchstart" catchtap="catchtapEdit" catchlongtap="catchlongtapMenu">
+      <image class="image" src="{{item.ProductImage}}" background-size="cover"></image>
+      <text class="text">{{item.ProductName}}</text>
+      <text class="text">{{item.TypeName}}</text>
+      <text class="text">中奖人数{{item.LotteryUserCount}}人</text>
+    </view>
+  </block>
+</view>

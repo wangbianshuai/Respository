@@ -1,0 +1,48 @@
+.ViewEdit {
+  height: 80rpx;
+  width: 100%;
+  display: block;
+  margin-top: 8rpx;
+  background-color: #fff;
+}
+
+.ViewEdit .view {
+  background-color: #fff;
+  width: 100%;
+  height: 80rpx;
+}
+
+.ViewEdit .label {
+  float: left;
+  line-height: 80rpx;
+  font-size: 28rpx;
+  color: #aaa;
+  padding-left: 40rpx;
+  margin-right: 20rpx;
+}
+
+.ViewEdit .input {
+  font-size: 28rpx;
+  height: 80rpx;
+}
+
+.ViewEdit .checkbox {
+  font-size: 28rpx;
+  padding-top: 26rpx;
+  display: block;
+}
+
+.Operation {
+  height: 80rpx;
+  display: flex;
+  width: 100%;
+  background-color: #fff;
+  margin-top: 100rpx;
+}
+
+.Operation .button {
+  width: 140rpx;
+  height: 64rpx;
+  font-size: 28rpx;
+  margin-top: 5rpx;
+}
