@@ -1,0 +1,36 @@
+<view class="container2" bindtouchcanel="touchend" bindtouchmove="touchend" bindtouchend="touchend">
+  <view class="DrawType">
+    <view class="TopView">
+      <image src="../../images/record_bg.png" class="TitleImage"></image>
+    </view>
+    <view class="ViewType">
+      <view class="TextView1">
+        <text class="text1">{{TypeName}}</text>
+        <text class="text2">{{ProductName}}</text>
+      </view>
+      <view class="TextView2">
+        <text class="text1">应中奖</text>
+        <text class="text2">{{LotteryUserCount}}人</text>
+      </view>
+      <view class="TextView2">
+        <text class="text1">实中奖</text>
+        <text class="text2">{{LotteryUserCount2}}人</text>
+      </view>
+    </view>
+  </view>
+  <view class="ItemListView">
+    <view class="ViewRecordTitle">
+      <image src="../../images/user_bg.png" class="image"></image>
+    </view>
+    <block wx:for="{{LotteryRecordList}}" wx:key="Id" class="block">
+      <view class="ItemView" data-lotterystatus="{{item.LotteryStatus}}" data-index="{{index}}" style="background-color:{{item.Selected?'#cccccc':'#ffffff'}}" id="{{item.RecordId}}" bindtouchstart="touchstart" catchlongtap="catchlongtapMenu">
+        <image class="image" src="{{item.AvatarUrl}}" background-size="cover"></image>
+        <text class="text">{{item.NickName}}</text>
+        <text class="text2">{{item.LotteryStatus === 0? "作废" : ""}}</text>
+      </view>
+    </block>
+    <view class="ViewBottom">
+      <image src="../../images/record_bottom.png" class="image"></image>
+    </view>
+  </view>
+</view>

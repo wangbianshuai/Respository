@@ -1,0 +1,22 @@
+.ViewText {
+  width: 100%;
+  background-color: #fff;
+}
+
+.ViewTitle {
+  width: 100%;
+  height: 60rpx;
+  background-color: #fff;
+  display: flex;
+  justify-content: center;
+  font-size: 28rpx;
+  line-height: 60rpx;
+}
+
+
+.textarea {
+  border: 1rpx solid #ddd;
+  margin: 10rpx;
+  width: 96%;
+  height: 1000rpx;
+}

@@ -1,0 +1,186 @@
+.DrawUser {
+  width: 100%;
+  display: flex;
+  height: 717rpx;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.TopView {
+  width: 100%;
+  display: flex;
+  height: 717rpx;
+}
+
+.TopView .TitleImage {
+  width: 100%;
+  height: 717rpx;
+}
+
+.ViewType {
+  width: 100%;
+  display: block;
+  text-align: center;
+  height: 252rpx;
+  overflow: hidden;
+}
+
+.ViewType .ImageView {
+  text-align: center;
+  height: 252rpx;
+  display: block;
+}
+
+.ViewType .image {
+  width: 640rpx;
+  height: 252rpx;
+}
+
+.TextView1 {
+  text-align: center;
+  height: 252rpx;
+  display: block;
+  position: relative;
+  top: -252rpx;
+}
+
+.TextView1 .text1 {
+  font-size: 50rpx;
+  color: #fdd300;
+  font-family: "微软雅黑";
+  line-height: 50rpx;
+  width: 360rpx;
+  float: left;
+  text-align: center;
+  margin-left: 60rpx;
+  margin-top: 20rpx;
+}
+
+.TextView1 .text2 {
+  width: 360rpx;
+  float: left;
+  font-size: 70rpx;
+  color: #fff;
+  font-family: "微软雅黑";
+  line-height: 70rpx;
+  text-align: center;
+  margin-left: 60rpx;
+  margin-top: 20rpx;
+}
+
+.TextView2 {
+  text-align: left;
+  height: 252rpx;
+  display: block;
+  position: relative;
+  top: -504rpx;
+  width: 270rpx;
+  margin-left: 420rpx;
+}
+
+.TextView2 .TextView3 {
+  text-align: left;
+  height: 80rpx;
+  display: block;
+  padding-left: 20px;
+}
+
+.TextView2 .text1 {
+  font-size: 40rpx;
+  color: #fff;
+  font-family: "微软雅黑";
+  display: block;
+  width: 120rpx;
+  float: left;
+}
+
+.TextView2 .text2 {
+  font-size: 40rpx;
+  color: #fed300;
+  font-family: "微软雅黑";
+  display: block;
+  width: 110rpx;
+  float: left;
+}
+
+.UserView2 {
+  width: 100%;
+  display: flex;
+  height: 717rpx;
+}
+
+.UserView {
+  height: 100rpx;
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+}
+
+.UserView .text {
+  font-size: 80rpx;
+  line-height: 100rpx;
+  font-weight: 700;
+  font-family: "微软雅黑";
+  color: #fff;
+  margin-right: 50rpx;
+}
+
+.DrawView {
+  display: block;
+  width: 100%;
+  position: relative;
+  top: -40rpx;
+  height: 170rpx;
+  overflow: hidden;
+}
+
+.ButtonView2 {
+  height: 224rpx;
+  display: flex;
+  width: 100%;
+  margin-bottom: 40rpx;
+  overflow: hidden;
+}
+
+.ButtonView2 .ImageView2 {
+  width: 100%;
+  height: 224rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.ButtonView2 .ImageView2 .image {
+  width: 339rpx;
+  height: 112rpx;
+}
+
+.ButtonView2 .ImageView2 .text {
+  font-size: 44rpx;
+  color: #ffda5f;
+  font-family: "微软雅黑";
+  width: 339rpx;
+  line-height: 112rpx;
+  position: relative;
+  top: -118rpx;
+}
+
+.ViewTime {
+  height: 150rpx;
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  margin-top: 20rpx;
+}
+
+.ViewTime .text {
+  color: #fed300;
+  font-family: "微软雅黑";
+  font-weight: 700;
+  line-height: 150rpx;
+  font-size: 150rpx;
+}
