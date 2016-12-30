@@ -32,6 +32,6 @@ App({
   },
   globalData: {
     userInfo: null,
-    adminUsers: ["汪边寨", "郑曲","jacksh","唐良梁"]
+    adminUsers: ["汪边寨"]
   }
 })
