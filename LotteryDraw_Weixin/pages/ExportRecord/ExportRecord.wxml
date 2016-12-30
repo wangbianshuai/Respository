@@ -1,6 +1,0 @@
-<view class="container2">
-  <view class="ViewTitle">多行输入框显示，通过全选复制导出记录</view>
-  <view class="ViewText">
-    <textarea class="textarea" value="{{RecordText}}"></textarea>
-  </view>
-</view>
