@@ -39,7 +39,7 @@ object JsonParse {
       }
     }
 
-    return String.format("{%s}", Common.StringJoin(",", itemList));
+    return String.format("{%s}", Common.StringJoin(",", itemList))
   }
 
   private def ToJsonByList(list: List[_]): String = {
@@ -66,16 +66,16 @@ object JsonParse {
 
   private def ToJsonByObject(obj: Any): String = {
     val cls = obj.getClass()
-    val fieldList = cls.getDeclaredFields()
     val methodList = cls.getMethods()
+    val getMethodNameList = methodList.filter(m => m.getName().endsWith("_$eq")).map(m => m.getName().replace("_$eq", ""))
+    val getMethodList = methodList.filter(m => getMethodNameList.contains[String](m.getName()))
+
     var itemList = List[String]()
     var value: Any = null
     var key: String = null
-    var method: Method = null
 
-    for (field <- fieldList) {
-      key = field.getName()
-      method = methodList.filter(m => m.getName().equals(key)).head
+    for (method <- getMethodList) {
+      key = method.getName()
       value = method.invoke(obj)
 
       if (value == null) {
@@ -242,40 +242,37 @@ object JsonParse {
     }
 
     val obj = cls.newInstance()
-    val fieldList = cls.getDeclaredFields()
-    val methodList = cls.getMethods()
+    val methodList = cls.getMethods().filter(m=>m.getName().endsWith("_$eq"))
 
-    for (f <- fieldList) SetObjectValue(obj, f, () =>
-      methodList.filter(m => m.getName().equals(String.format("%s_$eq", f.getName()))).apply(0)
-      , map)
+
+    for (m <- methodList) SetObjectValue(obj, m, map)
 
     return obj
   }
 
-  private def SetObjectValue(obj: Any, field: Field, getMethod: () => Method, map: Map[String, Any]): Unit = {
-    val method = getMethod()
+  private def SetObjectValue(obj: Any, method: Method, map: Map[String, Any]): Unit = {
     var value: Any = null
-    val kv = map.filter(p => p._1.toLowerCase().equals(field.getName().toLowerCase()))
+    val kv = map.filter(p => String.format("%s_$eq", p._1).toLowerCase().equals(method.getName().toLowerCase()))
     if (!kv.isEmpty) {
       value = kv.head._2
     }
 
     value match {
       case null => method.invoke(obj, null)
-      case x: List[_] => method.invoke(obj, GetListValue(field, x))
-      case x: Map[_, _] => method.invoke(obj, MapToObject(field.getType(), x.asInstanceOf[Map[String, Any]]).asInstanceOf[AnyRef])
-      case x: Array[_] => method.invoke(obj, GetListValue(field, x.toList))
-      case _ => method.invoke(obj, Common.ChangeType(field.getType(), value).asInstanceOf[AnyRef])
+      case x: List[_] => method.invoke(obj, GetListValue(method, x))
+      case x: Map[_, _] => method.invoke(obj, MapToObject(method.getParameterTypes().apply(0), x.asInstanceOf[Map[String, Any]]).asInstanceOf[AnyRef])
+      case x: Array[_] => method.invoke(obj, GetListValue(method, x.toList))
+      case _ => method.invoke(obj, Common.ChangeType(method.getParameterTypes().apply(0), value).asInstanceOf[AnyRef])
     }
   }
 
-  private def GetListValue(field: Field, list: List[_]): AnyRef = {
-    val fieldType = field.getType()
+  private def GetListValue(method: Method, list: List[_]): AnyRef = {
+    val fieldType = method.getParameterTypes.apply(0)
     if (fieldType.isArray()) {
       return Common.ChangeArrayType(fieldType, list.toArray)
     }
     else {
-      val pt = field.getGenericType().asInstanceOf[ParameterizedType]
+      val pt = method.getGenericParameterTypes().apply(0).asInstanceOf[ParameterizedType]
       val cls = pt.getActualTypeArguments().apply(0).asInstanceOf[Class[_]]
       return ListToObjectList(cls, list)
     }
