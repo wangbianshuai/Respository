@@ -109,4 +109,9 @@ class ChartLine extends Chart {
         return value
     }
 
+    offclick(e) {
+    }
+
+    onclick(e, shape) {
+    }
 }
