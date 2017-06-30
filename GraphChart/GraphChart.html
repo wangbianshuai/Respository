@@ -1,0 +1,63 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title></title>
+    <script src="GraphChart/1_Common.js"></script>
+    <script src="GraphChart/2_Chart.js"></script>
+    <script src="GraphChart/2_ChartLine.js"></script>
+    <script src="GraphChart/2_ChartPie.js"></script>
+    <script src="GraphChart/3_Shape.js"></script>
+    <script src="GraphChart/4_RectShape.js"></script>
+    <script src="GraphChart/4_SectorShape.js"></script>
+    <script src="GraphChart/4_TextShape.js"></script>
+    <script src="GraphChart/2_ChartRect.js"></script>
+    <script src="GraphChart/4_LineShape.js"></script>
+    <script src="GraphChart/4_CircleShape.js"></script>
+    <script src="GraphChart/Graph.js"></script>
+    <script src="GraphChart/GraphChart.js"></script>
+    <script type="text/javascript">
+        window.onload = function () {
+            const options = [{
+                Type: "pie", Data: [
+                    { Value: 335, Name: '直接访问', Color: "#d48265" },
+                    { Value: 310, Name: '邮件营销', Color: "#2f4554" },
+                    { Value: 234, Name: '联盟广告', Color: "#61a0a8" },
+                    { Value: 135, Name: '视频广告', Color: "#c23531" },
+                    { Value: 1548, Name: '搜索引擎', Color: "#91c7ae" }
+                ],
+                R1: 210,
+                R2: 120,
+                Legend: {
+                    X: 5, Y: 5, Width: 25, Height: 14, R: 3.5, Space: 10
+                },
+                TextLegend: {
+                    X: 35, Y: 16, FontColor: "#555555", Height: 14, Font: "12px Arial", Space: 10
+                }
+            },
+            {
+                Type: "line", Data: [
+                    { Value: 335, Name: '直接访问' },
+                    { Value: 452, Name: '邮件营销' },
+                    { Value: 234, Name: '联盟广告' },
+                    { Value: 620, Name: '视频广告' },
+                    { Value: 548, Name: '搜索引擎' }
+                ],
+                Color: "red",
+                R: 5
+
+            }
+            ]
+            const graphChart = new GraphChart({ TagId: "divChart", Width: 800, Height: 600, EventNames: ["click"] })
+            graphChart.Draw(options)
+        }
+    </script>
+</head>
+
+<body>
+    <div id="divChart" style="width:800px;height:600px; border:1px solid red;">
+    </div>
+</body>
+
+</html>
