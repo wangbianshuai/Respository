@@ -1,0 +1,15 @@
+﻿Request:
+                         Url:http://localhost/op/api/DataAccess/Query?_rYawCGRCxJc=0.15207651966846103
+                        Data:{"EntityName":"User","Request":{"SelectNames":["UserId","LoginName","UserName","LastLoginDate","DepartId","DataRight"],"Conditions":[{"Name":"LoginName","Logic":"=","Value":"123"},{"Name":"LoginPassword","Logic":"=","Value":"202CB962AC59075B964B07152D234B70"}]}}
+                  EntityName:DataAccess
+                  MethodName:
+                   IPAddress:::1
+               OperationUser:
+                   StartTime:2017-08-11 14:28:55.088
+                     EndTime:2017-08-11 14:28:55.088
+         ElapsedMilliseconds:1
+
+
+
+Response:
+{"Ack":{"IsSuccess":false,"StatusCode":102,"StatusMessage":"登录用户不存在或过期，请重新登录再试！"}}

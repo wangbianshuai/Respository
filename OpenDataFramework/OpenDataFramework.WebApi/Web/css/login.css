@@ -1,0 +1,130 @@
+﻿* {
+	PADDING-BOTTOM: 0px;
+    LIST-STYLE-TYPE: none; 
+    MARGIN: 0px; 
+    PADDING-LEFT: 0px; 
+    PADDING-RIGHT: 0px; 
+    PADDING-TOP: 0px
+}
+HTML {
+	HEIGHT: 100%;
+	width:100%;
+}
+BODY {
+	WIDTH: 100%; 
+	FONT-FAMILY: "宋体"; 
+	HEIGHT: 100%; 
+	FONT-SIZE: 12px
+}
+.Login 
+{
+	POSITION: absolute; 
+	MARGIN-TOP: -200px; 
+	WIDTH: 600px; 
+	HEIGHT: 400px; 
+	MARGIN-LEFT: -300px; 
+	TOP: 50%; 
+	LEFT: 50%
+}
+.Login .DivInfo
+{
+    width:300px;
+    height:30px;
+    border-bottom: #8FB9D0 1px solid;
+    text-align:center;
+    margin-top:110px;
+    margin-left:200px;
+    margin-right:100px;
+}
+.Login .DivInfo span
+{
+    font-weight:bold;
+    color:#555;
+    font-size:large;
+    line-height:30px;
+    vertical-align:middle;
+}
+.Login .DivText
+{
+    width:300px;
+    height:30px;
+    text-align:center;
+    margin-left:200px;
+    margin-right:100px;
+}
+.Login .DivText dl
+{
+    width:300px;
+    text-align:center;
+    margin:0 auto;
+}
+.Login .DivText dt
+{
+    float:left;
+    width:100px;
+    line-height:30px;
+    vertical-align:middle;
+    text-align:right;
+}
+.Login .DivText dd
+{
+    float:left;
+    width:190px;
+    text-align:left;
+    padding-left:5px;
+}
+.Login .DivText .TextBox
+{
+    width:150px;
+    margin-top:3px;
+    outline:none;
+}
+.Login .DivText .DownList
+{
+    width:153px;
+    margin-top:4px;
+}
+.Login .DivButton
+{
+    width:300px;
+    height:30px;
+    text-align:center;
+    margin:0 auto;
+}
+.Login .DivButton .Button
+{
+    width:60px;
+    margin-top:10px;
+    margin-left:250px;
+}
+
+.Alert {
+  width:100%;
+  height:100%;
+  margin:0;
+  padding:0;
+}
+
+    .Alert .Img {
+       margin:0;
+       padding:0;
+       margin-top:10px;
+    }
+    .Alert .Text {
+      margin-left:0px;
+      margin-top:20px;
+    }
+
+.DivBottomInfo {
+    position: absolute;
+    bottom: 0;
+    height: 30px;
+    width: 100%;
+    text-align:right;
+}
+
+    .DivBottomInfo span {
+        line-height: 30px;
+        color: red;
+        margin-right:20px;
+    }

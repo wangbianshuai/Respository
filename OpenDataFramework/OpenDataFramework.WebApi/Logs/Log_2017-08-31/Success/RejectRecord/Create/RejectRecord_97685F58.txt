@@ -1,0 +1,15 @@
+﻿Request:
+                         Url:http://localhost/op/api/DataAccess/Create?LoginUserId=9bc7111f-647e-4206-8791-5c8fce9419cc&_rEwpNHMabRA=0.023385327657117205
+                        Data:{"EntityName":"RejectRecord","Request":{"Data":[{"DataId":"a7cb5a64-52c5-2099-b838-b3a0018a4878","RejectDataId":"4d9f21ef-f2ee-47eb-a367-74241fde8a65","UserName":"admin(admin)","RejectReason":"764i74i"}]}}
+                  EntityName:RejectRecord
+                  MethodName:Create
+                   IPAddress:::1
+               OperationUser:9bc7111f-647e-4206-8791-5c8fce9419cc
+                   StartTime:2017-08-31 17:37:14.733
+                     EndTime:2017-08-31 17:37:14.733
+         ElapsedMilliseconds:8
+
+
+
+Response:
+{"Ack":{"IsSuccess":true,"StatusCode":0,"StatusMessage":""},"Data":{"RequestType":"Create","Ids":"e0adfd53-a52c-4820-b365-7d76bc4f4355"}}

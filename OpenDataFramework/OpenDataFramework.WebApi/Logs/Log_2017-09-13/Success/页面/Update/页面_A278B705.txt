@@ -1,0 +1,15 @@
+﻿Request:
+                         Url:http://localhost/op/api/DataAccess/Update?LoginUserId=9bc7111f-647e-4206-8791-5c8fce9419cc&_rYrssFSBcDA=0.5684178294764954
+                        Data:{"EntityName":"页面","Request":{"Data":[{"DataId":"6a979b44-83a6-4b43-b8bd-f5792bd8e983","RowVersion":"0,0,0,0,0,3,161,185","查询字段布局":"[{\"LabelWidth\":100,\"ControlWidth\":200,\"X\":1,\"Y\":1,\"IsVisible\":true,\"IsEmpty\":true,\"PropertyId\":\"5378bb66-31ff-17c8-b104-e354ca9c8686\",\"ControlType\":\"TextBox\",\"Logic\":\"like\",\"Point\":\"(1,1)\",\"Id\":\"504bf6ce-6d6b-08c6-54d1-75b358a92969\"}]"}]}}
+                  EntityName:页面
+                  MethodName:Update
+                   IPAddress:::1
+               OperationUser:9bc7111f-647e-4206-8791-5c8fce9419cc
+                   StartTime:2017-09-13 14:44:37.757
+                     EndTime:2017-09-13 14:44:37.780
+         ElapsedMilliseconds:22
+
+
+
+Response:
+{"Ack":{"IsSuccess":true,"StatusCode":0,"StatusMessage":""},"Data":{"RequestType":"Update","Ids":"6a979b44-83a6-4b43-b8bd-f5792bd8e983"}}

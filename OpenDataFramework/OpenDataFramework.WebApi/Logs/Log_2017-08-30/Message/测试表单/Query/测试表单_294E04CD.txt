@@ -1,0 +1,15 @@
+﻿Request:
+                         Url:http://localhost/op/api/DataAccess/Query?LoginUserId=&_rpFkeneWpWw=0.8370796997287733
+                        Data:{"EntityName":"测试表单","Request":{"IsRowVersion":true,"SelectNames":["长整数","名称","自然数","日期","资源","金额","浮点数"],"Conditions":[{"Name":"DataId","Logic":"=","Value":"d4445897-9860-4956-979a-12591e4283fe"}]}}
+                  EntityName:测试表单
+                  MethodName:Query
+                   IPAddress:::1
+               OperationUser:
+                   StartTime:2017-08-30 15:22:31.468
+                     EndTime:2017-08-30 15:22:31.469
+         ElapsedMilliseconds:0
+
+
+
+Response:
+{"Ack":{"IsSuccess":false,"StatusCode":102,"StatusMessage":"登录用户不存在或过期，请重新登录再试！"}}

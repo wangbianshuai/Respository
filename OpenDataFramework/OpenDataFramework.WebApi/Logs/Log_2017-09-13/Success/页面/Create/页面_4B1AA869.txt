@@ -1,0 +1,15 @@
+﻿Request:
+                         Url:http://localhost/op/api/DataAccess/Create?LoginUserId=9bc7111f-647e-4206-8791-5c8fce9419cc&_rrrKJZmDwyh=0.06820850209383345
+                        Data:{"EntityName":"页面","Request":{"Data":[{"名称":"默认页","表单":"ee46b9c6-c571-4dfc-8bf0-c972ee08645f","操作权限":"{\"IsNewAdd\":\"1\",\"IsEdit\":\"1\",\"IsDelete2\":\"1\",\"IsExcelExport\":\"1\",\"IsExcelImport\":\"1\",\"IsDataRight\":\"0\",\"IsDataStatus\":\"0\",\"IsLookLog\":\"0\",\"IsBatchDelete\":\"0\",\"IsBatchSubmit\":\"0\",\"IsBatchReject\":\"0\"}"}]}}
+                  EntityName:页面
+                  MethodName:Create
+                   IPAddress:::1
+               OperationUser:9bc7111f-647e-4206-8791-5c8fce9419cc
+                   StartTime:2017-09-13 14:44:20.797
+                     EndTime:2017-09-13 14:44:20.878
+         ElapsedMilliseconds:81
+
+
+
+Response:
+{"Ack":{"IsSuccess":true,"StatusCode":0,"StatusMessage":""},"Data":{"RequestType":"Create","Ids":"6a979b44-83a6-4b43-b8bd-f5792bd8e983"}}

@@ -1,0 +1,15 @@
+﻿Request:
+                         Url:http://localhost/op/api/DataAccess/Create?_rRrdSNPPQNt=0.6690519950084886
+                        Data:{"EntityName":"数据源","Request":{"Data":[{"名称":"表单"}]}}
+                  EntityName:DataAccess
+                  MethodName:Create
+                   IPAddress:::1
+               OperationUser:
+                   StartTime:2017-08-03 11:14:51.757
+                     EndTime:2017-08-03 11:14:51.764
+         ElapsedMilliseconds:7
+
+
+
+Response:
+{"Ack":{"IsSuccess":true,"StatusCode":0,"StatusMessage":""},"Data":{"RequestType":"Create","Ids":"d1a75710-645d-4a95-a687-d1866a56fae0"}}

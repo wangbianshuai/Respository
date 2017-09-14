@@ -1,0 +1,35 @@
+﻿Request:
+                         Url:http://localhost/op/api/DataAccess/Query?LoginUserId=&_rBAMSsKNTjD=0.551440961038516
+                        Data:{"EntityName":"测试表单","Request":{"IsExcel":true,"Title":"测试表单","SelectNames":["DataId","DataId","DataId","长整数","名称","自然数","日期","资源","金额","浮点数","CreateDate"],"Conditions":[],"OrderBys":[{"Name":"CreateDate","IsDesc":true}],"HeaderInfos":[{"Name":"名称","Label":"名称"},{"Name":"长整数","Label":"长整数"},{"Name":"自然数","Label":"自然数"},{"Name":"日期","Label":"日期"},{"Name":"金额","Label":"金额"},{"Name":"浮点数","Label":"浮点数"},{"Name":"CreateDate","Label":"创建时间"},{"Name":"资源","Label":"资源"}]}}
+                  EntityName:DataAccess
+                  MethodName:
+                   IPAddress:::1
+               OperationUser:
+                   StartTime:2017-08-10 16:19:17.756
+                     EndTime:2017-08-10 16:20:26.405
+         ElapsedMilliseconds:68660
+
+
+
+Response:
+{"Ack":{"IsSuccess":false,"StatusCode":101,"StatusMessage":"GUID 应包含带 4 个短划线的 32 位数(xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx)。"},"Data":null}
+Excption:
+           Message:发生一个或多个错误。
+           Source:mscorlib
+         StackTrace:   在 System.Threading.Tasks.Task.ThrowIfExceptional(Boolean includeTaskCanceledExceptions)
+   在 System.Threading.Tasks.Task.Wait(Int32 millisecondsTimeout, CancellationToken cancellationToken)
+   在 System.Threading.Tasks.Parallel.ForWorker[TLocal](Int32 fromInclusive, Int32 toExclusive, ParallelOptions parallelOptions, Action`1 body, Action`2 bodyWithState, Func`4 bodyWithLocal, Func`1 localInit, Action`1 localFinally)
+   在 System.Threading.Tasks.Parallel.ForEachWorker[TSource,TLocal](IEnumerable`1 source, ParallelOptions parallelOptions, Action`1 body, Action`2 bodyWithState, Action`3 bodyWithStateAndIndex, Func`4 bodyWithStateAndLocal, Func`5 bodyWithEverything, Func`1 localInit, Action`1 localFinally)
+   在 System.Threading.Tasks.Parallel.ForEach[TSource](IEnumerable`1 source, ParallelOptions parallelOptions, Action`1 body)
+   在 OpenDataFramework.Component.DataAccess.SetPropertyGuidTextValue(List`1 batchList, RequestProperty property) 位置 d:\CsharpProjects\OpenDataFramework\OpenDataFramework\OpenDataFramework.Component\DataAccess.cs:行号 777
+   在 OpenDataFramework.Component.DataAccess.<>c__DisplayClass67.<SetGuidTextValue>b__65(RequestProperty p) 位置 d:\CsharpProjects\OpenDataFramework\OpenDataFramework\OpenDataFramework.Component\DataAccess.cs:行号 746
+   在 System.Collections.Generic.List`1.ForEach(Action`1 action)
+   在 OpenDataFramework.Component.DataAccess.SetGuidTextValue(List`1 entityDataList) 位置 d:\CsharpProjects\OpenDataFramework\OpenDataFramework\OpenDataFramework.Component\DataAccess.cs:行号 744
+   在 OpenDataFramework.Component.DataAccess.ExcelExport(QueryRequest request, List`1 entityDataList) 位置 d:\CsharpProjects\OpenDataFramework\OpenDataFramework\OpenDataFramework.Component\DataAccess.cs:行号 719
+   在 OpenDataFramework.Component.DataAccess.QueryData(RequestEntity requestEntity, QueryRequest request, Boolean hasRowVersion) 位置 d:\CsharpProjects\OpenDataFramework\OpenDataFramework\OpenDataFramework.Component\DataAccess.cs:行号 672
+   在 OpenDataFramework.Component.DataAccess.QueryAction() 位置 d:\CsharpProjects\OpenDataFramework\OpenDataFramework\OpenDataFramework.Component\DataAccess.cs:行号 712
+   在 OpenDataFramework.Component.DataAccess.EntityRequest() 位置 d:\CsharpProjects\OpenDataFramework\OpenDataFramework\OpenDataFramework.Component\DataAccess.cs:行号 165
+   在 OpenDataFramework.Component.DataAccess.Request() 位置 d:\CsharpProjects\OpenDataFramework\OpenDataFramework\OpenDataFramework.Component\DataAccess.cs:行号 152
+   在 OpenDataFramework.Component.DataAccess.Query() 位置 d:\CsharpProjects\OpenDataFramework\OpenDataFramework\OpenDataFramework.Component\DataAccess.cs:行号 123
+   在 OpenDataFramework.WebApi.Code.DataAccess.RequestAction(String methodName) 位置 D:\CsharpProjects\OpenDataFramework\OpenDataFramework\OpenDataFramework.WebApi\Code\DataAccess.cs:行号 26
+   在 OpenDataFramework.WebApi.Controllers.DefaultController.RequestAction(String className, String methodName) 位置 D:\CsharpProjects\OpenDataFramework\OpenDataFramework\OpenDataFramework.WebApi\Controllers\DefaultController.cs:行号 74

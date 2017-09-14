@@ -1,0 +1,15 @@
+﻿Request:
+                         Url:http://localhost/op/api/DataAccess/Update?_rYaRDYwmBjj=0.8368944029666214
+                        Data:{"EntityName":"页面","Request":{"Data":[{"DataId":"8391f680-4fd3-458b-a322-09f3d9b8a3c5","RowVersion":"0,0,0,0,0,1,48,217","名称":"资源","表单":"0ba1873d-f6fb-40f6-aaba-f25c452e770d","操作权限":"{\"IsNewAdd\":\"1\",\"IsEdit\":\"1\",\"IsDelete2\":\"1\",\"IsExcelExport\":\"0\",\"IsExcelImport\":\"0\"}"}]}}
+                  EntityName:DataAccess
+                  MethodName:Update
+                   IPAddress:::1
+               OperationUser:
+                   StartTime:2017-07-28 16:33:53.558
+                     EndTime:2017-07-28 16:33:53.631
+         ElapsedMilliseconds:73
+
+
+
+Response:
+{"Ack":{"IsSuccess":true,"StatusCode":0,"StatusMessage":""},"Data":{"RequestType":"Update","Ids":"8391f680-4fd3-458b-a322-09f3d9b8a3c5"}}

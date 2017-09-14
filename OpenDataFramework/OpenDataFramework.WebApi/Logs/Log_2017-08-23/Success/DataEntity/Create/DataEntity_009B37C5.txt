@@ -1,0 +1,15 @@
+﻿Request:
+                         Url:http://localhost/op/api/DataAccess/Create?LoginUserId=9bc7111f-647e-4206-8791-5c8fce9419cc&_reWZFCdRJMZ=0.0012975034785323025
+                        Data:{"EntityName":"DataEntity","Request":{"Data":[{"EntityName":"RejectReason","Properties":[{"PropertyName":"RejectDataId","DataType":"guid","MaxLength":"50","IsIndex":"0","IsNullable":"0","PropertyId":"d07c367d-98f1-455e-5e77-7e0b41f2481b"},{"PropertyName":"RejectReason","DataType":"string","MaxLength":"500","IsIndex":"0","IsNullable":"0","PropertyId":"dc245f57-ce1b-acab-83f8-c94ccebeef3c"}]}]}}
+                  EntityName:DataEntity
+                  MethodName:Create
+                   IPAddress:::1
+               OperationUser:9bc7111f-647e-4206-8791-5c8fce9419cc
+                   StartTime:2017-08-23 10:29:01.261
+                     EndTime:2017-08-23 10:29:01.313
+         ElapsedMilliseconds:47
+
+
+
+Response:
+{"Ack":{"IsSuccess":true,"StatusCode":0,"StatusMessage":""},"Data":{"RequestType":"Create","Ids":"c6c7549f-8bba-4c66-94a3-a5cff6340f9f"}}

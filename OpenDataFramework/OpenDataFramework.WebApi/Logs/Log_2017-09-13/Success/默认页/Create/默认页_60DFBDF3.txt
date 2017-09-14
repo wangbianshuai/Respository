@@ -1,0 +1,15 @@
+﻿Request:
+                         Url:http://localhost/op/api/DataAccess/Create?LoginUserId=9bc7111f-647e-4206-8791-5c8fce9419cc&_rpzPQjnXfHe=0.9930409741873334
+                        Data:{"EntityName":"默认页","Request":{"Data":[{"列位置":"1","行位置":"1","属性名":"手机号码","属性值":"15618960078"}]}}
+                  EntityName:默认页
+                  MethodName:Create
+                   IPAddress:::1
+               OperationUser:9bc7111f-647e-4206-8791-5c8fce9419cc
+                   StartTime:2017-09-13 14:48:35.800
+                     EndTime:2017-09-13 14:48:35.813
+         ElapsedMilliseconds:12
+
+
+
+Response:
+{"Ack":{"IsSuccess":true,"StatusCode":0,"StatusMessage":""},"Data":{"RequestType":"Create","Ids":"fdb0464f-6fb6-4acd-b9b1-ddd8f40e78d0"}}

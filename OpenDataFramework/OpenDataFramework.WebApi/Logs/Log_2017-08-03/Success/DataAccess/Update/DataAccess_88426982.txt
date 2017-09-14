@@ -1,0 +1,15 @@
+﻿Request:
+                         Url:http://localhost/op/api/DataAccess/Update?_rFJSFQCEtsc=0.4825906450588404
+                        Data:{"EntityName":"数据源","Request":{"Data":[{"DataId":"567c4f9a-d4db-4c33-92b9-ad2a7bd2bf02","RowVersion":"0,0,0,0,0,1,174,18","名称":"123","表单":"e8d157c7-db0e-4dc2-a308-a7bfc89f9b3d","选项集":"null"}]}}
+                  EntityName:DataAccess
+                  MethodName:Update
+                   IPAddress:::1
+               OperationUser:
+                   StartTime:2017-08-03 18:14:37.948
+                     EndTime:2017-08-03 18:14:58.052
+         ElapsedMilliseconds:20104
+
+
+
+Response:
+{"Ack":{"IsSuccess":true,"StatusCode":0,"StatusMessage":""},"Data":{"RequestType":"Update","Ids":"567c4f9a-d4db-4c33-92b9-ad2a7bd2bf02"}}

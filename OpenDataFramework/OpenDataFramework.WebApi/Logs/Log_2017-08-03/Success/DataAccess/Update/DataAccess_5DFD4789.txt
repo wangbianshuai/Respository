@@ -1,0 +1,15 @@
+﻿Request:
+                         Url:http://localhost/op/api/DataAccess/Update?_rYjmeXaMxkZ=0.015399841425125294
+                        Data:{"EntityName":"资源","Request":{"Data":[{"DataId":"e53832b7-8f0b-4941-bb43-6968715f342c","RowVersion":"0,0,0,0,0,1,173,185","类型":"js","名称":"数据源","内容":"(function (config) {\n    var optionsProperty = {\n        Name: \"Options\",\n        EditOptions: {\n            X: 2,\n            Y: 1,\n            Height: 400,\n        },\n        Label: \"选项集\",\n        ControlType: \"GridView\",\n        Entity: {\n            Name: \"Option\",\n            Label: \"选项\",\n            PrimaryKey: \"Id\",\n            Properties: [{\n                Name: \"Value\",\n                Label: \"值\",\n                MaxLength: 50,\n                IsNullable: false,\n                EditOptions: {\n                    X: 1,\n                    Y: 1,\n                    ControlWidth: 300\n                },\n                DataOptions: {\n                    X: 1,\n                    ColumnWidth: 250\n                }\n            },\n            {\n                Name: \"Text\",\n                Label: \"文本\",\n                IsNullable: false,\n                EditOptions: {\n                    X: 2,\n                    Y: 1,\n                    ControlWidth: 300\n                },\n                DataOptions: {\n                    X: 2,\n                    ColumnWidth: 250\n                }\n            }]\n        }\n    };\n\n    config.Entity.ExpandSetEditData = function (data, blUpdate, ns) {\n        data[\"选项集\"] = JSON.stringify(data.Options);\n        delete data.Options;\n\n        return data;\n    };\n\n    config.Entity.ExpandGetEditData = function (data, ns) {\n        data.Options = data[\"选项集\"] ? JSON.parse(data[\"选项集\"]) : [];\n    };\n\n    config.Entity.Properties.push(optionsProperty);\n})(window.PageEntityConfigs);"}]}}
+                  EntityName:DataAccess
+                  MethodName:Update
+                   IPAddress:::1
+               OperationUser:
+                   StartTime:2017-08-03 10:03:18.953
+                     EndTime:2017-08-03 10:03:18.962
+         ElapsedMilliseconds:9
+
+
+
+Response:
+{"Ack":{"IsSuccess":true,"StatusCode":0,"StatusMessage":""},"Data":{"RequestType":"Update","Ids":"e53832b7-8f0b-4941-bb43-6968715f342c"}}

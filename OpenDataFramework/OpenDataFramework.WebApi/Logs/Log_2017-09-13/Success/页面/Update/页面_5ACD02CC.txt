@@ -1,0 +1,15 @@
+﻿Request:
+                         Url:http://localhost/op/api/DataAccess/Update?LoginUserId=9bc7111f-647e-4206-8791-5c8fce9419cc&_rmZsZxEQath=0.931562235425146
+                        Data:{"EntityName":"页面","Request":{"Data":[{"DataId":"6a979b44-83a6-4b43-b8bd-f5792bd8e983","RowVersion":"0,0,0,0,0,3,161,198","编辑字段布局":"[{\"LabelWidth\":100,\"ControlWidth\":200,\"X\":1,\"Y\":1,\"IsVisible\":true,\"IsEmpty\":true,\"PropertyId\":\"5378bb66-31ff-17c8-b104-e354ca9c8686\",\"ControlType\":\"TextBox\",\"Point\":\"(1,1)\",\"Id\":\"39e53dc2-c195-3e00-9e2e-3fcb4b338761\"},{\"LabelWidth\":100,\"ControlWidth\":200,\"X\":2,\"Y\":1,\"IsVisible\":true,\"IsEmpty\":true,\"PropertyId\":\"ea2cbf7a-9724-2251-ba7a-f56931d0af14\",\"ControlType\":\"TextBox\",\"Point\":\"(2,1)\",\"Id\":\"7b67f004-3163-fdbc-9bfe-9d5f13782834\",\"Height\":null,\"DataSourceId\":null,\"DefaultValue\":null},{\"LabelWidth\":100,\"ControlWidth\":200,\"X\":3,\"Y\":1,\"IsVisible\":true,\"IsEmpty\":true,\"PropertyId\":\"65faa9f2-4ac7-f6ee-a0bb-9d1609888654\",\"ControlType\":\"TextBox\",\"Point\":\"(3,1)\",\"Id\":\"995fd501-630c-988d-3913-0d866d20f3e3\"},{\"LabelWidth\":100,\"ControlWidth\":200,\"X\":4,\"Y\":1,\"IsVisible\":true,\"IsEmpty\":true,\"PropertyId\":\"527d6c99-2b33-2542-321b-2ea11d1cd69b\",\"ControlType\":\"TextBox\",\"Point\":\"(4,1)\",\"Id\":\"1d5010a1-839d-3c91-076f-9900c561ee9f\"}]"}]}}
+                  EntityName:页面
+                  MethodName:Update
+                   IPAddress:::1
+               OperationUser:9bc7111f-647e-4206-8791-5c8fce9419cc
+                   StartTime:2017-09-13 14:46:12.226
+                     EndTime:2017-09-13 14:46:12.243
+         ElapsedMilliseconds:16
+
+
+
+Response:
+{"Ack":{"IsSuccess":true,"StatusCode":0,"StatusMessage":""},"Data":{"RequestType":"Update","Ids":"6a979b44-83a6-4b43-b8bd-f5792bd8e983"}}

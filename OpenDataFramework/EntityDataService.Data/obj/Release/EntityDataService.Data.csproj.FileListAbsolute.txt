@@ -1,0 +1,5 @@
+D:\CsharpProjects\OpenDataFramework\OpenDataFramework\EntityDataService.Data\bin\Release\EntityDataService.Data.dll
+D:\CsharpProjects\OpenDataFramework\OpenDataFramework\EntityDataService.Data\bin\Release\EntityDataService.Data.pdb
+D:\CsharpProjects\OpenDataFramework\OpenDataFramework\EntityDataService.Data\bin\Release\Oracle.ManagedDataAccess.dll
+D:\CsharpProjects\OpenDataFramework\OpenDataFramework\EntityDataService.Data\obj\Release\EntityDataService.Data.dll
+D:\CsharpProjects\OpenDataFramework\OpenDataFramework\EntityDataService.Data\obj\Release\EntityDataService.Data.pdb

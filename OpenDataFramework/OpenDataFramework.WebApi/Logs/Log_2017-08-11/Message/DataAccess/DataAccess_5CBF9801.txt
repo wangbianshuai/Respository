@@ -1,0 +1,15 @@
+﻿Request:
+                         Url:http://localhost/op/api/DataAccess/Update?LoginUserId=&_rnGzesfFiQi=0.1254474823843832
+                        Data:{"EntityName":"User","Request":{"Data":[{"UserId":"9785b025-7e6a-4eea-aa0f-2400960aae8e","LastLoginDate":"2017-08-11 14:44:26.099"}]}}
+                  EntityName:DataAccess
+                  MethodName:
+                   IPAddress:::1
+               OperationUser:
+                   StartTime:2017-08-11 14:44:26.098
+                     EndTime:2017-08-11 14:44:26.099
+         ElapsedMilliseconds:0
+
+
+
+Response:
+{"Ack":{"IsSuccess":false,"StatusCode":102,"StatusMessage":"登录用户不存在或过期，请重新登录再试！"}}

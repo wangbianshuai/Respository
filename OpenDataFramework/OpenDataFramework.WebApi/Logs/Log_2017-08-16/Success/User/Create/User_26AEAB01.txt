@@ -1,0 +1,15 @@
+﻿Request:
+                         Url:http://localhost/op/api/DataAccess/Create?LoginUserId=9bc7111f-647e-4206-8791-5c8fce9419cc&_rKCxATxBQFG=0.9746336158616657
+                        Data:{"EntityName":"User","Request":{"Data":[{"UserName":"123","LoginName":"123","LoginPassword":"202CB962AC59075B964B07152D234B70","DepartId":"6c33c7af-4f93-42ea-b96c-8f862354f754","DataRight":"1"}]}}
+                  EntityName:User
+                  MethodName:Create
+                   IPAddress:::1
+               OperationUser:9bc7111f-647e-4206-8791-5c8fce9419cc
+                   StartTime:2017-08-16 09:38:01.582
+                     EndTime:2017-08-16 09:38:01.587
+         ElapsedMilliseconds:19
+
+
+
+Response:
+{"Ack":{"IsSuccess":true,"StatusCode":0,"StatusMessage":""},"Data":{"RequestType":"Create","Ids":"cef145c6-afed-4934-b8ef-7951a5b5319a"}}

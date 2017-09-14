@@ -1,0 +1,15 @@
+﻿Request:
+                         Url:http://localhost/op/api/DataAccess/Update?LoginUserId=9bc7111f-647e-4206-8791-5c8fce9419cc&_rFehXEFHeGR=0.7768817653491431
+                        Data:{"EntityName":"测试表单","Request":{"Data":[{"DataId":"e57a7aa2-b01b-4d55-b26d-414135040e4c","RowVersion":"0,0,0,0,0,3,36,219","长整数":"563","名称":"736737","自然数":"546","日期":"2017-08-23","资源":"e53832b7-8f0b-4941-bb43-6968715f342c","金额":"563","浮点数":"5635"}]}}
+                  EntityName:测试表单
+                  MethodName:Update
+                   IPAddress:::1
+               OperationUser:9bc7111f-647e-4206-8791-5c8fce9419cc
+                   StartTime:2017-08-30 16:40:46.197
+                     EndTime:2017-08-30 16:40:46.385
+         ElapsedMilliseconds:187
+
+
+
+Response:
+{"Ack":{"IsSuccess":true,"StatusCode":0,"StatusMessage":""},"Data":{"RequestType":"Update","Ids":"e57a7aa2-b01b-4d55-b26d-414135040e4c"}}

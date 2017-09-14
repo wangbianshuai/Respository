@@ -1,0 +1,15 @@
+﻿Request:
+                         Url:http://localhost/op/api/DataAccess/Create?LoginUserId=9bc7111f-647e-4206-8791-5c8fce9419cc&_rwDFDRrHQxy=0.5768477719531899
+                        Data:{"EntityName":"默认页","Request":{"Data":[{"列位置":"2","行位置":"1","属性名":"电子邮件","属性值":"277822695@qq.com"}]}}
+                  EntityName:默认页
+                  MethodName:Create
+                   IPAddress:::1
+               OperationUser:9bc7111f-647e-4206-8791-5c8fce9419cc
+                   StartTime:2017-09-13 14:49:39.603
+                     EndTime:2017-09-13 14:49:39.615
+         ElapsedMilliseconds:12
+
+
+
+Response:
+{"Ack":{"IsSuccess":true,"StatusCode":0,"StatusMessage":""},"Data":{"RequestType":"Create","Ids":"651c47bf-a3df-4b12-b8f6-0f71327b7515"}}

@@ -1,0 +1,15 @@
+﻿Request:
+                         Url:http://localhost/op/api/DataAccess/Create?_rYPntzYprPH=0.34082702775759954
+                        Data:{"EntityName":"键值配置","Request":{"Data":[{"键名":"875o87","值":"o578o"}]}}
+                  EntityName:DataAccess
+                  MethodName:Create
+                   IPAddress:::1
+               OperationUser:
+                   StartTime:2017-07-25 10:14:48.724
+                     EndTime:2017-07-25 10:14:48.743
+         ElapsedMilliseconds:19
+
+
+
+Response:
+{"Ack":{"IsSuccess":true,"StatusCode":0,"StatusMessage":""},"Data":{"RequestType":"Create","Ids":"131385b0-08f3-4344-9fab-3f98aa379cc1"}}

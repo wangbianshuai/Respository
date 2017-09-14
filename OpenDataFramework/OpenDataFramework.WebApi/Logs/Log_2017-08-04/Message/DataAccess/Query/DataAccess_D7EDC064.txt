@@ -1,0 +1,15 @@
+﻿Request:
+                         Url:http://localhost/op/api/DataAccess/Query?_rEajrnByFpX=0.3064104533679588
+                        Data:{"Request":{"IsPage":true,"IsRowVersion":true,"PageIndex":1,"PageSize":10,"SelectNames":[null],"Conditions":[],"OrderBys":[{"Name":"CreateDate","IsDesc":true}]}}
+                  EntityName:DataAccess
+                  MethodName:Query
+                   IPAddress:::1
+               OperationUser:
+                   StartTime:2017-08-04 10:47:48.334
+                     EndTime:2017-08-04 10:47:48.336
+         ElapsedMilliseconds:1
+
+
+
+Response:
+{"Ack":{"IsSuccess":false,"StatusCode":102,"StatusMessage":"请求实体名不能为空！"}}

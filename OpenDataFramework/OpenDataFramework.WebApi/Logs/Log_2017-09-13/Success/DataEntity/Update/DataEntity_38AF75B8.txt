@@ -1,0 +1,15 @@
+﻿Request:
+                         Url:http://localhost/op/api/DataAccess/Update?LoginUserId=9bc7111f-647e-4206-8791-5c8fce9419cc&_rQmxeehtkFt=0.7172742884153909
+                        Data:{"EntityName":"DataEntity","Request":{"Data":[{"EntityId":"ee46b9c6-c571-4dfc-8bf0-c972ee08645f","RowVersion":"0,0,0,0,0,3,161,181","EntityName":"默认页","KeyNames":"属性名","Properties":[{"PropertyId":"527d6c99-2b33-2542-321b-2ea11d1cd69b","PropertyName":"列位置","DataType":"int","MaxLength":50,"IsIndex":0,"IsNullable":0},{"PropertyId":"65faa9f2-4ac7-f6ee-a0bb-9d1609888654","PropertyName":"行位置","DataType":"int","MaxLength":50,"IsIndex":0,"IsNullable":0},{"PropertyId":"5378bb66-31ff-17c8-b104-e354ca9c8686","PropertyName":"属性名","DataType":"string","MaxLength":50,"IsIndex":1,"IsNullable":0},{"PropertyId":"ea2cbf7a-9724-2251-ba7a-f56931d0af14","PropertyName":"属性值","DataType":"string","MaxLength":500,"IsIndex":0,"IsNullable":0}]}]}}
+                  EntityName:DataEntity
+                  MethodName:Update
+                   IPAddress:::1
+               OperationUser:9bc7111f-647e-4206-8791-5c8fce9419cc
+                   StartTime:2017-09-13 14:43:48.179
+                     EndTime:2017-09-13 14:43:48.186
+         ElapsedMilliseconds:7
+
+
+
+Response:
+{"Ack":{"IsSuccess":true,"StatusCode":0,"StatusMessage":""},"Data":{"RequestType":"Update","Ids":"ee46b9c6-c571-4dfc-8bf0-c972ee08645f"}}

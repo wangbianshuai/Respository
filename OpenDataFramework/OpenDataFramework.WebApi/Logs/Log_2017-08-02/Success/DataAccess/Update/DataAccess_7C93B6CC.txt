@@ -1,0 +1,15 @@
+﻿Request:
+                         Url:http://localhost/op/api/DataAccess/Update?_rNExfpEEtjz=0.7580702905560897
+                        Data:{"EntityName":"资源","Request":{"Data":[{"DataId":"e7bb030d-a98b-4d94-8306-4bdf54d2fc7e","RowVersion":"0,0,0,0,0,1,142,195","类型":"css","名称":"css","内容":"sss"}]}}
+                  EntityName:DataAccess
+                  MethodName:Update
+                   IPAddress:::1
+               OperationUser:
+                   StartTime:2017-08-02 17:11:38.514
+                     EndTime:2017-08-02 17:11:38.515
+         ElapsedMilliseconds:10
+
+
+
+Response:
+{"Ack":{"IsSuccess":true,"StatusCode":0,"StatusMessage":""},"Data":{"RequestType":"Update","Ids":"e7bb030d-a98b-4d94-8306-4bdf54d2fc7e"}}

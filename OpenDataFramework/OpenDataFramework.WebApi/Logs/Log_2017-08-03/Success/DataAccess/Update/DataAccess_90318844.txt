@@ -1,0 +1,15 @@
+﻿Request:
+                         Url:http://localhost/op/api/DataAccess/Update?_rfFxxbnFmYA=0.6947785410300213
+                        Data:{"EntityName":"资源","Request":{"Data":[{"DataId":"ac19cfe5-122b-40d7-a24b-163a5d65f84b","RowVersion":"0,0,0,0,0,1,173,235","类型":"html","名称":"IndexHtml","内容":"<!DOCTYPE html>\n<html xmlns=\"http://www.w3.org/1999/xhtml\">\n<head>\n    <meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\" />\n    <title></title>\n    <link href=\"css/public?s=true&v=${PageVersion}\" rel=\"stylesheet\" />\n    <link href=\"css/${PageName}?s=true&v=${PageVersion}\" rel=\"stylesheet\" />\n    <script src=\"js/index?s=true&v=${PageVersion}\"></script>\n    <script src=\"js/${PageName}?v=${PageVersion}\"></script>\n    <script src=\"js/${PageName}?s=true&v=${PageVersion}\"></script>\n    <script type=\"text/javascript\">\n        (function (ns, configs) { window.onload = function () { configs.ns = ns; if (ns.pages[configs.PageName]) new ns.pages[configs.PageName](configs).Load() } })(OpenDataFramework, PageEntityConfigs);\n\n    </script>\n</head>\n<body>\n</body>\n</html>"}]}}
+                  EntityName:DataAccess
+                  MethodName:Update
+                   IPAddress:::1
+               OperationUser:
+                   StartTime:2017-08-03 15:36:31.390
+                     EndTime:2017-08-03 15:36:31.402
+         ElapsedMilliseconds:11
+
+
+
+Response:
+{"Ack":{"IsSuccess":true,"StatusCode":0,"StatusMessage":""},"Data":{"RequestType":"Update","Ids":"ac19cfe5-122b-40d7-a24b-163a5d65f84b"}}

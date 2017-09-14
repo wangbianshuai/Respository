@@ -1,0 +1,15 @@
+﻿Request:
+                         Url:http://localhost/op/api/DataAccess/Create?_reyQjkRrGGh=0.01458007113692017
+                        Data:{"EntityName":"资源","Request":{"Data":[{"类型":"js","名称":"123","内容":"123"}]}}
+                  EntityName:DataAccess
+                  MethodName:Create
+                   IPAddress:::1
+               OperationUser:
+                   StartTime:2017-08-03 18:16:12.327
+                     EndTime:2017-08-03 18:16:22.625
+         ElapsedMilliseconds:10297
+
+
+
+Response:
+{"Ack":{"IsSuccess":false,"StatusCode":102,"StatusMessage":"对不起，该名称,类型已存在"}}

@@ -1,0 +1,25 @@
+﻿Request:
+                         Url:http://localhost/op/api/DataAccess/Query?LoginUserId=9bc7111f-647e-4206-8791-5c8fce9419cc&_rNSaBCBEeGs=0.8364650753535048
+                        Data:{"EntityName":"测试表单","Request":{"IsRowVersion":true,"SelectNames":["RejectReason"],"Conditions":[{"Name":"DataId","Logic":"=","Value":"8eb66628-6f81-4db1-95a4-10ff64cef58c"}]}}
+                  EntityName:测试表单
+                  MethodName:Query
+                   IPAddress:::1
+               OperationUser:9bc7111f-647e-4206-8791-5c8fce9419cc
+                   StartTime:2017-08-23 09:41:15.330
+                     EndTime:2017-08-23 09:41:15.330
+         ElapsedMilliseconds:1
+
+
+
+Response:
+{"Ack":{"IsSuccess":false,"StatusCode":101,"StatusMessage":"查询属性名集合为空！"},"Data":null}
+Excption:
+           Message:查询属性名集合为空！
+           Source:OpenDataFramework.Component
+         StackTrace:   在 OpenDataFramework.Component.DataAccess.QueryData(RequestEntity requestEntity, QueryRequest request, Boolean hasRowVersion) 位置 d:\CsharpProjects\OpenDataFramework\OpenDataFramework\OpenDataFramework.Component\DataAccess.cs:行号 656
+   在 OpenDataFramework.Component.DataAccess.QueryAction() 位置 d:\CsharpProjects\OpenDataFramework\OpenDataFramework\OpenDataFramework.Component\DataAccess.cs:行号 760
+   在 OpenDataFramework.Component.DataAccess.EntityRequest() 位置 d:\CsharpProjects\OpenDataFramework\OpenDataFramework\OpenDataFramework.Component\DataAccess.cs:行号 203
+   在 OpenDataFramework.Component.DataAccess.Request() 位置 d:\CsharpProjects\OpenDataFramework\OpenDataFramework\OpenDataFramework.Component\DataAccess.cs:行号 190
+   在 OpenDataFramework.Component.DataAccess.Query() 位置 d:\CsharpProjects\OpenDataFramework\OpenDataFramework\OpenDataFramework.Component\DataAccess.cs:行号 161
+   在 OpenDataFramework.WebApi.Code.DataAccess.RequestAction(String methodName) 位置 D:\CsharpProjects\OpenDataFramework\OpenDataFramework\OpenDataFramework.WebApi\Code\DataAccess.cs:行号 29
+   在 OpenDataFramework.WebApi.Controllers.DefaultController.RequestAction(String className, String methodName) 位置 D:\CsharpProjects\OpenDataFramework\OpenDataFramework\OpenDataFramework.WebApi\Controllers\DefaultController.cs:行号 72

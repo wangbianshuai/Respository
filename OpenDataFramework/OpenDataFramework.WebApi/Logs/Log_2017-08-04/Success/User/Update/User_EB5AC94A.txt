@@ -1,0 +1,15 @@
+﻿Request:
+                         Url:http://localhost/op/api/DataAccess/Update?LoginUserId=e43fc04e-bb1c-4fad-a398-dbc2d33293de&_rmjjcSmmHCT=0.4610551699470895
+                        Data:{"EntityName":"User","Request":{"Data":[{"OldLoginPassword":"shuai","LoginPassword":"123","AgainLoginPassword":"123"}]}}
+                  EntityName:User
+                  MethodName:Update
+                   IPAddress:::1
+               OperationUser:e43fc04e-bb1c-4fad-a398-dbc2d33293de
+                   StartTime:2017-08-04 11:38:15.551
+                     EndTime:2017-08-04 11:38:15.551
+         ElapsedMilliseconds:3
+
+
+
+Response:
+{"Ack":{"IsSuccess":true,"StatusCode":0,"StatusMessage":""},"Data":{"RequestType":"Update","Ids":"00000000-0000-0000-0000-000000000000"}}

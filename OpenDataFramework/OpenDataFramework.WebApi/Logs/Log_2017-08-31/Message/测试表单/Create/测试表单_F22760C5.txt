@@ -1,0 +1,15 @@
+﻿Request:
+                         Url:http://localhost/op/api/DataAccess/Create?LoginUserId=9bc7111f-647e-4206-8791-5c8fce9419cc&_rnZZaraGSkF=0.30690083514475597
+                        Data:{"EntityName":"测试表单","Request":{"Data":[{"长整数":"8","名称":"78578","自然数":"75857","金额":"78","浮点数":"78"}]}}
+                  EntityName:测试表单
+                  MethodName:Create
+                   IPAddress:::1
+               OperationUser:9bc7111f-647e-4206-8791-5c8fce9419cc
+                   StartTime:2017-08-31 14:21:59.621
+                     EndTime:2017-08-31 14:21:59.621
+         ElapsedMilliseconds:11
+
+
+
+Response:
+{"Ack":{"IsSuccess":false,"StatusCode":102,"StatusMessage":"对不起，该名称已存在"}}

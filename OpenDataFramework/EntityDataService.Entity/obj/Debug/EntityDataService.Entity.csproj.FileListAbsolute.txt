@@ -1,0 +1,8 @@
+D:\CsharpProjects\OpenDataFramework\OpenDataFramework\EntityDataService.Entity\bin\Debug\EntityDataService.Entity.dll
+D:\CsharpProjects\OpenDataFramework\OpenDataFramework\EntityDataService.Entity\bin\Debug\EntityDataService.Entity.pdb
+D:\CsharpProjects\OpenDataFramework\OpenDataFramework\EntityDataService.Entity\bin\Debug\EntityDataService.Data.dll
+D:\CsharpProjects\OpenDataFramework\OpenDataFramework\EntityDataService.Entity\bin\Debug\Oracle.ManagedDataAccess.dll
+D:\CsharpProjects\OpenDataFramework\OpenDataFramework\EntityDataService.Entity\bin\Debug\EntityDataService.Data.pdb
+D:\CsharpProjects\OpenDataFramework\OpenDataFramework\EntityDataService.Entity\obj\Debug\EntityDataService.Entity.csprojResolveAssemblyReference.cache
+D:\CsharpProjects\OpenDataFramework\OpenDataFramework\EntityDataService.Entity\obj\Debug\EntityDataService.Entity.dll
+D:\CsharpProjects\OpenDataFramework\OpenDataFramework\EntityDataService.Entity\obj\Debug\EntityDataService.Entity.pdb

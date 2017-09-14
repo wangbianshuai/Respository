@@ -1,0 +1,15 @@
+﻿Request:
+                         Url:http://localhost/op/api/DataAccess/Update?LoginUserId=9bc7111f-647e-4206-8791-5c8fce9419cc&_rhTnJDXTims=0.7973223391329436
+                        Data:{"EntityName":"User","Request":{"Data":[{"UserId":"9bc7111f-647e-4206-8791-5c8fce9419cc","RowVersion":"0,0,0,0,0,2,230,100","UserName":"admin","LoginName":"admin","DepartId":"5ebefa63-ba45-43bf-bfe6-e5975332bc4e","DataRight":"3"}]}}
+                  EntityName:User
+                  MethodName:Update
+                   IPAddress:::1
+               OperationUser:9bc7111f-647e-4206-8791-5c8fce9419cc
+                   StartTime:2017-08-22 17:05:55.127
+                     EndTime:2017-08-22 17:05:55.135
+         ElapsedMilliseconds:7
+
+
+
+Response:
+{"Ack":{"IsSuccess":true,"StatusCode":0,"StatusMessage":""},"Data":{"RequestType":"Update","Ids":"9bc7111f-647e-4206-8791-5c8fce9419cc"}}

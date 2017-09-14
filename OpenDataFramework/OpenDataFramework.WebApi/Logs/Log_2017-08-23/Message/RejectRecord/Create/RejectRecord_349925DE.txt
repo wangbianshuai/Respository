@@ -1,0 +1,15 @@
+﻿Request:
+                         Url:http://localhost/op/api/DataAccess/Create?LoginUserId=9bc7111f-647e-4206-8791-5c8fce9419cc&_rhwTziaQMjM=0.9219926725748693
+                        Data:{"EntityName":"RejectRecord","Request":{"Data":[{"DataId":"9e5482f2-6f6b-eede-a23b-f405edb853b9","RejectDataId":"455aaae8-718d-465d-a96b-42d05d0a4211","RejectReason":"09p0p"}]}}
+                  EntityName:RejectRecord
+                  MethodName:Create
+                   IPAddress:::1
+               OperationUser:9bc7111f-647e-4206-8791-5c8fce9419cc
+                   StartTime:2017-08-23 10:52:44.602
+                     EndTime:2017-08-23 10:55:10.634
+         ElapsedMilliseconds:146020
+
+
+
+Response:
+{"Ack":{"IsSuccess":false,"StatusCode":102,"StatusMessage":"请求实体不存在！"}}

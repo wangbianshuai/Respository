@@ -1,0 +1,15 @@
+﻿Request:
+                         Url:http://localhost/op/api/DataAccess/Create?LoginUserId=9bc7111f-647e-4206-8791-5c8fce9419cc&_rFcmGFXhwZd=0.6391230106000716
+                        Data:{"EntityName":"测试表单","Request":{"Data":[{"长整数":"34","名称":"34134","自然数":"34","布尔值":"真","日期":"2017-09-13","金额":"34","浮点数":"34"}]}}
+                  EntityName:测试表单
+                  MethodName:Create
+                   IPAddress:::1
+               OperationUser:9bc7111f-647e-4206-8791-5c8fce9419cc
+                   StartTime:2017-09-13 16:25:28.300
+                     EndTime:2017-09-13 16:25:28.411
+         ElapsedMilliseconds:111
+
+
+
+Response:
+{"Ack":{"IsSuccess":true,"StatusCode":0,"StatusMessage":""},"Data":{"RequestType":"Create","Ids":"3b5fc2ac-7394-4688-b76b-8cf4eea767a4"}}

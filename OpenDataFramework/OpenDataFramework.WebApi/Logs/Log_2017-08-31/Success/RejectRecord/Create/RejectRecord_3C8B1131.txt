@@ -1,0 +1,15 @@
+﻿Request:
+                         Url:http://localhost/op/api/DataAccess/Create?LoginUserId=9bc7111f-647e-4206-8791-5c8fce9419cc&_reZmRkFKsyp=0.8439129611408249
+                        Data:{"EntityName":"RejectRecord","Request":{"Data":[{"DataId":"aa634879-022c-1cf2-7134-0f95b6e2ac1d","RejectDataId":"4d9f21ef-f2ee-47eb-a367-74241fde8a65","UserName":"admin(admin)","RejectReason":"567u356u536u"},{"DataId":"064c1f08-ad59-0d86-1751-34bb0e9fb29f","RejectDataId":"25e8abdc-5742-4451-9f39-0fbce607b594","UserName":"admin(admin)","RejectReason":"567u356u536u"},{"DataId":"ec82bea3-6751-e0f3-9c50-fb892eecb320","RejectDataId":"e57a7aa2-b01b-4d55-b26d-414135040e4c","UserName":"admin(admin)","RejectReason":"567u356u536u"},{"DataId":"893c39f2-3c44-8122-fec9-053ab5278750","RejectDataId":"8b7b3b27-182c-47c2-babc-f245bf1b88cf","UserName":"admin(admin)","RejectReason":"567u356u536u"},{"DataId":"7064e866-02fd-e2c6-f9c6-fe703b791659","RejectDataId":"6df572d5-219c-495a-a3c3-94d50dfec0c2","UserName":"admin(admin)","RejectReason":"567u356u536u"},{"DataId":"28ed4d74-c0f8-55d1-0ed5-b7c570dc1af3","RejectDataId":"455aaae8-718d-465d-a96b-42d05d0a4211","UserName":"admin(admin)","RejectReason":"567u356u536u"}]}}
+                  EntityName:RejectRecord
+                  MethodName:Create
+                   IPAddress:::1
+               OperationUser:9bc7111f-647e-4206-8791-5c8fce9419cc
+                   StartTime:2017-08-31 17:45:06.332
+                     EndTime:2017-08-31 17:45:06.352
+         ElapsedMilliseconds:34
+
+
+
+Response:
+{"Ack":{"IsSuccess":true,"StatusCode":0,"StatusMessage":""},"Data":{"RequestType":"Create","Ids":"b0899104-57de-4899-9cad-9bc13ff8d254,2c3ab0d2-aba4-4fee-9fa6-dbc855230c1f,ca28042c-1891-440c-9896-d10e8fd2c841,8856278a-a3a4-4aa1-91b8-33796c69605a,50e5c881-83f2-4dda-98ea-8dfef178fa05,db183afd-175b-4539-a80d-1693d9ed9c49"}}

@@ -1,0 +1,15 @@
+﻿Request:
+                         Url:http://localhost/op/api/DataAccess/Update?_rGEmktGFMiX=0.30803947988409464
+                        Data:{"EntityName":"页面","Request":{"Data":[{"DataId":"8391f680-4fd3-458b-a322-09f3d9b8a3c5","RowVersion":"0,0,0,0,0,1,142,183","编辑字段布局":"[{\"PropertyId\":\"24c7b7a9-928c-959c-4b0a-7dad8751bed5\",\"ControlType\":\"TextBox\",\"LabalWidth\":100,\"ControlWidth\":250,\"X\":1,\"Y\":1,\"IsVisible\":true,\"Point\":\"(1,1)\",\"Id\":\"e9b88288-d29d-4725-526f-ba8b683978e3\",\"DataSource\":null,\"DefaultValue\":null,\"LabelWidth\":100},{\"LabalWidth\":100,\"ControlWidth\":600,\"X\":2,\"Y\":1,\"IsVisible\":true,\"PropertyId\":\"21012965-22bf-68cb-902f-e1e2bc1e510c\",\"ControlType\":\"TextArea\",\"Point\":\"(2,1)\",\"Id\":\"feb76203-c7cb-fb7e-7149-a3f6f118f06c\",\"DataSource\":null,\"DefaultValue\":null,\"LabelWidth\":100},{\"LabalWidth\":80,\"ControlWidth\":250,\"X\":1,\"Y\":2,\"IsVisible\":true,\"PropertyId\":\"55268181-d7eb-8c9f-fa1c-5773ac110c8e\",\"ControlType\":\"TextBox\",\"Point\":\"(1,2)\",\"Id\":\"80f5d52e-c2bd-0bf5-00ac-1088adee19e3\",\"DataSource\":null,\"DefaultValue\":null,\"LabelWidth\":90}]"}]}}
+                  EntityName:DataAccess
+                  MethodName:Update
+                   IPAddress:::1
+               OperationUser:
+                   StartTime:2017-08-02 16:47:14.177
+                     EndTime:2017-08-02 16:47:14.182
+         ElapsedMilliseconds:13
+
+
+
+Response:
+{"Ack":{"IsSuccess":true,"StatusCode":0,"StatusMessage":""},"Data":{"RequestType":"Update","Ids":"8391f680-4fd3-458b-a322-09f3d9b8a3c5"}}

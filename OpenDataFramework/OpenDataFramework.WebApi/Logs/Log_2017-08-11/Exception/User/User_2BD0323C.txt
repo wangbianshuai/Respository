@@ -1,0 +1,32 @@
+﻿Request:
+                         Url:http://localhost/op/api/DataAccess/Update?LoginUserId=9bc7111f-647e-4206-8791-5c8fce9419cc&_rhtMMQZKDnK=0.8827429624634759
+                        Data:{"EntityName":"User","Request":{"Data":[{"UserId":"d241caba-7664-4528-a0eb-3055a3c00278","RowVersion":"0,0,0,0,0,2,43,6","UserName":"123","LoginName":"123","部门":"6c33c7af-4f93-42ea-b96c-8f862354f754","数据权限":"用户"}]}}
+                  EntityName:User
+                  MethodName:
+                   IPAddress:::1
+               OperationUser:9bc7111f-647e-4206-8791-5c8fce9419cc
+                   StartTime:2017-08-11 11:30:22.622
+                     EndTime:2017-08-11 11:32:51.442
+         ElapsedMilliseconds:147989
+
+
+
+Response:
+{"Ack":{"IsSuccess":false,"StatusCode":101,"StatusMessage":"变量名 '@UserName' 已声明。变量名在查询批次或存储过程内部必须唯一。\r\n必须声明标量变量 \"@UserId\"。"},"Data":null}
+Excption:
+           Message:变量名 '@UserName' 已声明。变量名在查询批次或存储过程内部必须唯一。
+必须声明标量变量 "@UserId"。
+           Source:.Net SqlClient Data Provider
+         StackTrace:   在 EntityDataService.Data.DataBase.ExecuteNonQuery(IDbCommand command) 位置 d:\CsharpProjects\OpenDataFramework\OpenDataFramework\EntityDataService.Data\DataBase.cs:行号 155
+   在 EntityDataService.Data.DataBase.ExecNonQuery(String sqlText, Boolean blSql, List`1 parameterList, IDbTransaction trans) 位置 d:\CsharpProjects\OpenDataFramework\OpenDataFramework\EntityDataService.Data\DataBase.cs:行号 297
+   在 EntityDataService.Data.DataBase.ExecSqlNonQuery(String sqlText, List`1 parameterList, IDbTransaction trans) 位置 d:\CsharpProjects\OpenDataFramework\OpenDataFramework\EntityDataService.Data\DataBase.cs:行号 289
+   在 EntityDataService.Entity.EntityAccess.UpdateEntity(EntityType entityType, IQuery query, IEntityData entityData, IDbTransaction trans) 位置 d:\CsharpProjects\OpenDataFramework\OpenDataFramework\EntityDataService.Entity\EntityAccess.cs:行号 238
+   在 EntityDataService.Entity.EntityAccess.UpdateEntity(IQuery query, IEntityData entityData, IDbTransaction trans) 位置 d:\CsharpProjects\OpenDataFramework\OpenDataFramework\EntityDataService.Entity\EntityAccess.cs:行号 243
+   在 EntityDataService.Service.EntityRequest.Update() 位置 d:\CsharpProjects\OpenDataFramework\OpenDataFramework\EntityDataService.Service\EntityRequest.cs:行号 398
+   在 OpenDataFramework.Component.User.EditEntity() 位置 d:\CsharpProjects\OpenDataFramework\OpenDataFramework\OpenDataFramework.Component\User.cs:行号 28
+   在 OpenDataFramework.Component.DataAccess.EditAction() 位置 d:\CsharpProjects\OpenDataFramework\OpenDataFramework\OpenDataFramework.Component\DataAccess.cs:行号 271
+   在 OpenDataFramework.Component.DataAccess.EntityRequest() 位置 d:\CsharpProjects\OpenDataFramework\OpenDataFramework\OpenDataFramework.Component\DataAccess.cs:行号 167
+   在 OpenDataFramework.Component.DataAccess.Request() 位置 d:\CsharpProjects\OpenDataFramework\OpenDataFramework\OpenDataFramework.Component\DataAccess.cs:行号 152
+   在 OpenDataFramework.Component.DataAccess.Update() 位置 d:\CsharpProjects\OpenDataFramework\OpenDataFramework\OpenDataFramework.Component\DataAccess.cs:行号 135
+   在 OpenDataFramework.WebApi.Code.DataAccess.RequestAction(String methodName) 位置 D:\CsharpProjects\OpenDataFramework\OpenDataFramework\OpenDataFramework.WebApi\Code\DataAccess.cs:行号 28
+   在 OpenDataFramework.WebApi.Controllers.DefaultController.RequestAction(String className, String methodName) 位置 D:\CsharpProjects\OpenDataFramework\OpenDataFramework\OpenDataFramework.WebApi\Controllers\DefaultController.cs:行号 74

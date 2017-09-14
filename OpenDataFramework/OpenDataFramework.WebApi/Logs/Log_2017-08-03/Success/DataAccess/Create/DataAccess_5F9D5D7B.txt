@@ -1,0 +1,15 @@
+﻿Request:
+                         Url:http://localhost/op/api/DataAccess/Create?_rBNnZbyyGeM=0.5878524794520255
+                        Data:{"EntityName":"资源","Request":{"Data":[{"类型":"html","名称":"IndexHtml","内容":"<!DOCTYPE html>\n<html xmlns=\"http://www.w3.org/1999/xhtml\">\n<head>\n    <meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\" />\n    <title></title>\n    <link href=\"css/public?s=true&v=${PageVersion}\" rel=\"stylesheet\" />\n    <link href=\"css/${PageName}?s=true&v=${PageVersion}\" rel=\"stylesheet\" />\n    <script src=\"js/index?v=${PageVersion}\"></script>\n    <script src=\"js/${PageName}?v=${PageVersion}\"></script>\n    <script src=\"js/${PageName}?s=true&v=${PageVersion}\"></script>\n    <script type=\"text/javascript\">\n        (function (ns, configs) { window.onload = function () { configs.ns = ns; if (ns.pages[configs.PageName]) new ns.pages[configs.PageName](configs).Load() } })(OpenDataFramework, PageEntityConfigs);\n\n    </script>\n</head>\n<body>\n</body>\n</html>"}]}}
+                  EntityName:DataAccess
+                  MethodName:Create
+                   IPAddress:::1
+               OperationUser:
+                   StartTime:2017-08-03 15:03:12.922
+                     EndTime:2017-08-03 15:03:12.984
+         ElapsedMilliseconds:51
+
+
+
+Response:
+{"Ack":{"IsSuccess":true,"StatusCode":0,"StatusMessage":""},"Data":{"RequestType":"Create","Ids":"ac19cfe5-122b-40d7-a24b-163a5d65f84b"}}

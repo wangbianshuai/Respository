@@ -1,0 +1,15 @@
+﻿Request:
+                         Url:http://localhost/op/api/DataAccess/Update?LoginUserId=cef145c6-afed-4934-b8ef-7951a5b5319a&_rxtiFGRjTyr=0.30579460924640256
+                        Data:{"EntityName":"User","Request":{"Data":[{"UserId":"cef145c6-afed-4934-b8ef-7951a5b5319a","LastLoginDate":"2017-08-22 17:12:15.296"}]}}
+                  EntityName:User
+                  MethodName:Update
+                   IPAddress:::1
+               OperationUser:cef145c6-afed-4934-b8ef-7951a5b5319a
+                   StartTime:2017-08-22 17:12:15.299
+                     EndTime:2017-08-22 17:12:15.325
+         ElapsedMilliseconds:26
+
+
+
+Response:
+{"Ack":{"IsSuccess":true,"StatusCode":0,"StatusMessage":""},"Data":{"RequestType":"Update","Ids":"cef145c6-afed-4934-b8ef-7951a5b5319a"}}

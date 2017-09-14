@@ -1,0 +1,15 @@
+﻿Request:
+                         Url:http://localhost/op/api/DataAccess/Create?LoginUserId=9bc7111f-647e-4206-8791-5c8fce9419cc&_rBeRKwxstRa=0.6145437458539804
+                        Data:{"EntityName":"测试表单","Request":{"Data":[{"长整数":"978","名称":"=]=","自然数":"0","日期":"2017-08-23","资源":"2f5d45ee-689d-45cc-a8b8-3ba93279e315","金额":"808","浮点数":"080"}]}}
+                  EntityName:测试表单
+                  MethodName:Create
+                   IPAddress:::1
+               OperationUser:9bc7111f-647e-4206-8791-5c8fce9419cc
+                   StartTime:2017-08-30 14:52:14.764
+                     EndTime:2017-08-30 14:52:18.732
+         ElapsedMilliseconds:3966
+
+
+
+Response:
+{"Ack":{"IsSuccess":true,"StatusCode":0,"StatusMessage":""},"Data":{"RequestType":"Create","Ids":"8b7b3b27-182c-47c2-babc-f245bf1b88cf"}}

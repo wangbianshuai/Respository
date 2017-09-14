@@ -1,0 +1,15 @@
+﻿Request:
+                         Url:http://localhost/op/api/DataAccess/Update?_rGPsYHkKYth=0.9532313383671636
+                        Data:{"EntityName":"User","Request":{"Data":[{"UserId":"e43fc04e-bb1c-4fad-a398-dbc2d33293de","LastLoginDate":"2017-08-04 10:52:30.939"}]}}
+                  EntityName:User
+                  MethodName:Update
+                   IPAddress:::1
+               OperationUser:
+                   StartTime:2017-08-04 10:52:30.939
+                     EndTime:2017-08-04 10:52:30.939
+         ElapsedMilliseconds:2
+
+
+
+Response:
+{"Ack":{"IsSuccess":true,"StatusCode":0,"StatusMessage":""},"Data":{"RequestType":"Update","Ids":"e43fc04e-bb1c-4fad-a398-dbc2d33293de"}}

@@ -1,0 +1,15 @@
+﻿Request:
+                         Url:http://localhost/op/api/DataAccess/Create?_rGCGiGKJhQT=0.24453379655375773
+                        Data:{"EntityName":"页面","Request":{"Data":[{"名称":"7857","表单":"0a49d534-163e-41a5-9976-0bbc361832cd","操作权限":"{\"IsNewAdd\":\"1\",\"IsEdit\":\"1\",\"IsDelete2\":\"1\",\"IsExcelExport\":\"1\",\"IsExcelImport\":\"1\"}"}]}}
+                  EntityName:DataAccess
+                  MethodName:Create
+                   IPAddress:::1
+               OperationUser:
+                   StartTime:2017-07-28 15:58:17.440
+                     EndTime:2017-07-28 15:58:17.453
+         ElapsedMilliseconds:13
+
+
+
+Response:
+{"Ack":{"IsSuccess":true,"StatusCode":0,"StatusMessage":""},"Data":{"RequestType":"Create","Ids":"39ede2c7-48a6-45d7-9b8f-11c35a9bf06f"}}

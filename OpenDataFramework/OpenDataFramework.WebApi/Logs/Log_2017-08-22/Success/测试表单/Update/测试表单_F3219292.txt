@@ -1,0 +1,15 @@
+﻿Request:
+                         Url:http://localhost/op/api/DataAccess/Update?LoginUserId=cef145c6-afed-4934-b8ef-7951a5b5319a&_rcFcYKfKxMb=0.1265904073483346
+                        Data:{"EntityName":"测试表单","Request":{"Data":[{"DataId":"8eb66628-6f81-4db1-95a4-10ff64cef58c","DataStatus":1,"RowVersion":"0,0,0,0,0,2,230,130"}]}}
+                  EntityName:测试表单
+                  MethodName:Update
+                   IPAddress:::1
+               OperationUser:cef145c6-afed-4934-b8ef-7951a5b5319a
+                   StartTime:2017-08-22 17:13:54.532
+                     EndTime:2017-08-22 17:13:54.544
+         ElapsedMilliseconds:12
+
+
+
+Response:
+{"Ack":{"IsSuccess":true,"StatusCode":0,"StatusMessage":""},"Data":{"RequestType":"Update","Ids":"8eb66628-6f81-4db1-95a4-10ff64cef58c"}}

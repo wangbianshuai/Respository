@@ -1,0 +1,15 @@
+﻿Request:
+                         Url:http://localhost/op/api/DataAccess/Update?_rfQBSJGNwdm=0.1705597629341229
+                        Data:{"EntityName":"DataEntity","Request":{"Data":[{"EntityId":"818a0677-9c44-46af-8f2a-366e7d195f26","RowVersion":"0,0,0,0,0,1,17,115","EntityName":"选项集选项","KeyNames":null,"Properties":[{"PropertyId":"367d9ffa-f5cc-cc74-ec30-388d04f07b9b","PropertyName":"值","DataType":"string","MaxLength":50,"IsIndex":1,"IsNullable":0},{"PropertyId":"5b26d927-57a7-d8b3-07b2-6fc2f5e28302","PropertyName":"文本","DataType":"string","MaxLength":50,"IsIndex":1,"IsNullable":0},{"PropertyName":"选项集","DataType":"guid","MaxLength":"50","IsIndex":"1","IsNullable":"0","PropertyId":"09a4b450-1215-7f21-5437-862e5a85ed62"}]}]}}
+                  EntityName:DataEntity
+                  MethodName:Update
+                   IPAddress:::1
+               OperationUser:
+                   StartTime:2017-07-27 14:00:25.219
+                     EndTime:2017-07-27 14:00:25.228
+         ElapsedMilliseconds:8
+
+
+
+Response:
+{"Ack":{"IsSuccess":true,"StatusCode":0,"StatusMessage":""},"Data":{"RequestType":"Update","Ids":"818a0677-9c44-46af-8f2a-366e7d195f26"}}

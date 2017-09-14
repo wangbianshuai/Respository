@@ -1,0 +1,15 @@
+﻿Request:
+                         Url:http://localhost/op/api/DataAccess/Update?LoginUserId=9bc7111f-647e-4206-8791-5c8fce9419cc&_rHreBYhTmhh=0.6781905548712563
+                        Data:{"EntityName":"DataEntity","Request":{"Data":[{"EntityId":"4a0b9196-d5a3-43bd-b505-1ad093125aaa","RowVersion":"0,0,0,0,0,3,99,53","EntityName":"测试1","KeyNames":null,"Properties":[{"PropertyId":"6bbe9931-5a17-0134-3858-0a61f81caf3a","PropertyName":"字段串1","DataType":"string","MaxLength":"50","IsIndex":"0","IsNullable":"0"},{"PropertyId":"70b4c5bd-2ed5-b798-3212-3269ee94718d","PropertyName":"字段串2","DataType":"string","MaxLength":50,"IsIndex":0,"IsNullable":1}]}]}}
+                  EntityName:DataEntity
+                  MethodName:Update
+                   IPAddress:::1
+               OperationUser:9bc7111f-647e-4206-8791-5c8fce9419cc
+                   StartTime:2017-09-07 14:34:27.431
+                     EndTime:2017-09-07 14:34:27.449
+         ElapsedMilliseconds:17
+
+
+
+Response:
+{"Ack":{"IsSuccess":true,"StatusCode":0,"StatusMessage":""},"Data":{"RequestType":"Update","Ids":"4a0b9196-d5a3-43bd-b505-1ad093125aaa"}}

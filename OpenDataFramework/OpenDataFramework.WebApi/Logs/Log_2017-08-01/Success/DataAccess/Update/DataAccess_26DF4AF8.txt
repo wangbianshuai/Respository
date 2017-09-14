@@ -1,0 +1,15 @@
+﻿Request:
+                         Url:http://localhost/op/api/DataAccess/Update?_rJicpebxfAX=0.14138213565306312
+                        Data:{"EntityName":"页面","Request":{"Data":[{"DataId":"8391f680-4fd3-458b-a322-09f3d9b8a3c5","RowVersion":"0,0,0,0,0,1,79,252","编辑字段布局":"[{\"PropertyId\":\"24c7b7a9-928c-959c-4b0a-7dad8751bed5\",\"ControlType\":\"TextBox\",\"LabalWidth\":\"100\",\"ControlWidth\":\"200\",\"X\":\"1\",\"Y\":\"1\",\"IsVisible\":\"1\",\"Point\":\"(1,1)\",\"Id\":\"e9b88288-d29d-4725-526f-ba8b683978e3\"}]"}]}}
+                  EntityName:DataAccess
+                  MethodName:Update
+                   IPAddress:::1
+               OperationUser:
+                   StartTime:2017-08-01 10:17:37.090
+                     EndTime:2017-08-01 10:17:37.158
+         ElapsedMilliseconds:63
+
+
+
+Response:
+{"Ack":{"IsSuccess":true,"StatusCode":0,"StatusMessage":""},"Data":{"RequestType":"Update","Ids":"8391f680-4fd3-458b-a322-09f3d9b8a3c5"}}

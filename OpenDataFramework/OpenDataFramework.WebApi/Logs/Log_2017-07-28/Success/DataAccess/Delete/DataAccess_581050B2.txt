@@ -1,0 +1,15 @@
+﻿Request:
+                         Url:http://localhost/op/api/DataAccess/Delete?_rGXAdKZhwKF=0.04973465938592403
+                        Data:{"EntityName":"页面","Request":{"Data":[{"DataId":"39ede2c7-48a6-45d7-9b8f-11c35a9bf06f","RowVersion":"0,0,0,0,0,1,48,193"}]}}
+                  EntityName:DataAccess
+                  MethodName:Delete
+                   IPAddress:::1
+               OperationUser:
+                   StartTime:2017-07-28 16:32:42.516
+                     EndTime:2017-07-28 16:32:42.529
+         ElapsedMilliseconds:13
+
+
+
+Response:
+{"Ack":{"IsSuccess":true,"StatusCode":0,"StatusMessage":""},"Data":{"IsDelete":true}}

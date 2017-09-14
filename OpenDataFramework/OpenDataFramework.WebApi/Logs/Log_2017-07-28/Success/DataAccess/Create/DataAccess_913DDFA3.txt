@@ -1,0 +1,15 @@
+﻿Request:
+                         Url:http://localhost/op/api/DataAccess/Create?_ripCKDwmERb=0.12118505594022944
+                        Data:{"EntityName":"页面","Request":{"Data":[{"名称":"7367i6","表单":"818a0677-9c44-46af-8f2a-366e7d195f26","操作权限":"{\"IsNewAdd\":\"1\",\"IsEdit\":\"1\",\"IsDelete2\":\"1\",\"IsExcelExport\":\"1\",\"IsExcelImport\":\"1\"}"}]}}
+                  EntityName:DataAccess
+                  MethodName:Create
+                   IPAddress:::1
+               OperationUser:
+                   StartTime:2017-07-28 16:17:32.190
+                     EndTime:2017-07-28 16:21:47.434
+         ElapsedMilliseconds:255227
+
+
+
+Response:
+{"Ack":{"IsSuccess":true,"StatusCode":0,"StatusMessage":""},"Data":{"RequestType":"Create","Ids":"a746022b-487b-477a-b0af-545f36438412"}}

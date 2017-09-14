@@ -1,0 +1,15 @@
+﻿Request:
+                         Url:http://localhost/op/api/DataAccess/Create?_rSRChfsDHbT=0.9698449520527692
+                        Data:{"EntityName":"资源","Request":{"Data":[{"类型":"js","名称":"数据源","内容":"2"}]}}
+                  EntityName:DataAccess
+                  MethodName:Create
+                   IPAddress:::1
+               OperationUser:
+                   StartTime:2017-08-03 11:15:32.193
+                     EndTime:2017-08-03 11:15:32.202
+         ElapsedMilliseconds:8
+
+
+
+Response:
+{"Ack":{"IsSuccess":true,"StatusCode":0,"StatusMessage":""},"Data":{"RequestType":"Create","Ids":"001ad384-a7c9-4210-93f8-a4b9c0a6ce12"}}

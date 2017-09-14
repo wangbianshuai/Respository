@@ -1,0 +1,15 @@
+﻿Request:
+                         Url:http://localhost/op/api/DataAccess/Update?_rhebmxMwwkr=0.8776366389187222
+                        Data:{"EntityName":"DataEntity","Request":{"Data":[{"EntityId":"e8d157c7-db0e-4dc2-a308-a7bfc89f9b3d","RowVersion":"0,0,0,0,0,1,142,201","EntityName":"数据源","KeyNames":"名称","Properties":[{"PropertyId":"fb0dc2cb-e3d7-fcad-1803-d275d779c3fd","PropertyName":"名称","DataType":"string","MaxLength":50,"IsIndex":1,"IsNullable":0},{"PropertyId":"121e7847-cec6-db9e-a3e8-f369d44027d7","PropertyName":"表单","DataType":"guid","MaxLength":50,"IsIndex":1,"IsNullable":1},{"PropertyName":"选项集","DataType":"string","MaxLength":"4000","IsIndex":"0","IsNullable":"1","PropertyId":"9bfcb383-c3a4-57b8-95fd-e74b1e7989ce"}]}]}}
+                  EntityName:DataEntity
+                  MethodName:Update
+                   IPAddress:::1
+               OperationUser:
+                   StartTime:2017-08-02 17:43:23.203
+                     EndTime:2017-08-02 17:43:23.251
+         ElapsedMilliseconds:47
+
+
+
+Response:
+{"Ack":{"IsSuccess":true,"StatusCode":0,"StatusMessage":""},"Data":{"RequestType":"Update","Ids":"e8d157c7-db0e-4dc2-a308-a7bfc89f9b3d"}}

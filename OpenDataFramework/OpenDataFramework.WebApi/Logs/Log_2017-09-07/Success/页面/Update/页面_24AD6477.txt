@@ -1,0 +1,15 @@
+﻿Request:
+                         Url:http://localhost/op/api/DataAccess/Update?LoginUserId=9bc7111f-647e-4206-8791-5c8fce9419cc&_rPjdjTjdRTB=0.45502748330609655
+                        Data:{"EntityName":"页面","Request":{"Data":[{"DataId":"babfd213-ff8e-4005-aa82-550f557f5d5c","RowVersion":"0,0,0,0,0,3,99,77","名称":"部门","表单":"6b7662b2-5ed3-4a46-a249-39fe84e4986f","IsDataRight":"1","IsDataStatus":"1","IsLookLog":"1","IsBatchDelete":"1","IsBatchSubmit":"1","IsBatchReject":"1","操作权限":"{\"IsNewAdd\":\"1\",\"IsEdit\":\"1\",\"IsDelete2\":\"1\",\"IsExcelExport\":\"1\",\"IsExcelImport\":\"1\"}"}]}}
+                  EntityName:页面
+                  MethodName:Update
+                   IPAddress:::1
+               OperationUser:9bc7111f-647e-4206-8791-5c8fce9419cc
+                   StartTime:2017-09-07 14:58:06.184
+                     EndTime:2017-09-07 14:58:06.206
+         ElapsedMilliseconds:21
+
+
+
+Response:
+{"Ack":{"IsSuccess":true,"StatusCode":0,"StatusMessage":""},"Data":{"RequestType":"Update","Ids":"babfd213-ff8e-4005-aa82-550f557f5d5c"}}

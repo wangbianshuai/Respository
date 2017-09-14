@@ -1,0 +1,15 @@
+﻿Request:
+                         Url:http://localhost/op/api/DataAccess/Query?LoginUserId=9bc7111f-647e-4206-8791-5c8fce9419cc&_rBaaKnJmHnj=0.21616878288116315
+                        Data:{"EntityName":"部门","Request":{"SelectNames":["DataId","名称"],"Conditions":[]}}
+                  EntityName:DataAccess
+                  MethodName:
+                   IPAddress:::1
+               OperationUser:9bc7111f-647e-4206-8791-5c8fce9419cc
+                   StartTime:2017-08-11 11:20:01.270
+                     EndTime:2017-08-11 11:20:01.271
+         ElapsedMilliseconds:0
+
+
+
+Response:
+{"Ack":{"IsSuccess":false,"StatusCode":102,"StatusMessage":"请求实体不存在！"}}

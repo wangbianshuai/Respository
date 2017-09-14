@@ -1,0 +1,15 @@
+﻿Request:
+                         Url:http://localhost/op/api/DataAccess/Delete?LoginUserId=9bc7111f-647e-4206-8791-5c8fce9419cc&_rmtXxDHnSHr=0.7839924274155585
+                        Data:{"EntityName":"键值配置","Request":{"Data":[{"DataId":"d363db6c-fc6e-4723-b90d-d59c4304ce8d","RowVersion":"0,0,0,0,0,1,208,225"}]}}
+                  EntityName:DataAccess
+                  MethodName:Delete
+                   IPAddress:::1
+               OperationUser:9bc7111f-647e-4206-8791-5c8fce9419cc
+                   StartTime:2017-08-04 11:48:47.012
+                     EndTime:2017-08-04 11:48:47.012
+         ElapsedMilliseconds:2
+
+
+
+Response:
+{"Ack":{"IsSuccess":true,"StatusCode":0,"StatusMessage":""},"Data":{"IsDelete":true}}

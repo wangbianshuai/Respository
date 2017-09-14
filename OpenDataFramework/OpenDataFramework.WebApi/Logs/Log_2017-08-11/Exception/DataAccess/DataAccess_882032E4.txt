@@ -1,0 +1,27 @@
+﻿Request:
+                         Url:http://localhost/op/api/DataAccess/Query?LoginUserId=9bc7111f-647e-4206-8791-5c8fce9419cc&_rJbDmChpmAs=0.4825143077665146
+                        Data:{"EntityName":"User","Request":{"IsPage":true,"IsRowVersion":true,"PageIndex":1,"PageSize":20,"SelectNames":["UserId","UserName","LoginName","DepartId","DataRight","CreateDate"],"Conditions":[{"Name":"DepartId","Logic":"=","Value":"数据源加载中……"}],"OrderBys":[{"Name":"CreateDate","IsDesc":true}]}}
+                  EntityName:DataAccess
+                  MethodName:
+                   IPAddress:::1
+               OperationUser:9bc7111f-647e-4206-8791-5c8fce9419cc
+                   StartTime:2017-08-11 11:42:52.446
+                     EndTime:2017-08-11 11:43:25.612
+         ElapsedMilliseconds:33140
+
+
+
+Response:
+{"Ack":{"IsSuccess":false,"StatusCode":101,"StatusMessage":"将字符串转换为 uniqueidentifier 时失败。"},"Data":null}
+Excption:
+           Message:发生一个或多个错误。
+           Source:mscorlib
+         StackTrace:   在 System.Threading.Tasks.Task.FastWaitAll(Task[] tasks)
+   在 System.Threading.Tasks.Parallel.Invoke(ParallelOptions parallelOptions, Action[] actions)
+   在 OpenDataFramework.Component.DataAccess.QueryData(RequestEntity requestEntity, QueryRequest request, Boolean hasRowVersion) 位置 d:\CsharpProjects\OpenDataFramework\OpenDataFramework\OpenDataFramework.Component\DataAccess.cs:行号 656
+   在 OpenDataFramework.Component.DataAccess.QueryAction() 位置 d:\CsharpProjects\OpenDataFramework\OpenDataFramework\OpenDataFramework.Component\DataAccess.cs:行号 712
+   在 OpenDataFramework.Component.DataAccess.EntityRequest() 位置 d:\CsharpProjects\OpenDataFramework\OpenDataFramework\OpenDataFramework.Component\DataAccess.cs:行号 165
+   在 OpenDataFramework.Component.DataAccess.Request() 位置 d:\CsharpProjects\OpenDataFramework\OpenDataFramework\OpenDataFramework.Component\DataAccess.cs:行号 152
+   在 OpenDataFramework.Component.DataAccess.Query() 位置 d:\CsharpProjects\OpenDataFramework\OpenDataFramework\OpenDataFramework.Component\DataAccess.cs:行号 123
+   在 OpenDataFramework.WebApi.Code.DataAccess.RequestAction(String methodName) 位置 D:\CsharpProjects\OpenDataFramework\OpenDataFramework\OpenDataFramework.WebApi\Code\DataAccess.cs:行号 26
+   在 OpenDataFramework.WebApi.Controllers.DefaultController.RequestAction(String className, String methodName) 位置 D:\CsharpProjects\OpenDataFramework\OpenDataFramework\OpenDataFramework.WebApi\Controllers\DefaultController.cs:行号 74

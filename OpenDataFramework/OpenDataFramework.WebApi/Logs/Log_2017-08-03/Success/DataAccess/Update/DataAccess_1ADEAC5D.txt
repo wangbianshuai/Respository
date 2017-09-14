@@ -1,0 +1,15 @@
+﻿Request:
+                         Url:http://localhost/op/api/DataAccess/Update?_rMEyStJwTFF=0.8940769864920644
+                        Data:{"EntityName":"资源","Request":{"Data":[{"DataId":"d76334de-553c-4cb4-8f71-913691994629","RowVersion":"0,0,0,0,0,1,173,249","类型":"js","名称":"index","内容":"static RemoveWhiteEnter(str) {\n            str = str.replace(/\\n/g, \"\");\n            while (str.indexOf(\"  \") >= 0) {\n                str = str.replace(/  /g, \" \");\n            }\n            return Common.Trim(str);\n        }"}]}}
+                  EntityName:DataAccess
+                  MethodName:Update
+                   IPAddress:::1
+               OperationUser:
+                   StartTime:2017-08-03 15:46:31.826
+                     EndTime:2017-08-03 15:48:06.414
+         ElapsedMilliseconds:94582
+
+
+
+Response:
+{"Ack":{"IsSuccess":true,"StatusCode":0,"StatusMessage":""},"Data":{"RequestType":"Update","Ids":"d76334de-553c-4cb4-8f71-913691994629"}}

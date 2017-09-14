@@ -1,0 +1,15 @@
+﻿Request:
+                         Url:http://localhost/op/api/DataAccess/Update?_rjDnbQZTRxj=0.9137748660201324
+                        Data:{"EntityName":"DataEntity","Request":{"Data":[{"EntityId":"0ba1873d-f6fb-40f6-aaba-f25c452e770d","RowVersion":"0,0,0,0,0,1,17,121","EntityName":"资源","KeyNames":"名称,类型","Properties":[{"PropertyId":"24c7b7a9-928c-959c-4b0a-7dad8751bed5","PropertyName":"名称","DataType":"string","MaxLength":50,"IsIndex":1,"IsNullable":0},{"PropertyId":"21012965-22bf-68cb-902f-e1e2bc1e510c","PropertyName":"内容","DataType":"string","MaxLength":0,"IsIndex":0,"IsNullable":0},{"PropertyName":"类型","DataType":"string","MaxLength":"50","IsIndex":"1","IsNullable":"0","PropertyId":"55268181-d7eb-8c9f-fa1c-5773ac110c8e"}]}]}}
+                  EntityName:DataEntity
+                  MethodName:Update
+                   IPAddress:::1
+               OperationUser:
+                   StartTime:2017-08-02 16:07:20.444
+                     EndTime:2017-08-02 16:07:20.469
+         ElapsedMilliseconds:34
+
+
+
+Response:
+{"Ack":{"IsSuccess":true,"StatusCode":0,"StatusMessage":""},"Data":{"RequestType":"Update","Ids":"0ba1873d-f6fb-40f6-aaba-f25c452e770d"}}

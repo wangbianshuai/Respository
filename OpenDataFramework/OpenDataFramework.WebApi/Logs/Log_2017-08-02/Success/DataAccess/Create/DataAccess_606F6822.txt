@@ -1,0 +1,15 @@
+﻿Request:
+                         Url:http://localhost/op/api/DataAccess/Create?_rNtiGpdxiDH=0.6425960439592793
+                        Data:{"EntityName":"资源","Request":{"Data":[{"类型":"ccss","名称":"css","内容":"sss"}]}}
+                  EntityName:DataAccess
+                  MethodName:Create
+                   IPAddress:::1
+               OperationUser:
+                   StartTime:2017-08-02 17:11:23.541
+                     EndTime:2017-08-02 17:11:23.542
+         ElapsedMilliseconds:8
+
+
+
+Response:
+{"Ack":{"IsSuccess":true,"StatusCode":0,"StatusMessage":""},"Data":{"RequestType":"Create","Ids":"e7bb030d-a98b-4d94-8306-4bdf54d2fc7e"}}

@@ -1,0 +1,15 @@
+﻿Request:
+                         Url:http://localhost/op/api/DataAccess/Delete?LoginUserId=9bc7111f-647e-4206-8791-5c8fce9419cc&_rbyGQYZcdNw=0.41558125574609006
+                        Data:{"EntityName":"资源","Request":{"Data":[{"DataId":"5979eea0-9f5d-46b5-892a-32324a2d4f09","RowVersion":"0,0,0,0,0,2,43,135"}]}}
+                  EntityName:资源
+                  MethodName:Delete
+                   IPAddress:::1
+               OperationUser:9bc7111f-647e-4206-8791-5c8fce9419cc
+                   StartTime:2017-08-11 16:48:48.582
+                     EndTime:2017-08-11 16:48:48.588
+         ElapsedMilliseconds:6
+
+
+
+Response:
+{"Ack":{"IsSuccess":true,"StatusCode":0,"StatusMessage":""},"Data":{"IsDelete":true}}

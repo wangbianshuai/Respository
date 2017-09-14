@@ -1,0 +1,130 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>OpenDataFramework</title>
+    <link href="${PublicCss}" rel="stylesheet" />
+    <link href="web/css/login.css?v=${PageVersion}" rel="stylesheet" />
+    <script src="${IndexPath}"></script>
+    <script type="text/javascript">
+        window.onload = function () {
+            var ns = window.OpenDataFramework;
+            if (!ns) return;
+
+            var HtmlTag = ns.utils.HtmlTag;
+            var Common = ns.utils.Common;
+
+            var loginNameTag = HtmlTag.GetById("txtLoginName");
+            var loginPasswordTag = HtmlTag.GetById("txtLoginPassword");
+            var loginTag = HtmlTag.GetById("btnLogin");
+
+            loginNameTag.focus();
+
+            Common.ClearStorage();
+
+            loginNameTag.onkeypress = KeypressLogin;
+            loginPasswordTag.onkeypress = KeypressLogin;
+
+            loginTag.onclick = function () {
+                var loginName = HtmlTag.GetValue(loginNameTag);
+                var loginPassword = HtmlTag.GetValue(loginPasswordTag);
+
+                var blSucceed = true;
+                var msg = "";
+                if (blSucceed && Common.IsNullOrEmpty(loginName)) {
+                    blSucceed = false;
+                    msg = "对不起，用户名不能为空！";
+                    loginNameTag.focus();
+                }
+                if (blSucceed && Common.IsNullOrEmpty(loginPassword)) {
+                    blSucceed = false;
+                    msg = "对不起，密码不能为空！";
+                    loginPasswordTag.focus();
+                }
+                if (blSucceed) {
+                    HtmlTag.SetDisabled(loginTag, true);
+
+                    loginPassword = Common.ComputeMd5(loginPassword);
+
+                    var conditions = [{ Name: "LoginName", Logic: "=", Value: loginName }, { Name: "LoginPassword", Logic: "=", Value: loginPassword }];
+
+                    var indexAction = new ns.actions.Index({});
+                    indexAction.GetDataList("UserLogin", ["UserId", "LoginName", "UserName", "LastLoginDate", "DepartId", "DataRight"], conditions).then(function (res) {
+                        if (res.IsSuccess) {
+                            if (res.Data.DataList.length === 1) {
+                                var data = res.Data.DataList[0]  
+
+                                Common.SetStorage("LoginUserId", data.UserId);
+                                Common.SetStorage("LoginInfo", JSON.stringify(data));
+
+                                UpdateLoginLastDate(indexAction, data);
+
+                                window.location.replace("Index.aspx?page=" + escape("Default"));
+                            }
+                            else {
+                                Common.Alert("用户名或密码不正确！").then(function () {
+                                    HtmlTag.SetValue(loginNameTag, "");
+                                    HtmlTag.SetValue(loginPasswordTag, "");
+                                    loginNameTag.focus();
+                                });
+                            }
+                        }
+                        else {
+                            Common.Alert(res.Message);
+                        }
+
+                        HtmlTag.SetDisabled(loginTag, false);
+                    });
+                }
+                else {
+                    Common.Alert(msg);
+                }
+            };
+
+            function KeypressLogin(e) {
+                var key = window.event ? e.keyCode : e.which;
+                if (key == 13) {
+                    e.returnValue = false;
+                    e.cancel = true;
+                    loginNameTag.blur();
+                    loginPasswordTag.blur();
+                    loginTag.focus();
+                    loginTag.click();
+                }
+            }
+
+            function UpdateLoginLastDate(indexAction, data) {
+                var d = [{ UserId: data.UserId, LastLoginDate: Common.GetCurrentDate(true) }];
+                indexAction.EditData("User", d, true);
+            }
+        };
+    </script>
+</head>
+<body scroll="no">
+    <div class="Login">
+        <div class="DivInfo">
+            <span>登录信息</span>
+        </div>
+        <div class="DivText">
+            <dl>
+                <dt><span>用户名：</span></dt>
+                <dd>
+                    <input id="txtLoginName" type="text" class="TextBox" maxlength="50" />
+                </dd>
+            </dl>
+        </div>
+        <div class="DivText">
+            <dl>
+                <dt><span>密 码：</span></dt>
+                <dd>
+                    <input id="txtLoginPassword" type="password" style="margin-left: 0px;" class="TextBox" maxlength="50" />
+                </dd>
+            </dl>
+        </div>
+        <div class="DivButton">
+            <input id="btnLogin" type="button" value="登  录" class="Button" />
+        </div>
+    </div>
+    <div class="DivBottomInfo"><span>目前不支持IE或IE内核浏览器，建议使用Chrome或Chrome内核浏览器</span></div>
+</body>
+</html>

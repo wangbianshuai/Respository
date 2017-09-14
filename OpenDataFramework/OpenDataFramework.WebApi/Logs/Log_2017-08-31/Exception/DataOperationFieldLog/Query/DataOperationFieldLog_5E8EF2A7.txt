@@ -1,0 +1,39 @@
+﻿Request:
+                         Url:http://localhost/op/api/DataAccess/Query?LoginUserId=9bc7111f-647e-4206-8791-5c8fce9419cc&_rdDkPHxGcJt=0.16326564767069796
+                        Data:{"EntityName":"DataOperationFieldLog","Request":{"IsPage":false,"IsRowVersion":true,"IsDataRight":false,"IsDataStatus":false,"PageIndex":1,"PageSize":20,"SelectNames":["FieldLogId","FieldName","OldValue","NewValue"],"Conditions":[{"Name":"TableLogId","Logic":"=","Value":"816bed04-8b2c-45ac-97bc-1f234831b0a0"}],"OrderBys":[{"Name":"CreateDate","IsDesc":true}]}}
+                  EntityName:DataOperationFieldLog
+                  MethodName:Query
+                   IPAddress:::1
+               OperationUser:9bc7111f-647e-4206-8791-5c8fce9419cc
+                   StartTime:2017-08-31 10:14:34.463
+                     EndTime:2017-08-31 10:15:13.612
+         ElapsedMilliseconds:39169
+
+
+
+Response:
+{"Ack":{"IsSuccess":false,"StatusCode":101,"StatusMessage":"“by”附近有语法错误。"},"Data":null}
+Excption:
+           Message:“by”附近有语法错误。
+           Source:.Net SqlClient Data Provider
+         StackTrace:   在 System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   在 System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   在 System.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   在 System.Data.SqlClient.SqlDataReader.TryConsumeMetaData()
+   在 System.Data.SqlClient.SqlDataReader.get_MetaData()
+   在 System.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString)
+   在 System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async, Int32 timeout, Task& task, Boolean asyncWrite, SqlDataReader ds, Boolean describeParameterEncryptionRequest)
+   在 System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, TaskCompletionSource`1 completion, Int32 timeout, Task& task, Boolean asyncWrite)
+   在 System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method)
+   在 System.Data.SqlClient.SqlCommand.ExecuteReader(CommandBehavior behavior, String method)
+   在 EntityDataService.Data.DataBase.ExecReader(String sqlText, Boolean blSql, List`1 parameterList) 位置 d:\CsharpProjects\OpenDataFramework\OpenDataFramework\EntityDataService.Data\DataBase.cs:行号 271
+   在 EntityDataService.Data.DataBase.ExecSqlReader(String sqlText, List`1 parameterList) 位置 d:\CsharpProjects\OpenDataFramework\OpenDataFramework\EntityDataService.Data\DataBase.cs:行号 259
+   在 EntityDataService.Entity.EntityAccess.SelectEntities(IQuery query) 位置 d:\CsharpProjects\OpenDataFramework\OpenDataFramework\EntityDataService.Entity\EntityAccess.cs:行号 28
+   在 OpenDataFramework.Component.DataAccess.GetQueryData(QueryRequest request, String fieldSql, String sql, List`1 parameterList, String orderbySql) 位置 d:\CsharpProjects\OpenDataFramework\OpenDataFramework\OpenDataFramework.Component\DataAccess.cs:行号 947
+   在 OpenDataFramework.Component.DataAccess.QueryData(RequestEntity requestEntity, QueryRequest request, Boolean hasRowVersion) 位置 d:\CsharpProjects\OpenDataFramework\OpenDataFramework\OpenDataFramework.Component\DataAccess.cs:行号 744
+   在 OpenDataFramework.Component.DataAccess.QueryAction() 位置 d:\CsharpProjects\OpenDataFramework\OpenDataFramework\OpenDataFramework.Component\DataAccess.cs:行号 781
+   在 OpenDataFramework.Component.DataAccess.EntityRequest() 位置 d:\CsharpProjects\OpenDataFramework\OpenDataFramework\OpenDataFramework.Component\DataAccess.cs:行号 204
+   在 OpenDataFramework.Component.DataAccess.Request() 位置 d:\CsharpProjects\OpenDataFramework\OpenDataFramework\OpenDataFramework.Component\DataAccess.cs:行号 191
+   在 OpenDataFramework.Component.DataAccess.Query() 位置 d:\CsharpProjects\OpenDataFramework\OpenDataFramework\OpenDataFramework.Component\DataAccess.cs:行号 162
+   在 OpenDataFramework.WebApi.Code.DataAccess.RequestAction(String methodName) 位置 D:\CsharpProjects\OpenDataFramework\OpenDataFramework\OpenDataFramework.WebApi\Code\DataAccess.cs:行号 29
+   在 OpenDataFramework.WebApi.Controllers.DefaultController.RequestAction(String className, String methodName) 位置 D:\CsharpProjects\OpenDataFramework\OpenDataFramework\OpenDataFramework.WebApi\Controllers\DefaultController.cs:行号 72

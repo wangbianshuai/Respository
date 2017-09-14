@@ -1,0 +1,15 @@
+﻿Request:
+                         Url:http://localhost/op/api/DataAccess/Delete?LoginUserId=9bc7111f-647e-4206-8791-5c8fce9419cc&_rfziZnGsmNR=0.09881115284168884
+                        Data:{"EntityName":"测试表单","Request":{"Data":[{"DataId":"d4445897-9860-4956-979a-12591e4283fe","RowVersion":"0,0,0,0,0,3,36,204"}]}}
+                  EntityName:测试表单
+                  MethodName:Delete
+                   IPAddress:::1
+               OperationUser:9bc7111f-647e-4206-8791-5c8fce9419cc
+                   StartTime:2017-08-30 15:31:13.236
+                     EndTime:2017-08-30 15:31:13.260
+         ElapsedMilliseconds:23
+
+
+
+Response:
+{"Ack":{"IsSuccess":true,"StatusCode":0,"StatusMessage":""},"Data":{"IsDelete":true}}

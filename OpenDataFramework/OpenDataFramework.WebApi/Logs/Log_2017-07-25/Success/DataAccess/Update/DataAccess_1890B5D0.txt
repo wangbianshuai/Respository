@@ -1,0 +1,15 @@
+﻿Request:
+                         Url:http://localhost/op/api/DataAccess/Update?_rJrpfjyRyFX=0.38166266702121154
+                        Data:{"EntityName":"键值配置","Request":{"Data":[{"DataId":"097829b8-07db-4ab5-aaa4-1d4210accc9c","RowVersion":"0,0,0,0,0,0,211,5","键名":"管理员","值":"admin,shuai"}]}}
+                  EntityName:DataAccess
+                  MethodName:Update
+                   IPAddress:::1
+               OperationUser:
+                   StartTime:2017-07-25 14:50:09.612
+                     EndTime:2017-07-25 14:50:09.629
+         ElapsedMilliseconds:16
+
+
+
+Response:
+{"Ack":{"IsSuccess":true,"StatusCode":0,"StatusMessage":""},"Data":{"RequestType":"Update","Ids":"097829b8-07db-4ab5-aaa4-1d4210accc9c"}}

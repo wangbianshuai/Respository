@@ -1,0 +1,7 @@
+D:\CsharpProjects\OpenDataFramework\OpenDataFramework\EntityDataService.Utility\bin\Debug\EntityDataService.Utility.dll
+D:\CsharpProjects\OpenDataFramework\OpenDataFramework\EntityDataService.Utility\bin\Debug\EntityDataService.Utility.pdb
+D:\CsharpProjects\OpenDataFramework\OpenDataFramework\EntityDataService.Utility\bin\Debug\DocumentFormat.OpenXml.dll
+D:\CsharpProjects\OpenDataFramework\OpenDataFramework\EntityDataService.Utility\bin\Debug\NPOI.dll
+D:\CsharpProjects\OpenDataFramework\OpenDataFramework\EntityDataService.Utility\obj\Debug\EntityDataService.Utility.dll
+D:\CsharpProjects\OpenDataFramework\OpenDataFramework\EntityDataService.Utility\obj\Debug\EntityDataService.Utility.pdb
+D:\CsharpProjects\OpenDataFramework\OpenDataFramework\EntityDataService.Utility\obj\Debug\EntityDataService.Utility.csprojResolveAssemblyReference.cache
