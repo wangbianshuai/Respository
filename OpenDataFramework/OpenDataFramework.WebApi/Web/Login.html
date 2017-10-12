@@ -1,5 +1,6 @@
 ﻿<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
+
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>OpenDataFramework</title>
@@ -52,7 +53,7 @@
                     indexAction.GetDataList("UserLogin", ["UserId", "LoginName", "UserName", "LastLoginDate", "DepartId", "DataRight"], conditions).then(function (res) {
                         if (res.IsSuccess) {
                             if (res.Data.DataList.length === 1) {
-                                var data = res.Data.DataList[0]  
+                                var data = res.Data.DataList[0]
 
                                 Common.SetStorage("LoginUserId", data.UserId);
                                 Common.SetStorage("LoginInfo", JSON.stringify(data));
@@ -100,6 +101,7 @@
         };
     </script>
 </head>
+
 <body scroll="no">
     <div class="Login">
         <div class="DivInfo">
@@ -125,6 +127,10 @@
             <input id="btnLogin" type="button" value="登  录" class="Button" />
         </div>
     </div>
-    <div class="DivBottomInfo"><span>目前不支持IE或IE内核浏览器，建议使用Chrome或Chrome内核浏览器</span></div>
+    <div class="DivBottomInfo"><a href="http://down-www.newasp.net/soft/soft1/chrome_xp_installer.rar" target="_blank" style="margin-right:20px;">下载WindowsXp版本Chrome浏览器</a>
+        <a href="https://www.baidu.com/link?url=DCV6HvhR66Q_uWZwg2hR6UPxw5137t8NW-3B40b68mLbVqyJrbT3lvlvpMVkfEE_4FkUiIYJ1weeWylEqkIm0guTefnfWMa1Zxe4EfxndCS&wd=&eqid=ccbe1a61000225530000000259dee3d0"
+            target="_blank" style="margin-right:20px;">下载Windows7/8/10版本Chrome浏览器</a>
+        <span>目前不支持IE或IE内核浏览器，建议使用Chrome或Chrome内核浏览器</span></div>
 </body>
+
 </html>
