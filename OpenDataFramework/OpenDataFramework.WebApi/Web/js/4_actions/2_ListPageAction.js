@@ -714,6 +714,7 @@
 
         GetUserInfo(editData, c1) {
             editData.OldLoginPassword = Common.ComputeMd5(editData.OldLoginPassword);
+            editData.UserId = this.UserId
             var conditions = [{ Name: "UserId", Logic: "=", Value: this.UserId }, { Name: "LoginPassword", Logic: "=", Value: editData.OldLoginPassword }];
 
             this.GetDataList("User", ["UserId"], conditions).then(res => {
@@ -793,6 +794,10 @@
                     let message = "", blSucceed = true
                     if (blSucceed && !Common.IsNullOrEmpty(data.LoginPassword) && data.LoginPassword !== data.AgainLoginPassword) {
                         message = "新密码与确认新密码不一致！"
+                        blSucceed = false
+                    }
+                    if (blSucceed && data.LoginPassword === data.OldLoginPassword) {
+                        message = "新密码与原密码一致！"
                         blSucceed = false
                     }
                     if (!blSucceed) {

@@ -544,19 +544,19 @@
 
         static ArrayClone(a, objList) {
             if (!Common.IsArray(a)) return a
-    
+
             var dataList = []
             for (var i = 0; i < a.length; i++) {
                 dataList.push(Common.Clone(a[i], objList))
             }
             return dataList
         }
-    
+
         static Clone(a, objList) {
             if (Common.IsArray(a)) return Common.ArrayClone(a, objList)
-    
+
             if (!Common.IsObject(a)) return a
-    
+
             var blExists = false
             for (var i = 0; i < objList.length; i++) {
                 if (objList[i] === a) {
@@ -564,13 +564,13 @@
                     break
                 }
             }
-    
+
             if (blExists) return a
-    
+
             objList.push(a)
-    
+
             var c = {}
-    
+
             for (var key in a) {
                 if (Common.IsArray(a[key])) {
                     c[key] = Common.ArrayClone(a[key], objList)
@@ -582,8 +582,18 @@
                     c[key] = a[key]
                 }
             }
-    
+
             return c
+        }
+
+        static IsGuid(value) {
+            if (Common.IsNullOrEmpty(value)) return false;
+            if (typeof value !== "string") return false;
+
+            value = value.toUpperCase();
+            var reg = new RegExp("^[A-F0-9]{8}(-[A-F0-9]{4}){3}-[A-F0-9]{12}$");
+
+            return reg.test(value);
         }
     }
 

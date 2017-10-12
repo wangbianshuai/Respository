@@ -105,7 +105,7 @@ const PageEntityConfigs = {
                     { Value: "date", Text: "日期" },
                     { Value: "float", Text: "浮点数" },
                     { Value: "money", Text: "货币" },
-                    { Value: "guid", Text: "全局唯一标识符（用户于表单关联）" }],
+                    { Value: "guid", Text: "全局唯一标识符（用于表单关联）" }],
                     ControlType: "DownList",
                     IsEmpty: false,
                     EditOptions: {
