@@ -115,6 +115,11 @@ namespace OpenDataFramework.Component
                 return "请求实体不存在！";
             }
 
+            return this.ValidateUser();
+        }
+
+        private string ValidateUser()
+        {
             if (!string.IsNullOrEmpty(this._request.OperationUser))
             {
                 this._opeartionUserId = Guid.Parse(this._request.OperationUser);
@@ -1267,6 +1272,9 @@ namespace OpenDataFramework.Component
             this._requestEntity = RequestEntityType.GetRequestEntity(this._request.EntityName);
             if (this._requestEntity == null) return this.GetResponse("请求实体不存在！");
 
+            string message = this.ValidateUser();
+            if (!string.IsNullOrEmpty(message)) return this.GetResponse(message);
+
             Dictionary<string, string> proeprtyFieldDict = null;
             columnNameList = this.GetColumnNameList(columnNameList, out proeprtyFieldDict);
 
@@ -1297,7 +1305,6 @@ namespace OpenDataFramework.Component
                 });
             });
 
-            string message = string.Empty;
             List<Dictionary<string, object>> messageList = new List<Dictionary<string, object>>();
             Dictionary<string, object> msgDict = null;
             object obj = null;
