@@ -20,7 +20,7 @@
                 if (!p.Action && p.ActionInvoke) { p.Action = new ns.actions.Index(this); p.Action.Invoke = p.ActionInvoke }
             })
             this.Properties = this.Properties.sort((a, b) => a.X > b.X ? 1 : -1);
-            this.IsDataStatus && this.Properties.push({ Name: "DataStatusName", Label: "状态", ColumnWidth: 40, TextAlign: "center" })
+            this.IsDataStatus && this.Properties.push({ Name: "DataStatusName", Label: "状态", ColumnWidth: 70, TextAlign: "center" })
             this.DataActions.length > 0 && this.Properties.push({ Name: "Operation", Label: "操作", Actions: this.DataActions, ColumnWidth: this.DataActions.length * 40, ControlType: "LinkButtonList", TextAlign: "center" });
 
             this.ComputeWidth()
@@ -141,6 +141,8 @@
         ThMouseDown(e) {
             if (e.target.type === "checkbox") return;
             if (e.target.childNodes && e.target.childNodes[0].type === "checkbox") return;
+            
+            if (e.target.tagName.toLowerCase() === "select") return;
 
             if (this.IsCanMove) {
                 this.IsThMouseDown = true;
@@ -164,6 +166,8 @@
         ThMouseMove(e) {
             if (e.target.type === "checkbox") return;
             if (e.target.childNodes && e.target.childNodes[0].type === "checkbox") return;
+
+            if (e.target.tagName.toLowerCase() === "select") return;
 
             let th = e.target.tagName === "span" ? e.target.parentNode : e.target;
 

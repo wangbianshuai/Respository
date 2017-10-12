@@ -320,7 +320,7 @@ PageEntityConfigs.SelectGridViewOkAction = function (e, c) {
             IsVisible: true
         }
     }
-   
+
     function GetEntity(id) {
         return {
             Name: "DataProperty",
@@ -892,6 +892,7 @@ PageEntityConfigs.Entity = {
         MaxLength: 50,
         IsNullable: false,
         DataSource: {
+            CacheName: "SelectDataEntity",
             EntityName: "DataEntity",
             ValueName: "EntityId",
             TextName: "EntityName",

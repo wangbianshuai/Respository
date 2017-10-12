@@ -1640,6 +1640,8 @@ window.OpenDataFramework = $ns;
 
             if (this.ConditionList === false) return;
 
+            if (this.DataStatus) this.ConditionList.push({ Name: "DataStatus", Logic: "=", Value: this.DataStatus })
+
             if (Entity.IsSelectKey) SelectNames.splice(0, 0, Entity.PrimaryKey)
             let request = {
                 IsPage: IsPage,
@@ -3433,6 +3435,7 @@ window.OpenDataFramework = $ns;
 
             let styleList = []
             styleList.push(`width:${this.Width + 3}px;`)
+            if (this.StyleString) styleList.push(this.StyleString)
             styleList.length > 0 && this.SetAttribute("style", styleList.join(""))
 
             let html = []
@@ -3489,6 +3492,10 @@ window.OpenDataFramework = $ns;
             }
 
             HtmlTag.SetHtml(this.Element, html.join(""));
+        }
+
+        EventLoad2() {
+            this.Action && this.Action.EventNames.forEach((name) => { HtmlTag.BindEvent(this.Element, name, (e) => this.Action.Invoke(e, this)) })
         }
 
         DataLoad2() {
@@ -4056,7 +4063,7 @@ window.OpenDataFramework = $ns;
 })($ns);
 ((ns) => {
     const { Index } = ns.components
-    const { DataSpan, DataCheckBox } = ns.controls
+    const { DataSpan, DataCheckBox, DownList } = ns.controls
     const { HtmlTag } = ns.utils
 
     ns.components.GridHeader = class GridHeader extends Index {
@@ -4075,7 +4082,28 @@ window.OpenDataFramework = $ns;
                 this.CheckBoxControl = new DataCheckBox({ CheckChanged: (checked) => this.CheckChanged(checked) });
                 this.ControlList.push(this.CheckBoxControl);
             }
-            this.ControlList = this.ControlList.concat(this.Properties.map((p) => new DataSpan(Object.assign({ Value: p.Label || p.Name, IsLabel: true }, p))))
+            this.ControlList = this.ControlList.concat(this.Properties.map((p) => {
+                if (p.Name === "DataStatusName") return new DownList(Object.assign({
+                    ControlWidth: 60,
+                    Options: [{ Value: "", Text: "状态" },
+                    { Value: "0", Text: "未提交" },
+                    { Value: "1", Text: "已提交" }],
+                    IsEmpty: false,
+                    StyleString: "height:22px;margin:1px 2px 1px 2px;",
+                    Action: this.GetStatusChangeAction()
+                }, p))
+                return new DataSpan(Object.assign({ Value: p.Label || p.Name, IsLabel: true }, p))
+            }))
+        }
+
+        GetStatusChangeAction() {
+            var a = new ns.actions.Index(this);
+            a.EventNames = ["change"]
+            a.Invoke = (e, c) => {
+                this.DataGrid.SearchAction.DataStatus = c.GetValue()
+                this.DataGrid.SearchAction.Invoke(e, c)
+            }
+            return a
         }
 
         CheckChanged(checked) {
@@ -4133,7 +4161,7 @@ window.OpenDataFramework = $ns;
                 if (!p.Action && p.ActionInvoke) { p.Action = new ns.actions.Index(this); p.Action.Invoke = p.ActionInvoke }
             })
             this.Properties = this.Properties.sort((a, b) => a.X > b.X ? 1 : -1);
-            this.IsDataStatus && this.Properties.push({ Name: "DataStatusName", Label: "状态", ColumnWidth: 40, TextAlign: "center" })
+            this.IsDataStatus && this.Properties.push({ Name: "DataStatusName", Label: "状态", ColumnWidth: 70, TextAlign: "center" })
             this.DataActions.length > 0 && this.Properties.push({ Name: "Operation", Label: "操作", Actions: this.DataActions, ColumnWidth: this.DataActions.length * 40, ControlType: "LinkButtonList", TextAlign: "center" });
 
             this.ComputeWidth()
@@ -4254,6 +4282,8 @@ window.OpenDataFramework = $ns;
         ThMouseDown(e) {
             if (e.target.type === "checkbox") return;
             if (e.target.childNodes && e.target.childNodes[0].type === "checkbox") return;
+            
+            if (e.target.tagName.toLowerCase() === "select") return;
 
             if (this.IsCanMove) {
                 this.IsThMouseDown = true;
@@ -4277,6 +4307,8 @@ window.OpenDataFramework = $ns;
         ThMouseMove(e) {
             if (e.target.type === "checkbox") return;
             if (e.target.childNodes && e.target.childNodes[0].type === "checkbox") return;
+
+            if (e.target.tagName.toLowerCase() === "select") return;
 
             let th = e.target.tagName === "span" ? e.target.parentNode : e.target;
 
@@ -5733,7 +5765,8 @@ window.OpenDataFramework = $ns;
                 IsLookLog: this.IsLookLog,
                 LoginUser: this.LoginUser,
                 IsCheckBox: this.GetIsCheckBox(),
-                IsFixedWidth: this.IsFixedWidth
+                IsFixedWidth: this.IsFixedWidth,
+                SearchAction: this.SearchActions[0]
             })
             if (this.IsDialog && this.GridWidth) {
                 this.DataGridComponent.Width = this.GridWidth;

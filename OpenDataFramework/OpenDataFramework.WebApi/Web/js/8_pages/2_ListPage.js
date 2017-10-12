@@ -101,7 +101,8 @@
                 IsLookLog: this.IsLookLog,
                 LoginUser: this.LoginUser,
                 IsCheckBox: this.GetIsCheckBox(),
-                IsFixedWidth: this.IsFixedWidth
+                IsFixedWidth: this.IsFixedWidth,
+                SearchAction: this.SearchActions[0]
             })
             if (this.IsDialog && this.GridWidth) {
                 this.DataGridComponent.Width = this.GridWidth;

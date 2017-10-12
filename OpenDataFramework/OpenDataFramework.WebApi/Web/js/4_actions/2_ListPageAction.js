@@ -32,6 +32,8 @@
 
             if (this.ConditionList === false) return;
 
+            if (this.DataStatus) this.ConditionList.push({ Name: "DataStatus", Logic: "=", Value: this.DataStatus })
+
             if (Entity.IsSelectKey) SelectNames.splice(0, 0, Entity.PrimaryKey)
             let request = {
                 IsPage: IsPage,

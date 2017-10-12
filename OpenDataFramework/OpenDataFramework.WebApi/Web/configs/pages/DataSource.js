@@ -47,6 +47,7 @@
 
     var property = config.Entity.Properties.filter(f => f.Name === "表单")[0];
     property.DataSource = {
+        CacheName: "KeyNamesDataEntity",
         EntityName: "DataEntity",
         ValueName: "EntityId",
         TextName: "EntityName",

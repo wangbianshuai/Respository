@@ -19,6 +19,7 @@
 
             let styleList = []
             styleList.push(`width:${this.Width + 3}px;`)
+            if (this.StyleString) styleList.push(this.StyleString)
             styleList.length > 0 && this.SetAttribute("style", styleList.join(""))
 
             let html = []
@@ -75,6 +76,10 @@
             }
 
             HtmlTag.SetHtml(this.Element, html.join(""));
+        }
+
+        EventLoad2() {
+            this.Action && this.Action.EventNames.forEach((name) => { HtmlTag.BindEvent(this.Element, name, (e) => this.Action.Invoke(e, this)) })
         }
 
         DataLoad2() {
