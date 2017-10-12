@@ -58,7 +58,7 @@ namespace OpenDataFramework.Component
             else this._oldValue = this.GetEntityDataList(this.GetDataValue(idList), requestEntity);
 
             Guid userId = loginUser == null ? Guid.Empty : loginUser.GetValue<Guid>("UserId");
-            string userName = loginUser == null ? string.Empty : string.Format("{0}({0})", loginUser.GetStringValue("UserName"), loginUser.GetStringValue("LoginName"));
+            string userName = loginUser == null ? string.Empty : string.Format("{0}({1})", loginUser.GetStringValue("UserName"), loginUser.GetStringValue("LoginName"));
 
             List<IEntityData> dataList = this._oldValue == null ? this._newValue : this._oldValue;
 

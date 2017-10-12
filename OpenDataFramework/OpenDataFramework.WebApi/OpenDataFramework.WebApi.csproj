@@ -90,17 +90,31 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="css\images\confirm.png" />
+    <Content Include="css\images\ui-bg_flat_0_aaaaaa_40x100.png" />
+    <Content Include="css\images\ui-bg_flat_55_fbec88_40x100.png" />
+    <Content Include="css\images\ui-bg_glass_75_d0e5f5_1x400.png" />
+    <Content Include="css\images\ui-bg_glass_85_dfeffc_1x400.png" />
+    <Content Include="css\images\ui-bg_gloss-wave_55_5c9ccc_500x100.png" />
+    <Content Include="css\images\ui-bg_inset-hard_100_fcfdfd_1x100.png" />
+    <Content Include="css\images\ui-icons_217bc0_256x240.png" />
+    <Content Include="css\images\ui-icons_d8e7f3_256x240.png" />
+    <Content Include="css\images\warn.png" />
     <Content Include="download.aspx" />
     <Content Include="Global.asax" />
     <Content Include="Index.aspx" />
     <Content Include="OperationLog.aspx" />
-    <Content Include="Web\css\login.css" />
-    <Content Include="Web\Login.html" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
     <Content Include="WebForm1.aspx" />
     <Content Include="Web\configs\CreateRequest.js" />
+    <Content Include="Web\configs\ExpandMethod.js" />
+    <Content Include="Web\configs\pages\DataSource.js" />
+    <Content Include="Web\configs\pages\Entity.js" />
+    <Content Include="Web\configs\pages\KeyValue.js" />
+    <Content Include="Web\configs\pages\OperationLog.js" />
+    <Content Include="Web\configs\pages\Page.js" />
     <Content Include="Web\configs\pages\User.js" />
     <Content Include="Web\configs\QueryRuquest.js" />
     <Content Include="Web\css\1_public.css" />
@@ -114,6 +128,7 @@
     <Content Include="Web\css\images\ui-icons_217bc0_256x240.png" />
     <Content Include="Web\css\images\ui-icons_d8e7f3_256x240.png" />
     <Content Include="Web\css\images\warn.png" />
+    <Content Include="Web\css\login.css" />
     <Content Include="Web\Index.html" />
     <Content Include="Web\Index.min.css" />
     <Content Include="Web\Index.min.js" />
@@ -123,16 +138,30 @@
     <Content Include="Web\js\1_utils\1_Init.js" />
     <Content Include="Web\js\1_utils\2_Common.js" />
     <Content Include="Web\js\1_utils\3_HtmlTag.js" />
+    <Content Include="Web\js\1_utils\4_Md5.js" />
     <Content Include="Web\js\2_api\1_Index.js" />
     <Content Include="Web\js\2_api\2_DataAccess.js" />
     <Content Include="Web\js\3_data\1_Index.js" />
     <Content Include="Web\js\3_data\2_ListPage.js" />
+    <Content Include="Web\js\3_data\3_EditPage.js" />
+    <Content Include="Web\js\3_data\4_Cache.js" />
     <Content Include="Web\js\4_actions\1_Index.js" />
     <Content Include="Web\js\4_actions\2_ListPageAction.js" />
+    <Content Include="Web\js\4_actions\3_DialogAction.js" />
+    <Content Include="Web\js\4_actions\4_EditPageAction.js" />
     <Content Include="Web\js\5_controls\1_Index.js" />
     <Content Include="Web\js\5_controls\2_SpanLabel.js" />
     <Content Include="Web\js\5_controls\3_TextBox.js" />
     <Content Include="Web\js\5_controls\4_Button.js" />
+    <Content Include="Web\js\5_controls\5_GridView.js" />
+    <Content Include="Web\js\5_controls\6_DownList.js" />
+    <Content Include="Web\js\5_controls\7_TextArea.js" />
+    <Content Include="Web\js\5_controls\8_TextSelect.js" />
+    <Content Include="Web\js\6_components\10_ExcelImport.js" />
+    <Content Include="Web\js\6_components\11_Login.js" />
+    <Content Include="Web\js\6_components\12_Menu.js" />
+    <Content Include="Web\js\6_components\13_Loading.js" />
+    <Content Include="Web\js\6_components\14_SelectGridView.js" />
     <Content Include="Web\js\6_components\1_Index.js" />
     <Content Include="Web\js\6_components\2_Buttons.js" />
     <Content Include="Web\js\6_components\3_PropertyItem.js" />
@@ -140,11 +169,20 @@
     <Content Include="Web\js\6_components\5_GridHeader.js" />
     <Content Include="Web\js\6_components\6_DataGrid.js" />
     <Content Include="Web\js\6_components\7_DataPaging.js" />
+    <Content Include="Web\js\6_components\8_Dialog.js" />
+    <Content Include="Web\js\6_components\9_AlertConfirm.js" />
     <Content Include="Web\js\7_layouts\1_Index.js" />
     <Content Include="Web\js\7_layouts\2_Search.js" />
     <Content Include="Web\js\7_layouts\3_GridView.js" />
+    <Content Include="Web\js\7_layouts\4_EditLayout.js" />
+    <Content Include="Web\js\7_layouts\5_DataOperationLayout.js" />
+    <Content Include="Web\js\7_layouts\6_MenuLayout.js" />
+    <Content Include="Web\js\7_layouts\7_TableLayout.js" />
     <Content Include="Web\js\8_pages\1_Index.js" />
     <Content Include="Web\js\8_pages\2_ListPage.js" />
+    <Content Include="Web\js\8_pages\3_EditPage.js" />
+    <Content Include="Web\js\8_pages\4_DialogListPage.js" />
+    <Content Include="Web\Login.html" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\WebApiConfig.cs" />
@@ -195,6 +233,7 @@
       <SubType>Designer</SubType>
     </Content>
     <Content Include="ExcelImportHandler.ashx" />
+    <None Include="Properties\PublishProfiles\OpenDataWeb.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

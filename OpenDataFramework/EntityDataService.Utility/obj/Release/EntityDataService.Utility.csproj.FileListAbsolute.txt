@@ -1,7 +1,0 @@
-D:\CsharpProjects\OpenDataFramework\OpenDataFramework\EntityDataService.Utility\bin\Release\EntityDataService.Utility.dll
-D:\CsharpProjects\OpenDataFramework\OpenDataFramework\EntityDataService.Utility\bin\Release\EntityDataService.Utility.pdb
-D:\CsharpProjects\OpenDataFramework\OpenDataFramework\EntityDataService.Utility\bin\Release\DocumentFormat.OpenXml.dll
-D:\CsharpProjects\OpenDataFramework\OpenDataFramework\EntityDataService.Utility\bin\Release\NPOI.dll
-D:\CsharpProjects\OpenDataFramework\OpenDataFramework\EntityDataService.Utility\obj\Release\EntityDataService.Utility.dll
-D:\CsharpProjects\OpenDataFramework\OpenDataFramework\EntityDataService.Utility\obj\Release\EntityDataService.Utility.pdb
-D:\CsharpProjects\OpenDataFramework\OpenDataFramework\EntityDataService.Utility\obj\Release\EntityDataService.Utility.csprojResolveAssemblyReference.cache
