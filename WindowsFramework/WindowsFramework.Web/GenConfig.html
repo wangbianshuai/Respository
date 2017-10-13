@@ -1,0 +1,48 @@
+﻿<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>生成配置JSON字符串</title>
+    <script type="text/javascript"> window.configs = {};</script>
+
+    <script src="configs/UserManage.js"></script>
+    <script src="configs/Login.js"></script>
+    <script src="configs/Index.js"></script>
+
+    <script type="text/javascript">
+        window.onload = function () {
+            var html = []
+            for (var key in window.configs) {
+                html.push("<option value=\"" + key + "\">" + key + "</option>");
+            }
+            
+            var selectName = document.getElementById("selectName");
+            selectName.innerHTML = html.join("");
+
+            var txtContent = document.getElementById("txtContent");
+            var btnGen = document.getElementById("btnGen");
+            btnGen.onclick = function () {
+                txtContent.value = "";
+
+                if (selectName.value && window.configs[selectName.value]) {
+                    txtContent.value = JSON.stringify(window.configs[selectName.value]);
+                }
+            };
+        };
+    </script>
+</head>
+<body>
+    <form id="form1" runat="server">
+        <div style="width: 100%; height: 40px; margin-top: 10px; line-height: 40px;">
+            <span>名称：</span>
+            <select id="selectName" style="width: 300px;">
+            </select>
+            <input type="button" value="生成" id="btnGen" style="width: 60px; margin-left: 20px;" />
+        </div>
+        <div style="width: 100%; height: 510px; margin-top: 10px;">
+            <textarea id="txtContent" cols="20" rows="20" style="width: 90%; height: 500px;"> </textarea>
+        </div>
+    </form>
+</body>
+</html>

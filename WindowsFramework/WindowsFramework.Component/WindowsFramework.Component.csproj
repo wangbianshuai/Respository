@@ -1,0 +1,108 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{B178C86D-B9B8-424A-97C7-253FE1C8EC1F}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>WindowsFramework.Component</RootNamespace>
+    <AssemblyName>WindowsFramework.Component</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Code\Components\BaseComponent.cs" />
+    <Compile Include="Code\Components\IComponent.cs" />
+    <Compile Include="Code\Components\PropertyItem.cs" />
+    <Compile Include="Code\Controls\BaseControl.cs" />
+    <Compile Include="Code\Controls\Button.cs" />
+    <Compile Include="Code\Controls\IControl.cs" />
+    <Compile Include="Code\Controls\Label.cs" />
+    <Compile Include="Code\Controls\TextBox.cs" />
+    <Compile Include="Code\Data\Cache.cs" />
+    <Compile Include="Code\Data\ViewConfig.cs" />
+    <Compile Include="Code\Forms\BaseForm.cs" />
+    <Compile Include="Code\Forms\IForm.cs" />
+    <Compile Include="Code\Forms\Index.cs" />
+    <Compile Include="Code\Forms\Login.cs" />
+    <Compile Include="Code\Model\User.cs" />
+    <Compile Include="Code\Utils\Common.cs" />
+    <Compile Include="MainForm.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="configs\Index.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="configs\Login.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="configs\UserManage.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\WindowsFramework.Action\WindowsFramework.Action.csproj">
+      <Project>{f4a01350-3619-43ce-8d53-0f95c34b2a71}</Project>
+      <Name>WindowsFramework.Action</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\WindowsFramework.Domain\WindowsFramework.Domain.csproj">
+      <Project>{df90bcd3-fe19-4823-bd0b-8131462b7d9d}</Project>
+      <Name>WindowsFramework.Domain</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\WindowsFramework.Entity\WindowsFramework.Entity.csproj">
+      <Project>{e1339903-2b2d-4c18-aad9-b547d2a4e2db}</Project>
+      <Name>WindowsFramework.Entity</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\WindowsFramework.Service\WindowsFramework.Service.csproj">
+      <Project>{5e35d336-9a02-4b03-81a6-65cd5000f06d}</Project>
+      <Name>WindowsFramework.Service</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\WindowsFramework.Utility\WindowsFramework.Utility.csproj">
+      <Project>{da095e12-e389-477d-8be0-1c78c47f20df}</Project>
+      <Name>WindowsFramework.Utility</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
