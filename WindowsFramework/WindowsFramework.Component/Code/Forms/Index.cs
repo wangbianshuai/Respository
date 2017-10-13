@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WindowsFramework.Utility;
 
 namespace WindowsFramework.Component.Code.Forms
 {
@@ -28,6 +29,26 @@ namespace WindowsFramework.Component.Code.Forms
             {
                 this._Form.Show();
             }
+        }
+
+        public override void EventInvoke(object sender, EventArgs e, Controls.IControl control)
+        {
+            string name = control.GetProperty().GetStringValue("Name");
+            switch (name)
+            {
+                case "UserManage": SetUserManage(sender, e, control); break;
+            }
+        }
+
+        private void SetUserManage(object sender, EventArgs e, Controls.IControl control)
+        {
+            MainForm _UserManage = new MainForm(this.GetNewForm(), "UserManage");
+            _UserManage.CurrentForm.ParentForm = this._Form;
+
+            if (_UserManage._Form.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            { 
+            }
+
         }
     }
 }

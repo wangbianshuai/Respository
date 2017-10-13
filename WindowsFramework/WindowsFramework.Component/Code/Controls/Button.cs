@@ -20,7 +20,7 @@ namespace WindowsFramework.Component.Code.Controls
             _Button = new System.Windows.Forms.Button();
             this._Control = _Button;
             SetProperty();
-            SetProperty(_PropertyItem._Form, _Button, true);
+            SetProperty(_PropertyItem._Form, _Button);
         }
 
         private void SetProperty()

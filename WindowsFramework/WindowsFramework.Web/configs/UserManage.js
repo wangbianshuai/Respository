@@ -15,7 +15,7 @@
             Name: "DataGroupBox",
             ControlType: "GroupBox",
             Dock: "Fill",
-            View: GetDataView()
+            View: GetQueryView()
         }]
     };
 

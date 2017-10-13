@@ -11,9 +11,12 @@ namespace WindowsFramework.Component.Code.Components
 {
     public class BaseComponent : IComponent
     {
+        protected List<IComponent> _ComponentList { get; set; }
         protected List<IControl> _ControlList { get; set; }
         public IForm _Form { get; set; }
         protected Dictionary<string, object> _Property { get; set; }
+        protected Dictionary<string, object> _View { get; set; }
+        protected List<Dictionary<string, object>> _PropertyList { get; set; }
 
         /// <summary>
         /// 获取控件列表
@@ -30,6 +33,7 @@ namespace WindowsFramework.Component.Code.Components
         public void EventLoad()
         {
             this._ControlList.ForEach(c => c.EventLoad());
+            if (_ComponentList != null) this._ComponentList.ForEach(c => c.EventLoad());
         }
 
         /// <summary>
@@ -38,6 +42,7 @@ namespace WindowsFramework.Component.Code.Components
         public void DataLoad()
         {
             this._ControlList.ForEach(c => c.DataLoad());
+            if (_ComponentList != null) this._ComponentList.ForEach(c => c.DataLoad());
         }
 
 
@@ -64,6 +69,60 @@ namespace WindowsFramework.Component.Code.Components
         {
             message = string.Empty;
             return true;
+        }
+
+        protected void SetView()
+        {
+            this._View = _Property.GetValue<Dictionary<string, object>>("View");
+            if (this._View != null) this._PropertyList = this._View.GetValue<List<Dictionary<string, object>>>("Properties");
+            this.SetPropertyList(this._PropertyList);
+        }
+
+        protected void SetPropertyList(List<Dictionary<string, object>> dictList)
+        {
+            if (dictList == null) return;
+            string controlType = string.Empty;
+            dictList.ForEach(p =>
+            {
+                controlType = p.GetStringValue("ControlType");
+
+                SetProperty(controlType, p);
+            });
+        }
+        protected void SetProperty(string controlType, Dictionary<string, object> dict)
+        {
+            switch (controlType)
+            {
+                case "GroupBox": this._ComponentList.Add(new GroupBoxComponent(dict, this._Form)); break;
+                default: this._ComponentList.Add(new PropertyItem(dict, this._Form)); break;
+            }
+        }
+
+        /// <summary>
+        /// 获取控件列表
+        /// </summary>
+        /// <returns></returns>
+        protected List<System.Windows.Forms.Control> GetComponentsControls()
+        {
+            List<System.Windows.Forms.Control> controlList = new List<System.Windows.Forms.Control>();
+
+            if (this._ComponentList.Count > 0)
+            {
+                controlList.AddRange((from a in this._ComponentList
+                                      from b in a.GetControls()
+                                      select b));
+            }
+
+            List<System.Windows.Forms.Control> controlList2 = new List<System.Windows.Forms.Control>();
+
+            controlList2.AddRange(from a in controlList
+                                  where a.Dock == System.Windows.Forms.DockStyle.Fill
+                                  select a);
+
+            controlList2.AddRange(from a in controlList
+                                  where a.Dock != System.Windows.Forms.DockStyle.Fill
+                                  select a);
+            return controlList2;
         }
     }
 }

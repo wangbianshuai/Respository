@@ -24,7 +24,7 @@ namespace WindowsFramework.WebApi.Controllers
 
             try
             {
-                string dirPath = "D:\\CsharpProjects\\WindowsFramework\\WindowsFramework\\WindowsFramework.Component\\bin\\Debug";
+                string dirPath = AppDomain.CurrentDomain.BaseDirectory.Replace("WindowsFramework.WebApi\\", "") + "WindowsFramework.Component\\bin\\Debug";
 
                 string path = string.Concat(AppDomain.CurrentDomain.BaseDirectory, "Component.zip");
                 Utility.Common.Compress(dirPath, path);

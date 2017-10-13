@@ -58,6 +58,7 @@ namespace WindowsFramework.Component
             {
                 case "Index": return new Index(this._Form);
                 case "Login": return new Login(this._Form);
+                case "UserManage": return new UserManage(this._Form);
                 default: return new Login(this._Form);
             }
         }

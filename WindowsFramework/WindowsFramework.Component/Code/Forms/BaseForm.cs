@@ -59,6 +59,7 @@ namespace WindowsFramework.Component.Code.Forms
         {
             switch (controlType)
             {
+                case "GroupBox": this._ComponentList.Add(new GroupBoxComponent(dict, this)); break;
                 default: this._ComponentList.Add(new PropertyItem(dict, this)); break;
             }
         }
@@ -119,7 +120,16 @@ namespace WindowsFramework.Component.Code.Forms
                                       select b));
             }
 
-            return controlList;
+            List<System.Windows.Forms.Control> controlList2 = new List<System.Windows.Forms.Control>();
+
+            controlList2.AddRange(from a in controlList
+                                  where a.Dock == System.Windows.Forms.DockStyle.Fill
+                                  select a);
+
+            controlList2.AddRange(from a in controlList
+                                  where a.Dock != System.Windows.Forms.DockStyle.Fill
+                                  select a);
+            return controlList2;
         }
 
         /// <summary>

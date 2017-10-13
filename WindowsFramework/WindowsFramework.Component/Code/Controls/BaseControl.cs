@@ -12,7 +12,7 @@ namespace WindowsFramework.Component.Code.Controls
     {
         public Dictionary<string, object> _Property { get; protected set; }
 
-        public Dictionary<string, object> GetProperty() { return _Property; } 
+        public Dictionary<string, object> GetProperty() { return _Property; }
 
         protected System.Windows.Forms.Control _Control { get; set; }
 
@@ -84,7 +84,7 @@ namespace WindowsFramework.Component.Code.Controls
             this.SetLocation(x2, y2);
         }
 
-        protected void SetProperty(IForm form, System.Windows.Forms.Control control, bool blLabel = false)
+        protected void SetProperty(IForm form, System.Windows.Forms.Control control, bool blLabel = false, bool blControl = true)
         {
             bool isPoint = _Property.GetValue<bool>("IsPoint");
             if (isPoint)
@@ -94,7 +94,7 @@ namespace WindowsFramework.Component.Code.Controls
                 this.SetLocation(x, y);
             }
             else if (blLabel) this.SetLabelLocation(form.StartPoint);
-            else this.SetControlLocation(form.StartPoint);
+            else if (blControl) this.SetControlLocation(form.StartPoint);
 
             control.TabIndex = form.TabIndex;
             form.TabIndex += 1;
@@ -124,6 +124,20 @@ namespace WindowsFramework.Component.Code.Controls
         {
             message = string.Empty;
             return true;
+        }
+
+        protected System.Windows.Forms.DockStyle GetDock(string value)
+        {
+            switch (value)
+            {
+                case "Bottom": return System.Windows.Forms.DockStyle.Bottom;
+                case "Fill": return System.Windows.Forms.DockStyle.Fill;
+                case "Left": return System.Windows.Forms.DockStyle.Left;
+                case "None": return System.Windows.Forms.DockStyle.None;
+                case "Right": return System.Windows.Forms.DockStyle.Right;
+                case "Top": return System.Windows.Forms.DockStyle.Top;
+                default: return System.Windows.Forms.DockStyle.None;
+            }
         }
     }
 }

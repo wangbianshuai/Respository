@@ -46,10 +46,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Code\Components\BaseComponent.cs" />
+    <Compile Include="Code\Components\GroupBoxComponent.cs" />
     <Compile Include="Code\Components\IComponent.cs" />
     <Compile Include="Code\Components\PropertyItem.cs" />
     <Compile Include="Code\Controls\BaseControl.cs" />
     <Compile Include="Code\Controls\Button.cs" />
+    <Compile Include="Code\Controls\GroupBox.cs" />
     <Compile Include="Code\Controls\IControl.cs" />
     <Compile Include="Code\Controls\Label.cs" />
     <Compile Include="Code\Controls\TextBox.cs" />
@@ -59,6 +61,7 @@
     <Compile Include="Code\Forms\IForm.cs" />
     <Compile Include="Code\Forms\Index.cs" />
     <Compile Include="Code\Forms\Login.cs" />
+    <Compile Include="Code\Forms\UserManage.cs" />
     <Compile Include="Code\Model\User.cs" />
     <Compile Include="Code\Utils\Common.cs" />
     <Compile Include="MainForm.cs" />
