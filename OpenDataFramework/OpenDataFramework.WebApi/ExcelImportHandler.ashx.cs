@@ -27,6 +27,7 @@ namespace OpenDataFramework.WebApi
             {
                 string entityName = context.Request.QueryString["EntityName"];
                 string ft = context.Request.QueryString["ft"];
+                int dataStatus = context.Request.QueryString["DataStatus"] == "1" ? 1 : 0;
 
 
                 byte[] data = context.Request.BinaryRead(context.Request.ContentLength);
@@ -71,7 +72,7 @@ namespace OpenDataFramework.WebApi
 
                     IDataAccess dataAccess = new DataAccess(request);
 
-                    return EntityDataService.Entity.Parse.ToJson(dataAccess.ExcelImport(columnNameList, dataList));
+                    return EntityDataService.Entity.Parse.ToJson(dataAccess.ExcelImport(columnNameList, dataList, (byte)dataStatus));
                 }
             }
             catch (Exception ex)

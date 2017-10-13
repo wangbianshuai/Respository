@@ -17,7 +17,7 @@ namespace OpenDataFramework.Component
         object Create();
         object Update();
         object Delete();
-        object ExcelImport(List<string> columnNameList, List<List<Dictionary<string, string>>> dataList);
+        object ExcelImport(List<string> columnNameList, List<List<Dictionary<string, string>>> dataList, byte dataStatus);
         string GetPageJs(string name);
         string GetSource(string name, string type);
         string GetKeyValue(string key);
@@ -351,7 +351,7 @@ namespace OpenDataFramework.Component
             return this.EditEntityData(request.Data, response);
         }
 
-        private object EditEntityData(List<Dictionary<string, object>> dataList, IEntityData response)
+        private object EditEntityData(List<Dictionary<string, object>> dataList, IEntityData response, byte dataStatus = 0)
         {
             response = response ?? new EntityData(this._request.EntityName);
 
@@ -380,6 +380,7 @@ namespace OpenDataFramework.Component
                     d["EntityId"] = this._requestEntity.EntityId;
                     d["CreateUser"] = this._opeartionUserId;
                     d["CreateDate"] = DateTime.Now;
+                    if (dataStatus == 1) d["DataStatus"] = 1;
                 });
             }
             else
@@ -457,12 +458,12 @@ namespace OpenDataFramework.Component
                 if (!string.IsNullOrEmpty(message)) return message;
             }
 
-             List<IEntityData> oldValue = null;
+            List<IEntityData> oldValue = null;
 
-             if (this._requestType == "Update" && idList != null && idList.Count > 0)
-             {
-                 oldValue = new DataOperationLog().GetDataValue(idList);
-             }
+            if (this._requestType == "Update" && idList != null && idList.Count > 0)
+            {
+                oldValue = new DataOperationLog().GetDataValue(idList);
+            }
 
             IDbTransaction trans = this._entityReqeust.CurrentDataBase.BeginTransaction(this._entityReqeust.CurrentDataBase.ConnectionString);
             bool blSucceed = true;
@@ -1266,7 +1267,7 @@ namespace OpenDataFramework.Component
             return name;
         }
 
-        public object ExcelImport(List<string> columnNameList, List<List<Dictionary<string, string>>> dataList)
+        public object ExcelImport(List<string> columnNameList, List<List<Dictionary<string, string>>> dataList, byte dataStatus)
         {
             this._requestType = "Create";
             this._requestEntity = RequestEntityType.GetRequestEntity(this._request.EntityName);
@@ -1326,7 +1327,7 @@ namespace OpenDataFramework.Component
                     }
                     else
                     {
-                        obj = this.EditEntityData(new List<Dictionary<string, object>>() { dictList[i] }, null);
+                        obj = this.EditEntityData(new List<Dictionary<string, object>>() { dictList[i] }, null, dataStatus);
                     }
                     if (obj is string)
                     {

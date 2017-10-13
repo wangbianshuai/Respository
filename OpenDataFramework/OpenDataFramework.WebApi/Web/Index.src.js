@@ -4965,10 +4965,13 @@ window.OpenDataFramework = $ns;
 
         GetHtml() {
             var html = [];
-            html.push("<div class=\"DivText\"><dl><dt><span>Excel文件：</span></dt>")
+            html.push("<div class=\"DivText\" style=\"height:30px;\"><dl><dt><span>Excel文件：</span></dt>")
             html.push("<dd><input type=\"file\" id=\"file_" + this.Id + "\"")
             html.push(" accept=\"application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet\" style=\"width:500px;\" class=\"TextBox\"></dd>")
             html.push("</dl></div>");
+            html.push("<div class=\"DivText\" style=\"height:30px;line-height:30px;\"><dl><dt><span>数据状态：</span></dt>")
+            html.push("<dd><label style=\"cursor:pointer;\"><input type=\"checkbox\" id=\"ckb_" + this.Id + "\" checked=\"checked\" style=\"margin-right:3px;\"/>已提交</label></dd>")
+            html.push("</dl></div>")
             return html.join("")
         }
 
@@ -4979,6 +4982,10 @@ window.OpenDataFramework = $ns;
             if (!userId) Common.ToLogin();
             url = Common.AddURLParameter(url, "LoginUserId", userId);
             
+            let checkbox = HtmlTag.GetById("ckb_" + this.Id)
+            let dataStatus = checkbox && checkbox.checked ? 1 : 0
+            url = Common.AddURLParameter(url, "DataStatus", dataStatus);
+
             var fr = new FileReader()
 
             fr.onloadend = () => {
