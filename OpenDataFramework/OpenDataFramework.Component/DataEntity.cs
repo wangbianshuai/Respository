@@ -146,14 +146,19 @@ namespace OpenDataFramework.Component
 
             propertyList.ForEach(p =>
             {
+                fieldName = string.Empty;
+
                 if (p.GetValue<int>("IsIndex") == 1 && index < 10)
                 {
                     index += 1;
+                    //判断字段名是否存在
                     index = this.IsExistsFieldName(existsFieldNameList, name, index);
 
                     if (index <= 10) fieldName = string.Format("{0}{1}", name, index);
                 }
-                else if (noIndex < 30)
+               
+                //非索引字段或索引字段设置超过10个
+                if (string.IsNullOrEmpty(fieldName) && noIndex < 30)
                 {
                     noIndex += 1;
                     noIndex = this.IsExistsFieldName(existsFieldNameList, name, noIndex);
@@ -161,8 +166,11 @@ namespace OpenDataFramework.Component
                     if (noIndex <= 30) fieldName = string.Format("{0}{1}", name, noIndex);
                 }
 
-                p["TableName"] = tableName;
-                p["FieldName"] = fieldName;
+                if (!string.IsNullOrEmpty(fieldName))
+                {
+                    p["TableName"] = tableName;
+                    p["FieldName"] = fieldName;
+                }
             });
         }
 
@@ -186,6 +194,7 @@ namespace OpenDataFramework.Component
             int maxIndex = blFloat ? 20 : 30;
             propertyList.ForEach(p =>
             {
+                fieldName = string.Empty;
                 if (index < maxIndex)
                 {
                     index += 1;
@@ -194,8 +203,11 @@ namespace OpenDataFramework.Component
                     if (index <= maxIndex) fieldName = string.Format("{0}{1}", name, index);
                 }
 
-                p["TableName"] = tableName;
-                p["FieldName"] = fieldName;
+                if (!string.IsNullOrEmpty(fieldName))
+                {
+                    p["TableName"] = tableName;
+                    p["FieldName"] = fieldName;
+                }
             });
         }
 
@@ -207,6 +219,7 @@ namespace OpenDataFramework.Component
 
             propertyList.ForEach(p =>
             {
+                fieldName = string.Empty;
                 if (index < 20)
                 {
                     index += 1;
@@ -215,8 +228,11 @@ namespace OpenDataFramework.Component
                     if (index <= 20) fieldName = string.Format("{0}{1}", name, index);
                 }
 
-                p["TableName"] = tableName;
-                p["FieldName"] = fieldName;
+                if (!string.IsNullOrEmpty(fieldName))
+                {
+                    p["TableName"] = tableName;
+                    p["FieldName"] = fieldName;
+                }
             });
         }
 
@@ -228,6 +244,8 @@ namespace OpenDataFramework.Component
 
             propertyList.ForEach(p =>
             {
+                fieldName = string.Empty;
+
                 if (p.GetValue<int>("IsIndex") == 1 && index < 10)
                 {
                     index += 1;
@@ -235,7 +253,8 @@ namespace OpenDataFramework.Component
 
                     if (index <= 10) fieldName = string.Format("{0}{1}", name, index);
                 }
-                else if (noIndex < 20)
+
+                if (string.IsNullOrEmpty(fieldName) && noIndex < 20)
                 {
                     noIndex += 1;
                     noIndex = this.IsExistsFieldName(existsFieldNameList, name, noIndex);
@@ -243,8 +262,11 @@ namespace OpenDataFramework.Component
                     if (noIndex <= 20) fieldName = string.Format("{0}{1}", name, noIndex);
                 }
 
-                p["TableName"] = tableName;
-                p["FieldName"] = fieldName;
+                if (!string.IsNullOrEmpty(fieldName))
+                {
+                    p["TableName"] = tableName;
+                    p["FieldName"] = fieldName;
+                }
             });
         }
 
@@ -264,6 +286,7 @@ namespace OpenDataFramework.Component
 
             propertyList.ForEach(p =>
             {
+                fieldName = string.Empty;
                 maxLength = p.GetValue<int>("MaxLength");
                 if (maxLength == 50 || maxLength == 500)
                 {
@@ -281,35 +304,40 @@ namespace OpenDataFramework.Component
                     index50 = this.IsExistsFieldName(existsFieldNameList, name, index50);
                     if (index50 <= 10) fieldName = string.Format("{0}{1}", name, index50);
                 }
-                else if (maxLength == 50 && noIndex50 < 30)
+
+                if (string.IsNullOrEmpty(fieldName) && maxLength == 50 && noIndex50 < 30)
                 {
                     name = "Nvarchar50Value";
                     noIndex50 += 1;
                     noIndex50 = this.IsExistsFieldName(existsFieldNameList, name, noIndex50);
                     if (noIndex50 <= 30) fieldName = string.Format("{0}{1}", name, noIndex50);
                 }
-                else if (maxLength > 0 && maxLength <= 500 && index500 < 20)
+
+                if (string.IsNullOrEmpty(fieldName) && maxLength > 0 && maxLength <= 500 && index500 < 20)
                 {
                     name = "Nvarchar500Value";
                     index500 += 1;
                     index500 = this.IsExistsFieldName(existsFieldNameList, name, index500);
                     if (index500 <= 20) fieldName = string.Format("{0}{1}", name, index500);
                 }
-                else if (maxLength > 0 && maxLength <= 2000 && index2000 < 10)
+
+                if (string.IsNullOrEmpty(fieldName) && maxLength > 0 && maxLength <= 2000 && index2000 < 10)
                 {
                     name = "Nvarchar2000Value";
                     index2000 += 1;
                     index2000 = this.IsExistsFieldName(existsFieldNameList, name, index2000);
                     if (index500 <= 10) fieldName = string.Format("{0}{1}", name, index2000);
                 }
-                else if (maxLength > 0 && maxLength <= 4000 && index4000 < 10)
+
+                if (string.IsNullOrEmpty(fieldName) && maxLength > 0 && maxLength <= 4000 && index4000 < 10)
                 {
                     name = "Nvarchar4000Value";
                     index4000 += 1;
                     index4000 = this.IsExistsFieldName(existsFieldNameList, name, index4000);
                     if (index500 <= 10) fieldName = string.Format("{0}{1}", name, index4000);
                 }
-                else if (maxLength == 0 && indexMax < 10)
+
+                if (string.IsNullOrEmpty(fieldName) && maxLength == 0 && indexMax < 10)
                 {
                     name = "NvarcharMaxValue";
                     indexMax += 1;
@@ -317,8 +345,11 @@ namespace OpenDataFramework.Component
                     if (indexMax <= 10) fieldName = string.Format("{0}{1}", name, indexMax);
                 }
 
-                p["TableName"] = tableName;
-                p["FieldName"] = fieldName;
+                if (!string.IsNullOrEmpty(fieldName))
+                {
+                    p["TableName"] = tableName;
+                    p["FieldName"] = fieldName;
+                }
             });
         }
 
@@ -375,7 +406,7 @@ namespace OpenDataFramework.Component
                 dataType = c.a.GetStringValue("DataType").ToLower().Trim();
                 if (dataType.Equals("string"))
                 {
-                    if (c.a.GetValue<int>("MaxLength") == c.b.GetValue<int>("MaxLength") && c.a.GetValue<byte>("IsIndex") == c.b.GetValue<int>("IsIndex"))
+                    if (c.a.GetValue<int>("MaxLength") == c.b.GetValue<int>("MaxLength"))
                     {
                         foreach (var kvp in c.a)
                         {
@@ -389,7 +420,7 @@ namespace OpenDataFramework.Component
                         deletePropertyList.Add(c.b);
                     }
                 }
-                else if (dataType.Equals(c.b.GetStringValue("DataType")) && c.a.GetValue<byte>("IsIndex") == c.b.GetValue<int>("IsIndex"))
+                else if (dataType.Equals(c.b.GetStringValue("DataType")))
                 {
                     foreach (var kvp in c.a)
                     {
