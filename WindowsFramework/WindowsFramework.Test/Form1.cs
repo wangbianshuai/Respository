@@ -28,9 +28,9 @@ namespace WindowsFramework.Test
             {
                 this.RegControl();
 
-                this.axFramerControl2.Open(Application.StartupPath + "\\test2.docx");
+                //this.axFramerControl2.Open(Application.StartupPath + "\\test2.docx");
 
-                 doc = (Microsoft.Office.Interop.Word.Document)axFramerControl2.ActiveDocument;
+                 //doc = (Microsoft.Office.Interop.Word.Document)axFramerControl2.ActiveDocument;
 
                 //显示小翻页，即只翻一个屏幕的内容  
                 doc.Windows.Application.ActiveWindow.VerticalPercentScrolled = 10;

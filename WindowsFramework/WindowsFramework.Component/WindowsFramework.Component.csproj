@@ -68,15 +68,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="configs\Index.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="configs\Login.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="configs\UserManage.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
+    <None Include="configs\Index.json" />
+    <None Include="configs\Login.json" />
+    <None Include="configs\UserManage.json" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\WindowsFramework.Action\WindowsFramework.Action.csproj">
@@ -99,6 +93,9 @@
       <Project>{da095e12-e389-477d-8be0-1c78c47f20df}</Project>
       <Name>WindowsFramework.Utility</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="images\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

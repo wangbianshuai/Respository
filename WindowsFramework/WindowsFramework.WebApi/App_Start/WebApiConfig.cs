@@ -15,6 +15,8 @@ namespace WindowsFramework.WebApi
             config.MapHttpAttributeRoutes();
 
             config.Routes.MapHttpRoute(name: "FileApi", routeTemplate: "res/{name}", defaults: new { controller = "File" });
+
+            config.Routes.MapHttpRoute(name: "DefaultApi", routeTemplate: "api/{classname}/{methodname}", defaults: new { controller = "Default" });
         }
     }
 }

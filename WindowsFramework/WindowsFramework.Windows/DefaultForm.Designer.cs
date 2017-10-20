@@ -1,6 +1,6 @@
-﻿namespace WindowsFramework.Test
+﻿namespace WindowsFramework.Windows
 {
-    partial class Form2
+    partial class DefaultForm
     {
         /// <summary>
         /// Required designer variable.
@@ -28,28 +28,11 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.SuspendLayout();
-            // 
-            // toolStripContainer1
-            // 
-            // 
-
-            // Form2
-            // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
+            this.components = new System.ComponentModel.Container();
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(836, 390);
-            this.Name = "Form2";
-            this.Text = "Form2";
-            this.ResumeLayout(false);
-
+            this.Text = "DefaultForm";
         }
 
         #endregion
-
-
-
-
-
     }
 }

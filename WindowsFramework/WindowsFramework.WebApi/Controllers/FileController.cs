@@ -15,18 +15,22 @@ namespace WindowsFramework.WebApi.Controllers
     {
         public async Task<HttpResponseMessage> Get(string name)
         {
-            return await Task<HttpResponseMessage>.Run(() => { return GetFile(); });
+            return await Task<HttpResponseMessage>.Run(() => { return GetFile(name); });
         }
 
-        private HttpResponseMessage GetFile()
+        private HttpResponseMessage GetFile(string name)
         {
             HttpResponseMessage response = new HttpResponseMessage(HttpStatusCode.OK);
 
             try
             {
-                string dirPath = AppDomain.CurrentDomain.BaseDirectory.Replace("WindowsFramework.WebApi\\", "") + "WindowsFramework.Component\\bin\\Debug";
+                string dirPath = AppDomain.CurrentDomain.BaseDirectory.Replace("WindowsFramework.WebApi\\", "") + "WindowsFramework.Component\\";
 
-                string path = string.Concat(AppDomain.CurrentDomain.BaseDirectory, "Component.zip");
+                if (name.Equals("bin")) dirPath += "bin\\debug";
+                else if (name.Equals("configs")) dirPath += "configs";
+                else if (name.Equals("images")) dirPath += "images";
+
+                string path = string.Concat(AppDomain.CurrentDomain.BaseDirectory, string.Format("{0}_{1}", name, Guid.NewGuid().ToString().Substring(0, 8)));
                 Utility.Common.Compress(dirPath, path);
 
                 FileStream fs = new FileStream(path, FileMode.Open);
