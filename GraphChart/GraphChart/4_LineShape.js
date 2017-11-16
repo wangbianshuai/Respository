@@ -13,6 +13,10 @@ class LineShape extends Shape {
             //move
             i === 0 ? this.Move(p.X, p.Y) : this.Line(p.X, p.Y)
         })
+
+        if (this.IsDash) {
+            this.Context.setLineDash([this.Ratio * 2, 5 * this.Ratio])
+        }
     }
 
     Contain(e) {
@@ -65,5 +69,4 @@ class LineShape extends Shape {
 
         return blIn
     }
-
 }

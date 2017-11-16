@@ -54,4 +54,15 @@ class TextShape extends Shape {
 
         this.TextRect = { X: x, Y: y, Width: this.TextWidth + 10, Height: this.Height || 40 }
     }
+
+    Contain(e) {
+        const { X, Y } = e.Point
+        const { TextRect } = this
+
+        if (X >= TextRect.X && X <= TextRect.X + TextRect.Width
+            && Y >= TextRect.Y && Y <= TextRect.Y + TextRect.Height)
+        { return true }
+
+        return false
+    }
 }

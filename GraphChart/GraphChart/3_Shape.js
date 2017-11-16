@@ -4,6 +4,7 @@ class Shape {
         this.Id = Common.CreateGuid()
         this.Context = context //Canvas Context
         this.Data = data //业务数据
+        this.Ratio = window.devicePixelRatio || 1
 
         //options属性
         this.FillColor = "" //填充颜色
@@ -40,10 +41,25 @@ class Shape {
         this.SetProperty()
 
         if (this.FontColor) this.Context.fillStyle = this.FontColor
-        if (this.Font) this.Context.font = this.Font
+        if (this.Font) {
+            this.SetRadioFont()
+            this.Context.font = this.Font
+        }
         if (this.TextAlign) this.Context.textAlign = this.TextAlign
         if (this.TextBaseline) this.Context.textBaseline = this.TextBaseline
-        if (this.Text) this.Context.fillText(this.Text, this.X, this.Y)
+        if (this.Text) this.Context.fillText(this.Text, this.X * this.Ratio, this.Y * this.Ratio)
+    }
+
+    SetRadioFont() {
+        if (this.Ratio > 1) {
+            let items = this.Font.split(" ")
+            let size = items[0]
+            if (size.indexOf("px") > 0) {
+                size = parseFloat(size.replace("px", "")) * this.Ratio + "px"
+                items[0] = size
+            }
+            this.Font = items.join(" ")
+        }
     }
 
     GetTextWidth(text) {
@@ -82,7 +98,36 @@ class Shape {
 
     Contain(e) { return null }
 
+    SetRatioValue(p, r) {
+        if (r <= 1 || !p) {
+            return
+        }
+
+        this.GetRatioValue(p, "X", r)
+        this.GetRatioValue(p, "Y", r)
+        this.GetRatioValue(p, "X1", r)
+        this.GetRatioValue(p, "Y1", r)
+        this.GetRatioValue(p, "X2", r)
+        this.GetRatioValue(p, "Y2", r)
+        this.GetRatioValue(p, "W", r)
+        this.GetRatioValue(p, "H", r)
+        this.GetRatioValue(p, "R", r)
+    }
+
+    GetRatioValue(p, k, r) {
+        const v = p[k]
+        if (!v) { return }
+        const v2 = Math.floor(v)
+        if (v - v2 === 0.5 && r !== 3 && r !== 5) {
+            p[k] = Math.floor(v * r) + 0.5
+        }
+        else {
+            p[k] = v * r
+        }
+    }
+
     SetPath(t, p) {
+        this.SetRatioValue(p, this.Ratio)
         switch (t) {
             case "move":
                 return this.Context.moveTo(p.X, p.Y)
@@ -113,5 +158,27 @@ class Shape {
             this.Context.strokeStyle = this.StrokeColor
             this.Context.stroke()
         }
+    }
+
+    Save() {
+        this.Context.save()
+    }
+
+    Translate(x, y) {
+        x = x * this.Ratio
+        y = y * this.Ratio
+        this.Context.translate(x, y)
+    }
+
+    BeginPath() {
+        this.Context.beginPath()
+    }
+
+    Restore() {
+        this.Context.restore()
+    }
+
+    Rotate(angle) {
+        this.Context.rotate(angle)
     }
 }

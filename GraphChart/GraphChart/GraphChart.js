@@ -9,7 +9,12 @@
     }
 
     Init() {
-        const html = `<canvas id="${this.Id}" width="${this.Width}" height="${this.Height}"></canvas>`
+        this.Ratio = window.devicePixelRatio || 1
+        this.CanvasWidth = this.Width
+        this.CanvasHeight = this.Height
+        this.CanvasWidth *= this.Ratio
+        this.CanvasHeight *= this.Ratio
+        const html = `<canvas id="${this.Id}" width="${this.CanvasWidth}" height="${this.CanvasHeight}" style="width:${this.Width}px;height:${this.Height}px;"></canvas>`
         let ele = document.getElementById(this.TagId)
         if (!ele) { return }
         ele.innerHTML = html
@@ -30,7 +35,7 @@
         
         this.GraphList.forEach((g) => g.EventAction(name, e))
     }
-
+    
     Draw(options) {
         if (!this.CanvasContext) { return }
 

@@ -17,11 +17,7 @@ class Graph {
 
         this.Chart.Draw()
     }
-
-    EventAction(name, e) {
-        this.Chart && this.Chart.EventAction(name, e)
-    }
-
+    
     GetChart() {
         switch (this.Type) {
             case GraphType.Line:
@@ -30,5 +26,9 @@ class Graph {
                 return new ChartPie(this, this.Options)
             default: return null
         }
+    }
+
+    EventAction(name, e) {
+        this.Chart && this.Chart.EventAction(name, e)
     }
 }
