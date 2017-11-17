@@ -16,8 +16,23 @@ namespace WindowsFramework.Windows
         {
             InitializeComponent();
 
-            this.StartPosition = FormStartPosition.CenterScreen;
+            SetForm();
+           
             this.FormClosed += RootForm_FormClosed;
+        }
+
+        private void SetForm()
+        {
+            try
+            {
+
+                this.StartPosition = FormStartPosition.CenterScreen;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "提示信息");
+                Code.LoggerProxy.WriteLog("Exception", "RootForm", "SetForm", null, ex);
+            }
         }
 
         void RootForm_FormClosed(object sender, FormClosedEventArgs e)

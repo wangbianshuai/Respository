@@ -59,6 +59,7 @@
     <Compile Include="Code\LoggerProxy.cs" />
     <Compile Include="Code\RequestService.cs" />
     <Compile Include="Code\Response.cs" />
+    <Compile Include="Code\RootConfig.cs" />
     <Compile Include="DefaultForm.cs">
       <SubType>Form</SubType>
     </Compile>
