@@ -10,7 +10,7 @@
                 <Button Height="40" Width="80" Margin="20,10,0,0" >测试点击3</Button>
             </StackPanel>
             <DockPanel>
-                <ScrollViewer>
+                <ScrollViewer Name="ScrollViewer1">
                     <StackPanel>
                         <Label Height="80">数据行1</Label>
                         <Label Height="80">数据行1</Label>

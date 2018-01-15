@@ -29,7 +29,10 @@ namespace MouseSync
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("测试点击1");
+            //MessageBox.Show("测试点击1");
+
+            ScrollViewer1.Focus();
+            Code.MouseAction.Scroll(20);
         }
 
         Code.KeyboardMouse _KeyboardMouse { get; set; }

@@ -3,6 +3,8 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MouseSync", "MouseSync\MouseSync.csproj", "{35CD680F-C942-499E-AC6A-A54358E8BFDE}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WindowsFormsApplication1", "WindowsFormsApplication1\WindowsFormsApplication1.csproj", "{38EAB925-1528-4136-81B1-7C1902A0E56E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -13,6 +15,10 @@ Global
 		{35CD680F-C942-499E-AC6A-A54358E8BFDE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{35CD680F-C942-499E-AC6A-A54358E8BFDE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{35CD680F-C942-499E-AC6A-A54358E8BFDE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{38EAB925-1528-4136-81B1-7C1902A0E56E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{38EAB925-1528-4136-81B1-7C1902A0E56E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{38EAB925-1528-4136-81B1-7C1902A0E56E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{38EAB925-1528-4136-81B1-7C1902A0E56E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
