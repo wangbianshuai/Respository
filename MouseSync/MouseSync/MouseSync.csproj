@@ -34,8 +34,17 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\packages\Newtonsoft.Json.8.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -61,6 +70,19 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Code\AppSetting.cs" />
+    <Compile Include="Code\Common.cs" />
+    <Compile Include="Code\ExpandMethod.cs" />
+    <Compile Include="Code\KeyboardHook.cs" />
+    <Compile Include="Code\KeyboardMouse.cs" />
+    <Compile Include="Code\KeyboardMouseHook.cs" />
+    <Compile Include="Code\LoggerProxy.cs" />
+    <Compile Include="Code\Mouse.cs" />
+    <Compile Include="Code\MouseAction.cs" />
+    <Compile Include="Code\MouseHook.cs" />
+    <Compile Include="Code\StopwatchMessage.cs" />
+    <Compile Include="Code\UdpService.cs" />
+    <Compile Include="Code\Win32Api.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>

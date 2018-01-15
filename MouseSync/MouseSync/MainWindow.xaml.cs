@@ -23,6 +23,24 @@ namespace MouseSync
         public MainWindow()
         {
             InitializeComponent();
+
+            InitMouse();
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("测试点击1");
+        }
+
+        Code.KeyboardMouse _KeyboardMouse { get; set; }
+
+        void InitMouse()
+        {
+            Code.KeyboardMouseHook.IsMouseHook = true;
+            _KeyboardMouse = new Code.KeyboardMouse();
+            _KeyboardMouse.Width = System.Windows.SystemParameters.WorkArea.Width;
+            _KeyboardMouse.Height = System.Windows.SystemParameters.WorkArea.Height;
+            _KeyboardMouse.KeyboardMouseHook.SetHook();
         }
     }
 }

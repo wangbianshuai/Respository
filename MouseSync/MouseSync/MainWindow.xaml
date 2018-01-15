@@ -1,8 +1,35 @@
 ﻿<Window x:Class="MouseSync.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="MainWindow" Height="350" Width="525">
+        Title="MainWindow" Height="540" Width="960">
     <Grid>
-        
+        <DockPanel>
+            <StackPanel DockPanel.Dock="Top" Height="60" Orientation="Horizontal" FlowDirection="LeftToRight">
+                <Button Height="40" Width="80" Margin="20,10,0,0"   Click="Button_Click">测试点击</Button>
+                <Button Height="40" Width="80" Margin="20,10,0,0" >测试点击2</Button>
+                <Button Height="40" Width="80" Margin="20,10,0,0" >测试点击3</Button>
+            </StackPanel>
+            <DockPanel>
+                <ScrollViewer>
+                    <StackPanel>
+                        <Label Height="80">数据行1</Label>
+                        <Label Height="80">数据行1</Label>
+                        <Label Height="80">数据行1</Label>
+                        <Label Height="80">数据行1</Label>
+                        <Label Height="80">数据行1</Label>
+                        <Label Height="80">数据行1</Label>
+                        <Label Height="80">数据行1</Label>
+                        <Label Height="80">数据行1</Label>
+                        <Label Height="80">数据行1</Label>
+                        <Label Height="80">数据行1</Label>
+                        <Label Height="80">数据行1</Label>
+                        <Label Height="80">数据行1</Label>
+                        <Label Height="80">数据行1</Label>
+                        <Label Height="80">数据行1</Label>
+                        <Label Height="80">数据行1</Label>
+                    </StackPanel>
+                </ScrollViewer>
+            </DockPanel>
+        </DockPanel>
     </Grid>
 </Window>
