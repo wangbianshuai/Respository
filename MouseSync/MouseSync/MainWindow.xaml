@@ -1,17 +1,17 @@
 ﻿<Window x:Class="MouseSync.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="MainWindow" Height="540" Width="960">
+        Title="MainWindow" Height="540" Width="960" Loaded="Window_Loaded" >
     <Grid>
         <DockPanel>
             <StackPanel DockPanel.Dock="Top" Height="60" Orientation="Horizontal" FlowDirection="LeftToRight">
-                <Button Height="40" Width="80" Margin="20,10,0,0"   Click="Button_Click">测试点击</Button>
-                <Button Height="40" Width="80" Margin="20,10,0,0" >测试点击2</Button>
-                <Button Height="40" Width="80" Margin="20,10,0,0" >测试点击3</Button>
+                <Button Height="40" Width="80" Margin="20,10,0,0" Name="Button1"   Click="Button_Click">测试点击</Button>
+                <Button Height="40" Width="80" Margin="20,10,0,0" Click="Button_Click_1" >测试点击2</Button>
+                <Button Height="40" Width="80" Margin="20,10,0,0" Click="Button_Click_2" >测试点击3</Button>
             </StackPanel>
             <DockPanel>
                 <ScrollViewer Name="ScrollViewer1">
-                    <StackPanel>
+                    <StackPanel Name="StackPanel1">
                         <Label Height="80">数据行1</Label>
                         <Label Height="80">数据行1</Label>
                         <Label Height="80">数据行1</Label>

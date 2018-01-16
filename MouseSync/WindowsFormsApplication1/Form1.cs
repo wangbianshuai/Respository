@@ -124,5 +124,10 @@ namespace WindowsFormsApplication1
             textBox1.Text = String.Format("{0},{1}", MousePosition.X, MousePosition.Y);
             mouse_event(MouseEventFlag.Move, stepx, stepy, 0, UIntPtr.Zero);
         }
+
+        private void toolStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
+        {
+
+        }
     }
 }

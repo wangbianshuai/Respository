@@ -64,6 +64,7 @@ namespace MouseSync.Code
         public const int MOUSEEVENTF_RIGHTUP = 0x0010; //模拟鼠标右键抬起 
         public const int MOUSEEVENTF_MIDDLEDOWN = 0x0020; //模拟鼠标中键按下 
         public const int MOUSEEVENTF_MIDDLEUP = 0x0040;// 模拟鼠标中键抬起 
+        public const int MOUSEEVENTF_WHEEL = 0x800; //模拟鼠标滚动  
 
         [DllImport("user32")]
         public static extern void mouse_event(int dwFlags, int dx, int dy, int dwData, int dwExtraInfo);
@@ -179,5 +180,14 @@ namespace MouseSync.Code
 
         [DllImport("user32.dll", CharSet = CharSet.Auto)]
         internal static extern short VkKeyScan(char ch);
+
+        [DllImport("user32.dll")]
+        public static extern void BlockInput(bool Block);
+
+        [DllImport("user32.dll")]
+        public static extern int SetScrollPos(IntPtr hwnd, int bar, int position, int redraw);
+
+        [DllImport("user32.dll")]
+        public static extern int SendMessage(IntPtr hwnd, int msg, int lp, IntPtr rp);
     }
 }
