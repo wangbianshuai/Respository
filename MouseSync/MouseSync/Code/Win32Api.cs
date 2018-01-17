@@ -189,5 +189,24 @@ namespace MouseSync.Code
 
         [DllImport("user32.dll")]
         public static extern int SendMessage(IntPtr hwnd, int msg, int lp, IntPtr rp);
+
+        [DllImport("user32.dll")]
+        public static extern int GetClassName(IntPtr hWnd, StringBuilder lpString, int nMaxCount);
+
+        [DllImport("user32.dll")]
+        public static extern int GetWindowText(IntPtr hWnd, StringBuilder lpString, int nMaxCount);
+
+        [DllImport("user32")]
+        public static extern bool EnumChildWindows(IntPtr window, EnumWindowProc callback, IntPtr i);
+
+        [DllImport("user32.dll", EntryPoint = "FindWindowEx")]
+        private static extern IntPtr FindWindowEx(IntPtr hwndParent, IntPtr hwndChildAfter, string lpszClass, string lpszWindow);
+
+        [DllImport("user32")]
+        public static extern int EnumWindows(CallBack x, int y);
     }
+
+    public delegate bool EnumWindowProc(IntPtr hWnd, IntPtr parameter);
+
+    public delegate bool CallBack(IntPtr hwnd, IntPtr lParam);
 }

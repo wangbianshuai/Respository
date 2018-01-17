@@ -90,12 +90,12 @@ namespace MouseSync
             //Code.Win32Api.mouse_event(Code.Win32Api.MOUSEEVENTF_WHEEL, 0, 0, -100, 0);
 
             ScrollViewer1.Focus();
-          Code.Win32Api.SetScrollPos(((HwndSource)PresentationSource.FromVisual(ScrollViewer1)).Handle, 1, 200, 1);
+            Code.Win32Api.SetScrollPos(((HwndSource)PresentationSource.FromVisual(ScrollViewer1)).Handle, 1, 200, 1);
 
-        IntPtr hwnd=    ((HwndSource)PresentationSource.FromVisual(ScrollViewer1)).Handle;
+            IntPtr hwnd = ((HwndSource)PresentationSource.FromVisual(ScrollViewer1)).Handle;
 
-        Code.Win32Api.SendMessage(hwnd, 0x115, 7, IntPtr.Zero);
-          
+            Code.Win32Api.SendMessage(hwnd, 0x115, 7, IntPtr.Zero);
+
         }
 
         private void Button_Click_2(object sender, RoutedEventArgs e)
