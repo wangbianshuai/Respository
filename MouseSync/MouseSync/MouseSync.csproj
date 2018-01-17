@@ -82,6 +82,9 @@
     </ApplicationDefinition>
     <Compile Include="Code\AxAcroPDF.cs" />
     <Compile Include="Code\AxFramerControl.cs" />
+    <Compile Include="Code\Common2.cs" />
+    <Compile Include="Code\ImageSync.cs" />
+    <Compile Include="Code\UdpService2.cs" />
     <Compile Include="Window1.xaml.cs">
       <DependentUpon>Window1.xaml</DependentUpon>
     </Compile>

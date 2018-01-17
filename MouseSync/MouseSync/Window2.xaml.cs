@@ -101,11 +101,38 @@ namespace MouseSync
             bool result2 = GetScrollInfo(_AxAcroPDF.AcroPDF.Handle, 1, ref si2);
             if (result2) scrollInfoList.Add(si2);
 
-            PostMessage(_AxAcroPDF.AcroPDF.Handle, WM_VSCROLL, MakeLong((short)SB_THUMBTRACK, (short)(100)), 0);
+            //PostMessage(_AxAcroPDF.AcroPDF.Handle, WM_VSCROLL, MakeLong((short)SB_THUMBTRACK, (short)(100)), 0);
 
-            this._AxAcroPDF.AcroPDF.Focus();
-            mouse_event(MOUSEEVENTF_WHEEL, 0, 0, -100, 0);
-            mouse_event(MOUSEEVENTF_WHEEL, 0, 0, -100, 0);
+            //this._AxAcroPDF.AcroPDF.Focus();
+            //mouse_event(MOUSEEVENTF_WHEEL, 0, 0, -100, 0);
+            //mouse_event(MOUSEEVENTF_WHEEL, 0, 0, -100, 0);
+
+            timer = new System.Timers.Timer();
+            timer.Interval = 100;
+            timer.Elapsed += timer_Elapsed;
+            timer.Start();
+        }
+
+        System.Timers.Timer timer;
+
+        void timer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
+        {
+            this.Dispatcher.Invoke(() => SetImageSource());
+        }
+
+        void SetImageSource()
+        {
+            try
+            {
+                Point p = DockPanel1.PointToScreen(new Point());
+                byte[] bytes = Code.Common2.CaptureScreen(Convert.ToInt32(p.X), Convert.ToInt32(p.Y), Convert.ToInt32(DockPanel1.ActualWidth), Convert.ToInt32(DockPanel1.ActualHeight));
+
+                //Code.Common2.SaveFile(bytes, "image1.png");
+                Image1.Source = Code.Common2.GetImageSource(bytes);
+            }
+            catch
+            {
+            }
         }
 
         const int MOUSEEVENTF_WHEEL = 0x800;

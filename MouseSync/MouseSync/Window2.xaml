@@ -5,8 +5,10 @@
     <Grid>
         <DockPanel>
             <DockPanel Height="480" DockPanel.Dock="Top">
-                <WindowsFormsHost  Height="480"  Width="480" DockPanel.Dock="Left" Name="WindowsFormsHost1"/>
-                <WindowsFormsHost  Height="480"  Width="480" DockPanel.Dock="Right" Name="WindowsFormsHost2"/>
+                <DockPanel  Height="480"  Width="480" DockPanel.Dock="Left" Name="DockPanel1">
+                    <WindowsFormsHost  Height="480"  Width="480" Name="WindowsFormsHost1"/>
+                </DockPanel>
+                <Image  Height="480"  Width="480" DockPanel.Dock="Right" Name="Image1"/>
             </DockPanel>
             <DockPanel>
                 <Button Name="Button1" Width="60" Height="30" VerticalAlignment="Center" HorizontalAlignment="Center" Click="Button1_Click" >测试</Button>
