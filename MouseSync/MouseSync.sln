@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WindowsFormsApplication1", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleApplication1", "ConsoleApplication1\ConsoleApplication1.csproj", "{655562A0-FE8F-4FFA-8C8F-FD3FBA40CBAC}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MouseKeyboardLibrary", "MouseKeyboardLibrary\MouseKeyboardLibrary.csproj", "{3E24ABBA-1029-488A-B306-58397F0A41A2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -25,6 +27,10 @@ Global
 		{655562A0-FE8F-4FFA-8C8F-FD3FBA40CBAC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{655562A0-FE8F-4FFA-8C8F-FD3FBA40CBAC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{655562A0-FE8F-4FFA-8C8F-FD3FBA40CBAC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3E24ABBA-1029-488A-B306-58397F0A41A2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3E24ABBA-1029-488A-B306-58397F0A41A2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3E24ABBA-1029-488A-B306-58397F0A41A2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3E24ABBA-1029-488A-B306-58397F0A41A2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

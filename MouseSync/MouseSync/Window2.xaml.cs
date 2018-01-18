@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -164,6 +165,33 @@ namespace MouseSync
 
         [DllImport("user32.dll")]
         static extern void mouse_event(int flags, int dX, int dY, int buttons, int extraInfo);
+
+        [DllImport("user32.dll")]
+        public static extern IntPtr WindowFromPoint(Code.Win32Api.Point point);
+
+        [DllImport("user32.dll", EntryPoint = "GetWindowText")]
+        public static extern int GetWindowText(IntPtr hWnd, StringBuilder lpString, int nMaxCount);
+
+        private void Button2_Click(object sender, RoutedEventArgs e)
+        {
+            Task.Run(() =>
+            {
+                Thread.Sleep(3000);
+                Code.Win32Api.Point p;
+                Code.Win32Api.GetCursorPos(out p);
+
+                IntPtr hwnd = WindowFromPoint(p);
+
+                PostMessage(hwnd, WM_VSCROLL, MakeLong((short)SB_THUMBTRACK, (short)(100)), 0);
+
+                SCROLLINFO si2 = new SCROLLINFO();
+                si2.cbSize = (uint)Marshal.SizeOf(si2);
+                si2.fMask = (int)ScrollInfoMask.SIF_ALL;
+                bool result2 = GetScrollInfo(hwnd, 1, ref si2);
+              
+
+            });
+        }
 
     }
 }
