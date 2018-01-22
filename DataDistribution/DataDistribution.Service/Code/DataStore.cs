@@ -29,6 +29,12 @@ namespace DataDistribution.Service.Code
 
             userIdList.ForEach(userId => AddUserData(userId, userDict, data));
 
+            userIdList= userDict.Keys.Except(userIdList).ToList();
+            foreach (var userId in userIdList)
+            {
+                userDict[userId] = new ConcurrentQueue<byte[]>();
+            }
+
             return true;
         }
 

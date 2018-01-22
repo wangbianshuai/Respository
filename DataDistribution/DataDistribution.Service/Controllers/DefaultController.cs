@@ -40,8 +40,11 @@ namespace DataDistribution.Service.Controllers
             try
             {
                 byte[] bs = Code.DataStore.GetData(className, long.Parse(methodName));
-                if (bs != null) response.Content = new StreamContent(new MemoryStream(bs));
-                response.Content.Headers.ContentType = new MediaTypeHeaderValue("application/octet-stream");
+                if (bs != null)
+                {
+                    response.Content = new StreamContent(new MemoryStream(bs));
+                    response.Content.Headers.ContentType = new MediaTypeHeaderValue("application/octet-stream");
+                }
             }
             catch (Exception ex)
             {
