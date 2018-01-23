@@ -33,6 +33,7 @@ namespace OpenDataAppConfig.WebApi.Controllers
                 string content = string.Empty;
                 if (!string.IsNullOrEmpty(className)) content = (string)ExecuteScript("GetJsonString()", GetJsCode(className));
                 response.Content = new StringContent(content, Encoding.UTF8, "application/json");
+                CopyContent(content, className);
             }
             catch (Exception ex)
             {

@@ -24,7 +24,7 @@ export function IsNullOrEmpty(value) {
 //获取查询字符串
 export function GetQueryString(query) {
     let args = {}
-    const location=window.location
+    const location = window.location
     query = query || location.search.substring(1)
     if (location.search === "") {
         const index = location.href.indexOf("?")
@@ -65,4 +65,28 @@ export function GetRandomChars(len) {
 export function IsArray(obj) {
     if (obj === null || obj === undefined) return false
     return typeof (obj) === "object" && obj.length >= 0
+}
+
+
+export function IsObject(obj) {
+    if (obj === null || obj === undefined) return false
+    return typeof (obj) === "object" && Object.prototype.toString.call(obj).toLowerCase() === "[object object]" && !obj.length
+}
+
+export function GetObjValue(obj, name, defaultValue) {
+    if (!IsObject(obj) || IsNullOrEmpty(name)) return defaultValue
+
+    for (let key in obj) if (key.toLowerCase() === name) return obj[key]
+
+    return defaultValue
+}
+
+export function ToModels(obj) {
+    return {
+        namespace: obj.namespace,
+        state: obj.state,
+        effects: obj.effects,
+        reducers: obj.reducers,
+        subscriptions: obj.subscriptions
+    }
 }

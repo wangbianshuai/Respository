@@ -1,9 +1,16 @@
+import Service from "../services/Index"
+
 export default class Index {
-    constructor() {
-        this.Service = {}
+    constructor(config) {
+        this.Service = new Service(config.ActionList)
+
         this.ActionList = []
-        this.namespace = ""
+        if (config.ActionList) config.ActionList.forEach(a => this.AddAction(a.ActionName, a.StateName, a.DefaultValue))
+
+        this.namespace = config.EntityName
         this.state = { Loading: false }
+
+        this.Init()
     }
 
     Init() {
@@ -70,15 +77,5 @@ export default class Index {
     AddAction(actonName, stateName, defaultValue) {
         this.state[stateName] = defaultValue
         this.ActionList.push({ ActionName: actonName, StateName: stateName })
-    }
-}
-
-Index.ToModels = (obj) => {
-    return {
-        namespace: obj.namespace,
-        state: obj.state,
-        effects: obj.effects,
-        reducers: obj.reducers,
-        subscriptions: obj.subscriptions
     }
 }

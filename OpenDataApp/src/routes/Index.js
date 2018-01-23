@@ -1,26 +1,47 @@
-import React, { Component } from 'react';
-import { connect } from 'dva';
+import React, { Component } from "react"
+import { connect } from "dva"
+import { Toast } from "antd-mobile"
 import * as Common from "../utils/Common"
-import styles from '../styles/Index.css'
-import { List, InputItem, WhiteSpace, WingBlank, Button, Toast, Flex } from "antd-mobile"
-import BasePage from "./BasePage"
 
-class Index extends BasePage {
+class Index extends Component {
     constructor(props) {
         super(props)
 
-        this.state = {}
+        this.QueryString = Common.GetQueryString()
+        this.EntityName = Common.GetObjValue(this.QueryString, "Page", "Index")
+        this.GetPageConfig()
     }
 
-    componentDidMount2() {
+    GetPageConfig() {
+        
     }
 
-    componentWillReceiveProps2(nextProps) {
+    componentDidMount() {
 
     }
 
-    RenderHtml() {
-        return (<div></div>)
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.Loading) Toast.loading("加载中……", 0)
+        else if (nextProps.Loading === false) Toast.hide()
+
+    }
+
+    componentWillUnmount() {
+
+    }
+
+    SetResponseMessage(d) {
+        if (d && !d.IsSuccess && d.Message) { Toast.fail(d.Message); return true; }
+
+        return false
+    }
+
+    JudgeChanged(nextProps, name) {
+        return nextProps[name] !== undefined && nextProps[name] !== this.props[name]
+    }
+
+    render() {
+        return null
     }
 }
 

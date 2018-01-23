@@ -120,6 +120,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="dist\configs\" />
     <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
