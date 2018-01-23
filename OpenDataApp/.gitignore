@@ -1,11 +1,7 @@
-dependencies
-/node_modules
-
-production
-/dist
-
-misc
+node_modules
+dist
+mock
+public
 .DS_Store
 npm-debug.log*
-mock
 package-lock.json
