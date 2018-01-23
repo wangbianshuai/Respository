@@ -32,17 +32,17 @@ export default class Index {
         const obj = {}
 
         this.ActionList.forEach(a => {
-            obj[a.ActionName] = this.InvokeService(this.Service[a.ActionName], a.ActionName);
-        });
+            obj[a.ActionName] = this.InvokeService(this.Service[a.ActionName], a.ActionName)
+        })
 
-        return obj;
+        return obj
     }
 
     ChangeLoading(state, action) {
         return {
             ...state,
-            Loading: action.payload,
-        };
+            Loading: action.payload
+        }
     }
 
     GetReducers() {
@@ -64,7 +64,7 @@ export default class Index {
             }
         });
 
-        return obj;
+        return obj
     }
 
     AddAction(actonName, stateName, defaultValue) {
