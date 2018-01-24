@@ -1,24 +1,15 @@
-import React, { Component } from "react";
+import React, { Component } from "react"
 import * as Common from "../utils/Common"
 import Index from "./Index"
+import Panel from "./Panel"
 
 export default class Page extends Index {
     constructor(props) {
         super(props)
-
-        this.RootType = "div"
-        this.RootClassName = "DivPage"
-        this.Children = []
     }
 
     componentDidMount() {
-        const { PageConfig } = this.props
 
-        PageConfig.Properties.forEach(p => {
-            p.Id = p.Id || Common.CreateGuid()
-            const c = this.GetReactComponent(p)
-            if (c !== null) this.Children.push(c)
-        })
     }
 
     componentWillReceiveProps(nextProps) {
@@ -26,6 +17,6 @@ export default class Page extends Index {
     }
 
     render() {
-        return React.createElement(this.RootType, { className: this.RootClassName }, this.Children)
+        return <Panel Property={this.props.PageConfig} />
     }
 }

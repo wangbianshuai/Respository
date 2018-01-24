@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component } from "react"
 import * as Common from "../utils/Common"
 import Index from "./Index"
 import { Button, Toast } from "antd-mobile"

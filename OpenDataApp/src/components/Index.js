@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component } from "react"
 import * as Common from "../utils/Common"
 import Button2 from "../controls/Button2"
 
