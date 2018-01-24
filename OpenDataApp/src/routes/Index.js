@@ -3,10 +3,13 @@ import { connect } from "dva"
 import { Toast } from "antd-mobile"
 import * as Common from "../utils/Common"
 import IndexModel from "../models/Index"
+import Page from "../components/Page"
 
 class Index extends Component {
     constructor(props) {
         super(props)
+
+        props.InitConfigState()
 
         this.QueryString = Common.GetQueryString()
         this.PageName = Common.GetObjValue(this.QueryString, "Page", "UserList")
@@ -24,7 +27,6 @@ class Index extends Component {
     componentWillReceiveProps(nextProps) {
         this.SetLoading(nextProps)
         this.SetPageConfig(nextProps)
-
     }
 
     SetLoading(nextProps) {
@@ -41,8 +43,7 @@ class Index extends Component {
     InitPage(config) {
         this.InitModels(config)
 
-        config.ActionList && this.props.InitState(config.ActionList)
-
+        config.ActionList && this.props.InitState(config.EntityName, config.ActionList)
     }
 
     InitModels(config) {
@@ -66,7 +67,8 @@ class Index extends Component {
     }
 
     render() {
-        return null
+        if (!this.props.PageConfig) return null
+        return <Page {...this.props} />
     }
 }
 
@@ -99,7 +101,8 @@ function mapStateToProps(state, ownProps) {
 
 function mapDispatchToProps(dispatch) {
     return {
-        InitState(actionList) { actionList.forEach(a => dispatch({ type: `Set_${a.ActionName}`, payload: undefined })) },
+        InitConfigState() { dispatch({ type: "Config/Set_GetConfig", payload: undefined }) },
+        InitState(entityName, actionList) { actionList.forEach(a => dispatch({ type: `${entityName}/Set_${a.ActionName}`, payload: undefined })) },
         Dispatch(type, payload) { dispatch({ type: type, payload: payload }) }
     }
 }

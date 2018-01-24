@@ -2,7 +2,12 @@
     window.configs.UserList = {
         EntityName: "User",
         PrimaryKey: "UserId",
-        ActionList: GetActionList()
+        ActionList: GetActionList(),
+        Properties: [{
+            Name: "Search",
+            Type: "Button",
+            Text: "测试"
+        }]
     };
 
     function GetActionList() {
@@ -12,4 +17,6 @@
     function AddAction(actoinName, stateName, url, dataKey) {
         return { ActionName: actoinName, StateName: stateName, Url: url, DataKey: dataKey }
     }
+
+
 })();

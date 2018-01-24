@@ -1,1 +1,1 @@
-{"EntityName":"User","PrimaryKey":"UserId","ActionList":[{"ActionName":"Query","StateName":"DataList","Url":"DataAccess/Query","DataKey":"DataList"}]}
+{"EntityName":"User","PrimaryKey":"UserId","ActionList":[{"ActionName":"Query","StateName":"DataList","Url":"DataAccess/Query","DataKey":"DataList"}],"Properties":[{"Name":"Search","Type":"Button","Text":"测试"}]}
