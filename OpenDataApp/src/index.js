@@ -1,6 +1,5 @@
 import dva from 'dva';
 import './index.css';
-import * as Common from "./utils/Common"
 
 // 1. Initialize
 const app = dva();
@@ -16,5 +15,3 @@ app.router(require('./router').default);
 
 // 5. Start
 app.start('#root');
-
-Common.App = app

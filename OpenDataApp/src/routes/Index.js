@@ -2,6 +2,7 @@ import React, { Component } from "react"
 import { connect } from "dva"
 import { Toast } from "antd-mobile"
 import * as Common from "../utils/Common"
+import IndexModel from "../models/Index"
 
 class Index extends Component {
     constructor(props) {
@@ -9,7 +10,6 @@ class Index extends Component {
 
         this.QueryString = Common.GetQueryString()
         this.PageName = Common.GetObjValue(this.QueryString, "Page", "UserList")
-        this.GetPageConfig()
     }
 
     GetPageConfig() {
@@ -18,13 +18,37 @@ class Index extends Component {
     }
 
     componentDidMount() {
-        const app = Common.App
+        this.GetPageConfig()
     }
 
     componentWillReceiveProps(nextProps) {
+        this.SetLoading(nextProps)
+        this.SetPageConfig(nextProps)
+
+    }
+
+    SetLoading(nextProps) {
         if (nextProps.Loading) Toast.loading("加载中……", 0)
         else if (nextProps.Loading === false) Toast.hide()
+    }
 
+    SetPageConfig(nextProps) {
+        if (this.JudgeChanged(nextProps, "PageConfig") && nextProps.PageConfig) {
+            this.InitPage(nextProps.PageConfig)
+        }
+    }
+
+    InitPage(config) {
+        this.InitModels(config)
+
+        config.ActionList && this.props.InitState(config.ActionList)
+
+    }
+
+    InitModels(config) {
+        if (this.props.App._models.filter(f => f.namespace === config.EntityName).length === 0) {
+            this.props.App.model(Common.ToModels(new IndexModel(config)))
+        }
     }
 
     componentWillUnmount() {
