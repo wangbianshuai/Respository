@@ -17,6 +17,6 @@ export default class Page extends Index {
     }
 
     render() {
-        return <Panel Property={this.props.PageConfig} />
+        return <Panel Property={this.props.PageConfig}  />
     }
 }

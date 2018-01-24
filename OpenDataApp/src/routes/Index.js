@@ -20,6 +20,10 @@ class Index extends Component {
         this.props.Dispatch("Config/GetConfig", { Url: url })
     }
 
+    Dispatch(action, payload) {
+        this.props.Dispatch(this.props.PageConfig.EntityName + "/" + action.ActionName, payload)
+    }
+
     componentDidMount() {
         this.GetPageConfig()
     }
@@ -68,7 +72,7 @@ class Index extends Component {
 
     render() {
         if (!this.props.PageConfig) return null
-        return <Page {...this.props} />
+        return <Page RoutePage={this} {...this.props} />
     }
 }
 
