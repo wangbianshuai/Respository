@@ -90,3 +90,7 @@ export function ToModels(obj) {
         subscriptions: obj.subscriptions
     }
 }
+
+export const DataApiUrl = "http://localhost/op/api/"
+
+export const ConfigApiUrl = "http://localhost/opac/api/"

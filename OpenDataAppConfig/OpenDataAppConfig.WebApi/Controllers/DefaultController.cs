@@ -15,6 +15,11 @@ namespace OpenDataAppConfig.WebApi.Controllers
 {
     public class DefaultController : ApiController
     {
+        public string Options()
+        {
+            return null;
+        }
+
         /// <summary>
         /// GET请求
         /// </summary>

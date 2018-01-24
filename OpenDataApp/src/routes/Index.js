@@ -8,16 +8,17 @@ class Index extends Component {
         super(props)
 
         this.QueryString = Common.GetQueryString()
-        this.EntityName = Common.GetObjValue(this.QueryString, "Page", "Index")
+        this.PageName = Common.GetObjValue(this.QueryString, "Page", "UserList")
         this.GetPageConfig()
     }
 
     GetPageConfig() {
-        
+        const url = Common.ConfigApiUrl + this.PageName
+        this.props.Dispatch("Config/GetConfig", { Url: url })
     }
 
     componentDidMount() {
-
+        const app = Common.App
     }
 
     componentWillReceiveProps(nextProps) {
@@ -45,13 +46,37 @@ class Index extends Component {
     }
 }
 
-function mapStateToProps(state) {
-    return {
+function mapStateToProps(state, ownProps) {
+    const props = {}
+
+    let pageConfig = null
+
+    if (ownProps.PageConfig === undefined) {
+        pageConfig = state.Config.Data
+        props.PageConfig = pageConfig;
     }
+    else pageConfig = ownProps.PageConfig
+
+    if (pageConfig && pageConfig.EntityName && state[pageConfig.EntityName]) {
+        pageConfig.ActionList.forEach(a => props[a.StateName] = state[pageConfig.EntityName][a.StateName])
+    }
+
+    if (pageConfig && pageConfig.StateList) {
+        pageConfig.StateList.forEach(s => {
+            if (state[s.EntityName]) props[s.StateName] = state[s.EntityName][s.StateName]
+        })
+    }
+
+    console.log(state)
+    console.log(props)
+
+    return props
 }
 
 function mapDispatchToProps(dispatch) {
     return {
+        InitState(actionList) { actionList.forEach(a => dispatch({ type: `Set_${a.ActionName}`, payload: undefined })) },
+        Dispatch(type, payload) { dispatch({ type: type, payload: payload }) }
     }
 }
 

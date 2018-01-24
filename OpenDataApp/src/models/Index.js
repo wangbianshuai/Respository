@@ -2,13 +2,13 @@ import Service from "../services/Index"
 
 export default class Index {
     constructor(config) {
+        this.namespace = config.EntityName
+        this.state = { Loading: false }
+
         this.Service = new Service(config.ActionList)
 
         this.ActionList = []
         if (config.ActionList) config.ActionList.forEach(a => this.AddAction(a.ActionName, a.StateName, a.DefaultValue))
-
-        this.namespace = config.EntityName
-        this.state = { Loading: false }
 
         this.Init()
     }
