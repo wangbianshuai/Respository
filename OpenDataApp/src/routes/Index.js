@@ -62,7 +62,8 @@ class Index extends Component {
     }
 
     InitPage(config) {
-        this.InitModels(config)
+        if (Common.IsEmptyObject(config)) return
+        config.EntityName && this.InitModels(config)
 
         config.ActionList && this.props.InitState(config.EntityName, config.ActionList)
     }
@@ -88,7 +89,8 @@ class Index extends Component {
     }
 
     render() {
-        if (!this.props.PageConfig) return null
+        if (Common.IsEmptyObject(this.props.PageConfig)) return null
+
         const props = { Page: this, Property: this.props.PageConfig }
         for (var key in this.props) if (key !== "PageConfig") props[key] = this.props[key]
         return <Panel {...props} />

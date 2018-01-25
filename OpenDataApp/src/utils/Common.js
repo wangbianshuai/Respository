@@ -76,7 +76,7 @@ export function IsObject(obj) {
 export function GetObjValue(obj, name, defaultValue) {
     if (!IsObject(obj) || IsNullOrEmpty(name)) return defaultValue
 
-    for (let key in obj) if (key.toLowerCase() === name) return obj[key]
+    for (let key in obj) if (key.toLowerCase() === name.toLowerCase()) return obj[key]
 
     return defaultValue
 }
@@ -94,3 +94,11 @@ export function ToModels(obj) {
 export const DataApiUrl = "http://localhost/op/api/"
 
 export const ConfigApiUrl = "http://localhost/opac/api/"
+
+export function IsEmptyObject(obj) {
+    if (!IsObject(obj)) return true
+
+    if(Object.getOwnPropertyNames(obj).length ===0) return true
+
+    return false
+}

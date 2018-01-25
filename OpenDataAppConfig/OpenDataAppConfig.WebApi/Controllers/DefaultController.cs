@@ -37,6 +37,7 @@ namespace OpenDataAppConfig.WebApi.Controllers
             {
                 string content = string.Empty;
                 if (!string.IsNullOrEmpty(className)) content = (string)ExecuteScript("GetJsonString()", GetJsCode(className));
+                if (string.IsNullOrEmpty(content) || content == "{}") content = string.Empty;
                 response.Content = new StringContent(content, Encoding.UTF8, "application/json");
                 CopyContent(content, className);
             }
@@ -60,7 +61,6 @@ namespace OpenDataAppConfig.WebApi.Controllers
             sb.AppendLine("var window={};window.configs = {};");
 
             string dirPath = AppDomain.CurrentDomain.BaseDirectory;
-
 
             using (TextReader reader = new StreamReader(string.Format("{0}configs\\{1}.js", dirPath, name)))
             {
@@ -101,8 +101,12 @@ namespace OpenDataAppConfig.WebApi.Controllers
         {
             StringBuilder sb = new StringBuilder();
 
+            sb.AppendLine("function GetObjValue(obj,name){");
+            sb.AppendLine("for(var key in obj)if(key.toLowerCase()===name.toLowerCase())return obj[key];");
+            sb.AppendLine("}");
+
             sb.AppendLine("function GetJsonString(){");
-            sb.AppendLine(string.Format("return JSON.stringify(window.configs[\"{0}\"])", name));
+            sb.AppendLine(string.Format("return JSON.stringify(GetObjValue(window.configs,\"{0}\"))", name));
             sb.AppendLine("}");
             return sb.ToString();
         }
