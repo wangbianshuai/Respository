@@ -7,7 +7,7 @@ export default class Panel extends Index {
         super(props)
 
         this.RootType = "div"
-        this.RootClassName = "DivPage"
+        this.RootClassName = "DivPanel"
         this.Children = []
     }
 

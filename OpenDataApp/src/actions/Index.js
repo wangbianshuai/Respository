@@ -7,5 +7,6 @@ export default class Index {
         this.Page = options.Page
     }
 
+    PropsChanged(props, nextProps) { }
 
 }

@@ -3,7 +3,8 @@ import { connect } from "dva"
 import { Toast } from "antd-mobile"
 import * as Common from "../utils/Common"
 import IndexModel from "../models/Index"
-import Page from "../components/Page"
+import Panel from "../components/Panel"
+import PageAction from "../actions/Page"
 
 class Index extends Component {
     constructor(props) {
@@ -13,6 +14,12 @@ class Index extends Component {
 
         this.QueryString = Common.GetQueryString()
         this.PageName = Common.GetObjValue(this.QueryString, "Page", "UserList")
+
+        this.InitActions()
+    }
+
+    InitActions() {
+        this.PageAction = new PageAction({ Page: this })
     }
 
     GetPageConfig() {
@@ -24,6 +31,11 @@ class Index extends Component {
         this.props.Dispatch(this.props.PageConfig.EntityName + "/" + action.ActionName, payload)
     }
 
+    GetAction(actionName) {
+        var list = this.props.PageConfig.ActionList.filter(f => f.ActionName === actionName)
+        return list.length > 0 ? list[0] : null
+    }
+
     componentDidMount() {
         this.GetPageConfig()
     }
@@ -31,6 +43,11 @@ class Index extends Component {
     componentWillReceiveProps(nextProps) {
         this.SetLoading(nextProps)
         this.SetPageConfig(nextProps)
+        this.PropsChanged(nextProps)
+    }
+
+    PropsChanged(nextProps) {
+        this.PageAction.PropsChanged(this.props, nextProps)
     }
 
     SetLoading(nextProps) {
@@ -72,7 +89,9 @@ class Index extends Component {
 
     render() {
         if (!this.props.PageConfig) return null
-        return <Page RoutePage={this} {...this.props} />
+        const props = { Page: this, Property: this.props.PageConfig }
+        for (var key in this.props) if (key !== "PageConfig") props[key] = this.props[key]
+        return <Panel {...props} />
     }
 }
 

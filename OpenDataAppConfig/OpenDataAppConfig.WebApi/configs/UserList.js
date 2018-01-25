@@ -22,7 +22,7 @@
     }
 
     function AddAlertAction() {
-        return { ActionName: "AlertMessage", StateName: "AlertMessage", ActionType: "Alert", Message: "测试" }
+        return { ActionName: "AlertMessage", IsRequest: false, StateName: "AlertMessage", ActionType: "Alert", Message: "测试" }
     }
 
 

@@ -10,8 +10,11 @@ export default class Index extends Component {
     }
 
     GetReactComponent(property) {
+        const props = { ParentComponent: this, Property: property }
+        for (var key in this.props) if (key !== "Property") props[key] = this.props[key]
+
         switch (property.Type) {
-            case "Button": return <Button2 Config={property} key={property.Id} />
+            case "Button": return <Button2 {...props} key={property.Id} />
             default: return null
         }
     }

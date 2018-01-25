@@ -8,7 +8,10 @@ export default class Index {
         this.Service = new Service(config.ActionList)
 
         this.ActionList = []
-        if (config.ActionList) config.ActionList.forEach(a => this.AddAction(a.ActionName, a.StateName, a.DefaultValue))
+        if (config.ActionList) {
+            this.ActionList = config.ActionList
+            config.ActionList.forEach(a => this.state[a.StateName] = a.DefaultValue)
+        }
 
         this.Init()
     }
@@ -35,11 +38,18 @@ export default class Index {
         }
     }
 
+    InvokeAction(type) {
+        return function* ({ payload }, { call, put }) {
+            yield put({ type: `Set_${type}`, payload: payload })
+        }
+    }
+
     GetEffects() {
         const obj = {}
 
         this.ActionList.forEach(a => {
-            obj[a.ActionName] = this.InvokeService(this.Service[a.ActionName], a.ActionName)
+            if (a.IsRequest === false) obj[a.ActionName] = this.InvokeAction(a.ActionName)
+            else obj[a.ActionName] = this.InvokeService(this.Service[a.ActionName], a.ActionName)
         })
 
         return obj
@@ -72,10 +82,5 @@ export default class Index {
         });
 
         return obj
-    }
-
-    AddAction(actonName, stateName, defaultValue) {
-        this.state[stateName] = defaultValue
-        this.ActionList.push({ ActionName: actonName, StateName: stateName })
     }
 }
