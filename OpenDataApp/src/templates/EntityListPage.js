@@ -1,0 +1,89 @@
+import * as Common from "../utils/Common"
+
+//实体列表页
+/*
+Config配置结构：
+{
+    EntityName:实体名
+    PrimaryKey:主键
+    SearchNames:搜索关键字对应搜索属性名集合，以逗号隔开
+    SelectNames:查询数据列名集合
+    DataUrl:查询数据URL
+    TemplateName:列表页模板名称
+    DataItemTemplateName:数据行模板名称
+    DataItemConfig:数据行配置,结构相应模板配置结构
+    IsNewAdd:是否可新增
+    IsDelete:是否可删除
+    IsPaging:是否分页
+    PageSize:分页大小,
+    Title:标题
+}
+*/
+export default function EntityListPage(config) {
+    const _Config = { Config: config }
+
+    //初始化配置
+    InitConfig(_Config, config)
+
+    //NavBar 导航栏
+    InitNavBar(_Config)
+
+    //两行 WhiteSpace 上下留白
+    InitWhiteSpace1(_Config)
+
+    //SearchBar 搜索栏
+    InitSearchBar(_Config)
+
+    //两行 WhiteSpace 上下留白
+    InitWhiteSpace2(_Config)
+
+    //ListView 长列表
+    InitListView(_Config)
+
+    return _Config
+}
+
+function InitConfig(a, b) {
+    a.IsNewAdd = true
+    a.IsDelete = true
+    a.IsPaging = true
+    a.PageSize = 20
+    a.Properties = []
+    a.IsNavBar = true
+    a.WhiteSpaceCount1 = 2
+    a.IsSearchBar = true
+    a.WhiteSpaceCount2 = 2
+
+    const copyNames = ["Title", "EntityName", "PrimaryKey", "SearchNames", "SelectNames", "DataUrl", "IsNewAdd", "IsDelete", "IsPaging", "PageSize"]
+
+    Common.Copy(a, b, copyNames)
+}
+
+//NavBar 导航栏
+function InitNavBar(a) {
+    return {
+        Name: "Header",
+        Type: "NavBar",
+        Title: a.Title
+    }
+}
+
+//两行 WhiteSpace 上下留白
+function InitWhiteSpace1(a) {
+
+}
+
+//SearchBar 搜索栏
+function InitSearchBar(a) {
+
+}
+
+//两行 WhiteSpace 上下留白
+function InitWhiteSpace2(a) {
+
+}
+
+//ListView 长列表
+function InitListView(a) {
+
+}

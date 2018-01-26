@@ -98,7 +98,24 @@ export const ConfigApiUrl = "http://localhost/opac/api/"
 export function IsEmptyObject(obj) {
     if (!IsObject(obj)) return true
 
-    if(Object.getOwnPropertyNames(obj).length ===0) return true
+    if (Object.getOwnPropertyNames(obj).length > 0) return false
 
-    return false
+    let blEmpty = true
+    for (let key in obj) if (key) { blEmpty = false; break; }
+
+    return blEmpty
+}
+
+export function Copy(a, b, c) {
+    if (!IsObject(a) || !IsObject(b)) return
+    
+    if (IsArray(c)) {
+        let n = ""
+        for (let i = 0; i < c.length; i++) {
+            n = c[i]
+            if (b[n] !== undefined) a[n] = b[n]
+            else for (let k in b) if (k === n) { a[n] = b[n]; break; }
+        }
+    }
+    else for (let k in b) a[k] = b[k]
 }

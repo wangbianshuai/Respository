@@ -1,13 +1,13 @@
 import React, { Component } from "react"
 import * as Common from "../utils/Common"
 import Index from "./Index"
+import { Flex } from "antd-mobile"
 
 export default class Panel extends Index {
     constructor(props) {
         super(props)
 
-        this.RootType = "div"
-        this.RootClassName = "DivPanel"
+        this.RootType = Flex
         this.Children = []
     }
 
@@ -26,6 +26,6 @@ export default class Panel extends Index {
     }
 
     render() {
-        return React.createElement(this.RootType, { className: this.RootClassName }, this.Children)
+        return (<Flex><Flex.Item>{this.Children}</Flex.Item></Flex>)
     }
 }

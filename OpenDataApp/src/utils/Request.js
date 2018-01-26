@@ -24,8 +24,7 @@ function GetFullUrl(url) {
 }
 
 function GetRootPath() {
-    //return window.location.protocol + "//" + window.location.host + "/api/"
-    return "http://localhost/op/api/"
+    return Common.DataApiUrl
 }
 
 function SetResult(res) {
