@@ -1,15 +1,11 @@
 (function () {
     window.configs.UserList = {
         Name: "UserList",
+        Title: "用户列表",
         EntityName: "User",
         PrimaryKey: "UserId",
         ActionList: GetActionList(),
-        Properties: [{
-            Name: "Search",
-            Type: "Button",
-            Text: "测试",
-            ActionSteps: ["AlertMessage"]
-        }]
+        TemplateName: "EntityListPage"
     };
 
     function GetActionList() {

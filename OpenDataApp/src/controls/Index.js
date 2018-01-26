@@ -7,4 +7,8 @@ export default class Index extends Component {
 
         this.Id = props.Id || Common.CreateGuid()
     }
+
+    GetPropsValue(name) {
+        return this.props[name] || this[name]
+    }
 }

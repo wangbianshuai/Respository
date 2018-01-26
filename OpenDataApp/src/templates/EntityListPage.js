@@ -61,26 +61,41 @@ function InitConfig(a, b) {
 
 //NavBar 导航栏
 function InitNavBar(a) {
-    return {
+    a.IsNavBar && a.Properties.push({
         Name: "Header",
         Type: "NavBar",
         Title: a.Title
-    }
+    })
 }
 
 //两行 WhiteSpace 上下留白
 function InitWhiteSpace1(a) {
-
+    if (a.WhiteSpaceCount1 > 0) {
+        for (let i = 1; i <= a.WhiteSpaceCount1; i++) a.Properties.push({
+            Name: "WhiteSpaceCount1_" + i,
+            Type: "WhiteSpace"
+        })
+    }
 }
 
 //SearchBar 搜索栏
 function InitSearchBar(a) {
-
+    a.IsSearchBar && a.Properties.push({
+        Name: "SearchBar1",
+        Type: "SearchBar",
+        PlaceHolder: "搜索",
+        MaxLength: 50
+    })
 }
 
 //两行 WhiteSpace 上下留白
 function InitWhiteSpace2(a) {
-
+    if (a.WhiteSpaceCount2 > 0) {
+        for (let i = 1; i <= a.WhiteSpaceCount2; i++) a.Properties.push({
+            Name: "WhiteSpaceCount2_" + i,
+            Type: "WhiteSpace"
+        })
+    }
 }
 
 //ListView 长列表

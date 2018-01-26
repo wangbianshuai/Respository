@@ -5,6 +5,7 @@ import * as Common from "../utils/Common"
 import IndexModel from "../models/Index"
 import Panel from "../components/Panel"
 import PageAction from "../actions/Page"
+import EntityListPage from "../templates/EntityListPage"
 
 class Index extends Component {
     constructor(props) {
@@ -93,7 +94,16 @@ class Index extends Component {
 
         const props = { Page: this, Property: this.props.PageConfig }
         for (var key in this.props) if (key !== "PageConfig") props[key] = this.props[key]
-        return <Panel {...props} />
+        return (<Panel {...props} />)
+    }
+}
+
+function InitTemplateConfig(config) {
+    if (!config || Common.IsNullOrEmpty(config.TemplateName)) return config
+
+    switch (config.TemplateName) {
+        case "EntityListPage": return EntityListPage(config)
+        default: return config
     }
 }
 
@@ -103,12 +113,12 @@ function mapStateToProps(state, ownProps) {
     let pageConfig = null
 
     if (ownProps.PageConfig === undefined) {
-        pageConfig = state.Config.Data
+        pageConfig = InitTemplateConfig(state.Config.Data)
         props.PageConfig = pageConfig;
     }
     else pageConfig = ownProps.PageConfig
 
-    if (pageConfig && pageConfig.EntityName && state[pageConfig.EntityName]) {
+    if (pageConfig && pageConfig.ActionList && pageConfig.EntityName && state[pageConfig.EntityName]) {
         pageConfig.ActionList.forEach(a => props[a.StateName] = state[pageConfig.EntityName][a.StateName])
     }
 

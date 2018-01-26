@@ -20,6 +20,6 @@ export default class Button2 extends Index {
     render() {
         const { Property } = this.props
 
-        return <Button onClick={this.ClickAction.bind(this)}>{Property.Text}</Button>
+        return (<Button onClick={this.ClickAction.bind(this)}>{Property.Text}</Button>)
     }
 }
