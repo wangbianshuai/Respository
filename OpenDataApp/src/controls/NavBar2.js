@@ -12,7 +12,7 @@ export default class NavBar2 extends Index {
     }
 
     GetLeftIcon() {
-        const blLeftIcon = this.GetPropsValue("IsLeftIcon")
+        const blLeftIcon = this.GetPropertyValue("IsLeftIcon")
         if (blLeftIcon) return (<Icon type="left" />)
         return null
     }
@@ -24,6 +24,6 @@ export default class NavBar2 extends Index {
     render() {
         const { Property } = this.props
 
-        return (<NavBar mode={this.GetPropsValue("Mode")} icon={this.GetLeftIcon()} rightContent={this.GetRightContent()}>{Property.Title}</NavBar>)
+        return (<NavBar mode={this.GetPropertyValue("Mode")} icon={this.GetLeftIcon()} rightContent={this.GetRightContent()}>{Property.Title}</NavBar>)
     }
 }

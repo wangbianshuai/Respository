@@ -11,4 +11,8 @@ export default class Index extends Component {
     GetPropsValue(name) {
         return this.props[name] || this[name]
     }
+
+    GetPropertyValue(name) {
+        return this.props.Property[name] || this[name]
+    }
 }

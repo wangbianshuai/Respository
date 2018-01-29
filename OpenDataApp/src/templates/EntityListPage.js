@@ -50,7 +50,7 @@ function InitConfig(a, b) {
     a.PageSize = 20
     a.Properties = []
     a.IsNavBar = true
-    a.WhiteSpaceCount1 = 2
+    a.WhiteSpaceCount1 = 1
     a.IsSearchBar = true
     a.WhiteSpaceCount2 = 2
 
