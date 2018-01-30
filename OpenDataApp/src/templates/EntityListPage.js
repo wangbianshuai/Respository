@@ -100,5 +100,8 @@ function InitWhiteSpace2(a) {
 
 //ListView 长列表
 function InitListView(a) {
-
+    a.Properties.push({
+        Name: "DataListView",
+        Type: "ListView"
+    })
 }
