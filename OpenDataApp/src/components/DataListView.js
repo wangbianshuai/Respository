@@ -1,6 +1,6 @@
 import React, { Component } from "react"
 import * as Common from "../utils/Common"
-import { ListView2 } from "../controls/ListView2"
+import ListView2 from "../controls/ListView2"
 
 export default class DataListView extends Component {
     constructor(props) {

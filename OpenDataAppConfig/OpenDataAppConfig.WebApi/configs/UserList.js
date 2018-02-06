@@ -5,7 +5,10 @@
         EntityName: "User",
         PrimaryKey: "UserId",
         ActionList: GetActionList(),
-        TemplateName: "EntityListPage"
+        TemplateName: "EntityListPage",
+        SelectNames: ["UserName", "LoginName", "CreateDate"],
+        SearchNames: ["UserName", "LoginName"],
+        DataItemKeyValues: GetDataItemKeyValues()
     };
 
     function GetActionList() {
@@ -19,6 +22,13 @@
 
     function AddAlertAction() {
         return { ActionName: "AlertMessage", IsRequest: false, StateName: "AlertMessage", ActionType: "Alert", Message: "测试" }
+    }
+
+    function GetDataItemKeyValues() {
+        var list = [];
+        list.push({ LeftName1: "LoginName", RightName1: "" })
+        list.push({ LeftName2: "UserName", RightName2: "CreateDate" })
+        return list;
     }
 
 

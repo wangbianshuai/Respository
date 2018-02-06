@@ -1,4 +1,5 @@
 import * as Common from "../utils/Common"
+import ListViewDataItem from "./ListViewDataItem"
 
 //实体列表页
 /*
@@ -102,6 +103,7 @@ function InitWhiteSpace2(a) {
 function InitListView(a) {
     a.Properties.push({
         Name: "DataListView",
-        Type: "ListView"
+        Type: "ListView",
+        RowConfig: ListViewDataItem(a.Config)
     })
 }

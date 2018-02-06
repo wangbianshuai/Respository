@@ -18,6 +18,7 @@ export default function ListViewDataItem(config) {
 }
 
 function InitConfig(a, b) {
+    a.Properties = [];
 
     const copyNames = []
 
