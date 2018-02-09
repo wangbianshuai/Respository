@@ -141,7 +141,7 @@ export function IsEquals(a, b, c) {
 
 export function IsArrayEquals(a, b) {
     if (a === b) return true
-    if (a.length != b.length) return false
+    if (a.length !== b.length) return false
 
     let blEquals = true
     for (let i = 0; i < a.length; i++) {

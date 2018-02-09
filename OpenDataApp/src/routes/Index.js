@@ -121,8 +121,7 @@ class Index extends Component {
 
         const props = { Page: this, Property: this.props.PageConfig }
         for (var key in this.props) if (key !== "PageConfig") props[key] = this.props[key]
-       // return (<Panel {...props} />)
-       return null;
+        return (<Panel {...props} />)
     }
 }
 
@@ -142,8 +141,8 @@ function mapStateToProps(state, ownProps) {
     let pageConfig = null
 
     if (ownProps.PageConfig === undefined) {
-        //pageConfig = InitTemplateConfig(state.Config.Data)
-        props.PageConfig = state.Config.Data;
+        pageConfig = InitTemplateConfig(state.Config.Data)
+        props.PageConfig = pageConfig;
     }
     else pageConfig = ownProps.PageConfig
 
