@@ -108,7 +108,7 @@ export function IsEmptyObject(obj) {
 
 export function Copy(a, b, c) {
     if (!IsObject(a) || !IsObject(b)) return
-    
+
     if (IsArray(c)) {
         let n = ""
         for (let i = 0; i < c.length; i++) {
@@ -118,4 +118,58 @@ export function Copy(a, b, c) {
         }
     }
     else for (let k in b) a[k] = b[k]
+}
+
+export function IsEquals(a, b, c) {
+    if (a === undefined && b === undefined) return true
+    if (a === null && b === null) return true
+    if (a === b) return true
+
+    let a_isArray = IsArray(a), b_isArray = IsArray(b)
+    let a_isObj = IsObject(a), b_Obj = IsObject(b)
+
+    if ((a_isArray && !b_isArray) || (!a_isArray && b_isArray)) return false
+    if ((a_isObj && !b_Obj) || (!a_isObj && b_Obj)) return false
+
+    if (a_isArray && b_isArray) return IsArrayEquals(a, b)
+    if (a_isObj && b_Obj) return IsObjectEquals(a, b)
+
+    let sa = IsNullOrEmpty(a) ? "" : a.toString()
+    let sb = IsNullOrEmpty(b) ? "" : b.toString()
+    return c ? sa.toLowerCase() === sb.toLowerCase() : sa === sb
+}
+
+export function IsArrayEquals(a, b) {
+    if (a === b) return true
+    if (a.length != b.length) return false
+
+    let blEquals = true
+    for (let i = 0; i < a.length; i++) {
+        blEquals = IsObjectEquals(a[i], b[i])
+        if (!blEquals) break
+    }
+
+    return blEquals
+}
+
+export function IsObjectEquals(a, b) {
+    if (a === b) return true
+
+    let blEquals = true
+
+    for (let k in a) {
+        blEquals = IsEquals(a[k], b[k])
+        if (!blEquals) break;
+    }
+
+    if (blEquals) {
+        for (let k in b) {
+            if (a[k] === undefined) {
+                blEquals = false
+                break;
+            }
+        }
+    }
+
+    return blEquals
 }

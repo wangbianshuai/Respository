@@ -14,7 +14,7 @@ export default class Button2 extends Index {
 
         const actionName = ActionSteps[0]
         const action = Page.GetAction(actionName)
-        if (action != null) Page.PageAction.Alert(action)
+        //if (action != null) Page.PageAction.Alert(action)
     }
 
     render() {

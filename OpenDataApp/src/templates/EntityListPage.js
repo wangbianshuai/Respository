@@ -17,7 +17,8 @@ Config配置结构：
     IsDelete:是否可删除
     IsPaging:是否分页
     PageSize:分页大小,
-    Title:标题
+    Title:标题,
+    EventActionList:事件行动列表
 }
 */
 export default function EntityListPage(config) {
@@ -56,6 +57,7 @@ function InitConfig(a, b) {
     a.WhiteSpaceCount2 = 2
 
     const copyNames = ["Title", "EntityName", "PrimaryKey", "SearchNames", "SelectNames", "DataUrl", "IsNewAdd", "IsDelete", "IsPaging", "PageSize"]
+    copyNames.push("EventActionList")
 
     Common.Copy(a, b, copyNames)
 }

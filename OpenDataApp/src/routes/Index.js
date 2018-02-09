@@ -6,6 +6,7 @@ import IndexModel from "../models/Index"
 import Panel from "../components/Panel"
 import PageAction from "../actions/Page"
 import EntityListPage from "../templates/EntityListPage"
+import QueryAction from "../actions/Query"
 
 class Index extends Component {
     constructor(props) {
@@ -15,12 +16,17 @@ class Index extends Component {
 
         this.QueryString = Common.GetQueryString()
         this.PageName = Common.GetObjValue(this.QueryString, "Page", "UserList")
-
-        this.InitActions()
+        this.EventActions = {};
+        this.IsPageLoad = false;
+        this.InitActions();
     }
 
+    //初始化行为
     InitActions() {
-        this.PageAction = new PageAction({ Page: this })
+        //页面通用行为
+        this.EventActions.Page = new PageAction({ Page: this })
+        //查询行为
+        this.EventActions.Query = new QueryAction({ Page: this });
     }
 
     GetPageConfig() {
@@ -48,7 +54,7 @@ class Index extends Component {
     }
 
     PropsChanged(nextProps) {
-        this.PageAction.PropsChanged(this.props, nextProps)
+        for (let a in this.EventActions) this.EventActions[a].PropsChanged && this.EventActions[a].PropsChanged(this.props, nextProps);
     }
 
     SetLoading(nextProps) {
@@ -58,7 +64,8 @@ class Index extends Component {
 
     SetPageConfig(nextProps) {
         if (this.JudgeChanged(nextProps, "PageConfig") && nextProps.PageConfig) {
-            this.InitPage(nextProps.PageConfig)
+            this.IsPageLoad = false
+            this.InitPage(nextProps.PageConfig);
         }
     }
 
@@ -75,6 +82,26 @@ class Index extends Component {
         }
     }
 
+    //组件完成更新
+    componentDidUpdate() {
+        //初始化页面配置，即初始化页面,类似Page_Load
+        if (this.props.PageConfig && !this.IsPageLoad) {
+            this.IsPageLoad = true;
+            this.PageLoad();
+        }
+    }
+
+    //页页加载
+    PageLoad() {
+        const { PageConfig } = this.props;
+
+        //加载初始调用事件行为
+        if (PageConfig.EventActionList) {
+            const list = PageConfig.EventActionList.filter(f => f.IsInitInvoke)
+            list.forEach(a => this.EventActions[a.Type] && this.EventActions[a.Type][a.Name] && this.EventActions[a.Type][a.Name]());
+        }
+    }
+
     componentWillUnmount() {
 
     }
@@ -86,7 +113,7 @@ class Index extends Component {
     }
 
     JudgeChanged(nextProps, name) {
-        return nextProps[name] !== undefined && nextProps[name] !== this.props[name]
+        return nextProps[name] !== undefined && !Common.IsEquals(nextProps[name], this.props[name])
     }
 
     render() {
@@ -94,10 +121,12 @@ class Index extends Component {
 
         const props = { Page: this, Property: this.props.PageConfig }
         for (var key in this.props) if (key !== "PageConfig") props[key] = this.props[key]
-        return (<Panel {...props} />)
+       // return (<Panel {...props} />)
+       return null;
     }
 }
 
+//初始化模板配置
 function InitTemplateConfig(config) {
     if (!config || Common.IsNullOrEmpty(config.TemplateName)) return config
 
@@ -113,8 +142,8 @@ function mapStateToProps(state, ownProps) {
     let pageConfig = null
 
     if (ownProps.PageConfig === undefined) {
-        pageConfig = InitTemplateConfig(state.Config.Data)
-        props.PageConfig = pageConfig;
+        //pageConfig = InitTemplateConfig(state.Config.Data)
+        props.PageConfig = state.Config.Data;
     }
     else pageConfig = ownProps.PageConfig
 

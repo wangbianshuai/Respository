@@ -8,7 +8,8 @@
         TemplateName: "EntityListPage",
         SelectNames: ["UserName", "LoginName", "CreateDate"],
         SearchNames: ["UserName", "LoginName"],
-        DataItemKeyValues: GetDataItemKeyValues()
+        DataItemKeyValues: GetDataItemKeyValues(),
+        EventActionList: GetEventActionList()
     };
 
     function GetActionList() {
@@ -29,6 +30,14 @@
         list.push({ LeftName1: "LoginName", RightName1: "" })
         list.push({ LeftName2: "UserName", RightName2: "CreateDate" })
         return list;
+    }
+
+    function GetEventActionList() {
+        return [{
+            Name: "SearchData",
+            Type: "Query",
+            IsInitInvoke: true
+        }]
     }
 
 
