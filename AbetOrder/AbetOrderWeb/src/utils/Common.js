@@ -99,9 +99,9 @@ export function ToModels(obj) {
     }
 }
 
-export const DataApiUrl = "http://localhost/qc/api/"
+export const DataApiUrl = "http://localhost/aow/api/"
 
-export const ConfigApiUrl = "http://localhost/qcwc/api/"
+export const ConfigApiUrl = "http://localhost/aowc/api/"
 
 export function IsEmptyObject(obj) {
     if (!IsObject(obj)) return true

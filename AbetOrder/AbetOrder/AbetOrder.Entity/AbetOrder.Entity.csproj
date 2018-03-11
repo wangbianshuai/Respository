@@ -42,6 +42,7 @@
     <Compile Include="Channel.cs" />
     <Compile Include="ContentTag.cs" />
     <Compile Include="DictionaryConfig.cs" />
+    <Compile Include="OperationLog.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StaticSource.cs" />
     <Compile Include="TemplateHtml.cs" />

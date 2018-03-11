@@ -35,7 +35,7 @@ namespace OpenDataAccess.Service
 
         public string ProcessRequest(Request request, Func<string, string, Type> getClassType, string entityName = null, string methodName = null)
         {
-            DateTime startTime = DateTime.Now;
+            request.StartTime = DateTime.Now;
             Stopwatch sw = new Stopwatch();
             sw.Start();
 
