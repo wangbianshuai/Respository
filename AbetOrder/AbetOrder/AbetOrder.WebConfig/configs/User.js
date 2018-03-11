@@ -1,0 +1,6 @@
+﻿(function () {
+    window.configs.User = {
+
+    };
+
+})();

@@ -1,0 +1,16 @@
+{
+  "entry": "src/index.js",
+  "env": {
+    "development": {
+      "extraBabelPlugins": [
+        "dva-hmr",
+         ["import", { "libraryName": "antd", "style": "css" }]
+      ]
+    },
+    "production": {
+      "extraBabelPlugins": [
+          ["import", { "libraryName": "antd", "style": "css" }]
+      ]
+    }
+  }
+}
