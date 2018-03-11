@@ -40,12 +40,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="User.cs" />
-    <Compile Include="ContentTag.cs" />
+    <Compile Include="Customer.cs" />
     <Compile Include="DictionaryConfig.cs" />
     <Compile Include="OperationLog.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="StaticSource.cs" />
-    <Compile Include="TemplateHtml.cs" />
+    <Compile Include="BillType.cs" />
+    <Compile Include="Bill.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\OpenDataAccess\OpenDataAccess.Entity\OpenDataAccess.Entity.csproj">
