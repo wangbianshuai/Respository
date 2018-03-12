@@ -18,6 +18,7 @@ export default class TextBox2 extends Index {
     OnChange(e) {
         const v = e.target.value;
         this.setState({ Value: v })
+        if (this.Property.ValueChange) this.Property.ValueChange(v);
     }
 
     render() {

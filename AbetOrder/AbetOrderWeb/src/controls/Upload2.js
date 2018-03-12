@@ -14,7 +14,10 @@ export default class Upload2 extends Index {
     }
 
     componentWillMount() {
-        this.Property.SetAccept = () => this.setState({ Accept: this.Property.Accept });
+        this.Property.SetUploadState = () => this.setState({
+            Accept: this.Property.Accept,
+            UploadUrl: this.Property.UploadUrl
+        });
     }
 
     OnChange(data) {
