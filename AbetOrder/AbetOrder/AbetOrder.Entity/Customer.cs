@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace AbetOrder.Entity
 {
-    [TableProperty(Name = "t_d_Customer", PrimaryKey = "Id")]
+    [TableProperty(Name = "t_d_Customer", PrimaryKey = "Id", NoSelectNames = "IsDelete")]
     public class Customer : EntityModel, IEntity
     {
         /// <summary> 
@@ -55,6 +55,8 @@ namespace AbetOrder.Entity
         /// </summary> 
         public DateTime CreateDate { get; set; }
 
+        public long RowVersion { get; set; }
+
         public override void InsertValidate(List<Func<IValidate, IEntityData, string>> validateList)
         {
             validateList.Add(this.ValidateExists<Customer>("IsDelete=0 and Name=@Name", "对不起，该名称已存在！"));
@@ -70,6 +72,6 @@ namespace AbetOrder.Entity
     [TableProperty(Name = "v_Customer", PrimaryKey = "Id")]
     public class ViewCustomer : Customer
     {
-        public long RowVersion { get; set; }
+       
     }
 }

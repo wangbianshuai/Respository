@@ -1,8 +1,8 @@
 (function () {
-    window.configs.ContentChannel = {
-        Name: "ContentChannel",
-        Title: "内容频道",
-        EntityName: "Channel",
+    window.configs.BillType = {
+        Name: "BillType",
+        Title: "账目类型",
+        EntityName: "BillType",
         PrimaryKey: "Id",
         TemplateName: "EntityListPage",
         SelectNames: ["Id", "RowVersion", "Name", "Remark", "CreateDate"],

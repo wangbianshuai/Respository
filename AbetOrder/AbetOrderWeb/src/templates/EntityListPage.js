@@ -83,7 +83,7 @@ function InitConfig(a, b) {
     a.StateList = [{ Name: b.Name, StateName: "Loading" }];
 
     const copyNames = ["Title", "EntityName", "PrimaryKey", "SearchNames", "SelectNames", "DataUrl", "EditPageUrl",
-        "IsNewAdd", "IsUpdate", "IsDelete", "IsPaging", "PageSize", "EditNames", "OrderByList", "Name",
+        "IsNewAdd", "IsUpdate", "IsDelete", "IsPaging", "PageSize", "EditNames", "OrderByList", "Name", "ActionList",
         "InitEventActionList", "Properties", "DataColumnNames", "DataView"];
 
     Common.Copy(a, b, copyNames)

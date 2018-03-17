@@ -630,7 +630,8 @@ namespace OpenDataAccess.Service
                                            {
                                                Name = property.Name,
                                                ParameterName = property.ParameterName,
-                                               Type = property.Type
+                                               Type = property.Type,
+                                               IsSelect = property.IsSelect
                                            }).ToList();
             if (propertyList.Count > 0)
             {

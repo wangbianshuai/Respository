@@ -14,6 +14,7 @@ namespace OpenDataAccess.Entity
         public bool IsPost { get; set; }
         public bool IsPut { get; set; }
         public bool IsDelete { get; set; }
+        public List<string> NoSelectNameList { get; set; }
         public LogAttribute LogAttribute { get; set; }
         public List<Property> Properties { get; set; }
         public List<Func<IValidate, IEntityData, string>> InsertValidateList { get; set; }
@@ -55,7 +56,8 @@ namespace OpenDataAccess.Entity
                                                 {
                                                     Name = a.Name,
                                                     ParameterName = a.ParameterName,
-                                                    Type = a.Type
+                                                    Type = a.Type,
+                                                    IsSelect = a.IsSelect
                                                 }).ToList();
                 }
                 newEntityType.TableName = entityType.TableName;

@@ -1,10 +1,8 @@
-import StaticSource from "./StaticSource";
-import ContentEdit from "./ContentEdit"
+import User from "./User";
 
 export default (config, page) => {
     switch (config.Name) {
-        case "StaticSource": return new StaticSource(config, page);
-        case "ContentEdit": return new ContentEdit(config, page);
+        case "User": return new User(config, page);
         default: return null;
     }
 };

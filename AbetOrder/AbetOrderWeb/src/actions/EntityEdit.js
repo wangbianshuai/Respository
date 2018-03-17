@@ -139,7 +139,6 @@ export default class EntityEdit extends Index {
             }
         }
         else {
-
             EditView.Properties.forEach(p => {
                 if (p.InitState !== undefined) p.InitState();
             });
@@ -208,7 +207,7 @@ export default class EntityEdit extends Index {
 
         this.OkProperty = property;
 
-        const data = {};
+        let data = {};
 
         EditView.Properties.forEach(p => { if (p.GetValue) data[p.Name] = p.GetValue() })
 
@@ -234,6 +233,11 @@ export default class EntityEdit extends Index {
 
         if (PageConfig.ComplexView && PageConfig.ComplexView.GetValue) {
             data[PageConfig.ComplexView.PropertyName] = PageConfig.ComplexView.GetValue();
+        }
+
+        if (EditView.ExpandSetEditData) {
+            data = EditView.ExpandSetEditData(data);
+            if (data === false) return;
         }
 
         let url = PageConfig.InsertUrl ? PageConfig.InsertUrl : PageConfig.EntityName;

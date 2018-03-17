@@ -47,7 +47,7 @@ export default class EntityListPage extends Index {
 
         this.DataStateName = DataView.StateName;
 
-        this.DataProperties = DataView.Properties.map(p => p);
+        this.DataProperties = DataView.Properties.map(p => this.SetDataPropert(p));
 
         let actionList = []
 

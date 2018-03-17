@@ -19,7 +19,7 @@ export default class Index extends Component {
 
         this.Property.SetDisabled = (disabled) => this.setState({ Disabled: disabled });
 
-        this.Property.GetValue = () => this.state.Value;
+        this.Property.GetValue = () => this.state.Value === undefined ? null : this.state.Value;
 
         this.Property.SetValue = (v) => this.setState({ Value: v });
 

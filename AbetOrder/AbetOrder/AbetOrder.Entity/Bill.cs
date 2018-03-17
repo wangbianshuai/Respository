@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace AbetOrder.Entity
 {
-    [TableProperty(Name = "t_d_templatehtml", PrimaryKey = "Id")]
+    [TableProperty(Name = "t_d_Bill", PrimaryKey = "Id", NoSelectNames = "IsDelete")]
     public class Bill : EntityModel, IEntity
     {
         /// <summary> 
@@ -25,7 +25,7 @@ namespace AbetOrder.Entity
         /// <summary>
         /// 账目类型
         /// </summary>
-        public Guid BillType { get; set; }
+        public Guid BillTypeId { get; set; }
         /// <summary>
         /// 收入支出  -- 1: 收入，2：支出
         /// </summary>
@@ -43,6 +43,10 @@ namespace AbetOrder.Entity
         /// </summary>
         public DateTime UpdateDate { get; set; }
         /// <summary>
+        /// 时间
+        /// </summary>
+        public DateTime BillDate { get; set; }
+        /// <summary>
         /// 经手人
         /// </summary>
         public Guid BillUser { get; set; }
@@ -58,11 +62,19 @@ namespace AbetOrder.Entity
         /// 创建时间
         /// </summary> 
         public DateTime CreateDate { get; set; }
+
+        public long RowVersion { get; set; }
     }
 
     [TableProperty(Name = "v_Bill", PrimaryKey = "Id")]
     public class ViewBill : Bill 
     {
-        public long RowVersion { get; set; }
+        public string IncomePaymentName { get; set; }
+        public string CreateUserName { get; set; }
+        public string UpdateUserName { get; set; }
+        public string BillUserName { get; set; }
+        public int DataRight { get; set; }
+        public string BillTypeName { get; set; }
+        public decimal Amount2 { get; set; }
     }
 }

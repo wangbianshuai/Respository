@@ -4,6 +4,7 @@ import * as Common from "../utils/Common"
 import PropertyItem from "../components/PropertyItem"
 import AButton from "../controls/AButton"
 import Popconfirm2 from "../controls/Popconfirm2"
+import SpanText from "../controls/SpanText"
 
 export default class Index extends Component {
     constructor(props) {
@@ -79,5 +80,15 @@ export default class Index extends Component {
         }
 
         return blChangedProps;
+    }
+
+    SetDataPropert(p) {
+        if (p.IsCurrency && p.Render === undefined) {
+            p.Render = (text, record) => {
+                if (parseFloat(text) < 0) return <SpanText Style={{ color: "red" }} Text={Common.ToCurrency(text)} />
+                return Common.ToCurrency(text)
+            };
+        }
+        return p;
     }
 }

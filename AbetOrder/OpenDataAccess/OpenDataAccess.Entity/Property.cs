@@ -12,5 +12,6 @@ namespace OpenDataAccess.Entity
         public Type Type { get; set; }
         public object Value { get; set; }
         public string ParameterName { get; set; }
+        public bool IsSelect { get; set; }
     }
 }

@@ -142,7 +142,7 @@ function AddAction(actoinName, stateName, dataKey, isModalMessage) {
 
 function InitEditView(config) {
     if (config.EditView === undefined) {
-        config.EditView = { Properties: [], IsVisible: true, Title: "内容信息", Name: "EditView" };
+        config.EditView = { Properties: [], IsVisible: true, Title: config.Config.EditViewTitle, Name: "EditView" };
     }
 
     let p = null;

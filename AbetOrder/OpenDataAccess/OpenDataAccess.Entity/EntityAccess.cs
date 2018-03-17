@@ -230,6 +230,10 @@ namespace OpenDataAccess.Entity
             {
                 entityData.SetValue("RowVersion", Guid.NewGuid());
             }
+            else
+            {
+                entityData.Remove("RowVersion");
+            }
 
             for (int i = 0; i < entityData.Count; i++)
             {

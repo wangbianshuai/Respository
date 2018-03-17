@@ -15,5 +15,10 @@ namespace OpenDataAccess.Entity
         public string Name { get; set; }
 
         public string PrimaryKey { get; set; }
+
+        /// <summary>
+        /// 不许查询字段名集合
+        /// </summary>
+        public string NoSelectNames { get; set; }
     }
 }

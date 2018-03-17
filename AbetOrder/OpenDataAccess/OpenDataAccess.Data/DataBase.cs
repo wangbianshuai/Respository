@@ -327,6 +327,7 @@ namespace OpenDataAccess.Data
                             string name = reader.GetName(i);
                             if (value is DBNull) dict[name] = null;
                             else if (name.ToLower().Equals("rowversion") && value is DateTime) dict[name] = ((DateTime)value).Ticks;
+                            else if (name.ToLower().Equals("rowversion") && value is byte[]) dict[name] = string.Join(",", (byte[])value);
                             else dict[name] = value;
                         }
                         dictList.Add(dict);

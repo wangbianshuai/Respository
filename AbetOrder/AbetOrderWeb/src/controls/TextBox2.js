@@ -15,6 +15,8 @@ export default class TextBox2 extends Index {
     }
 
     InputNumberChange(value) {
+        if (this.Property.Scale > 0) value = Common.GetNumber(value, this.Property.Scale);
+
         this.setState({ Value: value })
     }
 
@@ -48,10 +50,13 @@ export default class TextBox2 extends Index {
                 maxLength={Property.MaxLength}
                 max={Property.Max}
                 min={Property.Min}
+                step={Property.Step || 1}
                 readOnly={this.state.IsReadonly}
                 disabled={this.state.Disabled}
                 value={value} />)
         }
+
+        const type = Property.ControlType || "text";
 
         return (
             <Input placeholder={Property.PlaceHolder}
@@ -59,6 +64,7 @@ export default class TextBox2 extends Index {
                 maxLength={Property.MaxLength}
                 readOnly={this.state.IsReadonly}
                 disabled={this.state.Disabled}
+                type={type}
                 value={value} />
         );
     }

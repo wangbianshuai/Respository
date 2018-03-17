@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace AbetOrder.Entity
 {
-    [TableProperty(Name = "t_d_Dictionary", PrimaryKey = "Id")]
+    [TableProperty(Name = "t_d_Dictionary", PrimaryKey = "Id", NoSelectNames = "IsDelete")]
     public class DictionaryConfig : EntityModel, IEntity
     {
         /// <summary> 
@@ -34,11 +34,13 @@ namespace AbetOrder.Entity
         /// 创建时间
         /// </summary> 
         public DateTime CreateDate { get; set; }
+
+        public long RowVersion { get; set; }
     }
 
     [TableProperty(Name = "v_Dictionary", PrimaryKey = "Id")]
     public class ViewDictionaryConfig : DictionaryConfig
     {
-        public long RowVersion { get; set; }
+       
     }
 }

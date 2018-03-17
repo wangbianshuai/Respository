@@ -38,6 +38,7 @@ namespace OpenDataAccess.Entity
             var abList = (from a in dict.Keys
                           from b in entityType.Properties
                           where a.ToLower().Equals(b.Name.ToLower())
+                          && b.IsSelect
                           select new { a, b.Name });
 
             if (abList.Count() > 0)

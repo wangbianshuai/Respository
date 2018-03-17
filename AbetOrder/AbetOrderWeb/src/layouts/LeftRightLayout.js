@@ -11,16 +11,16 @@ export default class LeftRightLayout extends Component {
 
         this.state = {
             collapsed: false,
-            Name: "Quark CMS"
+            Name: "Abet Order"
         };
 
         this.MenuList = [
             this.AddMenu("内容编辑", "form", "ContentEdit"),
             this.AddMenu("内容列表", "table", "ContentList"),
             this.AddMenu("内容频道", "table", "ContentChannel"),
-            this.AddMenu("内容标签", "table", "ContentTag"),
-            this.AddMenu("HTML模板", "table", "TemplateHtml"),
-            this.AddMenu("静态资源", "table", "StaticSource"),
+            this.AddMenu("支收明细", "table", "Bill"),
+            this.AddMenu("用户", "table", "User"),
+            this.AddMenu("账目类型", "table", "BillType"),
             this.AddMenu("键值配置", "table", "DictionaryConfig")
         ]
     }
@@ -37,7 +37,7 @@ export default class LeftRightLayout extends Component {
     toggle = () => {
         this.setState({
             collapsed: !this.state.collapsed,
-            Name: this.state.collapsed ? "Quark CMS" : "CMS"
+            Name: this.state.collapsed ? "Abet Order" : "Abet"
         });
     }
 

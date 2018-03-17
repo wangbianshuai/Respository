@@ -24,6 +24,7 @@ namespace OpenDataAccess.Entity
             {
                 entityType.TableName = tableProperty.Name;
                 entityType.PrimaryKey = tableProperty.PrimaryKey;
+                entityType.NoSelectNameList = string.IsNullOrEmpty(tableProperty.NoSelectNames) ? new List<string>() : tableProperty.NoSelectNames.Split(',').ToList();
             }
 
             RequestMethodAttribute requestMethodProperty = this.GetType().GetCustomAttributes(typeof(RequestMethodAttribute), false).FirstOrDefault() as RequestMethodAttribute;
@@ -57,7 +58,8 @@ namespace OpenDataAccess.Entity
                 entityType.Properties.Add(new Property()
                 {
                     Name = propertyInfo.Name,
-                    Type = propertyInfo.PropertyType
+                    Type = propertyInfo.PropertyType,
+                    IsSelect=  !entityType.NoSelectNameList.Contains(propertyInfo.Name)
                 });
             });
             this.InsertValidate(entityType.InsertValidateList);

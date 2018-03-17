@@ -1,10 +1,11 @@
 import React, { Component } from "react"
 import * as Common from "../utils/Common"
 import Index from "./Index"
-import { Select } from "antd"
-const Option = Select.Option;
+import { Radio } from "antd"
+const RadioGroup = Radio.Group
+const RadioButton = Radio.Button;
 
-export default class Select2 extends Index {
+export default class Radio2 extends Index {
     constructor(props) {
         super(props)
 
@@ -19,7 +20,15 @@ export default class Select2 extends Index {
         const options = [];
 
         this.Property.DataSource.forEach(d => {
-            options.push(<Option value={d[this.ValueName]} key={d[this.ValueName]}>{d[this.TextName]}</Option>)
+            if (this.Property.IsButton) {
+                const style = {}
+                if (this.Property.ButtonWidth > 0) {
+                    style.width = this.Property.ButtonWidth;
+                    style.textAlign = "center";
+                }
+                options.push(<RadioButton style={style} value={d[this.ValueName]} key={d[this.ValueName]}>{d[this.TextName]}</RadioButton>)
+            }
+            else options.push(<Radio value={d[this.ValueName]} key={d[this.ValueName]}>{d[this.TextName]}</Radio>)
         });
 
         return options;
@@ -29,8 +38,8 @@ export default class Select2 extends Index {
         return Common.ArrayFirst(this.Property.DataSource, (f) => f[this.ValueName] === value);
     }
 
-    OnChange(value) {
-        this.setState({ Value: value })
+    OnChange(e) {
+        this.setState({ Value: e.target.value })
     }
 
     ValueChange(value) {
@@ -42,16 +51,10 @@ export default class Select2 extends Index {
         const { Property } = this.props
 
         const value = Common.IsNullOrEmpty(this.state.Value) ? undefined : this.state.Value.toString()
-        const width = Property.Width || "100%"
 
-        return (<Select disabled={this.state.Disabled}
-            style={{ width: width }}
+        return (<RadioGroup disabled={this.state.Disabled}
             value={value}
             onChange={this.OnChange.bind(this)}
-            allowClear={Property.AllowClear}
-            mode={Property.Mode}
-            maxTagCount={Property.MaxTagCount}
-            placeholder={Property.PlaceHolder}
-            defaultValue={Property.DefaultValue} >{this.state.Options}</Select>)
+            defaultValue={Property.DefaultValue} >{this.state.Options}</RadioGroup>)
     }
 }

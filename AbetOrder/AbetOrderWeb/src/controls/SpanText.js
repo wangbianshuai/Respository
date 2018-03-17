@@ -6,6 +6,6 @@ export default class SpanText extends Component {
     }
 
     render() {
-        return (<span style={this.props.style}>{this.props.children}</span>)
+        return (<span style={this.props.Style}>{this.props.Text}</span>)
     }
 }

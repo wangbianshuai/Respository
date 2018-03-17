@@ -90,7 +90,7 @@ export default class Query extends Index {
         const list = SearchView.Properties.filter(f => f.IsSearch);
         list.forEach(p => {
             condition = {
-                Name: p.Name,
+                Name: p.PropertyName || p.Name,
                 Label: p.Label,
                 OperateLogic: p.OperateLogic || "=",
                 DataType: p.DataType || "string",

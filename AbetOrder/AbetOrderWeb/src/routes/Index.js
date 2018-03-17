@@ -29,6 +29,8 @@ class Index extends Component {
         this.InitActions();
 
         this.QueryString = Common.GetQueryString();
+
+        Common.SetStorage("LoginUserId", "A1E2658B-1F98-4019-B36E-22ABA85304E3")
     }
 
     //初始化行为

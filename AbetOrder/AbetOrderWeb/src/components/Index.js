@@ -8,6 +8,7 @@ import Select2 from "../controls/Select2";
 import Upload2 from "../controls/Upload2";
 import DatePicker2 from "../controls/DatePicker2";
 import AutoComplete2 from "../controls/AutoComplete2";
+import Radio2 from "../controls/Radio2";
 
 export default class Index extends Component {
     constructor(props) {
@@ -28,6 +29,7 @@ export default class Index extends Component {
             case "Upload": return <Upload2 {...props} key={property.Id} />
             case "Date": return <DatePicker2 {...props} key={property.Id} />
             case "AutoComplete": return <AutoComplete2 {...props} key={property.Id} />
+            case "Radio": return <Radio2 {...props} key={property.Id} />
             default: return null;
         }
     }

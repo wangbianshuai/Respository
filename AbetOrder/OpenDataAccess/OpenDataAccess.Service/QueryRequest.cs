@@ -719,7 +719,7 @@ namespace OpenDataAccess.Service
             List<string> fields = sql.Trim().TrimEnd(',').Split(',').ToList();
             string fieldSql = string.Join(",", (from property in this._Request.Entity.Properties
                                                 from filed in fields
-                                                where property.Name.Trim().ToLower() == filed.Trim().ToLower()
+                                                where property.Name.Trim().ToLower() == filed.Trim().ToLower() && property.IsSelect
                                                 select property.Name).ToArray());
             if (fields.Exists(e => e == "RowVersion") && fieldSql.IndexOf("RowVersion") < 0)
             {

@@ -99,9 +99,9 @@ export function ToModels(obj) {
     }
 }
 
-export const DataApiUrl = "http://localhost/qc/api/"
+export const DataApiUrl = "http://localhost/aow/api/"
 
-export const ConfigApiUrl = "http://localhost/qcwc/api/"
+export const ConfigApiUrl = "http://localhost/aowc/api/"
 
 export function IsEmptyObject(obj) {
     if (!IsObject(obj)) return true
@@ -185,4 +185,72 @@ export function IsObjectEquals(a, b) {
 export function ArrayFirst(list, fn) {
     const list2 = list.filter(fn)
     return list2.length > 0 ? list2[0] : null;
+}
+
+export function SetStorage(key, value, time) {
+    try {
+        time = time || 0;
+        window.localStorage.setItem(key, value)
+
+        if (time > 0) {
+            key += "_Time"
+            var tv = (new Date().getTime() + time * 60 * 1000).toString() + "_" + time.toString()
+            window.localStorage.setItem(key, tv)
+        }
+    }
+    catch (ex) {
+    }
+}
+
+export function GetStorage(key) {
+    var value = ""
+    try {
+        value = window.localStorage.getItem(key)
+        var tkey = key + "_Time";
+        var tvs = window.localStorage.getItem(tkey)
+        if (!IsNullOrEmpty(tvs)) {
+            var vs = tvs.split("_")
+            var tv = parseFloat(vs[0])
+            var time = parseFloat(vs[1])
+            if (tv > 0) {
+                var ct = new Date().getTime()
+                if (ct > tv) {
+                    value = ""
+                    window.localStorage.removeItem(key)
+                    window.localStorage.removeItem(tkey)
+                }
+                else {
+                    tv = (new Date().getTime() + time * 60 * 1000).toString() + "_" + time.toString()
+                    window.localStorage.setItem(tkey, tv)
+                }
+            }
+        }
+    }
+    catch (ex) {
+    }
+    return IsNullOrEmpty(value) ? "" : value
+}
+
+export function GetNumber(value, scale) {
+    let f = parseFloat(value)
+    if (isNaN(f)) return value
+
+    scale = (scale || 2) * 10
+    return Math.floor(f * scale) / scale
+}
+
+export function ToCurrency(value, blFixed2) {
+    blFixed2 = blFixed2 === undefined ? true : blFixed2
+    var floatValue = isNaN(value) ? parseFloat(value) : value
+    if (isNaN(floatValue)) {
+        return value
+    }
+    else {
+        var flString = blFixed2 ? floatValue.toFixed(2) : floatValue.toString()
+        var r = /(\d+)(\d{3})/
+        while (r.test(flString)) {
+            flString = flString.replace(r, "$1" + ',' + '$2')
+        }
+        return flString
+    }
 }

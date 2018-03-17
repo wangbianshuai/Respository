@@ -19,6 +19,7 @@ function FetchRequest(url, data, resKey) {
 }
 
 function GetFullUrl(url) {
+    url=Common.AddUrlParams(url,"LoginUserId", Common.GetStorage("LoginUserId"))
     if (url.indexOf("http") !== 0) url = GetRootPath() + url
     return Common.AddUrlRandom(url)
 }
