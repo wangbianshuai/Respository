@@ -18,7 +18,7 @@ export default class Index extends Component {
     }
 
     GetReactComponent(property) {
-        const props = { Page: this.props.Page, Property: property }
+        const props = { Page: this.props.Page, Property: property, View: this.props.View }
 
         switch (property.Type) {
             case "Button": return <Button2 {...props} key={property.Id} />

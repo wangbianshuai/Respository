@@ -9,24 +9,29 @@ export default class Select2 extends Index {
         super(props)
 
         this.state = Object.assign({ Options: [] }, this.state)
+
+        this.Property.GetValue = () => this.GetSelectValue(true);
     }
 
     componentWillMount() {
         this.GetDataSource();
     }
 
-    GetOptions() {
+    GetOptions(parentValue) {
         const options = [];
+        this.ValueList = [];
 
+        let value = null;
         this.Property.DataSource.forEach(d => {
-            options.push(<Option value={d[this.ValueName]} key={d[this.ValueName]}>{d[this.TextName]}</Option>)
+            value = d[this.ValueName]
+
+            if (this.JudgePush(d, parentValue)) {
+                options.push(<Option value={value} key={value}>{d[this.TextName]}</Option>)
+                this.ValueList.push(value);
+            }
         });
 
         return options;
-    }
-
-    GetSelectData(value) {
-        return Common.ArrayFirst(this.Property.DataSource, (f) => f[this.ValueName] === value);
     }
 
     OnChange(value) {
@@ -36,13 +41,24 @@ export default class Select2 extends Index {
     ValueChange(value) {
         const { Property } = this.props
         if (Property.ValueChange) Property.ValueChange(value, this.GetSelectData(value));
+
+        this.ChildPropertiesChanged();
+    }
+
+    GetSelectValue(blGet) {
+        let value = Common.IsNullOrEmpty(this.state.Value) ? undefined : this.state.Value.toString()
+        if (!Common.IsNullOrEmpty(value)) value = Common.ArrayFirst(this.ValueList, (f) => Common.IsEquals(f, value, true));
+        if (blGet) return value === undefined ? null : value;
+        return value;
     }
 
     render() {
         const { Property } = this.props
 
-        const value = Common.IsNullOrEmpty(this.state.Value) ? undefined : this.state.Value.toString()
+
         const width = Property.Width || "100%"
+
+        const value = this.GetSelectValue()
 
         return (<Select disabled={this.state.Disabled}
             style={{ width: width }}

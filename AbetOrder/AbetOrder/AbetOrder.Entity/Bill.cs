@@ -15,9 +15,9 @@ namespace AbetOrder.Entity
         /// </summary> 
         public Guid Id { get; set; }
         /// <summary> 
-        /// 名称
+        /// 数据ID
         /// </summary> 
-        public string Name { get; set; }
+        public Guid DataId { get; set; }
         /// <summary>
         /// 金额
         /// </summary>

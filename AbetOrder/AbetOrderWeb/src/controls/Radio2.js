@@ -34,17 +34,8 @@ export default class Radio2 extends Index {
         return options;
     }
 
-    GetSelectData(value) {
-        return Common.ArrayFirst(this.Property.DataSource, (f) => f[this.ValueName] === value);
-    }
-
     OnChange(e) {
         this.setState({ Value: e.target.value })
-    }
-
-    ValueChange(value) {
-        const { Property } = this.props
-        if (Property.ValueChange) Property.ValueChange(value, this.GetSelectData(value));
     }
 
     render() {

@@ -14,22 +14,22 @@ export default class AutoComplete2 extends Index {
         this.GetDataSource();
     }
 
-    GetOptions() {
+    GetOptions(parentValue) {
         const options = [];
 
         this.Property.DataSource.forEach(d => {
-            options.push(d[this.TextName])
+            this.JudgePush(d, parentValue) && options.push(d[this.TextName])
         });
 
         return options;
     }
 
-    ValueChange(value) {
-        if (this.Property.ValueChange) this.Property.ValueChange(value);
+    OnChange(value) {
+        this.setState({ Value: value })
     }
 
-    OnChange(value, valueString) {
-        this.setState({ Value: value })
+    ValueChange(value) {
+        if (this.Property.ValueChange) this.Property.ValueChange(value);
     }
 
     render() {

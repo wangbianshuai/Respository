@@ -50,6 +50,14 @@ namespace AbetOrder.Entity
         /// 地址
         /// </summary>
         public string Address { get; set; }
+        /// <summary>
+        /// 银行账号
+        /// </summary>
+        public string BankCardNo { get; set; }
+        /// <summary>
+        /// 开户行
+        /// </summary>
+        public string OpenBank { get; set; }
         /// <summary> 
         /// 备注
         /// </summary> 

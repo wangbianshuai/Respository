@@ -76,7 +76,7 @@ export default class ComplexDataGrid extends Index {
         const col = row[property.Id];
         col.Value = record[property.Name]
 
-        const props = { Page: this.props.Page, Property: col }
+        const props = { Page: this.props.Page, Property: col, View: this.props.Property.DataView }
 
         switch (property.Type) {
             case "TextBox": return <TextBox2 {...props} key={key} />
@@ -129,7 +129,7 @@ export default class ComplexDataGrid extends Index {
                 Type: "Button", ActionType: "ComplexDataGrid", ActionName: "Add"
             };
 
-            return (<Button2 Property={p} Page={this.props.Page} />)
+            return (<Button2 Property={p} Page={this.props.Page} View={this.props.Property} />)
         }
 
         return null;

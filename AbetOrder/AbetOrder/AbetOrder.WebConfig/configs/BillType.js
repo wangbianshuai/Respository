@@ -5,17 +5,28 @@
         EntityName: "BillType",
         PrimaryKey: "Id",
         TemplateName: "EntityListPage",
-        SelectNames: ["Id", "RowVersion", "Name", "Remark", "CreateDate"],
+        SelectNames: ["Id", "RowVersion", "Name", "IncomePaymentName", "Remark", "CreateDate"],
         SearchNames: ["Name"],
-        DataColumnNames: ["Name", "Remark", "CreateDate"],
-        EditNames: ["Name", "Remark"],
+        DataColumnNames: ["Name", "IncomePaymentName", "Remark", "CreateDate"],
+        EditNames: ["Name", "IncomePayment", "Remark"],
         OrderByList: [{ Name: "CreateDate", IsDesc: true }],
         Properties: GetProperties()
     };
 
     function GetProperties() {
         return [{ Label: "名称", Name: "Name", DataType: "string", MaxLength: 50, IsNullable: false },
+        {
+            Label: "收支", Name: "IncomePayment", Type: "Radio", IsButton: true, DefaultValue: "2", ButtonWidth: 145,
+            DataType: "int", IsUpdate: false, DataSource: GeDataSource()
+        },
         { Label: "备注", Name: "Remark", DataType: "string", MaxLength: 100, IsNullable: true },
+        { Label: "收支", Name: "IncomePaymentName" },
         { Label: "创建时间", Name: "CreateDate", DataType: "DateTime" }]
     }
+
+    function GeDataSource() {
+        return [{ Value: "2", Text: "支出" },
+        { Value: "1", Text: "收入" }]
+    }
+
 })();

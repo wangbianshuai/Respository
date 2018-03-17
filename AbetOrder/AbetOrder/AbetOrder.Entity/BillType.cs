@@ -18,6 +18,10 @@ namespace AbetOrder.Entity
         /// 名称
         /// </summary> 
         public string Name { get; set; }
+        /// <summary>
+        /// 收入支出  -- 1: 收入，2：支出
+        /// </summary>
+        public byte IncomePayment { get; set; }
         /// <summary> 
         /// 备注
         /// </summary> 
@@ -47,5 +51,6 @@ namespace AbetOrder.Entity
     [TableProperty(Name = "v_BillType", PrimaryKey = "Id")]
     public class ViewBillType : BillType
     {
+        public string IncomePaymentName { get; set; }
     }
 }

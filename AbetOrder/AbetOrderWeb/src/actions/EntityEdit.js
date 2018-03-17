@@ -125,9 +125,11 @@ export default class EntityEdit extends Index {
         let value = null;
         if (entityData != null) {
             EditView.Properties.forEach(p => {
-                value = entityData === null ? p.DefaultValue : entityData[p.Name];
+                value = entityData[p.Name];
                 if (p.SetValue !== undefined) p.SetValue(value);
                 else p.Value = value;
+
+                if (p.IsUpdate === false && p.SetDisabled) p.SetDisabled(true);
             });
 
             if (PageConfig.ComplexView && PageConfig.ComplexView.SetDataList) {

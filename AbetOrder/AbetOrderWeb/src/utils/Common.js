@@ -254,3 +254,28 @@ export function ToCurrency(value, blFixed2) {
         return flString
     }
 }
+
+export function GetDateString(myDate, isDate) {
+    var year = myDate.getFullYear().toString();
+    var month = (myDate.getMonth() + 1);
+    month = month < 10 ? "0" + month.toString() : month.toString();
+    var day = myDate.getDate();
+    day = day < 10 ? "0" + day.toString() : day.toString();
+    if (isDate) {
+        return year + "-" + month + "-" + day;
+    }
+    else {
+        var hh = myDate.getHours();
+        hh = hh < 10 ? "0" + hh.toString() : hh.toString();
+        var mm = myDate.getMinutes();
+        mm = mm < 10 ? "0" + mm.toString() : mm.toString();
+        var ss = myDate.getSeconds();
+        ss = ss < 10 ? "0" + ss.toString() : ss.toString();
+        return year + "-" + month + "-" + day + " " + hh + ":" + mm + ":" + ss;
+    }
+}
+
+export function GetCurrentDate() {
+    var myDate = new Date();
+    return GetDateString(myDate);
+}

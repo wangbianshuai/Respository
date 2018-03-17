@@ -8,6 +8,7 @@ export default class Index extends Component {
         this.Id = props.Property.Id || Common.CreateGuid()
 
         this.Property = props.Property;
+        this.View = props.View;
 
         this.InitState = {
             Disabled: this.Property.Disabled,
@@ -28,6 +29,10 @@ export default class Index extends Component {
         this.Property.InitState = () => this.setState(this.InitState)
     }
 
+    GetProperty(name) {
+        return Common.ArrayFirst(this.View.Properties, (f) => f.Name === name);
+    }
+
     GetPropsValue(name) {
         return this.props[name] || this[name]
     }
@@ -35,8 +40,6 @@ export default class Index extends Component {
     GetPropertyValue(name) {
         return this.props.Property[name] || this[name]
     }
-
-    ValueChange(v) { }
 
     shouldComponentUpdate(nextProps, nextState) {
         let blChangedProps = false;
@@ -85,13 +88,53 @@ export default class Index extends Component {
             Property.ActionType = "Page";
             Property.ActionName = "GetServiceDataSource"
 
-            Property.SetDataSource = (dataList) => {
+            Property.SetDataSource = (dataList, parentValue) => {
                 this.Property.DataSource = dataList;
-                this.setState({ Options: this.GetOptions() })
+                 this.setState({ Options: this.GetOptions(parentValue) });
             };
 
             const action = Page.GetAction(Property.ServiceDataSource.ActionName);
-            Page.InvokeAction(Property, action);
+
+            const list = Page.props[action.StateName];
+            if (list === undefined) Page.InvokeAction(Property, action);
+            else Property.SetDataSource(list);
+        }
+    }
+
+    JudgePush(d, parentValue) {
+        if (this.View && this.Property.ParentName && this.Property.ParentPropertyName) {
+            const parentProperty = this.GetProperty(this.Property.ParentName);
+            if (parentValue === undefined) {
+                if (parentProperty.GetValue === undefined) parentValue = parentProperty.GetValue();
+                else parentValue = parentProperty.Value || (parentProperty.DefaultValue || null);
+            }
+
+            return Common.IsEquals(parentValue, d[this.Property.ParentPropertyName], true);
+        }
+
+        return true;
+    }
+
+    GetSelectData(value) {
+        return Common.ArrayFirst(this.Property.DataSource, (f) => f[this.ValueName] === value);
+    }
+
+    ValueChange(value) {
+        const { Property } = this.props
+        if (Property.ValueChange) Property.ValueChange(value, this.GetSelectData(value));
+
+        this.ChildPropertiesChanged(value);
+    }
+
+    ChildPropertiesChanged(value) {
+        if (Common.IsArray(this.Property.ChildNames)) {
+            let p = null;
+            this.Property.ChildNames.forEach(n => {
+                p = this.GetProperty(n);
+                if (p != null && p.SetDataSource) {
+                    p.SetDataSource(p.DataSource, value);
+                }
+            })
         }
     }
 }

@@ -41,27 +41,27 @@ export default class Index extends Component {
 
         for (let key in rowDict) rowDict[key] = rowDict[key].sort((a, b) => a.Y > b.Y ? 1 : -1);
 
-        return { XList: xList, RowDictionary: rowDict, IsVisible: view.IsVisible };
+        return { XList: xList, RowDictionary: rowDict, IsVisible: view.IsVisible, View: view };
     }
 
     RenderView(view) {
         return (
             <div style={{ display: view.IsVisible ? "" : "none" }}>
-                {view.XList.map(m => this.RendRowCols(m.RowId, view.RowDictionary[m.X]))}
+                {view.XList.map(m => this.RendRowCols(view.View, m.RowId, view.RowDictionary[m.X]))}
             </div>
         );
     }
 
-    RendRowCols(rowId, colList) {
-        return (<Row key={rowId} type="flex" justify="start" align="top" gutter={16}>{colList.map(c => this.RenderColumn(c))}</Row>);
+    RendRowCols(view, rowId, colList) {
+        return (<Row key={rowId} type="flex" justify="start" align="top" gutter={16}>{colList.map(c => this.RenderColumn(view, c))}</Row>);
     }
 
-    RenderColumn(col) {
-        return (<Col key={col.ColId} span={col.ColSpan}>{this.GetPropertyItem(col)}</Col>);
+    RenderColumn(view, col) {
+        return (<Col key={col.ColId} span={col.ColSpan}>{this.GetPropertyItem(view, col)}</Col>);
     }
 
-    GetPropertyItem(p) {
-        return (<PropertyItem Property={p} Page={this.props.Page} />)
+    GetPropertyItem(view, p) {
+        return (<PropertyItem Property={p} Page={this.props.Page} View={view} />)
     }
 
     shouldComponentUpdate(nextProps, nextState) {
