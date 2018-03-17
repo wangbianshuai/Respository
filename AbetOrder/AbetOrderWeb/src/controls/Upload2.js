@@ -7,40 +7,38 @@ export default class Upload2 extends Index {
     constructor(props) {
         super(props)
 
-        this.state = {
-            UploadUrl: props.Property.UploadUrl,
-            Accept: props.Property.Accept
-        };
-    }
-
-    componentWillMount() {
-        this.Property.SetUploadState = () => this.setState({
+        this.InitState = {
+            UploadUrl: this.Property.UploadUrl,
             Accept: this.Property.Accept,
-            UploadUrl: this.Property.UploadUrl
-        });
+            Value: []
+        }
+
+        this.Property.SetUploadState = (state) => this.setState(state);
     }
 
     OnChange(data) {
         const { Property } = this.props;
+        let fileList = data.fileList;
 
         if (data.file.status === "error") {
             this.ShowMessage(`${data.file.name} 文件上传失败！`);
         }
         else if (data.file.status === "done") {
             const response = data.file.response;
-            if (!Common.IsNullOrEmpty(response)) {
-                try {
-                    const obj = JSON.stringify(response);
-                    if (obj.IsSuccess) {
-                        Property.SetUploadResponse && Property.SetUploadResponse(obj)
-                    }
-                    else if (obj.Message) this.ShowMessage(obj.Message);
+            if (response) {
+                if (response.IsSuccess) {
+                    Property.SetUploadResponse && Property.SetUploadResponse(response)
                 }
-                catch (ex) {
-                    this.ShowMessage(response);
-                }
+                else if (response.Message) this.ShowMessage(response.Message);
             }
         }
+
+        fileList = fileList.map((file) => {
+            if (file.response && file.response.FilePath) file.url = file.response.FilePath;
+            return file;
+        });
+
+        this.setState({ Value: fileList });
     }
 
     GetFullUrl(url) {
@@ -87,6 +85,8 @@ export default class Upload2 extends Index {
             return false;
         }
 
+        if (this.Property.BeforeUpload) return this.Property.BeforeUpload(file);
+
         return true
     }
 
@@ -97,6 +97,7 @@ export default class Upload2 extends Index {
             <Upload name={Property.Name}
                 action={this.GetFullUrl(this.state.UploadUrl)}
                 accept={this.state.Accept}
+                fileList={this.state.Value}
                 beforeUpload={this.BeforeUpload.bind(this)}
                 onChange={this.OnChange.bind(this)} >
                 <Button>

@@ -4,24 +4,31 @@ import Index from "./Index"
 export default class Page extends Index {
     constructor(options) {
         super(options)
-    }
 
-    Alert(action) {
-        let message = Common.CreateGuid().substr(0, 8) + action.Message
-        this.Page.Dispatch(action, message)
+        this.ServiceDataSourceProperty = {}
     }
 
     PropsChanged(props, nextProps) {
-        this.SetAlert(nextProps)
+        this.ReceiveServiceDataSource(props, nextProps);
     }
 
-    SetAlert(nextProps) {
-        if (this.Page.JudgeChanged(nextProps, "AlertMessage")) {
-            let message = nextProps.AlertMessage
-            if (Common.IsNullOrEmpty(message)) return
+    ReceiveServiceDataSource(props, nextProps) {
+        for (let key in this.ServiceDataSourceProperty) {
+            const p = this.ServiceDataSourceProperty[key];
 
-            message = message.substring(8)
-            //Toast.info(message)
+            if (this.Page.JudgeChanged(nextProps, p.StateName)) {
+                const dataList = nextProps[p.StateName];
+                if (Common.IsArray(dataList)) p.SetDataSource(dataList);
+            }
         }
+    }
+
+    GetServiceDataSource(property, action) {
+        if (!action) return;
+
+        property.StateName = action.StateName;
+        this.ServiceDataSourceProperty[property.Id] = property;
+
+        this.Page.Dispatch(action, {})
     }
 }

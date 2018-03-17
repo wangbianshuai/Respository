@@ -11,13 +11,12 @@ export default class LeftRightLayout extends Component {
 
         this.state = {
             collapsed: false,
-            Name: "Abet Order"
+            Name: "Quark CMS"
         };
 
         this.MenuList = [
             this.AddMenu("内容编辑", "form", "ContentEdit"),
             this.AddMenu("内容列表", "table", "ContentList"),
-            this.AddMenu("内容推荐", "table", "ContentRecommend"),
             this.AddMenu("内容频道", "table", "ContentChannel"),
             this.AddMenu("内容标签", "table", "ContentTag"),
             this.AddMenu("HTML模板", "table", "TemplateHtml"),
@@ -30,14 +29,15 @@ export default class LeftRightLayout extends Component {
         return {
             MenuName: name,
             IconType: type,
-            PageName: pageName
+            PageName: pageName,
+            Id: Common.CreateGuid()
         }
     }
 
     toggle = () => {
         this.setState({
             collapsed: !this.state.collapsed,
-            Name: this.state.collapsed ? "Abet Order" : "Abet"
+            Name: this.state.collapsed ? "Quark CMS" : "CMS"
         });
     }
 
@@ -47,13 +47,19 @@ export default class LeftRightLayout extends Component {
         if (keys.length === 1 && keys[0] === '') {
             return [this.MenuList[0].PageName];
         }
-        return keys;
+
+        return keys.map(m => {
+            for (let i = 0; i < this.MenuList.length; i++) {
+                if (Common.IsEquals(this.MenuList[i].PageName, m, true)) return this.MenuList[i].PageName;
+            }
+            return m;
+        });
     }
 
     render() {
         const { Header, Sider, Content } = Layout;
 
-        const selectKeys = this.GetCurrentMenuSelectedKeys();
+        const selectedKeys = this.GetCurrentMenuSelectedKeys();
 
         return (<Layout>
             <Sider trigger={null}
@@ -62,7 +68,7 @@ export default class LeftRightLayout extends Component {
                 <div className={styles.logo} >
                     <span>{this.state.Name}</span>
                 </div>
-                <Menu theme="dark" mode="inline" defaultSelectedKeys={selectKeys}>
+                <Menu theme="dark" mode="inline" selectedKeys={selectedKeys}>
                     {
                         this.MenuList.map(m => (
                             <Menu.Item key={m.PageName}>
@@ -87,7 +93,7 @@ export default class LeftRightLayout extends Component {
                     <Switch>
                         {
                             this.MenuList.map(m => (
-                                <Route path={"/" + m.PageName} exact component={() => <IndexPage App={this.props.App} PageName={m.PageName} />} key={Common.CreateGuid()} />
+                                <Route path={"/" + m.PageName} exact component={() => <IndexPage App={this.props.App} PageName={m.PageName} Id={m.Id} />} key={m.Id} />
                             ))
                         }
                     </Switch>

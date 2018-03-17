@@ -6,6 +6,8 @@ import TextBox2 from "../controls/TextBox2"
 import AButton from "../controls/AButton";
 import Select2 from "../controls/Select2";
 import Upload2 from "../controls/Upload2";
+import DatePicker2 from "../controls/DatePicker2";
+import AutoComplete2 from "../controls/AutoComplete2";
 
 export default class Index extends Component {
     constructor(props) {
@@ -24,6 +26,9 @@ export default class Index extends Component {
             case "TextBox": return <TextBox2 {...props} key={property.Id} />
             case "Select": return <Select2 {...props} key={property.Id} />
             case "Upload": return <Upload2 {...props} key={property.Id} />
+            case "Date": return <DatePicker2 {...props} key={property.Id} />
+            case "AutoComplete": return <AutoComplete2 {...props} key={property.Id} />
+            default: return null;
         }
     }
 

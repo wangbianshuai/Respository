@@ -23,11 +23,20 @@ export default class EntityEdit extends Index {
     ReceiveInsertInfo(props, nextProps) {
         if (this.Page.JudgeChanged(nextProps, "InsertInfo")) {
             if (nextProps.InsertInfo && nextProps.InsertInfo.Succeed) {
-                const { PageConfig: { EditView } } = props;
-                EditView.SetEdit && EditView.SetEdit({ IsVisible: false });
+                const { PageConfig } = props;
+                const { EditView } = PageConfig;
 
-                //刷新查询
-                this.Page.EventActions.Query.Refresh("Insert");
+                if (PageConfig.IsEditPage) {
+                    const id = nextProps.InsertInfo.PrimaryKey;
+                    const url = `/${PageConfig.Name}?${PageConfig.PrimaryKey}=${id}`
+                    props.ToPage(url);
+                }
+                else {
+                    EditView.SetEdit && EditView.SetEdit({ IsVisible: false });
+
+                    //刷新查询
+                    this.Page.EventActions.Query.Refresh("Insert");
+                }
             }
             else this.SetOkDisabled(false);
         }
@@ -36,11 +45,19 @@ export default class EntityEdit extends Index {
     ReceiveUpdateInfo(props, nextProps) {
         if (this.Page.JudgeChanged(nextProps, "UpdateInfo")) {
             if (nextProps.UpdateInfo && nextProps.UpdateInfo.Succeed) {
-                const { PageConfig: { EditView } } = props;
-                EditView.SetEdit && EditView.SetEdit({ IsVisible: false });
+                const { PageConfig } = props;
+                const { EditView } = PageConfig;
 
-                //刷新查询
-                this.Page.EventActions.Query.Refresh("Update");
+                if (PageConfig.IsEditPage) {
+                    this.Page.ShowMessage("保存成功！")
+                    this.SetOkDisabled(false);
+                }
+                else {
+                    EditView.SetEdit && EditView.SetEdit({ IsVisible: false });
+
+                    //刷新查询
+                    this.Page.EventActions.Query.Refresh("Update");
+                }
             }
             else this.SetOkDisabled(false);
         }
@@ -50,8 +67,16 @@ export default class EntityEdit extends Index {
     ReceiveDeleteInfo(props, nextProps) {
         if (this.Page.JudgeChanged(nextProps, "DeleteInfo")) {
             if (nextProps.DeleteInfo && nextProps.DeleteInfo.Succeed) {
-                //刷新查询
-                this.Page.EventActions.Query.Refresh("Delete");
+                const { PageConfig } = props;
+
+                if (PageConfig.IsEditPage) {
+                    const url = "/" + PageConfig.Name;
+                    props.ToPage(url);
+                }
+                else {
+                    //刷新查询
+                    this.Page.EventActions.Query.Refresh("Delete");
+                }
             }
         }
     }
@@ -68,11 +93,18 @@ export default class EntityEdit extends Index {
     }
 
     NewAdd(property, params) {
-        this.EditEntityData(null)
+        if (Common.IsNullOrEmpty(property.EditPageUrl)) this.EditEntityData(null);
+        else this.Page.props.ToPage(property.EditPageUrl);
     }
 
     Edit(property, params) {
-        this.EditEntityData(params);
+        if (Common.IsNullOrEmpty(property.EditPageUrl)) this.EditEntityData(params);
+        else {
+            let url = property.EditPageUrl;
+            const { PageConfig } = this.Page.props;
+            url = Common.AddUrlParams(url, PageConfig.PrimaryKey, params[PageConfig.PrimaryKey]);
+            this.Page.props.ToPage(url);
+        }
     }
 
     EditEntityData(entityData) {
@@ -87,22 +119,57 @@ export default class EntityEdit extends Index {
     }
 
     SetEntityData(entityData) {
-        const { PageConfig: { EditView } } = this.Page.props;
+        const { PageConfig } = this.Page.props;
+        const { EditView } = PageConfig;
+
         let value = null;
-        EditView.Properties.forEach(p => {
-            value = entityData === null ? null : entityData[p.Name];
-            if (p.SetValue !== undefined) p.SetValue(value);
-            else p.Value = value;
-        });
+        if (entityData != null) {
+            EditView.Properties.forEach(p => {
+                value = entityData === null ? p.DefaultValue : entityData[p.Name];
+                if (p.SetValue !== undefined) p.SetValue(value);
+                else p.Value = value;
+            });
+
+            if (PageConfig.ComplexView && PageConfig.ComplexView.SetDataList) {
+                let dataList = entityData[PageConfig.ComplexView.PropertyName];
+                if (Common.IsArray(dataList)) {
+                    dataList = dataList.map(m => { return { ...m, IsEdit: true, IsDelete: true } })
+                    PageConfig.ComplexView.SetDataList(dataList);
+                }
+            }
+        }
+        else {
+
+            EditView.Properties.forEach(p => {
+                if (p.InitState !== undefined) p.InitState();
+            });
+        }
 
         EditView.EntityData = entityData;
+
+        EditView.DataLoad && EditView.DataLoad();
     }
 
     Delete(property, params) {
         const { PageConfig } = this.Page.props;
-        const { EditView } = PageConfig
 
-        let url = PageConfig.EntityName + "/Delete2(" + params[PageConfig.PrimaryKey] + ")";
+        this.DeleteEntityData(params[PageConfig.PrimaryKey])
+    }
+
+    Delete2(property, params) {
+        this.Page.ShowConfirm("确认要删除吗？", () => {
+            const { PageConfig } = this.Page.props;
+            const { EditView } = PageConfig
+            if (Common.IsEmptyObject(EditView.EntityData)) return
+
+            this.DeleteEntityData(EditView.EntityData[PageConfig.PrimaryKey])
+        });
+    }
+
+    DeleteEntityData(id) {
+        const { PageConfig } = this.Page.props;
+
+        let url = PageConfig.EntityName + "/Delete2(" + id + ")";
 
         const action = this.Page.GetAction("Delete");
         if (!action) return;
@@ -117,7 +184,15 @@ export default class EntityEdit extends Index {
         const { PageConfig } = this.Page.props;
 
         const id = entityData[PageConfig.PrimaryKey];
+
+        this.GetEntityDataById(id)
+    }
+
+    GetEntityDataById(id) {
+        const { PageConfig } = this.Page.props;
+
         let url = PageConfig.EntityName + "(" + id + ")";
+        if (!Common.IsNullOrEmpty(PageConfig.GetEntityDataUrl)) url = PageConfig.GetEntityDataUrl + "(" + id + ")";
 
         const action = this.Page.GetAction("GetEntityData");
         if (!action) return;
@@ -157,9 +232,14 @@ export default class EntityEdit extends Index {
             return;
         }
 
-        let url = PageConfig.EntityName;
+        if (PageConfig.ComplexView && PageConfig.ComplexView.GetValue) {
+            data[PageConfig.ComplexView.PropertyName] = PageConfig.ComplexView.GetValue();
+        }
 
-        if (EntityData !== null) {
+        let url = PageConfig.InsertUrl ? PageConfig.InsertUrl : PageConfig.EntityName;
+
+        if (!Common.IsEmptyObject(EntityData)) {
+            url = PageConfig.UpdateUrl ? PageConfig.UpdateUrl : PageConfig.EntityName;
             const id = EntityData[PageConfig.PrimaryKey];
             url += "(" + id + ")";
 

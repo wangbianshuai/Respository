@@ -8,51 +8,49 @@ export default class Button2 extends Index {
     constructor(props) {
         super(props)
 
-        this.state = {
-            Disabled: false,
-            Value: props.Property.DefaultValue
-        };
-
-        props.Property.SetDisabled = (disabled) => this.setState({ Disabled: disabled })
-
-        props.Property.GetValue = () => this.state.Value;
-
-        props.Property.SetValue = (v) => this.setState({ Value: v });
-
-        if (props.Property.SelectChanged) props.Property.SelectChanged(props.Property.DefaultValue, this.GetSelectData(props.Property.DefaultValue));
+        this.state = Object.assign({ Options: [] }, this.state)
     }
 
     componentWillMount() {
-        this.Options = [];
+        this.GetDataSource();
+    }
 
-        const { Property } = this.props
+    GetOptions() {
+        const options = [];
 
-        if (Common.IsArray(Property.DataSource)) {
-            Property.DataSource.forEach(d => {
-                this.Options.push(<Option value={d.Value} key={d.Value}>{d.Text}</Option>)
-            });
-        }
+        this.Property.DataSource.forEach(d => {
+            options.push(<Option value={d[this.ValueName]} key={d[this.ValueName]}>{d[this.TextName]}</Option>)
+        });
+
+        return options;
     }
 
     GetSelectData(value) {
-        return Common.ArrayFirst(this.Property.DataSource, (f) => f.Value === value);
+        return Common.ArrayFirst(this.Property.DataSource, (f) => f[this.ValueName] === value);
     }
 
     OnChange(value) {
         this.setState({ Value: value })
+    }
 
+    ValueChange(value) {
         const { Property } = this.props
-        if (Property.SelectChanged) Property.SelectChanged(value, this.GetSelectData(value));
+        if (Property.ValueChange) Property.ValueChange(value, this.GetSelectData(value));
     }
 
     render() {
         const { Property } = this.props
 
+        const value = Common.IsNullOrEmpty(this.state.Value) ? "" : this.state.Value
         const width = Property.Width || "100%"
 
         return (<Select disabled={this.state.Disabled}
-            style={{ width: width }} value={this.state.Value}
+            style={{ width: width }}
+            value={value}
             onChange={this.OnChange.bind(this)}
-            defaultValue={Property.DefaultValue} >{this.Options}</Select>)
+            allowClear={Property.AllowClear}
+            mode={Property.Mode}
+            maxTagCount={Property.MaxTagCount}
+            defaultValue={Property.DefaultValue} >{this.state.Options}</Select>)
     }
 }

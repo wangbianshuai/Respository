@@ -10,7 +10,7 @@ function RouterConfig({ history, app }) {
       <Router history={history}>
         <Switch>
           <Route path="/:name" render={props => <LeftRightLayout {...props} App={app} />} />
-          <Redirect exact from="/" to="/DictionaryConfig" />
+          <Redirect exact from="/" to="/ContentEdit" />
         </Switch>
       </Router>
     </LocaleProvider>

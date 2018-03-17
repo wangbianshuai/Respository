@@ -10,8 +10,6 @@ export default class Button2 extends Index {
         this.state = {
             Disabled: false
         };
-
-        props.Property.SetDisabled = (disabled) => this.setState({ Disabled: disabled })
     }
 
     ClickAction() {
@@ -26,6 +24,7 @@ export default class Button2 extends Index {
         return (<Button onClick={this.ClickAction.bind(this)}
             icon={Property.Icon}
             disabled={this.state.Disabled}
+            style={Property.Style}
             type={Property.ButtonType}>{text}</Button>)
     }
 }

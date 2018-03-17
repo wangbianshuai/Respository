@@ -2,7 +2,7 @@ import Service from "../services/Index"
 
 export default class Index {
     constructor(config) {
-        this.namespace = config.EntityName
+        this.namespace = config.Name
         this.state = { Loading: false }
 
         this.Service = new Service(config.ActionList)

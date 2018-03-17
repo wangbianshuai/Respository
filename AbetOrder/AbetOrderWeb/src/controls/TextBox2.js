@@ -1,24 +1,25 @@
 import React, { Component } from "react"
 import * as Common from "../utils/Common"
 import Index from "./Index"
-import { Input } from "antd";
+import { Input, InputNumber } from "antd";
 const { TextArea } = Input;
 
 export default class TextBox2 extends Index {
     constructor(props) {
         super(props)
 
-        this.state = { Value: props.Property.Value }
-
-        props.Property.GetValue = () => this.state.Value;
-
-        props.Property.SetValue = (v) => this.setState({ Value: v });
     }
 
     OnChange(e) {
-        const v = e.target.value;
-        this.setState({ Value: v })
-        if (this.Property.ValueChange) this.Property.ValueChange(v);
+        this.setState({ Value: e.target.value })
+    }
+
+    InputNumberChange(value) {
+        this.setState({ Value: value })
+    }
+
+    ValueChange(value) {
+        if (this.Property.ValueChange) this.Property.ValueChange(value);
     }
 
     render() {
@@ -26,18 +27,39 @@ export default class TextBox2 extends Index {
 
         const rows = Property.Rows || 4
 
+        const value = Common.IsNullOrEmpty(this.state.Value) ? "" : this.state.Value
+
         if (Property.ControlType === "TextArea") {
-            return <TextArea rows={rows}
-                placeholder={Property.PlaceHolder} onChange={this.OnChange.bind(this)}
-                maxLength={Property.MaxLength} readOnly={Property.IsReadonly}
-                value={this.state.Value} />
+            return (<TextArea rows={rows}
+                placeholder={Property.PlaceHolder}
+                onChange={this.OnChange.bind(this)}
+                maxLength={Property.MaxLength}
+                readOnly={this.state.IsReadonly}
+                disabled={this.state.Disabled}
+                value={value} />)
+        }
+
+        if (Property.ControlType === "InputNumber") {
+            const width = Property.Width || "100%"
+
+            return (<InputNumber placeholder={Property.PlaceHolder}
+                style={{ width: width }}
+                onChange={this.InputNumberChange.bind(this)}
+                maxLength={Property.MaxLength}
+                max={Property.Max}
+                min={Property.Min}
+                readOnly={this.state.IsReadonly}
+                disabled={this.state.Disabled}
+                value={value} />)
         }
 
         return (
-            <Input placeholder={Property.PlaceHolder} onChange={this.OnChange.bind(this)}
+            <Input placeholder={Property.PlaceHolder}
+                onChange={this.OnChange.bind(this)}
                 maxLength={Property.MaxLength}
-                readOnly={Property.IsReadonly}
-                value={this.state.Value} />
+                readOnly={this.state.IsReadonly}
+                disabled={this.state.Disabled}
+                value={value} />
         );
     }
 }

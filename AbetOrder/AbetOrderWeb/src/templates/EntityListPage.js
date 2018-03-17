@@ -23,10 +23,10 @@ Config配置结构：
 
 const EntityListPageConfig = {};
 
-export default function EntityListPage(config) {
-    if (EntityListPageConfig[config.Name]) return EntityListPageConfig[config.Name];
+export default function EntityListPage(config, id) {
+    if (EntityListPageConfig[id]) return EntityListPageConfig[id];
 
-    const _Config = { Config: config }
+    const _Config = { Config: config, Id: id }
 
     //初始化配置
     InitConfig(_Config, config)
@@ -34,21 +34,40 @@ export default function EntityListPage(config) {
     //查询视图
     InitSearchView(_Config);
 
+    AddRowColId(_Config.SearchView)
+
     //操作视图
     InitOperationView(_Config);
 
+    AddRowColId(_Config.OperationView)
+
     //数据视图
     InitDataView(_Config);
+    AddId(_Config.DataView)
 
     //编辑视图
     InitEditView(_Config);
 
+    AddRowColId(_Config.EditView)
+
     //行为列表
     InitActionList(_Config);
 
-    EntityListPageConfig[config.Name] = _Config;
+    EntityListPageConfig[id] = _Config;
 
     return _Config
+}
+
+function AddId(view) {
+    if (view && view.Properties) view.Properties.forEach(p => p.Id = Common.CreateGuid());
+}
+
+function AddRowColId(view) {
+    if (view && view.Properties) view.Properties.forEach(p => {
+        p.Id = Common.CreateGuid();
+        p.RowId = Common.CreateGuid();
+        p.ColId = Common.CreateGuid()
+    });
 }
 
 function InitConfig(a, b) {
@@ -60,10 +79,10 @@ function InitConfig(a, b) {
     a.PageIndex = 1
     a.InitEventActionList = []
     a.ActionList = [];
-    a.DataView = { Properties: [], StateName: "DataList" };
-    a.StateList = [{ EntityName: b.EntityName, StateName: "Loading" }];
+    a.DataView = { Properties: [], StateName: "DataList", Name: "DataView" };
+    a.StateList = [{ Name: b.Name, StateName: "Loading" }];
 
-    const copyNames = ["Title", "EntityName", "PrimaryKey", "SearchNames", "SelectNames", "DataUrl",
+    const copyNames = ["Title", "EntityName", "PrimaryKey", "SearchNames", "SelectNames", "DataUrl", "EditPageUrl",
         "IsNewAdd", "IsUpdate", "IsDelete", "IsPaging", "PageSize", "EditNames", "OrderByList", "Name",
         "InitEventActionList", "Properties", "DataColumnNames", "DataView"];
 
@@ -72,11 +91,11 @@ function InitConfig(a, b) {
 
 function InitSearchView(config) {
     if (config.SearchView === undefined) {
-        config.SearchView = { IsVisible: true, Properties: [] };
+        config.SearchView = { IsVisible: true, Properties: [], Name: "SearchView" };
     }
 
     if (config.SearchNames) {
-        let x = 0, y = 0;
+        let x = 0, y = 0, p = null;
         config.SearchNames.forEach(n => {
             if (x === 0) x = 1;
             if (y === 3) { x += 1; y = 0 }
@@ -84,7 +103,9 @@ function InitSearchView(config) {
 
             for (let i = 0; i < config.Properties.length; i++) {
                 if (n === config.Properties[i].Name) {
-                    config.SearchView.Properties.push(Object.assign({ Type: "TextBox", OperateLogic: "like", X: x, Y: y, IsSearch: true, ColSpan: 6 }, config.Properties[i]));
+                    p = Object.assign({ Type: "TextBox", OperateLogic: "like", X: x, Y: y, IsSearch: true, ColSpan: 6 }, config.Properties[i]);
+                    if (p.SearchProperty) for (let key in p.SearchProperty) { p[key] = p.SearchProperty[key] }
+                    config.SearchView.Properties.push(p);
                     break;
                 }
             }
@@ -116,7 +137,7 @@ function InitSearchView(config) {
 
 function InitOperationView(config) {
     if (config.OperationView === undefined) {
-        config.OperationView = { IsVisible: true, Properties: [] };
+        config.OperationView = { IsVisible: true, Properties: [], Name: "OperationView" };
     }
     let x = 0, y = 0;
     if (config.IsNewAdd) {
@@ -130,6 +151,7 @@ function InitOperationView(config) {
             Icon: "plus",
             X: x,
             Y: y,
+            EditPageUrl: config.EditPageUrl,
             ActionType: "EntityEdit",
             ActionName: "NewAdd"
         });
@@ -173,7 +195,7 @@ function InitDataView(config) {
 
 function InitEditView(config) {
     if (config.EditView === undefined) {
-        config.EditView = { Properties: [], IsVisible: true, ColumnCount: 1 };
+        config.EditView = { Properties: [], IsVisible: true, ColumnCount: 1, Name: "EditView" };
         if (config.Config.EditViewWidth > 0) config.EditView.Width = config.Config.EditViewWidth;
 
         //组合不能为空属性名

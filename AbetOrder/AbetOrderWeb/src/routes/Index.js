@@ -6,20 +6,29 @@ import IndexModel from "../models/Index"
 import Panel from "../components/Panel"
 import PageAction from "../actions/Page"
 import EntityListPage from "../templates/EntityListPage"
+import EntityEditPage from "../templates/EntityEditPage";
 import QueryAction from "../actions/Query"
 import EntityListPageLayout from "../layouts/EntityListPage"
+import EntityEditPageLayout from "../layouts/EntityEditPage";
 import EntityEditAction from "../actions/EntityEdit"
+import ComplexDataGridAction from "../actions/ComplexDataGrid"
 import PageExpand from "../pages/Index"
+import { routerRedux } from 'dva/router';
 
 class Index extends Component {
     constructor(props) {
         super(props)
+    }
 
-        props.InitConfigState()
+    componentWillMount() {
+        this.props.InitConfigState()
 
         this.EventActions = {};
+        this.ExpandActions = {};
         this.IsPageLoad = false;
         this.InitActions();
+
+        this.QueryString = Common.GetQueryString();
     }
 
     //初始化行为
@@ -30,9 +39,14 @@ class Index extends Component {
         this.EventActions.Query = new QueryAction({ Page: this });
         //实体编辑行为
         this.EventActions.EntityEdit = new EntityEditAction({ Page: this });
+        //复杂对象编辑行为
+        this.EventActions.ComplexDataGrid = new ComplexDataGridAction({ Page: this });
     }
 
     InvokeAction(property, params) {
+        if (property.ActionType === "ExpandPage" && this.ExpandActions[property.ActionName]) {
+            this.ExpandActions[property.ActionName](property, params);
+        }
         if (this.EventActions[property.ActionType] && this.EventActions[property.ActionType][property.ActionName]) {
             this.EventActions[property.ActionType][property.ActionName](property, params);
         }
@@ -44,11 +58,11 @@ class Index extends Component {
     }
 
     Dispatch(action, payload) {
-        this.props.Dispatch(this.props.PageConfig.EntityName + "/" + action.ActionName, payload)
+        this.props.Dispatch(this.props.PageConfig.Name + "/" + action.ActionName, payload)
     }
 
     SetActionState(action, payload) {
-        this.props.Dispatch(this.props.PageConfig.EntityName + "/Set_" + action.ActionName, payload)
+        this.props.Dispatch(this.props.PageConfig.Name + "/Set_" + action.ActionName, payload)
     }
 
     GetAction(actionName) {
@@ -69,6 +83,8 @@ class Index extends Component {
     PropsChanged(nextProps) {
         if (Common.IsEmptyObject(this.props.PageConfig)) return;
         for (let a in this.EventActions) this.EventActions[a].PropsChanged && this.EventActions[a].PropsChanged(this.props, nextProps);
+
+        this.ExpandPropsChanged && this.ExpandPropsChanged(this.props, nextProps);
     }
 
     SetLoading(nextProps) {
@@ -92,6 +108,14 @@ class Index extends Component {
         }
 
         return false
+    }
+
+    ShowConfirm(msg, onOk) {
+        Modal.confirm({
+            title: "确认信息",
+            content: msg,
+            onOk: onOk
+        });
     }
 
     ShowMessage(msg) {
@@ -123,13 +147,13 @@ class Index extends Component {
 
     InitPage(config) {
         if (Common.IsEmptyObject(config)) return
-        config.EntityName && this.InitModels(config)
+        config.Name && this.InitModels(config)
 
-        config.ActionList && this.props.InitState(config.EntityName, config.ActionList)
+        config.ActionList && this.props.InitState(config.Name, config.ActionList)
     }
 
     InitModels(config) {
-        if (this.props.App._models.filter(f => f.namespace === config.EntityName).length === 0) {
+        if (this.props.App._models.filter(f => f.namespace === config.Name).length === 0) {
             this.props.App.model(Common.ToModels(new IndexModel(config)))
         }
     }
@@ -191,7 +215,7 @@ class Index extends Component {
     }
 
     render() {
-        if (Common.IsEmptyObject(this.props.PageConfig)) return null
+        if (Common.IsEmptyObject(this.props.PageConfig) || this.props.Id !== this.props.PageConfig.Id) return null;
 
         const props = { Page: this, Property: this.props.PageConfig }
 
@@ -199,17 +223,19 @@ class Index extends Component {
 
         switch (this.props.PageConfig.Config.TemplateName) {
             case "EntityListPage": return (<EntityListPageLayout {...props} />)
+            case "EntityEditPage": return (<EntityEditPageLayout {...props} />)
             default: return (<Panel {...props} />)
         }
     }
 }
 
 //初始化模板配置
-function InitTemplateConfig(config) {
+function InitTemplateConfig(config, id) {
     if (!config || Common.IsNullOrEmpty(config.TemplateName)) return config
 
     switch (config.TemplateName) {
-        case "EntityListPage": return EntityListPage(config)
+        case "EntityListPage": return EntityListPage(config, id)
+        case "EntityEditPage": return EntityEditPage(config, id)
         default: return config
     }
 }
@@ -217,20 +243,24 @@ function InitTemplateConfig(config) {
 function mapStateToProps(state, ownProps) {
     const props = {}
 
-    let pageConfig = InitTemplateConfig(state.Config.Data)
-    props.PageConfig = pageConfig;
+    if (state.Config.Data && state.Config.Data.Name !== ownProps.PageName) {
+        props.PageConfig = undefined;
+    }
+    else {
+        let pageConfig = InitTemplateConfig(state.Config.Data, ownProps.Id)
+        props.PageConfig = pageConfig;
 
-    if (pageConfig && pageConfig.ActionList && pageConfig.EntityName && state[pageConfig.EntityName]) {
-        pageConfig.ActionList.forEach(a => props[a.StateName] = state[pageConfig.EntityName][a.StateName])
+        if (pageConfig && pageConfig.ActionList && pageConfig.Name && state[pageConfig.Name]) {
+            pageConfig.ActionList.forEach(a => props[a.StateName] = state[pageConfig.Name][a.StateName])
+        }
+
+        if (pageConfig && pageConfig.StateList) {
+            pageConfig.StateList.forEach(s => {
+                if (state[s.Name]) props[s.StateName] = state[s.Name][s.StateName]
+            })
+        }
     }
 
-    if (pageConfig && pageConfig.StateList) {
-        pageConfig.StateList.forEach(s => {
-            if (state[s.EntityName]) props[s.StateName] = state[s.EntityName][s.StateName]
-        })
-    }
-
-    console.log(state)
     console.log(props)
 
     return props
@@ -240,7 +270,8 @@ function mapDispatchToProps(dispatch) {
     return {
         InitConfigState() { dispatch({ type: "Config/Set_GetConfig", payload: undefined }) },
         InitState(entityName, actionList) { actionList.forEach(a => dispatch({ type: `${entityName}/Set_${a.ActionName}`, payload: undefined })) },
-        Dispatch(type, payload) { dispatch({ type: type, payload: payload }) }
+        Dispatch(type, payload) { dispatch({ type: type, payload: payload }) },
+        ToPage(url) { url = Common.AddUrlRandom(url); dispatch(routerRedux.push(url)) }
     }
 }
 

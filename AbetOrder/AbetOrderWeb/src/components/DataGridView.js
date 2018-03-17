@@ -16,6 +16,7 @@ export default class DataGridView extends Index {
     }
 
     GetPagination() {
+        if (this.props.IsPaging === false) return false;
         const { PageInfo } = this.props
 
         return {

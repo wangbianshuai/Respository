@@ -1,12 +1,10 @@
 import React, { Component } from "react"
-import { Row, Col, Divider, Modal } from "antd"
+import { Modal } from "antd"
 import * as Common from "../utils/Common"
-import PropertyItem from "../components/PropertyItem"
 import DataGridView from "../components/DataGridView"
-import AButton from "../controls/AButton"
-import Popconfirm2 from "../controls/Popconfirm2"
+import Index from "./Index"
 
-export default class EntityListPage extends Component {
+export default class EntityListPage extends Index {
     constructor(props) {
         super(props)
 
@@ -54,7 +52,7 @@ export default class EntityListPage extends Component {
         let actionList = []
 
         if (this.props.Property.IsUpdate) {
-            actionList.push({ Name: "Update", Text: "修改", ActionType: "EntityEdit", ActionName: "Edit" })
+            actionList.push({ Name: "Update", Text: "修改", EditPageUrl: this.props.Property.EditPageUrl, ActionType: "EntityEdit", ActionName: "Edit" })
         }
 
         if (this.props.Property.IsDelete) {
@@ -71,57 +69,6 @@ export default class EntityListPage extends Component {
         }
     }
 
-    RenderActions(actionList, record) {
-        const list = []
-
-        for (let i = 0; i < actionList.length; i++) {
-            if (i > 0) list.push(<Divider type="vertical" key={i} />)
-            if (actionList[i].IsConfrim) list.push(<Popconfirm2 Property={actionList[i]} Page={this.props.Page} Params={record} key={actionList[i].Name} />)
-            else list.push(<AButton Property={actionList[i]} Page={this.props.Page} Params={record} key={actionList[i].Name} />)
-        }
-
-        return (<span>{list.map(m => m)}</span>)
-    }
-
-    InitSetView(view) {
-        const properties = view.Properties || [];
-
-        const rowDict = {};
-        let xList = [];
-
-        properties.forEach(p => {
-            p.Id = p.Id || Common.CreateGuid()
-            if (rowDict[p.X] === undefined) { rowDict[p.X] = []; xList.push(p.X); }
-            rowDict[p.X].push(p)
-        });
-
-        xList = xList.sort((a, b) => a > b ? 1 : -1);
-
-        for (let key in rowDict) rowDict[key] = rowDict[key].sort((a, b) => a.Y > b.Y ? 1 : -1);
-
-        return { XList: xList, RowDictionary: rowDict, IsVisible: view.IsVisible };
-    }
-
-    RenderView(view) {
-        return (
-            <div style={{ display: view.IsVisible ? "" : "none" }}>
-                {view.XList.map(m => this.RendRowCols(m, view.RowDictionary[m]))}
-            </div>
-        );
-    }
-
-    RendRowCols(rowId, colList) {
-        return (<Row key={rowId} type="flex" justify="start" align="top" gutter={16}>{colList.map(c => this.RenderColumn(c))}</Row>);
-    }
-
-    RenderColumn(col) {
-        return (<Col key={col.Y} span={col.ColSpan}>{this.GetPropertyItem(col)}</Col>);
-    }
-
-    GetPropertyItem(p) {
-        return (<PropertyItem Property={p} Page={this.props.Page} />)
-    }
-
     SetDataList() {
         let dataList = this.props[this.DataStateName];
 
@@ -129,7 +76,7 @@ export default class EntityListPage extends Component {
 
         if (Common.IsArray(dataList)) this.DataList = dataList;
 
-        this.DataList.forEach((d, i) => d.key = i + 1);
+        this.DataList.forEach((d, i) => d.key = d[this.props.Property.PrimaryKey]);
     }
 
     SetPageInfo() {
@@ -153,24 +100,6 @@ export default class EntityListPage extends Component {
         return (<DataGridView Page={this.props.Page} DataList={this.DataList} PageInfo={this.PageInfo}
             PageIndexChange={this.PageIndexChange.bind(this)}
             IsLoading={this.state.IsDataLoading} DataProperties={this.DataProperties} />)
-    }
-
-    shouldComponentUpdate(nextProps, nextState) {
-        let blChangedProps = false;
-
-        for (let key in nextProps) {
-            if (nextProps[key] !== undefined) {
-                if (this.props[key] !== nextProps[key]) { blChangedProps = true; break; }
-            }
-        }
-
-        if (!blChangedProps) {
-            for (let key in nextState) {
-                if (this.state[key] !== nextState[key]) { blChangedProps = true; break; }
-            }
-        }
-
-        return blChangedProps;
     }
 
     EditOk(e) {

@@ -3,7 +3,7 @@ import * as Common from "../utils/Common"
 
 function InitModel() {
     const obj = new Index({
-        EntityName: "Config",
+        Name: "Config",
         ActionList: [{ ActionName: "GetConfig", StateName: "Data", DataKey: "$EntityConfig", Method: "GET" }]
     })
     return Common.ToModels(obj)
