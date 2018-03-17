@@ -5,6 +5,8 @@
         EntityName: "Bill",
         PrimaryKey: "Id",
         TemplateName: "EntityListPage",
+        InsertUrl: "Bill/Insert2",
+        UpdateUrl: "Bill/Update2",
         SelectNames: ["Id", "RowVersion", "Amount2", "BillTypeName", "IncomePaymentName", "BillUserName", "CreateUserName", "UpdateUserName", "BillType", "BillDate", "UpdateDate", "Remark", "CreateDate"],
         SearchNames: ["IncomePayment", "BillTypeId", "BillUser", "StartDate", "EndDate", "Remark"],
         DataColumnNames: ["BillTypeName", "IncomePaymentName", "Amount2", "BillUserName", "BillDate", "Remark", "CreateUserName", "UpdateUserName", "CreateDate", "UpdateDate"],

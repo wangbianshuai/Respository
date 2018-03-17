@@ -21,5 +21,6 @@ namespace OpenDataAccess.Entity
         string GetPropertyName(int i);
         string GetStringValue(string propertyName);
         T GetValue<T>(string propertyName);
+        void SetDefaultValue(string property, object value);
     }
 }

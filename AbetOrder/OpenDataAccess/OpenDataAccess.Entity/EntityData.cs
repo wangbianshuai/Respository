@@ -109,6 +109,12 @@ namespace OpenDataAccess.Entity
             }
         }
 
+        public void SetDefaultValue(string propertyName, object value)
+        {
+            string strValue = GetStringValue(propertyName);
+            if (string.IsNullOrEmpty(strValue)) SetValue(propertyName, value);
+        }
+
         public void SetValue(int i, object value)
         {
             _PropertyName = GetPropertyName(i);

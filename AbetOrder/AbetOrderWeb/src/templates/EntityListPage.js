@@ -84,6 +84,7 @@ function InitConfig(a, b) {
 
     const copyNames = ["Title", "EntityName", "PrimaryKey", "SearchNames", "SelectNames", "DataUrl", "EditPageUrl",
         "IsNewAdd", "IsUpdate", "IsDelete", "IsPaging", "PageSize", "EditNames", "OrderByList", "Name", "ActionList",
+        "InsertUrl", "UpdateUrl", "GetEntityDataUrl",
         "InitEventActionList", "Properties", "DataColumnNames", "DataView"];
 
     Common.Copy(a, b, copyNames)

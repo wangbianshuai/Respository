@@ -8,13 +8,13 @@ using System.Threading.Tasks;
 
 namespace AbetOrder.Component
 {
-    public class Channel : EntityRequest
+    public class User : EntityRequest
     {
-        public Channel()
+        public User()
         {
         }
 
-        public Channel(Request request)
+        public User(Request request)
             : base(request)
         {
         }
@@ -22,7 +22,7 @@ namespace AbetOrder.Component
         [Log]
         public object Delete2()
         {
-            return CommonOperation.DeleteByLogic<Channel>(this);
+            return CommonOperation.DeleteByLogic<User>(this);
         }
     }
 }

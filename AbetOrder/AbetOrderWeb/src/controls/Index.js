@@ -90,7 +90,7 @@ export default class Index extends Component {
 
             Property.SetDataSource = (dataList, parentValue) => {
                 this.Property.DataSource = dataList;
-                 this.setState({ Options: this.GetOptions(parentValue) });
+                this.setState({ Options: this.GetOptions(parentValue) });
             };
 
             const action = Page.GetAction(Property.ServiceDataSource.ActionName);
@@ -123,7 +123,7 @@ export default class Index extends Component {
         const { Property } = this.props
         if (Property.ValueChange) Property.ValueChange(value, this.GetSelectData(value));
 
-        this.ChildPropertiesChanged(value);
+        window.setTimeout(() => this.ChildPropertiesChanged(value), 100);
     }
 
     ChildPropertiesChanged(value) {

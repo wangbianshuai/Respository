@@ -39,13 +39,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Channel.cs" />
+    <Compile Include="Bill.cs" />
+    <Compile Include="BillType.cs" />
+    <Compile Include="User.cs" />
     <Compile Include="CommonOperation.cs" />
-    <Compile Include="ContentTag.cs" />
     <Compile Include="DictionaryConfig.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="StaticSource.cs" />
-    <Compile Include="TemplateHtml.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\OpenDataAccess\OpenDataAccess.Data\OpenDataAccess.Data.csproj">

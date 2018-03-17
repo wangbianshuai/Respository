@@ -8,13 +8,13 @@ using System.Threading.Tasks;
 
 namespace AbetOrder.Component
 {
-    public class TemplateHtml : EntityRequest
+    public class BillType : EntityRequest
     {
-        public TemplateHtml()
+        public BillType()
         {
         }
 
-        public TemplateHtml(Request request)
+        public BillType(Request request)
             : base(request)
         {
         }
@@ -22,7 +22,7 @@ namespace AbetOrder.Component
         [Log]
         public object Delete2()
         {
-            return CommonOperation.DeleteByLogic<TemplateHtml>(this);
+            return CommonOperation.DeleteByLogic<BillType>(this);
         }
     }
 }
