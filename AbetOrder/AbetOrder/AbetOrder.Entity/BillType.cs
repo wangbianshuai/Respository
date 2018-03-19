@@ -48,7 +48,7 @@ namespace AbetOrder.Entity
         }
     }
 
-    [TableProperty(Name = "v_BillType", PrimaryKey = "Id")]
+    [TableProperty(Name = "v_BillType", PrimaryKey = "Id", NoSelectNames = "IsDelete")]
     public class ViewBillType : BillType
     {
         public string IncomePaymentName { get; set; }

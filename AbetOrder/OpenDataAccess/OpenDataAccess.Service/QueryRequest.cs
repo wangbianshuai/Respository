@@ -539,6 +539,7 @@ namespace OpenDataAccess.Service
                     {
                         return typeof(DateTime);
                     }
+                case "time": return typeof(DateTime);
                 default:
                     {
                         return typeof(string);

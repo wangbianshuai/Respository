@@ -38,7 +38,7 @@ namespace AbetOrder.Entity
         public long RowVersion { get; set; }
     }
 
-    [TableProperty(Name = "v_Dictionary", PrimaryKey = "Id")]
+    [TableProperty(Name = "v_Dictionary", PrimaryKey = "Id", NoSelectNames = "IsDelete")]
     public class ViewDictionaryConfig : DictionaryConfig
     {
        

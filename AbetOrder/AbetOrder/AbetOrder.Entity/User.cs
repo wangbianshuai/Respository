@@ -89,7 +89,7 @@ namespace AbetOrder.Entity
         }
     }
 
-    [TableProperty(Name = "v_User", PrimaryKey = "UserId")]
+    [TableProperty(Name = "v_User", PrimaryKey = "UserId", NoSelectNames = "IsDelete,LoginPassword")]
     public class ViewUser : User
     {
         /// <summary>

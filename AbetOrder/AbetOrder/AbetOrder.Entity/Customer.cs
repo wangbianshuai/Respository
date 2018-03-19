@@ -69,7 +69,7 @@ namespace AbetOrder.Entity
         }
     }
 
-    [TableProperty(Name = "v_Customer", PrimaryKey = "Id")]
+    [TableProperty(Name = "v_Customer", PrimaryKey = "Id", NoSelectNames = "IsDelete")]
     public class ViewCustomer : Customer
     {
        

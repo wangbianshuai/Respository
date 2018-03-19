@@ -66,8 +66,8 @@ namespace AbetOrder.Entity
         public long RowVersion { get; set; }
     }
 
-    [TableProperty(Name = "v_Bill", PrimaryKey = "Id")]
-    public class ViewBill : Bill 
+    [TableProperty(Name = "v_Bill", PrimaryKey = "Id", NoSelectNames = "IsDelete")]
+    public class ViewBill : Bill
     {
         public string IncomePaymentName { get; set; }
         public string CreateUserName { get; set; }
@@ -76,5 +76,14 @@ namespace AbetOrder.Entity
         public int DataRight { get; set; }
         public string BillTypeName { get; set; }
         public decimal Amount2 { get; set; }
+        public int BillYear { get; set; }
+        public int BillMonth { get; set; }
+        public int BillDay { get; set; }
+    }
+
+    [TableProperty(Name = "v_BillYear", PrimaryKey = "BillYear")]
+    public class ViewBillYear : EntityModel, IEntity
+    {
+        public int BillYear { get; set; }
     }
 }
