@@ -124,18 +124,18 @@ class Index extends Component {
         message.warning(msg, 3)
     }
 
-    ShowSuccess(message) {
+    ShowSuccess(msg) {
         Modal.success({
             title: "成功信息",
-            content: message,
+            content: msg,
             okText: "确定"
         })
     }
 
-    ShowModalMessage(message) {
+    ShowModalMessage(msg) {
         Modal.warning({
             title: "提示信息",
-            content: message,
+            content: msg,
             okText: "确定"
         });
     }
