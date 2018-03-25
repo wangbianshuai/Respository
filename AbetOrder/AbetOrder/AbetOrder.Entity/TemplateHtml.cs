@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 
 namespace AbetOrder.Entity
 {
-    [TableProperty(Name = "t_d_BillType", PrimaryKey = "Id", NoSelectNames = "IsDelete")]
-    public class BillType : EntityModel, IEntity
+    [TableProperty(Name = "t_d_templatehtml", PrimaryKey = "Id", NoSelectNames = "IsDelete")]
+    public class TemplateHtml : EntityModel, IEntity
     {
         /// <summary> 
         /// 主键
@@ -18,14 +18,15 @@ namespace AbetOrder.Entity
         /// 名称
         /// </summary> 
         public string Name { get; set; }
-        /// <summary>
-        /// 收入支出  -- 1: 收入，2：支出
-        /// </summary>
-        public byte IncomePayment { get; set; }
+        /// <summary> 
+        /// 内容
+        /// </summary> 
+        public string Content { get; set; }
         /// <summary> 
         /// 备注
         /// </summary> 
         public string Remark { get; set; }
+        /// <summary> 
         /// 逻辑删除，1：删除,0:正常
         /// </summary> 
         public byte IsDelete { get; set; }
@@ -38,19 +39,18 @@ namespace AbetOrder.Entity
 
         public override void InsertValidate(List<Func<IValidate, IEntityData, string>> validateList)
         {
-            validateList.Add(this.ValidateExists<BillType>("IsDelete=0 and Name=@Name", "对不起，该名称已存在！"));
+            validateList.Add(this.ValidateExists<TemplateHtml>("IsDelete=0 and Name=@Name", "对不起，该名称已存在！"));
         }
 
         public override void UpdateValidate(List<Func<IValidate, IEntityData, string>> validateList)
         {
-            validateList.Add(this.ValidateExists<BillType>("Id=@Id and Name=@Name", "true"));
-            validateList.Add(this.ValidateExists<BillType>("IsDelete=0 and Name=@Name", "对不起，该名称已存在！"));
+            validateList.Add(this.ValidateExists<TemplateHtml>("Id=@Id and Name=@Name", "true"));
+            validateList.Add(this.ValidateExists<TemplateHtml>("IsDelete=0 and Name=@Name", "对不起，该名称已存在！"));
         }
     }
 
-    [TableProperty(Name = "v_BillType", PrimaryKey = "Id", NoSelectNames = "IsDelete")]
-    public class ViewBillType : BillType
+    [TableProperty(Name = "v_TemplateHtml", PrimaryKey = "Id", NoSelectNames = "IsDelete")]
+    public class ViewTemplateHtml : TemplateHtml
     {
-        public string IncomePaymentName { get; set; }
     }
 }

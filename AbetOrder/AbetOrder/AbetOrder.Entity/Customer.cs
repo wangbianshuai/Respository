@@ -55,7 +55,7 @@ namespace AbetOrder.Entity
         /// </summary> 
         public DateTime CreateDate { get; set; }
 
-        public long RowVersion { get; set; }
+        public string RowVersion { get; set; }
 
         public override void InsertValidate(List<Func<IValidate, IEntityData, string>> validateList)
         {

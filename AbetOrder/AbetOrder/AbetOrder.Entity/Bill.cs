@@ -63,7 +63,7 @@ namespace AbetOrder.Entity
         /// </summary> 
         public DateTime CreateDate { get; set; }
 
-        public long RowVersion { get; set; }
+        public string RowVersion { get; set; }
     }
 
     [TableProperty(Name = "v_Bill", PrimaryKey = "Id", NoSelectNames = "IsDelete")]

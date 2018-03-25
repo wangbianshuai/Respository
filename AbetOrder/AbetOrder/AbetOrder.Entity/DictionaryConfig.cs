@@ -35,7 +35,7 @@ namespace AbetOrder.Entity
         /// </summary> 
         public DateTime CreateDate { get; set; }
 
-        public long RowVersion { get; set; }
+        public string RowVersion { get; set; }
     }
 
     [TableProperty(Name = "v_Dictionary", PrimaryKey = "Id", NoSelectNames = "IsDelete")]

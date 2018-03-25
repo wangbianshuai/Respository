@@ -27,13 +27,33 @@ namespace AbetOrder.Entity
         public Guid SaleUser { get; set; }
         public byte IsDelete { get; set; }
         public DateTime CreateDate { get; set; }
-
-        public long RowVersion { get; set; }
+        public string OrderPdfPath { get; set; }
+        public string ProcessPdfPath { get; set; }
+        public Guid OrderTemplateHtmlId { get; set; }
+        public Guid ProcessTemplateHtmlId { get; set; }
+        public string RowVersion { get; set; }
     }
 
     [TableProperty(Name = "v_Order", PrimaryKey = "OrderId", NoSelectNames = "IsDelete")]
     public class ViewOrder : Order
     {
+        public string OrderStatusName { get; set; }
+        public string CreateUserName { get; set; }
+        public string UpdateUserName { get; set; }
+        public string SaleUserName { get; set; }
+        public int DataRight { get; set; }
+        public string CustomerName { get; set; }
+        public int BillYear { get; set; }
+        public int BillMonth { get; set; }
+        public int BillDay { get; set; }
+        public string OrderTemplateHtmlName { get; set; }
+        public string ProcessTemplateHtmlName { get; set; }
+    }
+
+    [TableProperty(Name = "v_OrderYear", PrimaryKey = "OrderYear")]
+    public class ViewOrderYear : EntityModel, IEntity
+    {
+        public int OrderYear { get; set; }
     }
 
     [TableProperty(Name = "t_d_OrderImage", PrimaryKey = "Id")]
