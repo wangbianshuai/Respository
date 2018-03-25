@@ -39,6 +39,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Order.cs" />
+    <Compile Include="ProcessType.cs" />
     <Compile Include="User.cs" />
     <Compile Include="Customer.cs" />
     <Compile Include="DictionaryConfig.cs" />

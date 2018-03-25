@@ -37,7 +37,7 @@ namespace AbetOrder.Entity
         /// <summary>
         /// 传真
         /// </summary>
-        public string Tax { get; set; }
+        public string Fax { get; set; }
         /// <summary>
         /// 地址
         /// </summary>

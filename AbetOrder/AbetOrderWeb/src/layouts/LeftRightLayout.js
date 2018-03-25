@@ -17,10 +17,11 @@ export default class LeftRightLayout extends Component {
         this.MenuList = [
             this.AddMenu("内容编辑", "form", "ContentEdit"),
             this.AddMenu("内容列表", "table", "ContentList"),
-            this.AddMenu("内容频道", "table", "ContentChannel"),
+            this.AddMenu("客户", "table", "Customer"),
             this.AddMenu("支收明细", "table", "Bill"),
             this.AddMenu("用户", "table", "User"),
             this.AddMenu("账目类型", "table", "BillType"),
+            this.AddMenu("加工类型", "table", "ProcessType"),
             this.AddMenu("键值配置", "table", "DictionaryConfig")
         ]
     }
