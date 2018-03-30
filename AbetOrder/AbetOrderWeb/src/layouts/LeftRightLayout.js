@@ -64,7 +64,7 @@ export default class LeftRightLayout extends Component {
 
         const selectedKeys = this.GetCurrentMenuSelectedKeys();
 
-        return (<Layout>
+        return (<Layout style={{ minHeight: "100%" }}>
             <Sider trigger={null}
                 collapsible
                 collapsed={this.state.collapsed}>
