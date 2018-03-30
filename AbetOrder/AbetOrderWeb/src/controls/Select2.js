@@ -1,4 +1,4 @@
-import React, { Component } from "react"
+import React from "react"
 import * as Common from "../utils/Common"
 import Index from "./Index"
 import { Select } from "antd"
@@ -22,7 +22,7 @@ export default class Select2 extends Index {
         this.ValueList = [];
 
         let value = null;
-        this.Property.DataSource.forEach(d => {
+        Common.IsArray(this.Property.DataSource) && this.Property.DataSource.forEach(d => {
             value = d[this.ValueName]
 
             if (this.JudgePush(d, parentValue)) {
@@ -47,7 +47,7 @@ export default class Select2 extends Index {
 
     GetSelectValue(blGet) {
         let value = Common.IsNullOrEmpty(this.state.Value) ? undefined : this.state.Value.toString()
-        if (!Common.IsNullOrEmpty(value)) value = Common.ArrayFirst(this.ValueList, (f) => Common.IsEquals(f, value, true));
+        if (!Common.IsNullOrEmpty(value) && Common.IsArray(this.ValueList)) value = Common.ArrayFirst(this.ValueList, (f) => Common.IsEquals(f, value, true));
         if (blGet) return value === undefined ? null : value;
         return value;
     }

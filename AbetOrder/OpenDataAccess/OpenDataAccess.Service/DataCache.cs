@@ -72,6 +72,31 @@ namespace OpenDataAccess.Service
 
             return data;
         }
+
+        const string DesKey = "userlogintokedeskey12345";
+
+        static System.Collections.Concurrent.ConcurrentDictionary<Guid, string> _UserTokenDictionary = new System.Collections.Concurrent.ConcurrentDictionary<Guid, string>();
+ 
+        public static bool JudgeToken(Guid userId, string token)
+        {
+            if (_UserTokenDictionary.ContainsKey(userId))
+            {
+                if (_UserTokenDictionary[userId].Equals(token))
+                {
+                    DateTime loginDate = DateTime.Parse(OpenDataAccess.Utility.DESEncryptor.HexDecrypt(token, DesKey));
+                    if (loginDate.AddDays(1) > DateTime.Now) return true;
+                }
+            }
+            return false;
+        }
+
+        public static string AddLoginToken(Guid userId)
+        {
+            string token = OpenDataAccess.Utility.DESEncryptor.HexEncrypt(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"), DesKey);
+            _UserTokenDictionary.AddOrUpdate(userId, token, (key, value) => { return token; });
+
+            return token;
+        }
     }
 
     public class ExcelExportData

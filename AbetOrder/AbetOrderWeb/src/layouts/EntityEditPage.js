@@ -1,4 +1,4 @@
-import React, { Component } from "react"
+import React from "react"
 import { Card } from "antd"
 import * as Common from "../utils/Common"
 import ComplexDataGrid from "./ComplexDataGrid"
@@ -7,6 +7,8 @@ import Index from "./Index"
 export default class EntityEditPage extends Index {
     constructor(props) {
         super(props)
+
+        this.Name = "EntityEditPage";
     }
 
     componentWillMount() {

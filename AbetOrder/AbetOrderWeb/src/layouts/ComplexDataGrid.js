@@ -1,6 +1,5 @@
-import React, { Component } from "react"
+import React from "react"
 import { Card } from "antd"
-import * as Common from "../utils/Common"
 import DataGridView from "../components/DataGridView"
 import Button2 from "../controls/Button2"
 import Index from "./Index"

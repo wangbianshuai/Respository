@@ -11,6 +11,7 @@ using System.Runtime.Serialization.Json;
 using System.Web.Script.Serialization;
 using System.Collections;
 using System.IO.Compression;
+using Newtonsoft.Json;
 
 namespace OpenDataAccess.Utility
 {
@@ -881,6 +882,57 @@ namespace OpenDataAccess.Utility
             }
         }
 
+        public static void SaveFile(byte[] bytes, string fileName)
+        {
+            using (FileStream fs = new FileStream(fileName, FileMode.Create, FileAccess.Write))
+            {
+                fs.Write(bytes, 0, bytes.Length);
+                fs.Close();
+            }
+        }
 
+        public static string GetFileSize(int len)
+        {
+            if (len < 1000) return string.Format("{0}B", len);
+
+            decimal k = (decimal)len / (decimal)1024;
+            if (k < 1000) return string.Format("{0}K", decimal.Round(k, 2).ToString());
+
+            k = k / 1024;
+            if (k < 1000) return string.Format("{0}M", decimal.Round(k, 2).ToString());
+
+            k = k / 1024;
+            return string.Format("{0}G", decimal.Round(k, 2).ToString());
+        }
+
+        public static string AddUrlRandom(string url)
+        {
+            if (string.IsNullOrEmpty(url)) return string.Empty;
+
+            string rc = Common.GetRandomChars();
+            string rd = DateTime.Now.ToString("yyyyMMddHHmmssfff") + new Random().Next(100000, 999999);
+            url += url.IndexOf("?") > 0 ? "&" : "?";
+            url += string.Format("_r{0}={1}", rc, rd);
+
+            return url;
+        }
+
+        public static string GetRandomChars(int len = 0)
+        {
+            len = len == 0 ? 10 : len;
+            char[] chars = "ABCDEFGHJKMNPQRSTWXYZabcdefhijkmnprstwxyz".ToCharArray();
+            List<char> list = new List<char>();
+            Random r = new Random((int)DateTime.Now.Ticks);
+            for (int i = 0; i < len; i++)
+            {
+                list.Add(chars[r.Next(0, chars.Length - 1)]);
+            }
+            return string.Join("", list);
+        }
+
+        public static string ToJson(object obj)
+        {
+            return JsonConvert.SerializeObject(obj);
+        }
     }
 }

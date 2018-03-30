@@ -4,6 +4,8 @@ import Index from "./Index"
 export default class Query extends Index {
     constructor(options) {
         super(options)
+
+        this.Name = "Query";
     }
 
     PropsChanged(props, nextProps) {
@@ -26,7 +28,7 @@ export default class Query extends Index {
 
     SearchData(p, blQueryPage) {
         const { PageConfig } = this.Page.props
-        const { IsPaging, PageSize, SelectNames } = PageConfig
+        const { SelectNames } = PageConfig
 
         //禁用查询按钮
         if (p && p.SetDisabled) p.SetDisabled(true);

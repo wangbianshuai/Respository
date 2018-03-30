@@ -1,4 +1,4 @@
-import React, { Component } from "react"
+import React from "react"
 import { Modal } from "antd"
 import * as Common from "../utils/Common"
 import DataGridView from "../components/DataGridView"

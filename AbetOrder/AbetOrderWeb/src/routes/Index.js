@@ -18,6 +18,8 @@ import { routerRedux } from 'dva/router';
 class Index extends Component {
     constructor(props) {
         super(props)
+
+        this.Id = Common.CreateGuid();
     }
 
     componentWillMount() {
@@ -30,7 +32,8 @@ class Index extends Component {
 
         this.QueryString = Common.GetQueryString();
 
-        Common.SetStorage("LoginUserId", "6F62524B-B682-4F7E-8A2C-B33417F2F16F")
+        this.LoginUser = Common.JsonParse(Common.GetStorage("LoginUserInfo"));
+        if (this.LoginUser === null) this.props.ToPage("/Login")
     }
 
     //初始化行为
@@ -55,7 +58,9 @@ class Index extends Component {
     }
 
     GetPageConfig() {
-        const url = Common.ConfigApiUrl + this.props.PageName
+        let url = Common.ConfigApiUrl + this.props.PageName
+        if (Common.IsDist) url += ".json";
+
         this.props.Dispatch("Config/GetConfig", { Url: url })
     }
 
@@ -263,7 +268,7 @@ function mapStateToProps(state, ownProps) {
         }
     }
 
-    console.log(props)
+    if (!Common.IsDist) console.log(props);
 
     return props
 }

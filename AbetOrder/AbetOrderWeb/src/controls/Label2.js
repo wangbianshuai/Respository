@@ -1,11 +1,12 @@
-import React, { Component } from "react"
-import * as Common from "../utils/Common"
+import React from "react"
 import Index from "./Index"
 import styles from "../styles/Index.css"
 
 export default class Label2 extends Index {
     constructor(props) {
         super(props)
+
+        this.Name = "Label2";
     }
 
     render() {

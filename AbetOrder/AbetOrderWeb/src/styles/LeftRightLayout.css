@@ -22,3 +22,34 @@
     line-height: 32px;
     color: #ffffff;
   }
+
+  .UserRightMenu{
+    width: 160px;
+  }
+
+  .Dropdown{
+float: right;
+margin-right: 20px;
+padding: 0px 12px 0 12px;
+  }
+
+  .Dropdown:hover{
+    background: #e6f7ff;
+  }
+
+  .UserRightMenuItem{
+    height: 40px;
+    line-height: 40px;
+    display:flex;
+    align-items: center;
+  }
+
+  .UserRightMenuItem span{
+    margin-left: 20px;
+  }
+
+  .avatar {
+    margin: 20px 8px 20px 0;
+    background: rgba(255, 255, 255, .85);
+    vertical-align: middle;
+  }

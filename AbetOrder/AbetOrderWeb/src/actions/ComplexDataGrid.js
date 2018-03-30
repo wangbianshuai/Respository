@@ -4,6 +4,8 @@ import Index from "./Index"
 export default class ComplexDataGrid extends Index {
     constructor(options) {
         super(options)
+
+        this.Name = "ComplexDataGrid";
     }
 
     PropsChanged(props, nextProps) {

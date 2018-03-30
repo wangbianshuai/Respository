@@ -14,6 +14,7 @@ export default class Index {
             if (Common.IsNullOrEmpty(url) && !Common.IsNullOrEmpty(payload.Url)) url = payload.Url
 
             if (s.Method === "PUT") url = Common.AddUrlParams(url, "$put", "true");
+            if (s.Method === "GET") url = Common.AddUrlParams(url, "$get", "true");
             else if (s.Method === "DELETE") url = Common.AddUrlParams(url, "$delete", "true");
             else if (s.Method === "DELETE2") {
                 url = Common.AddUrlParams(url, "$delete", "true");
@@ -24,7 +25,7 @@ export default class Index {
             if (payload.Url !== undefined) { for (let key in payload) if (key !== "Url") data[key] = payload[key]; }
             else data = payload;
 
-            if (s.Method === "GET" || s.Method === "DELETE") return Request.Get(url, s.DataKey)
+            if (s.ActionName === "GetConfig") return Request.Get(url, s.DataKey)
             else return Request.Post(url, data, s.DataKey)
         }
     }

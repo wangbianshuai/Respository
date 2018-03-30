@@ -1,4 +1,4 @@
-import React, { Component } from "react"
+import React from "react"
 import * as Common from "../utils/Common"
 import Index from "./Index"
 import { DatePicker } from "antd"
@@ -7,6 +7,8 @@ import moment from "moment"
 export default class DatePicker2 extends Index {
     constructor(props) {
         super(props)
+
+        this.Name = "DatePicker2";
     }
 
     ValueChange(value) {
@@ -27,7 +29,7 @@ export default class DatePicker2 extends Index {
     GetMomentValue(value) {
         if (!Common.IsNullOrEmpty(value)) {
             if (this.Property.IsShowTime) value = moment(value, "YYYY-MM-DD HH:mm:ss")
-            else value == moment(value, "YYYY-MM-DD")
+            else value = moment(value, "YYYY-MM-DD")
         }
         return value;
     }
@@ -38,7 +40,7 @@ export default class DatePicker2 extends Index {
         const width = Property.Width || "100%"
 
         let value = Common.IsNullOrEmpty(this.state.Value) ? "" : this.state.Value
-        
+
         const mv = this.GetMomentValue(value);
 
         return (<DatePicker placeholder={Property.PlaceHolder}

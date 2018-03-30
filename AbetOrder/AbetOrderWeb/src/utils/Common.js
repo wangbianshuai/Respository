@@ -99,9 +99,26 @@ export function ToModels(obj) {
     }
 }
 
-export const DataApiUrl = "http://localhost/aow/api/"
+//export const DataApiUrl = "http://localhost/cmsweb/api/"
+//export const ConfigApiUrl = "http://localhost/cmswebconfig/api/"
+//export const UploadUfoResouce = "http://172.16.6.1:12300/upload/file";
+//export const IsDist = false;
 
-export const ConfigApiUrl = "http://localhost/aowc/api/"
+export const DataApiUrl = GetRootPath() + "/api/";
+export const ConfigApiUrl = GetRootPath() + "/configs/";
+export const UploadUfoResouce = "https://ufo-resources.quarkfinance.com/upload/file";
+export const IsDist = true;
+
+function GetRootPath() {
+    let names = window.location.pathname.substr(1).split("/");
+    let path = ""
+    if (names.length > 1) {
+        names.splice(names.length - 1, 1);
+        path = "/" + names.join("/");
+    }
+
+    return window.location.protocol + "//" + window.location.host + path;
+}
 
 export function IsEmptyObject(obj) {
     if (!IsObject(obj)) return true
@@ -249,7 +266,7 @@ export function ToCurrency(value, blFixed2) {
         var flString = blFixed2 ? floatValue.toFixed(2) : floatValue.toString()
         var r = /(\d+)(\d{3})/
         while (r.test(flString)) {
-            flString = flString.replace(r, "$1" + ',' + '$2')
+            flString = flString.replace(r, "$1,$2")
         }
         return flString
     }
@@ -278,4 +295,10 @@ export function GetDateString(myDate, isDate) {
 export function GetCurrentDate() {
     var myDate = new Date();
     return GetDateString(myDate);
+}
+
+export function JsonParse(str) {
+    if (IsNullOrEmpty(str)) return null;
+
+    return JSON.parse(str);
 }

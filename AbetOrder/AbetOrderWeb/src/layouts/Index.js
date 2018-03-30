@@ -9,6 +9,8 @@ import SpanText from "../controls/SpanText"
 export default class Index extends Component {
     constructor(props) {
         super(props)
+
+        this.Id = Common.CreateGuid();
     }
 
     RenderActions(actionList, record) {

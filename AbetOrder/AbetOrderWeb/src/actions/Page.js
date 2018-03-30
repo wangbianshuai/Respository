@@ -5,6 +5,7 @@ export default class Page extends Index {
     constructor(options) {
         super(options)
 
+        this.Name = "Page";
         this.ServiceDataSourceProperty = {}
     }
 

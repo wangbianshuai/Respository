@@ -1,11 +1,12 @@
-import React, { Component } from "react"
-import * as Common from "../utils/Common"
+import React from "react"
 import Index from "./Index"
 import { Popconfirm } from "antd"
 
 export default class Button2 extends Index {
     constructor(props) {
         super(props)
+
+        this.Name = "Button2";
     }
 
     ConfirmAction() {

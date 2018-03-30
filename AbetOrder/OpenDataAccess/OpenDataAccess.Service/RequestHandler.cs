@@ -45,10 +45,15 @@ namespace OpenDataAccess.Service
             try
             {
                 string put = request.QueryString["$put"];
+                string get = request.QueryString["$get"];
                 string delete = request.QueryString["$delete"];
                 if (put == "true")
                 {
                     request.RequestType = "PUT";
+                }
+                else if (get == "true")
+                {
+                    request.RequestType = "GET";
                 }
                 else if (delete == "true")
                 {
@@ -70,8 +75,15 @@ namespace OpenDataAccess.Service
                 }
                 this.SetEntityAndMethodName(request, request.EntityName, request.MethodName);
 
-                obj = this.InvokeMethod(request, getClassType);
-                responseContent = Parse.ToJson(obj);
+                if (JudgeRight(request))
+                {
+                    obj = this.InvokeMethod(request, getClassType);
+                    responseContent = Parse.ToJson(obj);
+                }
+                else
+                {
+                    responseContent = Common.ToJson(new { Message = "登录信息过期，请重新登录！" });
+                }
             }
             catch (Exception ex)
             {
@@ -95,6 +107,17 @@ namespace OpenDataAccess.Service
             }
 
             return responseContent;
+        }
+
+        bool JudgeRight(Request request)
+        {
+            if (request.EntityName.ToLower().Equals("user") && request.MethodName.ToLower().Equals("login")) return true;
+
+            string userId = request.GetParameterValue("LoginUserId");
+            string token = request.GetParameterValue("Token");
+            if (string.IsNullOrEmpty(userId) || string.IsNullOrEmpty(token)) return false;
+
+            return DataCache.JudgeToken(Guid.Parse(userId), token);
         }
 
         private void SetEntityAndMethodName(Request request, string entityName, string methodName)

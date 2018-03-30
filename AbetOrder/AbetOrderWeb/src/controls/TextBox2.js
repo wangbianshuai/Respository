@@ -1,4 +1,4 @@
-import React, { Component } from "react"
+import React from "react"
 import * as Common from "../utils/Common"
 import Index from "./Index"
 import { Input, InputNumber } from "antd";
@@ -8,6 +8,7 @@ export default class TextBox2 extends Index {
     constructor(props) {
         super(props)
 
+        this.Name = "TextBox2";
     }
 
     OnChange(e) {

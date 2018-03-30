@@ -1,5 +1,4 @@
-import React, { Component } from "react"
-import * as Common from "../utils/Common"
+import React from "react"
 import Index from "./Index"
 import { Table } from "antd"
 const { Column } = Table;
@@ -7,10 +6,12 @@ const { Column } = Table;
 export default class DataGridView extends Index {
     constructor(props) {
         super(props)
+
+        this.Name = "DataGridView";
     }
 
     GetColumn(p) {
-        if (p.IsData === false) (<Column title={p.Label} key={p.Name} render={p.Render} />)
+        if (p.IsData === false) return (<Column title={p.Label} key={p.Name} render={p.Render} />)
 
         return (<Column title={p.Label} dataIndex={p.Name} key={p.Name} render={p.Render} />)
     }

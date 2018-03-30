@@ -19,7 +19,8 @@ function FetchRequest(url, data, resKey) {
 }
 
 function GetFullUrl(url) {
-    url=Common.AddUrlParams(url,"LoginUserId", Common.GetStorage("LoginUserId"))
+    url = Common.AddUrlParams(url, "Token", Common.GetStorage("Token"));
+    url = Common.AddUrlParams(url, "LoginUserId", Common.GetStorage("LoginUserId"));
     if (url.indexOf("http") !== 0) url = GetRootPath() + url
     return Common.AddUrlRandom(url)
 }
@@ -54,5 +55,5 @@ function GetResponse(d, resKey) {
 
 function GetErrorResponse(res) {
     const msg = res && res.message ? res.message : res
-    Promise.resolve({ IsSuccess: false, Message: msg })
+    return Promise.resolve({ IsSuccess: false, Message: msg })
 }

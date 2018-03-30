@@ -4,6 +4,8 @@ import Index from "./Index"
 export default class EntityEdit extends Index {
     constructor(options) {
         super(options)
+
+        this.Name = "EntityEdit";
     }
 
     PropsChanged(props, nextProps) {
@@ -210,8 +212,6 @@ export default class EntityEdit extends Index {
         this.OkProperty = property;
 
         let data = {};
-
-        EditView.Properties.forEach(p => { if (p.GetValue) data[p.Name] = p.GetValue() })
 
         let p = null, v = null, msg = "";
         for (let i = 0; i < EditView.Properties.length; i++) {

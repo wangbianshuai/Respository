@@ -39,5 +39,25 @@ namespace OpenDataAccess.Service
         {
             this.RequestId = Guid.NewGuid();
         }
+
+        public string GetParameterValue(string name)
+        {
+            string key = this.QueryString.AllKeys.Where(where => where.Trim().ToLower() == name.Trim().ToLower()).FirstOrDefault();
+            if (key != null)
+            {
+                if (this.QueryString[key] == "undefined")
+                {
+                    return string.Empty;
+                }
+                else
+                {
+                    return HttpUtility.UrlDecode(this.QueryString[key].Trim());
+                }
+            }
+            else
+            {
+                return string.Empty;
+            }
+        }
     }
 }

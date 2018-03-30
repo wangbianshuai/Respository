@@ -1,10 +1,11 @@
-import React, { Component } from "react"
-import * as Common from "../utils/Common"
+import React from "react"
 import Index from "./Index"
 
 export default class AButton extends Index {
     constructor(props) {
         super(props)
+
+        this.Name = "AButton";
     }
 
     ClickAction() {

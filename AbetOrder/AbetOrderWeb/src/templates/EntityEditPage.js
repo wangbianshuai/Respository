@@ -31,10 +31,6 @@ export default function EntityEditPage(config, id) {
     return _Config
 }
 
-function AddId(view) {
-    if (view && view.Properties) view.Properties.forEach(p => p.Id = Common.CreateGuid());
-}
-
 function AddRowColId(view) {
     if (view && view.Properties) view.Properties.forEach(p => {
         p.Id = Common.CreateGuid();

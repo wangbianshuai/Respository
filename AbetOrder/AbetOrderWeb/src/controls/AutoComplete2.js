@@ -1,4 +1,4 @@
-import React, { Component } from "react"
+import React from "react"
 import * as Common from "../utils/Common"
 import Index from "./Index"
 import { AutoComplete } from "antd"
@@ -17,7 +17,7 @@ export default class AutoComplete2 extends Index {
     GetOptions(parentValue) {
         const options = [];
 
-        this.Property.DataSource.forEach(d => {
+        Common.IsArray(this.Property.DataSource) && this.Property.DataSource.forEach(d => {
             this.JudgePush(d, parentValue) && options.push(d[this.TextName])
         });
 

@@ -1,4 +1,4 @@
-import React, { Component } from "react"
+import React from "react"
 import * as Common from "../utils/Common"
 import Index from "./Index"
 import { Upload, message, Button, Icon } from "antd";
@@ -26,15 +26,19 @@ export default class Upload2 extends Index {
         else if (data.file.status === "done") {
             const response = data.file.response;
             if (response) {
-                if (response.IsSuccess) {
-                    Property.SetUploadResponse && Property.SetUploadResponse(response)
+                if (Property.SetResponse) Property.SetResponse(response);
+                else {
+                    if (response.IsSuccess) {
+                        Property.SetUploadResponse && Property.SetUploadResponse(response)
+                    }
+                    else if (response.Message) this.ShowMessage(response.Message);
                 }
-                else if (response.Message) this.ShowMessage(response.Message);
             }
         }
 
         fileList = fileList.map((file) => {
             if (file.response && file.response.FilePath) file.url = file.response.FilePath;
+            else if (Property.SetResponseUrl) file.url = Property.SetResponseUrl(file);
             return file;
         });
 
@@ -97,6 +101,7 @@ export default class Upload2 extends Index {
             <Upload name={Property.Name}
                 action={this.GetFullUrl(this.state.UploadUrl)}
                 accept={this.state.Accept}
+                headers={Property.Headers}
                 fileList={this.state.Value}
                 beforeUpload={this.BeforeUpload.bind(this)}
                 onChange={this.OnChange.bind(this)} >
