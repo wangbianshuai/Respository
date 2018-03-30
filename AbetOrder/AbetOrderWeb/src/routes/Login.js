@@ -73,7 +73,7 @@ class Login extends Component {
             <div className={styles.DivContainer}>
                 <div className={styles.DivLogin}>
                     <Form.Item>
-                        <div className={styles.DivHeader}><span>Quark CMS</span></div>
+                        <div className={styles.DivHeader}><span>Abet Order</span></div>
                     </Form.Item>
                     <Form.Item>
                         <Input size="large" onPressEnter={this.OnLogin.bind(this)} prefix={<Icon type="user" className={styles.prefixIcon} />} placeholder="登录名" onChange={this.OnChange.bind(this, "LoginName")} value={this.state.LoginName} />

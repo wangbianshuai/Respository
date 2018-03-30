@@ -13,7 +13,7 @@ export default class LeftRightLayout extends Component {
 
         this.state = {
             collapsed: false,
-            Name: "Quark CMS",
+            Name: "Abet Order",
             IsChangePassword: false,
             OldPassword: "",
             NewPassword: "",
@@ -24,22 +24,24 @@ export default class LeftRightLayout extends Component {
     componentWillMount() {
         this.CurrentUser = Common.JsonParse(Common.GetStorage("LoginUserInfo")) || {};
 
-        this.MenuList = [
-            this.AddMenu("内容编辑", "form", "ContentEdit"),
-            this.AddMenu("内容列表", "table", "ContentList")
-        ];
-
-        if (this.CurrentUser.DataRight > 0) {
-            this.MenuList.push(this.AddMenu("内容频道", "table", "ContentChannel"));
-            this.MenuList.push(this.AddMenu("静态资源", "table", "StaticSource"));
-            this.MenuList.push(this.AddMenu("UFO资源", "table", "UfoResource"));
-        }
+        this.MenuList = [];
 
         if (this.CurrentUser.DataRight === 1) {
-            this.MenuList.push(this.AddMenu("内容标签", "table", "ContentTag"));
-            this.MenuList.push(this.AddMenu("HTML模板", "table", "TemplateHtml"));
-            this.MenuList.push(this.AddMenu("用户", "table", "User"));
-            this.MenuList.push(this.AddMenu("键值配置", "table", "DictionaryConfig"));
+            this.MenuList = [
+                this.AddMenu("订单编辑", "form", "OrderEdit"),
+                this.AddMenu("订单列表", "table", "OrderList"),
+                this.AddMenu("加工订单", "table", "ProcessOrderList"),
+                this.AddMenu("支收明细", "table", "Bill"),
+                this.AddMenu("客户", "table", "Customer"),
+                this.AddMenu("用户", "table", "User"),
+                this.AddMenu("账目类型", "table", "BillType"),
+                this.AddMenu("加工类型", "table", "ProcessType"),
+                this.AddMenu("订单模板", "table", "TemplateHtml"),
+                this.AddMenu("键值配置", "table", "DictionaryConfig")
+            ]
+        }
+        else {
+            this.MenuList.push(this.AddMenu("加工订单", "table", "ProcessOrderList"));
         }
     }
 
@@ -55,7 +57,7 @@ export default class LeftRightLayout extends Component {
     toggle = () => {
         this.setState({
             collapsed: !this.state.collapsed,
-            Name: this.state.collapsed ? "Quark CMS" : "CMS"
+            Name: this.state.collapsed ? "Abet Order" : "Abet"
         });
     }
 

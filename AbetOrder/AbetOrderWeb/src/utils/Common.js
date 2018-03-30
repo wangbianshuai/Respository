@@ -99,15 +99,13 @@ export function ToModels(obj) {
     }
 }
 
-//export const DataApiUrl = "http://localhost/cmsweb/api/"
-//export const ConfigApiUrl = "http://localhost/cmswebconfig/api/"
-//export const UploadUfoResouce = "http://172.16.6.1:12300/upload/file";
-//export const IsDist = false;
+export const DataApiUrl = "http://localhost/aow/api/"
+export const ConfigApiUrl = "http://localhost/aowc/api/"
+export const IsDist = false;
 
-export const DataApiUrl = GetRootPath() + "/api/";
-export const ConfigApiUrl = GetRootPath() + "/configs/";
-export const UploadUfoResouce = "https://ufo-resources.quarkfinance.com/upload/file";
-export const IsDist = true;
+//export const DataApiUrl = GetRootPath() + "/api/";
+//export const ConfigApiUrl = GetRootPath() + "/configs/";
+//export const IsDist = true;
 
 function GetRootPath() {
     let names = window.location.pathname.substr(1).split("/");

@@ -68,6 +68,8 @@ namespace AbetOrder.Web.Controllers
         /// <returns></returns>
         public HttpResponseMessage RequestAction(string entityName, string methodName, bool blGet)
         {
+            if (!JudgeRight()) return new HttpResponseMessage(HttpStatusCode.InternalServerError);
+
             Func<string, string, Type> getClassType = (classNamespace, className) =>
             {
                 return Activator.CreateInstance(classNamespace, string.Format("{0}.{1}", classNamespace, className)).Unwrap().GetType();
@@ -77,6 +79,17 @@ namespace AbetOrder.Web.Controllers
             {
                 Content = new StringContent(new OpenDataAccess.Service.RequestHandler().ProcessRequest(Code.Request.GetRequest(this, blGet), getClassType, entityName, methodName), Encoding.UTF8, "application/json")
             };
+        }
+
+        bool JudgeRight()
+        {
+            if (this.Request.Headers.Referrer == null) return false;
+
+            if (this.Request.Headers.Referrer.Host != this.Request.RequestUri.Host) return false;
+
+            //if (this.Request.Headers.Referrer.LocalPath != "/" && !this.Request.Headers.Referrer.LocalPath.ToLower().Contains("default.aspx")) return false;
+
+            return true;
         }
     }
 }
