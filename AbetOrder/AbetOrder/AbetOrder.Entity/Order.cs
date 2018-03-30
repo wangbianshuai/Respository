@@ -43,17 +43,16 @@ namespace AbetOrder.Entity
         public string SaleUserName { get; set; }
         public int DataRight { get; set; }
         public string CustomerName { get; set; }
-        public int BillYear { get; set; }
-        public int BillMonth { get; set; }
-        public int BillDay { get; set; }
         public string OrderTemplateHtmlName { get; set; }
         public string ProcessTemplateHtmlName { get; set; }
     }
 
-    [TableProperty(Name = "v_OrderYear", PrimaryKey = "OrderYear")]
-    public class ViewOrderYear : EntityModel, IEntity
+    [TableProperty(Name = "v_ProcessOrder", PrimaryKey = "OrderId", NoSelectNames = "IsDelete")]
+    public class ViewProcessOrder : Order
     {
-        public int OrderYear { get; set; }
+        public string UpdateUserName { get; set; }
+        public string SaleUserName { get; set; }
+        public int DataRight { get; set; }
     }
 
     [TableProperty(Name = "t_d_OrderImage", PrimaryKey = "Id")]

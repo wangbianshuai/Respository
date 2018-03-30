@@ -84,7 +84,6 @@ function InitOperationView(config) {
             Icon: "plus",
             X: x,
             Y: y,
-            EditPageUrl: "/ContentEdit",
             ActionType: "EntityEdit",
             ActionName: "NewAdd",
             IsEditEnable: true,

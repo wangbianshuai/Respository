@@ -61,7 +61,7 @@ class Login extends Component {
                 Common.SetStorage("Token", res.User.Token);
                 Common.SetStorage("LoginUserId", res.User.UserId);
                 Common.SetStorage("LoginUserInfo", JSON.stringify(res.User));
-                this.props.ToPage("/ContentEdit");
+                this.props.ToPage("/OrderEdit");
             }
         },res=>{
         debugger

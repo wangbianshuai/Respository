@@ -27,6 +27,8 @@ namespace AbetOrder.Component
             entityData.SetDefaultValue("BillDate", DateTime.Now);
             entityData.SetDefaultValue("BillUser", this._Request.OperationUser);
             entityData.SetDefaultValue("CreateUser", this._Request.OperationUser);
+            entityData.SetDefaultValue("UpdateUser", this._Request.OperationUser);
+            entityData.SetDefaultValue("UpdateDate", DateTime.Now);
 
             return this.Insert();
         }

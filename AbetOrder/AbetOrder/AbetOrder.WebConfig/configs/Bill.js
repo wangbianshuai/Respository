@@ -48,7 +48,7 @@
         },
         { Label: "时间", Type: "Date", IsShowTime: true, IsDefaultNow: true, Name: "BillDate", PlaceHolder: "默认系统当前时间", DataType: "DateTime", MaxLength: 20, IsNullable: true },
         { Label: "开始时间", Type: "Date", IsShowTime: true, SearchProperty: { ColSpan: 5 }, OperateLogic: ">=", PropertyName: "BillDate", Name: "StartDate", PlaceHolder: "大于或等于其值", DataType: "DateTime", MaxLength: 20, IsNullable: true },
-        { Label: "结束时间", Type: "Date", IsShowTime: true, SearchProperty: { ColSpan: 5 }, OperateLogic: "<=", PropertyName: "BillDate", Name: "EndDate", PlaceHolder: "小于其值", DataType: "Time", MaxLength: 20, IsNullable: true },
+        { Label: "结束时间", Type: "Date", IsShowTime: true, SearchProperty: { ColSpan: 5 }, OperateLogic: "<", PropertyName: "BillDate", Name: "EndDate", PlaceHolder: "小于其值", DataType: "Time", MaxLength: 20, IsNullable: true },
         { Label: "备注", Name: "Remark", DataType: "string", Rows: 3, SearchProperty: { ColSpan: 5, X: 1, Y: 4 }, EditProperty: { ControlType: "TextArea" }, MaxLength: 200, IsNullable: true },
         { Label: "类型", Name: "BillTypeName" },
         { Label: "收支", Name: "IncomePaymentName" },
