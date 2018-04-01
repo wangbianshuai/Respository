@@ -12,20 +12,24 @@ export default class EntityEditPage extends Index {
     }
 
     componentWillMount() {
-        const operationView = this.props.Property.OperationView || [];
         const eidtView = this.props.Property.EditView || [];
 
-        const { PrimaryKey } = this.props.Property;
-        const { QueryString, EventActions } = this.props.Page;
-        const id = Common.GetObjValue(QueryString, PrimaryKey);
-        if (!Common.IsNullOrEmpty(id) && operationView.Properties) {
-            operationView.Properties.forEach(p => { if (p.IsEditEnable) p.IsVisible = true; });
+        if (!this.props.Property.IsTabView) {
+            const operationView = this.props.Property.OperationView || [];
+
+            const { PrimaryKey } = this.props.Property;
+            const { QueryString, EventActions } = this.props.Page;
+            const id = Common.GetObjValue(QueryString, PrimaryKey);
+            if (!Common.IsNullOrEmpty(id) && operationView.Properties) {
+                operationView.Properties.forEach(p => { if (p.IsEditEnable) p.IsVisible = true; });
+            }
+
+            this.OperationView = this.InitSetView(operationView);
         }
 
-        this.OperationView = this.InitSetView(operationView);
         this.EditView = this.InitSetView(eidtView)
 
-        if (!Common.IsNullOrEmpty(id)) {
+        if (!Common.IsNullOrEmpty(id) && !this.props.Property.IsTabView) {
             EventActions.EntityEdit.GetEntityDataById(id);
         }
     }

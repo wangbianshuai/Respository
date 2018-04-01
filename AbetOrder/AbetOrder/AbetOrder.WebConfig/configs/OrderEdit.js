@@ -65,7 +65,7 @@
         return {
             Name: "Order",
             TabLabel: "订单信息",
-            IsVisible: true,
+            IsTabView: true,
             Properties: GetOrderPropeties()
         }
     }
@@ -108,8 +108,8 @@
         return {
             Name: "OrderDetail",
             TabLabel: "订单明细",
-            IsVisible: true,
-            ComplexView: GetOrderDetailComplexView(),
+            IsTabView: true,
+            ComplexView: GetOrderDetailComplexView()
         }
     }
 
@@ -119,9 +119,18 @@
     }
 
     function GetOrderImageView() {
-
+        return {
+            Name: "OrderDetail",
+            TabLabel: "订单设计图",
+            IsTabView: true,
+            ComplexView: GetOrderImageComplexView()
+        }
     }
 
+    function GetOrderImageComplexView() {
+        return [{ Label: "序号", Name: "Name", DataType: "string", MaxLength: 50, IsNullable: false },
+        { Label: "属性值", Name: "Value", DataType: "string", MaxLength: 6000, IsNullable: false }]
+    }
 
     function GetPaymentMethodDataSource() {
         return {

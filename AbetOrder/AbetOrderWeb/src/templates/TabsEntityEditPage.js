@@ -1,36 +1,28 @@
 import * as Common from "../utils/Common"
+import EntityEditPage from "./templates/EntityEditPage";
 
-const EntityEditPageConfig = {};
+const TabsEntityEditPageConfig = {};
 
-export default function EntityEditPage(config, id) {
-    if (!config.IsTabView) {
-        if (EntityEditPageConfig[id]) return EntityEditPageConfig[id];
-    }
+export default function TabsEntityEditPage(config, id) {
+    if (TabsEntityEditPageConfig[id]) return TabsEntityEditPageConfig[id];
 
     const _Config = { Config: config, Id: id }
 
-    if (!config.IsTabView) {
-        //初始化配置
-        InitConfig(_Config, config)
+    //初始化配置
+    InitConfig(_Config, config)
 
-        //操作视图
-        InitOperationView(_Config);
+    //操作视图
+    InitOperationView(_Config);
 
-        AddRowColId(_Config.OperationView)
+    AddRowColId(_Config.OperationView)
 
-        //行为列表
-        InitActionList(_Config);
-    }
+    //初始化Tab视图
+    InitTabView(_Config);
 
-    //编辑视图
-    InitEditView(_Config);
+    //行为列表
+    InitActionList(_Config);
 
-    AddRowColId(_Config.EditView)
-
-    //复杂对象视图
-    InitComplexView(_Config);
-
-    if (!config.IsTabView) { EntityEditPageConfig[id] = _Config; }
+    TabsEntityEditPageConfig[id] = _Config;
 
     return _Config
 }
@@ -139,31 +131,7 @@ function AddAction(actoinName, stateName, dataKey, isModalMessage) {
     return { ActionName: actoinName, StateName: stateName, DataKey: dataKey, IsModalMessage: isModalMessage }
 }
 
-function InitEditView(config) {
-    if (config.EditView === undefined) {
-        config.EditView = { Properties: [], IsVisible: true, Title: config.Config.EditViewTitle, Name: "EditView" };
-    }
 
-    let p = null;
-    for (let i = 0; i < config.Properties.length; i++) {
-        p = Object.assign({ IsEdit: true, IsNullable: true }, config.Properties[i]);
-        config.EditView.Properties.push(p);
-    }
-}
-
-function InitComplexView(config) {
-    if (config.Config.ComplexView) {
-        let view = Object.assign({ IsNewAdd: true, IsUpdate: true, IdDelete: true }, config.Config.ComplexView);
-        if (view.DataView === undefined) {
-            view.DataView = { Properties: [], IsVisible: true, Name: "DataView" };
-        }
-
-        let p = null;
-        for (let i = 0; i < view.Properties.length; i++) {
-            p = Object.assign({ IsEdit: true, IsNullable: true, Id: Common.CreateGuid() }, view.Properties[i]);
-            view.DataView.Properties.push(p);
-        }
-        config.ComplexView = view
-
-    }
+function InitTabView(config){
+    config.TabViews= config.TabViews.map(m=>EntityEditPage(m, id));
 }

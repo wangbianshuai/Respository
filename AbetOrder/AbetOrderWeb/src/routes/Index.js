@@ -7,9 +7,11 @@ import Panel from "../components/Panel"
 import PageAction from "../actions/Page"
 import EntityListPage from "../templates/EntityListPage"
 import EntityEditPage from "../templates/EntityEditPage";
+import TabsEntityEditPage from "../templates/TabsEntityEditPage";
 import QueryAction from "../actions/Query"
 import EntityListPageLayout from "../layouts/EntityListPage"
 import EntityEditPageLayout from "../layouts/EntityEditPage";
+import TabsEntityEditPageLayout from "../layouts/TabsEntityEditPage";
 import EntityEditAction from "../actions/EntityEdit"
 import ComplexDataGridAction from "../actions/ComplexDataGrid"
 import PageExpand from "../pages/Index"
@@ -231,6 +233,7 @@ class Index extends Component {
         switch (this.props.PageConfig.Config.TemplateName) {
             case "EntityListPage": return (<EntityListPageLayout {...props} />)
             case "EntityEditPage": return (<EntityEditPageLayout {...props} />)
+            case "TabsEntityEditPage": return (<TabsEntityEditPageLayout {...props} />)
             default: return (<Panel {...props} />)
         }
     }
@@ -243,6 +246,7 @@ function InitTemplateConfig(config, id) {
     switch (config.TemplateName) {
         case "EntityListPage": return EntityListPage(config, id)
         case "EntityEditPage": return EntityEditPage(config, id)
+        case "TabsEntityEditPage": return TabsEntityEditPage(config, id)
         default: return config
     }
 }
