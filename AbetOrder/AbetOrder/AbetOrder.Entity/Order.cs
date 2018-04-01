@@ -14,7 +14,7 @@ namespace AbetOrder.Entity
         public byte OrderStatus { get; set; }
         public DateTime OrderDate { get; set; }
         public DateTime DeliveryDate { get; set; }
-        public string PaymentMehthod { get; set; }
+        public string PaymentMethod { get; set; }
         public decimal Amount { get; set; }
         public decimal ActualAmount { get; set; }
         public decimal PaidDeposit { get; set; }
@@ -91,5 +91,11 @@ namespace AbetOrder.Entity
         public decimal Amount { get; set; }
         public decimal ActualAmount { get; set; }
         public string Remark { get; set; }
+    }
+
+    [TableProperty(Name = "v_PaymentMethod", PrimaryKey = "PaymentMethod")]
+    public class ViewPaymentMethod : EntityModel, IEntity
+    {
+        public int PaymentMethod { get; set; }
     }
 }
