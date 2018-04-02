@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web.Http;
@@ -24,18 +25,24 @@ namespace AbetOrder.Web.Controllers
         /// GET请求
         /// </summary>
         /// <returns></returns>
-        public async Task<HttpResponseMessage> Get(string entityName)
+        public HttpResponseMessage Get(string entityName)
         {
-            return await Task<HttpResponseMessage>.Run(() => { return this.RequestAction(entityName, string.Empty, true); });
+            return Get(entityName, string.Empty);
         }
 
         /// <summary>
         /// GET请求
         /// </summary>
         /// <returns></returns>
-        public async Task<HttpResponseMessage> Get(string entityName, string methodName)
+        public HttpResponseMessage Get(string entityName, string methodName)
         {
-            return await Task<HttpResponseMessage>.Run(() => { return this.RequestAction(entityName, methodName, true); });
+            HttpResponseMessage response = new HttpResponseMessage(HttpStatusCode.OK)
+            {
+                Content = new ByteArrayContent(Convert.FromBase64String("R0lGODlhAQABAIABAAAAAP///yH5BAEAAAEALAAAAAABAAEAAAICTAEAOw=="))
+            };
+            response.Content.Headers.ContentType = new MediaTypeHeaderValue("image/gif");
+
+            return response;
         }
 
         /// <summary>
