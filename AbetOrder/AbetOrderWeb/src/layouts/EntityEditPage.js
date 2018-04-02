@@ -13,6 +13,7 @@ export default class EntityEditPage extends Index {
 
     componentWillMount() {
         const eidtView = this.props.Property.EditView || [];
+        this.EditView = this.InitSetView(eidtView)
 
         if (!this.props.Property.IsTabView) {
             const operationView = this.props.Property.OperationView || [];
@@ -25,12 +26,10 @@ export default class EntityEditPage extends Index {
             }
 
             this.OperationView = this.InitSetView(operationView);
-        }
 
-        this.EditView = this.InitSetView(eidtView)
-
-        if (!Common.IsNullOrEmpty(id) && !this.props.Property.IsTabView) {
-            EventActions.EntityEdit.GetEntityDataById(id);
+            if (!Common.IsNullOrEmpty(id) && !this.props.Property.IsTabView) {
+                EventActions.EntityEdit.GetEntityDataById(id);
+            }
         }
     }
 

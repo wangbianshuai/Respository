@@ -14,7 +14,7 @@ namespace AbetOrder.Entity
         public byte OrderStatus { get; set; }
         public DateTime OrderDate { get; set; }
         public DateTime DeliveryDate { get; set; }
-        public string PaymentMethod { get; set; }
+        public string OrderName { get; set; }
         public decimal Amount { get; set; }
         public decimal ActualAmount { get; set; }
         public decimal PaidDeposit { get; set; }
@@ -78,6 +78,7 @@ namespace AbetOrder.Entity
         public decimal Amount { get; set; }
         public decimal ActualAmount { get; set; }
         public string Remark { get; set; }
+        public string ColorCode { get; set; }
     }
 
     [TableProperty(Name = "t_d_OrderDetailProcess", PrimaryKey = "Id")]
@@ -93,9 +94,27 @@ namespace AbetOrder.Entity
         public string Remark { get; set; }
     }
 
-    [TableProperty(Name = "v_PaymentMethod", PrimaryKey = "PaymentMethod")]
-    public class ViewPaymentMethod : EntityModel, IEntity
+    [TableProperty(Name = "v_OrderName", PrimaryKey = "OrderName")]
+    public class ViewOrderName : EntityModel, IEntity
     {
-        public int PaymentMethod { get; set; }
+        public int OrderName { get; set; }
+    }
+
+    [TableProperty(Name = "t_d_OrderProperty", PrimaryKey = "Id")]
+    public class OrderProperty : EntityModel, IEntity
+    {
+        public Guid Id { get; set; }
+        public Guid OrderId { get; set; }
+        public string Name { get; set; }
+        public string Value { get; set; }
+    }
+
+    [TableProperty(Name = "t_d_OrderDetailProperty", PrimaryKey = "Id")]
+    public class OrderDetailProperty : EntityModel, IEntity
+    {
+        public Guid Id { get; set; }
+        public Guid OrderDetailId { get; set; }
+        public string Name { get; set; }
+        public string Value { get; set; }
     }
 }

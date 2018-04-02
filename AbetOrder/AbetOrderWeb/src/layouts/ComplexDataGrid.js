@@ -135,11 +135,21 @@ export default class ComplexDataGrid extends Index {
     }
 
     render() {
-        return (
-            <Card title={this.props.Property.Title} bordered={false}>
-                {this.RenderDataView()}
-                {this.RenderAddPanel()}
-            </Card>
-        );
+        if (this.props.Property.IsCard === false) {
+            return (
+                <div>
+                    {this.RenderDataView()}
+                    {this.RenderAddPanel()}
+                </div>
+            );
+        }
+        else {
+            return (
+                <Card title={this.props.Property.Title} bordered={false}>
+                    {this.RenderDataView()}
+                    {this.RenderAddPanel()}
+                </Card>
+            );
+        }
     }
 }

@@ -6,6 +6,7 @@ export default function EntityEditPage(config, id) {
     if (!config.IsTabView) {
         if (EntityEditPageConfig[id]) return EntityEditPageConfig[id];
     }
+    else id = Common.CreateGuid();
 
     const _Config = { Config: config, Id: id }
 
@@ -21,11 +22,14 @@ export default function EntityEditPage(config, id) {
         //行为列表
         InitActionList(_Config);
     }
+    else {
+        InitTagViewConfig(_Config, config)
+    }
 
     //编辑视图
     InitEditView(_Config);
 
-    AddRowColId(_Config.EditView)
+    _Config.EditView && AddRowColId(_Config.EditView);
 
     //复杂对象视图
     InitComplexView(_Config);
@@ -41,6 +45,19 @@ function AddRowColId(view) {
         p.RowId = Common.CreateGuid();
         p.ColId = Common.CreateGuid()
     });
+}
+
+function InitTagViewConfig(a, b) {
+    a.InitEventActionList = []
+    a.ActionList = [];
+    a.IsNewAdd = false;
+    a.IsUpdate = false;
+    a.IsDelete = false;
+
+    const copyNames = ["IsTabView", "EntityName", "PrimaryKey", "Name", "TabLabel",
+        "InitEventActionList", "ActionList", "Properties"];
+
+    Common.Copy(a, b, copyNames)
 }
 
 function InitConfig(a, b) {
@@ -144,11 +161,14 @@ function InitEditView(config) {
         config.EditView = { Properties: [], IsVisible: true, Title: config.Config.EditViewTitle, Name: "EditView" };
     }
 
-    let p = null;
-    for (let i = 0; i < config.Properties.length; i++) {
-        p = Object.assign({ IsEdit: true, IsNullable: true }, config.Properties[i]);
-        config.EditView.Properties.push(p);
+    if (Common.IsArray(config.Properties)) {
+        let p = null;
+        for (let i = 0; i < config.Properties.length; i++) {
+            p = Object.assign({ IsEdit: true, IsNullable: true }, config.Properties[i]);
+            config.EditView.Properties.push(p);
+        }
     }
+    else config.EditView.IsVisible = false;
 }
 
 function InitComplexView(config) {

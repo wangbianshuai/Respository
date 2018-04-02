@@ -1,5 +1,5 @@
 import * as Common from "../utils/Common"
-import EntityEditPage from "./templates/EntityEditPage";
+import EntityEditPage from "./EntityEditPage";
 
 const TabsEntityEditPageConfig = {};
 
@@ -132,6 +132,11 @@ function AddAction(actoinName, stateName, dataKey, isModalMessage) {
 }
 
 
-function InitTabView(config){
-    config.TabViews= config.TabViews.map(m=>EntityEditPage(m, id));
+function InitTabView(config) {
+    config.TabViews = config.Config.TabViews.map(m => {
+        const view = EntityEditPage(m);
+        view.EntityName = config.EntityName;
+        view.PrimaryKey = config.PrimaryKey;
+        return view;
+    });
 }

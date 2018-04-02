@@ -1,5 +1,6 @@
 import React from "react"
-import { Tabs } from "antd"
+import { Tabs } from "antd";
+import * as Common from "../utils/Common"
 import EntityEditPage from "./EntityEditPage"
 import Index from "./Index"
 

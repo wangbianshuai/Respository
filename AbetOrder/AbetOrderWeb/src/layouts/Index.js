@@ -47,6 +47,7 @@ export default class Index extends Component {
     }
 
     RenderView(view) {
+        if (Common.IsEmptyObject(view)) return null;
         return (
             <div style={{ display: view.IsVisible ? "" : "none" }}>
                 {view.XList.map(m => this.RendRowCols(view.View, m.RowId, view.RowDictionary[m.X]))}
