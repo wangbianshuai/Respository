@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 
 namespace AbetOrder.Entity
 {
-    [TableProperty(Name = "t_d_Dictionary", PrimaryKey = "Id", NoSelectNames = "IsDelete")]
-    public class DictionaryConfig : EntityModel, IEntity
+    [TableProperty(Name = "t_d_RemarkItem", PrimaryKey = "Id", NoSelectNames = "IsDelete")]
+    public class RemarkItem : EntityModel, IEntity
     {
         /// <summary> 
         /// 主键
@@ -19,13 +19,9 @@ namespace AbetOrder.Entity
         /// </summary> 
         public string Name { get; set; }
         /// <summary> 
-        /// 值
+        /// 显示顺序
         /// </summary> 
-        public string Value { get; set; }
-        /// <summary> 
-        /// 备注
-        /// </summary> 
-        public string Remark { get; set; }
+        public int DisplayIndex { get; set; }
         /// <summary> 
         /// 逻辑删除，1：删除,0:正常
         /// </summary> 
@@ -38,8 +34,8 @@ namespace AbetOrder.Entity
         public string RowVersion { get; set; }
     }
 
-    [TableProperty(Name = "v_Dictionary", PrimaryKey = "Id", NoSelectNames = "IsDelete")]
-    public class ViewDictionaryConfig : DictionaryConfig
+    [TableProperty(Name = "v_RemarkItem", PrimaryKey = "Id", NoSelectNames = "IsDelete")]
+    public class ViewRemarkItem : RemarkItem
     {
        
     }

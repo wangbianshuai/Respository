@@ -41,9 +41,12 @@
   <ItemGroup>
     <Compile Include="Bill.cs" />
     <Compile Include="BillType.cs" />
+    <Compile Include="Customer.cs" />
+    <Compile Include="ProcessItem.cs" />
+    <Compile Include="TemplateHtml.cs" />
     <Compile Include="User.cs" />
     <Compile Include="CommonOperation.cs" />
-    <Compile Include="DictionaryConfig.cs" />
+    <Compile Include="RemarkItem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

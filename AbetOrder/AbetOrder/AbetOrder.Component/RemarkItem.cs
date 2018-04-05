@@ -8,13 +8,13 @@ using System.Threading.Tasks;
 
 namespace AbetOrder.Component
 {
-    public class DictionaryConfig : EntityRequest
+    public class RemarkItem : EntityRequest
     {
-        public DictionaryConfig()
+        public RemarkItem()
         {
         }
 
-        public DictionaryConfig(Request request)
+        public RemarkItem(Request request)
             : base(request)
         {
         }
@@ -22,7 +22,7 @@ namespace AbetOrder.Component
         [Log]
         public object Delete2()
         {
-            return CommonOperation.DeleteByLogic<DictionaryConfig>(this);
+            return CommonOperation.DeleteByLogic<RemarkItem>(this);
         }
     }
 }

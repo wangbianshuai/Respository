@@ -42,6 +42,22 @@ namespace AbetOrder.Entity
         /// 地址
         /// </summary>
         public string Address { get; set; }
+        /// <summary>
+        /// 仓库名称
+        /// </summary>
+        public string DepotName { get; set; }
+        /// <summary>
+        /// 仓库地址
+        /// </summary>
+        public string DepotAddress { get; set; }
+        /// <summary>
+        /// 收货人
+        /// </summary>
+        public string Consignee { get; set; }
+        /// <summary>
+        /// 收货人电话
+        /// </summary>
+        public string ConsigneePhone { get; set; }
         /// <summary> 
         /// 备注
         /// </summary> 

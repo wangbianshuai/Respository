@@ -19,6 +19,10 @@ namespace AbetOrder.Entity
         public decimal ActualAmount { get; set; }
         public decimal PaidDeposit { get; set; }
         public decimal ShouldPayBalance { get; set; }
+        public double DiscountRate { get; set; }
+        public decimal ProcessAmount { get; set; }
+        public decimal CostAmount { get; set; }
+        public string OrderRemarkItemIds { get; set; }
         public Guid CustomerId { get; set; }
         public string Remark { get; set; }
         public Guid CreateUser { get; set; }
@@ -53,13 +57,15 @@ namespace AbetOrder.Entity
         public string UpdateUserName { get; set; }
         public string SaleUserName { get; set; }
         public int DataRight { get; set; }
+        public decimal ProcessAmount { get; set; }
     }
 
     [TableProperty(Name = "t_d_OrderImage", PrimaryKey = "Id")]
     public class OrderImage : EntityModel, IEntity
     {
         public Guid Id { get; set; }
-        public string Remark { get; set; }
+        public string Name { get; set; }
+        public int DisplayIndex { get; set; }
         public Guid OrderId { get; set; }
         public string ImageUrl { get; set; }
     }
@@ -73,48 +79,12 @@ namespace AbetOrder.Entity
         public double Width { get; set; }
         public double Height { get; set; }
         public double Area { get; set; }
+        public double Thickness { get; set; }
         public decimal Price { get; set; }
         public double Number { get; set; }
         public decimal Amount { get; set; }
-        public decimal ActualAmount { get; set; }
+        public string ProcessItems { get; set; }
         public string Remark { get; set; }
-        public string ColorCode { get; set; }
-    }
-
-    [TableProperty(Name = "t_d_OrderDetailProcess", PrimaryKey = "Id")]
-    public class OrderDetailProcess : EntityModel, IEntity
-    {
-        public Guid Id { get; set; }
-        public Guid OrderDetailId { get; set; }
-        public string Name { get; set; }
-        public decimal Price { get; set; }
-        public double AmountPercent { get; set; }
-        public decimal Amount { get; set; }
-        public decimal ActualAmount { get; set; }
-        public string Remark { get; set; }
-    }
-
-    [TableProperty(Name = "v_OrderName", PrimaryKey = "OrderName")]
-    public class ViewOrderName : EntityModel, IEntity
-    {
-        public int OrderName { get; set; }
-    }
-
-    [TableProperty(Name = "t_d_OrderProperty", PrimaryKey = "Id")]
-    public class OrderProperty : EntityModel, IEntity
-    {
-        public Guid Id { get; set; }
-        public Guid OrderId { get; set; }
-        public string Name { get; set; }
-        public string Value { get; set; }
-    }
-
-    [TableProperty(Name = "t_d_OrderDetailProperty", PrimaryKey = "Id")]
-    public class OrderDetailProperty : EntityModel, IEntity
-    {
-        public Guid Id { get; set; }
-        public Guid OrderDetailId { get; set; }
-        public string Name { get; set; }
-        public string Value { get; set; }
+        public byte DetailType { get; set; }
     }
 }
