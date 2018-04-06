@@ -17,6 +17,6 @@ export default class AButton extends Index {
         const { Property } = this.props
         const text = Property.Label || Property.Text
 
-        return (<a href="javascript:void(0);" onClick={this.ClickAction.bind(this)}>{text}</a>)
+        return (<a onClick={this.ClickAction.bind(this)}>{text}</a>)
     }
 }

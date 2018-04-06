@@ -22,6 +22,7 @@ namespace AbetOrder.Entity
         public double DiscountRate { get; set; }
         public decimal ProcessAmount { get; set; }
         public decimal CostAmount { get; set; }
+        public decimal ExtraCharge { get; set; }
         public string OrderRemarkItemIds { get; set; }
         public Guid CustomerId { get; set; }
         public string Remark { get; set; }
@@ -57,7 +58,6 @@ namespace AbetOrder.Entity
         public string UpdateUserName { get; set; }
         public string SaleUserName { get; set; }
         public int DataRight { get; set; }
-        public decimal ProcessAmount { get; set; }
     }
 
     [TableProperty(Name = "t_d_OrderImage", PrimaryKey = "Id")]
@@ -83,7 +83,7 @@ namespace AbetOrder.Entity
         public decimal Price { get; set; }
         public double Number { get; set; }
         public decimal Amount { get; set; }
-        public string ProcessItems { get; set; }
+        public string ProcessItemIds { get; set; }
         public string Remark { get; set; }
         public byte DetailType { get; set; }
     }

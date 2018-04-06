@@ -3,6 +3,7 @@ import { Tabs } from "antd";
 import * as Common from "../utils/Common"
 import EntityEditPage from "./EntityEditPage"
 import Index from "./Index"
+import PageComponent from "../pagecomponents/PageComponent"
 
 export default class TabsEntityEditPage extends Index {
     constructor(props) {
@@ -31,7 +32,17 @@ export default class TabsEntityEditPage extends Index {
     RenderTabPanel(view) {
         const props = { Page: this.props.Page, Property: view }
 
-        return <Tabs.TabPane tab={view.TabLabel} key={view.Id}><EntityEditPage {...props} /></Tabs.TabPane>
+        if (view.TemplateName === "EntityEditPage") return <Tabs.TabPane tab={view.TabLabel} key={view.Id}><EntityEditPage {...props} /></Tabs.TabPane>
+        else if (view.PageComponentName) return this.GetPageComponent(view, props);
+
+        return null;
+    }
+
+    GetPageComponent(view, props) {
+        const c = PageComponent(view, props);
+        if (c === null) return c;
+
+        return <Tabs.TabPane tab={view.TabLabel} key={view.Id}>{c}</Tabs.TabPane>
     }
 
     render() {

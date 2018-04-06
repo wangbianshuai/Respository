@@ -34,7 +34,7 @@
 
     function GetProperties() {
         return [{
-            Label: "收支", Name: "IncomePayment", EditProperty: { Type: "Radio", ChildNames: ["BillTypeId"], IsButton: true, DefaultValue: "1", ButtonWidth: 202 },
+            Label: "收支", Name: "IncomePayment", EditProperty: { Type: "Radio", ChildNames: ["BillTypeId"], IsButton: true, DefaultValue: "2", ButtonWidth: 202 },
             DataType: "int", Type: "Select", DataSource: GeDataSource(), OperateLogic: "=", AllowClear: true, SearchProperty: { ColSpan: 5 }
         },
         {
@@ -85,8 +85,7 @@
     }
 
     function GeDataSource() {
-        return [{ Value: "1", Text: "收入" },
-        { Value: "2", Text: "支出" }]
+        return [{ Value: "2", Text: "支出" }, { Value: "1", Text: "收入" }]
     }
 
     function GetBillTypeDataSource() {

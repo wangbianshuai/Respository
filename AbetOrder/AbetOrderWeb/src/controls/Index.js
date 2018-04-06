@@ -78,7 +78,7 @@ export default class Index extends Component {
             this.ValueName = "Value";
             this.TextName = "Text";
         }
-
+        
         if (Common.IsArray(Property.DataSource)) {
             this.setState({ Options: this.GetOptions() })
         }

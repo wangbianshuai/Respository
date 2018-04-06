@@ -2,11 +2,11 @@ import React from "react"
 import Index from "./Index"
 import { Popconfirm } from "antd"
 
-export default class Button2 extends Index {
+export default class Popconfirm2 extends Index {
     constructor(props) {
         super(props)
 
-        this.Name = "Button2";
+        this.Name = "Popconfirm2";
     }
 
     ConfirmAction() {
@@ -20,7 +20,7 @@ export default class Button2 extends Index {
 
         return (
             <Popconfirm title={Property.Title} onConfirm={this.ConfirmAction.bind(this)} okText="确定" cancelText="取消">
-                <a href="javascript:void(0);">{text}</a>
+                <a>{text}</a>
             </Popconfirm>
         )
     }

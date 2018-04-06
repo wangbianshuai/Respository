@@ -3,10 +3,10 @@ import EntityEditPage from "./EntityEditPage";
 
 const TabsEntityEditPageConfig = {};
 
-export default function TabsEntityEditPage(config, id) {
-    if (TabsEntityEditPageConfig[id]) return TabsEntityEditPageConfig[id];
+export default function TabsEntityEditPage(config, id, pageId) {
+    if (TabsEntityEditPageConfig[id] && TabsEntityEditPageConfig[id].PageId === pageId) return TabsEntityEditPageConfig[id];
 
-    const _Config = { Config: config, Id: id }
+    const _Config = { Config: config, Id: id, PageId: pageId }
 
     //初始化配置
     InitConfig(_Config, config)
@@ -134,9 +134,14 @@ function AddAction(actoinName, stateName, dataKey, isModalMessage) {
 
 function InitTabView(config) {
     config.TabViews = config.Config.TabViews.map(m => {
-        const view = EntityEditPage(m);
+        let view = m;
+
+        if (m.TemplateName === "EntityEditPage") view = EntityEditPage(m);
+
+        view.Id = view.Id || Common.CreateGuid();
         view.EntityName = config.EntityName;
         view.PrimaryKey = config.PrimaryKey;
+
         return view;
     });
 }

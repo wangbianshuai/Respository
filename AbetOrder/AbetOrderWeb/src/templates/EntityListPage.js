@@ -23,10 +23,10 @@ Config配置结构：
 
 const EntityListPageConfig = {};
 
-export default function EntityListPage(config, id) {
-    if (EntityListPageConfig[id]) return EntityListPageConfig[id];
+export default function EntityListPage(config, id, pageId) {
+    if (EntityListPageConfig[id] && EntityListPageConfig[id].PageId === pageId) return EntityListPageConfig[id];
 
-    const _Config = { Config: config, Id: id }
+    const _Config = { Config: config, Id: id, PageId: pageId }
 
     //初始化配置
     InitConfig(_Config, config)

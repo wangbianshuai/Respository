@@ -2,13 +2,13 @@ import * as Common from "../utils/Common"
 
 const EntityEditPageConfig = {};
 
-export default function EntityEditPage(config, id) {
+export default function EntityEditPage(config, id, pageId) {
     if (!config.IsTabView) {
-        if (EntityEditPageConfig[id]) return EntityEditPageConfig[id];
+        if (EntityEditPageConfig[id] && EntityEditPageConfig[id].PageId === pageId) return EntityEditPageConfig[id];
     }
     else id = Common.CreateGuid();
 
-    const _Config = { Config: config, Id: id }
+    const _Config = { Config: config, Id: id, PageId: pageId }
 
     if (!config.IsTabView) {
         //初始化配置
@@ -54,7 +54,7 @@ function InitTagViewConfig(a, b) {
     a.IsUpdate = false;
     a.IsDelete = false;
 
-    const copyNames = ["IsTabView", "EntityName", "PrimaryKey", "Name", "TabLabel",
+    const copyNames = ["IsTabView", "EntityName", "PrimaryKey", "Name", "TabLabel", "TemplateName",
         "InitEventActionList", "ActionList", "Properties"];
 
     Common.Copy(a, b, copyNames)

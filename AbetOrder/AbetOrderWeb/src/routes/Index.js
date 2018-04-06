@@ -240,13 +240,13 @@ class Index extends Component {
 }
 
 //初始化模板配置
-function InitTemplateConfig(config, id) {
+function InitTemplateConfig(config, id, pageId) {
     if (!config || Common.IsNullOrEmpty(config.TemplateName)) return config
 
     switch (config.TemplateName) {
-        case "EntityListPage": return EntityListPage(config, id)
-        case "EntityEditPage": return EntityEditPage(config, id)
-        case "TabsEntityEditPage": return TabsEntityEditPage(config, id)
+        case "EntityListPage": return EntityListPage(config, id, pageId)
+        case "EntityEditPage": return EntityEditPage(config, id, pageId)
+        case "TabsEntityEditPage": return TabsEntityEditPage(config, id, pageId)
         default: return config
     }
 }
@@ -258,21 +258,24 @@ function mapStateToProps(state, ownProps) {
         props.PageConfig = undefined;
     }
     else {
-        let pageConfig = InitTemplateConfig(state.Config.Data, ownProps.Id)
+        let pageConfig = InitTemplateConfig(state.Config.Data, ownProps.Id, ownProps.PageId);
         props.PageConfig = pageConfig;
 
-        if (pageConfig && pageConfig.ActionList && pageConfig.Name && state[pageConfig.Name]) {
-            pageConfig.ActionList.forEach(a => props[a.StateName] = state[pageConfig.Name][a.StateName])
-        }
+        if (pageConfig && pageConfig.IsLoad) {
+            if (pageConfig && pageConfig.ActionList && pageConfig.Name && state[pageConfig.Name]) {
+                pageConfig.ActionList.forEach(a => props[a.StateName] = state[pageConfig.Name][a.StateName])
+            }
 
-        if (pageConfig && pageConfig.StateList) {
-            pageConfig.StateList.forEach(s => {
-                if (state[s.Name]) props[s.StateName] = state[s.Name][s.StateName]
-            })
+            if (pageConfig && pageConfig.StateList) {
+                pageConfig.StateList.forEach(s => {
+                    if (state[s.Name]) props[s.StateName] = state[s.Name][s.StateName]
+                })
+            }
         }
+        else if (pageConfig) pageConfig.IsLoad = true;
     }
 
-    if (!Common.IsDist) console.log(props);
+    if (!Common.IsDist) { console.log(props); }
 
     return props
 }

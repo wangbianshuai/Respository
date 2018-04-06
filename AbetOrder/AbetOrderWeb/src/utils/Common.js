@@ -300,3 +300,9 @@ export function JsonParse(str) {
 
     return JSON.parse(str);
 }
+
+export function ArrayMax(list, name) {
+    if (list.length === 0) return null;
+    list = list.sort((a, b) => a[name] > b[name] ? -1 : 1)
+    return list[0]
+}

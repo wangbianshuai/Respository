@@ -36,8 +36,8 @@
             Url: "ViewTemplateHtml?$select=Id,Name&$orderby=CreateDate", DataKey: "ViewTemplateHtml", Method: "GET"
         },
         {
-            ActionName: "GetOrderNameList", StateName: "OrderNameList",
-            Url: "ViewOrderName", DataKey: "ViewOrderName", Method: "GET"
+            ActionName: "GetProcessItemList", StateName: "ProcessItemList",
+            Url: "ViewProcessItem?$select=Id,Name&$orderby=DisplayIndex", DataKey: "ViewProcessItem", Method: "GET"
         },
         {
             ActionName: "GetUserList", StateName: "UserList",
@@ -66,8 +66,8 @@
             Name: "Order",
             TabLabel: "订单信息",
             IsTabView: true,
-            Properties: GetOrderPropeties(),
-            ComplexView: GetComplexView()
+            TemplateName: "EntityEditPage",
+            Properties: GetOrderPropeties()
         }
     }
 
@@ -79,7 +79,7 @@
             ColSpan: 11, LabelCol: 4, WrapperCol: 20,
             DataType: "Guid", Type: "Select", ServiceDataSource: GetCustomerListDataSource(), IsNullable: false
         },
-        { Label: "门板花式", Type: "AutoComplete", ServiceDataSource: GetOrderNameDataSource(), Name: "OrderName", ColSpan: 11, LabelCol: 4, WrapperCol: 20, X: 2, Y: 1, DataType: "string", MaxLength: 100, IsNullable: true },
+        { Label: "门板花式", Type: "TextBox", Name: "OrderName", ColSpan: 11, LabelCol: 4, WrapperCol: 20, X: 2, Y: 1, DataType: "string", MaxLength: 100, IsNullable: false },
         {
             Label: "销售员", Name: "SaleUser", PlaceHolder: "默认当前用户",
             DataType: "Guid", Type: "Select", ServiceDataSource: GetUserDataSource(), ColSpan: 11, LabelCol: 4, WrapperCol: 20, X: 2, Y: 2, IsNullable: true
@@ -90,19 +90,23 @@
             Label: "订单模板", Name: "OrderTemplateHtmlId", X: 4, Y: 1,
             AllowClear: true,
             ColSpan: 11, LabelCol: 4, WrapperCol: 20,
-            DataType: "Guid", Type: "Select", ServiceDataSource: GetTemplateHtmlDataSource(), IsNullable: false
+            DataType: "Guid", Type: "Select", ServiceDataSource: GetTemplateHtmlDataSource()
         },
         {
             Label: "加工单模板", Name: "ProcessTemplateHtmlId", X: 4, Y: 2,
             AllowClear: true,
             ColSpan: 11, LabelCol: 4, WrapperCol: 20,
-            DataType: "Guid", Type: "Select", ServiceDataSource: GetTemplateHtmlDataSource(), IsNullable: false
+            DataType: "Guid", Type: "Select", ServiceDataSource: GetTemplateHtmlDataSource()
         },
-        { Label: "应付金额", Max: 100000000, Min: 0.01, Step: 0.01, PlaceHolder: "只读，计算其值", IsReadonly: true, Scale: 2, Type: "TextBox", ControlType: "InputNumber", Name: "Amount", ColSpan: 11, LabelCol: 4, WrapperCol: 20, X: 6, Y: 1, DataType: "decimal", MaxLength: 10, IsNullable: true },
-        { Label: "实付金额", Max: 100000000, Min: 0.01, Step: 0.01, Scale: 2, PlaceHolder: "默认计算其值", Type: "TextBox", ControlType: "InputNumber", Name: "ActualAmount", ColSpan: 11, LabelCol: 4, WrapperCol: 20, X: 6, Y: 2, DataType: "decimal", MaxLength: 10, IsNullable: true },
-        { Label: "已交订金", Max: 100000000, Min: 0.01, Step: 0.01, Scale: 2, Type: "TextBox", ControlType: "InputNumber", Name: "PaidDeposit", ColSpan: 11, LabelCol: 4, WrapperCol: 20, X: 7, Y: 1, DataType: "decimal", MaxLength: 10, IsNullable: true },
-        { Label: "应付余额", Max: 100000000, Min: 0.01, Step: 0.01, Scale: 2, PlaceHolder: "默认计算其值", Type: "TextBox", ControlType: "InputNumber", Name: "ShouldPayBalance", ColSpan: 11, LabelCol: 4, WrapperCol: 20, X: 7, Y: 2, DataType: "decimal", MaxLength: 10, IsNullable: true },
-        { Label: "备注", Name: "Remark", X: 8, Y: 1, Type: "TextBox", MaxLength: 2000, DataType: "string", ColSpan: 22, LabelCol: 2, WrapperCol: 22, Rows: 10, ControlType: "TextArea", IsNullable: true }]
+        { Label: "明细总金额", Max: 100000000, Min: 0.01, Step: 0.01, PlaceHolder: "默认计算其值", Scale: 2, Type: "TextBox", ControlType: "InputNumber", Name: "Amount", ColSpan: 11, LabelCol: 4, WrapperCol: 20, X: 6, Y: 1, DataType: "decimal", MaxLength: 10, IsNullable: true },
+        { Label: "折扣比(%)", Max: 100, Min: 0.01, Step: 0.01, PlaceHolder: "百份比1~100之间值，可精确2位小数", Scale: 2, Type: "TextBox", ControlType: "InputNumber", Name: "DiscountRate", ColSpan: 11, LabelCol: 4, WrapperCol: 20, X: 6, Y: 2, DataType: "decimal", MaxLength: 10, IsNullable: true },
+        { Label: "附加费", Max: 100000000, Min: 0.01, Step: 0.01, Scale: 2, PlaceHolder: "默认计算其值", Type: "TextBox", ControlType: "InputNumber", Name: "ExtraCharge", ColSpan: 11, LabelCol: 4, WrapperCol: 20, X: 7, Y: 1, DataType: "decimal", MaxLength: 10, IsNullable: true },
+        { Label: "订单金额", Max: 100000000, Min: 0.01, Step: 0.01, Scale: 2, PlaceHolder: "明细总金额*折扣比+附加费", Type: "TextBox", ControlType: "InputNumber", Name: "ActualAmount", ColSpan: 11, LabelCol: 4, WrapperCol: 20, X: 7, Y: 2, DataType: "decimal", MaxLength: 10, IsNullable: true },
+        { Label: "成本金额", Max: 100000000, Min: 0.01, Step: 0.01, Scale: 2, Type: "TextBox", ControlType: "InputNumber", Name: "CostAmount", ColSpan: 11, LabelCol: 4, WrapperCol: 20, X: 8, Y: 1, DataType: "decimal", MaxLength: 10, IsNullable: true },
+        { Label: "加工费", Max: 100000000, Min: 0.01, Step: 0.01, Scale: 2, Type: "TextBox", ControlType: "InputNumber", Name: "ProcessAmount", ColSpan: 11, LabelCol: 4, WrapperCol: 20, X: 8, Y: 2, DataType: "decimal", MaxLength: 10, IsNullable: true },
+        { Label: "已付金额", Max: 100000000, Min: 0.01, Step: 0.01, Scale: 2, Type: "TextBox", ControlType: "InputNumber", Name: "PaidDeposit", ColSpan: 11, LabelCol: 4, WrapperCol: 20, X: 9, Y: 1, DataType: "decimal", MaxLength: 10, IsNullable: true },
+        { Label: "应付余额", Max: 100000000, Min: 0.01, Step: 0.01, Scale: 2, Type: "TextBox", PlaceHolder: "默认计算其值", ControlType: "InputNumber", Name: "ShouldPayBalance", ColSpan: 11, LabelCol: 4, WrapperCol: 20, X: 9, Y: 2, DataType: "decimal", MaxLength: 10, IsNullable: true },
+        { Label: "备注", Name: "Remark", X: 10, Y: 1, Type: "TextBox", MaxLength: 200, DataType: "string", ColSpan: 22, LabelCol: 2, WrapperCol: 22, Rows: 3, ControlType: "TextArea", IsNullable: true }]
     }
 
     function GetOrderDetailView() {
@@ -110,57 +114,16 @@
             Name: "OrderDetail",
             TabLabel: "订单明细",
             IsTabView: true,
-            ComplexView: GetOrderDetailComplexView()
+            PageComponentName: "OrderDetail"
         }
-    }
-
-    function GetOrderDetailComplexView() {
-        return {
-            EntityName: "OrderDetail",
-            PrimaryKey: "Id",
-            PropertyName: "Details",
-            Title: "订单明细",
-            IsCard: false,
-            Properties: GetOrderDetailComplexProperties()
-        }
-    }
-
-    function GetOrderDetailComplexProperties() {
-        return [{ Label: "序号", Name: "Name", DataType: "string", MaxLength: 50, IsNullable: false },
-        { Label: "宽", Max: 100000000, Min: 0.01, Step: 0.01, Scale: 2, PlaceHolder: "默认计算其值", Type: "TextBox", ControlType: "InputNumber", Name: "ActualAmount", ColSpan: 11, LabelCol: 4, WrapperCol: 20, X: 6, Y: 2, DataType: "decimal", MaxLength: 10, IsNullable: true },
-        ]
     }
 
     function GetOrderImageView() {
         return {
-            Name: "OrderDetail",
+            Name: "OrderImage",
             TabLabel: "订单设计图",
             IsTabView: true,
-            ComplexView: GetOrderImageComplexView()
-        }
-    }
-
-    function GetOrderImageComplexView() {
-        return {
-            EntityName: "OrderImage",
-            PrimaryKey: "Id",
-            PropertyName: "Images",
-            Title: "订单设计图",
-            IsCard: false,
-            Properties: GetOrderImageComplexProperties()
-        }
-    }
-
-    function GetOrderImageComplexProperties() {
-        return [{ Label: "序号", Name: "Name", DataType: "string", MaxLength: 50, IsNullable: false },
-        { Label: "属性值", Name: "Value", DataType: "string", MaxLength: 6000, IsNullable: false }]
-    }
-
-    function GetOrderNameDataSource() {
-        return {
-            ActionName: "GetOrderNameList",
-            ValueName: "OrderName",
-            TextName: "OrderName"
+            PageComponentName: "OrderImage"
         }
     }
 
@@ -171,21 +134,5 @@
             TextName: "Name"
         }
     }
-
-    function GetComplexView() {
-        return {
-            EntityName: "ContentProperty",
-            PrimaryKey: "Id",
-            PropertyName: "Properties",
-            Properties: GetComplexProperties(),
-            Title: "扩展属性"
-        }
-    }
-
-    function GetComplexProperties() {
-        return [{ Label: "属性名", Name: "Name", DataType: "string", MaxLength: 50, IsNullable: false },
-        { Label: "属性值", Name: "Value", DataType: "string", MaxLength: 6000, IsNullable: false }]
-    }
-
 
 })();
