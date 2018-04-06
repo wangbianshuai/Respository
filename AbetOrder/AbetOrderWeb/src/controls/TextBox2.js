@@ -16,7 +16,10 @@ export default class TextBox2 extends Index {
     }
 
     InputNumberChange(value) {
-        if (this.Property.Scale > 0) value = Common.GetNumber(value, this.Property.Scale);
+        if (!Common.IsNullOrEmpty(value)) {
+            if (this.Property.Scale > 0) value = Common.GetNumber(value, this.Property.Scale);
+            else if (this.Property.DataType === "int") value = parseInt(value, 10);
+        }
 
         this.setState({ Value: value })
     }

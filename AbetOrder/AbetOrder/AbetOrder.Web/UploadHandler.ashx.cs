@@ -1,4 +1,5 @@
-﻿using System;
+﻿using OpenDataAccess.Utility;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -26,26 +27,35 @@ namespace AbetOrder.Web
             return Code.Common.ToJson(dict);
         }
 
+
         private string Upload(HttpContext context)
         {
             try
             {
-                string fileType = string.Empty;
-                string fileName= string.Empty;
-                string filePath = string.Empty;
+                string fileType = Code.Common.GetParameterValue(context.Request.QueryString, "ft");
+                string fileName = string.Empty;
+                string filePath = Code.Common.GetParameterValue(context.Request.QueryString, "fp");
                 string fileSize = string.Empty;
 
                 if (context.Request.Files.Count > 0)
                 {
-                    fileType = Path.GetExtension(context.Request.Files[0].FileName).ToLower();
+                    if (string.IsNullOrEmpty(fileType)) fileType = "html";
 
-                    fileSize = Code.Common.GetFileSize(context.Request.Files[0].ContentLength);
+                    fileSize = Common.GetFileSize(context.Request.Files[0].ContentLength);
 
-                    fileName = Path.GetFileName(context.Request.Files[0].FileName);
+                    if (string.IsNullOrEmpty(filePath))
+                    {
+                        string ext = Path.GetExtension(context.Request.Files[0].FileName);
+                        filePath = string.Format("resouces/{0}/", fileType);
+                        fileName = DateTime.Now.ToString("yyyyMMddHHmmssfff") + new Random().Next(100000, 999999) + ext;
+                    }
+                    else
+                    {
+                        fileName = Path.GetFileName(filePath);
+                        filePath = filePath.Replace(fileName, string.Empty);
+                    }
 
-                    filePath = string.Format("StaticSource/{0}/{1}/", fileType.Replace(".", string.Empty), DateTime.Now.ToString("yyyy-MM-dd"));
-
-                    string path =context.Server.MapPath(filePath);
+                    string path = context.Server.MapPath(filePath);
                     filePath += fileName;
 
                     if (!Directory.Exists(path)) Directory.CreateDirectory(path);
@@ -53,7 +63,7 @@ namespace AbetOrder.Web
                     path += fileName;
 
                     context.Request.Files[0].SaveAs(path);
-                  
+
                     return Code.Common.ToJson(new { IsSuccess = true, FileName = fileName, FileSize = fileSize, FilePath = filePath });
                 }
                 else return this.GetMessage("未有上传文件！");

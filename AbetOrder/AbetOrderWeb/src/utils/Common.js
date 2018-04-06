@@ -107,7 +107,7 @@ export const IsDist = false;
 //export const ConfigApiUrl = GetRootPath() + "/configs/";
 //export const IsDist = true;
 
-function GetRootPath() {
+export function GetRootPath() {
     let names = window.location.pathname.substr(1).split("/");
     let path = ""
     if (names.length > 1) {
@@ -250,10 +250,9 @@ export function GetNumber(value, scale) {
     let f = parseFloat(value)
     if (isNaN(f)) return value
 
-    f = parseFloat(f.toFixed(scale))
     scale = (scale || 2);
     scale = Math.pow(10, scale);
-    return Math.floor(f * scale) / scale
+    return Math.round(f * scale) / scale
 }
 
 export function ToCurrency(value, blFixed2) {
@@ -307,4 +306,10 @@ export function ArrayMax(list, name) {
     if (list.length === 0) return null;
     list = list.sort((a, b) => a[name] > b[name] ? -1 : 1)
     return list[0]
+}
+
+export function GetFloatValue(value) {
+    if (!isNaN(value)) return value;
+    const f = parseFloat(value)
+    return isNaN(f) ? 0 : f;
 }

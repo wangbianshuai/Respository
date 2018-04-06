@@ -47,12 +47,14 @@ export default class OrderDetail extends Index {
             if (d.Number > 0) totalNumber += d.Number;
         })
 
+        if (this.props.Page.SetAmountExtraCharge) this.props.Page.SetAmountExtraCharge(totalAmount1,totalAmount2);
+
         return { TotalAmount1: totalAmount1, TotalAmount2: totalAmount2, TotalArea: totalArea, TotalNumber: totalNumber };
     }
 
-    GetAddButton(text) {
+    GetAddButton(name, text) {
         const p = {
-            Name: "ComplexAdd", Text: text, Icon: "plus",
+            Name: name, Text: text, Icon: "plus",
             ButtonType: "dashed",
             Style: { width: '100%', marginTop: 16, marginBottom: 8 },
             Type: "Button"
@@ -155,10 +157,10 @@ export default class OrderDetail extends Index {
                     Delete={this.Delete.bind(this, m)} />)}
                 <Row gutter={16}>
                     <Col span={12}>
-                        {this.GetAddButton("添加明细")}
+                        {this.GetAddButton("AddDetail1", "添加明细")}
                     </Col>
                     <Col span={12}>
-                        {this.GetAddButton("添加附加费")}
+                        {this.GetAddButton("AddDetail2", "添加附加费")}
                     </Col>
                 </Row>
                 <Card title="备注" bordered={false}>{this.RenderRemarkCheckBoxList()}</Card>

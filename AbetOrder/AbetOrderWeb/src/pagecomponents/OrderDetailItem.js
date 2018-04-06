@@ -33,9 +33,9 @@ export default class OrderDetailItem extends Index {
     }
 
     InputNumberChange(name, value) {
-        this.props.Data[name] = value;
         const data = {};
-        data[name] = this.GetNumberValue(name, value)
+        data[name] = this.GetNumberValue(name, value);
+        this.props.Data[name] = data[name];
         if (this.state.DetailType === 1) this.ComputeAreaAmount(data, name)
         else if (this.state.DetailType === 2 && name === "Amount") this.props.SetTotalAmount();
         this.setState(data);
@@ -72,10 +72,10 @@ export default class OrderDetailItem extends Index {
     GetNumberValue(name, value) {
         if (Common.IsNullOrEmpty(value)) return "";
 
-        if (name == "Width" || name === "Thickness" || name === "Height" || name === "Number") return parseInt(value, 10);
+        if (name === "Width" || name === "Thickness" || name === "Height" || name === "Number") return parseInt(value, 10);
         else if (name === "Price") return Common.GetNumber(value, 2);
         else if (name === "Amount") {
-            value = Math.floor(parseFloat(value, 10));
+            value = Math.round(Common.GetFloatValue(value));
         }
         else if (name === "Area") {
             value = Common.GetNumber(value, 4);

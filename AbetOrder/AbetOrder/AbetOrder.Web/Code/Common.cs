@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Linq;
 using System.Net.Http;
 using System.Web;
@@ -19,22 +20,24 @@ namespace AbetOrder.Web.Code
         }
 
 
-        public static string GetParameterValue(HttpRequestMessage request, string name)
+        public static string GetParameterValue(NameValueCollection queryString, string name)
         {
-            KeyValuePair<string, string> kvp = request.GetQueryNameValuePairs().Where(w => w.Key.ToLower() == name.ToLower()).FirstOrDefault();
-            if (!string.IsNullOrEmpty(kvp.Value))
+            string key = queryString.AllKeys.Where(where => where.Trim().ToLower() == name.Trim().ToLower()).FirstOrDefault();
+            if (key != null)
             {
-                if (kvp.Value == "undefined")
+                if (queryString[key] == "undefined")
                 {
                     return string.Empty;
                 }
                 else
                 {
-                    return HttpUtility.UrlDecode(kvp.Value.Trim());
+                    return HttpUtility.UrlDecode(queryString[key].Trim());
                 }
             }
-
-            return string.Empty;
+            else
+            {
+                return string.Empty;
+            }
         }
 
         public static string ToJson(object obj)

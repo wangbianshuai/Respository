@@ -16,6 +16,10 @@ export default class Upload2 extends Index {
         this.Property.SetUploadState = (state) => this.setState(state);
     }
 
+    componentWillMount() {
+        if (this.Property.IsInitState) this.Property.InitState();
+    }
+
     OnChange(data) {
         const { Property } = this.props;
         let fileList = data.fileList;

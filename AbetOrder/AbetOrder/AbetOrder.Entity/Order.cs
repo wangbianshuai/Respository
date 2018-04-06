@@ -36,6 +36,7 @@ namespace AbetOrder.Entity
         public string ProcessPdfPath { get; set; }
         public Guid OrderTemplateHtmlId { get; set; }
         public Guid ProcessTemplateHtmlId { get; set; }
+        public decimal Profit { get; set; }
         public string RowVersion { get; set; }
     }
 
