@@ -26,18 +26,21 @@ export default class Index extends Component {
         return blChangedProps;
     }
 
-    GetDataSource(actionName, stateName) {
+    GetDataSource(property, actionName, stateName, fn) {
         const { Page } = this.props;
 
-        const property = {};
+        property.Id = property.Id || Common.CreateGuid();
         property.DataSource = []
 
         property.ActionType = "Page";
         property.ActionName = "GetServiceDataSource"
 
         property.SetDataSource = (dataList) => {
-            const data ={}; data[stateName]=dataList;
-            this.setState(data);
+            if (fn) fn(dataList);
+            else {
+                const data = {}; data[stateName] = dataList;
+                this.setState(data);
+            }
         };
 
         const action = Page.GetAction(actionName);

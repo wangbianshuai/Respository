@@ -1,5 +1,4 @@
 .RowHeader{
-    margin-top: 16px;
    background: #fafafa;
    text-align: left;
    color: rgba(0, 0, 0, 0.85);
@@ -8,4 +7,21 @@
    padding: 16px 16px;
    word-break: break-all;
    font-size: 14px;
+}
+
+
+
+.DivTotal{
+margin: 0;
+padding: 0;
+}
+
+.DivTotal span{
+    color: #1890ff;
+}
+
+.DivRemark{
+   display: flex;
+   flex-direction: column;
+   line-height: 32px;
 }

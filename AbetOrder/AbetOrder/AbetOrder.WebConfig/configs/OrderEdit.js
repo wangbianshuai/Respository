@@ -40,6 +40,10 @@
             Url: "ViewProcessItem?$select=Id,Name&$orderby=DisplayIndex", DataKey: "ViewProcessItem", Method: "GET"
         },
         {
+            ActionName: "GetRemarkItemList", StateName: "RemarkItemList",
+            Url: "ViewRemarkItem?$select=Id,Name&$orderby=DisplayIndex", DataKey: "ViewRemarkItem", Method: "GET"
+        },
+        {
             ActionName: "GetUserList", StateName: "UserList",
             Url: "ViewUser?$select=UserId,UserName&$orderby=CreateDate", DataKey: "ViewUser", Method: "GET"
         }]

@@ -250,7 +250,9 @@ export function GetNumber(value, scale) {
     let f = parseFloat(value)
     if (isNaN(f)) return value
 
-    scale = (scale || 2) * 10
+    f = parseFloat(f.toFixed(scale))
+    scale = (scale || 2);
+    scale = Math.pow(10, scale);
     return Math.floor(f * scale) / scale
 }
 

@@ -1,6 +1,6 @@
 import React from "react"
 import Index from "./Index"
-import { Alert, Row, Col } from "antd"
+import { Alert, Row, Col, Button, Card, Checkbox } from "antd"
 import styles from "../styles/OrderDetail.css"
 import OrderDetailItem from "./OrderDetailItem"
 import Button2 from "../controls/Button2"
@@ -10,16 +10,44 @@ export default class OrderDetail extends Index {
     constructor(props) {
         super(props)
 
-        this.state = { Details: [], ProcessItems: [] }
+        this.state = { RemarkItemIds: [], Details: [], ProcessItems: [], TotalAmount1: 0, TotalAmount2: 0, TotalArea: 0, TotalNumber: 0, RemarkItemOptions: [] }
     }
 
     componentWillMount() {
-        this.GetDataSource("GetProcessItemList", "ProcessItems");
+        this.GetDataSource({}, "GetProcessItemList", "ProcessItems");
+        this.GetDataSource({}, "GetRemarkItemList", "RemarkItemOptions", (list) => {
+            this.setState({ RemarkItemOptions: this.GetCheckBoxItems(list) });
+        });
     }
 
+    GetCheckBoxItems(list) {
+        return list.map(m => { return { label: m.Name, value: m.Id } });
+    }
 
     RenderTotalAmount() {
-        return <div>明细总金额：234345，附加费总金额：2342554，总计：234354452345</div>
+        const a1 = Common.ToCurrency(this.state.TotalAmount1);
+        const a2 = Common.ToCurrency(this.state.TotalAmount2);
+        const a3 = Common.ToCurrency(this.state.TotalAmount1 + this.state.TotalAmount2);
+
+        return <div className={styles.DivTotal}>合计，明细金额：<span>{a1}</span>，附加费：<span>{a2}</span>，总金额：<span>{a3}</span>，面积：<span>{this.state.TotalArea}</span>，数量：<span>{this.state.TotalNumber}</span></div>
+    }
+
+    SetTotalAmount() {
+        this.setState(this.GetTotalAmount(this.state.Details))
+    }
+
+    GetTotalAmount(details) {
+        let totalAmount1 = 0, totalAmount2 = 0, totalArea = 0, totalNumber = 0;
+
+        details.forEach(d => {
+            if (d.DetailType === 1 && d.Amount > 0) totalAmount1 += d.Amount;
+            else if (d.DetailType === 2 && d.Amount > 0) totalAmount2 += d.Amount;
+
+            if (d.Area > 0) totalArea += d.Area;
+            if (d.Number > 0) totalNumber += d.Number;
+        })
+
+        return { TotalAmount1: totalAmount1, TotalAmount2: totalAmount2, TotalArea: totalArea, TotalNumber: totalNumber };
     }
 
     GetAddButton(text) {
@@ -34,33 +62,63 @@ export default class OrderDetail extends Index {
     }
 
     AddDetail(text) {
-        const detail = { DetailType: text === "添加明细" ? 1 : 2, OrderDetailId: Common.CreateGuid() }
         let details = this.state.Details;
-
-        const list = details.filter(f => f.DetailType === detail.DetailType);
-        const max = Common.ArrayMax(list, "Index");
-        detail.Index = max === null ? (detail.DetailType === 1 ? 1 : 10001) : max.Index + 1;
+        const detail = { DetailType: text === "添加明细" ? 1 : 2, OrderDetailId: Common.CreateGuid(), DisplayIndex: details.length + 1 }
 
         details.push(detail);
 
-        details = details.sort((a, b) => a.Index > b.Index ? 1 : -1);
-        details = details.map((d, i) => { d.DisplayIndex = i + 1; d.Id = Common.CreateGuid(); return d });
+        this.SetDisplayIndex();
+    }
+
+    Delete(d) {
+        const details = this.state.Details.filter(f => f.OrderDetailId !== d.OrderDetailId);
+
+        this.SetDetails(details);
+
+        this.setState(this.GetTotalAmount(details))
+    }
+
+    SetDetails(details) {
+        details = details.map((d, i) => {
+            if (d.DisplayIndex === i + 1 && d.Id !== undefined) return d;
+            else d.DisplayIndex = i + 1; d.Id = Common.CreateGuid(); return d;
+        });
 
         this.setState({ Details: details });
     }
 
-    Delete(d) {
-        let details = this.state.Details.filter(f => f.OrderDetailId !== d.OrderDetailId);
+    SetDisplayIndex() {
+        let details = this.state.Details;
+        details.forEach(a => a.DisplayIndex = a.DisplayIndex * (a.DetailType === 1 ? 1 : 100000));
+        details = details.sort((a, b) => a.DisplayIndex > b.DisplayIndex ? 1 : -1);
 
-        details = details.map((d, i) => { d.DisplayIndex = i + 1; d.Id = Common.CreateGuid(); return d });
+        this.SetDetails(details);
+    }
 
-        this.setState({ Details: details });
+    CheckBoxChange(value) {
+        const ids = value.length === 0 ? "" : value.join(",");
+        this.setState({ RemarkItemIds: ids })
+    }
+
+    RenderRemarkCheckBoxList() {
+        let value = this.state.RemarkItemIds || "";
+        if (!Common.IsNullOrEmpty(value)) value = value.split(",");
+        else value = [];
+
+        return <Checkbox.Group value={value}
+            className={styles.DivRemark}
+            onChange={this.CheckBoxChange.bind(this)} options={this.state.RemarkItemOptions}></Checkbox.Group>
     }
 
     render() {
         return (
             <div>
                 <Alert message={this.RenderTotalAmount()} type="info" showIcon={true} />
+                <Row gutter={6} style={{ padding: "8px 8px" }}>
+                    <Col span={24}>
+                        <Button onClick={this.SetDisplayIndex.bind(this)}>重新排序</Button>
+                    </Col>
+                </Row>
                 <Row gutter={6} className={styles.RowHeader}>
                     <Col span={2}>
                         序号
@@ -75,10 +133,10 @@ export default class OrderDetail extends Index {
                         厚度
                     </Col>
                     <Col span={3}>
-                        面积
+                        数量
                     </Col>
                     <Col span={3}>
-                        数量
+                        面积
                     </Col>
                     <Col span={3}>
                         单价
@@ -90,7 +148,11 @@ export default class OrderDetail extends Index {
                         操作
                     </Col>
                 </Row>
-                {this.state.Details.map(m => <OrderDetailItem Data={m} key={m.Id} ProcessItems={this.state.ProcessItems} Delete={this.Delete.bind(this, m)} />)}
+                {this.state.Details.map(m => <OrderDetailItem Data={m}
+                    key={m.Id}
+                    SetTotalAmount={this.SetTotalAmount.bind(this)}
+                    ProcessItems={this.state.ProcessItems}
+                    Delete={this.Delete.bind(this, m)} />)}
                 <Row gutter={16}>
                     <Col span={12}>
                         {this.GetAddButton("添加明细")}
@@ -99,6 +161,7 @@ export default class OrderDetail extends Index {
                         {this.GetAddButton("添加附加费")}
                     </Col>
                 </Row>
+                <Card title="备注" bordered={false}>{this.RenderRemarkCheckBoxList()}</Card>
             </div>
         )
     }
