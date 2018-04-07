@@ -96,7 +96,7 @@ function mapStateToProps(state, ownProps) {
 
 function mapDispatchToProps(dispatch) {
     return {
-        ToPage(url) { dispatch(routerRedux.push(url)); }
+        ToPage(url) { dispatch(routerRedux.replace(url)); }
     }
 }
 

@@ -285,7 +285,7 @@ function mapDispatchToProps(dispatch) {
         InitConfigState() { dispatch({ type: "Config/Set_GetConfig", payload: undefined }) },
         InitState(entityName, actionList) { actionList.forEach(a => dispatch({ type: `${entityName}/Set_${a.ActionName}`, payload: undefined })) },
         Dispatch(type, payload) { dispatch({ type: type, payload: payload }) },
-        ToPage(url) { url = Common.AddUrlRandom(url); dispatch(routerRedux.push(url)) }
+        ToPage(url) { url = Common.AddUrlRandom(url); dispatch(routerRedux.replace(url)) }
     }
 }
 
