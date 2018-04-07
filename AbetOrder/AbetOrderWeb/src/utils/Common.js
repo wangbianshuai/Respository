@@ -99,13 +99,13 @@ export function ToModels(obj) {
     }
 }
 
-export const DataApiUrl = "http://localhost/aow/api/"
-export const ConfigApiUrl = "http://localhost/aowc/api/"
-export const IsDist = false;
+//export const DataApiUrl = "http://localhost/aow/api/"
+//export const ConfigApiUrl = "http://localhost/aowc/api/"
+//export const IsDist = false;
 
-//export const DataApiUrl = GetRootPath() + "/api/";
-//export const ConfigApiUrl = GetRootPath() + "/configs/";
-//export const IsDist = true;
+export const DataApiUrl = GetRootPath() + "/api/";
+export const ConfigApiUrl = GetRootPath() + "/configs/";
+export const IsDist = true;
 
 export function GetRootPath() {
     let names = window.location.pathname.substr(1).split("/");
