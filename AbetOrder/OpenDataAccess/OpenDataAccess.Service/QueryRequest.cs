@@ -99,10 +99,12 @@ namespace OpenDataAccess.Service
             string data = GetParameterValue("$data");
             string page = GetParameterValue("$page");
             string width = GetParameterValue("$width");
+            string groupbyinfo = GetParameterValue("$groupbyinfo");
             this.IsWidth = string.IsNullOrEmpty(width) ? false : bool.Parse(width);
             IsQuery = string.IsNullOrEmpty(query) ? false : bool.Parse(query);
             IsPage = string.IsNullOrEmpty(page) ? false : bool.Parse(page);
             IsData = string.IsNullOrEmpty(data) ? false : bool.Parse(data);
+            IsGroupByInfo = string.IsNullOrEmpty(groupbyinfo) ? false : bool.Parse(groupbyinfo);
             if (!string.IsNullOrEmpty(this.Filter))
             {
                 List<string> conditionList = new List<string>();
@@ -312,6 +314,9 @@ namespace OpenDataAccess.Service
         public bool IsPage { get; private set; }
         public bool IsData { get; private set; }
         public bool IsWidth { get; private set; }
+        public bool IsGroupByInfo { get; private set; }
+        public string GroupByInfoWhereSql { get; private set; }
+        public List<IDbDataParameter> GroupByInfoParameterList { get; private set; }
         public Property PrimaryKeyProperty { get; private set; }
         public string Select { get; private set; }
         public string OrderBy { get; private set; }
@@ -443,6 +448,17 @@ namespace OpenDataAccess.Service
             if (!string.IsNullOrEmpty(this.QueryInfo.WhereSql.Trim()))
             {
                 this.QueryInfo.WhereSql = " where " + this.QueryInfo.WhereSql.TrimStart().TrimStart(new char[] { 'a', 'n', 'd' }) + " ";
+
+                if (this.IsGroupByInfo)
+                {
+                    this.GroupByInfoWhereSql = this.QueryInfo.WhereSql;
+                    this.GroupByInfoParameterList = new List<IDbDataParameter>();
+
+                    this.QueryInfo.ParameterList.ForEach(p =>
+                    {
+                        this.GroupByInfoParameterList.Add(this._EntityAccess.CurrentDataBase.InParameter(p.ParameterName, p.Value));
+                    });
+                }
             }
         }
 

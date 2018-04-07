@@ -74,9 +74,10 @@ function InitConfig(a, b) {
     a.IsNewAdd = true
     a.IsDelete = true
     a.IsUpdate = true
-    a.IsPaging = true
+    a.IsPaging = true;
     a.PageSize = 20
     a.PageIndex = 1
+    a.IsGroupByInfo = false;
     a.InitEventActionList = []
     a.ActionList = [];
     a.DataView = { Properties: [], StateName: "DataList", Name: "DataView" };
@@ -84,7 +85,7 @@ function InitConfig(a, b) {
 
     const copyNames = ["Title", "EntityName", "PrimaryKey", "SearchNames", "SelectNames", "DataUrl", "EditPageUrl",
         "IsNewAdd", "IsUpdate", "IsDelete", "IsPaging", "PageSize", "EditNames", "OrderByList", "Name", "ActionList",
-        "InsertUrl", "UpdateUrl", "GetEntityDataUrl",
+        "InsertUrl", "UpdateUrl", "GetEntityDataUrl", "GroupByInfoHtml", "IsGroupByInfo", "QueryUrl",
         "InitEventActionList", "Properties", "DataColumnNames", "DataView"];
 
     Common.Copy(a, b, copyNames)

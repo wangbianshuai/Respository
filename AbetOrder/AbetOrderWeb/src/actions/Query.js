@@ -117,6 +117,8 @@ export default class Query extends Index {
         const { IsPaging, PageSize, PageIndex } = PageConfig
 
         let url = "View" + PageConfig.EntityName;
+        if (PageConfig.QueryUrl) url = PageConfig.QueryUrl;
+
         if (!Common.IsNullOrEmpty(url)) {
             url += url.indexOf("?") > 0 ? "&$query=true" : "?$query=true";
             if (IsPaging) {
@@ -125,6 +127,8 @@ export default class Query extends Index {
                 else url += "&$data=true";
             }
         }
+
+        if (!isPageQuery && PageConfig.IsGroupByInfo) url = Common.AddUrlParams(url, "$groupbyinfo", "true");
 
         this.Page.SetActionState(action);
         this.Page.Dispatch(action, { Url: url, QueryInfo: this.QueryInfo })

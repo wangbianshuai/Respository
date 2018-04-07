@@ -14,8 +14,21 @@
         OrderByList: [{ Name: "BillDate", IsDesc: true }],
         ActionList: GetActionList(),
         Properties: GetProperties(),
+        GroupByInfoHtml: GetGroupByInfoHtml(),
+        QueryUrl: "ViewBill/Select2",
+        IsGroupByInfo: true,
         EditViewWidth: 700
     };
+
+    function GetGroupByInfoHtml() {
+        var html = [];
+
+        html.push("收入：<span style=\"color:#1890ff;\">{TotalIncome}</span>，");
+        html.push("支出：<span style=\"color:#1890ff;\">{TotalPayment}</span>，");
+        html.push("结余：<span style=\"color:{TotalBalanceColor};\">{TotalBalance}</span>");
+
+        return html.join("");
+    }
 
     function GetActionList() {
         return [{

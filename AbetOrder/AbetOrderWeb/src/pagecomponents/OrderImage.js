@@ -20,9 +20,13 @@ export default class OrderImage extends Index {
 
     SetValue(value) {
         this.EntityData = value;
+        let images = value.Images;
 
-        if (Common.IsArray(value.Images)) value.Images.forEach(d => d.ImageId = Common.CreateGuid());
-        this.setState({ Images: value.Images });
+        if (Common.IsArray(images)) {
+            images.forEach(d => d.ImageId = Common.CreateGuid());
+            images = images.sort((a, b) => a.DisplayIndex > b.DisplayIndex ? 1 : -1);
+        }
+        this.setState({ Images: images });
     }
 
     GetValue() {

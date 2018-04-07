@@ -75,6 +75,11 @@ export default class EntityListPage extends Index {
         if (dataList === undefined) return;
 
         if (Common.IsArray(dataList)) this.DataList = dataList;
+        else if (Common.IsArray(dataList.DataList)) {
+            this.DataList = dataList.DataList;
+            this.GroupByInfo = dataList.GroupByInfo;
+        }
+        else this.GroupByInfo = null;
 
         this.DataList.forEach((d, i) => d.key = d[this.props.Property.PrimaryKey]);
     }
@@ -97,8 +102,9 @@ export default class EntityListPage extends Index {
     RenderDataView() {
         this.SetDataList();
         this.SetPageInfo();
+
         return (<DataGridView Page={this.props.Page} DataList={this.DataList} PageInfo={this.PageInfo}
-            PageIndexChange={this.PageIndexChange.bind(this)}
+            PageIndexChange={this.PageIndexChange.bind(this)} GroupByInfo={this.GroupByInfo} GroupByInfoHtml={this.props.Property.GroupByInfoHtml}
             IsLoading={this.state.IsDataLoading} DataProperties={this.DataProperties} />)
     }
 

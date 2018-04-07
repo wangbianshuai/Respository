@@ -8,7 +8,7 @@ export default class OrderDetailItem extends Index {
     constructor(props) {
         super(props)
 
-        this.state = Object.assign({}, props.Data);
+        this.state = Object.assign({}, props.Data, { ProcessItems: this.GetCheckBoxItems(props.ProcessItems) });
     }
 
     GetCheckBoxItems(list) {
@@ -55,9 +55,13 @@ export default class OrderDetailItem extends Index {
         const number = this.GetNumberValue2(data, "Number");
         const amount = this.GetNumberValue2(data, "Amount");
 
-        let area2 = width * height * number / 1000000;
-        area2 = this.GetNumberValue("Area", area2);
-        if (area !== area2) { this.props.Data.Area = area2; data.Area = area2; }
+        let area2 = area;
+        if (name !== "Area") {
+            area2 = width * height / 1000000;
+            area2 = this.GetNumberValue("Area", area2);
+            area2 = Common.GetNumber(area2 * number, 4);
+            if (area !== area2) { this.props.Data.Area = area2; data.Area = area2; }
+        }
 
         let amount2 = area2 * price;
         amount2 = this.GetNumberValue("Amount", amount2);
@@ -76,9 +80,9 @@ export default class OrderDetailItem extends Index {
     GetNumberValue(name, value) {
         if (Common.IsNullOrEmpty(value)) return "";
 
-        if (name === "Width" || name === "Thickness" || name === "Height" || name === "Number") return parseInt(value, 10);
-        else if (name === "Price") return Common.GetNumber(value, 2);
-        else if (name === "Amount") {
+        if (name === "Width" || name === "Thickness" || name === "Height" || name === "Number" || name === "Price") return Common.GetIntValue(value);
+
+        if (name === "Amount") {
             value = Math.round(Common.GetFloatValue(value));
         }
         else if (name === "Area") {
@@ -118,7 +122,7 @@ export default class OrderDetailItem extends Index {
 
                 </Col>
                 <Col span={3}>
-                    {this.RenderInputNumber("Amount", "金额", 1000000000, 1, 1, 10)}
+                    {this.RenderInputNumber("Amount", "金额", 1000000000, 0, 1, 10)}
                 </Col>
                 <Col span={1}>
                     <a style={{ lineHeight: "32px" }} onClick={this.props.Delete}>删除</a>
@@ -170,25 +174,25 @@ export default class OrderDetailItem extends Index {
                     {this.RenderInputNumber("DisplayIndex", "", 99, 1, 1, 2)}
                 </Col>
                 <Col span={3}>
-                    {this.RenderInputNumber("Width", "宽度(mm)", 99999, 1, 1, 5)}
+                    {this.RenderInputNumber("Height", "宽度(mm)", 9999, 1, 0, 4)}
                 </Col>
                 <Col span={3}>
-                    {this.RenderInputNumber("Height", "高度(mm)", 99999, 1, 1, 5)}
+                    {this.RenderInputNumber("Width", "高度(mm)", 9999, 1, 0, 4)}
                 </Col>
                 <Col span={3}>
-                    {this.RenderInputNumber("Thickness", "厚度(mm)", 99999, 1, 1, 5)}
+                    {this.RenderInputNumber("Thickness", "厚度(mm)", 9999, 0, 1, 4)}
                 </Col>
                 <Col span={3}>
-                    {this.RenderInputNumber("Number", "数量", 99999, 1, 1, 5)}
+                    {this.RenderInputNumber("Number", "数量(件)", 9999, 1, 0, 4)}
                 </Col>
                 <Col span={3}>
-                    {this.RenderInputNumber("Area", "只读，面积(m)", 10000, 0.1000, 0.0001, 10, true)}
+                    {this.RenderInputNumber("Area", "面积(㎡)", 10000, 0.1000, 0.0001, 10)}
                 </Col>
                 <Col span={3}>
-                    {this.RenderInputNumber("Price", "单价(元/m)", 1000000000, 0.01, 0.01, 10)}
+                    {this.RenderInputNumber("Price", "单价(元/㎡)", 1000000000, 0, 1, 6)}
                 </Col>
                 <Col span={3}>
-                    {this.RenderInputNumber("Amount", "金额", 1000000000, 1, 1, 10)}
+                    {this.RenderInputNumber("Amount", "金额", 1000000000, 0, 1, 10)}
                 </Col>
                 <Col span={1}>
                     <a style={{ lineHeight: "32px" }} onClick={this.props.Delete}>删除</a>

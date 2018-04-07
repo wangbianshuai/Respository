@@ -249,6 +249,7 @@ export function GetStorage(key) {
 export function GetNumber(value, scale) {
     let f = parseFloat(value)
     if (isNaN(f)) return value
+    if (f === 0) return f;
 
     scale = (scale || 2);
     scale = Math.pow(10, scale);
@@ -312,4 +313,9 @@ export function GetFloatValue(value) {
     if (!isNaN(value)) return value;
     const f = parseFloat(value)
     return isNaN(f) ? 0 : f;
+}
+
+export function GetIntValue(value) {
+    const i = parseInt(value, 10)
+    return isNaN(i) ? 0 : i;
 }

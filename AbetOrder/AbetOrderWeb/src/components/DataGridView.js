@@ -1,6 +1,6 @@
 import React from "react"
 import Index from "./Index"
-import { Table } from "antd"
+import { Table, Alert } from "antd"
 const { Column } = Table;
 
 export default class DataGridView extends Index {
@@ -33,9 +33,25 @@ export default class DataGridView extends Index {
         }
     }
 
+    RenderGroupByInfoAlert() {
+        if (!this.props.GroupByInfo || !this.props.GroupByInfoHtml) return null;
+
+        return <Alert message={this.RenderGroupByInfo()} type="info" showIcon={true} style={{ marginBottom: "8px" }} />
+    }
+
+    RenderGroupByInfo() {
+        let html = this.props.GroupByInfoHtml;
+        for (let key in this.props.GroupByInfo) {
+            html = html.replace(new RegExp("{" + key + "}", "g"), this.props.GroupByInfo[key]);
+        }
+
+        return <div dangerouslySetInnerHTML={{ __html: html }}></div>
+    }
+
     render() {
         return (
             <div>
+                {this.RenderGroupByInfoAlert()}
                 <Table dataSource={this.props.DataList} loading={this.props.IsLoading}
                     pagination={this.GetPagination()} >
                     {this.props.DataProperties.map(p => this.GetColumn(p))}

@@ -26,8 +26,12 @@ export default class OrderDetail extends Index {
     SetValue(value) {
         this.EntityData = value;
 
-        if (Common.IsArray(value.Details)) value.Details.forEach(d => d.Id = Common.CreateGuid());
-        this.setState({ Details: value.Details, RemarkItemIds: value.RemarkItemIds });
+        let details = value.Details;
+        if (Common.IsArray(details)) {
+            details.forEach(d => d.Id = Common.CreateGuid());
+            details = details.sort((a, b) => a.DisplayIndex > b.DisplayIndex ? 1 : -1);
+        }
+        this.setState({ Details: details, RemarkItemIds: value.RemarkItemIds });
     }
 
     GetValue() {
@@ -168,22 +172,22 @@ export default class OrderDetail extends Index {
                         序号
                     </Col>
                     <Col span={3}>
-                        宽度
+                        高度(mm)
                     </Col>
                     <Col span={3}>
-                        高度
+                        宽度(mm)
                     </Col>
                     <Col span={3}>
-                        厚度
+                        厚度(mm)
                     </Col>
                     <Col span={3}>
-                        数量
+                        数量(件)
                     </Col>
                     <Col span={3}>
-                        面积
+                        面积(㎡)
                     </Col>
                     <Col span={3}>
-                        单价
+                        单价(元/㎡)
                     </Col>
                     <Col span={3}>
                         金额

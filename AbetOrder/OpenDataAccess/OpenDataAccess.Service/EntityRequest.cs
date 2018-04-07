@@ -7,6 +7,7 @@ using OpenDataAccess.Data;
 using OpenDataAccess.Entity;
 using System.Data;
 using System.IO;
+using System.Threading.Tasks;
 
 namespace OpenDataAccess.Service
 {
@@ -101,6 +102,8 @@ namespace OpenDataAccess.Service
             return blEdit;
         }
 
+        public Action<IEntityData, string, List<IDbDataParameter>> QueryGroupByInfo { get; set; }
+
         public object Select()
         {
             IQuery query = null;
@@ -129,60 +132,11 @@ namespace OpenDataAccess.Service
             string entityName = this._QueryRequest.GetParameterValue("EntityName");
             if (_QueryRequest.IsPage)
             {
-                IEntityData pageInfo = null;
+                IEntityData pageInfo = new EntityData("PageInfo");
 
-                if (string.IsNullOrEmpty(this._QueryRequest.QueryInfo.ProcName))
-                {
-                    if (string.IsNullOrEmpty(query.ToGroupSql().Trim()))
-                    {
-                        query.Select("count(*) PageRecord");
-                        query.GroupBy(string.Empty).Join(string.Empty).OrderBy(string.Empty);
-                    }
-                    else
-                    {
-                        query.Select("count(*) PageRecord");
-                        query.TableName = string.Format("(select {0} from {1} {2} {3}) a", query.ToSelectSql(), _Request.Entity.TableName + " t", query.ToWhereSql(), query.ToGroupSql());
-                        query.GroupBy(string.Empty).Join(string.Empty).OrderBy(string.Empty).Where(string.Empty, query.ParameterList);
-                    }
+                QueryPage(query, pageInfo);
 
-                    pageInfo = this.SelectEntity(query);
-                }
-                else
-                {
-                    pageInfo = this.SelectEntity(this._QueryRequest.QueryInfo.ProcName, this._QueryRequest.QueryInfo.ParameterList);
-                }
-
-                if (pageInfo != null)
-                {
-                    int pageRecord = pageInfo.GetValue<int>("PageRecord");
-                    int pageCount = 0;
-                    string pageSizeString = _QueryRequest.GetParameterValue("PageSize");
-                    string pageIndexString = _QueryRequest.GetParameterValue("PageIndex");
-                    int pageSize = string.IsNullOrEmpty(pageSizeString) ? 20 : int.Parse(pageSizeString);
-                    int pageIndex = string.IsNullOrEmpty(pageIndexString) ? 1 : int.Parse(pageIndexString);
-                    if (pageRecord % pageSize == 0)
-                    {
-                        pageCount = pageRecord / pageSize;
-                    }
-                    else
-                    {
-                        pageCount = pageRecord / pageSize + 1;
-                    }
-                    pageIndex = pageIndex > pageCount ? pageCount : pageIndex;
-
-                    pageInfo = new EntityData("PageInfo");
-
-                    pageInfo.SetValue("PageRecord", pageRecord);
-                    pageInfo.SetValue("PageIndex", pageIndex);
-                    pageInfo.SetValue("PageSize", pageSize);
-                    pageInfo.SetValue("PageCount", pageCount);
-          
-                    return pageInfo;
-                }
-                else
-                {
-                    return null;
-                }
+                return pageInfo;
             }
             else if (_QueryRequest.IsData && action != "Excel")
             {
@@ -214,7 +168,7 @@ namespace OpenDataAccess.Service
                     }
 
                     query.SetSql(sb.ToString());
-                
+
                     if (_QueryRequest.IsWidth)
                     {
                         Dictionary<string, object> dict = new Dictionary<string, object>();
@@ -230,7 +184,27 @@ namespace OpenDataAccess.Service
                     }
                     else
                     {
-                        return this.SelectEntities(query);
+                        if (_QueryRequest.IsGroupByInfo && QueryGroupByInfo != null)
+                        {
+                            IEntityData data = new EntityData(this.EntityType);
+                            data.SetValue("DataList", new List<IEntityData>());
+                            data.SetValue("GroupByInfo", null);
+
+                            Parallel.Invoke(() =>
+                            {
+                                QueryGroupByInfo(data, this._QueryRequest.GroupByInfoWhereSql, this._QueryRequest.GroupByInfoParameterList);
+                            },
+                           () =>
+                           {
+                               data.SetValue("DataList", this.SelectEntities(query));
+                           });
+
+                            return data;
+                        }
+                        else
+                        {
+                            return this.SelectEntities(query);
+                        }
                     }
                 }
                 else
@@ -315,6 +289,55 @@ namespace OpenDataAccess.Service
                 {
                     return this.SelectEntities(query);
                 }
+            }
+        }
+
+        void QueryPage(IQuery query, IEntityData pageInfo)
+        {
+            IEntityData selectData = null;
+            if (string.IsNullOrEmpty(this._QueryRequest.QueryInfo.ProcName))
+            {
+                if (string.IsNullOrEmpty(query.ToGroupSql().Trim()))
+                {
+                    query.Select("count(*) PageRecord");
+                    query.GroupBy(string.Empty).Join(string.Empty).OrderBy(string.Empty);
+                }
+                else
+                {
+                    query.Select("count(*) PageRecord");
+                    query.TableName = string.Format("(select {0} from {1} {2} {3}) a", query.ToSelectSql(), _Request.Entity.TableName + " t", query.ToWhereSql(), query.ToGroupSql());
+                    query.GroupBy(string.Empty).Join(string.Empty).OrderBy(string.Empty).Where(string.Empty, query.ParameterList);
+                }
+
+                selectData = this.SelectEntity(query);
+            }
+            else
+            {
+                selectData = this.SelectEntity(this._QueryRequest.QueryInfo.ProcName, this._QueryRequest.QueryInfo.ParameterList);
+            }
+
+            if (selectData != null)
+            {
+                int pageRecord = selectData.GetValue<int>("PageRecord");
+                int pageCount = 0;
+                string pageSizeString = _QueryRequest.GetParameterValue("PageSize");
+                string pageIndexString = _QueryRequest.GetParameterValue("PageIndex");
+                int pageSize = string.IsNullOrEmpty(pageSizeString) ? 20 : int.Parse(pageSizeString);
+                int pageIndex = string.IsNullOrEmpty(pageIndexString) ? 1 : int.Parse(pageIndexString);
+                if (pageRecord % pageSize == 0)
+                {
+                    pageCount = pageRecord / pageSize;
+                }
+                else
+                {
+                    pageCount = pageRecord / pageSize + 1;
+                }
+                pageIndex = pageIndex > pageCount ? pageCount : pageIndex;
+
+                pageInfo.SetValue("PageRecord", pageRecord);
+                pageInfo.SetValue("PageIndex", pageIndex);
+                pageInfo.SetValue("PageSize", pageSize);
+                pageInfo.SetValue("PageCount", pageCount);
             }
         }
 
