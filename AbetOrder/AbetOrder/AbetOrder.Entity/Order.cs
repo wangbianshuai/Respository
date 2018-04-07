@@ -15,6 +15,7 @@ namespace AbetOrder.Entity
         public DateTime OrderDate { get; set; }
         public DateTime DeliveryDate { get; set; }
         public string OrderName { get; set; }
+        public string OrderName2 { get; set; }
         public decimal Amount { get; set; }
         public decimal ActualAmount { get; set; }
         public decimal PaidDeposit { get; set; }

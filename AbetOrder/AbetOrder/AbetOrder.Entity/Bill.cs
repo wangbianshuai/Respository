@@ -79,6 +79,7 @@ namespace AbetOrder.Entity
         public int BillYear { get; set; }
         public int BillMonth { get; set; }
         public int BillDay { get; set; }
+        public string OrderName2 { get; set; }
     }
 
     [TableProperty(Name = "v_BillYear", PrimaryKey = "BillYear")]

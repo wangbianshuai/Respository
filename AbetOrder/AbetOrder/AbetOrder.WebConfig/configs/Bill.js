@@ -7,10 +7,10 @@
         TemplateName: "EntityListPage",
         InsertUrl: "Bill/Insert2",
         UpdateUrl: "Bill/Update2",
-        SelectNames: ["Id", "RowVersion", "Amount2", "BillTypeName", "IncomePaymentName", "BillUserName", "CreateUserName", "UpdateUserName", "BillType", "BillDate", "UpdateDate", "Remark", "CreateDate"],
+        SelectNames: ["Id", "RowVersion", "Amount2", "BillTypeName", "OrderName2", "IncomePaymentName", "BillUserName", "CreateUserName", "UpdateUserName", "BillType", "BillDate", "UpdateDate", "Remark", "CreateDate"],
         SearchNames: ["IncomePayment", "BillTypeId", "BillUser", "Remark", "StartDate", "EndDate", "BillYear", "BillMonth", "BillDay"],
-        DataColumnNames: ["BillDate", "BillTypeName", "IncomePaymentName", "Amount2", "BillUserName", "Remark", "CreateUserName", "UpdateUserName", "CreateDate", "UpdateDate"],
-        EditNames: ["IncomePayment", "BillTypeId", , "Amount", "BillUser", "BillDate", "Remark"],
+        DataColumnNames: ["BillDate", "BillTypeName", "OrderName2", "IncomePaymentName", "Amount2", "BillUserName", "Remark", "CreateUserName", "UpdateUserName", "CreateDate", "UpdateDate"],
+        EditNames: ["IncomePayment", "BillTypeId", "DataId", "Amount", "BillUser", "BillDate", "Remark"],
         OrderByList: [{ Name: "BillDate", IsDesc: true }],
         ActionList: GetActionList(),
         Properties: GetProperties(),
@@ -27,6 +27,10 @@
             Url: "ViewBillYear?$select=BillYear&$orderby=BillYear", DataKey: "ViewBillYear", Method: "GET"
         },
         {
+            ActionName: "GetOrderList", StateName: "OrderList",
+            Url: "ViewOrder?$select=Top 100 OrderId,OrderName2&$orderby=OrderDate desc", DataKey: "ViewOrder", Method: "GET"
+        },
+        {
             ActionName: "GetUserList", StateName: "UserList",
             Url: "ViewUser?$select=UserId,UserName&$orderby=CreateDate", DataKey: "ViewUser", Method: "GET"
         }]
@@ -41,6 +45,10 @@
             Label: "类型", Name: "BillTypeId", AllowClear: true, EditProperty: { AllowClear: false, ParentName: "IncomePayment", ParentPropertyName: "IncomePayment" }, OperateLogic: "=",
             DataType: "Guid", Type: "Select", ServiceDataSource: GetBillTypeDataSource(), IsNullable: false, SearchProperty: { ColSpan: 5 }
         },
+        {
+            Label: "订单", Name: "DataId", AllowClear: true,
+            DataType: "Guid", Type: "Select", ServiceDataSource: GetOrderDataSource(), IsNullable: true
+        },
         { Label: "金额", Max: 100000000, Min: 0.01, Step: 0.01, Scale: 2, IsCurrency: true, Type: "TextBox", ControlType: "InputNumber", Name: "Amount", DataType: "decimal", MaxLength: 10, IsNullable: false },
         {
             Label: "经手人", Name: "BillUser", EditProperty: { PlaceHolder: "默认当前用户" },
@@ -53,6 +61,7 @@
         { Label: "类型", Name: "BillTypeName" },
         { Label: "收支", Name: "IncomePaymentName" },
         { Label: "创建人", Name: "CreateUserName" },
+        { Label: "订单", Name: "OrderName2" },
         { Label: "修改人", Name: "UpdateUserName" },
         { Label: "经手人", Name: "BillUserName" },
         {
@@ -109,6 +118,14 @@
             ActionName: "GetUserList",
             ValueName: "UserId",
             TextName: "UserName"
+        }
+    }
+
+    function GetOrderDataSource() {
+        return {
+            ActionName: "GetOrderList",
+            ValueName: "OrderId",
+            TextName: "OrderName2"
         }
     }
 
