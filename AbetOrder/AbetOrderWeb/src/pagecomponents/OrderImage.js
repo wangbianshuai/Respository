@@ -13,6 +13,33 @@ export default class OrderImage extends Index {
         this.state = { Images: [] }
     }
 
+    SetValue(value) {
+        this.EntityData = value;
+
+        this.setState({ Images: value.Images });
+    }
+
+    GetValue() {
+
+        let msg = "", d = null;
+        for (let i = 0; i < this.state.Images.length; i++) {
+            d = this.state.Images[i];
+            if (Common.IsNullOrEmpty(d.ImageUrl)) msg = "订单设计图新增设计图，请先上传图片！";
+            if (!Common.IsNullOrEmpty(msg)) break;
+        }
+
+        if (!Common.IsNullOrEmpty(msg)) { this.Page.ShowMessage(msg); return false; }
+
+        const images = this.state.Images.map((m, i) => {
+            m.DisplayIndex = i + 1;
+            if (Common.IsNullOrEmpty(m.Name)) m.Name = "图" + m.DisplayIndex;
+            if (m.ImageId) delete m.ImageId
+            return m
+        });
+
+        return { Images: images };
+    }
+
     GetAddButton(text) {
         const p = {
             Name: "AddDetailImage", Text: text, Icon: "plus",
@@ -67,11 +94,11 @@ export default class OrderImage extends Index {
                     <Col span={2}>
                         序号
                     </Col>
-                    <Col span={4}>
+                    <Col span={6}>
                         名称
                     </Col>
-                    <Col span={6}>
-                        路径
+                    <Col span={4}>
+                        缩略图
                     </Col>
                     <Col span={10}>
                         上传图片

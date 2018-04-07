@@ -26,7 +26,6 @@ export default class EntityEdit extends Index {
         if (this.Page.JudgeChanged(nextProps, "InsertInfo")) {
             if (nextProps.InsertInfo && nextProps.InsertInfo.Succeed) {
                 const { PageConfig } = props;
-                const { EditView } = PageConfig;
 
                 if (PageConfig.IsEditPage) {
                     const id = nextProps.InsertInfo.PrimaryKey;
@@ -34,6 +33,8 @@ export default class EntityEdit extends Index {
                     props.ToPage(url);
                 }
                 else {
+                    const { EditView } = PageConfig;
+
                     EditView.SetEdit && EditView.SetEdit({ IsVisible: false });
 
                     //刷新查询
@@ -48,13 +49,14 @@ export default class EntityEdit extends Index {
         if (this.Page.JudgeChanged(nextProps, "UpdateInfo")) {
             if (nextProps.UpdateInfo && nextProps.UpdateInfo.Succeed) {
                 const { PageConfig } = props;
-                const { EditView } = PageConfig;
 
                 if (PageConfig.IsEditPage) {
                     this.Page.ShowMessage("保存成功！")
                     this.SetOkDisabled(false);
                 }
                 else {
+                    const { EditView } = PageConfig;
+
                     EditView.SetEdit && EditView.SetEdit({ IsVisible: false });
 
                     //刷新查询
@@ -122,7 +124,25 @@ export default class EntityEdit extends Index {
 
     SetEntityData(entityData) {
         const { PageConfig } = this.Page.props;
-        const { EditView } = PageConfig;
+
+        if (PageConfig.TabViews) return this.SetTabViewsEntityData(entityData);
+
+        this.SetViewEntityData(PageConfig, entityData);
+    }
+
+    SetTabViewsEntityData(entityData) {
+        const { PageConfig } = this.Page.props;
+
+        PageConfig.TabViews.forEach(v => {
+            if (v.EditView) this.SetViewEntityData(v, entityData);
+            else if (v.SetValue) v.SetValue(entityData);
+        })
+
+        PageConfig.EntityData = entityData;
+    }
+
+    SetViewEntityData(view, entityData) {
+        const { EditView } = view;
 
         let value = null;
         if (entityData != null) {
@@ -134,11 +154,11 @@ export default class EntityEdit extends Index {
                 if (p.IsUpdate === false && p.SetDisabled) p.SetDisabled(true);
             });
 
-            if (PageConfig.ComplexView && PageConfig.ComplexView.SetDataList) {
-                let dataList = entityData[PageConfig.ComplexView.PropertyName];
+            if (view.ComplexView && view.ComplexView.SetDataList) {
+                let dataList = entityData[view.ComplexView.PropertyName];
                 if (Common.IsArray(dataList)) {
                     dataList = dataList.map(m => { return { ...m, IsEdit: true, IsDelete: true } })
-                    PageConfig.ComplexView.SetDataList(dataList);
+                    view.ComplexView.SetDataList(dataList);
                 }
             }
         }
@@ -205,11 +225,22 @@ export default class EntityEdit extends Index {
     }
 
     EditOk(property, params) {
+        this.OkProperty = property;
         const { PageConfig } = this.Page.props;
-        const { EditView } = PageConfig
+
+        if (PageConfig.TabViews) return this.EditTabViewsOk(property, params);
+
+        const data = this.GetViewData(PageConfig);
+        if (data === false) return;
+
+        const { EditView } = PageConfig;
         const { EntityData } = EditView;
 
-        this.OkProperty = property;
+        this.SaveEntityData(EntityData, data)
+    }
+
+    GetViewData(view) {
+        const { EditView } = view;
 
         let data = {};
 
@@ -228,33 +259,52 @@ export default class EntityEdit extends Index {
 
         if (Common.IsNullOrEmpty(msg)) msg = this.JudgeNoNullableGroupNames(EditView, data);
 
-        if (!Common.IsNullOrEmpty(msg)) {
-            this.Page.ShowMessage(msg);
-            return;
-        }
+        if (!Common.IsNullOrEmpty(msg)) { this.Page.ShowMessage(msg); return false; }
 
-        if (PageConfig.ComplexView && PageConfig.ComplexView.GetValue) {
-            data[PageConfig.ComplexView.PropertyName] = PageConfig.ComplexView.GetValue();
-        }
+        if (view.ComplexView && view.ComplexView.GetValue) data[view.ComplexView.PropertyName] = view.ComplexView.GetValue();
 
-        if (EditView.ExpandSetEditData) {
-            data = EditView.ExpandSetEditData(data);
-            if (data === false) return;
-        }
+        if (EditView.ExpandSetEditData) data = EditView.ExpandSetEditData(data);
+
+        return data;
+    }
+
+    SaveEntityData(entityData, data) {
+        const { PageConfig } = this.Page.props;
 
         let url = PageConfig.InsertUrl ? PageConfig.InsertUrl : PageConfig.EntityName;
 
-        if (!Common.IsEmptyObject(EntityData)) {
+        if (!Common.IsEmptyObject(entityData)) {
             url = PageConfig.UpdateUrl ? PageConfig.UpdateUrl : PageConfig.EntityName;
-            const id = EntityData[PageConfig.PrimaryKey];
+            const id = entityData[PageConfig.PrimaryKey];
             url += "(" + id + ")";
 
             data[PageConfig.PrimaryKey] = id;
-            if (EntityData.RowVersion) data.RowVersion = EntityData.RowVersion;
+            if (entityData.RowVersion) data.RowVersion = entityData.RowVersion;
 
             this.SaveData("Update", url, data)
         }
         else this.SaveData("Insert", url, data)
+    }
+
+    EditTabViewsOk(property, params) {
+        const { PageConfig } = this.Page.props;
+        const { EntityData } = PageConfig;
+
+        let data = {}, v = null, viewData = null;
+
+        for (let i = 0; i < PageConfig.TabViews.length; i++) {
+            v = PageConfig.TabViews[i];
+            if (v.EditView) viewData = this.GetViewData(v);
+            else if (v.GetValue) viewData = v.GetValue();
+
+            if (viewData === false) { data = false; break; }
+            else if (Common.IsObject(viewData)) for (var key in viewData) data[key] = viewData[key];
+        }
+
+        if (data === false) return;
+
+
+        this.SaveEntityData(EntityData, data)
     }
 
     SaveData(actionName, url, entityData) {
@@ -270,7 +320,7 @@ export default class EntityEdit extends Index {
         this.SetOkDisabled(true);
 
         this.Page.SetActionState(action);
-        this.Page.Dispatch(action, data)
+        this.Page.Dispatch(action, data);
     }
 
     //判断组合不能为空属性值

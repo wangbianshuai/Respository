@@ -92,6 +92,12 @@ export default class Index extends Component {
                 return Common.ToCurrency(text)
             };
         }
+        else if (p.IsDate && p.Render === undefined) {
+            p.Render = (text, record) => {
+                if (!Common.IsNullOrEmpty(text)) text = text.substr(0, 10);
+                return text;
+            };
+        }
         return p;
     }
 }

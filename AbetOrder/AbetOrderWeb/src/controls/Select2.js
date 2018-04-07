@@ -55,7 +55,6 @@ export default class Select2 extends Index {
     render() {
         const { Property } = this.props
 
-
         const width = Property.Width || "100%"
 
         const value = this.GetSelectValue()

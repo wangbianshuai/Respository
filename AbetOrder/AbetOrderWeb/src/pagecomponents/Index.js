@@ -5,7 +5,21 @@ export default class Index extends Component {
     constructor(props) {
         super(props)
 
-        this.Id = props.Id || Common.CreateGuid()
+        this.Id = props.Id || Common.CreateGuid();
+
+        this.Property = props.Property;
+        this.Page = props.Page;
+
+        this.Property.SetValue = (value) => this.SetValue(value);
+        this.Property.GetValue = () => this.GetValue();
+    }
+
+    SetValue(value) { }
+
+    GetValue() { }
+
+    componentWillUnmount() {
+        this.IsDestory = true;
     }
 
     shouldComponentUpdate(nextProps, nextState) {
@@ -36,6 +50,7 @@ export default class Index extends Component {
         property.ActionName = "GetServiceDataSource"
 
         property.SetDataSource = (dataList) => {
+            if (this.IsDestory) return;
             if (fn) fn(dataList);
             else {
                 const data = {}; data[stateName] = dataList;

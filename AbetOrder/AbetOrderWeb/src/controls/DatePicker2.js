@@ -31,7 +31,8 @@ export default class DatePicker2 extends Index {
             if (this.Property.IsShowTime) value = moment(value, "YYYY-MM-DD HH:mm:ss")
             else value = moment(value, "YYYY-MM-DD")
         }
-        return value;
+
+        return Common.IsNullOrEmpty(value) ? null : value;
     }
 
     render() {

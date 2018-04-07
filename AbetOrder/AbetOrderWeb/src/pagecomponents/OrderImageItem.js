@@ -73,17 +73,20 @@ export default class OrderImageItem extends Index {
     }
 
     render() {
-        const url = Common.GetRootPath() + "/" + this.state.ImageUrl
+        let url = "";
+        if (!Common.IsNullOrEmpty(this.state.ImageUrl)) url = Common.DataApiUrl.replace("api/", "") + this.state.ImageUrl;
         return (<div>
             <Row gutter={6} style={{ padding: "8px 8px", borderBottom: "1px solid #e8e8e8" }}>
                 <Col span={2}>
                     {this.RenderInputNumber("DisplayIndex", "", 99, 1, 1, 2)}
                 </Col>
-                <Col span={4}>
+                <Col span={6}>
                     {this.RenderInput("Name", "图片名称，为空，则保存为\"图+序号\"")}
                 </Col>
-                <Col span={6}>
-                    <a href={url} style={{ lineHeight: "32px" }} target="_blank" >{this.state.ImageUrl}</a>
+                <Col span={4}>{!Common.IsNullOrEmpty(url) ?
+                    <a href={url} target="_blank" >
+                        <img src={url} alt="" border="0" width="120" height="90" />
+                    </a> : null}
                 </Col>
                 <Col span={10}>
                     {this.RenderUpload()}

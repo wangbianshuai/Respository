@@ -72,6 +72,47 @@ namespace OpenDataAccess.Service
             }
         }
 
+
+        public static object Insert<T>(T entityRequest, Dictionary<string, EntityType> complexDictionary) where T : IEntityRequest
+        {
+            try
+            {
+                IDbTransaction trans = entityRequest.CurrentDataBase.BeginTransaction(entityRequest.CurrentDataBase.ConnectionString);
+                bool blSucceed = true;
+                object primaryKey = null;
+                if (entityRequest._Request.Entities.ContainsKey(entityRequest.EntityType.Name))
+                {
+                    IEntityData entityData = entityRequest._Request.Entities[entityRequest.EntityType.Name].FirstOrDefault();
+                    string message = entityRequest.Validate(entityData, entityRequest.EntityType.InsertValidateList);
+                    if (!string.IsNullOrEmpty(message))
+                    {
+                        return entityRequest.GetMessageDict(message);
+                    }
+                    blSucceed = entityRequest.InsertEntity(entityData, out primaryKey, trans);
+                    Property primaryKeyProperty = entityRequest.EntityType.GetProperty(entityRequest.EntityType.PrimaryKey);
+                    primaryKeyProperty.Value = primaryKey;
+
+                    foreach (var kvp in complexDictionary)
+                    {
+                        blSucceed = InsertComplexType<T>(entityRequest, trans, entityData, primaryKeyProperty, kvp.Value, kvp.Key);
+                        if (!blSucceed) break;
+                    }
+                    blSucceed = entityRequest.CurrentDataBase.CommitTransaction(trans, blSucceed);
+                    Dictionary<string, object> boolDict = entityRequest.GetBoolDict(blSucceed);
+                    boolDict.Add("PrimaryKey", primaryKey);
+                    return boolDict;
+                }
+                else
+                {
+                    return entityRequest.GetBoolDict(false);
+                }
+            }
+            catch (Exception ex)
+            {
+                return entityRequest.GetExceptionDict(ex.Message);
+            }
+        }
+
         public static bool InsertComplexType<T>(T entityRequest, IDbTransaction trans, IEntityData entityData, Property primaryKeyProperty, EntityType complexTypeEntity, string complexTypePropertyName, Func<IDbTransaction, IEntityData, Property, bool> insertChildComplexType = null) where T : IEntityRequest
         {
             bool blSucceed = true;
@@ -174,6 +215,57 @@ namespace OpenDataAccess.Service
             }
         }
 
+        public static object Update<T>(T entityRequest, Dictionary<string, EntityType> complexDictionary) where T : IEntityRequest
+        {
+            try
+            {
+                IDbTransaction trans = entityRequest.CurrentDataBase.BeginTransaction(entityRequest.CurrentDataBase.ConnectionString);
+                bool blSucceed = true;
+                if (entityRequest._Request.Entities.ContainsKey(entityRequest.EntityType.Name))
+                {
+                    IEntityData entityData = entityRequest._Request.Entities[entityRequest.EntityType.Name].FirstOrDefault();
+                    string message = entityRequest.Validate(entityData, entityRequest.EntityType.UpdateValidateList);
+                    if (!string.IsNullOrEmpty(message))
+                    {
+                        return entityRequest.GetMessageDict(message);
+                    }
+                    if (entityData.GetValue("RowVersion") != null)
+                    {
+                        IEntityData oldEntityData = entityRequest.SelectEntity(entityRequest._QueryRequest.ToQuery());
+                        if (oldEntityData == null)
+                        {
+                            return entityRequest.GetBoolDict(false);
+                        }
+                        message = entityRequest.CompareVersion(entityData, oldEntityData);
+                        if (!string.IsNullOrEmpty(message))
+                        {
+                            return entityRequest.GetMessageDict(message);
+                        }
+                    }
+                    blSucceed = entityRequest.UpdateEntity(entityRequest._QueryRequest.ToQuery(), entityData, trans);
+                    if (blSucceed)
+                    {
+                        foreach (var kvp in complexDictionary)
+                        {
+                            DeleteComplexType<T>(entityRequest, trans, entityRequest._QueryRequest.PrimaryKeyProperty, kvp.Value);
+                            blSucceed = InsertComplexType<T>(entityRequest, trans, entityData, entityRequest._QueryRequest.PrimaryKeyProperty, kvp.Value, kvp.Key);
+                            if (!blSucceed) break;
+                        }
+                    }
+                    blSucceed = entityRequest.CurrentDataBase.CommitTransaction(trans, blSucceed);
+                    return entityRequest.GetBoolDict(blSucceed);
+                }
+                else
+                {
+                    return entityRequest.GetBoolDict(false);
+                }
+            }
+            catch (Exception ex)
+            {
+                return entityRequest.GetExceptionDict(ex.Message);
+            }
+        }
+
         public static bool DeleteComplexType<T>(T entityRequest, IDbTransaction trans, Property primaryKeyProperty, EntityType complexTypeEntity) where T : IEntityRequest
         {
             IQuery query = new Query(complexTypeEntity.TableName, complexTypeEntity.Name);
@@ -234,6 +326,26 @@ namespace OpenDataAccess.Service
                 query.Where(string.Format(" where {0}=@{0}", entityRequest.EntityType.PrimaryKey), parameterList);
                 List<IEntityData> complexDataList = entityRequest.SelectEntities(query);
                 entityData.SetValue(complexTypePropertyName, complexDataList);
+            }
+            return entityData;
+        }
+
+        public static object GetEntityData<T>(T entityRequest, Dictionary<string, EntityType> complexDictionary) where T : IEntityRequest
+        {
+            IEntityData entityData = entityRequest.Select() as IEntityData;
+            if (entityData != null)
+            {
+                foreach (var kvp in complexDictionary)
+                {
+                    IQuery query = new Query(kvp.Value.TableName, kvp.Value.Name);
+                    List<IDbDataParameter> parameterList = new List<IDbDataParameter>()
+                    {
+                    entityRequest.GetInParameter(entityRequest._QueryRequest.PrimaryKeyProperty)
+                    };
+                    query.Where(string.Format(" where {0}=@{0}", entityRequest.EntityType.PrimaryKey), parameterList);
+                    List<IEntityData> complexDataList = entityRequest.SelectEntities(query);
+                    entityData.SetValue(kvp.Key, complexDataList);
+                }
             }
             return entityData;
         }

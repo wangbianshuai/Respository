@@ -15,12 +15,22 @@
 
     function GetOperationProperties() {
         return [{
-            Name: "GenPdfAction",
+            Name: "OrderPdfAction",
             Type: "Button",
-            Text: "生成PDF",
+            Text: "订单Pdf",
             Icon: "file-pdf",
             ActionType: "ExpandPage",
-            ActionName: "Publish",
+            ActionName: "OrderPdf",
+            IsEditEnable: true,
+            IsVisible: false
+        },
+        {
+            Name: "ProcessOrderPdfAction",
+            Type: "Button",
+            Text: "加工单Pdf",
+            Icon: "file-pdf",
+            ActionType: "ExpandPage",
+            ActionName: "ProcessOrderPdf",
             IsEditEnable: true,
             IsVisible: false
         }]
@@ -105,7 +115,7 @@
         { Label: "明细总金额", Max: 100000000, Min: 0, Step: 1, IsReadonly: true, PlaceHolder: "只读，计算其值", Type: "TextBox", ControlType: "InputNumber", Name: "Amount", ColSpan: 11, LabelCol: 4, WrapperCol: 20, X: 6, Y: 1, DataType: "int", MaxLength: 10, IsNullable: true },
         { Label: "折扣比(%)", Max: 100, Min: 0, Step: 1, PlaceHolder: "百份比1~100之间值", Type: "TextBox", ControlType: "InputNumber", Name: "DiscountRate", ColSpan: 11, LabelCol: 4, WrapperCol: 20, X: 6, Y: 2, DataType: "int", MaxLength: 10, IsNullable: true },
         { Label: "附加费", Max: 100000000, Min: 0, Step: 1, IsReadonly: true, PlaceHolder: "只读，计算其值", Type: "TextBox", ControlType: "InputNumber", Name: "ExtraCharge", ColSpan: 11, LabelCol: 4, WrapperCol: 20, X: 7, Y: 1, DataType: "int", MaxLength: 10, IsNullable: true },
-        { Label: "订单金额", Max: 100000000, Min: 0, Step: 1, PlaceHolder: "订单金额=明细总金额*折扣比+附加费", Type: "TextBox", ControlType: "InputNumber", Name: "ActualAmount", ColSpan: 11, LabelCol: 4, WrapperCol: 20, X: 7, Y: 2, DataType: "int", MaxLength: 10, IsNullable: true },
+        { Label: "订单金额", Max: 100000000, Min: 0, Step: 1, PlaceHolder: "订单金额=明细总金额*折扣比+附加费", Type: "TextBox", ControlType: "InputNumber", Name: "ActualAmount", ColSpan: 11, LabelCol: 4, WrapperCol: 20, X: 7, Y: 2, DataType: "int", MaxLength: 10, IsNullable: false },
         { Label: "成本金额", Max: 100000000, Min: 0, Step: 1, Type: "TextBox", ControlType: "InputNumber", Name: "CostAmount", ColSpan: 11, LabelCol: 4, WrapperCol: 20, X: 8, Y: 1, DataType: "int", MaxLength: 10, IsNullable: true },
         { Label: "加工费", Max: 100000000, Min: 0, Step: 1, Type: "TextBox", ControlType: "InputNumber", Name: "ProcessAmount", ColSpan: 11, LabelCol: 4, WrapperCol: 20, X: 8, Y: 2, DataType: "int", MaxLength: 10, IsNullable: true },
         { Label: "利润", Max: 100000000, Min: 0, Step: 1, IsReadonly: true, PlaceHolder: "只读，利润=订单金额-成本金额-加工费", Type: "TextBox", ControlType: "InputNumber", Name: "Profit", ColSpan: 11, LabelCol: 4, WrapperCol: 20, X: 9, Y: 1, DataType: "int", MaxLength: 10, IsNullable: true },

@@ -20,6 +20,44 @@ export default class OrderDetail extends Index {
         });
     }
 
+    SetValue(value) {
+        this.EntityData = value;
+
+        this.setState({ Details: value.Details, RemarkItemIds: value.RemarkItemIds });
+    }
+
+    GetValue() {
+        const noNullNames = ["Width", "Height", "Number", "Price", "Amount"];
+        let msg = "", d = null;
+        for (let i = 0; i < this.state.Details.length; i++) {
+            d = this.state.Details[i];
+            if (d.DetailType === 1) msg = this.JudgeNullable(d, noNullNames);
+            else if (!(d.Amount > 0)) msg = "金额应大于零！";
+
+            if (!Common.IsNullOrEmpty(msg)) break;
+        }
+
+        if (!Common.IsNullOrEmpty(msg)) { this.Page.ShowMessage(msg); return false; }
+
+        const details = this.state.Details.map((m, i) => {
+            m.DisplayIndex = i + 1;
+            if (m.Id) delete m.Id
+            return m
+        });
+
+        return { Details: details, RemarkItemIds: this.state.RemarkItemIds };
+    }
+
+    JudgeNullable(data, noNullNames) {
+        let n = "";
+        for (let i = 0; i < noNullNames.length; i++) {
+            n = noNullNames[i];
+            if (!(data[n] > 0)) return "订单明细宽度、高度、数量、单价、金额皆应大于零！"
+        }
+
+        return "";
+    }
+
     GetCheckBoxItems(list) {
         return list.map(m => { return { label: m.Name, value: m.Id } });
     }
@@ -47,7 +85,7 @@ export default class OrderDetail extends Index {
             if (d.Number > 0) totalNumber += d.Number;
         })
 
-        if (this.props.Page.SetAmountExtraCharge) this.props.Page.SetAmountExtraCharge(totalAmount1,totalAmount2);
+        if (this.props.Page.SetAmountExtraCharge) this.props.Page.SetAmountExtraCharge(totalAmount1, totalAmount2);
 
         return { TotalAmount1: totalAmount1, TotalAmount2: totalAmount2, TotalArea: totalArea, TotalNumber: totalNumber };
     }

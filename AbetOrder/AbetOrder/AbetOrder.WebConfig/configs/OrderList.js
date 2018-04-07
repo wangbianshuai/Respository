@@ -3,9 +3,9 @@
         Name: "OrderList",
         Title: "订单列表",
         EntityName: "Order",
-        PrimaryKey: "Id",
+        PrimaryKey: "OrderId",
         TemplateName: "EntityListPage",
-        SelectNames: ["Id", "RowVersion", "OrderCode", "OrderDate", "DeliveryDate", "CustomerName", "SaleUserName", "ActualAmount", "OrderStatusName", "UpdateUserName", "UpdateDate"],
+        SelectNames: ["OrderId", "RowVersion", "OrderCode", "OrderDate", "DeliveryDate", "CustomerName", "SaleUserName", "ActualAmount", "OrderStatusName", "UpdateUserName", "UpdateDate"],
         SearchNames: ["OrderCode", "CustomerId", "SaleUser", "OrderStatus", "StartDate", "EndDate", "StartDate2", "EndDate2"],
         DataColumnNames: ["OrderCode", "OrderDate", "DeliveryDate", "CustomerName", "ActualAmount", "OrderStatusName", "SaleUserName", "UpdateUserName", "UpdateDate"],
         OrderByList: [{ Name: "OrderDate", IsDesc: true }],
@@ -27,7 +27,7 @@
 
     function GetProperties() {
         return [
-            { Label: "订单日期", Type: "Date", Name: "OrderDate", DataType: "DateTime", MaxLength: 20, IsNullable: true },
+            { Label: "订单日期", Type: "Date", IsDate: true, Name: "OrderDate", DataType: "DateTime", MaxLength: 20, IsNullable: true },
             { Label: "订单日期", Type: "Date", X: 1, Y: 1, ColSpan: 5, OperateLogic: ">=", PropertyName: "OrderDate", Name: "StartDate", PlaceHolder: "大于或等于其值", DataType: "DateTime", MaxLength: 20, IsNullable: true },
             { Label: "至", Type: "Date", X: 1, Y: 2, ColSpan: 5, OperateLogic: "<", PropertyName: "OrderDate", Name: "EndDate", PlaceHolder: "小于或等于其值", DataType: "DateTime", MaxLength: 20, IsNullable: true },
             { Label: "发货日期", Type: "Date", ColSpan: 5, OperateLogic: ">=", X: 1, Y: 3, PropertyName: "DeliveryDate", Name: "StartDate2", PlaceHolder: "大于或等于其值", DataType: "DateTime", MaxLength: 20, IsNullable: true },
@@ -49,7 +49,7 @@
             { Label: "修改人", Name: "UpdateUserName" },
             { Label: "客户", Name: "CustomerName" },
             { Label: "销售员", Name: "SaleUserName" },
-            { Label: "发货日期", Name: "DeliveryDate" },
+            { Label: "发货日期", Name: "DeliveryDate", IsDate: true },
             { Label: "订单金额", Name: "ActualAmount" },
             { Label: "修改时间", Name: "UpdateDate", DataType: "DateTime" }]
     }

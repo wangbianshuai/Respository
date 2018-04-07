@@ -23,7 +23,7 @@ namespace AbetOrder.Entity
         public decimal ProcessAmount { get; set; }
         public decimal CostAmount { get; set; }
         public decimal ExtraCharge { get; set; }
-        public string OrderRemarkItemIds { get; set; }
+        public string RemarkItemIds { get; set; }
         public Guid CustomerId { get; set; }
         public string Remark { get; set; }
         public Guid CreateUser { get; set; }
@@ -38,6 +38,17 @@ namespace AbetOrder.Entity
         public Guid ProcessTemplateHtmlId { get; set; }
         public decimal Profit { get; set; }
         public string RowVersion { get; set; }
+
+        public override void InsertValidate(List<Func<IValidate, IEntityData, string>> validateList)
+        {
+            validateList.Add(this.ValidateExists<Order>("IsDelete=0 and OrderCode=@OrderCode", "对不起，该订单编号已存在！"));
+        }
+
+        public override void UpdateValidate(List<Func<IValidate, IEntityData, string>> validateList)
+        {
+            validateList.Add(this.ValidateExists<Order>("Id=@Id and OrderCode=@OrderCode", "true"));
+            validateList.Add(this.ValidateExists<Order>("IsDelete=0 and OrderCode=@OrderCode", "对不起，该订单编号已存在！"));
+        }
     }
 
     [TableProperty(Name = "v_Order", PrimaryKey = "OrderId", NoSelectNames = "IsDelete")]

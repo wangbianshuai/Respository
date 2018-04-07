@@ -186,7 +186,7 @@ export default class LeftRightLayout extends Component {
                     ) : null}
                 </Header>
                 <Content style={{ margin: '24px 16px', padding: 24, background: '#fff', minHeight: 450 }}>
-                    <SwitchRoute MenuList={this.MenuList} App={this.props.App} PageName={pageName} />
+                    <SwitchRoute MenuList={this.MenuList} App={this.props.App} PageName={pageName} href={window.location.href} />
                 </Content>
                 <Modal
                     title="修改登录密码"

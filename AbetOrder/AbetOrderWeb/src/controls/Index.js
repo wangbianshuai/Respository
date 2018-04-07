@@ -29,6 +29,10 @@ export default class Index extends Component {
         this.Property.InitState = () => this.setState(this.InitState)
     }
 
+    componentWillUnmount() {
+        this.IsDestory = true;
+    }
+
     GetProperty(name) {
         return Common.ArrayFirst(this.View.Properties, (f) => f.Name === name);
     }
@@ -78,7 +82,7 @@ export default class Index extends Component {
             this.ValueName = "Value";
             this.TextName = "Text";
         }
-        
+
         if (Common.IsArray(Property.DataSource)) {
             this.setState({ Options: this.GetOptions() })
         }
@@ -89,6 +93,7 @@ export default class Index extends Component {
             Property.ActionName = "GetServiceDataSource"
 
             Property.SetDataSource = (dataList, parentValue) => {
+                if (this.IsDestory) return;
                 this.Property.DataSource = dataList;
                 this.setState({ Options: this.GetOptions(parentValue) });
             };
