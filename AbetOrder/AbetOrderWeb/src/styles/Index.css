@@ -17,3 +17,7 @@ font-size: 14px;
     vertical-align: middle;
     line-height: 32px;
 }
+
+input:read-only{
+    color: #1890ff;
+}

@@ -18,11 +18,15 @@ export default class OrderDetail extends Index {
         this.GetDataSource({}, "GetRemarkItemList", "RemarkItemOptions", (list) => {
             this.setState({ RemarkItemOptions: this.GetCheckBoxItems(list) });
         });
+
+        const { EntityData } = this.Page.props.PageConfig
+        if (EntityData) this.SetValue(EntityData);
     }
 
     SetValue(value) {
         this.EntityData = value;
 
+        if (Common.IsArray(value.Details)) value.Details.forEach(d => d.Id = Common.CreateGuid());
         this.setState({ Details: value.Details, RemarkItemIds: value.RemarkItemIds });
     }
 

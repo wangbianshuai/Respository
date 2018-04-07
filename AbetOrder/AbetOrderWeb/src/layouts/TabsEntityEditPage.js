@@ -49,7 +49,7 @@ export default class TabsEntityEditPage extends Index {
         return (
             <div>
                 {this.RenderView(this.OperationView)}
-                <Tabs defaultActiveKe={this.props.Property.TabViews.map(m => m.Id)}>
+                <Tabs>
                     {this.props.Property.TabViews.map(m => this.RenderTabPanel(m))}
                 </Tabs>
             </div>

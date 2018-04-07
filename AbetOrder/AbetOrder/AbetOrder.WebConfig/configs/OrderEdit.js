@@ -9,7 +9,7 @@
         UpdateUrl: "Order/Update2",
         GetEntityDataUrl: "Order/GetOrder",
         ActionList: GetActionList(),
-        OperationProperties: GetOperationProperties(),
+        //OperationProperties: GetOperationProperties(),
         TabViews: [GetOrderView(), GetOrderDetailView(), GetOrderImageView()]
     };
 

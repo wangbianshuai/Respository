@@ -94,8 +94,11 @@ namespace OpenDataAccess.Service
 
                     foreach (var kvp in complexDictionary)
                     {
-                        blSucceed = InsertComplexType<T>(entityRequest, trans, entityData, primaryKeyProperty, kvp.Value, kvp.Key);
-                        if (!blSucceed) break;
+                        if (entityData.GetValue(kvp.Key) != null)
+                        {
+                            blSucceed = InsertComplexType<T>(entityRequest, trans, entityData, primaryKeyProperty, kvp.Value, kvp.Key);
+                            if (!blSucceed) break;
+                        }
                     }
                     blSucceed = entityRequest.CurrentDataBase.CommitTransaction(trans, blSucceed);
                     Dictionary<string, object> boolDict = entityRequest.GetBoolDict(blSucceed);
@@ -247,9 +250,12 @@ namespace OpenDataAccess.Service
                     {
                         foreach (var kvp in complexDictionary)
                         {
-                            DeleteComplexType<T>(entityRequest, trans, entityRequest._QueryRequest.PrimaryKeyProperty, kvp.Value);
-                            blSucceed = InsertComplexType<T>(entityRequest, trans, entityData, entityRequest._QueryRequest.PrimaryKeyProperty, kvp.Value, kvp.Key);
-                            if (!blSucceed) break;
+                            if (entityData.GetValue(kvp.Key) != null)
+                            {
+                                DeleteComplexType<T>(entityRequest, trans, entityRequest._QueryRequest.PrimaryKeyProperty, kvp.Value);
+                                blSucceed = InsertComplexType<T>(entityRequest, trans, entityData, entityRequest._QueryRequest.PrimaryKeyProperty, kvp.Value, kvp.Key);
+                                if (!blSucceed) break;
+                            }
                         }
                     }
                     blSucceed = entityRequest.CurrentDataBase.CommitTransaction(trans, blSucceed);

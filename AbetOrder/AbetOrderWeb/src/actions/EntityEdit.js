@@ -113,13 +113,16 @@ export default class EntityEdit extends Index {
 
     EditEntityData(entityData) {
         const { PageConfig } = this.Page.props;
-        const { EditView } = PageConfig
-        const title = (entityData === null ? "新增" : "修改") + PageConfig.Title
 
         this.SetEntityData(null)
         this.GetEntityData(entityData);
 
-        if (EditView.SetEdit) EditView.SetEdit({ IsVisible: true, Title: title })
+        if (!PageConfig.TabViews) {
+            const title = (entityData === null ? "新增" : "修改") + PageConfig.Title
+
+            const { EditView } = PageConfig
+            if (EditView.SetEdit) EditView.SetEdit({ IsVisible: true, Title: title });
+        }
     }
 
     SetEntityData(entityData) {
@@ -182,10 +185,19 @@ export default class EntityEdit extends Index {
     Delete2(property, params) {
         this.Page.ShowConfirm("确认要删除吗？", () => {
             const { PageConfig } = this.Page.props;
-            const { EditView } = PageConfig
-            if (Common.IsEmptyObject(EditView.EntityData)) return
 
-            this.DeleteEntityData(EditView.EntityData[PageConfig.PrimaryKey])
+            let id = ""
+            if (PageConfig.TabViews) {
+                if (Common.IsEmptyObject(PageConfig.EntityData)) return
+                id = PageConfig.EntityData[PageConfig.PrimaryKey];
+            }
+            else {
+                const { EditView } = PageConfig
+                if (Common.IsEmptyObject(EditView.EntityData)) return
+                id = EditView.EntityData[PageConfig.PrimaryKey];
+            }
+
+            this.DeleteEntityData(id);
         });
     }
 

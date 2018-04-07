@@ -13,14 +13,19 @@ export default class OrderImage extends Index {
         this.state = { Images: [] }
     }
 
+    componentWillMount() {
+        const { EntityData } = this.Page.props.PageConfig
+        if (EntityData) this.SetValue(EntityData);
+    }
+
     SetValue(value) {
         this.EntityData = value;
 
+        if (Common.IsArray(value.Images)) value.Images.forEach(d => d.ImageId = Common.CreateGuid());
         this.setState({ Images: value.Images });
     }
 
     GetValue() {
-
         let msg = "", d = null;
         for (let i = 0; i < this.state.Images.length; i++) {
             d = this.state.Images[i];

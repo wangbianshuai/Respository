@@ -8,13 +8,17 @@ export default class OrderDetailItem extends Index {
     constructor(props) {
         super(props)
 
-        this.state = Object.assign({}, props.Data, {
-            ProcessItems: this.GetCheckBoxItems(props.ProcessItems)
-        });
+        this.state = Object.assign({}, props.Data);
     }
 
     GetCheckBoxItems(list) {
         return list.map(m => { return { label: m.Name, value: m.Id } });
+    }
+
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.ProcessItems !== this.props.ProcessItems) {
+            this.setState({ ProcessItems: this.GetCheckBoxItems(nextProps.ProcessItems) })
+        }
     }
 
     RenderInputNumber(name, placeholder, max, min, step, maxLength, readOnly) {

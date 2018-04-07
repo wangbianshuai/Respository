@@ -44,7 +44,7 @@ function InitConfig(a, b) {
     a.IsEditPage = true;
     a.StateList = [{ Name: b.Name, StateName: "Loading" }];
 
-    const copyNames = ["Title", "EntityName", "PrimaryKey", "Name", "InsertUrl", "UpdateUrl", "GetEntityDataUrl",
+    const copyNames = ["Title", "EntityName", "PrimaryKey", "Name", "InsertUrl", "UpdateUrl", "GetEntityDataUrl", "EditPageUrl",
         "InitEventActionList", "ActionList", "Properties"];
 
     Common.Copy(a, b, copyNames)
@@ -81,6 +81,7 @@ function InitOperationView(config) {
             X: x,
             Y: y,
             ActionType: "EntityEdit",
+            EditPageUrl: "/" + config.Name,
             ActionName: "NewAdd",
             IsEditEnable: true,
             IsVisible: false

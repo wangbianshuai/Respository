@@ -46,7 +46,7 @@ namespace AbetOrder.Entity
 
         public override void UpdateValidate(List<Func<IValidate, IEntityData, string>> validateList)
         {
-            validateList.Add(this.ValidateExists<Order>("Id=@Id and OrderCode=@OrderCode", "true"));
+            validateList.Add(this.ValidateExists<Order>("OrderId=@OrderId and OrderCode=@OrderCode", "true"));
             validateList.Add(this.ValidateExists<Order>("IsDelete=0 and OrderCode=@OrderCode", "对不起，该订单编号已存在！"));
         }
     }

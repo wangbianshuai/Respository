@@ -107,6 +107,7 @@ function InitOperationView(config) {
             Y: y,
             ActionType: "EntityEdit",
             ActionName: "NewAdd",
+            EditPageUrl: "/" + config.Name,
             IsEditEnable: true,
             IsVisible: false
         });

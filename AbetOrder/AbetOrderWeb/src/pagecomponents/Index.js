@@ -10,8 +10,10 @@ export default class Index extends Component {
         this.Property = props.Property;
         this.Page = props.Page;
 
-        this.Property.SetValue = (value) => this.SetValue(value);
-        this.Property.GetValue = () => this.GetValue();
+        if (this.Property) {
+            this.Property.SetValue = (value) => this.SetValue(value);
+            this.Property.GetValue = () => this.GetValue();
+        }
     }
 
     SetValue(value) { }

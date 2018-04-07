@@ -160,10 +160,17 @@ export default class LeftRightLayout extends Component {
                     {
                         this.MenuList.map(m => (
                             <Menu.Item key={m.PageName}>
-                                <Link to={"/" + m.PageName}>
-                                    <Icon type={m.IconType} />
-                                    <span>{m.MenuName}</span>
-                                </Link>
+                                {
+                                    Common.IsEquals(m.PageName, pageName, true) ?
+                                        <div>
+                                            <Icon type={m.IconType} />
+                                            <span>{m.MenuName}</span>
+                                        </div> :
+                                        <Link to={"/" + m.PageName}>
+                                            <Icon type={m.IconType} />
+                                            <span>{m.MenuName}</span>
+                                        </Link>
+                                }
                             </Menu.Item>
                         ))
                     }
