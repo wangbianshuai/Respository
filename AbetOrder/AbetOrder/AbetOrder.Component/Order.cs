@@ -65,8 +65,20 @@ namespace AbetOrder.Component
 
         string GetOrderCode()
         {
-            return DateTime.Now.ToString("yyMMddHHmmssfff") + new Random().Next(10, 99);
+            lock (this)
+            {
+                if (OrderCodeDay != DateTime.Now.Date)
+                {
+                    OrderCodeDay = DateTime.Now.Date;
+                    OrderCodeIndex = 0;
+                }
+                OrderCodeIndex += 1;
+                return DateTime.Now.ToString("yyMMdd") + (OrderCodeIndex < 10 ? "0" + OrderCodeIndex.ToString() : OrderCodeIndex.ToString());
+            }
         }
+
+        public static int OrderCodeIndex { get; set; }
+        public static DateTime OrderCodeDay { get; set; }
 
         public object GetOrder()
         {

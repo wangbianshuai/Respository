@@ -7,17 +7,13 @@ using System.Threading.Tasks;
 
 namespace AbetOrder.Entity
 {
-    [TableProperty(Name = "t_d_Bill", PrimaryKey = "Id", NoSelectNames = "IsDelete")]
-    public class Bill : EntityModel, IEntity
+    [TableProperty(Name = "t_d_PersonBill", PrimaryKey = "Id", NoSelectNames = "IsDelete")]
+    public class PersonBill : EntityModel, IEntity
     {
         /// <summary> 
         /// 主键
         /// </summary> 
         public Guid Id { get; set; }
-        /// <summary> 
-        /// 数据ID
-        /// </summary> 
-        public Guid DataId { get; set; }
         /// <summary>
         /// 金额
         /// </summary>
@@ -42,18 +38,6 @@ namespace AbetOrder.Entity
         /// 更新时间
         /// </summary>
         public DateTime UpdateDate { get; set; }
-        /// <summary>
-        /// 时间
-        /// </summary>
-        public DateTime BillDate { get; set; }
-        /// <summary>
-        /// 经手人
-        /// </summary>
-        public Guid BillUser { get; set; }
-        /// <summary>
-        /// 状态 0：未确认，1：已确认
-        /// </summary>
-        public byte BillStatus { get; set; }
         /// <summary> 
         /// 备注
         /// </summary> 
@@ -70,17 +54,11 @@ namespace AbetOrder.Entity
         public string RowVersion { get; set; }
     }
 
-    [TableProperty(Name = "v_Bill", PrimaryKey = "Id", NoSelectNames = "IsDelete")]
-    public class ViewBill : Bill
+    [TableProperty(Name = "v_PersonBill", PrimaryKey = "Id", NoSelectNames = "IsDelete")]
+    public class ViewPersonBill : Bill
     {
         public string IncomePaymentName { get; set; }
-        public string CreateUserName { get; set; }
-        public string UpdateUserName { get; set; }
-        public string BillUserName { get; set; }
-        public int DataRight { get; set; }
         public string BillTypeName { get; set; }
         public decimal Amount2 { get; set; }
-        public string OrderName2 { get; set; }
-        public string BillStatusName { get; set; }
     }
 }

@@ -33,15 +33,27 @@ export default class LeftRightLayout extends Component {
                 this.AddMenu("加工订单", "table", "ProcessOrderList"),
                 this.AddMenu("收支明细", "table", "Bill"),
                 this.AddMenu("客户", "table", "Customer"),
-                this.AddMenu("用户", "table", "User"),
                 this.AddMenu("账目类型", "table", "BillType"),
                 this.AddMenu("加工选项", "table", "ProcessItem"),
                 this.AddMenu("备注选项", "table", "RemarkItem"),
-                this.AddMenu("订单模板", "table", "TemplateHtml")
             ]
         }
-        else {
+        else if (this.CurrentUser.DataRight === 2) {
             this.MenuList.push(this.AddMenu("加工订单", "table", "ProcessOrderList"));
+        }
+        else if (this.CurrentUser.DataRight === 3) {
+            this.MenuList = [
+                this.AddMenu("订单列表", "table", "OrderList"),
+                this.AddMenu("订单编辑", "form", "OrderEdit"),
+                this.AddMenu("加工订单", "table", "ProcessOrderList"),
+                this.AddMenu("收支明细", "table", "Bill"),
+                this.AddMenu("客户", "table", "Customer"),
+                this.AddMenu("账目类型", "table", "BillType"),
+                this.AddMenu("加工选项", "table", "ProcessItem"),
+                this.AddMenu("备注选项", "table", "RemarkItem"),
+                this.AddMenu("订单模板", "table", "TemplateHtml"),
+                this.AddMenu("用户", "table", "User")
+            ]
         }
     }
 

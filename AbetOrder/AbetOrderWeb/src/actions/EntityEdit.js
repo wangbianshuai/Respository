@@ -111,6 +111,30 @@ export default class EntityEdit extends Index {
         }
     }
 
+    Look(property, params) {
+        if (Common.IsNullOrEmpty(property.EditPageUrl)) this.LookEntityData(params);
+        else {
+            let url = property.EditPageUrl;
+            const { PageConfig } = this.Page.props;
+            url = Common.AddUrlParams(url, PageConfig.PrimaryKey, params[PageConfig.PrimaryKey]);
+            this.Page.props.ToPage(url);
+        }
+    }
+
+    LookEntityData(entityData) {
+        const { PageConfig } = this.Page.props;
+
+        this.SetEntityData(null)
+        this.GetEntityData(entityData);
+
+        if (!PageConfig.TabViews) {
+            const title = "查看" + PageConfig.Title
+            
+            const { EditView } = PageConfig
+            if (EditView.SetEdit) EditView.SetEdit({ IsVisible: true, IsEdit: false, Title: title });
+        }
+    }
+
     EditEntityData(entityData) {
         const { PageConfig } = this.Page.props;
 

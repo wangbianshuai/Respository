@@ -37,9 +37,8 @@
     }
 
     function GeDataSource() {
-        return [{ Value: "0", Text: "用户" },
-        { Value: "1", Text: "公司" },
-        { Value: "2", Text: "工厂" }]
+        return [{ Value: "1", Text: "公司" },
+        { Value: "2", Text: "工厂" }, { Value: "3", Text: "管理员" }]
     }
 
 })();

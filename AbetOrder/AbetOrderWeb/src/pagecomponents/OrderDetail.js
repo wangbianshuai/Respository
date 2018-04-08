@@ -26,12 +26,17 @@ export default class OrderDetail extends Index {
     SetValue(value) {
         this.EntityData = value;
 
-        let details = value.Details;
+        let details = value.Details || [];
+        let data = {};
         if (Common.IsArray(details)) {
             details.forEach(d => d.Id = Common.CreateGuid());
             details = details.sort((a, b) => a.DisplayIndex > b.DisplayIndex ? 1 : -1);
+
+            data = this.GetTotalAmount(details);
         }
-        this.setState({ Details: details, RemarkItemIds: value.RemarkItemIds });
+        data.Details = details;
+        data.RemarkItemIds = value.RemarkItemIds;
+        this.setState(data);
     }
 
     GetValue() {
@@ -111,7 +116,7 @@ export default class OrderDetail extends Index {
 
     AddDetail(text) {
         let details = this.state.Details;
-        const detail = { DetailType: text === "添加明细" ? 1 : 2, OrderDetailId: Common.CreateGuid(), DisplayIndex: details.length + 1 }
+        const detail = { DetailType: text === "添加明细" ? 1 : 2, OrderDetailId: Common.CreateGuid(), DisplayIndex: details.length + 1, Thickness: 20 }
 
         details.push(detail);
 

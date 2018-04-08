@@ -1,8 +1,10 @@
 import React from "react"
-import { Modal } from "antd"
+import { Modal, Button } from "antd"
 import * as Common from "../utils/Common"
 import DataGridView from "../components/DataGridView"
 import Index from "./Index"
+import { EFAULT } from "constants";
+import styles from "../styles/Index.css"
 
 export default class EntityListPage extends Index {
     constructor(props) {
@@ -11,7 +13,8 @@ export default class EntityListPage extends Index {
         this.state = {
             EditModalVisible: false,
             EditModalTitle: "",
-            IsDataLoading: false
+            IsDataLoading: false,
+            EditModaIsEdit: true
         }
     }
 
@@ -39,7 +42,7 @@ export default class EntityListPage extends Index {
 
     SetEdit(data) {
         if (!data.IsVisible && this.OkProperty.SetDisabled !== undefined) this.OkProperty.SetDisabled(false);
-        this.setState({ EditModalVisible: data.IsVisible, EditModalTitle: data.Title })
+        this.setState({ EditModalVisible: data.IsVisible, EditModalTitle: data.Title, EditModaIsEdit: data.IsEdit })
     }
 
     InitDataProperties() {
@@ -47,9 +50,10 @@ export default class EntityListPage extends Index {
 
         this.DataStateName = DataView.StateName;
 
-        this.DataProperties = DataView.Properties.map(p => this.SetDataPropert(p));
+        this.DataProperties = DataView.Properties.map(p => this.SetDataProperty(p));
 
         let actionList = []
+
 
         if (this.props.Property.IsUpdate) {
             actionList.push({ Name: "Update", Text: "修改", EditPageUrl: this.props.Property.EditPageUrl, ActionType: "EntityEdit", ActionName: "Edit" })
@@ -64,9 +68,29 @@ export default class EntityListPage extends Index {
                 Name: "Operation",
                 Label: "操作",
                 IsData: false,
-                Render: (text, record) => this.RenderActions(actionList, record)
+                Render: (text, record) => {
+                    const list = this.SetSelfOperationActionList(actionList, record);
+                    return this.RenderActions(list, record);
+                }
             })
         }
+    }
+
+    SetSelfOperationActionList(actionList, record) {
+        const { IsSelfOpeartion, SelfPropertyName } = this.props.Property
+
+        if (IsSelfOpeartion) {
+            const blEdit = Common.IsEquals(this.props.Page.LoginUser.UserId, record[SelfPropertyName], true);
+            if (!blEdit) {
+                actionList = []
+                if (this.props.Property.IsUpdate) {
+                    actionList.push({ Name: "Look", Text: "查看", EditPageUrl: this.props.Property.EditPageUrl, ActionType: "EntityEdit", ActionName: "Look" })
+                }
+                return actionList;
+            }
+        }
+
+        return actionList.map(m => m);
     }
 
     SetDataList() {
@@ -123,15 +147,34 @@ export default class EntityListPage extends Index {
     }
 
     RenderEditModal() {
-        const { EditModalTitle, EditModalVisible } = this.state;
+        const { EditModalTitle, EditModalVisible, EditModaIsEdit } = this.state;
         const { EditView } = this.props.Property;
 
+        if (EditModaIsEdit === false) {
+            return (
+                <Modal title={EditModalTitle} visible={EditModalVisible}
+                    width={EditView.Width} onCancel={this.EditCancel.bind(this)}
+                    footer={this.RenderLookFooter()}>
+                    {this.RenderView(this.EditView)}
+                </Modal>
+            )
+        }
+        else {
+            return (
+                <Modal title={EditModalTitle} visible={EditModalVisible}
+                    okText={this.OkProperty.Text} cancelText="取消" width={EditView.Width}
+                    onOk={this.EditOk.bind(this)} onCancel={this.EditCancel.bind(this)} >
+                    {this.RenderView(this.EditView)}
+                </Modal>
+            )
+        }
+    }
+
+    RenderLookFooter() {
         return (
-            <Modal title={EditModalTitle} visible={EditModalVisible}
-                okText={this.OkProperty.Text} cancelText="取消" width={EditView.Width}
-                onOk={this.EditOk.bind(this)} onCancel={this.EditCancel.bind(this)} >
-                {this.RenderView(this.EditView)}
-            </Modal>
+            <div>
+                <Button onClick={this.EditCancel.bind(this)}>取消</Button>
+            </div>
         )
     }
 

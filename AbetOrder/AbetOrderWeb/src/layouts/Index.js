@@ -5,6 +5,7 @@ import PropertyItem from "../components/PropertyItem"
 import AButton from "../controls/AButton"
 import Popconfirm2 from "../controls/Popconfirm2"
 import SpanText from "../controls/SpanText"
+import { Link } from "dva/router";
 
 export default class Index extends Component {
     constructor(props) {
@@ -85,7 +86,7 @@ export default class Index extends Component {
         return blChangedProps;
     }
 
-    SetDataPropert(p) {
+    SetDataProperty(p) {
         if (p.IsCurrency && p.Render === undefined) {
             p.Render = (text, record) => {
                 if (parseFloat(text) < 0) return <SpanText Style={{ color: "red" }} Text={Common.ToCurrency(text)} />
@@ -95,6 +96,18 @@ export default class Index extends Component {
         else if (p.IsDate && p.Render === undefined) {
             p.Render = (text, record) => {
                 if (!Common.IsNullOrEmpty(text)) text = text.substr(0, 10);
+                return text;
+            };
+        }
+        else if (p.IsToPage && p.Render === undefined) {
+            p.Render = (text, record) => {
+                if (!Common.IsNullOrEmpty(text)) {
+                    const dataValue = record[p.PropertyName];
+                    let url = p.PageUrl.replace("{" + p.PropertyName + "}", dataValue);
+                    url = Common.AddUrlRandom(url);
+
+                    return <Link to={url}>{text}</Link>
+                }
                 return text;
             };
         }

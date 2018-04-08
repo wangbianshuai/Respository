@@ -43,6 +43,7 @@
     <Compile Include="BillType.cs" />
     <Compile Include="Customer.cs" />
     <Compile Include="Order.cs" />
+    <Compile Include="PersonBill.cs" />
     <Compile Include="ProcessItem.cs" />
     <Compile Include="TemplateHtml.cs" />
     <Compile Include="User.cs" />

@@ -41,6 +41,7 @@
   <ItemGroup>
     <Compile Include="Order.cs" />
     <Compile Include="OrderPdf.cs" />
+    <Compile Include="PersonBill.cs" />
     <Compile Include="ProcessItem.cs" />
     <Compile Include="TemplateHtml.cs" />
     <Compile Include="User.cs" />

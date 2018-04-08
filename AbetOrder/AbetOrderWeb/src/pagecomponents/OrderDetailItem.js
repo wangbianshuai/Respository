@@ -174,10 +174,10 @@ export default class OrderDetailItem extends Index {
                     {this.RenderInputNumber("DisplayIndex", "", 99, 1, 1, 2)}
                 </Col>
                 <Col span={3}>
-                    {this.RenderInputNumber("Height", "宽度(mm)", 9999, 1, 0, 4)}
+                    {this.RenderInputNumber("Height", "高度(mm)", 9999, 1, 0, 4)}
                 </Col>
                 <Col span={3}>
-                    {this.RenderInputNumber("Width", "高度(mm)", 9999, 1, 0, 4)}
+                    {this.RenderInputNumber("Width", "宽度(mm)", 9999, 1, 0, 4)}
                 </Col>
                 <Col span={3}>
                     {this.RenderInputNumber("Thickness", "厚度(mm)", 9999, 0, 1, 4)}
