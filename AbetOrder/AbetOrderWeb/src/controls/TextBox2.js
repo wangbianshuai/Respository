@@ -45,7 +45,7 @@ export default class TextBox2 extends Index {
                 value={value} />)
         }
 
-        if (Property.ControlType === "InputNumber") {
+        if (Property.ControlType === "InputNumber" && !this.state.IsReadonly) {
             const width = Property.Width || "100%"
 
             return (<InputNumber placeholder={Property.PlaceHolder}
@@ -60,7 +60,7 @@ export default class TextBox2 extends Index {
                 value={value} />)
         }
 
-        const type = Property.ControlType || "text";
+        const type = this.state.IsReadonly ? "text" : (Property.ControlType || "text");
 
         return (
             <Input placeholder={Property.PlaceHolder}

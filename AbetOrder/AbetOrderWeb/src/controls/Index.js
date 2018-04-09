@@ -26,7 +26,7 @@ export default class Index extends Component {
 
         this.Property.SetReadonly = (isReadonly) => this.setState({ IsReadonly: isReadonly });
 
-        this.Property.InitState = () => { this.IsLoadValue = false; this.setState(this.InitState); }
+        this.Property.InitState = (initState) => { this.IsLoadValue = false; this.setState(Object.assign({}, this.InitState, initState)); }
     }
 
     componentWillUnmount() {

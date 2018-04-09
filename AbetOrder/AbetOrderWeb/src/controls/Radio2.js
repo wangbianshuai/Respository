@@ -1,7 +1,7 @@
 import React from "react"
 import * as Common from "../utils/Common"
 import Index from "./Index"
-import { Radio } from "antd"
+import { Radio, Input } from "antd"
 const RadioGroup = Radio.Group
 const RadioButton = Radio.Button;
 
@@ -38,10 +38,23 @@ export default class Radio2 extends Index {
         this.setState({ Value: e.target.value })
     }
 
+    GetSelectText(value) {
+        const d = Common.ArrayFirst(this.Property.DataSource, (f) => Common.IsEquals(f[this.ValueName], value));
+        return d === null ? "" : d[this.TextName]
+    }
+
     render() {
         const { Property } = this.props
 
         const value = Common.IsNullOrEmpty(this.state.Value) ? undefined : this.state.Value.toString()
+
+        if (this.state.IsReadonly) {
+            const text = this.GetSelectText(value);
+
+            return <Input readOnly={this.state.IsReadonly}
+                type="text"
+                value={text} />
+        }
 
         return (<RadioGroup disabled={this.state.Disabled}
             value={value}

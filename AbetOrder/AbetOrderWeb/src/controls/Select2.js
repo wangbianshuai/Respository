@@ -1,7 +1,7 @@
 import React from "react"
 import * as Common from "../utils/Common"
 import Index from "./Index"
-import { Select } from "antd"
+import { Select, Input } from "antd"
 const Option = Select.Option;
 
 export default class Select2 extends Index {
@@ -52,10 +52,26 @@ export default class Select2 extends Index {
         return value;
     }
 
+    GetSelectText() {
+        const selectData = this.GetSelectData(this.state.Value);
+        if (selectData === null) return "";
+
+        return selectData[this.TextName] === undefined ? "" : selectData[this.TextName];
+    }
+
     render() {
         const { Property } = this.props
 
         const width = Property.Width || "100%"
+
+        if (this.state.IsReadonly) {
+            const text = this.GetSelectText();
+
+            return <Input readOnly={this.state.IsReadonly}
+                type="text"
+                style={{ width: width }}
+                value={text} />
+        }
 
         const value = this.GetSelectValue()
 

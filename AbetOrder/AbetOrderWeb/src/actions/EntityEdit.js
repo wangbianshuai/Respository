@@ -124,12 +124,12 @@ export default class EntityEdit extends Index {
     LookEntityData(entityData) {
         const { PageConfig } = this.Page.props;
 
-        this.SetEntityData(null)
+        this.SetEntityData(null, true)
         this.GetEntityData(entityData);
 
         if (!PageConfig.TabViews) {
             const title = "查看" + PageConfig.Title
-            
+
             const { EditView } = PageConfig
             if (EditView.SetEdit) EditView.SetEdit({ IsVisible: true, IsEdit: false, Title: title });
         }
@@ -138,37 +138,38 @@ export default class EntityEdit extends Index {
     EditEntityData(entityData) {
         const { PageConfig } = this.Page.props;
 
-        this.SetEntityData(null)
+        this.SetEntityData(null, false)
         this.GetEntityData(entityData);
 
         if (!PageConfig.TabViews) {
             const title = (entityData === null ? "新增" : "修改") + PageConfig.Title
 
             const { EditView } = PageConfig
+
             if (EditView.SetEdit) EditView.SetEdit({ IsVisible: true, Title: title });
         }
     }
 
-    SetEntityData(entityData) {
+    SetEntityData(entityData, isReadonly) {
         const { PageConfig } = this.Page.props;
 
-        if (PageConfig.TabViews) return this.SetTabViewsEntityData(entityData);
+        if (PageConfig.TabViews) return this.SetTabViewsEntityData(entityData, isReadonly);
 
-        this.SetViewEntityData(PageConfig, entityData);
+        this.SetViewEntityData(PageConfig, entityData, isReadonly);
     }
 
-    SetTabViewsEntityData(entityData) {
+    SetTabViewsEntityData(entityData, isReadonly) {
         const { PageConfig } = this.Page.props;
 
         PageConfig.TabViews.forEach(v => {
-            if (v.EditView) this.SetViewEntityData(v, entityData);
+            if (v.EditView) this.SetViewEntityData(v, entityData, isReadonly);
             else if (v.SetValue) v.SetValue(entityData);
         })
 
         PageConfig.EntityData = entityData;
     }
 
-    SetViewEntityData(view, entityData) {
+    SetViewEntityData(view, entityData, isReadonly) {
         const { EditView } = view;
 
         let value = null;
@@ -191,7 +192,10 @@ export default class EntityEdit extends Index {
         }
         else {
             EditView.Properties.forEach(p => {
-                if (p.InitState !== undefined) p.InitState();
+                p.IsReadonly = isReadonly;
+
+                if (p.InitState !== undefined) p.InitState({ IsReadonly: isReadonly });
+
             });
         }
 

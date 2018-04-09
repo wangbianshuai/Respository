@@ -1,7 +1,7 @@
 import React from "react"
 import * as Common from "../utils/Common"
 import Index from "./Index"
-import { DatePicker } from "antd"
+import { DatePicker, Input } from "antd"
 import moment from "moment"
 
 export default class DatePicker2 extends Index {
@@ -41,6 +41,15 @@ export default class DatePicker2 extends Index {
         const width = Property.Width || "100%"
 
         let value = Common.IsNullOrEmpty(this.state.Value) ? "" : this.state.Value
+
+        if (this.state.IsReadonly) {
+            if (!Property.IsShowTime && !Common.IsNullOrEmpty(value)) value = value.substr(0, 10);
+
+            return <Input readOnly={this.state.IsReadonly}
+                type="text"
+                style={{ width: width }}
+                value={value} />
+        }
 
         const mv = this.GetMomentValue(value);
 
