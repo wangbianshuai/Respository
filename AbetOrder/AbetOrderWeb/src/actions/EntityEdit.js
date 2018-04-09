@@ -229,6 +229,33 @@ export default class EntityEdit extends Index {
         });
     }
 
+    UpdateStatus(property, params) {
+        const { PageConfig } = this.Page.props;
+
+        this.UpdateEntityStatus(params[PageConfig.PrimaryKey], property, params)
+    }
+
+    UpdateStatus2(property, params, confirmMessage) {
+        this.Page.ShowConfirm(confirmMessage, () => {
+            const { PageConfig } = this.Page.props;
+
+            let id = ""
+            if (PageConfig.TabViews) {
+                if (Common.IsEmptyObject(PageConfig.EntityData)) return
+                id = PageConfig.EntityData[PageConfig.PrimaryKey];
+                params = PageConfig.EntityData;
+            }
+            else {
+                const { EditView } = PageConfig
+                if (Common.IsEmptyObject(EditView.EntityData)) return
+                id = EditView.EntityData[PageConfig.PrimaryKey];
+                params = EditView.EntityData;
+            }
+
+            this.UpdateEntityStatus(id, property, params);
+        });
+    }
+
     DeleteEntityData(id) {
         const { PageConfig } = this.Page.props;
 
@@ -239,6 +266,20 @@ export default class EntityEdit extends Index {
 
         this.Page.SetActionState(action);
         this.Page.Dispatch(action, { Url: url });
+    }
+
+    UpdateEntityStatus(id, property, params) {
+        const { PageConfig } = this.Page.props;
+
+        let url = PageConfig.UpdateStatusUrl ? PageConfig.UpdateStatusUrl : PageConfig.EntityName;
+        url += "(" + id + ")";
+
+        const data = {};
+        data[property.StatusName] = property.StatusValue
+        data[PageConfig.PrimaryKey] = id;
+        if (params.RowVersion) data.RowVersion = params.RowVersion;
+
+        this.SaveData("Update", url, data, false)
     }
 
     GetEntityData(entityData) {
@@ -347,7 +388,7 @@ export default class EntityEdit extends Index {
         this.SaveEntityData(EntityData, data)
     }
 
-    SaveData(actionName, url, entityData) {
+    SaveData(actionName, url, entityData, blOk) {
         const { PageConfig } = this.Page.props;
 
         const action = this.Page.GetAction(actionName);
@@ -357,7 +398,7 @@ export default class EntityEdit extends Index {
         data[PageConfig.EntityName] = entityData;
         data.Url = url;
 
-        this.SetOkDisabled(true);
+        blOk !== false && this.SetOkDisabled(true);
 
         this.Page.SetActionState(action);
         this.Page.Dispatch(action, data);

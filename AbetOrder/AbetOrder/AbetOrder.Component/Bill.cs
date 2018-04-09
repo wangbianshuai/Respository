@@ -48,6 +48,17 @@ namespace AbetOrder.Component
             return this.Update();
         }
 
+          [Log]
+        public object UpdateStatus()
+        {
+            IEntityData entityData = this._Request.Entities[this.EntityType.Name].FirstOrDefault();
+
+            entityData.SetDefaultValue("UpdateUser", this._Request.OperationUser);
+            entityData.SetDefaultValue("UpdateDate", DateTime.Now);
+
+            return this.Update();
+        }
+
         [Log]
         public object Delete2()
         {

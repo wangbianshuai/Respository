@@ -52,7 +52,6 @@ export default class EntityListPage extends Index {
 
         let actionList = []
 
-
         if (this.props.Property.IsUpdate) {
             actionList.push({ Name: "Update", Text: "修改", EditPageUrl: this.props.Property.EditPageUrl, ActionType: "EntityEdit", ActionName: "Edit" })
         }
@@ -67,7 +66,8 @@ export default class EntityListPage extends Index {
                 Label: "操作",
                 IsData: false,
                 Render: (text, record) => {
-                    const list = this.SetSelfOperationActionList(actionList, record);
+                    let list = this.SetSelfOperationActionList(actionList, record);
+                    if (DataView.ExpandSetOperation) list = DataView.ExpandSetOperation(list, record);
                     return this.RenderActions(list, record);
                 }
             })
@@ -81,9 +81,7 @@ export default class EntityListPage extends Index {
             const blEdit = Common.IsEquals(this.props.Page.LoginUser.UserId, record[SelfPropertyName], true);
             if (!blEdit) {
                 actionList = []
-                if (this.props.Property.IsUpdate) {
-                    actionList.push({ Name: "Look", Text: "查看", EditPageUrl: this.props.Property.EditPageUrl, ActionType: "EntityEdit", ActionName: "Look" })
-                }
+                actionList.push({ Name: "Look", Text: "查看", EditPageUrl: this.props.Property.EditPageUrl, ActionType: "EntityEdit", ActionName: "Look" })
                 return actionList;
             }
         }
