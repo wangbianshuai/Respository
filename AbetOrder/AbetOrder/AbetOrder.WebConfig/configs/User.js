@@ -5,9 +5,9 @@
         EntityName: "User",
         PrimaryKey: "UserId",
         TemplateName: "EntityListPage",
-        SelectNames: ["UserId", "RowVersion", "UserName", "DataRightName", "LogiNName", "Phone", "Telephone", "Fax", "Address", "LastLoginDate", "CreateDate"],
+        SelectNames: ["UserId", "RowVersion", "UserName", "DataRightName", "LogiNName", "Phone", "Telephone", "Fax", "Address", "LastLoginDate"],
         SearchNames: ["UserName,LoginName"],
-        DataColumnNames: ["UserName", "LoginName", "Phone", "Telephone", "Fax", "Address", "DataRightName", "LastLoginDate", "CreateDate"],
+        DataColumnNames: ["UserName", "LoginName", "Phone", "Telephone", "Fax", "Address", "DataRightName", "LastLoginDate"],
         EditNames: ["UserName", "LoginName", "LoginPassword", "AgainLoginPassword", "Phone", "Telephone", "Fax", "Address", "DataRight", "BankCardNo", "OpenBank"],
         OrderByList: [{ Name: "CreateDate", IsDesc: true }],
         Properties: GetProperties(),
@@ -28,8 +28,7 @@
         { Label: "地址", X: 6, Y: 1, ColSpan: 24, LabelCol: 3, WrapperCol: 20, Name: "Address", DataType: "string", MaxLength: 200 },
         { Label: "数据权限", X: 4, Y: 2, Name: "DataRight", DataType: "int", EditProperty: GetEditProperty(), Type: "Select", DefaultValue: "0", IsNullable: false, DataSource: GeDataSource() },
         { Label: "数据权限", Name: "DataRightName", DataType: "string" },
-        { Label: "最近登录时间", Name: "LastLoginDate", DataType: "DateTime" },
-        { Label: "创建时间", Name: "CreateDate", DataType: "DateTime" }]
+        { Label: "最近登录时间", Name: "LastLoginDate", DataType: "DateTime" }]
     }
 
     function GetEditProperty() {

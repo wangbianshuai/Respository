@@ -5,9 +5,9 @@
         EntityName: "Customer",
         PrimaryKey: "Id",
         TemplateName: "EntityListPage",
-        SelectNames: ["Id", "RowVersion", "Name", "CompanyName", "Linkman", "Phone", "Consignee", "ConsigneePhone", "Remark", "CreateDate"],
+        SelectNames: ["Id", "RowVersion", "Name", "CompanyName", "Linkman", "Phone", "Consignee", "ConsigneePhone", "Remark"],
         SearchNames: ["Name,CompanyName"],
-        DataColumnNames: ["Name", "CompanyName", "Linkman", "Phone", "Consignee", "ConsigneePhone", "Remark", "CreateDate"],
+        DataColumnNames: ["Name", "CompanyName", "Linkman", "Phone", "Consignee", "ConsigneePhone", "Remark"],
         EditNames: ["Name", "CompanyName", "Linkman", "Phone", "Telephone", "Fax", "Consignee", "ConsigneePhone", "DepotName", "DepotAddress", "Address", "Remark"],
         OrderByList: [{ Name: "CreateDate", IsDesc: true }],
         Properties: GetProperties(),
@@ -27,8 +27,7 @@
         { Label: "收货人电话", X: 5, Y: 1, Name: "ConsigneePhone", DataType: "string", EditProperty: GetEditProperty(), MaxLength: 50 },
         { Label: "仓库名称", X: 5, Y: 2, Name: "DepotName", DataType: "string", EditProperty: GetEditProperty(), MaxLength: 50 },
         { Label: "仓库地址", X: 6, Y: 1, Name: "DepotAddress", DataType: "string", EditProperty: GetEditProperty(), MaxLength: 200 },
-        { Label: "备注", X: 6, Y: 2, Name: "Remark", DataType: "string", EditProperty: GetEditProperty(), MaxLength: 200 },
-        { Label: "创建时间", Name: "CreateDate", DataType: "DateTime" }]
+        { Label: "备注", X: 6, Y: 2, Name: "Remark", DataType: "string", EditProperty: GetEditProperty(), MaxLength: 200 }]
     }
 
 
