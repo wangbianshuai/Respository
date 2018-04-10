@@ -1,5 +1,3 @@
-import * as Common from "../utils/Common";
-
 export default class Bill {
     constructor(pageConfig, page) {
         this.PageConfig = pageConfig;
@@ -9,10 +7,12 @@ export default class Bill {
 
     InitLoad() {
         this.PageConfig.DataView.ExpandSetOperation = (actionList, record) => this.ExpandSetOperation(actionList, record);
+
+        this.PageConfig.DataView.ExpandedRowRender = (record) => this.ExpandedRowRender(record);
     }
 
     ExpandSetOperation(actionList, record) {
-        if (actionList.length == 1 && record.BillStatus === 0) {
+        if (actionList.length === 1 && record.BillStatus === 0) {
             const list = []
             list.push({ Name: "Approve", Text: "审核确认", Title: "确定要审核确认吗？", StatusName: "BillStatus", StatusValue: 1, IsConfrim: true, ActionType: "EntityEdit", ActionName: "UpdateStatus" });
             list.push(actionList[0])
@@ -25,5 +25,9 @@ export default class Bill {
         }
 
         return actionList
+    }
+
+    ExpandedRowRender(record) {
+        return record.Remark;
     }
 }

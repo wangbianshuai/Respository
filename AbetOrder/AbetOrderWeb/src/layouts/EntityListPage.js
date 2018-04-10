@@ -65,6 +65,8 @@ export default class EntityListPage extends Index {
                 Name: "Operation",
                 Label: "操作",
                 IsData: false,
+                ColumnWidth: this.props.Property.OperationColumnWidth,
+                Fixed: this.props.Property.OperationColumnFixed,
                 Render: (text, record) => {
                     let list = this.SetSelfOperationActionList(actionList, record);
                     if (DataView.ExpandSetOperation) list = DataView.ExpandSetOperation(list, record);
@@ -123,9 +125,21 @@ export default class EntityListPage extends Index {
         this.SetDataList();
         this.SetPageInfo();
 
+        let tableScroll = undefined;
+        if (this.props.Property.TableWidth > 0) tableScroll = { x: this.props.Property.TableWidth };
+
+        let expandedRowRender = undefined;
+        if (this.props.Property.DataView.ExpandedRowRender) expandedRowRender = this.ExpandedRowRender.bind(this)
+
         return (<DataGridView Page={this.props.Page} DataList={this.DataList} PageInfo={this.PageInfo}
+            TableScroll={tableScroll} ExpandedRowRender={expandedRowRender}
             PageIndexChange={this.PageIndexChange.bind(this)} GroupByInfo={this.GroupByInfo} GroupByInfoHtml={this.props.Property.GroupByInfoHtml}
             IsLoading={this.state.IsDataLoading} DataProperties={this.DataProperties} />)
+    }
+
+    ExpandedRowRender(record) {
+        const { DataView } = this.props.Property
+        return DataView.ExpandedRowRender(record);
     }
 
     EditOk(e) {

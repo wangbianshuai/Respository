@@ -83,9 +83,10 @@ function InitConfig(a, b) {
     a.DataView = { Properties: [], StateName: "DataList", Name: "DataView" };
     a.StateList = [{ Name: b.Name, StateName: "Loading" }];
 
-    const copyNames = ["Title", "EntityName", "PrimaryKey", "SearchNames", "SelectNames", "DataUrl", "EditPageUrl",
+    const copyNames = ["Title", "EntityName", "PrimaryKey", "SearchNames", "SelectNames", "DataUrl", "EditPageUrl", "TableWidth", "OperationColumnWidth",
         "IsNewAdd", "IsUpdate", "IsDelete", "IsPaging", "PageSize", "EditNames", "OrderByList", "Name", "ActionList", "UpdateStatusUrl",
-        "InsertUrl", "UpdateUrl", "GetEntityDataUrl", "GroupByInfoHtml", "IsGroupByInfo", "QueryUrl", "IsSelfOpeartion", "SelfPropertyName",
+        "InsertUrl", "UpdateUrl", "OperationColumnFixed",
+        "GetEntityDataUrl", "GroupByInfoHtml", "IsGroupByInfo", "QueryUrl", "IsSelfOpeartion", "SelfPropertyName",
         "InitEventActionList", "Properties", "DataColumnNames", "DataView"];
 
     Common.Copy(a, b, copyNames)

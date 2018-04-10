@@ -20,7 +20,8 @@
         IsGroupByInfo: true,
         IsSelfOpeartion: true,
         SelfPropertyName: "CreateUser",
-        EditViewWidth: 700
+        EditViewWidth: 700,
+        TableWidth:1300
     };
 
     function GetGroupByInfoHtml() {
@@ -74,7 +75,7 @@
         { Label: "开始日期", Type: "Date", SearchProperty: { ColSpan: 5 }, OperateLogic: ">=", PropertyName: "BillDate", Name: "StartDate", PlaceHolder: "大于或等于其值", DataType: "DateTime", MaxLength: 20, IsNullable: true },
         { Label: "至", Type: "Date", SearchProperty: { ColSpan: 5 }, OperateLogic: "<", PropertyName: "BillDate", Name: "EndDate", PlaceHolder: "小于其值", DataType: "DateTime", MaxLength: 20, IsNullable: true },
         { Label: "订单", Name: "OrderName2", PropertyName: "DataId", SearchProperty: { PropertyName: "" }, IsToPage: true, PageUrl: "/OrderEdit?OrderId={DataId}", DataType: "string", ColSpan: 5, X: 2, Y: 3, MaxLength: 20, IsNullable: true, PlaceHolder: "模糊匹配订单编号或门板花式" },
-        { Label: "备注", Name: "Remark", DataType: "string", Rows: 3, SearchProperty: { ColSpan: 5, X: 2, Y: 4 }, EditProperty: { ControlType: "TextArea" }, MaxLength: 200, IsNullable: true },
+        { Label: "备注", Name: "Remark", DataType: "string", IsTooltip: true, ColumnWidth: 300, Rows: 3, SearchProperty: { ColSpan: 5, X: 2, Y: 4 }, EditProperty: { ControlType: "TextArea" }, MaxLength: 200, IsNullable: true },
         { Label: "类型", Name: "BillTypeName" },
         { Label: "收支", Name: "IncomePaymentName" },
         { Label: "记账人", Name: "CreateUserName" },

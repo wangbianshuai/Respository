@@ -11,9 +11,9 @@ export default class DataGridView extends Index {
     }
 
     GetColumn(p) {
-        if (p.IsData === false) return (<Column title={p.Label} key={p.Name} render={p.Render} />)
+        if (p.IsData === false) return (<Column title={p.Label} key={p.Name} render={p.Render} width={p.ColumnWidth} fixed={p.Fixed} />)
 
-        return (<Column title={p.Label} dataIndex={p.Name} key={p.Name} render={p.Render} />)
+        return (<Column title={p.Label} dataIndex={p.Name} key={p.Name} render={p.Render} width={p.ColumnWidth} fixed={p.Fixed} />)
     }
 
     GetPagination() {
@@ -52,8 +52,8 @@ export default class DataGridView extends Index {
         return (
             <div>
                 {this.RenderGroupByInfoAlert()}
-                <Table dataSource={this.props.DataList} loading={this.props.IsLoading}
-                    pagination={this.GetPagination()} >
+                <Table dataSource={this.props.DataList} loading={this.props.IsLoading} scroll={this.props.TableScroll}
+                    pagination={this.GetPagination()} expandedRowRender={this.props.ExpandedRowRender}>
                     {this.props.DataProperties.map(p => this.GetColumn(p))}
                 </Table>
             </div>

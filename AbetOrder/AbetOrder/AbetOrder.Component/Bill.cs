@@ -48,7 +48,7 @@ namespace AbetOrder.Component
             return this.Update();
         }
 
-          [Log]
+        [Log]
         public object UpdateStatus()
         {
             IEntityData entityData = this._Request.Entities[this.EntityType.Name].FirstOrDefault();

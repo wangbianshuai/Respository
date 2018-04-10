@@ -21,3 +21,11 @@ font-size: 14px;
 input:read-only{
     color: #1890ff;
 }
+
+.TooltipSpan {
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+    display:block;
+  }
+  

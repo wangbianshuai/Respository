@@ -1,11 +1,12 @@
 import React, { Component } from "react"
-import { Row, Col, Divider } from "antd"
+import { Row, Col, Divider, Tooltip } from "antd"
 import * as Common from "../utils/Common"
 import PropertyItem from "../components/PropertyItem"
 import AButton from "../controls/AButton"
 import Popconfirm2 from "../controls/Popconfirm2"
 import SpanText from "../controls/SpanText"
 import { Link } from "dva/router";
+import styles from "../styles/Index.css"
 
 export default class Index extends Component {
     constructor(props) {
@@ -107,6 +108,16 @@ export default class Index extends Component {
                     url = Common.AddUrlRandom(url);
 
                     return <Link to={url}>{text}</Link>
+                }
+                return text;
+            };
+        }
+        else if (p.IsTooltip && p.Render === undefined) {
+            p.Render = (text, record) => {
+                if (!Common.IsNullOrEmpty(text)) {
+                    return (<Tooltip title={text}>
+                        <span className={styles.TooltipSpan} style={{ width: "300px" }}>{text}</span>
+                    </Tooltip>)
                 }
                 return text;
             };
