@@ -102,6 +102,21 @@ export default class Query extends Index {
             if (!Common.IsNullOrEmpty(condition.Value)) conditionList.push(condition)
         });
 
+        if (Common.IsArray(PageConfig.DefaultConditions)) {
+            PageConfig.DefaultConditions.forEach(p => {
+                condition = {
+                    Name: p.Name,
+                    Label: p.Label,
+                    OperateLogic: p.OperateLogic || "=",
+                    DataType: p.DataType || "string",
+                    Value: p.DefaultValue
+                }
+                if (p.IsCurrentUser) condition.Value = this.Page.LoginUser.UserId;
+
+                if (!Common.IsNullOrEmpty(condition.Value)) conditionList.push(condition)
+            });
+        }
+
         return conditionList;
     }
 

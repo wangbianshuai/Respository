@@ -16,10 +16,19 @@
         Properties: GetProperties(),
         GroupByInfoHtml: GetGroupByInfoHtml(),
         QueryUrl: "ViewPersonBill/Select2",
+        DefaultConditions: GetDefaultConditions(),
         IsGroupByInfo: true,
         EditViewWidth: 700,
         TableWidth: 1300
     };
+
+    function GetDefaultConditions() {
+        return [{
+            Name: "CreateUser",
+            Type: "Guid",
+            IsCurrentUser: true
+        }]
+    }
 
     function GetGroupByInfoHtml() {
         var html = [];

@@ -21,7 +21,9 @@
         IsSelfOpeartion: true,
         SelfPropertyName: "CreateUser",
         EditViewWidth: 700,
-        TableWidth:1300
+        OperationColumnWidth: 120,
+        OperationColumnFixed: "right",
+        TableWidth: 1300
     };
 
     function GetGroupByInfoHtml() {
@@ -71,17 +73,17 @@
             Label: "状态", Name: "BillStatus", ColSpan: 5, X: 1, Y: 4,
             DataType: "int", Type: "Select", DataSource: GetStatusDataSource(), OperateLogic: "=", AllowClear: true, SearchProperty: { ColSpan: 5 }
         },
-        { Label: "日期", Type: "Date", IsDate: true, IsDefaultNow: true, Name: "BillDate", PlaceHolder: "默认系统当前时间", DataType: "DateTime", MaxLength: 20, IsNullable: true },
+        { Label: "日期", Type: "Date", IsDate: true, ColumnWidth: 110, IsDefaultNow: true, Name: "BillDate", PlaceHolder: "默认系统当前时间", DataType: "DateTime", MaxLength: 20, IsNullable: true },
         { Label: "开始日期", Type: "Date", SearchProperty: { ColSpan: 5 }, OperateLogic: ">=", PropertyName: "BillDate", Name: "StartDate", PlaceHolder: "大于或等于其值", DataType: "DateTime", MaxLength: 20, IsNullable: true },
         { Label: "至", Type: "Date", SearchProperty: { ColSpan: 5 }, OperateLogic: "<", PropertyName: "BillDate", Name: "EndDate", PlaceHolder: "小于其值", DataType: "DateTime", MaxLength: 20, IsNullable: true },
         { Label: "订单", Name: "OrderName2", PropertyName: "DataId", SearchProperty: { PropertyName: "" }, IsToPage: true, PageUrl: "/OrderEdit?OrderId={DataId}", DataType: "string", ColSpan: 5, X: 2, Y: 3, MaxLength: 20, IsNullable: true, PlaceHolder: "模糊匹配订单编号或门板花式" },
         { Label: "备注", Name: "Remark", DataType: "string", IsTooltip: true, ColumnWidth: 300, Rows: 3, SearchProperty: { ColSpan: 5, X: 2, Y: 4 }, EditProperty: { ControlType: "TextArea" }, MaxLength: 200, IsNullable: true },
         { Label: "类型", Name: "BillTypeName" },
-        { Label: "收支", Name: "IncomePaymentName" },
-        { Label: "记账人", Name: "CreateUserName" },
-        { Label: "经手人", Name: "BillUserName" },
-        { Label: "状态", Name: "BillStatusName" },
-        { Label: "金额", Name: "Amount2", Scale: 2, IsCurrency: true }]
+        { Label: "收支", Name: "IncomePaymentName", ColumnWidth: 60 },
+        { Label: "记账人", Name: "CreateUserName", ColumnWidth: 80 },
+        { Label: "经手人", Name: "BillUserName", ColumnWidth: 80 },
+        { Label: "状态", Name: "BillStatusName", ColumnWidth: 80 },
+        { Label: "金额", Name: "Amount2", Scale: 2, IsCurrency: true, ColumnWidth: 100 }]
     }
 
     function GetStatusDataSource() {

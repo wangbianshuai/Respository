@@ -85,7 +85,7 @@ function InitConfig(a, b) {
 
     const copyNames = ["Title", "EntityName", "PrimaryKey", "SearchNames", "SelectNames", "DataUrl", "EditPageUrl", "TableWidth", "OperationColumnWidth",
         "IsNewAdd", "IsUpdate", "IsDelete", "IsPaging", "PageSize", "EditNames", "OrderByList", "Name", "ActionList", "UpdateStatusUrl",
-        "InsertUrl", "UpdateUrl", "OperationColumnFixed",
+        "InsertUrl", "UpdateUrl", "OperationColumnFixed", "DefaultConditions",
         "GetEntityDataUrl", "GroupByInfoHtml", "IsGroupByInfo", "QueryUrl", "IsSelfOpeartion", "SelfPropertyName",
         "InitEventActionList", "Properties", "DataColumnNames", "DataView"];
 
