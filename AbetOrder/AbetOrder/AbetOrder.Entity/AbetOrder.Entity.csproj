@@ -39,6 +39,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ContentTag.cs" />
     <Compile Include="Order.cs" />
     <Compile Include="OrderPdf.cs" />
     <Compile Include="PersonBill.cs" />

@@ -38,6 +38,10 @@ namespace AbetOrder.Entity
         /// 更新时间
         /// </summary>
         public DateTime UpdateDate { get; set; }
+        /// <summary>
+        /// 时间
+        /// </summary>
+        public DateTime BillDate { get; set; }
         /// <summary> 
         /// 备注
         /// </summary> 
