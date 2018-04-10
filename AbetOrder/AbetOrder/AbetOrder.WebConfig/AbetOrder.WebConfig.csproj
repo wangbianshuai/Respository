@@ -90,6 +90,15 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="configs\Bill.js" />
+    <Content Include="configs\BillType.js" />
+    <Content Include="configs\Customer.js" />
+    <Content Include="configs\OrderEdit.js" />
+    <Content Include="configs\OrderList.js" />
+    <Content Include="configs\ProcessItem.js" />
+    <Content Include="configs\ProcessOrderList.js" />
+    <Content Include="configs\RemarkItem.js" />
+    <Content Include="configs\TemplateHtml.js" />
     <Content Include="configs\User.js" />
     <Content Include="Global.asax" />
     <Content Include="js\json2.js" />

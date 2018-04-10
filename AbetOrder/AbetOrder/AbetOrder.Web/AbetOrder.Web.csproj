@@ -90,6 +90,17 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="configs\Bill.json" />
+    <Content Include="configs\BillType.json" />
+    <Content Include="configs\ContentTag.json" />
+    <Content Include="configs\Customer.json" />
+    <Content Include="configs\OrderEdit.json" />
+    <Content Include="configs\OrderList.json" />
+    <Content Include="configs\ProcessItem.json" />
+    <Content Include="configs\ProcessOrderList.json" />
+    <Content Include="configs\RemarkItem.json" />
+    <Content Include="configs\TemplateHtml.json" />
+    <Content Include="configs\User.json" />
     <Content Include="Default.aspx" />
     <Content Include="Global.asax" />
     <Content Include="index.css" />
@@ -126,24 +137,7 @@
       <SubType>Designer</SubType>
     </Content>
     <Content Include="UploadHandler.ashx" />
-    <Content Include="configs\Bill.json" />
-    <Content Include="configs\BillType.json" />
-    <Content Include="configs\ContentChannel.json" />
-    <Content Include="configs\ContentEdit.json" />
-    <Content Include="configs\ContentList.json" />
-    <Content Include="configs\ContentTag.json" />
-    <Content Include="configs\Customer.json" />
-    <Content Include="configs\DictionaryConfig.json" />
-    <Content Include="configs\OrderEdit.json" />
-    <Content Include="configs\OrderList.json" />
-    <Content Include="configs\ProcessItem.json" />
-    <Content Include="configs\ProcessOrderList.json" />
-    <Content Include="configs\ProcessType.json" />
-    <Content Include="configs\RemarkItem.json" />
-    <Content Include="configs\StaticSource.json" />
-    <Content Include="configs\TemplateHtml.json" />
-    <Content Include="configs\User.json" />
-    <Content Include="configs\UserList.json" />
+    <Content Include="configs\PersonBill.json" />
     <None Include="Properties\PublishProfiles\AbetOrderWeb.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
