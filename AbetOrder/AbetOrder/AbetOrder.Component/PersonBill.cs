@@ -90,7 +90,7 @@ namespace AbetOrder.Component
         public object Select2()
         {
             var whereField = this._QueryRequest.QueryInfo.WhereFields.Where(w => w.Name == "CreateUser" && w.Value== this._Request.OperationUser).FirstOrDefault();
-            if (whereField == null) return GetMessageDict("查询用户不是当前用户");
+            if (whereField == null) return GetMessageDict("查询用户不是当前用户,请重新登录！");
 
             return this.Select();
         }
