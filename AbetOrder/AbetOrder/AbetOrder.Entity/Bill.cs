@@ -35,9 +35,13 @@ namespace AbetOrder.Entity
         /// </summary>
         public Guid CreateUser { get; set; }
         /// <summary>
-        /// 更新人
+        /// 审核人
         /// </summary>
-        public Guid UpdateUser { get; set; }
+        public Guid ApproveUser { get; set; }
+        /// <summary>
+        /// 审核时间
+        /// </summary>
+        public DateTime ApproveDate { get; set; }
         /// <summary>
         /// 更新时间
         /// </summary>
@@ -46,10 +50,6 @@ namespace AbetOrder.Entity
         /// 时间
         /// </summary>
         public DateTime BillDate { get; set; }
-        /// <summary>
-        /// 经手人
-        /// </summary>
-        public Guid BillUser { get; set; }
         /// <summary>
         /// 状态 0：未确认，1：已确认
         /// </summary>
@@ -75,9 +75,7 @@ namespace AbetOrder.Entity
     {
         public string IncomePaymentName { get; set; }
         public string CreateUserName { get; set; }
-        public string UpdateUserName { get; set; }
-        public string BillUserName { get; set; }
-        public int DataRight { get; set; }
+        public string ApproveUserName { get; set; }
         public string BillTypeName { get; set; }
         public decimal Amount2 { get; set; }
         public string OrderName2 { get; set; }

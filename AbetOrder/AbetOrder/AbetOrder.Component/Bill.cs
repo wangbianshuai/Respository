@@ -27,9 +27,7 @@ namespace AbetOrder.Component
             IEntityData entityData = this._Request.Entities[this.EntityType.Name].FirstOrDefault();
 
             entityData.SetDefaultValue("BillDate", DateTime.Now);
-            entityData.SetDefaultValue("BillUser", this._Request.OperationUser);
             entityData.SetDefaultValue("CreateUser", this._Request.OperationUser);
-            entityData.SetDefaultValue("UpdateUser", this._Request.OperationUser);
             entityData.SetDefaultValue("UpdateDate", DateTime.Now);
 
             return this.Insert();
@@ -41,8 +39,6 @@ namespace AbetOrder.Component
             IEntityData entityData = this._Request.Entities[this.EntityType.Name].FirstOrDefault();
 
             entityData.SetDefaultValue("BillDate", DateTime.Now);
-            entityData.SetDefaultValue("BillUser", this._Request.OperationUser);
-            entityData.SetDefaultValue("UpdateUser", this._Request.OperationUser);
             entityData.SetDefaultValue("UpdateDate", DateTime.Now);
 
             return this.Update();
@@ -53,8 +49,8 @@ namespace AbetOrder.Component
         {
             IEntityData entityData = this._Request.Entities[this.EntityType.Name].FirstOrDefault();
 
-            entityData.SetDefaultValue("UpdateUser", this._Request.OperationUser);
-            entityData.SetDefaultValue("UpdateDate", DateTime.Now);
+            entityData.SetDefaultValue("ApproveUser", this._Request.OperationUser);
+            entityData.SetDefaultValue("ApproveDate", DateTime.Now);
 
             return this.Update();
         }

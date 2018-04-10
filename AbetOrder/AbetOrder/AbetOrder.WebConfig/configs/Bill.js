@@ -8,10 +8,10 @@
         InsertUrl: "Bill/Insert2",
         UpdateUrl: "Bill/Update2",
         UpdateStatusUrl: "Bill/UpdateStatus",
-        SelectNames: ["Id", "RowVersion", "Amount2", "BillTypeName", "DataId", "BillStatus", "CreateUser", "OrderName2", "IncomePaymentName", "BillStatusName", "BillUserName", "CreateUserName", "BillType", "BillDate", "Remark"],
-        SearchNames: ["IncomePayment", "BillTypeId", "BillUser", "BillStatus", "StartDate", "EndDate", "OrderName2", "Remark"],
-        DataColumnNames: ["BillDate", "BillTypeName", "OrderName2", "IncomePaymentName", "Amount2", "BillUserName", "Remark", "BillStatusName", "CreateUserName"],
-        EditNames: ["IncomePayment", "BillTypeId", "DataId", "Amount", "BillUser", "BillDate", "Remark"],
+        SelectNames: ["Id", "RowVersion", "Amount2", "BillTypeName", "DataId", "BillStatus", "CreateUser", "OrderName2", "IncomePaymentName", "BillStatusName", "CreateUserName", "BillType", "BillDate", "Remark"],
+        SearchNames: ["IncomePayment", "BillTypeId", "CreateUser", "BillStatus", "StartDate", "EndDate", "OrderName2", "Remark"],
+        DataColumnNames: ["BillDate", "BillTypeName", "OrderName2", "IncomePaymentName", "Amount2", "CreateUserName", "Remark", "BillStatusName"],
+        EditNames: ["IncomePayment", "BillTypeId", "DataId", "Amount", "BillDate", "Remark"],
         OrderByList: [{ Name: "BillDate", IsDesc: true }],
         ActionList: GetActionList(),
         Properties: GetProperties(),
@@ -21,7 +21,7 @@
         IsSelfOpeartion: true,
         SelfPropertyName: "CreateUser",
         EditViewWidth: 700,
-        OperationColumnWidth: 120,
+        OperationColumnWidth: 140,
         OperationColumnFixed: "right",
         TableWidth: 1300
     };
@@ -47,7 +47,7 @@
         },
         {
             ActionName: "GetUserList", StateName: "UserList",
-            Url: "ViewUser?$select=UserId,UserName&$orderby=CreateDate", DataKey: "ViewUser", Method: "GET"
+            Url: "ViewUser?$select=UserId,UserName&$orderby=CreateDate&$filter=DataRight eq 1", DataKey: "ViewUser", Method: "GET"
         }]
     }
 
@@ -66,7 +66,7 @@
         },
         { Label: "金额", Max: 100000000, Min: 0.01, Step: 0.01, Scale: 2, IsCurrency: true, Type: "TextBox", ControlType: "InputNumber", Name: "Amount", DataType: "decimal", MaxLength: 10, IsNullable: false },
         {
-            Label: "经手人", Name: "BillUser", EditProperty: { PlaceHolder: "默认当前用户" },
+            Label: "经手人", Name: "CreateUser",
             DataType: "Guid", Type: "Select", ServiceDataSource: GetUserDataSource(), OperateLogic: "=", AllowClear: true, SearchProperty: { ColSpan: 5 }
         },
         {
@@ -80,8 +80,7 @@
         { Label: "备注", Name: "Remark", DataType: "string", IsTooltip: true, ColumnWidth: 300, Rows: 3, SearchProperty: { ColSpan: 5, X: 2, Y: 4 }, EditProperty: { ControlType: "TextArea" }, MaxLength: 200, IsNullable: true },
         { Label: "类型", Name: "BillTypeName" },
         { Label: "收支", Name: "IncomePaymentName", ColumnWidth: 60 },
-        { Label: "记账人", Name: "CreateUserName", ColumnWidth: 80 },
-        { Label: "经手人", Name: "BillUserName", ColumnWidth: 80 },
+        { Label: "经手人", Name: "CreateUserName", ColumnWidth: 80 },
         { Label: "状态", Name: "BillStatusName", ColumnWidth: 80 },
         { Label: "金额", Name: "Amount2", Scale: 2, IsCurrency: true, ColumnWidth: 100 }]
     }
