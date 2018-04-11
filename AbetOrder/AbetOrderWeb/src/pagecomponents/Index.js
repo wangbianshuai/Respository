@@ -62,8 +62,12 @@ export default class Index extends Component {
 
         action = action || Page.GetAction(actionName);
 
-        const list = Page.props[action.StateName];
+        if (action.IsFirst === undefined) action.IsFirst = true;
+
+        const list = action.IsFirst ? undefined : Page.props[action.StateName];
         if (list === undefined) Page.InvokeAction(property, action);
         else property.SetDataSource(list);
+
+        action.IsFirst = false;
     }
 }

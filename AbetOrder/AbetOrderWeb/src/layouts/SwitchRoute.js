@@ -32,7 +32,7 @@ export default class SwitchRoute extends Component {
         return (<Switch>
             {
                 this.props.MenuList.map(m => (
-                    <Route path={"/" + m.PageName} exact component={() => <IndexPage App={this.props.App} PageName={m.PageName} PageId={m.PageId} Id={m.Id} />} key={m.Id} />
+                    <Route path={"/" + m.PageName} exact component={() => <IndexPage App={this.props.App} PageName={m.PageName} PageId={m.PageId} />} key={m.Id} />
                 ))
             }
         </Switch>)

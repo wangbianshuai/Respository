@@ -12,8 +12,8 @@ export default class DealingsBillDataView extends Index {
 
     componentWillMount() {
         this.GetDealingsUserList();
-        this.DealingsUser2Property = this.Property.DefaultConditions[1];
-        this.DealingsUserEditProperty = Common.ArrayFirst(this.Property.EditView.Properties, (f) => f.Name === "DealingsUser");
+
+        this.GetDealingsUserProperty();
 
         this.Property.AddTabPane = (d) => this.AddTabPane(d);
     }
@@ -43,9 +43,15 @@ export default class DealingsBillDataView extends Index {
         }, action);
     }
 
+    GetDealingsUserProperty() {
+        this.DealingsUser2Property = this.Property.DefaultConditions[1];
+        this.DealingsUserEditProperty = Common.ArrayFirst(this.Property.EditView.Properties, (f) => f.Name === "DealingsUser");
+    }
+
     QueryData(activeKey) {
         if (Common.IsNullOrEmpty(activeKey)) return;
 
+        !this.DealingsUser2Property && this.GetDealingsUserProperty();
         this.DealingsUser2Property.DefaultValue = activeKey;
         this.DealingsUserEditProperty.Value2 = activeKey;
         this.Page.EventActions.Query.SearchData(this.Property.SearchButton);
@@ -62,7 +68,9 @@ export default class DealingsBillDataView extends Index {
         this.QueryData(key);
     }
 
-    RenderDataView() {
+    RenderDataView(d) {
+        if (d.DealingsUser !== this.state.TabsActiveKey) return null;
+
         return (<DataGridView Page={this.props.Page} DataList={this.props.DataList} PageInfo={this.props.PageInfo}
             TableScroll={this.props.TableScroll} ExpandedRowRender={this.props.ExpandedRowRender}
             PageIndexChange={this.props.PageIndexChange.bind(this)} GroupByInfo={this.props.GroupByInfo} GroupByInfoHtml={this.props.Property.GroupByInfoHtml}
@@ -72,7 +80,7 @@ export default class DealingsBillDataView extends Index {
     RenderTabPanel(d) {
         const tab = "与" + d.DealingsUserName + "的往来";
         return <Tabs.TabPane tab={tab} key={d.DealingsUser}>
-            {this.RenderDataView()}
+            {this.RenderDataView(d)}
         </Tabs.TabPane>
     }
 

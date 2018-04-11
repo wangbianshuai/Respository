@@ -30,6 +30,9 @@ export default class Page extends Index {
         property.StateName = action.StateName;
         this.ServiceDataSourceProperty[property.Id] = property;
 
-        this.Page.Dispatch(action, {})
+        let payload = {};
+        if (action.IsUrlParams) payload.Url = action.Url;
+
+        this.Page.Dispatch(action, payload)
     }
 }

@@ -11,7 +11,9 @@ export default class Index {
     InitActionService(s) {
         return async (payload) => {
             let url = s.Url
-            if (Common.IsNullOrEmpty(url) && !Common.IsNullOrEmpty(payload.Url)) url = payload.Url
+
+            if (s.IsUrlParams) url = payload.Url
+            else if (Common.IsNullOrEmpty(url) && !Common.IsNullOrEmpty(payload.Url)) url = payload.Url
 
             if (s.Method === "PUT") url = Common.AddUrlParams(url, "$put", "true");
             if (s.Method === "GET") url = Common.AddUrlParams(url, "$get", "true");

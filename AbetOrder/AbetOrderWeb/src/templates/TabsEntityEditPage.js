@@ -1,12 +1,12 @@
 import * as Common from "../utils/Common"
 import EntityEditPage from "./EntityEditPage";
 
-const TabsEntityEditPageConfig = {};
+var TabsEntityEditPageConfig = {};
 
-export default function TabsEntityEditPage(config, id, pageId) {
-    if (TabsEntityEditPageConfig[id] && TabsEntityEditPageConfig[id].PageId === pageId) return TabsEntityEditPageConfig[id];
+export default function TabsEntityEditPage(config, pageId) {
+    if (TabsEntityEditPageConfig.PageId === pageId) return TabsEntityEditPageConfig;
 
-    const _Config = { Config: config, Id: id, PageId: pageId }
+    const _Config = { Config: config, PageId: pageId }
 
     //初始化配置
     InitConfig(_Config, config)
@@ -22,7 +22,7 @@ export default function TabsEntityEditPage(config, id, pageId) {
     //行为列表
     InitActionList(_Config);
 
-    TabsEntityEditPageConfig[id] = _Config;
+    TabsEntityEditPageConfig = _Config;
 
     return _Config
 }

@@ -21,12 +21,12 @@ Config配置结构：
 }
 */
 
-const EntityListPageConfig = {};
+var EntityListPageConfig = {};
 
-export default function EntityListPage(config, id, pageId) {
-    if (EntityListPageConfig[id] && EntityListPageConfig[id].PageId === pageId) return EntityListPageConfig[id];
-
-    const _Config = { Config: config, Id: id, PageId: pageId }
+export default function EntityListPage(config, pageId) {
+    if (EntityListPageConfig.PageId === pageId) return EntityListPageConfig;
+    
+    const _Config = { Config: config, PageId: pageId }
 
     //初始化配置
     InitConfig(_Config, config)
@@ -53,7 +53,8 @@ export default function EntityListPage(config, id, pageId) {
     //行为列表
     InitActionList(_Config);
 
-    EntityListPageConfig[id] = _Config;
+  
+    EntityListPageConfig = _Config;
 
     return _Config
 }

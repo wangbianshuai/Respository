@@ -55,8 +55,7 @@
             Url: "ViewBillType?$select=Id,IncomePayment,Name&$orderby=CreateDate", DataKey: "ViewBillType", Method: "GET"
         },
         {
-            ActionName: "GetDealingsUserList", StateName: "DealingsUserList",
-            Url: "ViewDealingsBillUser", DataKey: "ViewDealingsBillUser", Method: "GET"
+            ActionName: "GetDealingsUserList", StateName: "DealingsUserList", IsUrlParams: true, DataKey: "ViewDealingsBillUser", Method: "GET"
         },
         {
             ActionName: "GetUserList", StateName: "UserList",

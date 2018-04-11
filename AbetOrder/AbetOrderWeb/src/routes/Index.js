@@ -190,7 +190,7 @@ class Index extends Component {
     }
 
     componentWillUnmount() {
-
+        this.props.InitConfigState();
     }
 
     shouldComponentUpdate(nextProps, nextState) {
@@ -224,7 +224,7 @@ class Index extends Component {
     }
 
     render() {
-        if (Common.IsEmptyObject(this.props.PageConfig) || this.props.Id !== this.props.PageConfig.Id) return null;
+        if (Common.IsEmptyObject(this.props.PageConfig) || this.props.PageId !== this.props.PageConfig.PageId) return null;
 
         const props = { Page: this, Property: this.props.PageConfig }
 
@@ -240,13 +240,13 @@ class Index extends Component {
 }
 
 //初始化模板配置
-function InitTemplateConfig(config, id, pageId) {
+function InitTemplateConfig(config, pageId) {
     if (!config || Common.IsNullOrEmpty(config.TemplateName)) return config
 
     switch (config.TemplateName) {
-        case "EntityListPage": return EntityListPage(config, id, pageId)
-        case "EntityEditPage": return EntityEditPage(config, id, pageId)
-        case "TabsEntityEditPage": return TabsEntityEditPage(config, id, pageId)
+        case "EntityListPage": return EntityListPage(config, pageId)
+        case "EntityEditPage": return EntityEditPage(config, pageId)
+        case "TabsEntityEditPage": return TabsEntityEditPage(config, pageId)
         default: return config
     }
 }
@@ -258,7 +258,7 @@ function mapStateToProps(state, ownProps) {
         props.PageConfig = undefined;
     }
     else {
-        let pageConfig = InitTemplateConfig(state.Config.Data, ownProps.Id, ownProps.PageId);
+        let pageConfig = InitTemplateConfig(state.Config.Data, ownProps.PageId);
         props.PageConfig = pageConfig;
 
         if (pageConfig && pageConfig.IsLoad) {

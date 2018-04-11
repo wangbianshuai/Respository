@@ -1,14 +1,13 @@
 import * as Common from "../utils/Common"
 
-const EntityEditPageConfig = {};
+var EntityEditPageConfig = {};
 
-export default function EntityEditPage(config, id, pageId) {
+export default function EntityEditPage(config, pageId) {
     if (!config.IsTabView) {
-        if (EntityEditPageConfig[id] && EntityEditPageConfig[id].PageId === pageId) return EntityEditPageConfig[id];
+        if (EntityEditPageConfig.PageId === pageId) return EntityEditPageConfig;
     }
-    else id = Common.CreateGuid();
 
-    const _Config = { Config: config, Id: id, PageId: pageId }
+    const _Config = { Config: config, PageId: pageId }
 
     if (!config.IsTabView) {
         //初始化配置
@@ -34,7 +33,7 @@ export default function EntityEditPage(config, id, pageId) {
     //复杂对象视图
     InitComplexView(_Config);
 
-    if (!config.IsTabView) { EntityEditPageConfig[id] = _Config; }
+    if (!config.IsTabView) { EntityEditPageConfig = _Config; }
 
     return _Config
 }
