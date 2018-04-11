@@ -41,7 +41,7 @@
 
     function GetProperties() {
         return [{
-            Label: "收支", Name: "IncomePayment", EditProperty: { Type: "Radio", ChildNames: ["BillTypeId"], IsButton: true, DefaultValue: "2", ButtonWidth: 202 },
+            Label: "收支", Name: "IncomePayment", EditProperty: { Type: "Radio", IsButton: true, DefaultValue: "2", ButtonWidth: 202 },
             DataType: "int", Type: "Select", DataSource: GetDataSource(), OperateLogic: "=", AllowClear: true, SearchProperty: { ColSpan: 5 }
         },
         { Label: "金额", Max: 100000000, Min: 0.01, Step: 0.01, Scale: 2, IsCurrency: true, Type: "TextBox", ControlType: "InputNumber", Name: "Amount", DataType: "decimal", MaxLength: 10, IsNullable: false },

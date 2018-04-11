@@ -108,4 +108,24 @@ namespace AbetOrder.Component
             return this.Select();
         }
     }
+
+    public class ViewDealingsBillUser : EntityRequest
+    {
+        public ViewDealingsBillUser()
+        {
+        }
+
+        public ViewDealingsBillUser(Request request)
+            : base(request)
+        {
+        }
+
+        public object Select2()
+        {
+            var whereField = this._QueryRequest.QueryInfo.WhereFields.Where(w => w.Name == "CreateUser" && w.Value == this._Request.OperationUser).FirstOrDefault();
+            if (whereField == null) return GetMessageDict("查询用户不是当前用户,请重新登录！");
+
+            return this.Select();
+        }
+    }
 }

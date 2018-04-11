@@ -31,6 +31,7 @@ export default class LeftRightLayout extends Component {
                 this.AddMenu("订单列表", "table", "OrderList"),
                 this.AddMenu("订单编辑", "form", "OrderEdit"),
                 this.AddMenu("加工订单", "table", "ProcessOrderList"),
+                this.AddMenu("业务往来", "table", "DealingsBill"),
                 this.AddMenu("收支明细", "table", "Bill"),
                 this.AddMenu("客户", "table", "Customer"),
                 this.AddMenu("账目类型", "table", "BillType"),
@@ -38,13 +39,19 @@ export default class LeftRightLayout extends Component {
             ]
         }
         else if (this.CurrentUser.DataRight === 2) {
-            this.MenuList.push(this.AddMenu("加工订单", "table", "ProcessOrderList"));
+            this.MenuList = [
+                this.AddMenu("加工订单", "table", "ProcessOrderList"),
+                this.AddMenu("业务往来", "table", "DealingsBill"),
+                this.AddMenu("个人账目", "table", "PersonBill")
+            ]
+            
         }
         else if (this.CurrentUser.DataRight === 3) {
             this.MenuList = [
                 this.AddMenu("订单列表", "table", "OrderList"),
                 this.AddMenu("订单编辑", "form", "OrderEdit"),
                 this.AddMenu("加工订单", "table", "ProcessOrderList"),
+                this.AddMenu("业务往来", "table", "DealingsBill"),
                 this.AddMenu("收支明细", "table", "Bill"),
                 this.AddMenu("客户", "table", "Customer"),
                 this.AddMenu("账目类型", "table", "BillType"),
@@ -54,7 +61,6 @@ export default class LeftRightLayout extends Component {
                 this.AddMenu("备注选项", "table", "RemarkItem"),
                 this.AddMenu("订单模板", "table", "TemplateHtml"),
                 this.AddMenu("内容标签", "table", "ContentTag")
-               
             ]
         }
     }

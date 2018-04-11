@@ -78,6 +78,7 @@ function InitConfig(a, b) {
     a.PageSize = 20
     a.PageIndex = 1
     a.IsGroupByInfo = false;
+    a.IsInitQuery = true;
     a.InitEventActionList = []
     a.ActionList = [];
     a.DataView = { Properties: [], StateName: "DataList", Name: "DataView" };
@@ -85,7 +86,7 @@ function InitConfig(a, b) {
 
     const copyNames = ["Title", "EntityName", "PrimaryKey", "SearchNames", "SelectNames", "DataUrl", "EditPageUrl", "TableWidth", "OperationColumnWidth",
         "IsNewAdd", "IsUpdate", "IsDelete", "IsPaging", "PageSize", "EditNames", "OrderByList", "Name", "ActionList", "UpdateStatusUrl",
-        "InsertUrl", "UpdateUrl", "OperationColumnFixed", "DefaultConditions",
+        "InsertUrl", "UpdateUrl", "OperationColumnFixed", "DefaultConditions", "IsInitQuery", "DataViewComponentName",
         "GetEntityDataUrl", "GroupByInfoHtml", "IsGroupByInfo", "QueryUrl", "IsSelfOpeartion", "SelfPropertyName",
         "InitEventActionList", "Properties", "DataColumnNames", "DataView"];
 
@@ -131,11 +132,14 @@ function InitSearchView(config) {
 
     config.SearchView.Properties.push(searchButton);
 
-    config.InitEventActionList.push({
-        Name: "SearchData",
-        Type: "Query",
-        Property: searchButton
-    });
+    if (config.IsInitQuery) {
+        config.InitEventActionList.push({
+            Name: "SearchData",
+            Type: "Query",
+            Property: searchButton
+        });
+    }
+    else config.SearchButton=searchButton;
 }
 
 function InitOperationView(config) {

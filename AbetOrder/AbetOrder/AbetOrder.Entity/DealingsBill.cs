@@ -79,4 +79,12 @@ namespace AbetOrder.Entity
         public Guid DealingsUser2 { get; set; }
         public Guid CreateUser2 { get; set; }
     }
+
+    [TableProperty(Name = "v_DealingsBillUser", PrimaryKey = "CreateUser")]
+    public class ViewDealingsBillUser : EntityModel, IEntity
+    {
+        public Guid CreateUser { get; set; }
+        public Guid DealingsUser { get; set; }
+        public string DealingsUserName { get; set; }
+    }
 }

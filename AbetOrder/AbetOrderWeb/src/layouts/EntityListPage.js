@@ -3,6 +3,7 @@ import { Modal, Button } from "antd"
 import * as Common from "../utils/Common"
 import DataGridView from "../components/DataGridView"
 import Index from "./Index"
+import PageComponent from "../pagecomponents/PageComponent";
 
 export default class EntityListPage extends Index {
     constructor(props) {
@@ -131,10 +132,29 @@ export default class EntityListPage extends Index {
         let expandedRowRender = undefined;
         if (this.props.Property.DataView.ExpandedRowRender) expandedRowRender = this.ExpandedRowRender.bind(this)
 
+        if (this.props.Property.DataViewComponentName) return this.SetDataViewComponent(tableScroll, expandedRowRender)
+
         return (<DataGridView Page={this.props.Page} DataList={this.DataList} PageInfo={this.PageInfo}
             TableScroll={tableScroll} ExpandedRowRender={expandedRowRender}
             PageIndexChange={this.PageIndexChange.bind(this)} GroupByInfo={this.GroupByInfo} GroupByInfoHtml={this.props.Property.GroupByInfoHtml}
             IsLoading={this.state.IsDataLoading} DataProperties={this.DataProperties} />)
+    }
+
+    SetDataViewComponent(tableScroll, expandedRowRender) {
+        const props = {
+            DataProperties: this.DataProperties,
+            IsDataLoading: this.state.IsDataLoading,
+            PageIndexChange: this.PageIndexChange,
+            Page: this.props.Page,
+            Property: this.props.Property,
+            DataList: this.DataList,
+            PageInfo: this.PageInfo,
+            GroupByInfo: this.GroupByInfo,
+            TableScroll: tableScroll,
+            ExpandedRowRender: expandedRowRender
+        };
+
+        return PageComponent(this.props.Property, props);
     }
 
     ExpandedRowRender(record) {

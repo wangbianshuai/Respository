@@ -42,7 +42,7 @@ export default class Index extends Component {
         return blChangedProps;
     }
 
-    GetDataSource(property, actionName, stateName, fn) {
+    GetDataSource(property, actionName, stateName, fn, action) {
         const { Page } = this.props;
 
         property.Id = property.Id || Common.CreateGuid();
@@ -60,7 +60,7 @@ export default class Index extends Component {
             }
         };
 
-        const action = Page.GetAction(actionName);
+        action = action || Page.GetAction(actionName);
 
         const list = Page.props[action.StateName];
         if (list === undefined) Page.InvokeAction(property, action);
