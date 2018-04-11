@@ -9,7 +9,31 @@ export default class DealingsBill {
         this.PageConfig.DataView.ExpandSetOperation = (actionList, record) => this.ExpandSetOperation(actionList, record);
 
         this.PageConfig.DataView.ExpandedRowRender = (record) => this.ExpandedRowRender(record);
+
+        this.PageConfig.EditView.ExpandSetEditData = (data) => this.ExpandSetEditData(data);
+
+        this.PageConfig.EditView.Properties.forEach(p => {
+            if (p.Name === "DealingsUser") this.DealingsUserProperty = p;
+        });
     }
+
+    ExpandSetEditData(data) {
+        if (data.DealingsUser === this.Page.LoginUser.UserId) {
+            this.Page.ShowMessage("业务往来人不能为自己！")
+            return false;
+        }
+
+        const dealingsUser = {
+            CreateUser: this.Page.LoginUser.UserId,
+            DealingsUser: data.DealingsUser,
+            DealingsUserName: this.DealingsUserProperty.GetText()
+        }
+
+        this.PageConfig.AddTabPane && this.PageConfig.AddTabPane(dealingsUser);
+
+        return data
+    }
+
 
     ExpandSetOperation(actionList, record) {
         if (actionList.length === 1 && record.BillStatus === 0) {

@@ -193,9 +193,12 @@ export default class EntityEdit extends Index {
         else {
             EditView.Properties.forEach(p => {
                 p.IsReadonly = isReadonly;
+                if (p.Value2 !== undefined) p.DefaultValue = p.Value2;
 
-                if (p.InitState !== undefined) p.InitState({ IsReadonly: isReadonly });
-
+                if (p.InitState !== undefined) {
+                    if (p.Value2 !== undefined) p.InitState({ IsReadonly: isReadonly, Value: p.Value2 });
+                    else p.InitState({ IsReadonly: isReadonly });
+                }
             });
         }
 

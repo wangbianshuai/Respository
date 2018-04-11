@@ -11,6 +11,8 @@ export default class Select2 extends Index {
         this.state = Object.assign({ Options: [] }, this.state)
 
         this.Property.GetValue = () => this.GetSelectValue(true);
+
+        this.Property.GetText = () => this.GetSelectText();
     }
 
     componentWillMount() {

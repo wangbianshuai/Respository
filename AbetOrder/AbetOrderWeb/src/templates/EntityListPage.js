@@ -139,7 +139,7 @@ function InitSearchView(config) {
             Property: searchButton
         });
     }
-    else config.SearchButton=searchButton;
+    else config.SearchButton = searchButton;
 }
 
 function InitOperationView(config) {

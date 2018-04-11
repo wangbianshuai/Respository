@@ -13,11 +13,29 @@ export default class DealingsBillDataView extends Index {
     componentWillMount() {
         this.GetDealingsUserList();
         this.DealingsUser2Property = this.Property.DefaultConditions[1];
+        this.DealingsUserEditProperty = Common.ArrayFirst(this.Property.EditView.Properties, (f) => f.Name === "DealingsUser");
+
+        this.Property.AddTabPane = (d) => this.AddTabPane(d);
+    }
+
+    AddTabPane(d) {
+        const user = Common.ArrayFirst(this.state.DealingsUserList, (f) => f.DealingsUser === d.DealingsUser);
+        if (user === null) {
+            this.DealingsUser2Property.DefaultValue = d.DealingsUser;
+            this.DealingsUserEditProperty.Value2 = d.DealingsUser;
+
+            const list = this.state.DealingsUserList.map(m => m)
+            list.push(d);
+
+            this.setState({ DealingsUserList: list, TabsActiveKey: d.DealingsUser });
+        }
     }
 
     GetDealingsUserList() {
         const action = this.Page.GetAction("GetDealingsUserList");
+
         const userId = this.Page.LoginUser.UserId;
+
         action.Url = `ViewDealingsBillUser?$orderby=DealingsUser&$filter=CreateUser eq '${userId}'`;
 
         this.GetDataSource({}, "GetDealingsUserList", "DealingsUserList", (list) => {
@@ -27,7 +45,9 @@ export default class DealingsBillDataView extends Index {
 
     QueryData(activeKey) {
         if (Common.IsNullOrEmpty(activeKey)) return;
+
         this.DealingsUser2Property.DefaultValue = activeKey;
+        this.DealingsUserEditProperty.Value2 = activeKey;
         this.Page.EventActions.Query.SearchData(this.Property.SearchButton);
     }
 
