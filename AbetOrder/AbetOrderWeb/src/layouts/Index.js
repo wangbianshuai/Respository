@@ -91,6 +91,9 @@ export default class Index extends Component {
         if (p.IsCurrency && p.Render === undefined) {
             p.Render = (text, record) => {
                 if (parseFloat(text) < 0) return <SpanText Style={{ color: "red" }} Text={Common.ToCurrency(text)} />
+
+                if (p.FontColor) return <SpanText Style={{ color: p.FontColor }} Text={Common.ToCurrency(text)} />
+
                 return Common.ToCurrency(text)
             };
         }

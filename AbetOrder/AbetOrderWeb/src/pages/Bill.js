@@ -14,7 +14,7 @@ export default class Bill {
     ExpandSetOperation(actionList, record) {
         if (actionList.length === 1 && record.BillStatus === 0) {
             const list = []
-            list.push({ Name: "Approve", Text: "审核确认", Title: "确定要审核确认吗？", StatusName: "BillStatus", StatusValue: 1, IsConfrim: true, ActionType: "EntityEdit", ActionName: "UpdateStatus" });
+            list.push({ Name: "Approve", Text: "审核", Title: "确定要审核通过吗？", StatusName: "BillStatus", StatusValue: 1, IsConfrim: true, ActionType: "EntityEdit", ActionName: "UpdateStatus" });
             list.push(actionList[0])
             return list;
         }

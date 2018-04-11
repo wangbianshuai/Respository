@@ -8,9 +8,9 @@
         InsertUrl: "Bill/Insert2",
         UpdateUrl: "Bill/Update2",
         UpdateStatusUrl: "Bill/UpdateStatus",
-        SelectNames: ["Id", "RowVersion", "Amount2", "BillTypeName", "DataId", "BillStatus", "CreateUser", "OrderName2", "IncomePaymentName", "BillStatusName", "CreateUserName", "BillType", "BillDate", "Remark"],
+        SelectNames: ["Id", "RowVersion", "Amount2", "BillTypeName", "DataId", "BillStatus", "CreateUser", "OrderName2", "IncomePaymentName", "BillStatusName", "CreateUserName", "BillDate", "Remark"],
         SearchNames: ["IncomePayment", "BillTypeId", "CreateUser", "BillStatus", "StartDate", "EndDate", "OrderName2", "Remark"],
-        DataColumnNames: ["BillDate", "BillTypeName", "OrderName2", "IncomePaymentName", "Amount2", "CreateUserName", "Remark", "BillStatusName"],
+        DataColumnNames: ["BillDate", "BillTypeName", "OrderName2", "IncomePaymentName", "Amount2", "CreateUserName", "BillStatusName"],
         EditNames: ["IncomePayment", "BillTypeId", "DataId", "Amount", "BillDate", "Remark"],
         OrderByList: [{ Name: "BillDate", IsDesc: true }],
         ActionList: GetActionList(),
@@ -21,16 +21,14 @@
         IsSelfOpeartion: true,
         SelfPropertyName: "CreateUser",
         EditViewWidth: 700,
-        OperationColumnWidth: 140,
-        OperationColumnFixed: "right",
-        TableWidth: 1300
+        TableWidth: 1000
     };
 
     function GetGroupByInfoHtml() {
         var html = [];
 
         html.push("收入：<span style=\"color:#1890ff;\">{TotalIncome}</span>，");
-        html.push("支出：<span style=\"color:#1890ff;\">{TotalPayment}</span>，");
+        html.push("支出：<span style=\"color:red;\">{TotalPayment}</span>，");
         html.push("结余：<span style=\"color:{TotalBalanceColor};\">{TotalBalance}</span>");
 
         return html.join("");
@@ -73,16 +71,16 @@
             Label: "状态", Name: "BillStatus", ColSpan: 5, X: 1, Y: 4,
             DataType: "int", Type: "Select", DataSource: GetStatusDataSource(), OperateLogic: "=", AllowClear: true, SearchProperty: { ColSpan: 5 }
         },
-        { Label: "日期", Type: "Date", IsDate: true, ColumnWidth: 110, IsDefaultNow: true, Name: "BillDate", PlaceHolder: "默认系统当前时间", DataType: "DateTime", MaxLength: 20, IsNullable: true },
+        { Label: "日期", Type: "Date", IsDate: true, IsDefaultNow: true, Name: "BillDate", PlaceHolder: "默认系统当前时间", DataType: "DateTime", MaxLength: 20, IsNullable: true },
         { Label: "开始日期", Type: "Date", SearchProperty: { ColSpan: 5 }, OperateLogic: ">=", PropertyName: "BillDate", Name: "StartDate", PlaceHolder: "大于或等于其值", DataType: "DateTime", MaxLength: 20, IsNullable: true },
         { Label: "至", Type: "Date", SearchProperty: { ColSpan: 5 }, OperateLogic: "<", PropertyName: "BillDate", Name: "EndDate", PlaceHolder: "小于其值", DataType: "DateTime", MaxLength: 20, IsNullable: true },
         { Label: "订单", Name: "OrderName2", PropertyName: "DataId", SearchProperty: { PropertyName: "" }, IsToPage: true, PageUrl: "/OrderEdit?OrderId={DataId}", DataType: "string", ColSpan: 5, X: 2, Y: 3, MaxLength: 20, IsNullable: true, PlaceHolder: "模糊匹配订单编号或门板花式" },
-        { Label: "备注", Name: "Remark", DataType: "string", IsTooltip: true, ColumnWidth: 300, Rows: 3, SearchProperty: { ColSpan: 5, X: 2, Y: 4 }, EditProperty: { ControlType: "TextArea" }, MaxLength: 200, IsNullable: true },
+        { Label: "备注", Name: "Remark", DataType: "string", Rows: 3, SearchProperty: { ColSpan: 5, X: 2, Y: 4 }, EditProperty: { ControlType: "TextArea" }, MaxLength: 200, IsNullable: true },
         { Label: "类型", Name: "BillTypeName" },
-        { Label: "收支", Name: "IncomePaymentName", ColumnWidth: 60 },
-        { Label: "经手人", Name: "CreateUserName", ColumnWidth: 80 },
-        { Label: "状态", Name: "BillStatusName", ColumnWidth: 80 },
-        { Label: "金额", Name: "Amount2", Scale: 2, IsCurrency: true, ColumnWidth: 100 }]
+        { Label: "收支", Name: "IncomePaymentName" },
+        { Label: "经手人", Name: "CreateUserName" },
+        { Label: "状态", Name: "BillStatusName" },
+        { Label: "金额", Name: "Amount2", Scale: 2, IsCurrency: true }]
     }
 
     function GetStatusDataSource() {

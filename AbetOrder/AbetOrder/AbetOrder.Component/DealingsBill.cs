@@ -10,13 +10,13 @@ using System.Threading.Tasks;
 
 namespace AbetOrder.Component
 {
-    public class PersonBill : EntityRequest
+    public class DealingsBill : EntityRequest
     {
-        public PersonBill()
+        public DealingsBill()
         {
         }
 
-        public PersonBill(Request request)
+        public DealingsBill(Request request)
             : base(request)
         {
         }
@@ -45,19 +45,29 @@ namespace AbetOrder.Component
         }
 
         [Log]
+        public object UpdateStatus()
+        {
+            IEntityData entityData = this._Request.Entities[this.EntityType.Name].FirstOrDefault();
+
+            entityData.SetDefaultValue("ApproveDate", DateTime.Now);
+
+            return this.Update();
+        }
+
+        [Log]
         public object Delete2()
         {
-            return CommonOperation.DeleteByLogic<PersonBill>(this);
+            return CommonOperation.DeleteByLogic<DealingsBill>(this);
         }
     }
 
-    public class ViewPersonBill : EntityRequest
+    public class ViewDealingsBill : EntityRequest
     {
-        public ViewPersonBill()
+        public ViewDealingsBill()
         {
         }
 
-        public ViewPersonBill(Request request)
+        public ViewDealingsBill(Request request)
             : base(request)
         {
             this.QueryGroupByInfo = (data, wherqSql, parameterList) => this.QueryBillGroupByInfo(data, wherqSql, parameterList);
@@ -89,8 +99,11 @@ namespace AbetOrder.Component
 
         public object Select2()
         {
-            var whereField = this._QueryRequest.QueryInfo.WhereFields.Where(w => w.Name == "CreateUser" && w.Value == this._Request.OperationUser).FirstOrDefault();
+            var whereField = this._QueryRequest.QueryInfo.WhereFields.Where(w => w.Name == "CreateUser2" && w.Value == this._Request.OperationUser).FirstOrDefault();
             if (whereField == null) return GetMessageDict("查询用户不是当前用户,请重新登录！");
+
+            whereField = this._QueryRequest.QueryInfo.WhereFields.Where(w => w.Name == "DealingsUser2" && !string.IsNullOrEmpty(w.Value)).FirstOrDefault();
+            if (whereField == null) return GetMessageDict("查询未有往来用户");
 
             return this.Select();
         }
