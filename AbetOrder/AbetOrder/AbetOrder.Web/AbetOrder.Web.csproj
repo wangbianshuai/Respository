@@ -96,6 +96,7 @@
     <Content Include="configs\Customer.json" />
     <Content Include="configs\OrderEdit.json" />
     <Content Include="configs\OrderList.json" />
+    <Content Include="configs\PersonBill.json" />
     <Content Include="configs\ProcessItem.json" />
     <Content Include="configs\ProcessOrderList.json" />
     <Content Include="configs\RemarkItem.json" />
@@ -137,7 +138,8 @@
       <SubType>Designer</SubType>
     </Content>
     <Content Include="UploadHandler.ashx" />
-    <Content Include="configs\PersonBill.json" />
+    <Content Include="configs\DealingsBill.json" />
+    <Content Include="configs\DealingsBillType.json" />
     <None Include="Properties\PublishProfiles\AbetOrderWeb.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
