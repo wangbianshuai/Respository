@@ -136,8 +136,9 @@ export default class Index extends Component {
         else if (p.IsOpenPage && p.Render === undefined) {
             p.Render = (text, record) => {
                 if (!Common.IsNullOrEmpty(text)) {
+                    let url = "";
                     const dataValue = record[p.PropertyName];
-                    let url = p.PageUrl.replace("{" + p.PropertyName + "}", escape(dataValue));
+                    if (dataValue) url = p.PageUrl.replace("{" + p.PropertyName + "}", escape(dataValue));
 
                     if (p.IsAddToken) {
                         const { LoginUser } = this.props.Page;
@@ -146,7 +147,7 @@ export default class Index extends Component {
                     }
                     if (p.IsRandom !== false) url = Common.AddUrlRandom(url);
 
-                    if (Common.IsNullOrEmpty(url)) return null;
+                    if (Common.IsNullOrEmpty(url)) return text;
                     else return <a href={url} target="_blank">{text}</a>
                 }
                 return text;
