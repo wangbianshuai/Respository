@@ -11,6 +11,7 @@ namespace AbetOrder.Entity
     {
         public Guid OrderId { get; set; }
         public string OrderCode { get; set; }
+        public int OrderIntCode { get; set; }
         public byte OrderStatus { get; set; }
         public DateTime OrderDate { get; set; }
         public DateTime DeliveryDate { get; set; }
@@ -63,6 +64,8 @@ namespace AbetOrder.Entity
         public string CustomerName { get; set; }
         public string OrderTemplateHtmlName { get; set; }
         public string ProcessTemplateHtmlName { get; set; }
+        public decimal ProcessAmount2 { get; set; }
+        public decimal CostAmount2 { get; set; }
     }
 
     [TableProperty(Name = "v_ProcessOrder", PrimaryKey = "OrderId", NoSelectNames = "IsDelete")]

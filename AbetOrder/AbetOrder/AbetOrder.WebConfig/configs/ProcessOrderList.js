@@ -19,7 +19,7 @@
     function GetActionList() {
         return [{
             ActionName: "GetUserList", StateName: "UserList",
-            Url: "ViewUser?$select=UserId,UserName&$orderby=CreateDate", DataKey: "ViewUser", Method: "GET"
+            Url: "ViewUser?$select=UserId,UserName&$orderby=CreateDate&$filter=DataRight eq 1", DataKey: "ViewUser", Method: "GET"
         }]
     }
 

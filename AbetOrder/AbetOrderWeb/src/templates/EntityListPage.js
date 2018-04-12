@@ -25,7 +25,11 @@ var EntityListPageConfig = {};
 
 export default function EntityListPage(config, pageId) {
     if (EntityListPageConfig.PageId === pageId) return EntityListPageConfig;
-    
+
+    if (config.PageId && config.PageId === EntityListPageConfig.PageId) return;
+
+    config.PageId = pageId;
+
     const _Config = { Config: config, PageId: pageId }
 
     //初始化配置
@@ -53,7 +57,7 @@ export default function EntityListPage(config, pageId) {
     //行为列表
     InitActionList(_Config);
 
-  
+
     EntityListPageConfig = _Config;
 
     return _Config

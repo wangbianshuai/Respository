@@ -17,13 +17,13 @@
         return [{ Label: "名称", Name: "Name", DataType: "string", MaxLength: 50, IsNullable: false },
         {
             Label: "收支", Name: "IncomePayment", Type: "Radio", IsButton: true, DefaultValue: "2", ButtonWidth: 145,
-            DataType: "int", IsUpdate: false, DataSource: GeDataSource()
+            DataType: "int", IsUpdate: false, DataSource: GetDataSource()
         },
         { Label: "备注", Name: "Remark", DataType: "string", MaxLength: 100, IsNullable: true },
         { Label: "收支", Name: "IncomePaymentName" }]
     }
 
-    function GeDataSource() {
+    function GetDataSource() {
         return [{ Value: "2", Text: "支出" },
         { Value: "1", Text: "收入" }]
     }

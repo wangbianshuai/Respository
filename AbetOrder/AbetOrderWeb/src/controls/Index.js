@@ -128,7 +128,7 @@ export default class Index extends Component {
     }
 
     GetSelectData(value) {
-        return Common.ArrayFirst(this.Property.DataSource, (f) => f[this.ValueName] === value);
+        return Common.ArrayFirst(this.Property.DataSource, (f) => Common.IsEquals(f[this.ValueName], value, true));
     }
 
     ValueChange(value) {

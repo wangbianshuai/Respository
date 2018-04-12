@@ -5,6 +5,10 @@ var EntityEditPageConfig = {};
 export default function EntityEditPage(config, pageId) {
     if (!config.IsTabView) {
         if (EntityEditPageConfig.PageId === pageId) return EntityEditPageConfig;
+
+        if (config.PageId && config.PageId === EntityEditPageConfig.PageId) return;
+
+        config.PageId = pageId;
     }
 
     const _Config = { Config: config, PageId: pageId }

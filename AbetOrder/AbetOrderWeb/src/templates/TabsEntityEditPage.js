@@ -6,6 +6,10 @@ var TabsEntityEditPageConfig = {};
 export default function TabsEntityEditPage(config, pageId) {
     if (TabsEntityEditPageConfig.PageId === pageId) return TabsEntityEditPageConfig;
 
+    if (config.PageId && config.PageId === TabsEntityEditPageConfig.PageId) return;
+
+    config.PageId = pageId;
+
     const _Config = { Config: config, PageId: pageId }
 
     //初始化配置

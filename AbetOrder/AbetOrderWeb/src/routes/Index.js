@@ -191,6 +191,7 @@ class Index extends Component {
 
     componentWillUnmount() {
         this.props.InitConfigState();
+        this.props.PageConfig && this.props.PageConfig.ActionList && this.props.InitState(this.props.PageConfig.Name, this.props.PageConfig.ActionList)
     }
 
     shouldComponentUpdate(nextProps, nextState) {

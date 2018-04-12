@@ -90,11 +90,11 @@ export default class Index extends Component {
     SetDataProperty(p) {
         if (p.IsCurrency && p.Render === undefined) {
             p.Render = (text, record) => {
-                if (parseFloat(text) < 0) return <SpanText Style={{ color: "red" }} Text={Common.ToCurrency(text)} />
+                if (parseFloat(text) < 0) return <SpanText Style={{ color: "red" }} Text={Common.ToCurrency(text, p.IsFixed2)} />
 
-                if (p.FontColor) return <SpanText Style={{ color: p.FontColor }} Text={Common.ToCurrency(text)} />
+                if (p.FontColor) return <SpanText Style={{ color: p.FontColor }} Text={Common.ToCurrency(text, p.IsFixed2)} />
 
-                return Common.ToCurrency(text)
+                return Common.ToCurrency(text, p.IsFixed2)
             };
         }
         else if (p.IsDate && p.Render === undefined) {
@@ -119,7 +119,7 @@ export default class Index extends Component {
             p.Render = (text, record) => {
                 if (!Common.IsNullOrEmpty(text)) {
                     return (<Tooltip title={text}>
-                        <span className={styles.TooltipSpan} style={{ width: "300px" }}>{text}</span>
+                        <span className={styles.TooltipSpan} style={{ width: p.ColumnWidth }}>{text}</span>
                     </Tooltip>)
                 }
                 return text;

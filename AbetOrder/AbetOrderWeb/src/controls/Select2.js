@@ -71,6 +71,7 @@ export default class Select2 extends Index {
 
             return <Input readOnly={this.state.IsReadonly}
                 type="text"
+                placeholder={Property.PlaceHolder}
                 style={{ width: width }}
                 value={text} />
         }

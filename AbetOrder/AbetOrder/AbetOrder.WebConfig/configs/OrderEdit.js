@@ -55,7 +55,7 @@
         },
         {
             ActionName: "GetUserList", StateName: "UserList",
-            Url: "ViewUser?$select=UserId,UserName&$orderby=CreateDate", DataKey: "ViewUser", Method: "GET"
+            Url: "ViewUser?$select=UserId,UserName&$orderby=CreateDate&$filter=DataRight eq 1", DataKey: "ViewUser", Method: "GET"
         }]
     }
 
@@ -117,11 +117,15 @@
         { Label: "附加费", Max: 100000000, Min: 0, Step: 1, IsReadonly: true, PlaceHolder: "只读，计算其值", Type: "TextBox", ControlType: "InputNumber", Name: "ExtraCharge", ColSpan: 11, LabelCol: 4, WrapperCol: 20, X: 7, Y: 1, DataType: "int", MaxLength: 10, IsNullable: true },
         { Label: "订单金额", Max: 100000000, Min: 0, Step: 1, PlaceHolder: "订单金额=明细总金额*折扣比+附加费", Type: "TextBox", ControlType: "InputNumber", Name: "ActualAmount", ColSpan: 11, LabelCol: 4, WrapperCol: 20, X: 7, Y: 2, DataType: "int", MaxLength: 10, IsNullable: false },
         { Label: "成本金额", Max: 100000000, Min: 0, Step: 1, Type: "TextBox", ControlType: "InputNumber", Name: "CostAmount", ColSpan: 11, LabelCol: 4, WrapperCol: 20, X: 8, Y: 1, DataType: "int", MaxLength: 10, IsNullable: true },
-        { Label: "加工费", Max: 100000000, Min: 0, Step: 1, Type: "TextBox", ControlType: "InputNumber", Name: "ProcessAmount", ColSpan: 11, LabelCol: 4, WrapperCol: 20, X: 8, Y: 2, DataType: "int", MaxLength: 10, IsNullable: true },
+        { Label: "加工费", Max: 100000000, Min: 0, Step: 1, IsReadonly: true, PlaceHolder: "只读", Type: "TextBox", ControlType: "InputNumber", Name: "ProcessAmount", ColSpan: 11, LabelCol: 4, WrapperCol: 20, X: 8, Y: 2, DataType: "int", MaxLength: 10, IsNullable: true },
         { Label: "利润", Max: 100000000, Step: 1, IsReadonly: true, PlaceHolder: "只读，利润=订单金额-成本金额-加工费", Type: "TextBox", ControlType: "InputNumber", Name: "Profit", ColSpan: 11, LabelCol: 4, WrapperCol: 20, X: 9, Y: 1, DataType: "int", MaxLength: 10, IsNullable: true },
-        { Label: "已付金额", Max: 100000000, Min: 0, Step: 1, Type: "TextBox", ControlType: "InputNumber", Name: "PaidDeposit", ColSpan: 11, LabelCol: 4, WrapperCol: 20, X: 9, Y: 2, DataType: "int", MaxLength: 10, IsNullable: true },
-        { Label: "应付余额", Max: 100000000, Min: 0, Step: 1, Type: "TextBox", IsReadonly: true, PlaceHolder: "只读，计算其值", ControlType: "InputNumber", Name: "ShouldPayBalance", ColSpan: 11, LabelCol: 4, WrapperCol: 20, X: 10, Y: 1, DataType: "int", MaxLength: 10, IsNullable: true },
-        { Label: "备注", Name: "Remark", X: 10, Y: 1, Type: "TextBox", MaxLength: 200, DataType: "string", ColSpan: 22, LabelCol: 2, WrapperCol: 22, Rows: 3, ControlType: "TextArea", IsNullable: true }]
+        { Label: "已收金额", Max: 100000000, Min: 0, Step: 1, Type: "TextBox", ControlType: "InputNumber", Name: "PaidDeposit", ColSpan: 11, LabelCol: 4, WrapperCol: 20, X: 9, Y: 2, DataType: "int", MaxLength: 10, IsNullable: true },
+        { Label: "应收余额", Max: 100000000, Min: 0, Step: 1, Type: "TextBox", IsReadonly: true, PlaceHolder: "只读，计算其值", ControlType: "InputNumber", Name: "ShouldPayBalance", ColSpan: 11, LabelCol: 4, WrapperCol: 20, X: 10, Y: 1, DataType: "int", MaxLength: 10, IsNullable: true },
+        {
+            Label: "订单状态", Name: "OrderStatus", IsReadonly: true, PlaceHolder: "只读",
+            DataType: "int", Type: "Select", DataSource: GetStatusDataSource(), ColSpan: 11, LabelCol: 4, WrapperCol: 20, X: 10, Y: 2
+        },
+        { Label: "备注", Name: "Remark", X: 11, Y: 1, Type: "TextBox", MaxLength: 200, DataType: "string", ColSpan: 22, LabelCol: 2, WrapperCol: 22, Rows: 3, ControlType: "TextArea", IsNullable: true }]
     }
 
     function GetOrderDetailView() {
@@ -148,6 +152,12 @@
             ValueName: "Id",
             TextName: "Name"
         }
+    }
+
+    function GetStatusDataSource() {
+        return [{ Value: "0", Text: "未确认" },
+        { Value: "1", Text: "已确认" },
+        { Value: "2", Text: "已完成" }]
     }
 
 })();

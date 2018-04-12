@@ -80,7 +80,7 @@ namespace AbetOrder.Component
 
             IEntityData groupByInfo = new EntityData(string.Empty);
             groupByInfo.SetValue("TotalIncome", income.ToString("C"));
-            groupByInfo.SetValue("TotalPayment", payment.ToString("C"));
+            groupByInfo.SetValue("TotalPayment", (0 - payment).ToString("C"));
             groupByInfo.SetValue("TotalBalance", (income - payment).ToString("C"));
             groupByInfo.SetValue("TotalBalanceColor", income - payment >= 0 ? "#1890ff" : "red");
 
