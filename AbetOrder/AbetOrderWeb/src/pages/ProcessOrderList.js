@@ -11,5 +11,6 @@ export default class ProcessOrderList {
 
     ExpandSetOperation(actionList, record) {
         if (record.BillStatus === 1) return [];
+        return actionList;
     }
 }

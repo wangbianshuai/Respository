@@ -22,21 +22,21 @@ namespace AbetOrder.Component
         {
         }
 
-        public bool EditOrderDealignsBill(IEntityData entityData)
+        public bool EditOrderDealignsBill(IEntityData entityData, Guid userId)
         {
             Guid orderId = entityData.GetValue<Guid>("OrderId");
             IEntityData bill = GetOrderDealingsBill(orderId);
             if (bill == null)
             {
-                Guid billTypeId = new BillType().GetOrderProcessBillTypeId();
+                Guid billTypeId = new DealingsBillType().GetOrderProcessBillTypeId();
                 IEntityData insertData = new EntityData(this.EntityType);
                 insertData.SetValue("DataId", orderId);
                 insertData.SetValue("Amount", entityData.GetValue<decimal>("ProcessAmount"));
                 insertData.SetValue("Remark", string.Format("订单编号{0}加工费", entityData.GetStringValue("OrderCode")));
                 insertData.SetValue("BillTypeId", billTypeId);
-                insertData.SetValue("CreateUser", this._Request.OperationUser);
+                insertData.SetValue("CreateUser", userId);
                 insertData.SetValue("UpdateDate", DateTime.Now);
-                insertData.SetValue("DealignsUser", entityData.GetValue("SaleUser"));
+                insertData.SetValue("DealingsUser", entityData.GetValue("SaleUser"));
                 insertData.SetValue("BillData", DateTime.Now);
 
                 object primaryKey = null;
@@ -51,15 +51,13 @@ namespace AbetOrder.Component
 
                 return this.UpdateEntityByPrimaryKey(id, updateData);
             }
-
-            return true;
         }
 
         IEntityData GetOrderDealingsBill(Guid orderId)
         {
             IQuery query = new Query(this.EntityType.TableName);
             query.Select("Id,BillStatus");
-            query.Where(string.Format("where IsDelete=0 and OrderId='{0}'", orderId));
+            query.Where(string.Format("where IsDelete=0 and DataId='{0}'", orderId));
 
             return this.SelectEntity(query);
         }

@@ -63,17 +63,17 @@
                 Label: "销售员", Name: "SaleUser", X: 2, Y: 3,
                 DataType: "Guid", Type: "Select", ServiceDataSource: GetUserDataSource(), OperateLogic: "=", AllowClear: true, ColSpan: 5
             },
-            { Label: "订单编号", Name: "OrderCode", IsOpenPage: true, IsAddToken: true, PropertyName: "OrderId", PageUrl: "OrderPdf.aspx?Type=1&OrderId={OrderId}", ColumnWidth: 100, DataType: "string", X: 2, Y: 1, ColSpan: 5, MaxLength: 50, IsNullable: true },
+            { Label: "订单编号", Name: "OrderCode", IsOpenPage: true, IsRandom: false, PropertyName: "OrderPdfPath", PageUrl: "{OrderPdfPath}", ColumnWidth: 100, DataType: "string", X: 2, Y: 1, ColSpan: 5, MaxLength: 50, IsNullable: true },
             { Label: "订单状态", Name: "OrderStatusName", ColumnWidth: 90 },
             { Label: "客户", Name: "CustomerName", ColumnWidth: 120, IsTooltip: true },
             { Label: "销售员", Name: "SaleUserName", ColumnWidth: 90 },
             { Label: "发货日期", Name: "DeliveryDate", IsDate: true, ColumnWidth: 110 },
-            { Label: "订单金额", Name: "ActualAmount", ColumnWidth: 100, IsCurrency: true, IsFixed2: false, FontColor: "#1890ff" },
-            { Label: "成本金额", Name: "CostAmount2", ColumnWidth: 100, IsCurrency: true, IsFixed2: false, FontColor: "#1890ff" },
-            { Label: "加工费", Name: "ProcessAmount2", ColumnWidth: 100, IsCurrency: true, IsFixed2: false, FontColor: "#1890ff" },
-            { Label: "利润", Name: "Profit", ColumnWidth: 100, IsCurrency: true, IsFixed2: false, FontColor: "#1890ff" },
-            { Label: "已收金额", Name: "PaidDeposit", ColumnWidth: 100, IsCurrency: true, IsFixed2: false, FontColor: "#1890ff" },
-            { Label: "应收余额", Name: "ShouldPayBalance", ColumnWidth: 100, IsCurrency: true, IsFixed2: false, FontColor: "#1890ff" },
+            { Label: "订单金额", Name: "ActualAmount", ColumnWidth: 120, IsCurrency: true, IsFixed2: false, FontColor: "#1890ff" },
+            { Label: "成本金额", Name: "CostAmount2", ColumnWidth: 120, IsCurrency: true, IsFixed2: false, FontColor: "#1890ff" },
+            { Label: "加工费", Name: "ProcessAmount2", ColumnWidth: 120, IsCurrency: true, IsFixed2: false, FontColor: "#1890ff" },
+            { Label: "利润", Name: "Profit", ColumnWidth: 120, IsCurrency: true, IsFixed2: false, FontColor: "#1890ff" },
+            { Label: "已收金额", Name: "PaidDeposit", ColumnWidth: 120, IsCurrency: true, IsFixed2: false, FontColor: "#1890ff" },
+            { Label: "应收余额", Name: "ShouldPayBalance", ColumnWidth: 120, IsCurrency: true, IsFixed2: false, FontColor: "#1890ff" },
             { Label: "修改时间", Name: "UpdateDate", DataType: "DateTime" }]
     }
 

@@ -51,8 +51,8 @@
 
     function GetActionList() {
         return [{
-            ActionName: "GetBillTypeList", StateName: "BillTypeList",
-            Url: "ViewBillType?$select=Id,IncomePayment,Name&$orderby=CreateDate", DataKey: "ViewBillType", Method: "GET"
+            ActionName: "GetDealingsBillTypeList", StateName: "DealingsBillTypeList",
+            Url: "ViewDealingsBillType?$select=Id,Name&$orderby=CreateDate", DataKey: "ViewDealingsBillType", Method: "GET"
         },
         {
             ActionName: "GetDealingsUserList", StateName: "DealingsUserList", IsUrlParams: true, DataKey: "ViewDealingsBillUser", Method: "GET"
@@ -70,7 +70,7 @@
         },
         {
             Label: "类型", Name: "BillTypeId", AllowClear: true, EditProperty: { AllowClear: false }, OperateLogic: "=",
-            DataType: "Guid", Type: "Select", ServiceDataSource: GetBillTypeDataSource(), IsNullable: false, SearchProperty: { ColSpan: 5 }
+            DataType: "Guid", Type: "Select", ServiceDataSource: GetDealingsBillTypeList(), IsNullable: false, SearchProperty: { ColSpan: 5 }
         },
         { Label: "金额", Max: 100000000, Min: 0.01, Step: 0.01, Scale: 2, IsCurrency: true, Type: "TextBox", ControlType: "InputNumber", Name: "Amount", DataType: "decimal", MaxLength: 10, IsNullable: false },
         {
@@ -99,9 +99,9 @@
         return [{ Value: "2", Text: "支出" }, { Value: "1", Text: "收入" }]
     }
 
-    function GetBillTypeDataSource() {
+    function GetDealingsBillTypeList() {
         return {
-            ActionName: "GetBillTypeList",
+            ActionName: "GetDealingsBillTypeList",
             ValueName: "Id",
             TextName: "Name"
         }

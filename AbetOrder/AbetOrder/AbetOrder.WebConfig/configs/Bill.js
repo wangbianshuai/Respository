@@ -41,7 +41,7 @@
         },
         {
             ActionName: "GetOrderList", StateName: "OrderList",
-            Url: "ViewOrder?$select=Top 100 OrderId,OrderName2&$orderby=OrderDate desc", DataKey: "ViewOrder", Method: "GET"
+            Url: "ViewOrder?$select=OrderId,OrderName2&$orderby=OrderDate desc", DataKey: "ViewOrder", Method: "GET"
         },
         {
             ActionName: "GetUserList", StateName: "UserList",

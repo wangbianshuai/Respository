@@ -35,13 +35,15 @@ namespace AbetOrder.Component
             if (entityData.GetValue<decimal>("ProcessAmount") == oldEntityData.GetValue<decimal>("ProcessAmount")) return GetMessageDict("加工费其值未变化，无需更新！");
 
             Guid saleUser = oldEntityData.GetValue<Guid>("SaleUser");
+            Guid userId = Guid.Parse(this._Request.OperationUser);
 
-            if (saleUser == Guid.Parse(this._Request.OperationUser)) return GetMessageDict("加工费修改人不能为销售员");
+            if (saleUser == userId) return GetMessageDict("加工费修改人不能为销售员自己！");
 
             oldEntityData.SetValue("ProcessAmount", entityData.GetValue("ProcessAmount"));
 
             DealingsBill bill = new DealingsBill();
-            if (!bill.EditOrderDealignsBill(oldEntityData)) return GetMessageDict("添加订单加工费往来失败，请刷新数据再试！");
+
+            if (!bill.EditOrderDealignsBill(oldEntityData, userId)) return GetMessageDict("添加订单加工费往来失败，请刷新数据再试！");
 
             return this.Update();
         }

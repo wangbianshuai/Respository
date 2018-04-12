@@ -44,6 +44,7 @@
     <Compile Include="ContentTag.cs" />
     <Compile Include="Customer.cs" />
     <Compile Include="DealingsBill.cs" />
+    <Compile Include="DealingsBillType.cs" />
     <Compile Include="Order.cs" />
     <Compile Include="PersonBill.cs" />
     <Compile Include="ProcessItem.cs" />

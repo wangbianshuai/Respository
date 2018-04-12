@@ -5,7 +5,7 @@
         EntityName: "ProcessOrder",
         PrimaryKey: "OrderId",
         TemplateName: "EntityListPage",
-        SelectNames: ["OrderId", "OrderCode", "ProcessAmount", "BillStatus", "BillStatusName", "OrderDate", "DeliveryDate", "SaleUserName", "UpdateUserName", "UpdateDate"],
+        SelectNames: ["OrderId", "OrderCode", "ProcessAmount", "ProcessPdfPath", "BillStatus", "BillStatusName", "OrderDate", "DeliveryDate", "SaleUserName", "UpdateUserName", "UpdateDate"],
         SearchNames: ["OrderCode", "SaleUser", "StartDate", "EndDate", "StartDate2", "EndDate2", "BillStatus"],
         DataColumnNames: ["OrderCode", "OrderDate", "DeliveryDate", "SaleUserName", "ProcessAmount", "BillStatusName"],
         OrderByList: [{ Name: "OrderDate", IsDesc: true }],
@@ -46,7 +46,7 @@
             Label: "状态", Name: "BillStatus", ColSpan: 5, X: 2, Y: 3,
             DataType: "int", Type: "Select", DataSource: GetStatusDataSource(), OperateLogic: "=", AllowClear: true, SearchProperty: { ColSpan: 5 }
         },
-        { Label: "订单编号", Name: "OrderCode", IsOpenPage: true, IsAddToken: true, PropertyName: "OrderId", PageUrl: "OrderPdf.aspx?Type=2&OrderId={OrderId}", DataType: "string", ColSpan: 5, X: 2, Y: 1, MaxLength: 50, IsNullable: true },
+        { Label: "订单编号", Name: "OrderCode", IsOpenPage: true, IsRandom: false, PropertyName: "ProcessPdfPath", PageUrl: "ProcessPdfPath", DataType: "string", ColSpan: 5, X: 2, Y: 1, MaxLength: 50, IsNullable: true },
         { Label: "订单日期", Type: "Date", IsDate: true, Name: "OrderDate", DataType: "DateTime", MaxLength: 20, IsNullable: true },
         { Label: "订单日期", Type: "Date", X: 1, Y: 1, ColSpan: 5, OperateLogic: ">=", PropertyName: "OrderDate", Name: "StartDate", PlaceHolder: "大于或等于其值", DataType: "DateTime", MaxLength: 20, IsNullable: true },
         { Label: "至", Type: "Date", ColSpan: 5, X: 1, Y: 2, OperateLogic: "<", PropertyName: "OrderDate", Name: "EndDate", PlaceHolder: "小于或等于其值", DataType: "DateTime", MaxLength: 20, IsNullable: true },

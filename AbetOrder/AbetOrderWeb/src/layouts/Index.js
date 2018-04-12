@@ -144,9 +144,10 @@ export default class Index extends Component {
                         url = Common.AddUrlParams(url, "LoginUserId", LoginUser.UserId)
                         url = Common.AddUrlParams(url, "Token", LoginUser.Token)
                     }
-                    url = Common.AddUrlRandom(url);
+                    if (p.IsRandom !== false) url = Common.AddUrlRandom(url);
 
-                    return <a href={url} target="_blank">{text}</a>
+                    if (Common.IsNullOrEmpty(url)) return null;
+                    else return <a href={url} target="_blank">{text}</a>
                 }
                 return text;
             };
