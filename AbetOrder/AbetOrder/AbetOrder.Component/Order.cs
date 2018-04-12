@@ -14,7 +14,7 @@ namespace AbetOrder.Component
     {
         EntityType _OrderDetailEntity { get; set; }
         EntityType _OrderImageEntity { get; set; }
-        Dictionary<string, EntityType> _ComplexDictionay { get; set; }
+        Dictionary<string, EntityType> _ComplexDictionary { get; set; }
 
         public Order()
         {
@@ -25,9 +25,9 @@ namespace AbetOrder.Component
         {
             _OrderDetailEntity = EntityType.GetEntityType<Entity.OrderDetail>();
             _OrderImageEntity = EntityType.GetEntityType<Entity.OrderImage>();
-            _ComplexDictionay = new Dictionary<string, EntityType>();
-            _ComplexDictionay.Add("Details", _OrderDetailEntity);
-            _ComplexDictionay.Add("Images", _OrderImageEntity);
+            _ComplexDictionary = new Dictionary<string, EntityType>();
+            _ComplexDictionary.Add("Details", _OrderDetailEntity);
+            _ComplexDictionary.Add("Images", _OrderImageEntity);
         }
 
         [Log]
@@ -53,7 +53,7 @@ namespace AbetOrder.Component
                 entityData.SetDefaultValue("OrderIntCode", orderCode);
             }
 
-            return EntityByComplexTypeOperation.Insert<Order>(this, _ComplexDictionay);
+            return EntityByComplexTypeOperation.Insert<Order>(this, _ComplexDictionary);
         }
 
         [Log]
@@ -71,7 +71,18 @@ namespace AbetOrder.Component
                 entityData.SetDefaultValue("OrderCode", orderCode);
                 entityData.SetDefaultValue("OrderIntCode", orderCode);
             }
-            return EntityByComplexTypeOperation.Update<Order>(this, _ComplexDictionay);
+            return EntityByComplexTypeOperation.Update<Order>(this, _ComplexDictionary);
+        }
+
+        [Log]
+        public object UpdateStatus()
+        {
+            IEntityData entityData = this._Request.Entities[this.EntityType.Name].FirstOrDefault();
+
+            entityData.SetDefaultValue("UpdateUser", this._Request.OperationUser);
+            entityData.SetDefaultValue("UpdateDate", DateTime.Now);
+
+            return this.Update();
         }
 
         int GetOrderCode(DateTime orderDate)
@@ -92,7 +103,7 @@ namespace AbetOrder.Component
 
         public object GetOrder()
         {
-            return EntityByComplexTypeOperation.GetEntityData<Order>(this, _ComplexDictionay);
+            return EntityByComplexTypeOperation.GetEntityData<Order>(this, _ComplexDictionary);
         }
     }
 

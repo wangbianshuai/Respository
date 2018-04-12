@@ -74,6 +74,8 @@ namespace AbetOrder.Entity
         public string UpdateUserName { get; set; }
         public string SaleUserName { get; set; }
         public int DataRight { get; set; }
+        public byte BillStatus { get; set; }
+        public string BillStatusName { get; set; }
     }
 
     [TableProperty(Name = "t_d_OrderImage", PrimaryKey = "Id")]

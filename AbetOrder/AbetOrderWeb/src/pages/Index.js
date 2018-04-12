@@ -2,6 +2,7 @@ import User from "./User";
 import OrderEdit from "./OrderEdit";
 import Bill from "./Bill";
 import DealingsBill from "./DealingsBill";
+import OrderList from "./OrderList";
 
 export default (config, page) => {
     switch (config.Name) {
@@ -9,6 +10,7 @@ export default (config, page) => {
         case "OrderEdit": return new OrderEdit(config, page);
         case "Bill": return new Bill(config, page);
         case "DealingsBill": return new DealingsBill(config, page);
+        case "OrderList": return new OrderList(config, page);
         default: return null;
     }
 };

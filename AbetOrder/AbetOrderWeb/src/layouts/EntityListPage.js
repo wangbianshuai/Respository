@@ -22,9 +22,12 @@ export default class EntityListPage extends Index {
         this.InitPageInfo = { PageSize: this.props.Property.PageSize, PageIndex: 1, PageCount: 0, PageRecord: 0 };
         this.PageInfo = this.InitPageInfo;
 
+
         const searchView = this.props.Property.SearchView || [];
         const operationView = this.props.Property.OperationView || [];
         const eidtView = this.props.Property.EditView || [];
+
+        this.InitSearchConditionDefalutValue(searchView);
 
         searchView.SetDataLoading = (isLoading) => this.setState({ IsDataLoading: isLoading });
 
@@ -37,6 +40,20 @@ export default class EntityListPage extends Index {
         this.InitDataProperties();
 
         this.props.Property.EditView.SetEdit = (data) => this.SetEdit(data);
+    }
+
+    InitSearchConditionDefalutValue(searchView) {
+        if (!Common.IsArray(searchView.Properties)) return;
+        const { QueryString } = this.props.Page;
+
+        let v = ""
+        searchView.Properties.forEach(p => {
+            v = Common.GetObjValue(QueryString, p.Name);
+            if (!Common.IsNullOrEmpty(v)) {
+                p.DefaultValue = v;
+                p.IsQueryDefault = true;
+            }
+        })
     }
 
     SetEdit(data) {

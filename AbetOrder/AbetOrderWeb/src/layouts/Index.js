@@ -21,10 +21,28 @@ export default class Index extends Component {
         for (let i = 0; i < actionList.length; i++) {
             if (i > 0) list.push(<Divider type="vertical" key={i} />)
             if (actionList[i].IsConfrim) list.push(<Popconfirm2 Property={actionList[i]} Page={this.props.Page} Params={record} key={actionList[i].Name} />)
+            else if (actionList[i].IsToPage) list.push(this.GetLinkAction(actionList[i], record));
             else list.push(<AButton Property={actionList[i]} Page={this.props.Page} Params={record} key={actionList[i].Name} />)
         }
 
         return (<span>{list.map(m => m)}</span>)
+    }
+
+    GetLinkAction(p, record) {
+        const text = p.Text;
+        if (!Common.IsNullOrEmpty(text)) {
+            let url = p.PageUrl, v;
+
+            p.PropertyNames.forEach(n => {
+                v = record[n];
+                url = url.replace("{" + n + "}", escape(v));
+            })
+
+            url = Common.AddUrlRandom(url);
+
+            return <Link to={url} key={p.Name}>{text}</Link>
+        }
+        return text;
     }
 
     InitSetView(view) {
@@ -107,10 +125,28 @@ export default class Index extends Component {
             p.Render = (text, record) => {
                 if (!Common.IsNullOrEmpty(text)) {
                     const dataValue = record[p.PropertyName];
-                    let url = p.PageUrl.replace("{" + p.PropertyName + "}", dataValue);
+                    let url = p.PageUrl.replace("{" + p.PropertyName + "}", escape(dataValue));
                     url = Common.AddUrlRandom(url);
 
                     return <Link to={url}>{text}</Link>
+                }
+                return text;
+            };
+        }
+        else if (p.IsOpenPage && p.Render === undefined) {
+            p.Render = (text, record) => {
+                if (!Common.IsNullOrEmpty(text)) {
+                    const dataValue = record[p.PropertyName];
+                    let url = p.PageUrl.replace("{" + p.PropertyName + "}", escape(dataValue));
+
+                    if (p.IsAddToken) {
+                        const { LoginUser } = this.props.Page;
+                        url = Common.AddUrlParams(url, "LoginUserId", LoginUser.UserId)
+                        url = Common.AddUrlParams(url, "Token", LoginUser.Token)
+                    }
+                    url = Common.AddUrlRandom(url);
+
+                    return <a href={url} target="_blank">{text}</a>
                 }
                 return text;
             };

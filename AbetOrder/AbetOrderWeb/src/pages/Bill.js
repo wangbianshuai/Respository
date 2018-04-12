@@ -1,3 +1,5 @@
+import * as Common from "../utils/Common";
+
 export default class Bill {
     constructor(pageConfig, page) {
         this.PageConfig = pageConfig;
@@ -9,6 +11,10 @@ export default class Bill {
         this.PageConfig.DataView.ExpandSetOperation = (actionList, record) => this.ExpandSetOperation(actionList, record);
 
         this.PageConfig.DataView.ExpandedRowRender = (record) => this.ExpandedRowRender(record);
+
+        this.PageConfig.EditView.Properties.forEach(p => {
+            if (p.Name === "DataId") p.DefaultValue = Common.GetObjValue(this.Page.QueryString, "OrderId");
+        });
     }
 
     ExpandSetOperation(actionList, record) {

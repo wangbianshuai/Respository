@@ -171,6 +171,6 @@ export default class Query extends Index {
     ClearConditions() {
         const { PageConfig: { SearchView } } = this.Page.props
 
-        SearchView.Properties.forEach(p => p.SetValue && p.SetValue(null));
+        SearchView.Properties.forEach(p => p.SetValue && p.SetValue(p.IsQueryDefault ? p.DefaultValue : null));
     }
 }
