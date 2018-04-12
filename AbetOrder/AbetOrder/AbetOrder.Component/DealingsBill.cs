@@ -14,11 +14,54 @@ namespace AbetOrder.Component
     {
         public DealingsBill()
         {
+            this.EntityType = EntityType.GetEntityType<Entity.DealingsBill>();
         }
 
         public DealingsBill(Request request)
             : base(request)
         {
+        }
+
+        public bool EditOrderDealignsBill(IEntityData entityData)
+        {
+            Guid orderId = entityData.GetValue<Guid>("OrderId");
+            IEntityData bill = GetOrderDealingsBill(orderId);
+            if (bill == null)
+            {
+                Guid billTypeId = new BillType().GetOrderProcessBillTypeId();
+                IEntityData insertData = new EntityData(this.EntityType);
+                insertData.SetValue("DataId", orderId);
+                insertData.SetValue("Amount", entityData.GetValue<decimal>("ProcessAmount"));
+                insertData.SetValue("Remark", string.Format("订单编号{0}加工费", entityData.GetStringValue("OrderCode")));
+                insertData.SetValue("BillTypeId", billTypeId);
+                insertData.SetValue("CreateUser", this._Request.OperationUser);
+                insertData.SetValue("UpdateDate", DateTime.Now);
+                insertData.SetValue("DealignsUser", entityData.GetValue("SaleUser"));
+                insertData.SetValue("BillData", DateTime.Now);
+
+                object primaryKey = null;
+                return this.InsertEntity(insertData, out primaryKey);
+            }
+            else
+            {
+                object id = bill.GetValue("Id");
+                IEntityData updateData = new EntityData(this.EntityType);
+                updateData.SetValue("Id", id);
+                updateData.SetValue("Amount", entityData.GetValue<decimal>("ProcessAmount"));
+
+                return this.UpdateEntityByPrimaryKey(id, updateData);
+            }
+
+            return true;
+        }
+
+        IEntityData GetOrderDealingsBill(Guid orderId)
+        {
+            IQuery query = new Query(this.EntityType.TableName);
+            query.Select("Id,BillStatus");
+            query.Where(string.Format("where IsDelete=0 and OrderId='{0}'", orderId));
+
+            return this.SelectEntity(query);
         }
 
         [Log]

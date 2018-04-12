@@ -53,6 +53,11 @@ namespace AbetOrder.Entity
         }
     }
 
+    [TableProperty(Name = "t_d_Order", PrimaryKey = "OrderId", NoSelectNames = "IsDelete")]
+    public class ProcessOrder : Order
+    {
+    }
+
     [TableProperty(Name = "v_Order", PrimaryKey = "OrderId", NoSelectNames = "IsDelete")]
     public class ViewOrder : Order
     {

@@ -47,6 +47,7 @@
     <Compile Include="Order.cs" />
     <Compile Include="PersonBill.cs" />
     <Compile Include="ProcessItem.cs" />
+    <Compile Include="ProcessOrder.cs" />
     <Compile Include="TemplateHtml.cs" />
     <Compile Include="User.cs" />
     <Compile Include="CommonOperation.cs" />
