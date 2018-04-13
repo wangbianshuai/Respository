@@ -82,6 +82,19 @@ namespace AbetOrder.Component
             entityData.SetDefaultValue("UpdateUser", this._Request.OperationUser);
             entityData.SetDefaultValue("UpdateDate", DateTime.Now);
 
+            decimal costAmount = entityData.GetValue<decimal>("CostAmount");
+            decimal paidDeposit = entityData.GetValue<decimal>("PaidDeposit");
+
+            IEntityData oldEntityData = this.SelectEntityByPrimaryKey(this._QueryRequest.PrimaryKeyProperty.Value);
+            if (oldEntityData != null)
+            {
+                decimal actualAmount = oldEntityData.GetValue<decimal>("ActualAmount");
+                decimal processAmount = oldEntityData.GetValue<decimal>("ProcessAmount");
+
+                entityData.SetValue("ShouldPayBalance", actualAmount - paidDeposit);
+                entityData.SetValue("Profit", actualAmount - costAmount - processAmount);
+            }
+
             return this.Update();
         }
 
@@ -99,6 +112,14 @@ namespace AbetOrder.Component
             int orderStatus = entityData.GetValue<int>("OrderStatus");
             if (orderStatus == 0)
             {
+                IEntityData oldEntityData = this.SelectEntityByPrimaryKey(orderId);
+                if (oldEntityData != null)
+                {
+                    decimal actualAmount = oldEntityData.GetValue<decimal>("ActualAmount");
+                    decimal costAmount = oldEntityData.GetValue<decimal>("CostAmount");
+
+                    entityData.SetValue("Profit", actualAmount - costAmount);
+                }
                 entityData.SetValue("ProcessAmount", null);
                 new DealingsBill().DeleteOrderDealingsBill(orderId);
             }

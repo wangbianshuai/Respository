@@ -32,7 +32,9 @@ namespace AbetOrder.Component
 
             if (oldEntityData == null) return GetMessageDict("更新数据不存在，请刷新数据！");
 
-            if (entityData.GetValue<decimal>("ProcessAmount") == oldEntityData.GetValue<decimal>("ProcessAmount")) return GetMessageDict("加工费其值未变化，无需更新！");
+            decimal processAmount = entityData.GetValue<decimal>("ProcessAmount");
+
+            if (processAmount == oldEntityData.GetValue<decimal>("ProcessAmount")) return GetMessageDict("加工费其值未变化，无需更新！");
 
             Guid saleUser = oldEntityData.GetValue<Guid>("SaleUser");
             Guid userId = Guid.Parse(this._Request.OperationUser);
@@ -44,6 +46,11 @@ namespace AbetOrder.Component
             DealingsBill bill = new DealingsBill();
 
             if (!bill.EditOrderDealignsBill(oldEntityData, userId)) return GetMessageDict("添加订单加工费往来失败，请刷新数据再试！");
+
+            decimal actualAmount = oldEntityData.GetValue<decimal>("ActualAmount");
+            decimal costAmount = oldEntityData.GetValue<decimal>("CostAmount");
+
+            entityData.SetValue("Profit", actualAmount - costAmount - processAmount);
 
             return this.Update();
         }
