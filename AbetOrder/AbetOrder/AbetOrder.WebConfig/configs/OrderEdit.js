@@ -8,6 +8,8 @@
         InsertUrl: "Order/Insert2",
         UpdateUrl: "Order/Update2",
         GetEntityDataUrl: "Order/GetOrder",
+        UpdateStatusUrl: "Order/UpdateStatus",
+        UpdateStatusActionName: "UpdateStatus",
         ActionList: GetActionList(),
         OperationProperties: GetOperationProperties(),
         TabViews: [GetOrderView(), GetOrderDetailView(), GetOrderImageView()]
@@ -19,8 +21,11 @@
             Type: "Button",
             Text: "提交加工",
             Icon: "check",
-            ActionType: "ExpandPage",
-            ActionName: "UpdateStatus1",
+            ActionType: "EntityEdit",
+            ActionName: "UpdateStatus2",
+            ConfirmMessage: "确定要提交加工吗？",
+            StatusName: "OrderStatus",
+            StatusValue: 1,
             IsEditEnable: true,
             IsVisible: false
         },
@@ -29,8 +34,11 @@
             Type: "Button",
             Text: "存档完成",
             Icon: "check",
-            ActionType: "ExpandPage",
+            ActionType: "EntityEdit",
             ActionName: "UpdateStatus2",
+            ConfirmMessage: "确定要存档完成吗？",
+            StatusName: "OrderStatus",
+            StatusValue: 2,
             IsEditEnable: true,
             IsVisible: false
         },
@@ -39,8 +47,11 @@
             Type: "Button",
             Text: "审核加工费",
             Icon: "check",
-            ActionType: "ExpandPage",
-            ActionName: "CheckPrcoessAmount",
+            Icon: "check",
+            ActionType: "EntityEdit",
+            ActionName: "UpdateStatus2",
+            StatusName: "OrderStatus",
+            StatusValue: 3,
             IsEditEnable: true,
             IsVisible: false
         },
@@ -49,8 +60,11 @@
             Type: "Button",
             Text: "撤回",
             Icon: "edit",
-            ActionType: "ExpandPage",
-            ActionName: "UpdateStatus0",
+            ActionType: "EntityEdit",
+            ActionName: "UpdateStatus2",
+            ConfirmMessage: "确定要撤回吗？",
+            StatusName: "OrderStatus",
+            StatusValue: 0,
             IsEditEnable: true,
             IsVisible: false
         },
@@ -90,6 +104,9 @@
         return [{
             ActionName: "GetCustomerList", StateName: "CustomerList",
             Url: "ViewCustomer?$select=Id,Name&$orderby=CreateDate", DataKey: "ViewCustomer", Method: "GET"
+        },
+        {
+            ActionName: "UpdateStatus", StateName: "UpdateStatusInfo", DataKey: "", Method: "PUT"
         },
         {
             ActionName: "GetTemplateHtmlList", StateName: "TemplateHtmlList",

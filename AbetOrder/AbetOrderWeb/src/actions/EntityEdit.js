@@ -18,6 +18,9 @@ export default class EntityEdit extends Index {
         //更新
         this.ReceiveUpdateInfo(props, nextProps);
 
+        //更新
+        this.ReceiveUpdateStatusInfo(props, nextProps);
+
         //删除
         this.ReceiveDeleteInfo(props, nextProps);
     }
@@ -67,6 +70,46 @@ export default class EntityEdit extends Index {
         }
     }
 
+    ReceiveUpdateStatusInfo(props, nextProps) {
+        if (this.Page.JudgeChanged(nextProps, "UpdateStatusInfo")) {
+            if (nextProps.UpdateStatusInfo && nextProps.UpdateStatusInfo.Succeed) {
+                const { PageConfig } = props;
+
+                if (PageConfig.IsEditPage) {
+                    const url = this.AddPrimaryKey("/" + PageConfig.Name, PageConfig);
+                    props.ToPage(url);
+                }
+                else {
+                    const { EditView } = PageConfig;
+
+                    EditView.SetEdit && EditView.SetEdit({ IsVisible: false });
+
+                    //刷新查询
+                    this.Page.EventActions.Query.Refresh("Update");
+                }
+            }
+            else if (this.UpdateProperty) {
+                this.SetPropertyDisabled(this.UpdateProperty, false);
+            }
+        }
+    }
+
+    AddPrimaryKey(url, pageConfig) {
+        let entityData = pageConfig.EntityData;
+        const primaryKey = pageConfig.PrimaryKey;
+
+        if (!entityData && pageConfig.EditView) entityData = pageConfig.EditView.EntityData;
+
+        if (entityData) {
+            url = Common.AddUrlParams(url, primaryKey, entityData[primaryKey]);
+        }
+        else if (this.Page.QueryString) {
+            const id = Common.GetObjValue(this.Page.QueryString, primaryKey);
+            url = Common.AddUrlParams(url, primaryKey, id);
+        }
+        return url;
+    }
+
     //删除
     ReceiveDeleteInfo(props, nextProps) {
         if (this.Page.JudgeChanged(nextProps, "DeleteInfo")) {
@@ -87,6 +130,10 @@ export default class EntityEdit extends Index {
 
     SetOkDisabled(disabled) {
         this.OkProperty && this.OkProperty.SetDisabled && this.OkProperty.SetDisabled(disabled);
+    }
+
+    SetPropertyDisabled(property, disabled) {
+        property.SetDisabled && property.SetDisabled(disabled);
     }
 
     ReceiveEntityData(props, nextProps) {
@@ -229,6 +276,8 @@ export default class EntityEdit extends Index {
                 id = EditView.EntityData[PageConfig.PrimaryKey];
             }
 
+            this.SetPropertyDisabled(property, true);
+            this.UpdateProperty = property;
             this.DeleteEntityData(id);
         });
     }
@@ -239,8 +288,8 @@ export default class EntityEdit extends Index {
         this.UpdateEntityStatus(params[PageConfig.PrimaryKey], property, params)
     }
 
-    UpdateStatus2(property, params, confirmMessage) {
-        this.Page.ShowConfirm(confirmMessage, () => {
+    UpdateStatus2(property, params) {
+        this.Page.ShowConfirm(property.ConfirmMessage, () => {
             const { PageConfig } = this.Page.props;
 
             let id = ""
@@ -256,6 +305,8 @@ export default class EntityEdit extends Index {
                 params = EditView.EntityData;
             }
 
+            this.SetPropertyDisabled(property, true);
+            this.UpdateProperty = property;
             this.UpdateEntityStatus(id, property, params);
         });
     }
@@ -283,7 +334,8 @@ export default class EntityEdit extends Index {
         data[PageConfig.PrimaryKey] = id;
         if (params.RowVersion) data.RowVersion = params.RowVersion;
 
-        this.SaveData("Update", url, data, false)
+        const actionName = PageConfig.UpdateStatusActionName || "Update";
+        this.SaveData(actionName, url, data, false)
     }
 
     GetEntityData(entityData) {

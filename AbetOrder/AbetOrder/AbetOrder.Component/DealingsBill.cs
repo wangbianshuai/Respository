@@ -22,6 +22,48 @@ namespace AbetOrder.Component
         {
         }
 
+        public void DeleteOrderDealingsBill(Guid orderId)
+        {
+            IEntityData bill = GetOrderDealingsBill(orderId);
+            if (bill != null)
+            {
+                object id = bill.GetValue("Id");
+                IEntityData updateData = new EntityData(this.EntityType);
+                updateData.SetValue("Id", id);
+                updateData.SetValue("IsDelete", 1);
+
+                this.UpdateEntityByPrimaryKey(id, updateData);
+            }
+        }
+
+        public byte GetBillStatus(Guid orderId)
+        {
+            IEntityData bill = GetOrderDealingsBill(orderId);
+            if (bill != null) return bill.GetValue<byte>("BillStatus");
+
+            return 0;
+        }
+
+        [Log]
+        public object CheckProcessAmount(Guid orderId, Guid userId)
+        {
+            IEntityData bill = GetOrderDealingsBill(orderId);
+            if (bill == null) return GetMessageDict("此订单加工费往来不存在！");
+
+            if (bill.GetValue<int>("BillStatus") == 1) return GetMessageDict("此订单已审核加工费！");
+
+            if (bill.GetValue<Guid>("DealingsUser") != userId) return GetMessageDict("审核加工费需销售员确认操作！");
+
+            IEntityData entityData = new EntityData(this.EntityType);
+
+            entityData.SetValue("Id", bill.GetValue("Id"));
+            entityData.SetValue("BillStatus", 1);
+
+            entityData.SetValue("ApproveDate", DateTime.Now);
+
+            return GetBoolDict(this.UpdateEntityByPrimaryKey(bill.GetValue("Id"), entityData));
+        }
+
         public bool EditOrderDealignsBill(IEntityData entityData, Guid userId)
         {
             Guid orderId = entityData.GetValue<Guid>("OrderId");
@@ -60,7 +102,7 @@ namespace AbetOrder.Component
         IEntityData GetOrderDealingsBill(Guid orderId)
         {
             IQuery query = new Query(this.EntityType.TableName);
-            query.Select("Id,BillStatus");
+            query.Select("Id,BillStatus,DealingsUser");
             query.Where(string.Format("where IsDelete=0 and DataId='{0}'", orderId));
 
             return this.SelectEntity(query);

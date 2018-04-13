@@ -48,7 +48,7 @@ function InitConfig(a, b) {
     a.IsEditPage = true;
     a.StateList = [{ Name: b.Name, StateName: "Loading" }];
 
-    const copyNames = ["Title", "EntityName", "PrimaryKey", "Name", "InsertUrl", "UpdateUrl", "GetEntityDataUrl", "EditPageUrl",
+    const copyNames = ["Title", "EntityName", "PrimaryKey", "UpdateStatusActionName", "UpdateStatusUrl", "Name", "InsertUrl", "UpdateUrl", "GetEntityDataUrl", "EditPageUrl",
         "InitEventActionList", "ActionList", "Properties"];
 
     Common.Copy(a, b, copyNames)

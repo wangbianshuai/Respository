@@ -93,7 +93,29 @@ namespace AbetOrder.Component
             entityData.SetDefaultValue("UpdateUser", this._Request.OperationUser);
             entityData.SetDefaultValue("UpdateDate", DateTime.Now);
 
+            Guid orderId = (Guid)this._QueryRequest.PrimaryKeyProperty.Value;
+            Guid userId = Guid.Parse(this._Request.OperationUser);
+
+            int orderStatus = entityData.GetValue<int>("OrderStatus");
+            if (orderStatus == 0)
+            {
+                entityData.SetValue("ProcessAmount", null);
+                new DealingsBill().DeleteOrderDealingsBill(orderId);
+            }
+            else if (orderStatus == 1) GenProcessOrderPdf(orderId);
+            else if (orderStatus == 3) return new DealingsBill().CheckProcessAmount(orderId, userId);
+            else if (orderStatus == 2)
+            {
+                int billStatus = new DealingsBill().GetBillStatus(orderId);
+                if (billStatus == 0) return GetMessageDict("加工费未审核确认，请先审核加工费！");
+            }
+            
             return this.Update();
+        }
+
+        void GenProcessOrderPdf(Guid orderId)
+        {
+
         }
 
         int GetOrderCode(DateTime orderDate)
@@ -114,7 +136,14 @@ namespace AbetOrder.Component
 
         public object GetOrder()
         {
-            return EntityByComplexTypeOperation.GetEntityData<Order>(this, _ComplexDictionary);
+            IEntityData entityData = EntityByComplexTypeOperation.GetEntityData<Order>(this, _ComplexDictionary) as IEntityData;
+
+            if (entityData != null)
+            {
+                entityData.SetValue("BillStatus", new DealingsBill().GetBillStatus(entityData.GetValue<Guid>("OrderId")));
+            }
+
+            return entityData;
         }
     }
 

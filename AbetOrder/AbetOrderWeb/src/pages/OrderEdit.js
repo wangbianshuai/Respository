@@ -44,7 +44,15 @@ export default class OrderEdit {
             if (p.Name !== "AddAction" && p.Name !== "OrderPdfAction" && p.Name !== "BillAction") p.IsDataRight = false;
         });
 
-        this.PageConfig.TabViews[0].EditView.DataLoad = this.EditViewDataLoad.bind(this)
+        this.PageConfig.TabViews[0].EditView.DataLoad = this.EditViewDataLoad.bind(this);
+
+        this.ExpandActions();
+    }
+
+    ExpandActions() {
+        this.Page.ExpandActions.ToBill = this.ToBill.bind(this);
+        this.Page.ExpandActions.OrderPdf = this.OrderPdf.bind(this);
+        this.Page.ExpandActions.ProcessOrderPdf = this.ProcessOrderPdf.bind(this);
     }
 
     EditViewDataLoad() {
@@ -68,8 +76,12 @@ export default class OrderEdit {
             this.PageConfig.OperationView.Properties.forEach(p => {
                 if (p.Name === "SaveAction" || p.Name === "DeleteAction") this.SetButtonVisible(p, s === 0);
                 else if (p.Name === "UpdateStatus1Action") this.SetButtonVisible(p, s === 0);
-                else if (p.Name === "UpdateStatus2Action" || p.Name === "UpdateStatus0Action" || p.Name === "CheckPrcoessAmountAction") this.SetButtonVisible(p, s === 1);
-                else if (p.Name === "ProcessOrderPdfAction") this.SetButtonVisible(p, s > 0)
+                else if (p.Name === "UpdateStatus2Action" || p.Name === "UpdateStatus0Action") this.SetButtonVisible(p, s === 1);
+                else if (p.Name === "ProcessOrderPdfAction") this.SetButtonVisible(p, s > 0);
+                else if (p.Name === "CheckPrcoessAmountAction" && s === 1 && EntityData.ProcessAmount > 0 && EntityData.BillStatus === 0) {
+                    p.IsDataRight = true;
+                    p.ConfirmMessage = "确认要审核通过加工费：" + Common.ToCurrency(EntityData.ProcessAmount, false) + "元吗？";
+                }
             });
 
             this.PageConfig.OperationView.RefreshVisible();
@@ -140,5 +152,32 @@ export default class OrderEdit {
         this.ExtraChargeProperty.SetValue(extraChange);
 
         this.DiscountRateChange(this.DiscountRateProperty.GetValue(), amount, extraChange)
+    }
+
+    ToBill(property, params) {
+        const { EntityData } = this.PageConfig;
+        if (!EntityData) return;
+
+        let url = "/Bill?OrderName2=" + escape(EntityData.OrderCode) + "&OrderId=" + EntityData.OrderId;
+        this.Page.props.ToPage(url);
+    }
+
+    OrderPdf(property, params) {
+        this.OpenPdf("OrderPdfPath", "订单");
+    }
+
+    ProcessOrderPdf(property, params) {
+        this.OpenPdf("ProcessPdfPath", "加工单");
+    }
+
+    OpenPdf(name, label) {
+        const { EntityData } = this.PageConfig;
+        const url = EntityData && EntityData[name] ? EntityData[name] : "";
+        if (Common.IsNullOrEmpty(url)) {
+            this.Page.ShowMessage(label + "PDF未生成！")
+            return;
+        }
+
+        window.open(url);
     }
 }

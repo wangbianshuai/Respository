@@ -57,7 +57,7 @@ function InitTagViewConfig(a, b) {
     a.IsUpdate = false;
     a.IsDelete = false;
 
-    const copyNames = ["IsTabView", "EntityName", "PrimaryKey", "Name", "TabLabel", "TemplateName",
+    const copyNames = ["IsTabView", "EntityName", "PrimaryKey", "UpdateStatusActionName", "Name", "TabLabel", "TemplateName", "UpdateStatusUrl",
         "InitEventActionList", "ActionList", "Properties"];
 
     Common.Copy(a, b, copyNames)

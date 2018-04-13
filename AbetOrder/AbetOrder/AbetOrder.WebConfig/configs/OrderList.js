@@ -7,12 +7,14 @@
         TemplateName: "EntityListPage",
         SelectNames: ["OrderId", "RowVersion", "OrderStatus", "OrderCode", "OrderDate", "DeliveryDate", "CustomerName", "SaleUserName", "ActualAmount", "CostAmount2", "ProcessAmount2", "Profit", "PaidDeposit", "ShouldPayBalance", "OrderStatusName"],
         SearchNames: ["OrderCode", "CustomerId", "SaleUser", "OrderStatus", "StartDate", "EndDate", "StartDate2", "EndDate2"],
-        DataColumnNames: ["OrderCode", "OrderDate", "DeliveryDate", "CustomerName", "ActualAmount", "CostAmount2", "ProcessAmount2", "Profit", "PaidDeposit", "ShouldPayBalance", "OrderStatusName", "SaleUserName"],
+        DataColumnNames: ["OrderCode", "OrderDate", "OrderStatusName", "CustomerName", "ActualAmount", "CostAmount2", "ProcessAmount2", "Profit", "PaidDeposit", "ShouldPayBalance", "DeliveryDate", "SaleUserName"],
         EditNames: ["CostAmount", "PaidDeposit"],
         OrderByList: [{ Name: "OrderDate", IsDesc: true }],
         ActionList: GetActionList(),
         Properties: GetProperties(),
         EditPageUrl: "/OrderEdit",
+        UpdateStatusUrl: "Order/UpdateStatus",
+        UpdateStatusActionName: "UpdateStatus",
         TableWidth: 1600,
         OperationColumnWidth: 240,
         OperationColumnFixed: "right",
@@ -39,6 +41,9 @@
         return [{
             ActionName: "GetCustomerList", StateName: "CustomerList",
             Url: "ViewCustomer?$select=Id,Name&$orderby=CreateDate", DataKey: "ViewCustomer", Method: "GET"
+        },
+        {
+            ActionName: "UpdateStatus", StateName: "UpdateStatusInfo", DataKey: "", Method: "PUT"
         },
         {
             ActionName: "GetUserList", StateName: "UserList",
