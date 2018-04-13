@@ -52,7 +52,7 @@ export default class Index extends Component {
         let xList = [];
 
         properties.forEach(p => {
-            if (!(p.IsVisible === false)) {
+            if (!(p.IsVisible === false) && p.IsDataRight !== false) {
                 p.Id = p.Id || Common.CreateGuid()
                 if (rowDict[p.X] === undefined) { rowDict[p.X] = []; xList.push({ RowId: p.RowId, X: p.X }); }
                 rowDict[p.X].push(p)

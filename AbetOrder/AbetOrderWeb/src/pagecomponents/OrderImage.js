@@ -10,7 +10,7 @@ export default class OrderImage extends Index {
     constructor(props) {
         super(props)
 
-        this.state = { Images: [] }
+        this.state = { Images: [], IsEdit: !props.Page.IsEdit }
     }
 
     componentWillMount() {
@@ -26,7 +26,7 @@ export default class OrderImage extends Index {
             images.forEach(d => d.ImageId = Common.CreateGuid());
             images = images.sort((a, b) => a.DisplayIndex > b.DisplayIndex ? 1 : -1);
         }
-        this.setState({ Images: images });
+        this.setState({ Images: images, IsEdit: value.OrderStatus === 0 });
     }
 
     GetValue() {
@@ -94,11 +94,13 @@ export default class OrderImage extends Index {
     render() {
         return (
             <div>
-                <Row gutter={6} style={{ padding: "8px 8px" }}>
-                    <Col span={24}>
-                        <Button onClick={this.SetDisplayIndex.bind(this)}>重新排序</Button>
-                    </Col>
-                </Row>
+                {this.state.IsEdit ?
+                    <Row gutter={6} style={{ padding: "8px 8px" }}>
+                        <Col span={24}>
+                            <Button onClick={this.SetDisplayIndex.bind(this)}>重新排序</Button>
+                        </Col>
+                    </Row> : null
+                }
                 <Row gutter={6} className={styles.RowHeader}>
                     <Col span={2}>
                         序号
@@ -109,19 +111,23 @@ export default class OrderImage extends Index {
                     <Col span={4}>
                         缩略图
                     </Col>
-                    <Col span={10}>
-                        上传图片
-                    </Col>
-                    <Col span={2}>
-                        操作
-                    </Col>
+                    {this.state.IsEdit ?
+                        <Col span={10}>
+                            上传图片
+                    </Col> : null}
+                    {this.state.IsEdit ?
+                        <Col span={2}>
+                            操作
+                    </Col> : null}
                 </Row>
-                {this.state.Images.map(m => <OrderImageItem Page={this.props.Page} View={this.props.Property} Data={m} key={m.ImageId} Delete={this.Delete.bind(this, m)} />)}
-                <Row gutter={16}>
-                    <Col span={24}>
-                        {this.GetAddButton("添加设计图")}
-                    </Col>
-                </Row>
+                {this.state.Images.map(m => <OrderImageItem Page={this.props.Page} IsEdit={this.state.IsEdit} View={this.props.Property} Data={m} key={m.ImageId} Delete={this.Delete.bind(this, m)} />)}
+                {this.state.IsEdit ?
+                    <Row gutter={16}>
+                        <Col span={24}>
+                            {this.GetAddButton("添加设计图")}
+                        </Col>
+                    </Row> : null
+                }
             </div>
         )
     }

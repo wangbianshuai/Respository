@@ -37,7 +37,7 @@ namespace AbetOrder.Component
                 insertData.SetValue("CreateUser", userId);
                 insertData.SetValue("UpdateDate", DateTime.Now);
                 insertData.SetValue("DealingsUser", entityData.GetValue("SaleUser"));
-                insertData.SetValue("BillData", DateTime.Now);
+                insertData.SetValue("BillDate", DateTime.Now);
 
                 object primaryKey = null;
                 return this.InsertEntity(insertData, out primaryKey);
@@ -47,6 +47,10 @@ namespace AbetOrder.Component
                 object id = bill.GetValue("Id");
                 IEntityData updateData = new EntityData(this.EntityType);
                 updateData.SetValue("Id", id);
+                updateData.SetValue("CreateUser", userId);
+                updateData.SetValue("UpdateDate", DateTime.Now);
+                updateData.SetValue("DealingsUser", entityData.GetValue("SaleUser"));
+                updateData.SetValue("BillDate", DateTime.Now);
                 updateData.SetValue("Amount", entityData.GetValue<decimal>("ProcessAmount"));
 
                 return this.UpdateEntityByPrimaryKey(id, updateData);

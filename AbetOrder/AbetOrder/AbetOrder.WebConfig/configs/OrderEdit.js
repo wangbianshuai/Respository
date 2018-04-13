@@ -9,12 +9,62 @@
         UpdateUrl: "Order/Update2",
         GetEntityDataUrl: "Order/GetOrder",
         ActionList: GetActionList(),
-        //OperationProperties: GetOperationProperties(),
+        OperationProperties: GetOperationProperties(),
         TabViews: [GetOrderView(), GetOrderDetailView(), GetOrderImageView()]
     };
 
     function GetOperationProperties() {
         return [{
+            Name: "UpdateStatus1Action",
+            Type: "Button",
+            Text: "提交加工",
+            Icon: "check",
+            ActionType: "ExpandPage",
+            ActionName: "UpdateStatus1",
+            IsEditEnable: true,
+            IsVisible: false
+        },
+        {
+            Name: "UpdateStatus2Action",
+            Type: "Button",
+            Text: "存档完成",
+            Icon: "check",
+            ActionType: "ExpandPage",
+            ActionName: "UpdateStatus2",
+            IsEditEnable: true,
+            IsVisible: false
+        },
+        {
+            Name: "CheckPrcoessAmountAction",
+            Type: "Button",
+            Text: "审核加工费",
+            Icon: "check",
+            ActionType: "ExpandPage",
+            ActionName: "CheckPrcoessAmount",
+            IsEditEnable: true,
+            IsVisible: false
+        },
+        {
+            Name: "UpdateStatus0Action",
+            Type: "Button",
+            Text: "撤回",
+            Icon: "edit",
+            ActionType: "ExpandPage",
+            ActionName: "UpdateStatus0",
+            IsEditEnable: true,
+            IsVisible: false
+        },
+        {
+            Name: "BillAction",
+            Type: "Button",
+            Text: "收支明细",
+            Icon: "link",
+            ActionType: "ExpandPage",
+            ActionName: "ToBill",
+            IsEditEnable: true,
+            IsVisible: false
+        },
+        {
             Name: "OrderPdfAction",
             Type: "Button",
             Text: "订单Pdf",

@@ -9,7 +9,7 @@ export default class TabsEntityEditPage extends Index {
     constructor(props) {
         super(props)
 
-        this.Name = "TabsEntityEditPage";
+        this.state = { RefreshId: Common.CreateGuid() }
     }
 
     componentWillMount() {
@@ -22,11 +22,21 @@ export default class TabsEntityEditPage extends Index {
             operationView.Properties.forEach(p => { if (p.IsEditEnable) p.IsVisible = true; });
         }
 
+        operationView.RefreshVisible = this.RefreshOperationViewVisible.bind(this);
+
         this.OperationView = this.InitSetView(operationView);
 
         if (!Common.IsNullOrEmpty(id)) {
             EventActions.EntityEdit.GetEntityDataById(id);
         }
+    }
+
+    RefreshOperationViewVisible() {
+        const operationView = this.props.Property.OperationView || [];
+
+        this.OperationView = this.InitSetView(operationView);
+
+        this.setState({ RefreshId: Common.CreateGuid() })
     }
 
     RenderTabPanel(view) {

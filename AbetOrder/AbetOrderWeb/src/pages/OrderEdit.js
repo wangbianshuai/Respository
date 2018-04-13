@@ -36,6 +36,48 @@ export default class OrderEdit {
         });
 
         this.Page.SetAmountExtraCharge = this.SetAmountExtraCharge.bind(this);
+
+        const id = Common.GetObjValue(this.Page.QueryString, "OrderId");
+        this.Page.IsEdit = !Common.IsNullOrEmpty(id);
+
+        this.Page.IsEdit && this.PageConfig.OperationView.Properties.forEach(p => {
+            if (p.Name !== "AddAction" && p.Name !== "OrderPdfAction" && p.Name !== "BillAction") p.IsDataRight = false;
+        });
+
+        this.PageConfig.TabViews[0].EditView.DataLoad = this.EditViewDataLoad.bind(this)
+    }
+
+    EditViewDataLoad() {
+        const { EntityData } = this.PageConfig.TabViews[0].EditView;
+        if (EntityData && EntityData.OrderStatus > 0) {
+            this.PageConfig.TabViews[0].EditView.Properties.forEach(p => {
+                if (!p.IsReadonly) p.IsReadonly = true;
+                if (p.SetReadonly) p.SetReadonly(true);
+            })
+        }
+
+        this.SetOperationButtons();
+    };
+
+    SetOperationButtons() {
+        const { EntityData } = this.PageConfig.TabViews[0].EditView;
+
+        if (EntityData) {
+            const s = EntityData.OrderStatus;
+
+            this.PageConfig.OperationView.Properties.forEach(p => {
+                if (p.Name === "SaveAction" || p.Name === "DeleteAction") this.SetButtonVisible(p, s === 0);
+                else if (p.Name === "UpdateStatus1Action") this.SetButtonVisible(p, s === 0);
+                else if (p.Name === "UpdateStatus2Action" || p.Name === "UpdateStatus0Action" || p.Name === "CheckPrcoessAmountAction") this.SetButtonVisible(p, s === 1);
+                else if (p.Name === "ProcessOrderPdfAction") this.SetButtonVisible(p, s > 0)
+            });
+
+            this.PageConfig.OperationView.RefreshVisible();
+        }
+    }
+
+    SetButtonVisible(p, blVisible) {
+        p.IsDataRight = blVisible;
     }
 
     PaidDepositChange(value) {

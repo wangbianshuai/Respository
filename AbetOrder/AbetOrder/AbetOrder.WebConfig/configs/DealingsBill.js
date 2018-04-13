@@ -8,7 +8,7 @@
         InsertUrl: "DealingsBill/Insert2",
         UpdateUrl: "DealingsBill/Update2",
         UpdateStatusUrl: "DealingsBill/UpdateStatus",
-        SelectNames: ["Id", "RowVersion", "Amount2", "BillTypeName", "BillStatus", "CreateUser", "IncomePaymentName", "BillStatusName", "CreateUserName", "BillDate", "Remark"],
+        SelectNames: ["Id", "RowVersion", "Amount2", "DataId", "BillTypeName", "BillStatus", "CreateUser", "IncomePaymentName", "BillStatusName", "CreateUserName", "BillDate", "Remark"],
         SearchNames: ["IncomePayment", "BillTypeId", "CreateUser", "BillStatus", "StartDate", "EndDate", "Remark"],
         DataColumnNames: ["BillDate", "BillTypeName", "IncomePaymentName", "Amount2", "BillStatusName"],
         EditNames: ["BillTypeId", "DealingsUser", "Amount", "BillDate", "Remark"],

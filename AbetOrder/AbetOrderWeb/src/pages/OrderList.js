@@ -10,17 +10,18 @@ export default class OrderList {
     }
 
     ExpandSetOperation(actionList, record) {
-        const billAction = { Name: "OrderBill", Text: "收支明细", IsToPage: true, PropertyNames: ["OrderCode", "OrderId"], PageUrl: "/Bill?OrderName2={OrderCode}&OrderId={OrderId}" };
+        const billAction = { Name: "OrderBill", Text: "收支", IsToPage: true, PropertyNames: ["OrderCode", "OrderId"], PageUrl: "/Bill?OrderName2={OrderCode}&OrderId={OrderId}" };
 
         if (record.OrderStatus === 0) {
             let list = [billAction]
-            list.push({ Name: "UpdateStatus1", Text: "提交加工", Title: "确定要提交加工吗？", StatusName: "OrderStatus", StatusValue: 1, IsConfrim: true, ActionType: "EntityEdit", ActionName: "UpdateStatus" });
+            list.push({ Name: "UpdateStatus1", Text: "加工", Title: "确定要提交加工吗？", StatusName: "OrderStatus", StatusValue: 1, IsConfrim: true, ActionType: "EntityEdit", ActionName: "UpdateStatus" });
             list = list.concat(actionList);
             return list;
         }
         else if (record.OrderStatus === 1) {
             let list = [billAction]
-            list.push({ Name: "UpdateStatus2", Text: "存档完成", Title: "确定要存档完成吗？", StatusName: "OrderStatus", StatusValue: 2, IsConfrim: true, ActionType: "EntityEdit", ActionName: "UpdateStatus" });
+            list.push({ Name: "UpdateStatus2", Text: "存档", Title: "确定要存档完成吗？", StatusName: "OrderStatus", StatusValue: 2, IsConfrim: true, ActionType: "EntityEdit", ActionName: "UpdateStatus" });
+            list.push({ Name: "UpdateAmount", Text: "修改金额", ActionType: "EntityEdit", ActionName: "Edit" })
             list.push(actionList[0])
             return list;
         }

@@ -25,15 +25,22 @@ export default class OrderDetailItem extends Index {
         let value = this.state[name];
         value = value === undefined ? "" : value;
 
-        return <InputNumber placeholder={placeholder}
-            style={{ width: "100%" }}
-            onChange={this.InputNumberChange.bind(this, name)}
-            maxLength={maxLength || 10}
-            max={max}
-            min={min}
-            readOnly={readOnly}
-            step={step}
-            value={value} />
+        if (readOnly) {
+            return <Input placeholder={placeholder}
+                readOnly={readOnly}
+                value={value} />
+        }
+        else {
+            return <InputNumber placeholder={placeholder}
+                style={{ width: "100%" }}
+                onChange={this.InputNumberChange.bind(this, name)}
+                maxLength={maxLength || 10}
+                max={max}
+                min={min}
+                readOnly={readOnly}
+                step={step}
+                value={value} />
+        }
     }
 
     InputNumberChange(name, value) {
@@ -101,7 +108,7 @@ export default class OrderDetailItem extends Index {
         return (<div>
             <Row gutter={6} style={{ padding: "8px 8px" }}>
                 <Col span={2}>
-                    {this.RenderInputNumber("DisplayIndex", "", 99, 1, 1, 2)}
+                    {this.RenderInputNumber("DisplayIndex", "", 99, 1, 1, 2, !this.props.IsEdit)}
                 </Col>
                 <Col span={3}>
 
@@ -122,11 +129,12 @@ export default class OrderDetailItem extends Index {
 
                 </Col>
                 <Col span={3}>
-                    {this.RenderInputNumber("Amount", "金额", 1000000000, 0, 1, 10)}
+                    {this.RenderInputNumber("Amount", "金额", 1000000000, 0, 1, 10, !this.props.IsEdit)}
                 </Col>
-                <Col span={1}>
-                    <a style={{ lineHeight: "32px" }} onClick={this.props.Delete}>删除</a>
-                </Col>
+                {this.props.IsEdit ?
+                    <Col span={1}>
+                        <a style={{ lineHeight: "32px" }} onClick={this.props.Delete}>删除</a>
+                    </Col> : null}
             </Row>
             <Row gutter={6} style={{ padding: "8px 8px", borderBottom: "1px solid #e8e8e8" }}>
                 <Col span={24}>
@@ -141,6 +149,7 @@ export default class OrderDetailItem extends Index {
             placeholder={"附加费备注"}
             onChange={this.OnChangeRemark.bind(this)}
             maxLength={200}
+            readOnly={!this.props.IsEdit}
             value={this.state.Remark} />
     }
 
@@ -160,7 +169,19 @@ export default class OrderDetailItem extends Index {
         if (!Common.IsNullOrEmpty(value)) value = value.split(",");
         else value = [];
 
-        return <Checkbox.Group value={value} onChange={this.CheckBoxChange.bind(this)} options={this.state.ProcessItems}></Checkbox.Group>
+        if (this.props.IsEdit) {
+            return <Checkbox.Group value={value} onChange={this.CheckBoxChange.bind(this)} options={this.state.ProcessItems}></Checkbox.Group>
+        }
+        else {
+            let options = [];
+            const ids = this.state.ProcessItemIds || "";
+            this.state.ProcessItems.forEach(r => {
+                if (ids.indexOf(r.value) >= 0) options.push(r);
+            });
+
+            return <Checkbox.Group value={value}
+                options={options}></Checkbox.Group>
+        }
     }
 
     GetCheckBox(data) {
@@ -171,32 +192,33 @@ export default class OrderDetailItem extends Index {
         return (<div>
             <Row gutter={6} style={{ padding: "8px 8px" }}>
                 <Col span={2}>
-                    {this.RenderInputNumber("DisplayIndex", "", 99, 1, 1, 2)}
+                    {this.RenderInputNumber("DisplayIndex", "", 99, 1, 1, 2, !this.props.IsEdit)}
                 </Col>
                 <Col span={3}>
-                    {this.RenderInputNumber("Height", "高度(mm)", 9999, 1, 0, 4)}
+                    {this.RenderInputNumber("Height", "高度(mm)", 9999, 1, 0, 4, !this.props.IsEdit)}
                 </Col>
                 <Col span={3}>
-                    {this.RenderInputNumber("Width", "宽度(mm)", 9999, 1, 0, 4)}
+                    {this.RenderInputNumber("Width", "宽度(mm)", 9999, 1, 0, 4, !this.props.IsEdit)}
                 </Col>
                 <Col span={3}>
-                    {this.RenderInputNumber("Thickness", "厚度(mm)", 9999, 0, 1, 4)}
+                    {this.RenderInputNumber("Thickness", "厚度(mm)", 9999, 0, 1, 4, !this.props.IsEdit)}
                 </Col>
                 <Col span={3}>
-                    {this.RenderInputNumber("Number", "数量(件)", 9999, 1, 0, 4)}
+                    {this.RenderInputNumber("Number", "数量(件)", 9999, 1, 0, 4, !this.props.IsEdit)}
                 </Col>
                 <Col span={3}>
-                    {this.RenderInputNumber("Area", "面积(㎡)", 10000, 0.1000, 0.0001, 10)}
+                    {this.RenderInputNumber("Area", "面积(㎡)", 10000, 0.1000, 0.0001, 10, !this.props.IsEdit)}
                 </Col>
                 <Col span={3}>
-                    {this.RenderInputNumber("Price", "单价(元/㎡)", 1000000000, 0, 1, 6)}
+                    {this.RenderInputNumber("Price", "单价(元/㎡)", 1000000000, 0, 1, 6, !this.props.IsEdit)}
                 </Col>
                 <Col span={3}>
-                    {this.RenderInputNumber("Amount", "金额", 1000000000, 0, 1, 10)}
+                    {this.RenderInputNumber("Amount", "金额", 1000000000, 0, 1, 10, !this.props.IsEdit)}
                 </Col>
-                <Col span={1}>
-                    <a style={{ lineHeight: "32px" }} onClick={this.props.Delete}>删除</a>
-                </Col>
+                {this.props.IsEdit ?
+                    <Col span={1}>
+                        <a style={{ lineHeight: "32px" }} onClick={this.props.Delete}>删除</a>
+                    </Col> : null}
             </Row>
             <Row gutter={6} style={{ padding: "8px 8px", borderBottom: "1px solid #e8e8e8" }}>
                 <Col span={24}>

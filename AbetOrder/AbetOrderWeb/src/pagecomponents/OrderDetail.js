@@ -10,7 +10,7 @@ export default class OrderDetail extends Index {
     constructor(props) {
         super(props)
 
-        this.state = { RemarkItemIds: [], Details: [], ProcessItems: [], TotalAmount1: 0, TotalAmount2: 0, TotalArea: 0, TotalNumber: 0, RemarkItemOptions: [] }
+        this.state = { IsEdit: !props.Page.IsEdit, RemarkItemIds: [], Details: [], ProcessItems: [], TotalAmount1: 0, TotalAmount2: 0, TotalArea: 0, TotalNumber: 0, RemarkItemOptions: [] }
     }
 
     componentWillMount() {
@@ -36,6 +36,7 @@ export default class OrderDetail extends Index {
         }
         data.Details = details;
         data.RemarkItemIds = value.RemarkItemIds;
+        data.IsEdit = value.OrderStatus === 0;
         this.setState(data);
     }
 
@@ -98,7 +99,7 @@ export default class OrderDetail extends Index {
             if (d.Number > 0) totalNumber += d.Number;
         })
 
-        if (this.props.Page.SetAmountExtraCharge) this.props.Page.SetAmountExtraCharge(totalAmount1, totalAmount2);
+        if (this.props.Page.SetAmountExtraCharge && this.state.IsEdit) this.props.Page.SetAmountExtraCharge(totalAmount1, totalAmount2);
 
         return { TotalAmount1: totalAmount1, TotalAmount2: totalAmount2, TotalArea: totalArea, TotalNumber: totalNumber };
     }
@@ -158,20 +159,34 @@ export default class OrderDetail extends Index {
         if (!Common.IsNullOrEmpty(value)) value = value.split(",");
         else value = [];
 
-        return <Checkbox.Group value={value}
-            className={styles.DivRemark}
-            onChange={this.CheckBoxChange.bind(this)} options={this.state.RemarkItemOptions}></Checkbox.Group>
+        if (this.state.IsEdit) {
+            return <Checkbox.Group value={value}
+                className={styles.DivRemark}
+                onChange={this.CheckBoxChange.bind(this)} options={this.state.RemarkItemOptions}></Checkbox.Group>
+        }
+        else {
+            let options = [];
+            const ids = this.state.RemarkItemIds || "";
+            this.state.RemarkItemOptions.forEach(r => {
+                if (ids.indexOf(r.value) >= 0) options.push(r);
+            });
+
+            return <Checkbox.Group value={value}
+                className={styles.DivRemark}
+                options={options}></Checkbox.Group>
+        }
     }
 
     render() {
         return (
             <div>
                 <Alert message={this.RenderTotalAmount()} type="info" showIcon={true} />
-                <Row gutter={6} style={{ padding: "8px 8px" }}>
-                    <Col span={24}>
-                        <Button onClick={this.SetDisplayIndex.bind(this)}>重新排序</Button>
-                    </Col>
-                </Row>
+                {this.state.IsEdit ?
+                    <Row gutter={6} style={{ padding: "8px 8px" }}>
+                        <Col span={24}>
+                            <Button onClick={this.SetDisplayIndex.bind(this)}>重新排序</Button>
+                        </Col>
+                    </Row> : null}
                 <Row gutter={6} className={styles.RowHeader}>
                     <Col span={2}>
                         序号
@@ -197,23 +212,26 @@ export default class OrderDetail extends Index {
                     <Col span={3}>
                         金额
                     </Col>
-                    <Col span={1}>
-                        操作
-                    </Col>
+                    {this.state.IsEdit ?
+                        <Col span={1}>
+                            操作
+                    </Col> : null}
                 </Row>
                 {this.state.Details.map(m => <OrderDetailItem Data={m}
                     key={m.Id}
+                    IsEdit={this.state.IsEdit}
                     SetTotalAmount={this.SetTotalAmount.bind(this)}
                     ProcessItems={this.state.ProcessItems}
                     Delete={this.Delete.bind(this, m)} />)}
-                <Row gutter={16}>
-                    <Col span={12}>
-                        {this.GetAddButton("AddDetail1", "添加明细")}
-                    </Col>
-                    <Col span={12}>
-                        {this.GetAddButton("AddDetail2", "添加附加费")}
-                    </Col>
-                </Row>
+                {this.state.IsEdit ?
+                    <Row gutter={16}>
+                        <Col span={12}>
+                            {this.GetAddButton("AddDetail1", "添加明细")}
+                        </Col>
+                        <Col span={12}>
+                            {this.GetAddButton("AddDetail2", "添加附加费")}
+                        </Col>
+                    </Row> : null}
                 <Card title="备注" bordered={false}>{this.RenderRemarkCheckBoxList()}</Card>
             </div>
         )

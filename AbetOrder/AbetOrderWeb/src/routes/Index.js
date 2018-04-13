@@ -150,6 +150,10 @@ class Index extends Component {
     SetPageConfig(nextProps) {
         if (this.JudgeChanged(nextProps, "PageConfig") && nextProps.PageConfig) {
             this.IsPageLoad = false
+
+            //扩展页面功能
+            PageExpand(nextProps.PageConfig, this);
+
             this.InitPage(nextProps.PageConfig);
         }
     }
@@ -179,9 +183,6 @@ class Index extends Component {
     //页页加载
     PageLoad() {
         const { PageConfig } = this.props;
-
-        //扩展页面功能
-        PageExpand(PageConfig, this);
 
         //加载初始调用事件行为
         if (PageConfig.InitEventActionList) {

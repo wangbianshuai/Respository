@@ -13,12 +13,14 @@ export default class Index extends Component {
         this.InitState = {
             Disabled: this.Property.Disabled,
             Value: this.Property.Value || (this.Property.DefaultValue || null),
-            IsReadonly: this.Property.IsReadonly
+            IsReadonly: this.Property.IsReadonly,
+            IsVisible: this.Property.IsVisible !== false && this.Property.IsDataRight !== false
         }
 
         this.state = this.InitState;
 
         this.Property.SetDisabled = (disabled) => this.setState({ Disabled: disabled });
+        this.Property.SetVisible = (isVisible) => this.setState({ IsVisible: isVisible });
 
         this.Property.GetValue = () => this.state.Value === undefined ? null : this.state.Value;
 
@@ -59,7 +61,7 @@ export default class Index extends Component {
                 if (this.state[key] !== nextState[key]) {
                     blChangedProps = true;
                     if (key === "Value") {
-                        if (!this.IsLoadValue && this.View && this.View.EntityData && Common.IsEquals(this.View.EntityData[key], nextState[key], true)) this.IsLoadValue = true;
+                        if (this.View && this.View.EntityData && !this.IsLoadValue) this.IsLoadValue = true;
                         else this.ValueChange(nextState.Value);
                     }
                     break;

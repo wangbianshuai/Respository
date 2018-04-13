@@ -7,7 +7,8 @@ export default class Button2 extends Index {
         super(props)
 
         this.state = {
-            Disabled: false
+            Disabled: false,
+            IsVisible: this.Property.IsVisible !== false && this.Property.IsDataRight !== false
         };
     }
 
@@ -20,6 +21,8 @@ export default class Button2 extends Index {
     render() {
         const { Property } = this.props
         const text = Property.Label || Property.Text
+
+        if (!this.state.IsVisible) return null;
 
         return (<Button onClick={this.ClickAction.bind(this)}
             icon={Property.Icon}
