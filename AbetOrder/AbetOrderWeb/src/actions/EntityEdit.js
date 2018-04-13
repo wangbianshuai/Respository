@@ -176,6 +176,7 @@ export default class EntityEdit extends Index {
         if (entityData != null) {
             EditView.Properties.forEach(p => {
                 value = entityData[p.Name];
+                if (p.InitSet !== undefined) p.InitSet({ IsLoadValue: false })
                 if (p.SetValue !== undefined) p.SetValue(value);
                 else p.Value = value;
 

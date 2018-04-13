@@ -29,6 +29,10 @@ export default class Index extends Component {
         this.Property.SetReadonly = (isReadonly) => this.setState({ IsReadonly: isReadonly });
 
         this.Property.InitState = (initState) => { this.IsLoadValue = false; this.setState(Object.assign({}, this.InitState, initState)); }
+
+        this.Property.InitSet = (obj) => { if (obj) for (let key in obj) this[key] = obj[key] };
+
+        if (this.View && this.View.EntityData) this.IsLoadValue = false;
     }
 
     componentWillUnmount() {
@@ -61,7 +65,7 @@ export default class Index extends Component {
                 if (this.state[key] !== nextState[key]) {
                     blChangedProps = true;
                     if (key === "Value") {
-                        if (this.View && this.View.EntityData && !this.IsLoadValue) this.IsLoadValue = true;
+                        if (this.IsLoadValue === false) this.IsLoadValue = true;
                         else this.ValueChange(nextState.Value);
                     }
                     break;
