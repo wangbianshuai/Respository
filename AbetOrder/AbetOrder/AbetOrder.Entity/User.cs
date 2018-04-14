@@ -97,4 +97,18 @@ namespace AbetOrder.Entity
         /// </summary>
         public string DataRightName { get; set; }
     }
+
+    [TableProperty(Name = "v_DealingsUser", PrimaryKey = "UserId")]
+    public class ViewDealingsUser : EntityModel, IEntity
+    {
+        public int UserType { get; set; }
+        /// <summary> 
+        /// 主键
+        /// </summary> 
+        public Guid UserId { get; set; }
+        /// <summary> 
+        /// 用户名
+        /// </summary> 
+        public string UserName { get; set; }
+    }
 }

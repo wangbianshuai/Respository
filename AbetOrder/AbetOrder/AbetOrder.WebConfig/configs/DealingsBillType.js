@@ -1,7 +1,7 @@
 (function () {
     window.configs.DealingsBillType = {
         Name: "DealingsBillType",
-        Title: "账目类型",
+        Title: "往来类型",
         EntityName: "DealingsBillType",
         PrimaryKey: "Id",
         TemplateName: "EntityListPage",

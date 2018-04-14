@@ -64,8 +64,9 @@ namespace AbetOrder.Component
             return GetBoolDict(this.UpdateEntityByPrimaryKey(bill.GetValue("Id"), entityData));
         }
 
-        public bool EditOrderDealignsBill(IEntityData entityData, Guid userId)
+        public bool EditOrderDealignsBill(IEntityData entityData, Guid userId, Guid processBookId)
         {
+           
             Guid orderId = entityData.GetValue<Guid>("OrderId");
             IEntityData bill = GetOrderDealingsBill(orderId);
             if (bill == null)
@@ -78,7 +79,7 @@ namespace AbetOrder.Component
                 insertData.SetValue("BillTypeId", billTypeId);
                 insertData.SetValue("CreateUser", userId);
                 insertData.SetValue("UpdateDate", DateTime.Now);
-                insertData.SetValue("DealingsUser", entityData.GetValue("SaleUser"));
+                insertData.SetValue("DealingsUser", processBookId);
                 insertData.SetValue("BillDate", DateTime.Now);
 
                 object primaryKey = null;
@@ -91,7 +92,7 @@ namespace AbetOrder.Component
                 updateData.SetValue("Id", id);
                 updateData.SetValue("CreateUser", userId);
                 updateData.SetValue("UpdateDate", DateTime.Now);
-                updateData.SetValue("DealingsUser", entityData.GetValue("SaleUser"));
+                updateData.SetValue("DealingsUser", processBookId);
                 updateData.SetValue("BillDate", DateTime.Now);
                 updateData.SetValue("Amount", entityData.GetValue<decimal>("ProcessAmount"));
 

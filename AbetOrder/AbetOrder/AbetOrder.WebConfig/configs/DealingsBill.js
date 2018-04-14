@@ -10,7 +10,7 @@
         UpdateStatusUrl: "DealingsBill/UpdateStatus",
         SelectNames: ["Id", "RowVersion", "Amount2", "DataId", "BillTypeName", "BillStatus", "CreateUser", "IncomePaymentName", "BillStatusName", "CreateUserName", "BillDate", "Remark"],
         SearchNames: ["IncomePayment", "BillTypeId", "CreateUser", "BillStatus", "StartDate", "EndDate", "Remark"],
-        DataColumnNames: ["BillDate", "BillTypeName", "IncomePaymentName", "Amount2", "BillStatusName"],
+        DataColumnNames: ["BillDate", "BillTypeName", "IncomePaymentName", "Amount2", "BillStatusName", "CreateUserName"],
         EditNames: ["BillTypeId", "DealingsUser", "Amount", "BillDate", "Remark"],
         OrderByList: [{ Name: "BillDate", IsDesc: true }],
         ActionList: GetActionList(),
@@ -59,7 +59,7 @@
         },
         {
             ActionName: "GetUserList", StateName: "UserList",
-            Url: "ViewUser?$select=UserId,UserName&$orderby=CreateDate&$filter=DataRight ne 3", DataKey: "ViewUser", Method: "GET"
+            Url: "ViewDealingsUser?$select=UserId,UserName&$orderby=UserType,UserId", DataKey: "ViewDealingsUser", Method: "GET"
         }]
     }
 
@@ -88,6 +88,7 @@
         { Label: "类型", Name: "BillTypeName" },
         { Label: "收支", Name: "IncomePaymentName" },
         { Label: "状态", Name: "BillStatusName" },
+        { Label: "记账人", Name: "CreateUserName" },
         { Label: "金额", Name: "Amount2", Scale: 2, IsCurrency: true }]
     }
 

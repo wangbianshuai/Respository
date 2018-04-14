@@ -386,7 +386,11 @@ export default class EntityEdit extends Index {
             p = EditView.Properties[i];
             if (p.IsEdit && p.GetValue) {
                 v = p.GetValue();
-                if (!p.IsNullable && Common.IsNullOrEmpty(v)) {
+                if (!p.IsNullable && p.DataType === "Array" && (Common.IsNullOrEmpty(v) || v.length === 0)) {
+                    msg = "请选择" + p.Label + "！"
+                    break;
+                }
+                else if (!p.IsNullable && Common.IsNullOrEmpty(v)) {
                     msg = p.Label + "不能为空！"
                     break;
                 }

@@ -60,6 +60,7 @@ export default class LeftRightLayout extends Component {
                 this.AddMenu("往来类型", "table", "DealingsBillType"),
                 this.AddMenu("个人账目", "table", "PersonBill"),
                 this.AddMenu("用户", "table", "User"),
+                this.AddMenu("往来账本", "table", "DealingsBook"),  
                 this.AddMenu("加工选项", "table", "ProcessItem"),
                 this.AddMenu("备注选项", "table", "RemarkItem"),
                 this.AddMenu("订单模板", "table", "TemplateHtml"),

@@ -45,7 +45,11 @@ namespace AbetOrder.Component
 
             DealingsBill bill = new DealingsBill();
 
-            if (!bill.EditOrderDealignsBill(oldEntityData, userId)) return GetMessageDict("添加订单加工费往来失败，请刷新数据再试！");
+            Guid processBookId = Guid.Parse(System.Configuration.ConfigurationManager.AppSettings["ProcessBookId"]);
+
+            if (!JudgeBookUser(processBookId, userId)) return GetMessageDict("订单加工费验证记账人失败，请联系管理员！");
+
+            if (!bill.EditOrderDealignsBill(oldEntityData, userId, processBookId)) return GetMessageDict("添加订单加工费往来失败，请刷新数据再试！");
 
             decimal actualAmount = oldEntityData.GetValue<decimal>("ActualAmount");
             decimal costAmount = oldEntityData.GetValue<decimal>("CostAmount");
@@ -53,6 +57,15 @@ namespace AbetOrder.Component
             entityData.SetValue("Profit", actualAmount - costAmount - processAmount);
 
             return this.Update();
+        }
+
+        bool JudgeBookUser(Guid processBookId, Guid userId)
+        {
+            IQuery query = new Query("t_d_DealingsBookUser");
+            query.Select("Id");
+            query.Where(string.Format("where BookId='{0}' and UserId='{1}'", processBookId, userId));
+
+            return this.SelectEntity(query) != null;
         }
     }
 

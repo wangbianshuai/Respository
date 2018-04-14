@@ -177,13 +177,18 @@ namespace OpenDataAccess.Entity
 
         private static void ParseJsonContent(object obj, List<Dictionary<string, object>> dictList)
         {
+          
             if (obj is Dictionary<string, object>)
             {
                 dictList.Add(ParseJsonContent(obj));
             }
             else if (obj is object[] || obj is ArrayList)
             {
-                dictList.AddRange(ParseJsonContentList(obj));
+                object list = ParseJsonContentList(obj);
+                foreach (var item in (list as IEnumerable))
+                {
+                    if (item is Dictionary<string, object>) dictList.Add(item as Dictionary<string, object>);
+                }
             }
         }
 
@@ -215,9 +220,11 @@ namespace OpenDataAccess.Entity
             return dict;
         }
 
-        private static List<Dictionary<string, object>> ParseJsonContentList(object obj)
+        private static object ParseJsonContentList(object obj)
         {
-            List<Dictionary<string, object>> dictList = new List<Dictionary<string, object>>();
+            List<Dictionary<string, object>> dictList = null;
+            List<object> objList = null;
+
             if (obj is object[])
             {
                 object[] arrayObj = obj as object[];
@@ -225,7 +232,13 @@ namespace OpenDataAccess.Entity
                 {
                     if (item is Dictionary<string, object>)
                     {
+                        dictList = dictList ?? new List<Dictionary<string, object>>();
                         dictList.Add(ParseJsonContent(item));
+                    }
+                    else
+                    {
+                        objList = objList ?? new List<object>();
+                        objList.Add(item);
                     }
                 }
             }
@@ -236,11 +249,20 @@ namespace OpenDataAccess.Entity
                 {
                     if (item is Dictionary<string, object>)
                     {
+                        dictList = dictList ?? new List<Dictionary<string, object>>();
                         dictList.Add(ParseJsonContent(item));
+                    }
+                    else
+                    {
+                        objList = objList ?? new List<object>();
+                        objList.Add(item);
                     }
                 }
             }
-            return dictList;
+
+            if (dictList != null) return dictList;
+            else if (objList != null) return objList;
+            return new Dictionary<string, object>();
         }
 
         public static string IEntityToJson(IEntity entity)
@@ -383,6 +405,10 @@ namespace OpenDataAccess.Entity
                         });
                         kvpValueList.Add(string.Format("{0}:{1}", AddQuotation(kvp.Key), DictionaryListToJson(dictList)));
                     }
+                    else if (kvp.Value is IEnumerable && kvp.Value != null && kvp.Value.GetType().IsGenericType)
+                    {
+                        kvpValueList.Add(string.Format("{0}:{1}", AddQuotation(kvp.Key), ListToJson(kvp.Value)));
+                    }
                     else
                     {
                         kvpValueList.Add(string.Format("{0}:{1}", AddQuotation(kvp.Key), GetValueString(kvp.Value)));
@@ -400,6 +426,20 @@ namespace OpenDataAccess.Entity
                 itemList.Add(DictionaryToJson(dict));
             });
             return string.Concat("[", string.Join(",", itemList.ToArray()), "]");
+        }
+
+        static string ListToJson(object obj)
+        {
+            List<string> itemList = new List<string>();
+            if (obj is IEnumerable)
+            {
+                foreach (var item in (obj as IEnumerable))
+                {
+                    itemList.Add(GetValueString(item));
+                }
+            }
+
+            return string.Concat("[", string.Join(",", itemList), "]");
         }
 
         public static string IEntityListToJson(List<IEntityData> entityDataList)

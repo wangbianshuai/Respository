@@ -71,8 +71,7 @@ namespace AbetOrder.Entity
     {
         public int IncomePayment { get; set; }
         public string IncomePaymentName { get; set; }
-        public string CreateUserName2 { get; set; }
-        public string DealingsUserName2 { get; set; }
+        public string CreateUserName { get; set; }
         public string BillTypeName { get; set; }
         public decimal Amount2 { get; set; }
         public string BillStatusName { get; set; }
@@ -83,6 +82,7 @@ namespace AbetOrder.Entity
     [TableProperty(Name = "v_DealingsBillUser", PrimaryKey = "CreateUser")]
     public class ViewDealingsBillUser : EntityModel, IEntity
     {
+        public int UserType { get; set; }
         public Guid CreateUser { get; set; }
         public Guid DealingsUser { get; set; }
         public string DealingsUserName { get; set; }

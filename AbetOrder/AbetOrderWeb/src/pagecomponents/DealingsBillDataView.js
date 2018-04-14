@@ -36,7 +36,7 @@ export default class DealingsBillDataView extends Index {
 
         const userId = this.Page.LoginUser.UserId;
 
-        action.Url = `ViewDealingsBillUser?$orderby=DealingsUser&$filter=CreateUser eq '${userId}'`;
+        action.Url = `ViewDealingsBillUser?$orderby=UserType,DealingsUser&$filter=CreateUser eq '${userId}'`;
 
         this.GetDataSource({}, "GetDealingsUserList", "DealingsUserList", (list) => {
             this.SetDealingsUserList(list);
