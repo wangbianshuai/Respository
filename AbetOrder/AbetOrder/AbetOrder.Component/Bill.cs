@@ -14,12 +14,55 @@ namespace AbetOrder.Component
     {
         public Bill()
         {
+            this.EntityType = EntityType.GetEntityType<Entity.Bill>();
         }
 
         public Bill(Request request)
             : base(request)
         {
         }
+
+
+        public bool EditBill(Guid orderId, string orderCode, Guid userId, decimal amount)
+        {
+            Guid billTypeId = Guid.Parse(System.Configuration.ConfigurationManager.AppSettings["PaidDepositBillTypeId"]);
+            IEntityData bill = GetOrderPaidDepositBill(orderId);
+            IEntityData data = new EntityData(this.EntityType);
+
+            data.SetValue("Amount", amount);
+            data.SetValue("Remark", string.Format("订单编号{0}收款", orderCode));
+            data.SetValue("BillTypeId", billTypeId);
+            data.SetValue("UpdateDate", DateTime.Now);
+            data.SetValue("IncomePayment", 1);
+            data.SetValue("BillDate", DateTime.Now);
+
+            if (bill == null)
+            {
+                data.SetValue("DataId", orderId);
+                data.SetValue("CreateUser", userId);
+
+                object primaryKey = null;
+                return this.InsertEntity(data, out primaryKey);
+            }
+            else
+            {
+                object id = bill.GetValue("Id");
+                data.SetValue("Id", id);
+                data.SetValue("UpdateDate", DateTime.Now);
+
+                return this.UpdateEntityByPrimaryKey(id, data);
+            }
+        }
+
+        IEntityData GetOrderPaidDepositBill(Guid orderId)
+        {
+            IQuery query = new Query(this.EntityType.TableName);
+            query.Select("Id,BillStatus");
+            query.Where(string.Format("where IsDelete=0 and DataType=1 and DataId='{0}'", orderId));
+
+            return this.SelectEntity(query);
+        }
+
 
         [Log]
         public object Insert2()

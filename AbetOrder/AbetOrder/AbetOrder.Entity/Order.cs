@@ -65,6 +65,7 @@ namespace AbetOrder.Entity
         public string CreateUserName { get; set; }
         public string UpdateUserName { get; set; }
         public string CustomerName { get; set; }
+        public byte DataRight { get; set; }
         public string OrderTemplateHtmlName { get; set; }
         public string ProcessTemplateHtmlName { get; set; }
         public decimal ProcessAmount2 { get; set; }

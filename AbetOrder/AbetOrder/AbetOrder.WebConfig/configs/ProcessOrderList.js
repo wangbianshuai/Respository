@@ -19,8 +19,17 @@
         QueryUrl: "ViewProcessOrder/Select2",
         IsGroupByInfo: true,
         UpdateUrl: "ProcessOrder/Update2",
+        DefaultConditions: GetDefaultConditions(),
         GroupByInfoHtml: GetGroupByInfoHtml()
     };
+
+    function GetDefaultConditions() {
+        return [{
+            Name: "CreateUser2",
+            Type: "Guid",
+            IsCurrentUser: true
+        }]
+    }
 
     function GetGroupByInfoHtml() {
         var html = [];

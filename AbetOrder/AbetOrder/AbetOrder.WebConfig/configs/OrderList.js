@@ -21,8 +21,18 @@
         GroupByInfoHtml: GetGroupByInfoHtml(),
         QueryUrl: "ViewOrder/Select2",
         UpdateUrl: "Order/Update3",
+        DefaultConditions: GetDefaultConditions(),
         IsGroupByInfo: true
     };
+
+    function GetDefaultConditions() {
+        return [{
+            Name: "DataRight",
+            Type: "int",
+            IsCurrentUser: true,
+            PropertyName: "DataRight"
+        }]
+    }
 
     function GetGroupByInfoHtml() {
         var html = [];

@@ -7,6 +7,7 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using OpenDataAccess.Utility;
 
 namespace AbetOrder.Component
 {
@@ -42,7 +43,6 @@ namespace AbetOrder.Component
             IEntityData entityData = this._Request.Entities[this.EntityType.Name].FirstOrDefault();
 
             entityData.SetDefaultValue("OrderDate", DateTime.Now);
-            entityData.SetDefaultValue("SaleUser", this._Request.OperationUser);
             entityData.SetDefaultValue("CreateUser", this._Request.OperationUser);
             entityData.SetDefaultValue("UpdateUser", this._Request.OperationUser);
             entityData.SetDefaultValue("UpdateDate", DateTime.Now);
@@ -53,7 +53,19 @@ namespace AbetOrder.Component
                 entityData.SetDefaultValue("OrderIntCode", orderCode);
             }
 
-            return EntityByComplexTypeOperation.Insert<Order>(this, _ComplexDictionary);
+            object obj = EntityByComplexTypeOperation.Insert<Order>(this, _ComplexDictionary);
+
+            if (obj is Dictionary<string, object>)
+            {
+                Guid orderId = (obj as Dictionary<string, object>).GetValue<Guid>("PrimaryKey");
+                if (orderId != Guid.Empty)
+                {
+                    decimal paidDeposit = entityData.GetValue<decimal>("PaidDeposit");
+                    if (paidDeposit > 0) new Bill().EditBill(orderId, entityData.GetStringValue("OrderCode"), Guid.Parse(this._Request.OperationUser), paidDeposit);
+                }
+            }
+
+            return obj;
         }
 
         [Log]
@@ -62,7 +74,6 @@ namespace AbetOrder.Component
             IEntityData entityData = this._Request.Entities[this.EntityType.Name].FirstOrDefault();
 
             entityData.SetDefaultValue("OrderDate", DateTime.Now);
-            entityData.SetDefaultValue("SaleUser", this._Request.OperationUser);
             entityData.SetDefaultValue("UpdateUser", this._Request.OperationUser);
             entityData.SetDefaultValue("UpdateDate", DateTime.Now);
             int orderCode = GetOrderCode(entityData.GetValue<DateTime>("OrderDate"));
@@ -71,7 +82,21 @@ namespace AbetOrder.Component
                 entityData.SetDefaultValue("OrderCode", orderCode);
                 entityData.SetDefaultValue("OrderIntCode", orderCode);
             }
-            return EntityByComplexTypeOperation.Update<Order>(this, _ComplexDictionary);
+
+            Guid orderId = (Guid)this._QueryRequest.PrimaryKeyProperty.Value;
+
+            object obj= EntityByComplexTypeOperation.Update<Order>(this, _ComplexDictionary);
+
+            if (obj is Dictionary<string, object>)
+            {
+                if ((obj as Dictionary<string, object>).ContainsKey("Succeed"))
+                {
+                    decimal paidDeposit = entityData.GetValue<decimal>("PaidDeposit");
+                    new Bill().EditBill(orderId, entityData.GetStringValue("OrderCode"), Guid.Parse(this._Request.OperationUser), paidDeposit);
+                }
+            }
+
+            return obj;
         }
 
         [Log]

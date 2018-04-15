@@ -20,9 +20,19 @@
         IsGroupByInfo: true,
         IsSelfOpeartion: true,
         SelfPropertyName: "CreateUser",
+        DefaultConditions: GetDefaultConditions(),
         EditViewWidth: 700,
         TableWidth: 1000
     };
+
+    function GetDefaultConditions() {
+        return [{
+            Name: "DataRight",
+            Type: "int",
+            IsCurrentUser: true,
+            PropertyName: "DataRight"
+        }]
+    }
 
     function GetGroupByInfoHtml() {
         var html = [];

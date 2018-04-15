@@ -111,7 +111,10 @@ export default class Query extends Index {
                     DataType: p.DataType || "string",
                     Value: p.DefaultValue
                 }
-                if (p.IsCurrentUser) condition.Value = this.Page.LoginUser.UserId;
+                if (p.IsCurrentUser) {
+                    if (p.PropertyName) condition.Value = this.Page.LoginUser[p.PropertyName];
+                    else condition.Value = this.Page.LoginUser.UserId;
+                }
 
                 if (!Common.IsNullOrEmpty(condition.Value)) conditionList.push(condition)
             });

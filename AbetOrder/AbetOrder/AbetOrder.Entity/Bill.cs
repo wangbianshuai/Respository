@@ -19,6 +19,10 @@ namespace AbetOrder.Entity
         /// </summary> 
         public Guid DataId { get; set; }
         /// <summary>
+        /// 数据类型
+        /// </summary>
+        public byte DataType { get; set; }
+        /// <summary>
         /// 金额
         /// </summary>
         public decimal Amount { get; set; }
@@ -80,5 +84,6 @@ namespace AbetOrder.Entity
         public decimal Amount2 { get; set; }
         public string OrderName2 { get; set; }
         public string BillStatusName { get; set; }
+        public byte DataRight { get; set; }
     }
 }

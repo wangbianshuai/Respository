@@ -36,16 +36,17 @@ namespace AbetOrder.Component
 
             if (processAmount == oldEntityData.GetValue<decimal>("ProcessAmount")) return GetMessageDict("加工费其值未变化，无需更新！");
 
-            Guid saleUser = oldEntityData.GetValue<Guid>("SaleUser");
+            Guid createUser = oldEntityData.GetValue<Guid>("CreatUser");
             Guid userId = Guid.Parse(this._Request.OperationUser);
 
-            if (saleUser == userId) return GetMessageDict("加工费修改人不能为销售员自己！");
+            if (createUser == userId) return GetMessageDict("加工费修改人不能为销售员自己！");
 
             oldEntityData.SetValue("ProcessAmount", entityData.GetValue("ProcessAmount"));
 
             DealingsBill bill = new DealingsBill();
 
-            Guid processBookId = Guid.Parse(System.Configuration.ConfigurationManager.AppSettings["ProcessBookId"]);
+            Guid factoryId = oldEntityData.GetValue<Guid>("FactoryId");
+            Guid processBookId = GetProcessBookId(factoryId);
 
             if (!JudgeBookUser(processBookId, userId)) return GetMessageDict("订单加工费验证记账人失败，请联系管理员！");
 
@@ -57,6 +58,16 @@ namespace AbetOrder.Component
             entityData.SetValue("Profit", actualAmount - costAmount - processAmount);
 
             return this.Update();
+        }
+
+        Guid GetProcessBookId(Guid factoryId)
+        {
+            IQuery query = new Query("t_d_Factory");
+            query.Select("DealingsBookId");
+            query.Where(string.Format("where Id='{1}'", factoryId));
+
+            IEntityData entityData = this.SelectEntity(query);
+            return entityData == null ? Guid.Empty : entityData.GetValue<Guid>("DealingsBookId");
         }
 
         bool JudgeBookUser(Guid processBookId, Guid userId)
