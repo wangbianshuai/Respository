@@ -82,6 +82,7 @@ namespace AbetOrder.Entity
         public Guid DealingsUser2 { get; set; }
         public Guid CreateUser2 { get; set; }
         public string ApproveUserName { get; set; }
+        public Guid OrderSaleUser { get; set; }
     }
 
     [TableProperty(Name = "v_DealingsBillUser", PrimaryKey = "CreateUser")]

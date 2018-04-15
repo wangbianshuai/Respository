@@ -8,7 +8,7 @@
         SelectNames: ["OrderId", "RowVersion", "OrderStatus", "OrderCode", "OrderDate", "DeliveryDate", "CustomerName", "CreateUserName", "CreateUser", "ActualAmount", "CostAmount2", "ProcessAmount2", "Profit", "PaidDeposit", "ShouldPayBalance", "OrderStatusName"],
         SearchNames: ["OrderCode", "CustomerId", "CreateUser", "OrderStatus", "StartDate", "EndDate", "StartDate2", "EndDate2"],
         DataColumnNames: ["OrderCode", "CustomerName", "OrderDate", "DeliveryDate", "OrderStatusName", , "ActualAmount", "ProcessAmount2", "PaidDeposit", "ShouldPayBalance", "CreateUserName"],
-        EditNames: ["CostAmount", "PaidDeposit"],
+        EditNames: ["CostAmount", "PaidDeposit", "BillDate"],
         OrderByList: [{ Name: "OrderDate", IsDesc: true }],
         ActionList: GetActionList(),
         Properties: GetProperties(),
@@ -79,6 +79,7 @@
                 Label: "销售员", Name: "CreateUser", X: 2, Y: 3,
                 DataType: "Guid", Type: "Select", ServiceDataSource: GetUserDataSource(), OperateLogic: "=", AllowClear: true, ColSpan: 5
             },
+            { Label: "收款日期", Type: "Date", IsDate: true, IsDefaultNow: true, Name: "BillDate", PlaceHolder: "默认系统当前日期", DataType: "DateTime", MaxLength: 20, IsNullable: true },
             { Label: "订单编号", Name: "OrderCode", IsOpenPage: true, IsRandom: false, PropertyName: "OrderPdfPath", PageUrl: "{OrderPdfPath}", ColumnWidth: 100, DataType: "string", X: 2, Y: 1, ColSpan: 5, MaxLength: 50, IsNullable: true },
             { Label: "订单状态", Name: "OrderStatusName", ColumnWidth: 80 },
             { Label: "客户", Name: "CustomerName", ColumnWidth: 120, IsTooltip: true },

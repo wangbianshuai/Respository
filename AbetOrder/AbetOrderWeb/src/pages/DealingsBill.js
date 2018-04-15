@@ -38,7 +38,7 @@ export default class DealingsBill {
 
 
     ExpandSetOperation(actionList, record) {
-        if (actionList.length === 1 && record.BillStatus === 0 && record.IncomePayment === 1) {
+        if (actionList.length === 1 && record.BillStatus === 0 && record.IncomePayment === 1 && (Common.IsNullOrEmpty(record.DataId) || record.OrderSaleUser === this.Page.LoginUser.UserId)) {
             const list = []
             list.push({ Name: "Approve", Text: "审核", Title: "确定要审核通过吗？", StatusName: "BillStatus", StatusValue: 1, IsConfrim: true, ActionType: "EntityEdit", ActionName: "UpdateStatus" });
             list.push(actionList[0])

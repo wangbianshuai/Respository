@@ -8,7 +8,7 @@
         InsertUrl: "DealingsBill/Insert2",
         UpdateUrl: "DealingsBill/Update2",
         UpdateStatusUrl: "DealingsBill/UpdateStatus",
-        SelectNames: ["Id", "RowVersion", "Amount2", "DataId", "BillTypeName", "ApproveUserName", "BillStatus", "IncomePayment", "CreateUser2", "CreateUser", "IncomePaymentName", "BillStatusName", "CreateUserName", "BillDate", "Remark"],
+        SelectNames: ["Id", "RowVersion", "Amount2", "DataId", "OrderSaleUser", "BillTypeName", "ApproveUserName", "BillStatus", "IncomePayment", "CreateUser2", "CreateUser", "IncomePaymentName", "BillStatusName", "CreateUserName", "BillDate", "Remark"],
         SearchNames: ["IncomePayment", "BillTypeId", "CreateUser", "BillStatus", "StartDate", "EndDate", "Remark"],
         DataColumnNames: ["BillDate", "BillTypeName", "IncomePaymentName", "Amount2", "BillStatusName", "CreateUserName", "ApproveUserName"],
         EditNames: ["BillTypeId", "DealingsUser", "Amount", "BillDate", "Remark"],
@@ -81,7 +81,7 @@
             Label: "状态", Name: "BillStatus", ColSpan: 5, X: 1, Y: 4,
             DataType: "int", Type: "Select", DataSource: GetStatusDataSource(), OperateLogic: "=", AllowClear: true, SearchProperty: { ColSpan: 5 }
         },
-        { Label: "日期", Type: "Date", IsDate: true, IsDefaultNow: true, Name: "BillDate", PlaceHolder: "默认系统当前时间", DataType: "DateTime", MaxLength: 20, IsNullable: true },
+        { Label: "日期", Type: "Date", IsDate: true, IsDefaultNow: true, Name: "BillDate", PlaceHolder: "默认系统当前日期", DataType: "DateTime", MaxLength: 20, IsNullable: true },
         { Label: "开始日期", Type: "Date", SearchProperty: { ColSpan: 5 }, OperateLogic: ">=", PropertyName: "BillDate", Name: "StartDate", PlaceHolder: "大于或等于其值", DataType: "DateTime", MaxLength: 20, IsNullable: true },
         { Label: "至", Type: "Date", SearchProperty: { ColSpan: 5 }, OperateLogic: "<", PropertyName: "BillDate", Name: "EndDate", PlaceHolder: "小于其值", DataType: "DateTime", MaxLength: 20, IsNullable: true },
         { Label: "备注", Name: "Remark", DataType: "string", Rows: 3, SearchProperty: { ColSpan: 5, X: 2, Y: 4 }, EditProperty: { ControlType: "TextArea" }, MaxLength: 200, IsNullable: true },

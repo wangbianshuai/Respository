@@ -61,7 +61,7 @@ namespace AbetOrder.Component
                 if (orderId != Guid.Empty)
                 {
                     decimal paidDeposit = entityData.GetValue<decimal>("PaidDeposit");
-                    if (paidDeposit > 0) new Bill().EditBill(orderId, entityData.GetStringValue("OrderCode"), Guid.Parse(this._Request.OperationUser), paidDeposit);
+                    if (paidDeposit > 0) new Bill().EditBill(orderId, entityData.GetStringValue("OrderCode"), Guid.Parse(this._Request.OperationUser), paidDeposit, DateTime.Now);
                 }
             }
 
@@ -92,7 +92,7 @@ namespace AbetOrder.Component
                 if ((obj as Dictionary<string, object>).ContainsKey("Succeed"))
                 {
                     decimal paidDeposit = entityData.GetValue<decimal>("PaidDeposit");
-                    new Bill().EditBill(orderId, entityData.GetStringValue("OrderCode"), Guid.Parse(this._Request.OperationUser), paidDeposit);
+                    new Bill().EditBill(orderId, entityData.GetStringValue("OrderCode"), Guid.Parse(this._Request.OperationUser), paidDeposit, DateTime.Now);
                 }
             }
 
@@ -106,6 +106,7 @@ namespace AbetOrder.Component
 
             entityData.SetDefaultValue("UpdateUser", this._Request.OperationUser);
             entityData.SetDefaultValue("UpdateDate", DateTime.Now);
+            entityData.SetDefaultValue("BillDate", DateTime.Now);
 
             decimal costAmount = entityData.GetValue<decimal>("CostAmount");
             decimal paidDeposit = entityData.GetValue<decimal>("PaidDeposit");
@@ -120,7 +121,7 @@ namespace AbetOrder.Component
                 entityData.SetValue("ShouldPayBalance", actualAmount - paidDeposit);
                 entityData.SetValue("Profit", actualAmount - costAmount - processAmount);
 
-                new Bill().EditBill(orderId, oldEntityData.GetStringValue("OrderCode"), Guid.Parse(this._Request.OperationUser), paidDeposit);
+                new Bill().EditBill(orderId, oldEntityData.GetStringValue("OrderCode"), Guid.Parse(this._Request.OperationUser), paidDeposit, entityData.GetValue<DateTime>("BillDate"));
             }
 
             return this.Update();

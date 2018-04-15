@@ -23,7 +23,7 @@ namespace AbetOrder.Component
         }
 
 
-        public bool EditBill(Guid orderId, string orderCode, Guid userId, decimal amount)
+        public bool EditBill(Guid orderId, string orderCode, Guid userId, decimal amount, DateTime billDate)
         {
             Guid billTypeId = Guid.Parse(System.Configuration.ConfigurationManager.AppSettings["PaidDepositBillTypeId"]);
             IEntityData bill = GetOrderPaidDepositBill(orderId);
@@ -34,7 +34,7 @@ namespace AbetOrder.Component
             data.SetValue("BillTypeId", billTypeId);
             data.SetValue("UpdateDate", DateTime.Now);
             data.SetValue("IncomePayment", 1);
-            data.SetValue("BillDate", DateTime.Now);
+            data.SetValue("BillDate", billDate);
 
             if (bill == null)
             {
