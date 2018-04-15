@@ -103,16 +103,19 @@ namespace AbetOrder.Component
         {
             IEntityData entityData = this._Request.Entities[this.EntityType.Name].FirstOrDefault();
 
+            Guid orderId = (Guid)this._QueryRequest.PrimaryKeyProperty.Value;
+
+            IEntityData oldEntityData = this.SelectEntityByPrimaryKey(orderId);
+            if (oldEntityData == null) return GetMessageDict("订单信息不存在，请刷新数据！");
+
             entityData.SetDefaultValue("UpdateUser", this._Request.OperationUser);
             entityData.SetDefaultValue("UpdateDate", DateTime.Now);
 
-            Guid orderId = (Guid)this._QueryRequest.PrimaryKeyProperty.Value;
             Guid userId = Guid.Parse(this._Request.OperationUser);
 
             int orderStatus = entityData.GetValue<int>("OrderStatus");
             if (orderStatus == 0)
             {
-                IEntityData oldEntityData = this.SelectEntityByPrimaryKey(orderId);
                 if (oldEntityData != null)
                 {
                     decimal actualAmount = oldEntityData.GetValue<decimal>("ActualAmount");
@@ -124,7 +127,12 @@ namespace AbetOrder.Component
                 new DealingsBill().DeleteOrderDealingsBill(orderId);
             }
             else if (orderStatus == 1) GenProcessOrderPdf(orderId);
-            else if (orderStatus == 3) return new DealingsBill().CheckProcessAmount(orderId, userId);
+            else if (orderStatus == 3)
+            {
+                if (oldEntityData.GetValue<Guid>("CreateUser") != userId) return GetMessageDict("审核加工费需销售员确认操作！");
+
+                return new DealingsBill().CheckProcessAmount(orderId, userId);
+            }
             else if (orderStatus == 2)
             {
                 int billStatus = new DealingsBill().GetBillStatus(orderId);

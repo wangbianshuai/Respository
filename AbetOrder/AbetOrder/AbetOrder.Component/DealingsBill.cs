@@ -52,8 +52,6 @@ namespace AbetOrder.Component
 
             if (bill.GetValue<int>("BillStatus") == 1) return GetMessageDict("此订单已审核加工费！");
 
-            if (bill.GetValue<Guid>("DealingsUser") != userId) return GetMessageDict("审核加工费需销售员确认操作！");
-
             IEntityData entityData = new EntityData(this.EntityType);
 
             entityData.SetValue("Id", bill.GetValue("Id"));

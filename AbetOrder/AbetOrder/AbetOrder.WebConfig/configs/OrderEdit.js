@@ -121,8 +121,8 @@
             Url: "ViewRemarkItem?$select=Id,Name&$orderby=DisplayIndex", DataKey: "ViewRemarkItem", Method: "GET"
         },
         {
-            ActionName: "GetUserList", StateName: "UserList",
-            Url: "ViewUser?$select=UserId,UserName&$orderby=CreateDate&$filter=DataRight eq 1", DataKey: "ViewUser", Method: "GET"
+            ActionName: "GetFactoryList", StateName: "FactoryList",
+            Url: "ViewFactory?$select=Id,Name&$orderby=CreateDate", DataKey: "ViewFactory", Method: "GET"
         }]
     }
 
@@ -134,7 +134,7 @@
         }
     }
 
-    function GetUserDataSource() {
+    function GetFactoryDataSource() {
         return {
             ActionName: "GetUserList",
             ValueName: "UserId",
@@ -162,8 +162,8 @@
         },
         { Label: "门板花式", Type: "TextBox", Name: "OrderName", ColSpan: 11, LabelCol: 4, WrapperCol: 20, X: 2, Y: 1, DataType: "string", MaxLength: 100, IsNullable: false },
         {
-            Label: "销售员", Name: "SaleUser", PlaceHolder: "默认当前用户",
-            DataType: "Guid", Type: "Select", ServiceDataSource: GetUserDataSource(), ColSpan: 11, LabelCol: 4, WrapperCol: 20, X: 2, Y: 2, IsNullable: true
+            Label: "加工工厂", Name: "CreateUser",
+            DataType: "Guid", Type: "Select", ServiceDataSource: GetFactoryDataSource(), ColSpan: 11, LabelCol: 4, WrapperCol: 20, X: 2, Y: 2, IsNullable: false
         },
         { Label: "订单日期", Type: "Date", Name: "OrderDate", ColSpan: 11, LabelCol: 4, WrapperCol: 20, X: 3, Y: 1, PlaceHolder: "默认系统当前日期", DataType: "DateTime", MaxLength: 10, IsNullable: true },
         { Label: "发货日期", Type: "Date", Name: "DeliveryDate", ColSpan: 11, LabelCol: 4, WrapperCol: 20, X: 3, Y: 2, DataType: "DateTime", MaxLength: 10, IsNullable: true },

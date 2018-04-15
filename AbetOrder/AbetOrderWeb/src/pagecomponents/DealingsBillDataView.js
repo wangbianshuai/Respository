@@ -78,7 +78,7 @@ export default class DealingsBillDataView extends Index {
     }
 
     RenderTabPanel(d) {
-        const tab = "与" + d.DealingsUserName + "的往来";
+        const tab = d.UserType === 1 ? d.DealingsUserName : "与" + d.DealingsUserName + "的往来";
         return <Tabs.TabPane tab={tab} key={d.DealingsUser}>
             {this.RenderDataView(d)}
         </Tabs.TabPane>

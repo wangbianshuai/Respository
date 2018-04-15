@@ -30,7 +30,6 @@ export default class LeftRightLayout extends Component {
             this.MenuList = [
                 this.AddMenu("订单列表", "table", "OrderList"),
                 this.AddMenu("订单编辑", "form", "OrderEdit"),
-                this.AddMenu("加工订单", "table", "ProcessOrderList"),
                 this.AddMenu("业务往来", "table", "DealingsBill"),
                 this.AddMenu("收支明细", "table", "Bill"),
                 this.AddMenu("客户", "table", "Customer"),
@@ -60,6 +59,7 @@ export default class LeftRightLayout extends Component {
                 this.AddMenu("往来类型", "table", "DealingsBillType"),
                 this.AddMenu("个人账目", "table", "PersonBill"),
                 this.AddMenu("用户", "table", "User"),
+                this.AddMenu("工厂", "table", "Factory"),
                 this.AddMenu("往来账本", "table", "DealingsBook"),  
                 this.AddMenu("加工选项", "table", "ProcessItem"),
                 this.AddMenu("备注选项", "table", "RemarkItem"),

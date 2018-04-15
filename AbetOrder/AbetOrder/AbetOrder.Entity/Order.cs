@@ -31,7 +31,7 @@ namespace AbetOrder.Entity
         public Guid CreateUser { get; set; }
         public Guid UpdateUser { get; set; }
         public DateTime UpdateDate { get; set; }
-        public Guid SaleUser { get; set; }
+        public Guid FactoryId { get; set; }
         public byte IsDelete { get; set; }
         public DateTime CreateDate { get; set; }
         public string OrderPdfPath { get; set; }
@@ -64,8 +64,6 @@ namespace AbetOrder.Entity
         public string OrderStatusName { get; set; }
         public string CreateUserName { get; set; }
         public string UpdateUserName { get; set; }
-        public string SaleUserName { get; set; }
-        public int DataRight { get; set; }
         public string CustomerName { get; set; }
         public string OrderTemplateHtmlName { get; set; }
         public string ProcessTemplateHtmlName { get; set; }
@@ -77,10 +75,10 @@ namespace AbetOrder.Entity
     public class ViewProcessOrder : Order
     {
         public string UpdateUserName { get; set; }
-        public string SaleUserName { get; set; }
-        public int DataRight { get; set; }
+        public string CreateUserName { get; set; }
         public byte BillStatus { get; set; }
         public string BillStatusName { get; set; }
+        public Guid CreateUser2 { get; set; }
     }
 
     [TableProperty(Name = "t_d_OrderImage", PrimaryKey = "Id")]
@@ -90,6 +88,7 @@ namespace AbetOrder.Entity
         public string Name { get; set; }
         public int DisplayIndex { get; set; }
         public Guid OrderId { get; set; }
+        public byte FileType { get; set; }
         public string ImageUrl { get; set; }
     }
 

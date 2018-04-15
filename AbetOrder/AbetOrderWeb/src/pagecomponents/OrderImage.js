@@ -33,7 +33,7 @@ export default class OrderImage extends Index {
         let msg = "", d = null;
         for (let i = 0; i < this.state.Images.length; i++) {
             d = this.state.Images[i];
-            if (Common.IsNullOrEmpty(d.ImageUrl)) msg = "订单设计图新增设计图，请先上传图片！";
+            if (Common.IsNullOrEmpty(d.ImageUrl)) msg = "订单设计图新增设计图，请先上传图片或附件！";
             if (!Common.IsNullOrEmpty(msg)) break;
         }
 
@@ -41,7 +41,7 @@ export default class OrderImage extends Index {
 
         const images = this.state.Images.map((m, i) => {
             m.DisplayIndex = i + 1;
-            if (Common.IsNullOrEmpty(m.Name)) m.Name = "图" + m.DisplayIndex;
+            if (Common.IsNullOrEmpty(m.Name)) m.Name = (m.FileType === 1 ? "图" : "附件") + m.DisplayIndex;
             if (m.ImageId) delete m.ImageId
             return m
         });
@@ -49,9 +49,9 @@ export default class OrderImage extends Index {
         return { Images: images };
     }
 
-    GetAddButton(text) {
+    GetAddButton(name, text) {
         const p = {
-            Name: "AddDetailImage", Text: text, Icon: "plus",
+            Name: name, Text: text, Icon: "plus",
             ButtonType: "dashed",
             Style: { width: '100%', marginTop: 16, marginBottom: 8 },
             Type: "Button"
@@ -62,7 +62,7 @@ export default class OrderImage extends Index {
 
     AddImage(text) {
         let images = this.state.Images;
-        const image = { Id: Common.CreateGuid(), DisplayIndex: images.length + 1 }
+        const image = { Id: Common.CreateGuid(), FileType: text === "添加设计图" ? 1 : 2, DisplayIndex: images.length + 1 }
 
         images.push(image);
 
@@ -108,11 +108,11 @@ export default class OrderImage extends Index {
                     <Col span={6}>
                         名称
                     </Col>
-                    <Col span={4}>
-                        缩略图
+                    <Col span={6}>
+                        缩略图/路径
                     </Col>
                     {this.state.IsEdit ?
-                        <Col span={10}>
+                        <Col span={8}>
                             上传图片
                     </Col> : null}
                     {this.state.IsEdit ?
@@ -123,8 +123,11 @@ export default class OrderImage extends Index {
                 {this.state.Images.map(m => <OrderImageItem Page={this.props.Page} IsEdit={this.state.IsEdit} View={this.props.Property} Data={m} key={m.ImageId} Delete={this.Delete.bind(this, m)} />)}
                 {this.state.IsEdit ?
                     <Row gutter={16}>
-                        <Col span={24}>
-                            {this.GetAddButton("添加设计图")}
+                        <Col span={12}>
+                            {this.GetAddButton("AddDetailImage", "添加设计图")}
+                        </Col>
+                        <Col span={12}>
+                            {this.GetAddButton2("AddDetailAttach", "添加附件")}
                         </Col>
                     </Row> : null
                 }

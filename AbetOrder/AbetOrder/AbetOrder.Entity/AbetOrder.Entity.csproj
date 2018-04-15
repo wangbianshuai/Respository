@@ -43,6 +43,7 @@
     <Compile Include="DealingsBill.cs" />
     <Compile Include="DealingsBillType.cs" />
     <Compile Include="DealingsBook.cs" />
+    <Compile Include="Factory.cs" />
     <Compile Include="Order.cs" />
     <Compile Include="OrderPdf.cs" />
     <Compile Include="PersonBill.cs" />

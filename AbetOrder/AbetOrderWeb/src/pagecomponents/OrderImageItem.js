@@ -93,13 +93,15 @@ export default class OrderImageItem extends Index {
                 <Col span={6}>
                     {this.RenderInput("Name", "图片名称，为空，则保存为\"图+序号\"")}
                 </Col>
-                <Col span={4}>{!Common.IsNullOrEmpty(url) ?
-                    <a href={url} target="_blank" >
-                        <img src={url} alt="" border="0" width="120" height="90" />
+                <Col span={6}>{!Common.IsNullOrEmpty(url) ?
+                    <a href={url} target="_blank" >{
+                        this.state.FileType === 1 ?
+                            <img src={url} alt="" border="0" width="120" height="90" />
+                            : <span>{url}</span>}
                     </a> : null}
                 </Col>
                 {this.props.IsEdit ?
-                    <Col span={10}>
+                    <Col span={8}>
                         {this.RenderUpload()}
                     </Col> : null}
                 {this.props.IsEdit ?

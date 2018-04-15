@@ -95,9 +95,11 @@ export default class OrderDetail extends Index {
             if (d.DetailType === 1 && d.Amount > 0) totalAmount1 += d.Amount;
             else if (d.DetailType === 2 && d.Amount > 0) totalAmount2 += d.Amount;
 
-            if (d.Area > 0) totalArea += d.Area;
+            if (d.Area > 0) totalArea += d.Area * 10000;
             if (d.Number > 0) totalNumber += d.Number;
-        })
+        });
+
+        totalArea = totalArea / 10000;
 
         if (this.props.Page.SetAmountExtraCharge && this.state.IsEdit) this.props.Page.SetAmountExtraCharge(totalAmount1, totalAmount2);
 
@@ -117,7 +119,16 @@ export default class OrderDetail extends Index {
 
     AddDetail(text) {
         let details = this.state.Details;
-        const detail = { DetailType: text === "添加明细" ? 1 : 2, OrderDetailId: Common.CreateGuid(), DisplayIndex: details.length + 1, Thickness: 20 }
+        const detailType = text === "添加明细" ? 1 : 2;
+        let price = 0;
+
+        for (var i = details.length - 1; i <= 0; i--) {
+            if (details[i].Price > 0) { price = details[i].Price; break; }
+        }
+
+        let detail = { DetailType: detailType, OrderDetailId: Common.CreateGuid(), DisplayIndex: details.length + 1 }
+        if (detailType === 1 && price > 0) detail.Price = price;
+        if (detailType === 1) { detail.Number = 1; detail.Thickness = 20; }
 
         details.push(detail);
 

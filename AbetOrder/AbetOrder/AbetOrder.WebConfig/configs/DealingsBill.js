@@ -20,7 +20,7 @@
         QueryUrl: "ViewDealingsBill/Select2",
         IsGroupByInfo: true,
         IsSelfOpeartion: true,
-        SelfPropertyName: "CreateUser",
+        SelfPropertyName: "CreateUser2",
         DataViewComponentName: "DealingsBillDataView",
         EditViewWidth: 700,
         IsInitQuery: false,
@@ -42,8 +42,8 @@
     function GetGroupByInfoHtml() {
         var html = [];
 
-        html.push("收入：<span style=\"color:#1890ff;\">{TotalIncome}</span>，");
-        html.push("支出：<span style=\"color:red;\">{TotalPayment}</span>，");
+        html.push("进账：<span style=\"color:#1890ff;\">{TotalIncome}</span>，");
+        html.push("出账：<span style=\"color:red;\">{TotalPayment}</span>，");
         html.push("结余：<span style=\"color:{TotalBalanceColor};\">{TotalBalance}</span>");
 
         return html.join("");
@@ -65,7 +65,7 @@
 
     function GetProperties() {
         return [{
-            Label: "收支", Name: "IncomePayment", EditProperty: { Type: "Radio", ChildNames: ["BillTypeId"], IsButton: true, DefaultValue: "2", ButtonWidth: 202 },
+            Label: "进出", Name: "IncomePayment", EditProperty: { Type: "Radio", ChildNames: ["BillTypeId"], IsButton: true, DefaultValue: "2", ButtonWidth: 202 },
             DataType: "int", Type: "Select", DataSource: GetDataSource(), OperateLogic: "=", AllowClear: true, SearchProperty: { ColSpan: 5 }
         },
         {
@@ -86,7 +86,7 @@
         { Label: "至", Type: "Date", SearchProperty: { ColSpan: 5 }, OperateLogic: "<", PropertyName: "BillDate", Name: "EndDate", PlaceHolder: "小于其值", DataType: "DateTime", MaxLength: 20, IsNullable: true },
         { Label: "备注", Name: "Remark", DataType: "string", Rows: 3, SearchProperty: { ColSpan: 5, X: 2, Y: 4 }, EditProperty: { ControlType: "TextArea" }, MaxLength: 200, IsNullable: true },
         { Label: "类型", Name: "BillTypeName" },
-        { Label: "收支", Name: "IncomePaymentName" },
+        { Label: "进出", Name: "IncomePaymentName" },
         { Label: "状态", Name: "BillStatusName" },
         { Label: "记账人", Name: "CreateUserName" },
         { Label: "金额", Name: "Amount2", Scale: 2, IsCurrency: true }]
@@ -97,7 +97,7 @@
     }
 
     function GetDataSource() {
-        return [{ Value: "2", Text: "支出" }, { Value: "1", Text: "收入" }]
+        return [{ Value: "2", Text: "出账" }, { Value: "1", Text: "进账" }]
     }
 
     function GetDealingsBillTypeList() {

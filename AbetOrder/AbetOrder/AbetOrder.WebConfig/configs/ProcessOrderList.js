@@ -5,9 +5,9 @@
         EntityName: "ProcessOrder",
         PrimaryKey: "OrderId",
         TemplateName: "EntityListPage",
-        SelectNames: ["OrderId", "OrderCode", "OrderName", "ProcessAmount", "ProcessPdfPath", "BillStatus", "BillStatusName", "OrderDate", "DeliveryDate", "SaleUserName", "UpdateUserName", "UpdateDate"],
-        SearchNames: ["OrderCode", "SaleUser", "StartDate", "EndDate", "StartDate2", "EndDate2", "BillStatus"],
-        DataColumnNames: ["OrderCode", "OrderName", "OrderDate", "DeliveryDate", "SaleUserName", "ProcessAmount", "BillStatusName"],
+        SelectNames: ["OrderId", "OrderCode", "OrderName", "ProcessAmount", "ProcessPdfPath", "BillStatus", "BillStatusName", "OrderDate", "DeliveryDate", "CreateUserName"],
+        SearchNames: ["OrderCode", "CreateUser", "StartDate", "EndDate", "StartDate2", "EndDate2", "BillStatus"],
+        DataColumnNames: ["OrderCode", "OrderName", "OrderDate", "DeliveryDate", "CreateUserName", "ProcessAmount", "BillStatusName"],
         OrderByList: [{ Name: "OrderDate", IsDesc: true }],
         ActionList: GetActionList(),
         Properties: GetProperties(),
@@ -39,7 +39,7 @@
 
     function GetProperties() {
         return [{
-            Label: "销售员", Name: "SaleUser", X: 2, Y: 2,
+            Label: "销售员", Name: "CreateUser", X: 2, Y: 2,
             DataType: "Guid", Type: "Select", ServiceDataSource: GetUserDataSource(), OperateLogic: "=", AllowClear: true, ColSpan: 5
         },
         {
@@ -52,7 +52,7 @@
         { Label: "至", Type: "Date", ColSpan: 5, X: 1, Y: 2, OperateLogic: "<", PropertyName: "OrderDate", Name: "EndDate", PlaceHolder: "小于或等于其值", DataType: "DateTime", MaxLength: 20, IsNullable: true },
         { Label: "发货日期", Type: "Date", ColSpan: 5, OperateLogic: ">=", X: 1, Y: 3, PropertyName: "DeliveryDate", Name: "StartDate2", PlaceHolder: "大于或等于其值", DataType: "DateTime", MaxLength: 20, IsNullable: true },
         { Label: "至", Type: "Date", ColSpan: 5, OperateLogic: "<", X: 1, Y: 4, PropertyName: "DeliveryDate", Name: "EndDate2", PlaceHolder: "小于或等于其值", DataType: "DateTime", MaxLength: 20, IsNullable: true },
-        { Label: "销售员", Name: "SaleUserName" },
+        { Label: "销售员", Name: "CreateUserName" },
         { Label: "门板花式", Name: "OrderName" },
         { Label: "状态", Name: "BillStatusName" },
         { Label: "加工费", Name: "ProcessAmount", Max: 100000000, Min: 1, Step: 1, IsCurrency: true, IsFixed2: false, FontColor: "#1890ff", Type: "TextBox", ControlType: "InputNumber", DataType: "decimal", MaxLength: 10, IsNullable: false },
