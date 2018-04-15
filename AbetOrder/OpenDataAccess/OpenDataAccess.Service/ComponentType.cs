@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,7 +8,7 @@ namespace OpenDataAccess.Service
 {
     public class ComponentType
     {
-        public static List<Type> TypeList = new List<Type>();
+        public static ConcurrentBag<Type> TypeList = new ConcurrentBag<Type>();
 
         public static Type GetComponentType(string name)
         {
@@ -16,7 +17,7 @@ namespace OpenDataAccess.Service
 
         public static void SetComponentType(Type type)
         {
-            if (!TypeList.Exists(exists => exists.Name == type.Name))
+            if (TypeList.Where(exists => exists.Name == type.Name).FirstOrDefault() == null)
             {
                 TypeList.Add(type);
             }

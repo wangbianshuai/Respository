@@ -105,10 +105,10 @@ export default class OrderImage extends Index {
                     <Col span={2}>
                         序号
                     </Col>
-                    <Col span={6}>
+                    <Col span={4}>
                         名称
                     </Col>
-                    <Col span={6}>
+                    <Col span={8}>
                         缩略图/路径
                     </Col>
                     {this.state.IsEdit ?
@@ -127,7 +127,7 @@ export default class OrderImage extends Index {
                             {this.GetAddButton("AddDetailImage", "添加设计图")}
                         </Col>
                         <Col span={12}>
-                            {this.GetAddButton2("AddDetailAttach", "添加附件")}
+                            {this.GetAddButton("AddDetailAttach", "添加附件")}
                         </Col>
                     </Row> : null
                 }

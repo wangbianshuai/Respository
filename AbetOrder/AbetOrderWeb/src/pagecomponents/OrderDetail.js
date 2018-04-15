@@ -122,7 +122,7 @@ export default class OrderDetail extends Index {
         const detailType = text === "添加明细" ? 1 : 2;
         let price = 0;
 
-        for (var i = details.length - 1; i <= 0; i--) {
+        for (var i = details.length - 1; i >= 0; i--) {
             if (details[i].Price > 0) { price = details[i].Price; break; }
         }
 

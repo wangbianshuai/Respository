@@ -54,8 +54,10 @@ export default class EntityEdit extends Index {
                 const { PageConfig } = props;
 
                 if (PageConfig.IsEditPage) {
-                    this.Page.ShowMessage("保存成功！")
-                    this.SetOkDisabled(false);
+                    this.Page.ShowSuccess("保存成功！")
+                    const id = Common.GetObjValue(this.Page.QueryString, PageConfig.PrimaryKey);
+                    const url = `/${PageConfig.Name}?${PageConfig.PrimaryKey}=${id}`
+                    props.ToPage(url);
                 }
                 else {
                     const { EditView } = PageConfig;

@@ -39,6 +39,7 @@ namespace AbetOrder.Component
             if (bill == null)
             {
                 data.SetValue("DataId", orderId);
+                data.SetValue("DataType", 1);
                 data.SetValue("CreateUser", userId);
 
                 object primaryKey = null;

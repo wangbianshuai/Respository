@@ -110,7 +110,8 @@ namespace AbetOrder.Component
             decimal costAmount = entityData.GetValue<decimal>("CostAmount");
             decimal paidDeposit = entityData.GetValue<decimal>("PaidDeposit");
 
-            IEntityData oldEntityData = this.SelectEntityByPrimaryKey(this._QueryRequest.PrimaryKeyProperty.Value);
+            Guid orderId = (Guid)this._QueryRequest.PrimaryKeyProperty.Value;
+            IEntityData oldEntityData = this.SelectEntityByPrimaryKey(orderId);
             if (oldEntityData != null)
             {
                 decimal actualAmount = oldEntityData.GetValue<decimal>("ActualAmount");
@@ -118,6 +119,8 @@ namespace AbetOrder.Component
 
                 entityData.SetValue("ShouldPayBalance", actualAmount - paidDeposit);
                 entityData.SetValue("Profit", actualAmount - costAmount - processAmount);
+
+                new Bill().EditBill(orderId, oldEntityData.GetStringValue("OrderCode"), Guid.Parse(this._Request.OperationUser), paidDeposit);
             }
 
             return this.Update();

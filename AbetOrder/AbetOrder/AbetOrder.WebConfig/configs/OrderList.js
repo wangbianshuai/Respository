@@ -5,7 +5,7 @@
         EntityName: "Order",
         PrimaryKey: "OrderId",
         TemplateName: "EntityListPage",
-        SelectNames: ["OrderId", "RowVersion", "OrderStatus", "OrderCode", "OrderDate", "DeliveryDate", "CustomerName", "CreateUserName", "ActualAmount", "CostAmount2", "ProcessAmount2", "Profit", "PaidDeposit", "ShouldPayBalance", "OrderStatusName"],
+        SelectNames: ["OrderId", "RowVersion", "OrderStatus", "OrderCode", "OrderDate", "DeliveryDate", "CustomerName", "CreateUserName", "CreateUser", "ActualAmount", "CostAmount2", "ProcessAmount2", "Profit", "PaidDeposit", "ShouldPayBalance", "OrderStatusName"],
         SearchNames: ["OrderCode", "CustomerId", "CreateUser", "OrderStatus", "StartDate", "EndDate", "StartDate2", "EndDate2"],
         DataColumnNames: ["OrderCode", "CustomerName", "DeliveryDate", "OrderDate", "OrderStatusName", , "ActualAmount", "ProcessAmount2", "PaidDeposit", "ShouldPayBalance", "CreateUserName"],
         EditNames: ["CostAmount", "PaidDeposit"],

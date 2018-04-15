@@ -43,6 +43,9 @@
         return [{
             ActionName: "GetUserList", StateName: "UserList",
             Url: "ViewUser?$select=UserId,UserName&$orderby=CreateDate&$filter=DataRight eq 1", DataKey: "ViewUser", Method: "GET"
+        },
+        {
+            ActionName: "GetOrderImageList", StateName: "OrderImageList", DataKey: "OrderImage", Method: "GET", IsRefresh: true
         }]
     }
 

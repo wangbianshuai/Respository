@@ -362,7 +362,7 @@ namespace OpenDataAccess.Service
             Dictionary<string,object> entityDict = new Dictionary<string,object>();
             List<Dictionary<string,object>> propertyList =null;
             Dictionary<string, object> propertyDict = null;
-            EntityType.EntityTypeList.ForEach(entity =>
+            EntityType.EntityTypeList.ToList().ForEach(entity =>
             {
                 entityDict = new Dictionary<string,object>();
                 entityDict.Add("Name", entity.Name);

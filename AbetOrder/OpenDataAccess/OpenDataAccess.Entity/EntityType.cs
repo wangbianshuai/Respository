@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -28,7 +29,7 @@ namespace OpenDataAccess.Entity
             this.DeleteValidateList = new List<Func<IValidate, IEntityData, string>>();
         }
 
-        public static List<EntityType> EntityTypeList = new List<EntityType>();
+        public static ConcurrentBag<EntityType> EntityTypeList = new ConcurrentBag<EntityType>();
 
         public static EntityType GetEntityType(string name, bool blClone = false)
         {
@@ -80,7 +81,7 @@ namespace OpenDataAccess.Entity
 
         public static void SetEntityType<T>() where T : IEntity
         {
-            if (!EntityTypeList.Exists(exists => exists.Name == typeof(T).Name))
+            if (EntityTypeList.Where(exists => exists.Name == typeof(T).Name).FirstOrDefault() == null)
             {
                 T entity = Activator.CreateInstance<T>();
                 EntityTypeList.Add(entity.ToEntityType());
@@ -89,7 +90,7 @@ namespace OpenDataAccess.Entity
 
         public static void SetEntityType(Type type)
         {
-            if (!EntityTypeList.Exists(exists => exists.Name == type.Name))
+            if (EntityTypeList.Where(exists => exists.Name == type.Name).FirstOrDefault() == null)
             {
                 IEntity entity = Activator.CreateInstance(type) as IEntity;
                 if (entity != null)
@@ -101,7 +102,7 @@ namespace OpenDataAccess.Entity
 
         public static void SetEntityType(object obj)
         {
-            if (!EntityTypeList.Exists(exists => exists.Name == obj.GetType().Name))
+            if (EntityTypeList.Where(exists => exists.Name == obj.GetType().Name).FirstOrDefault() == null)
             {
                 IEntity entity = obj as IEntity;
                 if (entity != null)

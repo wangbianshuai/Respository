@@ -19,7 +19,8 @@ export default class Page extends Index {
 
             if (this.Page.JudgeChanged(nextProps, p.StateName)) {
                 const dataList = nextProps[p.StateName];
-                if (Common.IsArray(dataList)) p.SetDataSource(dataList);
+                if (p.IsResponse) p.SetDataSource(dataList);
+                else if (Common.IsArray(dataList)) p.SetDataSource(dataList);
             }
         }
     }
@@ -33,6 +34,8 @@ export default class Page extends Index {
         let payload = {};
         if (action.IsUrlParams) payload.Url = action.Url;
 
+        this.Page.SetActionState(action);
         this.Page.Dispatch(action, payload)
     }
+
 }

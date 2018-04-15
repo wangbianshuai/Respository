@@ -16,7 +16,6 @@ namespace AbetOrder.Entity
         public DateTime OrderDate { get; set; }
         public DateTime DeliveryDate { get; set; }
         public string OrderName { get; set; }
-        public string OrderName2 { get; set; }
         public decimal Amount { get; set; }
         public decimal ActualAmount { get; set; }
         public decimal PaidDeposit { get; set; }
@@ -56,6 +55,7 @@ namespace AbetOrder.Entity
     [TableProperty(Name = "t_d_Order", PrimaryKey = "OrderId", NoSelectNames = "IsDelete")]
     public class ProcessOrder : Order
     {
+        public string OrderName2 { get; set; }
     }
 
     [TableProperty(Name = "v_Order", PrimaryKey = "OrderId", NoSelectNames = "IsDelete")]
@@ -70,6 +70,14 @@ namespace AbetOrder.Entity
         public string ProcessTemplateHtmlName { get; set; }
         public decimal ProcessAmount2 { get; set; }
         public decimal CostAmount2 { get; set; }
+        public string OrderName2 { get; set; }
+    }
+
+
+    [TableProperty(Name = "v_Order2", PrimaryKey = "OrderId", NoSelectNames = "IsDelete")]
+    public class ViewOrder2 : Order
+    {
+        public string OrderName2 { get; set; }
     }
 
     [TableProperty(Name = "v_ProcessOrder", PrimaryKey = "OrderId", NoSelectNames = "IsDelete")]
@@ -80,6 +88,7 @@ namespace AbetOrder.Entity
         public byte BillStatus { get; set; }
         public string BillStatusName { get; set; }
         public Guid CreateUser2 { get; set; }
+        public string OrderName2 { get; set; }
     }
 
     [TableProperty(Name = "t_d_OrderImage", PrimaryKey = "Id")]

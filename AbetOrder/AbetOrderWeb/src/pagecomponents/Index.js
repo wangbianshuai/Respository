@@ -64,7 +64,7 @@ export default class Index extends Component {
 
         if (action.IsFirst === undefined) action.IsFirst = true;
 
-        const list = action.IsFirst ? undefined : Page.props[action.StateName];
+        const list = action.IsFirst || action.IsRefresh ? undefined : Page.props[action.StateName];
         if (list === undefined) Page.InvokeAction(property, action);
         else property.SetDataSource(list);
 

@@ -8,7 +8,7 @@
         InsertUrl: "Bill/Insert2",
         UpdateUrl: "Bill/Update2",
         UpdateStatusUrl: "Bill/UpdateStatus",
-        SelectNames: ["Id", "RowVersion", "Amount2", "BillTypeName", "DataId", "BillStatus", "CreateUser", "OrderName2", "IncomePaymentName", "BillStatusName", "CreateUserName", "BillDate", "Remark"],
+        SelectNames: ["Id", "RowVersion", "Amount2", "BillTypeName", "DataId", "DataType", "BillStatus", "CreateUser", "OrderName2", "IncomePaymentName", "BillStatusName", "CreateUserName", "BillDate", "Remark"],
         SearchNames: ["IncomePayment", "BillTypeId", "CreateUser", "BillStatus", "StartDate", "EndDate", "OrderName2", "Remark"],
         DataColumnNames: ["BillDate", "BillTypeName", "OrderName2", "IncomePaymentName", "Amount2", "CreateUserName", "BillStatusName"],
         EditNames: ["IncomePayment", "BillTypeId", "DataId", "Amount", "BillDate", "Remark"],
@@ -51,7 +51,7 @@
         },
         {
             ActionName: "GetOrderList", StateName: "OrderList",
-            Url: "ViewOrder?$select=OrderId,OrderName2&$orderby=OrderDate desc", DataKey: "ViewOrder", Method: "GET"
+            Url: "ViewOrder2?$select=OrderId,OrderName2&$orderby=OrderDate desc", DataKey: "ViewOrder2", Method: "GET"
         },
         {
             ActionName: "GetUserList", StateName: "UserList",

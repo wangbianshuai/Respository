@@ -4,6 +4,7 @@ import * as Common from "../utils/Common"
 import DataGridView from "../components/DataGridView"
 import Index from "./Index"
 import PageComponent from "../pagecomponents/PageComponent";
+import ModalDialog from "../components/ModalDialog";
 
 export default class EntityListPage extends Index {
     constructor(props) {
@@ -13,7 +14,8 @@ export default class EntityListPage extends Index {
             EditModalVisible: false,
             EditModalTitle: "",
             IsDataLoading: false,
-            EditModaIsEdit: true
+            EditModaIsEdit: true,
+            ModalDialogProperty: null
         }
     }
 
@@ -40,6 +42,8 @@ export default class EntityListPage extends Index {
         this.InitDataProperties();
 
         this.props.Property.EditView.SetEdit = (data) => this.SetEdit(data);
+
+        this.props.Page.SetModalDialog = (p) => this.setState({ ModalDialogProperty: p });
     }
 
     InitSearchConditionDefalutValue(searchView) {
@@ -225,6 +229,12 @@ export default class EntityListPage extends Index {
         )
     }
 
+    RenderModalDialog() {
+        if (this.state.ModalDialogProperty === null) return null;
+
+        return <ModalDialog Property={this.state.ModalDialogProperty} Page={this.props.Page} />
+    }
+
     render() {
         return (
             <div>
@@ -232,6 +242,7 @@ export default class EntityListPage extends Index {
                 {this.RenderView(this.OperationView)}
                 {this.RenderDataView()}
                 {this.RenderEditModal()}
+                {this.RenderModalDialog()}
             </div>
         );
     }

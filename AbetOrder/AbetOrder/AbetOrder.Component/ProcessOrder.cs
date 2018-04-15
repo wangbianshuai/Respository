@@ -64,7 +64,7 @@ namespace AbetOrder.Component
         {
             IQuery query = new Query("t_d_Factory");
             query.Select("DealingsBookId");
-            query.Where(string.Format("where Id='{1}'", factoryId));
+            query.Where(string.Format("where Id='{0}'", factoryId));
 
             IEntityData entityData = this.SelectEntity(query);
             return entityData == null ? Guid.Empty : entityData.GetValue<Guid>("DealingsBookId");

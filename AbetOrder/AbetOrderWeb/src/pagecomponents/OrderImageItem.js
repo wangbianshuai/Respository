@@ -18,8 +18,10 @@ export default class OrderImageItem extends Index {
             UploadUrl: "?EntityName=OrderImage&ft=image",
             IsEdit: false,
             IsInitState: true,
-            Accept: ".jpg,.png,.gif", FileSize: 1024 * 1024, FileSizeText: "1M"
+            FileSize: 1024 * 1024, FileSizeText: "1M"
         };
+
+        if (this.state.FileType === 1) this.UploadProperty.Accept = ".jpg,.png,.gif";
 
         this.UploadProperty.SetUploadResponse = this.SetFileUploadResponse.bind(this);
     }
@@ -90,10 +92,10 @@ export default class OrderImageItem extends Index {
                 <Col span={2}>
                     {this.RenderInputNumber("DisplayIndex", "", 99, 1, 1, 2, !this.props.IsEdit)}
                 </Col>
-                <Col span={6}>
+                <Col span={4}>
                     {this.RenderInput("Name", "图片名称，为空，则保存为\"图+序号\"")}
                 </Col>
-                <Col span={6}>{!Common.IsNullOrEmpty(url) ?
+                <Col span={8}>{!Common.IsNullOrEmpty(url) ?
                     <a href={url} target="_blank" >{
                         this.state.FileType === 1 ?
                             <img src={url} alt="" border="0" width="120" height="90" />

@@ -136,9 +136,9 @@
 
     function GetFactoryDataSource() {
         return {
-            ActionName: "GetUserList",
-            ValueName: "UserId",
-            TextName: "UserName"
+            ActionName: "GetFactoryList",
+            ValueName: "Id",
+            TextName: "Name"
         }
     }
 
@@ -162,7 +162,7 @@
         },
         { Label: "门板花式", Type: "TextBox", Name: "OrderName", ColSpan: 11, LabelCol: 4, WrapperCol: 20, X: 2, Y: 1, DataType: "string", MaxLength: 100, IsNullable: false },
         {
-            Label: "加工工厂", Name: "CreateUser",
+            Label: "加工工厂", Name: "FactoryId",
             DataType: "Guid", Type: "Select", ServiceDataSource: GetFactoryDataSource(), ColSpan: 11, LabelCol: 4, WrapperCol: 20, X: 2, Y: 2, IsNullable: false
         },
         { Label: "订单日期", Type: "Date", Name: "OrderDate", ColSpan: 11, LabelCol: 4, WrapperCol: 20, X: 3, Y: 1, PlaceHolder: "默认系统当前日期", DataType: "DateTime", MaxLength: 10, IsNullable: true },

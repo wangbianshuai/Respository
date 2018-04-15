@@ -22,7 +22,7 @@ export default class Index extends Component {
             if (i > 0) list.push(<Divider type="vertical" key={i} />)
             if (actionList[i].IsConfrim) list.push(<Popconfirm2 Property={actionList[i]} Page={this.props.Page} Params={record} key={actionList[i].Name} />)
             else if (actionList[i].IsToPage) list.push(this.GetLinkAction(actionList[i], record));
-            else list.push(<AButton Property={actionList[i]} Page={this.props.Page} Params={record} key={actionList[i].Name} />)
+            else list.push(<AButton Property={actionList[i]} Page={this.props.Page} Params={record} key={actionList[i].Name} ClickAction={actionList[i].ClickAction} />)
         }
 
         return (<span>{list.map(m => m)}</span>)

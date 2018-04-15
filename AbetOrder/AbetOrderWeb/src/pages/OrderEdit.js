@@ -70,7 +70,7 @@ export default class OrderEdit {
     SetOperationButtons() {
         const { EntityData } = this.PageConfig.TabViews[0].EditView;
 
-        if (EntityData) {
+        if (EntityData && EntityData.CreateUser === this.Page.LoginUser.UserId) {
             const s = EntityData.OrderStatus;
 
             this.PageConfig.OperationView.Properties.forEach(p => {

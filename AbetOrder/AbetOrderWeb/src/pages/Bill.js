@@ -24,7 +24,7 @@ export default class Bill {
             list.push(actionList[0])
             return list;
         }
-        else if (record.BillStatus === 1) {
+        else if (record.BillStatus === 1 || (record.DataType === 1 && !Common.IsNullOrEmpty(record.DataId))) {
             actionList = []
             actionList.push({ Name: "Look", Text: "查看", ActionType: "EntityEdit", ActionName: "Look" })
             return actionList;
