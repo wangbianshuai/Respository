@@ -90,7 +90,7 @@
         { Label: "收支", Name: "IncomePaymentName" },
         { Label: "经手人", Name: "CreateUserName" },
         { Label: "状态", Name: "BillStatusName" },
-        { Label: "金额", Name: "Amount2", Scale: 2, IsCurrency: true }]
+        { Label: "金额", Name: "Amount2", Scale: 2, IsCurrency: true, FontColor: "#1890ff"  }]
     }
 
     function GetStatusDataSource() {

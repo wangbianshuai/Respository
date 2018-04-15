@@ -9,8 +9,8 @@
         UpdateUrl: "DealingsBill/Update2",
         UpdateStatusUrl: "DealingsBill/UpdateStatus",
         SelectNames: ["Id", "RowVersion", "Amount2", "DataId", "OrderSaleUser", "BillTypeName", "ApproveUserName", "BillStatus", "IncomePayment", "CreateUser2", "CreateUser", "IncomePaymentName", "BillStatusName", "CreateUserName", "BillDate", "Remark"],
-        SearchNames: ["IncomePayment", "BillTypeId", "CreateUser", "BillStatus", "StartDate", "EndDate", "Remark"],
-        DataColumnNames: ["BillDate", "BillTypeName", "IncomePaymentName", "Amount2", "BillStatusName", "CreateUserName", "ApproveUserName"],
+        SearchNames: ["BillTypeId", "CreateUser", "BillStatus", "StartDate", "EndDate", "Remark"],
+        DataColumnNames: ["BillDate", "BillTypeName", "Amount2", "BillStatusName", "CreateUserName", "ApproveUserName"],
         EditNames: ["BillTypeId", "DealingsUser", "Amount", "BillDate", "Remark"],
         OrderByList: [{ Name: "BillDate", IsDesc: true }],
         ActionList: GetActionList(),
@@ -65,10 +65,6 @@
 
     function GetProperties() {
         return [{
-            Label: "进出", Name: "IncomePayment", EditProperty: { Type: "Radio", ChildNames: ["BillTypeId"], IsButton: true, DefaultValue: "2", ButtonWidth: 202 },
-            DataType: "int", Type: "Select", DataSource: GetDataSource(), OperateLogic: "=", AllowClear: true, SearchProperty: { ColSpan: 5 }
-        },
-        {
             Label: "类型", Name: "BillTypeId", AllowClear: true, EditProperty: { AllowClear: false }, OperateLogic: "=",
             DataType: "Guid", Type: "Select", ServiceDataSource: GetDealingsBillTypeList(), IsNullable: false, SearchProperty: { ColSpan: 5 }
         },
@@ -78,27 +74,22 @@
             DataType: "Guid", Type: "Select", ServiceDataSource: GetUserDataSource(), AllowClear: true
         },
         {
-            Label: "状态", Name: "BillStatus", ColSpan: 5, X: 1, Y: 4,
+            Label: "状态", Name: "BillStatus", ColSpan: 5, X: 1, Y: 2,
             DataType: "int", Type: "Select", DataSource: GetStatusDataSource(), OperateLogic: "=", AllowClear: true, SearchProperty: { ColSpan: 5 }
         },
         { Label: "日期", Type: "Date", IsDate: true, IsDefaultNow: true, Name: "BillDate", PlaceHolder: "默认系统当前日期", DataType: "DateTime", MaxLength: 20, IsNullable: true },
         { Label: "开始日期", Type: "Date", SearchProperty: { ColSpan: 5 }, OperateLogic: ">=", PropertyName: "BillDate", Name: "StartDate", PlaceHolder: "大于或等于其值", DataType: "DateTime", MaxLength: 20, IsNullable: true },
         { Label: "至", Type: "Date", SearchProperty: { ColSpan: 5 }, OperateLogic: "<", PropertyName: "BillDate", Name: "EndDate", PlaceHolder: "小于其值", DataType: "DateTime", MaxLength: 20, IsNullable: true },
-        { Label: "备注", Name: "Remark", DataType: "string", Rows: 3, SearchProperty: { ColSpan: 5, X: 2, Y: 4 }, EditProperty: { ControlType: "TextArea" }, MaxLength: 200, IsNullable: true },
+        { Label: "备注", Name: "Remark", DataType: "string", Rows: 3, SearchProperty: { ColSpan: 5, X: 1, Y: 3 }, EditProperty: { ControlType: "TextArea" }, MaxLength: 200, IsNullable: true },
         { Label: "类型", Name: "BillTypeName" },
-        { Label: "进出", Name: "IncomePaymentName" },
         { Label: "状态", Name: "BillStatusName" },
         { Label: "记账人", Name: "CreateUserName" },
         { Label: "审核人", Name: "ApproveUserName" },
-        { Label: "金额", Name: "Amount2", Scale: 2, IsCurrency: true }]
+        { Label: "金额", Name: "Amount2", Scale: 2, IsCurrency: true, FontColor: "#1890ff" }]
     }
 
     function GetStatusDataSource() {
         return [{ Value: "0", Text: "未确认" }, { Value: "1", Text: "已确认" }]
-    }
-
-    function GetDataSource() {
-        return [{ Value: "2", Text: "出账" }, { Value: "1", Text: "进账" }]
     }
 
     function GetDealingsBillTypeList() {
