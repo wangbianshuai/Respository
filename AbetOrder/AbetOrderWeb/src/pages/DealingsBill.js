@@ -38,16 +38,16 @@ export default class DealingsBill {
 
 
     ExpandSetOperation(actionList, record) {
-        if (record.BillStatus === 1 || !Common.IsNullOrEmpty(record.DataId)) {
-            actionList = []
-            actionList.push({ Name: "Look", Text: "查看", ActionType: "EntityEdit", ActionName: "Look" })
-            return actionList;
-        }
-        else if (actionList.length === 1 && record.BillStatus === 0 && record.IncomePayment === 1) {
+        if (actionList.length === 1 && record.BillStatus === 0 && record.IncomePayment === 1) {
             const list = []
             list.push({ Name: "Approve", Text: "审核", Title: "确定要审核通过吗？", StatusName: "BillStatus", StatusValue: 1, IsConfrim: true, ActionType: "EntityEdit", ActionName: "UpdateStatus" });
             list.push(actionList[0])
             return list;
+        }
+        else if (record.BillStatus === 1 || !Common.IsNullOrEmpty(record.DataId)) {
+            actionList = []
+            actionList.push({ Name: "Look", Text: "查看", ActionType: "EntityEdit", ActionName: "Look" })
+            return actionList;
         }
 
         return actionList
