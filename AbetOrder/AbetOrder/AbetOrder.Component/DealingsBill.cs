@@ -135,6 +135,7 @@ namespace AbetOrder.Component
         {
             IEntityData entityData = this._Request.Entities[this.EntityType.Name].FirstOrDefault();
 
+            entityData.SetDefaultValue("ApproveUser", this._Request.OperationUser);
             entityData.SetDefaultValue("ApproveDate", DateTime.Now);
 
             return this.Update();

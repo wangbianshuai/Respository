@@ -39,6 +39,10 @@ namespace AbetOrder.Entity
         /// </summary>
         public DateTime ApproveDate { get; set; }
         /// <summary>
+        /// 审核人
+        /// </summary>
+        public Guid ApproveUser { get; set; }
+        /// <summary>
         /// 更新时间
         /// </summary>
         public DateTime UpdateDate { get; set; }
@@ -77,6 +81,7 @@ namespace AbetOrder.Entity
         public string BillStatusName { get; set; }
         public Guid DealingsUser2 { get; set; }
         public Guid CreateUser2 { get; set; }
+        public string ApproveUserName { get; set; }
     }
 
     [TableProperty(Name = "v_DealingsBillUser", PrimaryKey = "CreateUser")]

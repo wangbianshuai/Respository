@@ -8,9 +8,9 @@
         InsertUrl: "DealingsBill/Insert2",
         UpdateUrl: "DealingsBill/Update2",
         UpdateStatusUrl: "DealingsBill/UpdateStatus",
-        SelectNames: ["Id", "RowVersion", "Amount2", "DataId", "BillTypeName", "BillStatus", "CreateUser", "IncomePaymentName", "BillStatusName", "CreateUserName", "BillDate", "Remark"],
+        SelectNames: ["Id", "RowVersion", "Amount2", "DataId", "BillTypeName", "ApproveUserName", "BillStatus", "IncomePayment", "CreateUser2", "CreateUser", "IncomePaymentName", "BillStatusName", "CreateUserName", "BillDate", "Remark"],
         SearchNames: ["IncomePayment", "BillTypeId", "CreateUser", "BillStatus", "StartDate", "EndDate", "Remark"],
-        DataColumnNames: ["BillDate", "BillTypeName", "IncomePaymentName", "Amount2", "BillStatusName", "CreateUserName"],
+        DataColumnNames: ["BillDate", "BillTypeName", "IncomePaymentName", "Amount2", "BillStatusName", "CreateUserName", "ApproveUserName"],
         EditNames: ["BillTypeId", "DealingsUser", "Amount", "BillDate", "Remark"],
         OrderByList: [{ Name: "BillDate", IsDesc: true }],
         ActionList: GetActionList(),
@@ -20,7 +20,7 @@
         QueryUrl: "ViewDealingsBill/Select2",
         IsGroupByInfo: true,
         IsSelfOpeartion: true,
-        SelfPropertyName: "CreateUser2",
+        SelfPropertyName: "CreateUser",
         DataViewComponentName: "DealingsBillDataView",
         EditViewWidth: 700,
         IsInitQuery: false,
@@ -89,6 +89,7 @@
         { Label: "进出", Name: "IncomePaymentName" },
         { Label: "状态", Name: "BillStatusName" },
         { Label: "记账人", Name: "CreateUserName" },
+        { Label: "审核人", Name: "ApproveUserName" },
         { Label: "金额", Name: "Amount2", Scale: 2, IsCurrency: true }]
     }
 
