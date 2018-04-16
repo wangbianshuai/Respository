@@ -34,6 +34,10 @@ namespace AbetOrder.Component
         [Log]
         public object Delete2()
         {
+            Guid orderId = (Guid)this._QueryRequest.PrimaryKeyProperty.Value;
+            new Bill().DeleteOrderBill(orderId);
+            new DealingsBill().DeleteOrderDealingsBill(orderId);
+
             return CommonOperation.DeleteByLogic<Order>(this);
         }
 

@@ -21,7 +21,11 @@ namespace AbetOrder.Entity
         /// <summary> 
         /// 内容
         /// </summary> 
-        public string Content { get; set; }
+        public string Html { get; set; }
+        /// <summary> 
+        /// 内容
+        /// </summary> 
+        public string Css { get; set; }
         /// <summary> 
         /// 备注
         /// </summary> 

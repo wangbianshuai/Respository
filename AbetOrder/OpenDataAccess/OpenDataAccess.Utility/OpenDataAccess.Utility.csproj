@@ -38,6 +38,13 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\dll\DocumentFormat.OpenXml.dll</HintPath>
     </Reference>
+    <Reference Include="itextsharp, Version=5.1.2.0, Culture=neutral, PublicKeyToken=8354ae6d2174ddca, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>.\itextsharp.dll</HintPath>
+    </Reference>
+    <Reference Include="itextsharp.xmlworker">
+      <HintPath>.\itextsharp.xmlworker.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\..\UFCMS\packages\Newtonsoft.Json.8.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
@@ -67,6 +74,7 @@
     <Compile Include="ExpandMethod.cs" />
     <Compile Include="FileHelper.cs" />
     <Compile Include="MailUtility.cs" />
+    <Compile Include="PdfDocument.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TagParse.cs" />
   </ItemGroup>

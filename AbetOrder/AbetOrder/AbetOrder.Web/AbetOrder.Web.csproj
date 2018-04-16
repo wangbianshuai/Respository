@@ -102,12 +102,18 @@
     <Content Include="configs\RemarkItem.json" />
     <Content Include="configs\TemplateHtml.json" />
     <Content Include="configs\User.json" />
+    <Content Include="css\Order1.css" />
+    <Content Include="css\ProcessOrder1.css" />
     <Content Include="Default.aspx" />
+    <Content Include="GenPdf.aspx" />
     <Content Include="Global.asax" />
+    <Content Include="HtmlPage1.html" />
     <Content Include="index.css" />
     <Content Include="index.html" />
     <Content Include="index.js" />
     <Content Include="static\UserAvatar.fda3837f.png" />
+    <Content Include="templates\Order1.html" />
+    <Content Include="templates\ProcessOrder1.html" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -118,12 +124,20 @@
     <Compile Include="Code\LoggerProxy.cs" />
     <Compile Include="Code\Request.cs" />
     <Compile Include="Controllers\DefaultController.cs" />
+    <Compile Include="Controllers\PdfController.cs" />
     <Compile Include="Default.aspx.cs">
       <DependentUpon>Default.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Default.aspx.designer.cs">
       <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="GenPdf.aspx.cs">
+      <DependentUpon>GenPdf.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="GenPdf.aspx.designer.cs">
+      <DependentUpon>GenPdf.aspx</DependentUpon>
     </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -150,6 +164,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="images\" />
     <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>

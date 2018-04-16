@@ -1,0 +1,40 @@
+﻿div {
+    margin: 0;
+    padding: 0;
+}
+
+table {
+    font-family: "仿宋";
+}
+
+.tdTitle {
+    font-size: 22pt;
+    letter-spacing: 15px;
+    width: 450px;
+    text-align: center;
+}
+
+.Table1 {
+    margin-top: 10px;
+    width: 100%;
+}
+
+    .Table1 tr {
+        height: 24px;
+    }
+
+    .Table1 .tdRight {
+        text-align: right;
+    }
+
+.Table2 {
+}
+
+    .Table2 tr {
+        height: 24px;
+    }
+
+    .Table2 .tdSpan {
+        text-decoration: underline;
+        padding-right: 20px;
+    }

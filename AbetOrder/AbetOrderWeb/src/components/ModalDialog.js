@@ -30,11 +30,11 @@ export default class ModalDialog extends Index {
     render() {
         if (!this.props.Property) return null;
 
-        const { IsOk, Title, Width, Component, OkText } = this.props.Property;
+        const { IsOk, Title, Width, Component, OkText, Style } = this.props.Property;
 
         if (IsOk === false) {
             return (
-                <Modal title={Title} visible={this.state.Visible}
+                <Modal title={Title} visible={this.state.Visible} style={Style}
                     width={Width} onCancel={this.Cancel.bind(this)}
                     footer={this.RenderLookFooter()}>
                     {Component}
@@ -43,7 +43,7 @@ export default class ModalDialog extends Index {
         }
         else {
             return (
-                <Modal title={Title} visible={this.state.Visible}
+                <Modal title={Title} visible={this.state.Visible} style={Style}
                     okText={OkText || "确定"} cancelText="取消" width={Width}
                     onOk={this.Ok.bind(this)} onCancel={this.Cancel.bind(this)} >
                     {Component}

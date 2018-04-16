@@ -25,6 +25,12 @@ namespace AbetOrder.Web
              routeTemplate: "api/{entityname}",
              defaults: new { controller = "Default" }
             );
+
+            config.Routes.MapHttpRoute(
+             name: "DefaultApi3",
+             routeTemplate: "pdf/{name}.pdf",
+             defaults: new { controller = "Pdf" }
+           );
         }
     }
 }

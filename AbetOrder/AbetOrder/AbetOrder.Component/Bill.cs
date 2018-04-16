@@ -22,6 +22,25 @@ namespace AbetOrder.Component
         {
         }
 
+        public bool DeleteOrderBill(Guid orderId)
+        {
+            Guid billTypeId = Guid.Parse(System.Configuration.ConfigurationManager.AppSettings["PaidDepositBillTypeId"]);
+
+            IEntityData bill = GetOrderPaidDepositBill(orderId, billTypeId);
+
+            if (bill != null)
+            {
+                IEntityData data = new EntityData(this.EntityType);
+
+                object id = bill.GetValue("Id");
+                data.SetValue("Id", id);
+                data.SetValue("IsDelete", 1);
+
+                return this.UpdateEntityByPrimaryKey(id, data);
+            }
+
+            return true;
+        }
 
         public bool EditBill(Guid orderId, string orderCode, Guid userId, decimal amount, DateTime billDate)
         {
@@ -64,6 +83,14 @@ namespace AbetOrder.Component
             return this.SelectEntity(query);
         }
 
+        IEntityData GetOrderPaidDepositBill(Guid orderId, Guid billTypeId)
+        {
+            IQuery query = new Query(this.EntityType.TableName);
+            query.Select("Id,BillStatus");
+            query.Where(string.Format("where IsDelete=0 and DataType=1 and DataId='{0}' and BillTypeId='{1}'", orderId, billTypeId));
+
+            return this.SelectEntity(query);
+        }
 
         [Log]
         public object Insert2()
