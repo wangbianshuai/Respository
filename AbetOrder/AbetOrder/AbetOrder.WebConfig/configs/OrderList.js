@@ -1,14 +1,14 @@
 (function () {
     window.configs.OrderList = {
         Name: "OrderList",
-        Title: "订单列表",
+        Title: "订单",
         EntityName: "Order",
         PrimaryKey: "OrderId",
         TemplateName: "EntityListPage",
         SelectNames: ["OrderId", "RowVersion", "OrderStatus", "OrderCode", "OrderDate", "DeliveryDate", "CustomerName", "CreateUserName", "CreateUser", "ActualAmount", "CostAmount2", "ProcessAmount2", "Profit", "PaidDeposit", "ShouldPayBalance", "OrderStatusName"],
         SearchNames: ["OrderCode", "CustomerId", "CreateUser", "OrderStatus", "StartDate", "EndDate", "StartDate2", "EndDate2"],
         DataColumnNames: ["OrderCode", "CustomerName", "OrderDate", "DeliveryDate", "OrderStatusName", , "ActualAmount", "ProcessAmount2", "PaidDeposit", "ShouldPayBalance", "CreateUserName"],
-        EditNames: ["CostAmount", "PaidDeposit", "BillDate"],
+        EditNames: ["PaidDeposit", "BillDate"],
         OrderByList: [{ Name: "OrderDate", IsDesc: true }],
         ActionList: GetActionList(),
         Properties: GetProperties(),
@@ -16,7 +16,7 @@
         UpdateStatusUrl: "Order/UpdateStatus",
         UpdateStatusActionName: "UpdateStatus",
         TableWidth: 1300,
-        OperationColumnWidth: 200,
+        OperationColumnWidth: 180,
         GroupByInfoHtml: GetGroupByInfoHtml(),
         QueryUrl: "ViewOrder/Select2",
         UpdateUrl: "Order/Update3",
@@ -87,8 +87,7 @@
             { Label: "发货日期", Name: "DeliveryDate", IsDate: true, ColumnWidth: 110 },
             { Label: "订单金额", Name: "ActualAmount", ColumnWidth: 80, IsCurrency: true, IsFixed2: false, FontColor: "#1890ff" },
             { Label: "加工费", Name: "ProcessAmount2", ColumnWidth: 80, IsCurrency: true, IsFixed2: false, FontColor: "#1890ff" },
-            { Label: "已收金额", Name: "PaidDeposit", ColumnWidth: 80, IsCurrency: true, IsFixed2: false, FontColor: "#1890ff", Max: 100000000, Min: 1, Step: 1, Type: "TextBox", ControlType: "InputNumber", DataType: "decimal", MaxLength: 10 },
-            { Label: "成本金额", Name: "CostAmount", Max: 100000000, Min: 1, Step: 1, Type: "TextBox", ControlType: "InputNumber", DataType: "decimal", MaxLength: 10, IsNullable: false },
+            { Label: "已收金额", Name: "PaidDeposit", ColumnWidth: 80, IsNullable: false, IsCurrency: true, IsFixed2: false, FontColor: "#1890ff", Max: 100000000, Min: 1, Step: 1, Type: "TextBox", ControlType: "InputNumber", DataType: "decimal", MaxLength: 10 },
             { Label: "应收余额", Name: "ShouldPayBalance", ColumnWidth: 80, IsCurrency: true, IsFixed2: false, FontColor: "#1890ff" },
             { Label: "修改时间", Name: "UpdateDate", DataType: "DateTime" }]
     }

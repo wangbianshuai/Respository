@@ -26,7 +26,7 @@ export default class OrderList {
         else if (record.OrderStatus === 1) {
             let list = [billAction]
             list.push({ Name: "UpdateStatus2", Text: "存档", Title: "确定要存档完成吗？", StatusName: "OrderStatus", StatusValue: 2, IsConfrim: true, ActionType: "EntityEdit", ActionName: "UpdateStatus" });
-            list.push({ Name: "UpdateAmount", Text: "修改金额", ActionType: "EntityEdit", ActionName: "Edit" })
+            list.push({ Name: "UpdateAmount", Text: "收款", ActionType: "EntityEdit", ActionName: "Edit" })
             list.push(actionList[0])
             return list;
         }

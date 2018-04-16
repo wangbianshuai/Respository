@@ -21,11 +21,20 @@ export default class ProcessOrderAttach extends Index {
     InitDataProperties() {
         return [{ Name: "DisplayIndex", Label: "序号" }, { Name: "Name", Label: "名称" }, {
             Name: "ImageUrl",
-            Label: "地址",
-            Render: (text, record) => {
-                return <a href={text} target="_blank">{text}</a>
-            }
+            Label: "缩略图或路径",
+            Render: (text, record) => this.RenderImageUrl(text, record)
         }]
+    }
+
+    RenderImageUrl(text, record) {
+        let url = "";
+        if (!Common.IsNullOrEmpty(text)) url = Common.DataApiUrl.replace("api/", "") + text;
+
+        return <a href={url} target="_blank">
+            {
+                Common.IsImageUrl(url) ? <img src={url} alt="" border="0" width="120" height="90" /> : text
+            }
+        </a>
     }
 
     LoadData(orderId) {

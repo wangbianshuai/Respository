@@ -191,22 +191,14 @@ namespace AbetOrder.Component
 
             return orderIntCode + 1;
         }
-
-        public object GetOrder()
-        {
-            IEntityData entityData = EntityByComplexTypeOperation.GetEntityData<Order>(this, _ComplexDictionary) as IEntityData;
-
-            if (entityData != null)
-            {
-                entityData.SetValue("BillStatus", new DealingsBill().GetBillStatus(entityData.GetValue<Guid>("OrderId")));
-            }
-
-            return entityData;
-        }
     }
 
     public class ViewOrder : EntityRequest
     {
+        EntityType _OrderDetailEntity { get; set; }
+        EntityType _OrderImageEntity { get; set; }
+        Dictionary<string, EntityType> _ComplexDictionary { get; set; }
+
         public ViewOrder()
         {
         }
@@ -214,8 +206,15 @@ namespace AbetOrder.Component
         public ViewOrder(Request request)
             : base(request)
         {
+            _OrderDetailEntity = EntityType.GetEntityType<Entity.OrderDetail>();
+            _OrderImageEntity = EntityType.GetEntityType<Entity.OrderImage>();
+            _ComplexDictionary = new Dictionary<string, EntityType>();
+            _ComplexDictionary.Add("Details", _OrderDetailEntity);
+            _ComplexDictionary.Add("Images", _OrderImageEntity);
+
             this.QueryGroupByInfo = (data, wherqSql, parameterList) => this.QueryBillGroupByInfo(data, wherqSql, parameterList);
         }
+
 
         void QueryBillGroupByInfo(IEntityData data, string whereSql, List<IDbDataParameter> paramterList)
         {
@@ -242,6 +241,20 @@ namespace AbetOrder.Component
         public object Select2()
         {
             return this.Select();
+        }
+
+        public object GetOrder()
+        {
+            IEntityData entityData = EntityByComplexTypeOperation.GetEntityData<ViewOrder>(this, _ComplexDictionary) as IEntityData;
+
+            if (entityData != null)
+            {
+                entityData.SetValue("BillStatus", new DealingsBill().GetBillStatus(entityData.GetValue<Guid>("OrderId")));
+            }
+
+            entityData.EntityName = "Order";
+
+            return entityData;
         }
     }
 }

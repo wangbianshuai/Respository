@@ -99,13 +99,13 @@ export function ToModels(obj) {
     }
 }
 
-//export const DataApiUrl = "http://localhost/aow/api/"
-//export const ConfigApiUrl = "http://localhost/aowc/api/"
-//export const IsDist = false;
+export const DataApiUrl = "http://localhost/aow/api/"
+export const ConfigApiUrl = "http://localhost/aowc/api/"
+export const IsDist = false;
 
-export const DataApiUrl = GetRootPath() + "/api/";
-export const ConfigApiUrl = GetRootPath() + "/configs/";
-export const IsDist = true;
+//export const DataApiUrl = GetRootPath() + "/api/";
+//export const ConfigApiUrl = GetRootPath() + "/configs/";
+//export const IsDist = true;
 
 export function GetRootPath() {
     let names = window.location.pathname.substr(1).split("/");
@@ -318,4 +318,13 @@ export function GetFloatValue(value) {
 export function GetIntValue(value) {
     const i = parseInt(value, 10)
     return isNaN(i) ? 0 : i;
+}
+
+export function IsImageUrl(url) {
+    if (IsNullOrEmpty(url) || url.length <= 4) return false;
+
+    const ext = url.substr(url.length - 4, 4);
+    const reg = /.jpg|.png|.gif/;
+
+    return reg.test(ext)
 }

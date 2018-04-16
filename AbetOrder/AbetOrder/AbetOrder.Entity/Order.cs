@@ -16,14 +16,10 @@ namespace AbetOrder.Entity
         public DateTime OrderDate { get; set; }
         public DateTime DeliveryDate { get; set; }
         public string OrderName { get; set; }
-        public decimal Amount { get; set; }
         public decimal ActualAmount { get; set; }
         public decimal PaidDeposit { get; set; }
-        public decimal ShouldPayBalance { get; set; }
         public double DiscountRate { get; set; }
         public decimal ProcessAmount { get; set; }
-        public decimal CostAmount { get; set; }
-        public decimal ExtraCharge { get; set; }
         public string RemarkItemIds { get; set; }
         public Guid CustomerId { get; set; }
         public string Remark { get; set; }
@@ -37,7 +33,6 @@ namespace AbetOrder.Entity
         public string ProcessPdfPath { get; set; }
         public Guid OrderTemplateHtmlId { get; set; }
         public Guid ProcessTemplateHtmlId { get; set; }
-        public decimal Profit { get; set; }
         public string RowVersion { get; set; }
 
         public override void InsertValidate(List<Func<IValidate, IEntityData, string>> validateList)
@@ -71,6 +66,12 @@ namespace AbetOrder.Entity
         public decimal ProcessAmount2 { get; set; }
         public decimal CostAmount2 { get; set; }
         public string OrderName2 { get; set; }
+
+        public decimal Amount { get; set; }
+        public decimal ShouldPayBalance { get; set; }
+        public decimal CostAmount { get; set; }
+        public decimal ExtraCharge { get; set; }
+        public decimal Profit { get; set; }
     }
 
 

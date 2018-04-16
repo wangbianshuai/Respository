@@ -97,7 +97,7 @@ export default class OrderImageItem extends Index {
                 </Col>
                 <Col span={8}>{!Common.IsNullOrEmpty(url) ?
                     <a href={url} target="_blank" >{
-                        this.state.FileType === 1 ?
+                        this.state.FileType === 1 || Common.IsImageUrl(url) ?
                             <img src={url} alt="" border="0" width="120" height="90" />
                             : <span>{url}</span>}
                     </a> : null}
