@@ -22,7 +22,11 @@ namespace AbetOrder.Component
         [Log]
         public object Delete2()
         {
-            return CommonOperation.DeleteByLogic<Customer>(this);
+            List<DeleteRelationEntity> relationList = new List<DeleteRelationEntity>()
+            {
+               new DeleteRelationEntity(EntityType.GetEntityType<Entity.Order>(),"此客户存在被引用，不能删除，请先取消支订单引用！", "CustomerId")      
+            };
+            return CommonOperation.DeleteByLogic<Customer>(this, relationList);
         }
     }
 }

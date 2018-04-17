@@ -38,7 +38,7 @@ namespace AbetOrder.Component
             new Bill().DeleteOrderBill(orderId);
             new DealingsBill().DeleteOrderDealingsBill(orderId);
 
-            return CommonOperation.DeleteByLogic<Order>(this);
+            return CommonOperation.DeleteByLogic<Order>(this, null);
         }
 
         [Log]
@@ -65,7 +65,7 @@ namespace AbetOrder.Component
                 if (orderId != Guid.Empty)
                 {
                     decimal paidDeposit = entityData.GetValue<decimal>("PaidDeposit");
-                    if (paidDeposit > 0) new Bill().EditBill(orderId, entityData.GetStringValue("OrderCode"), Guid.Parse(this._Request.OperationUser), paidDeposit, DateTime.Now);
+                    if (paidDeposit > 0) new Bill().EditBill(orderId, entityData.GetStringValue("OrderCode"), Guid.Parse(this._Request.OperationUser), paidDeposit, entityData.GetValue<DateTime>("OrderDate"));
                 }
             }
 
@@ -96,7 +96,7 @@ namespace AbetOrder.Component
                 if ((obj as Dictionary<string, object>).ContainsKey("Succeed"))
                 {
                     decimal paidDeposit = entityData.GetValue<decimal>("PaidDeposit");
-                    new Bill().EditBill(orderId, entityData.GetStringValue("OrderCode"), Guid.Parse(this._Request.OperationUser), paidDeposit, DateTime.Now);
+                    new Bill().EditBill(orderId, entityData.GetStringValue("OrderCode"), Guid.Parse(this._Request.OperationUser), paidDeposit, entityData.GetValue<DateTime>("OrderDate"));
                 }
             }
 
@@ -111,6 +111,7 @@ namespace AbetOrder.Component
             entityData.SetDefaultValue("UpdateUser", this._Request.OperationUser);
             entityData.SetDefaultValue("UpdateDate", DateTime.Now);
             entityData.SetDefaultValue("BillDate", DateTime.Now);
+            entityData.SetValue("OrderDate", entityData.GetValue("BillDate"));
 
             decimal costAmount = entityData.GetValue<decimal>("CostAmount");
             decimal paidDeposit = entityData.GetValue<decimal>("PaidDeposit");
@@ -126,6 +127,13 @@ namespace AbetOrder.Component
                 entityData.SetValue("Profit", actualAmount - costAmount - processAmount);
 
                 new Bill().EditBill(orderId, oldEntityData.GetStringValue("OrderCode"), Guid.Parse(this._Request.OperationUser), paidDeposit, entityData.GetValue<DateTime>("BillDate"));
+            }
+
+            int orderCode = GetOrderCode(entityData.GetValue<DateTime>("OrderDate"));
+            if (string.IsNullOrEmpty(entityData.GetStringValue("OrderCode")))
+            {
+                entityData.SetDefaultValue("OrderCode", orderCode);
+                entityData.SetDefaultValue("OrderIntCode", orderCode);
             }
 
             return this.Update();

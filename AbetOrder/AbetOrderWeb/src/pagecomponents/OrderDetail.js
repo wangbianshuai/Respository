@@ -10,7 +10,7 @@ export default class OrderDetail extends Index {
     constructor(props) {
         super(props)
 
-        this.state = { IsEdit: !props.Page.IsEdit, RemarkItemIds: [], Details: [], ProcessItems: [], TotalAmount1: 0, TotalAmount2: 0, TotalArea: 0, TotalNumber: 0, RemarkItemOptions: [] }
+        this.state = { IsEdit: !props.Page.IsEdit, RemarkItemIds: "", Details: [], ProcessItems: [], TotalAmount1: 0, TotalAmount2: 0, TotalArea: 0, TotalNumber: 0, RemarkItemOptions: [] }
     }
 
     componentWillMount() {
@@ -34,6 +34,7 @@ export default class OrderDetail extends Index {
 
             data = this.GetTotalAmount(details);
         }
+
         data.Details = details;
         data.RemarkItemIds = value.RemarkItemIds;
         data.IsEdit = value.OrderStatus === 0;

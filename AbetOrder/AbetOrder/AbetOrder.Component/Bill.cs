@@ -129,7 +129,7 @@ namespace AbetOrder.Component
         [Log]
         public object Delete2()
         {
-            return CommonOperation.DeleteByLogic<Bill>(this);
+            return CommonOperation.DeleteByLogic<Bill>(this, null);
         }
     }
 

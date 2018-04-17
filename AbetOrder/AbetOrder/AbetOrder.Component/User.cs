@@ -24,7 +24,7 @@ namespace AbetOrder.Component
         [Log]
         public object Delete2()
         {
-            return CommonOperation.DeleteByLogic<User>(this);
+            return CommonOperation.DeleteByLogic<User>(this, null);
         }
 
         [Log]

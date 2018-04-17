@@ -144,7 +144,7 @@ namespace AbetOrder.Component
         [Log]
         public object Delete2()
         {
-            return CommonOperation.DeleteByLogic<DealingsBill>(this);
+            return CommonOperation.DeleteByLogic<DealingsBill>(this, null);
         }
     }
 

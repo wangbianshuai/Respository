@@ -22,7 +22,7 @@ namespace AbetOrder.Component
         [Log]
         public object Delete2()
         {
-            return CommonOperation.DeleteByLogic<ContentTag>(this);
+            return CommonOperation.DeleteByLogic<ContentTag>(this, null);
         }
     }
 }

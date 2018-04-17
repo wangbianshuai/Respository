@@ -24,7 +24,11 @@ namespace AbetOrder.Component
         [Log]
         public object Delete2()
         {
-            return CommonOperation.DeleteByLogic<DealingsBillType>(this);
+            List<DeleteRelationEntity> relationList = new List<DeleteRelationEntity>()
+            {
+               new DeleteRelationEntity(EntityType.GetEntityType<Entity.DealingsBill>(),"此往来类型存在被引用，不能删除，请先取消支业务往来引用！", "BillTypeId")      
+            };
+            return CommonOperation.DeleteByLogic<DealingsBillType>(this, relationList);
         }
 
         public Guid GetOrderProcessBillTypeId()

@@ -24,7 +24,11 @@ namespace AbetOrder.Component
         [Log]
         public object Delete2()
         {
-            return CommonOperation.DeleteByLogic<BillType>(this);
+            List<DeleteRelationEntity> relationList = new List<DeleteRelationEntity>()
+            {
+               new DeleteRelationEntity(EntityType.GetEntityType<Entity.Bill>(),"此账目类型存在被引用，不能删除，请先取消支付明细中引用！", "BillTypeId")
+            };
+            return CommonOperation.DeleteByLogic<BillType>(this, relationList);
         }
     }
 }
