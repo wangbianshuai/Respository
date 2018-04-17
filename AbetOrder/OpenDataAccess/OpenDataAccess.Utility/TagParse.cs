@@ -13,17 +13,22 @@ namespace OpenDataAccess.Utility
     /// </summary>
     public static class TagParse
     {
-        public static string GetTagInfoList(string content, List<string> nameList, out List<TagInfo> tagInfoList)
+        public static string GetTagInfoList(string content, List<string> nameList, List<TagInfo> tagList)
         {
-            tagInfoList = new List<TagInfo>();
-
             //替换引用内字符串
             Dictionary<Guid, string> strList = new Dictionary<Guid, string>();
             content = GetStringList(content, strList);
             content = GetSingleStringList(content, strList);
 
+            Dictionary<int, string> dict = GetTagIndex(content, nameList);
+
+            nameList = (from a in dict
+                        from b in nameList
+                        where a.Value == b
+                        orderby a.Key descending
+                        select b).ToList();
+
             //替换标签
-            List<TagInfo> tagList = new List<TagInfo>();
             nameList.ForEach(n =>
             {
                 int iCount = 0;
@@ -47,8 +52,6 @@ namespace OpenDataAccess.Utility
 
                 ParseTagAttributes(t);
             });
-
-            tagInfoList = tagList;
 
             foreach (var kvp in strList)
             {
@@ -90,12 +93,32 @@ namespace OpenDataAccess.Utility
             return default(T);
         }
 
+        static Dictionary<int, string> GetTagIndex(string content, List<string> tagNameList)
+        {
+            Dictionary<int, string> dict = new Dictionary<int, string>();
+
+            tagNameList.ForEach(n =>
+            {
+                string startTag = "<" + n + " ";
+                string startTag2 = "<" + n + ">";
+
+                int startIndex = content.IndexOf(startTag);
+                if (startIndex < 0) startIndex = content.IndexOf(startTag2);
+                if (startIndex >= 0) dict.Add(startIndex, n);
+            });
+
+            return dict;
+        }
+
         static string GetTagInfo(string content, List<TagInfo> tagInfoList, string tagName)
         {
-            string startTag = "<" + tagName;
+            string startTag = "<" + tagName + " ";
+            string startTag2 = "<" + tagName + ">";
             string endTag = "</" + tagName + ">";
 
             int startIndex = content.IndexOf(startTag);
+            if (startIndex < 0) { startIndex = content.IndexOf(startTag2); startTag = startTag2; }
+
             while (startIndex >= 0)
             {
                 int i = content.IndexOf(startTag, startIndex + startTag.Length);
@@ -303,6 +326,8 @@ namespace OpenDataAccess.Utility
         /// 解析后内容
         /// </summary>
         public string ResolveContent { get; set; }
+
+        public List<string> PropertyNameList { get; set; }
         /// <summary>
         /// 标签属性
         /// </summary>

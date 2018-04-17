@@ -33,6 +33,7 @@
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -53,6 +54,7 @@
     <Compile Include="ProcessItem.cs" />
     <Compile Include="ProcessOrder.cs" />
     <Compile Include="TemplateHtml.cs" />
+    <Compile Include="TemplateResolve.cs" />
     <Compile Include="User.cs" />
     <Compile Include="CommonOperation.cs" />
     <Compile Include="RemarkItem.cs" />

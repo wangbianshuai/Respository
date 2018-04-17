@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using OpenDataAccess.Utility;
+using System.IO;
 
 namespace AbetOrder.Component
 {
@@ -16,9 +17,12 @@ namespace AbetOrder.Component
         EntityType _OrderDetailEntity { get; set; }
         EntityType _OrderImageEntity { get; set; }
         Dictionary<string, EntityType> _ComplexDictionary { get; set; }
+        EntityType _TemplateHtmlEntity { get; set; }
 
         public Order()
         {
+            EntityType = EntityType.GetEntityType<Entity.Order>();
+            _TemplateHtmlEntity = EntityType.GetEntityType<Entity.TemplateHtml>();
         }
 
         public Order(Request request)
@@ -29,6 +33,8 @@ namespace AbetOrder.Component
             _ComplexDictionary = new Dictionary<string, EntityType>();
             _ComplexDictionary.Add("Details", _OrderDetailEntity);
             _ComplexDictionary.Add("Images", _OrderImageEntity);
+
+            _TemplateHtmlEntity = EntityType.GetEntityType<Entity.TemplateHtml>();
         }
 
         [Log]
@@ -64,6 +70,7 @@ namespace AbetOrder.Component
                 Guid orderId = (obj as Dictionary<string, object>).GetValue<Guid>("PrimaryKey");
                 if (orderId != Guid.Empty)
                 {
+                    GenOrderPdf(orderId, 1);
                     decimal paidDeposit = entityData.GetValue<decimal>("PaidDeposit");
                     if (paidDeposit > 0) new Bill().EditBill(orderId, entityData.GetStringValue("OrderCode"), Guid.Parse(this._Request.OperationUser), paidDeposit, entityData.GetValue<DateTime>("OrderDate"));
                 }
@@ -95,6 +102,7 @@ namespace AbetOrder.Component
             {
                 if ((obj as Dictionary<string, object>).ContainsKey("Succeed"))
                 {
+                    GenOrderPdf(orderId, 1);
                     decimal paidDeposit = entityData.GetValue<decimal>("PaidDeposit");
                     new Bill().EditBill(orderId, entityData.GetStringValue("OrderCode"), Guid.Parse(this._Request.OperationUser), paidDeposit, entityData.GetValue<DateTime>("OrderDate"));
                 }
@@ -167,7 +175,7 @@ namespace AbetOrder.Component
                 entityData.SetValue("ProcessAmount", null);
                 new DealingsBill().DeleteOrderDealingsBill(orderId);
             }
-            else if (orderStatus == 1) GenProcessOrderPdf(orderId);
+            else if (orderStatus == 1) GenOrderPdf(orderId, 2);
             else if (orderStatus == 3)
             {
                 if (oldEntityData.GetValue<Guid>("CreateUser") != userId) return GetMessageDict("审核加工费需销售员确认操作！");
@@ -183,9 +191,56 @@ namespace AbetOrder.Component
             return this.Update();
         }
 
-        void GenProcessOrderPdf(Guid orderId)
+        void GenOrderPdf(Guid orderId, int type)
         {
+            Task.Run(() => GenPdf(orderId, type));
+        }
 
+        public void GenPdf(Guid orderId, int type)
+        {
+            try
+            {
+                IEntityData order = this.SelectEntityByPrimaryKey(orderId);
+                object templateHtmlId = type == 1 ? order.GetValue("OrderTemplateHtmlId") : order.GetValue("ProcessTemplateHtmlId");
+                if (templateHtmlId == null) throw new Exception(string.Format("未选择{0}模板！", type == 1 ? "订单" : "加工单"));
+
+                order.SetValue("TemplateHtmlId", templateHtmlId);
+                IEntityData template = GetTemplateHtml((Guid)templateHtmlId);
+                if (templateHtmlId == null) throw new Exception("模板不存在！");
+
+                string html = template.GetStringValue("Html");
+                string css = template.GetStringValue("Css");
+
+                html = new TemplateResolve().ResolveContent(html, order);
+
+                string fileName = "PdfFiles\\" + (type == 1 ? "Order" : "Process");
+
+                string path = this._Request.RootPath + "\\" + fileName;
+                if (!Directory.Exists(path)) Directory.CreateDirectory(path);
+
+                fileName += "\\" + DateTime.Now.ToString("yyyyMMddHHmmssfff") + new Random().Next(100000, 999999) + ".pdf";
+                path = this._Request.RootPath + "\\" + fileName;
+
+
+                OpenDataAccess.Utility.PdfDocument.CreatePdfFromHtml(html, css, path);
+
+                IEntityData entityData = new EntityData(this.EntityType);
+                entityData.SetValue("OrderId", orderId);
+                entityData.SetValue(type == 1 ? "OrderPdfPath" : "ProcessTemplateHtmlId", fileName.Replace("\\", "/"));
+
+                this.UpdateEntityByPrimaryKey(orderId, entityData);
+            }
+            catch
+            {
+
+            }
+        }
+
+        IEntityData GetTemplateHtml(Guid templateHtmlId)
+        {
+            IQuery query = new Query(_TemplateHtmlEntity.TableName);
+            query.Where(string.Format("where Id='{0}'", templateHtmlId));
+            return this.SelectEntity(query);
         }
 
         int GetOrderCode(DateTime orderDate)

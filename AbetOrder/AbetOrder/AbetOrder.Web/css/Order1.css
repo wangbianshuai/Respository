@@ -1,7 +1,8 @@
-﻿div {
+﻿div, table, tr, td, span {
     margin: 0;
     padding: 0;
 }
+
 
 table {
     font-family: "仿宋";
@@ -37,4 +38,88 @@ table {
     .Table2 .tdSpan {
         text-decoration: underline;
         padding-right: 20px;
+    }
+
+.tableDetail {
+    text-align: center;
+    width: 100%;
+    font-size: 11pt;
+    line-height: 24px;
+}
+
+    .tableDetail tr {
+        height: 24px;
+    }
+
+    .tableDetail td {
+        border: solid #000000;
+        border-width: 0px 1px 1px 0px;
+    }
+
+    .tableDetail .tdStart {
+        border-width: 0px 1px 1px 1px;
+    }
+
+.Table3 {
+    width: 100%;
+}
+
+    .Table3 tr {
+        height: 24px;
+    }
+
+    .Table3 td {
+        border: 1px solid #000000;
+    }
+
+.table4 {
+    text-align: left;
+     width: 100%;
+}
+
+    .table4 tr {
+        height: 24px;
+    }
+
+    .table4 td {
+        border: solid #000000;
+        border-width: 0px 1px 1px 1px;
+    }
+
+    .table5 {
+    text-align: left;
+     width: 100%;
+}
+
+    .table5 tr {
+        height: 24px;
+    }
+
+    .table5 td {
+        border: solid #000000;
+        border-width: 0px 1px 0px 0px;
+        width:100%;
+    }
+
+       .table5 .tdStart {
+        border-width: 0px 0px 0px 1px;
+        width:60px;
+    }
+
+
+.table6 {
+width:100%;
+}
+
+  .table6 tr {
+        height: 24px;
+    }
+
+      .table6 td {
+        border: solid #000000;
+        border-width: 0px 1px 1px 0px;
+    }
+
+       .table6 .tdStart {
+        border-width: 0px 1px 1px 1px;
     }

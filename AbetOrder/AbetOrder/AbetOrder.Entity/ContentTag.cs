@@ -30,6 +30,10 @@ namespace AbetOrder.Entity
         /// 参数名集合
         /// </summary>
         public string ParameterNames { get; set; }
+        /// <summary>
+        /// 属性名集合
+        /// </summary>
+        public string PropertyNames { get; set; }
         /// <summary> 
         /// 备注
         /// </summary> 
