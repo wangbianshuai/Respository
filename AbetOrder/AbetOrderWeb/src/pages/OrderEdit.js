@@ -174,7 +174,7 @@ export default class OrderEdit {
         const { EntityData } = this.PageConfig;
         let url = EntityData && EntityData[name] ? EntityData[name] : "";
         if (Common.IsNullOrEmpty(url)) {
-            this.Page.ShowMessage(label + "PDF未生成！")
+            this.Page.ShowMessage(label + "PDF未生成或异步还未生成好，请稍后刷新数据查看！")
             return;
         }
 
