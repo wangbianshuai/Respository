@@ -8,7 +8,7 @@
         InsertUrl: "Bill/Insert2",
         UpdateUrl: "Bill/Update2",
         UpdateStatusUrl: "Bill/UpdateStatus",
-        SelectNames: ["Id", "RowVersion", "Amount2", "BillTypeName", "DataId", "DataType", "BillStatus", "CreateUser", "OrderName2", "IncomePaymentName", "BillStatusName", "CreateUserName", "BillDate", "Remark"],
+        SelectNames: ["Id", "RowVersion", "Amount2", "BillTypeName", "OrderPdfPath", "DataId", "DataType", "BillStatus", "CreateUser", "OrderName2", "IncomePaymentName", "BillStatusName", "CreateUserName", "BillDate", "Remark"],
         SearchNames: ["IncomePayment", "BillTypeId", "CreateUser", "BillStatus", "StartDate", "EndDate", "OrderName2", "Remark"],
         DataColumnNames: ["BillDate", "BillTypeName", "OrderName2", "IncomePaymentName", "Amount2", "CreateUserName", "BillStatusName"],
         EditNames: ["IncomePayment", "BillTypeId", "DataId", "Amount", "BillDate", "Remark"],
@@ -84,13 +84,13 @@
         { Label: "日期", Type: "Date", IsDate: true, IsDefaultNow: true, Name: "BillDate", PlaceHolder: "默认系统当前日期", DataType: "DateTime", MaxLength: 20, IsNullable: true },
         { Label: "开始日期", Type: "Date", SearchProperty: { ColSpan: 5 }, OperateLogic: ">=", PropertyName: "BillDate", Name: "StartDate", PlaceHolder: "大于或等于其值", DataType: "DateTime", MaxLength: 20, IsNullable: true },
         { Label: "至", Type: "Date", SearchProperty: { ColSpan: 5 }, OperateLogic: "<", PropertyName: "BillDate", Name: "EndDate", PlaceHolder: "小于其值", DataType: "DateTime", MaxLength: 20, IsNullable: true },
-        { Label: "订单", Name: "OrderName2", PropertyName: "DataId", SearchProperty: { PropertyName: "" }, IsToPage: true, PageUrl: "/OrderEdit?OrderId={DataId}", DataType: "string", ColSpan: 5, X: 2, Y: 3, MaxLength: 20, IsNullable: true, PlaceHolder: "模糊匹配订单编号或门板花式" },
+        { Label: "订单", Name: "OrderName2", PropertyName: "DataId", SearchProperty: { PropertyName: "" }, IsOpenPage: true, IsRandom: false, PropertyName: "OrderPdfPath", PageUrl: "{OrderPdfPath}", DataType: "string", ColSpan: 5, X: 2, Y: 3, MaxLength: 20, IsNullable: true, PlaceHolder: "模糊匹配订单编号或门板花式" },
         { Label: "备注", Name: "Remark", DataType: "string", Rows: 3, SearchProperty: { ColSpan: 5, X: 2, Y: 4 }, EditProperty: { ControlType: "TextArea" }, MaxLength: 200, IsNullable: true },
         { Label: "类型", Name: "BillTypeName" },
         { Label: "收支", Name: "IncomePaymentName" },
         { Label: "经手人", Name: "CreateUserName" },
         { Label: "状态", Name: "BillStatusName" },
-        { Label: "金额", Name: "Amount2", Scale: 2, IsCurrency: true, FontColor: "#1890ff"  }]
+        { Label: "金额", Name: "Amount2", Scale: 2, IsCurrency: true, FontColor: "#1890ff" }]
     }
 
     function GetStatusDataSource() {

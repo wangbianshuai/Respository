@@ -35,7 +35,8 @@ export default class LeftRightLayout extends Component {
                 this.AddMenu("客户", "table", "Customer"),
                 this.AddMenu("往来类型", "table", "DealingsBillType"),
                 this.AddMenu("账目类型", "table", "BillType"),
-                this.AddMenu("个人账目", "table", "PersonBill")
+                this.AddMenu("个人账目", "table", "PersonBill"),
+                this.AddMenu("订单PDF日志", "table", "OrderPdf")
             ]
         }
         else if (this.CurrentUser.DataRight === 2) {
@@ -64,7 +65,8 @@ export default class LeftRightLayout extends Component {
                 this.AddMenu("加工选项", "table", "ProcessItem"),
                 this.AddMenu("备注选项", "table", "RemarkItem"),
                 this.AddMenu("订单模板", "table", "TemplateHtml"),
-                this.AddMenu("内容标签", "table", "ContentTag")
+                this.AddMenu("内容标签", "table", "ContentTag"),
+                this.AddMenu("订单PDF日志", "table", "OrderPdf")
             ]
         }
     }

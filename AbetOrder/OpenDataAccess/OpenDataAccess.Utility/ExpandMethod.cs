@@ -25,6 +25,15 @@ namespace OpenDataAccess.Utility
             return string.Empty;
         }
 
+        public static object GetValue(this Dictionary<string, object> dict, string propertyName)
+        {
+            if (dict.ContainsKey(propertyName) && dict[propertyName] != null)
+            {
+                return dict[propertyName];
+            }
+            return null;
+        }
+
         public static T GetValue<T>(this Dictionary<string, object> dict, string propertyName)
         {
             if (dict.ContainsKey(propertyName) && dict[propertyName] != null)

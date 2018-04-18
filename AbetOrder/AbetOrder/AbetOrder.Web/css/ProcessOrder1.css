@@ -1,4 +1,101 @@
-﻿div {
+﻿div, table, tr, td, span {
     margin: 0;
     padding: 0;
 }
+
+
+table {
+    font-family: "仿宋";
+}
+
+.tdTitle {
+    font-size: 22pt;
+    letter-spacing: 15px;
+    width: 450px;
+    text-align: center;
+}
+
+.Table1 {
+    margin-top: 10px;
+    width: 100%;
+}
+
+tr {
+    height: 24px;
+}
+
+.Table1 .tdRight {
+    text-align: right;
+}
+
+.Table2 {
+}
+
+    .Table2 .tdSpan {
+        text-decoration: underline;
+        padding-right: 20px;
+    }
+
+.tableDetail {
+    text-align: center;
+    width: 100%;
+    font-size: 11pt;
+    line-height: 24px;
+}
+
+    .tableDetail td {
+        border: solid #000000;
+        border-width: 0px 1px 1px 0px;
+    }
+
+    .tableDetail .tdStart {
+        border-width: 0px 1px 1px 1px;
+    }
+
+.Table3 {
+    width: 100%;
+}
+
+    .Table3 td {
+        border: 1px solid #000000;
+    }
+
+.table4 {
+    text-align: left;
+    width: 100%;
+}
+
+    .table4 td {
+        border: solid #000000;
+        border-width: 0px 1px 1px 1px;
+    }
+
+.table5 {
+    text-align: left;
+    width: 100%;
+}
+
+    .table5 td {
+        border: solid #000000;
+        border-width: 0px 1px 0px 0px;
+        width: 100%;
+    }
+
+    .table5 .tdStart {
+        border-width: 0px 0px 0px 1px;
+        width: 60px;
+    }
+
+
+.table6 {
+    width: 100%;
+}
+
+    .table6 td {
+        border: solid #000000;
+        border-width: 0px 1px 1px 0px;
+    }
+
+    .table6 .tdStart {
+        border-width: 0px 1px 1px 1px;
+    }

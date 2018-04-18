@@ -25,7 +25,7 @@ namespace OpenDataAccess.Utility
             nameList = (from a in dict
                         from b in nameList
                         where a.Value == b
-                        orderby a.Key descending
+                        orderby a.Key
                         select b).ToList();
 
             //替换标签
@@ -51,6 +51,8 @@ namespace OpenDataAccess.Utility
                 }
 
                 ParseTagAttributes(t);
+
+                t.TagContent = GetTagInfoList(t.TagContent, nameList, t.ChildTags);
             });
 
             foreach (var kvp in strList)
@@ -332,5 +334,12 @@ namespace OpenDataAccess.Utility
         /// 标签属性
         /// </summary>
         public Dictionary<string, object> TagAttributes { get; set; }
+
+        public List<TagInfo> ChildTags { get; set; }
+
+        public TagInfo()
+        {
+            ChildTags = new List<TagInfo>();
+        }
     }
 }

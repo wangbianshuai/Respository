@@ -18,11 +18,13 @@ namespace AbetOrder.Component
         EntityType _OrderImageEntity { get; set; }
         Dictionary<string, EntityType> _ComplexDictionary { get; set; }
         EntityType _TemplateHtmlEntity { get; set; }
+        EntityType _OrderPdfEntity { get; set; }
 
         public Order()
         {
             EntityType = EntityType.GetEntityType<Entity.Order>();
             _TemplateHtmlEntity = EntityType.GetEntityType<Entity.TemplateHtml>();
+            _OrderPdfEntity = EntityType.GetEntityType<Entity.OrderPdf>();
         }
 
         public Order(Request request)
@@ -35,6 +37,7 @@ namespace AbetOrder.Component
             _ComplexDictionary.Add("Images", _OrderImageEntity);
 
             _TemplateHtmlEntity = EntityType.GetEntityType<Entity.TemplateHtml>();
+            _OrderPdfEntity = EntityType.GetEntityType<Entity.OrderPdf>();
         }
 
         [Log]
@@ -63,6 +66,8 @@ namespace AbetOrder.Component
                 entityData.SetDefaultValue("OrderIntCode", orderCode);
             }
 
+            Guid userId = Guid.Parse(this._Request.OperationUser);
+
             object obj = EntityByComplexTypeOperation.Insert<Order>(this, _ComplexDictionary);
 
             if (obj is Dictionary<string, object>)
@@ -70,7 +75,7 @@ namespace AbetOrder.Component
                 Guid orderId = (obj as Dictionary<string, object>).GetValue<Guid>("PrimaryKey");
                 if (orderId != Guid.Empty)
                 {
-                    GenOrderPdf(orderId, 1);
+                    GenOrderPdf(orderId, 1, this._Request.RootPath, userId);
                     decimal paidDeposit = entityData.GetValue<decimal>("PaidDeposit");
                     if (paidDeposit > 0) new Bill().EditBill(orderId, entityData.GetStringValue("OrderCode"), Guid.Parse(this._Request.OperationUser), paidDeposit, entityData.GetValue<DateTime>("OrderDate"));
                 }
@@ -95,6 +100,7 @@ namespace AbetOrder.Component
             }
 
             Guid orderId = (Guid)this._QueryRequest.PrimaryKeyProperty.Value;
+            Guid userId = Guid.Parse(this._Request.OperationUser);
 
             object obj= EntityByComplexTypeOperation.Update<Order>(this, _ComplexDictionary);
 
@@ -102,7 +108,7 @@ namespace AbetOrder.Component
             {
                 if ((obj as Dictionary<string, object>).ContainsKey("Succeed"))
                 {
-                    GenOrderPdf(orderId, 1);
+                    GenOrderPdf(orderId, 1, this._Request.RootPath, userId);
                     decimal paidDeposit = entityData.GetValue<decimal>("PaidDeposit");
                     new Bill().EditBill(orderId, entityData.GetStringValue("OrderCode"), Guid.Parse(this._Request.OperationUser), paidDeposit, entityData.GetValue<DateTime>("OrderDate"));
                 }
@@ -175,7 +181,7 @@ namespace AbetOrder.Component
                 entityData.SetValue("ProcessAmount", null);
                 new DealingsBill().DeleteOrderDealingsBill(orderId);
             }
-            else if (orderStatus == 1) GenOrderPdf(orderId, 2);
+            else if (orderStatus == 1) GenOrderPdf(orderId, 2, this._Request.RootPath, userId);
             else if (orderStatus == 3)
             {
                 if (oldEntityData.GetValue<Guid>("CreateUser") != userId) return GetMessageDict("审核加工费需销售员确认操作！");
@@ -191,13 +197,18 @@ namespace AbetOrder.Component
             return this.Update();
         }
 
-        void GenOrderPdf(Guid orderId, int type)
+        void GenOrderPdf(Guid orderId, int type, string rootPath, Guid userId)
         {
-            Task.Run(() => GenPdf(orderId, type));
+            Task.Run(() => GenPdf(orderId, type, rootPath, userId));
         }
 
-        public void GenPdf(Guid orderId, int type)
+        public void GenPdf(Guid orderId, int type, string rootPath, Guid userId)
         {
+            IEntityData orderPdf = new EntityData(this._OrderPdfEntity);
+            orderPdf.SetValue("OrderId", orderId);
+            orderPdf.SetValue("PdfType", type);
+            orderPdf.SetValue("CreateUser", userId);
+
             try
             {
                 IEntityData order = this.SelectEntityByPrimaryKey(orderId);
@@ -215,24 +226,40 @@ namespace AbetOrder.Component
 
                 string fileName = "PdfFiles\\" + (type == 1 ? "Order" : "Process");
 
-                string path = this._Request.RootPath + "\\" + fileName;
+                string path = rootPath + fileName;
                 if (!Directory.Exists(path)) Directory.CreateDirectory(path);
 
                 fileName += "\\" + DateTime.Now.ToString("yyyyMMddHHmmssfff") + new Random().Next(100000, 999999) + ".pdf";
-                path = this._Request.RootPath + "\\" + fileName;
-
+                path = rootPath + fileName;
 
                 OpenDataAccess.Utility.PdfDocument.CreatePdfFromHtml(html, css, path);
 
+                string pdfPath = fileName.Replace("\\", "/");
                 IEntityData entityData = new EntityData(this.EntityType);
                 entityData.SetValue("OrderId", orderId);
-                entityData.SetValue(type == 1 ? "OrderPdfPath" : "ProcessTemplateHtmlId", fileName.Replace("\\", "/"));
+                entityData.SetValue(type == 1 ? "OrderPdfPath" : "ProcessPdfPath", pdfPath);
 
                 this.UpdateEntityByPrimaryKey(orderId, entityData);
-            }
-            catch
-            {
 
+                orderPdf.SetValue("PdfPath", pdfPath);
+                orderPdf.SetValue("GenStatus", 1);
+            }
+            catch (Exception ex)
+            {
+                orderPdf.SetValue("GenStatus", 2);
+                orderPdf.SetValue("FailMessage", ex.Message);
+
+                OpenDataAccess.Utility.LoggerProxy.Exception("Order", "GenPdf", ex);
+            }
+
+            try
+            {
+                object primaryKey = null;
+                this.InsertEntity(_OrderPdfEntity, orderPdf, out primaryKey);
+            }
+            catch (Exception ex)
+            {
+                OpenDataAccess.Utility.LoggerProxy.Exception("Order", "InsertOrderPdf", ex);
             }
         }
 

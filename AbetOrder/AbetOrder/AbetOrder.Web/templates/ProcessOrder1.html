@@ -1,10 +1,73 @@
-﻿<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <title></title>
-</head>
-<body>
+﻿<div>
+    <table border="0">
+        <tr>
+            <td>
+                <img alt="" border="0" src="http://localhost/aow/images/logo.png" width="164" height="65" />
+            </td>
+            <td class="tdTitle">加工单</td>
+        </tr>
+    </table>
+    <order orderid="${OrderId}">
+    <table border="0" class="Table1">
+        <tr>
+            <td class="tdRight">单号：</td>
+            <td style="width: 360px;">${order.OrderCode}</td>
+            <td class="tdRight">销售员：</td>
+            <td>${order.CreateUserName}</td>
+        </tr>
+    </table>
+    <table border="0" class="Table3" cellpadding="0" cellspacing="0">
+        <tr>
+            <td>订购门板花式：<span>${order.OrderName}</span></td>
+        </tr>
+    </table>
+    <table border="0" cellpadding="0" cellspacing="0" class="tableDetail">
+        <tr>
+            <td class="tdStart">序号</td>
+            <td>面积(㎡)</td>
+            <td>高(mm)</td>
+            <td></td>
+            <td>宽(mm)</td>
+            <td></td>
+            <td>厚(mm)</td>
+            <td>数量(件)</td>
+        </tr>
+            <detail1 orderid="${OrderId}">
+        <tr>
+            <td class="tdStart">${detail1.DisplayIndex}</td>
+            <td>${detail1.Area}</td>
+            <td>${detail1.Height}</td>
+            <td>×</td>
+            <td>${detail1.Width}</td>
+            <td>×</td>
+            <td>${detail1.Thickness}</td>
+            <td>${detail1.Number}</td>
+        </tr>
+        <tr>
+            <td class="tdStart" colspan="8" style="text-align: left;">${detail1.Remark}</td>
+        </tr>
+        </detail1>
+        <detail2 orderid="${OrderId}">
+        <tr>
+             <td class="tdStart">${detail2.DisplayIndex}</td><td colspan="7" style="text-align: left;">${detail2.Remark}</td>
+        </tr>
+        </detail2>
+        <tr>
+            <td class="tdStart">合计:</td>
+            <td>${order.TotalArea} </td>
+            <td colspan="5"></td>
+            <td>${order.TotalNumber}</td>
+        </tr>
+    </table>
 
-</body>
-</html>
+    <table border="0" class="table5" cellpadding="0" cellspacing="0">
+        <orderremark orderid="${OrderId}">
+        <tr>
+            <td class="tdStart">${orderremark.Label}</td>
+            <td>${orderremark.Remark}</td>
+        </tr>
+        </orderremark>
+    </table>
+            <div style="height: 1px; width: 100%; background: #000000;"></div>
+        </order>
+</div>

@@ -83,6 +83,8 @@ namespace AbetOrder.Entity
         public Guid CreateUser2 { get; set; }
         public string ApproveUserName { get; set; }
         public Guid OrderSaleUser { get; set; }
+        public string OrderName2 { get; set; }
+        public string ProcessPdfPath { get; set; }
     }
 
     [TableProperty(Name = "v_DealingsBillUser", PrimaryKey = "CreateUser")]

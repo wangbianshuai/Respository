@@ -50,6 +50,7 @@
     <Compile Include="DealingsBook.cs" />
     <Compile Include="Factory.cs" />
     <Compile Include="Order.cs" />
+    <Compile Include="OrderPdf.cs" />
     <Compile Include="PersonBill.cs" />
     <Compile Include="ProcessItem.cs" />
     <Compile Include="ProcessOrder.cs" />

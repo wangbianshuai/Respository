@@ -172,11 +172,13 @@ export default class OrderEdit {
 
     OpenPdf(name, label) {
         const { EntityData } = this.PageConfig;
-        const url = EntityData && EntityData[name] ? EntityData[name] : "";
+        let url = EntityData && EntityData[name] ? EntityData[name] : "";
         if (Common.IsNullOrEmpty(url)) {
             this.Page.ShowMessage(label + "PDF未生成！")
             return;
         }
+
+        if (url.toLowerCase().indexOf("http") !== 0) url = Common.DataApiUrl.replace("api/", "") + url;
 
         window.open(url);
     }

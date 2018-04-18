@@ -8,9 +8,9 @@
         InsertUrl: "DealingsBill/Insert2",
         UpdateUrl: "DealingsBill/Update2",
         UpdateStatusUrl: "DealingsBill/UpdateStatus",
-        SelectNames: ["Id", "RowVersion", "Amount2", "DataId", "OrderSaleUser", "BillTypeName", "ApproveUserName", "BillStatus", "IncomePayment", "CreateUser2", "CreateUser", "IncomePaymentName", "BillStatusName", "CreateUserName", "BillDate", "Remark"],
+        SelectNames: ["Id", "RowVersion", "Amount2", "OrderName2", "ProcessPdfPath", "DataId", "OrderSaleUser", "BillTypeName", "ApproveUserName", "BillStatus", "IncomePayment", "CreateUser2", "CreateUser", "IncomePaymentName", "BillStatusName", "CreateUserName", "BillDate", "Remark"],
         SearchNames: ["BillTypeId", "CreateUser", "BillStatus", "StartDate", "EndDate", "Remark"],
-        DataColumnNames: ["BillDate", "BillTypeName", "Amount2", "BillStatusName", "CreateUserName", "ApproveUserName"],
+        DataColumnNames: ["BillDate", "OrderName2", "BillTypeName", "Amount2", "BillStatusName", "CreateUserName", "ApproveUserName"],
         EditNames: ["BillTypeId", "DealingsUser", "Amount", "BillDate", "Remark"],
         OrderByList: [{ Name: "BillDate", IsDesc: true }],
         ActionList: GetActionList(),
@@ -85,6 +85,7 @@
         { Label: "状态", Name: "BillStatusName" },
         { Label: "记账人", Name: "CreateUserName" },
         { Label: "审核人", Name: "ApproveUserName" },
+        { Label: "订单", Name: "OrderName2", IsOpenPage: true, IsRandom: false, PropertyName: "ProcessPdfPath", PageUrl: "{ProcessPdfPath}", DataType: "string" },
         { Label: "金额", Name: "Amount2", Scale: 2, IsCurrency: true, FontColor: "#1890ff" }]
     }
 

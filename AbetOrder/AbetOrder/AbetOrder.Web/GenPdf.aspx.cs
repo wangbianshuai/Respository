@@ -13,8 +13,8 @@ namespace AbetOrder.Web
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            Component.Order order = new Component.Order();
-            order.GenPdf(Guid.Parse("061135d5-021f-4c1e-b07c-511fd3a73f5f"), 1);
+            //Component.Order order = new Component.Order();
+            //order.GenPdf(Guid.Parse("061135d5-021f-4c1e-b07c-511fd3a73f5f"), 1, AppDomain.CurrentDomain.BaseDirectory, Guid.Empty);
         }
     }
 }

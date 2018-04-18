@@ -85,5 +85,6 @@ namespace AbetOrder.Entity
         public string OrderName2 { get; set; }
         public string BillStatusName { get; set; }
         public byte DataRight { get; set; }
+        public string OrderPdfPath { get; set; }
     }
 }

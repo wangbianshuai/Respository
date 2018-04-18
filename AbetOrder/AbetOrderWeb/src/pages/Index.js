@@ -6,6 +6,7 @@ import OrderList from "./OrderList";
 import ProcessOrderList from "./ProcessOrderList";
 import BillType from "./BillType";
 import DealingsBillType from "./DealingsBillType";
+import OrderPdf from "./OrderPdf";
 
 export default (config, page) => {
     switch (config.Name) {
@@ -17,6 +18,7 @@ export default (config, page) => {
         case "ProcessOrderList": return new ProcessOrderList(config, page);
         case "BillType": return new BillType(config, page);
         case "DealingsBillType": return new DealingsBillType(config, page);
+        case "OrderPdf": return new OrderPdf(config, page);
         default: return null;
     }
 };

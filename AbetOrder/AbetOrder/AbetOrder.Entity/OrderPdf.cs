@@ -14,24 +14,44 @@ namespace AbetOrder.Entity
         /// 主键
         /// </summary> 
         public Guid Id { get; set; }
-        /// <summary> 
-        /// 创建人
-        /// </summary> 
-        public string CreateUser { get; set; }
-        /// <summary>
-        /// 订单
-        /// </summary>
+
+        public Guid CreateUser { get; set; }
+
         public Guid OrderId { get; set; }
         /// <summary> 
         /// 路径
         /// </summary> 
         public string PdfPath { get; set; }
-        ///  -- 1:订单，2：加工单
+        /// <summary> 
+        /// 失败信息
         /// </summary> 
-        public byte PdfType { get; set; }
+        public string FailMessage { get; set; }
+        /// 1：成功 2：失败
+        /// </summary> 
+        public byte GenStatus { get; set; }
         /// <summary> 
         /// 创建时间
         /// </summary> 
         public DateTime CreateDate { get; set; }
+
+        ///  1:订单，2：加工单
+        /// </summary> 
+        public byte PdfType { get; set; }
+    }
+
+    [TableProperty(Name = "v_OrderPdf", PrimaryKey = "Id")]
+    public class ViewOrderPdf : OrderPdf
+    {
+        public int FailId { get; set; }
+
+        public string CreateUserName { get; set; }
+
+        public byte DataRight { get; set; }
+
+        public string GenStatusName { get; set; }
+
+        public string PdfTypeName { get; set; }
+
+        public string OrderName2 { get; set; }
     }
 }

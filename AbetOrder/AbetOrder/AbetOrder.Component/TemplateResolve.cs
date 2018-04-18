@@ -8,6 +8,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using OpenDataAccess.Utility;
 
 namespace AbetOrder.Component
 {
@@ -34,19 +35,24 @@ namespace AbetOrder.Component
             //获取内容标签信息列表
             List<IEntityData> contentTagList = GetContentTagList();
             List<OpenDataAccess.Utility.TagInfo> tagInfoList = new List<OpenDataAccess.Utility.TagInfo>();
+
+            //替换内容标签内容
+            contentTagList.ForEach(c =>
+            {
+                string ps = c.GetStringValue("PropertyNames");
+                c.SetValue("PropertyNameList", string.IsNullOrEmpty(ps) ? new List<string>() : ps.Split(new char[] { ',', '，' }).ToList());
+            });
+
             List<string> nameList = contentTagList.Select(s => s.GetStringValue("Name")).ToList();
 
             templateContent = OpenDataAccess.Utility.TagParse.GetTagInfoList(templateContent, nameList, tagInfoList);
 
-            tagInfoList.Reverse();
             ////解析内容标签
             ResolveContentTagList(contentTagList, tagInfoList, data);
 
             //替换内容标签内容
             tagInfoList.ForEach(t =>
             {
-                string ps = contentTagList.Where(w => w.GetStringValue("Name") == t.TagName).Select(s => s.GetStringValue("PropertyNames")).FirstOrDefault();
-                t.PropertyNameList = string.IsNullOrEmpty(ps) ? new List<string>() : ps.Split(new char[] { ',', '，' }).ToList();
                 templateContent = templateContent.Replace(t.ReplaceId.ToString(), t.ResolveContent);
             });
 
@@ -55,11 +61,11 @@ namespace AbetOrder.Component
 
         void ResolveContentTagList(List<IEntityData> contentTagList, List<OpenDataAccess.Utility.TagInfo> tagInfoList, IEntityData data)
         {
-            Dictionary<string, IEntityData> tagData = new Dictionary<string, IEntityData>();
+            Dictionary<string, Dictionary<string,object>> tagData = new Dictionary<string, Dictionary<string,object>>();
             tagInfoList.ForEach(t => ResolveContentTag(contentTagList, t, tagData, data));
         }
 
-        void ResolveContentTag(List<IEntityData> contentTagList, OpenDataAccess.Utility.TagInfo tagInfo,  Dictionary<string, IEntityData> tagData, IEntityData data)
+        void ResolveContentTag(List<IEntityData> contentTagList, OpenDataAccess.Utility.TagInfo tagInfo,  Dictionary<string, Dictionary<string,object>> tagData, IEntityData data)
         {
             IEntityData entityData = contentTagList.Where(w => w.GetStringValue("Name") == tagInfo.TagName).FirstOrDefault();
 
@@ -95,19 +101,23 @@ namespace AbetOrder.Component
                 }
             }
 
+            tagInfo.PropertyNameList = entityData.GetValue<List<string>>("PropertyNameList");
+
             List<string> contentList = new List<string>();
 
             dataList.ForEach(d =>
             {
-                contentList.Add(ResolveContentTagData(d, tagInfo));
+                contentList.Add(ResolveContentTagData(contentTagList, d, tagInfo, tagData, data));
             });
 
             tagInfo.ResolveContent = string.Join(string.Empty, contentList);
         }
 
-        string ResolveContentTagData(Dictionary<string, object> data, OpenDataAccess.Utility.TagInfo tagInfo)
+        string ResolveContentTagData(List<IEntityData> contentTagList, Dictionary<string, object> data, OpenDataAccess.Utility.TagInfo tagInfo, Dictionary<string, Dictionary<string, object>> tagData, IEntityData entityData)
         {
             string content = tagInfo.TagContent;
+
+            tagData[tagInfo.TagName] = data;
 
             foreach (var kvp in data)
             {
@@ -117,6 +127,17 @@ namespace AbetOrder.Component
             tagInfo.PropertyNameList.ForEach(p =>
             {
                 content = content.Replace(string.Concat("${", tagInfo.TagName, ".", p, "}"), string.Empty);
+            });
+
+            tagInfo.ChildTags.ForEach(t =>
+            {
+                ResolveContentTag(contentTagList, t, tagData, entityData);
+            });
+
+            //替换内容标签内容
+            tagInfo.ChildTags.ForEach(t =>
+            {
+                content = content.Replace(t.ReplaceId.ToString(), t.ResolveContent);
             });
 
             return content;
@@ -132,7 +153,7 @@ namespace AbetOrder.Component
             return OpenDataAccess.Utility.Common.ParseJsonContent(result);
         }
 
-        object GetTagAttrValue(string name, Dictionary<string, object> dict, Dictionary<string, IEntityData> tagData, IEntityData data)
+        object GetTagAttrValue(string name, Dictionary<string, object> dict, Dictionary<string, Dictionary<string,object>> tagData, IEntityData data)
         {
             if (dict == null) return null;
 
@@ -146,10 +167,10 @@ namespace AbetOrder.Component
                     string str = value.ToString();
                     if (str.StartsWith("${") && str.EndsWith("}"))
                     {
-                        str = str.Substring(2, str.Length - 1);
+                        str = str.Substring(2, str.Length - 3);
                         string[] names = str.Split('.');
                         if (names.Length == 1) return data.GetValue(str);
-                        else if (names.Length == 1 && tagData.ContainsKey(names[0])) return tagData[names[0]].GetValue(names[1]);
+                        else if (names.Length == 2 && tagData.ContainsKey(names[0])) return tagData[names[0]].GetValue(names[1]);
                         else return null;
                     }
                 }

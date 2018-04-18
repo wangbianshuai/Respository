@@ -148,7 +148,10 @@ export default class Index extends Component {
                     if (p.IsRandom !== false) url = Common.AddUrlRandom(url);
 
                     if (Common.IsNullOrEmpty(url)) return text;
-                    else return <a href={url} target="_blank">{text}</a>
+                    else {
+                        if (url.toLowerCase().indexOf("http") !== 0) url = Common.DataApiUrl.replace("api/", "") + url;
+                        return <a href={url} target="_blank">{text}</a>
+                    }
                 }
                 return text;
             };

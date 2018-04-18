@@ -20,20 +20,16 @@ table {
     width: 100%;
 }
 
-    .Table1 tr {
-        height: 24px;
-    }
+tr {
+    height: 24px;
+}
 
-    .Table1 .tdRight {
-        text-align: right;
-    }
+.Table1 .tdRight {
+    text-align: right;
+}
 
 .Table2 {
 }
-
-    .Table2 tr {
-        height: 24px;
-    }
 
     .Table2 .tdSpan {
         text-decoration: underline;
@@ -46,10 +42,6 @@ table {
     font-size: 11pt;
     line-height: 24px;
 }
-
-    .tableDetail tr {
-        height: 24px;
-    }
 
     .tableDetail td {
         border: solid #000000;
@@ -64,62 +56,46 @@ table {
     width: 100%;
 }
 
-    .Table3 tr {
-        height: 24px;
-    }
-
     .Table3 td {
         border: 1px solid #000000;
     }
 
 .table4 {
     text-align: left;
-     width: 100%;
+    width: 100%;
 }
-
-    .table4 tr {
-        height: 24px;
-    }
 
     .table4 td {
         border: solid #000000;
         border-width: 0px 1px 1px 1px;
     }
 
-    .table5 {
+.table5 {
     text-align: left;
-     width: 100%;
+    width: 100%;
 }
-
-    .table5 tr {
-        height: 24px;
-    }
 
     .table5 td {
         border: solid #000000;
         border-width: 0px 1px 0px 0px;
-        width:100%;
+        width: 100%;
     }
 
-       .table5 .tdStart {
+    .table5 .tdStart {
         border-width: 0px 0px 0px 1px;
-        width:60px;
+        width: 60px;
     }
 
 
 .table6 {
-width:100%;
+    width: 100%;
 }
 
-  .table6 tr {
-        height: 24px;
-    }
-
-      .table6 td {
+    .table6 td {
         border: solid #000000;
         border-width: 0px 1px 1px 0px;
     }
 
-       .table6 .tdStart {
+    .table6 .tdStart {
         border-width: 0px 1px 1px 1px;
     }

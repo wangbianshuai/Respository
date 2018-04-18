@@ -73,6 +73,7 @@
     <Compile Include="ExcelUtility2.cs" />
     <Compile Include="ExpandMethod.cs" />
     <Compile Include="FileHelper.cs" />
+    <Compile Include="LoggerProxy.cs" />
     <Compile Include="MailUtility.cs" />
     <Compile Include="PdfDocument.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

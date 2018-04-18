@@ -71,10 +71,14 @@ export default class DealingsBillDataView extends Index {
     RenderDataView(d) {
         if (d.DealingsUser !== this.state.TabsActiveKey) return null;
 
+        let dataPropertyList = this.props.DataProperties;
+
+        if (d.UserType === 2) dataPropertyList = dataPropertyList.filter(f => f.Name !== "OrderName2" && f.Name !== "CreateUserName" && f.Name !== "ApproveUserName");
+
         return (<DataGridView Page={this.props.Page} DataList={this.props.DataList} PageInfo={this.props.PageInfo}
             TableScroll={this.props.TableScroll} ExpandedRowRender={this.props.ExpandedRowRender}
             PageIndexChange={this.props.PageIndexChange.bind(this)} GroupByInfo={this.props.GroupByInfo} GroupByInfoHtml={this.props.Property.GroupByInfoHtml}
-            IsLoading={this.props.IsDataLoading} DataProperties={this.props.DataProperties} />)
+            IsLoading={this.props.IsDataLoading} DataProperties={dataPropertyList} />)
     }
 
     RenderTabPanel(d) {

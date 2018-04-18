@@ -28,12 +28,20 @@ namespace AbetOrder.Web.Controllers
 
                 string css = string.Empty;
 
-                using (TextReader reader = new StreamReader(AppDomain.CurrentDomain.BaseDirectory + "\\templates\\Order1.html"))
+                string htmlName = name == "order" ? "Order1.html" : "ProcessOrder1.html";
+                string cssName = name == "order" ? "Order1.css" : "ProcessOrder1.css";
+
+                using (TextReader reader = new StreamReader(AppDomain.CurrentDomain.BaseDirectory + "\\templates\\" + htmlName))
                 {
                     html = reader.ReadToEnd();
                 }
 
-                using (TextReader reader = new StreamReader(AppDomain.CurrentDomain.BaseDirectory + "\\css\\Order1.css"))
+                OpenDataAccess.Entity.IEntityData order = new OpenDataAccess.Entity.EntityData("Order");
+                order.SetValue("OrderId", "061135d5-021f-4c1e-b07c-511fd3a73f5f");
+
+                html = new Component.TemplateResolve().ResolveContent(html, order);
+
+                using (TextReader reader = new StreamReader(AppDomain.CurrentDomain.BaseDirectory + "\\css\\" + cssName))
                 {
                     css = reader.ReadToEnd();
                 }

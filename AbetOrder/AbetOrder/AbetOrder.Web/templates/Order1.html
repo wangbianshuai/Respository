@@ -1,5 +1,4 @@
 ﻿<div>
-
     <table border="0">
         <tr>
             <td>
@@ -20,13 +19,13 @@
             <td class="tdRight">发货日期：</td>
             <td style="width: 360px;">${order.DeliveryDate}</td>
             <td class="tdRight">汇款账号：</td>
-            <td>${order.BankCardCode}</td>
+            <td>${order.BankCardNo}</td>
         </tr>
         <tr>
             <td class="tdRight">单号：</td>
             <td style="width: 360px;">${order.OrderCode}</td>
             <td class="tdRight">开 户 行：</td>
-            <td>${order.BankOpenName}</td>
+            <td>${order.OpenBank}</td>
         </tr>
     </table>
     <div style="height: 1px; width: 100%; background: #000000;">
@@ -71,15 +70,15 @@
             <detail1 orderid="${OrderId}">
         <tr>
             <td class="tdStart">${detail1.DisplayIndex}</td>
-            <td>${detail.Area}</td>
-            <td>${detail.Price}</td>
-            <td>${detail.Amount}</td>
-            <td>${detail.Height}</td>
+            <td>${detail1.Area}</td>
+            <td>${detail1.Price}</td>
+            <td>${detail1.Amount}</td>
+            <td>${detail1.Height}</td>
             <td>×</td>
-            <td>${detail.Width}</td>
+            <td>${detail1.Width}</td>
             <td>×</td>
-            <td>${detail.Thickness}</td>
-            <td>${detail.Number}</td>
+            <td>${detail1.Thickness}</td>
+            <td>${detail1.Number}</td>
         </tr>
         <tr>
             <td class="tdStart" colspan="10" style="text-align: left;">${detail1.Remark}</td>
@@ -88,15 +87,9 @@
         <detail2 orderid="${OrderId}">
         <tr>
             <td class="tdStart">${detail2.DisplayIndex}</td>
-            <td></td>
-            <td></td>
+            <td colspan="2"></td>
             <td>${detail2.Amount}</td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
+            <td colspan="6"></td>
         </tr>
         <tr>
             <td class="tdStart" colspan="10" style="text-align: left;">${detail2.Remark}</td>
@@ -107,11 +100,7 @@
             <td>${order.TotalArea} </td>
             <td></td>
             <td>${order.ActualAmount}</td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
+            <td colspan="5"></td>
             <td>${order.TotalNumber}</td>
         </tr>
     </table>
