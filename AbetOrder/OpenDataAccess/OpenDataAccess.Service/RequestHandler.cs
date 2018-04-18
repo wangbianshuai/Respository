@@ -279,15 +279,10 @@ namespace OpenDataAccess.Service
                 MethodInfo methodInfo = type.GetMethod(request.MethodName);
                 if (methodInfo != null)
                 {
-                    NoLogAttribute nolog = methodInfo.GetCustomAttributes(typeof(NoLogAttribute), false).FirstOrDefault() as NoLogAttribute;
-                    if (nolog != null)
-                    {
-                        request.IsLog = false;
-                    }
-                    else
-                    {
-                        request.IsLog = true;
-                    }
+                    LogAttribute log = methodInfo.GetCustomAttributes(typeof(LogAttribute), false).FirstOrDefault() as LogAttribute;
+
+                    request.IsLog = log != null;
+                    
                     returnObj = methodInfo.Invoke(instanceObj, null);
                 }
                 else

@@ -34,4 +34,11 @@ namespace AbetOrder.Entity
 
         public DateTime CreateDate { get; set; }
     }
+
+    [TableProperty(Name = "v_OperationLog", PrimaryKey = "LogId")]
+    public class ViewOperationLog : OperationLog
+    {
+        public string UserName { get; set; }
+        public string LookDetail { get; set; }
+    }
 }

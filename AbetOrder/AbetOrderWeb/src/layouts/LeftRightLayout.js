@@ -66,7 +66,8 @@ export default class LeftRightLayout extends Component {
                 this.AddMenu("备注选项", "table", "RemarkItem"),
                 this.AddMenu("订单模板", "table", "TemplateHtml"),
                 this.AddMenu("内容标签", "table", "ContentTag"),
-                this.AddMenu("订单PDF日志", "table", "OrderPdf")
+                this.AddMenu("订单PDF日志", "table", "OrderPdf"),
+                this.AddMenu("操作日志", "table", "OperationLog")
             ]
         }
     }

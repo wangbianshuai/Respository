@@ -10,6 +10,8 @@ export default class Index extends Component {
         this.Property = props.Property;
         this.View = props.View;
 
+        this.SetDateDefaultValue();
+
         this.InitState = {
             Disabled: this.Property.Disabled,
             Value: this.Property.Value || (this.Property.DefaultValue || null),
@@ -33,6 +35,12 @@ export default class Index extends Component {
         this.Property.InitSet = (obj) => { if (obj) for (let key in obj) this[key] = obj[key] };
 
         if (this.View && this.View.EntityData) this.IsLoadValue = false;
+    }
+
+    SetDateDefaultValue() {
+        if (this.Property.IsCurrentDay) this.Property.DefaultValue = Common.GetCurrentDate().substr(0, 10);
+
+        if (this.Property.IsMonthFirst) this.Property.DefaultValue = Common.GetCurrentDate().substr(0, 8) + "01";
     }
 
     componentWillUnmount() {

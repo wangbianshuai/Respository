@@ -111,6 +111,7 @@
     <Content Include="index.css" />
     <Content Include="index.html" />
     <Content Include="index.js" />
+    <Content Include="OperationLog.aspx" />
     <Content Include="static\UserAvatar.fda3837f.png" />
     <Content Include="templates\Order1.html" />
     <Content Include="templates\ProcessOrder1.html" />
@@ -141,6 +142,13 @@
     </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="OperationLog.aspx.cs">
+      <DependentUpon>OperationLog.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="OperationLog.aspx.designer.cs">
+      <DependentUpon>OperationLog.aspx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UploadHandler.ashx.cs">
