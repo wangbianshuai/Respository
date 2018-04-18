@@ -35,8 +35,7 @@ export default class LeftRightLayout extends Component {
                 this.AddMenu("客户", "table", "Customer"),
                 this.AddMenu("往来类型", "table", "DealingsBillType"),
                 this.AddMenu("账目类型", "table", "BillType"),
-                this.AddMenu("个人账目", "table", "PersonBill"),
-                this.AddMenu("订单PDF日志", "table", "OrderPdf")
+                this.AddMenu("个人账目", "table", "PersonBill")
             ]
         }
         else if (this.CurrentUser.DataRight === 2) {
