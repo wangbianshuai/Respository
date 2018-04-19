@@ -187,7 +187,6 @@ function InitComplexView(config) {
             p = Object.assign({ IsEdit: true, IsNullable: true, Id: Common.CreateGuid() }, view.Properties[i]);
             view.DataView.Properties.push(p);
         }
-        config.ComplexView = view
-
+        config.ComplexView = view;
     }
 }

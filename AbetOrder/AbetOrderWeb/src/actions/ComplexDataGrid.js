@@ -12,12 +12,9 @@ export default class ComplexDataGrid extends Index {
 
     }
 
-    Add(property) {
-        const { PageConfig } = this.Page.props;
-        const { ComplexView } = PageConfig
-
+    Add(property, params, view) {
         const data = {};
-        data[ComplexView.PrimaryKey] = Common.CreateGuid();
+        data[view.PrimaryKey] = Common.CreateGuid();
         data.IsAdd = true;
         data.IsDelete = true;
         data.IsEdit = false;
@@ -26,35 +23,31 @@ export default class ComplexDataGrid extends Index {
         data.IsCancel = false;
         data.IsNew = true;
 
-        let dataList = ComplexView.GetDataList().map(m => m);
+        let dataList = view.GetDataList().map(m => m);
         dataList.push(data)
-        ComplexView.SetDataList(dataList)
+        view.SetDataList(dataList)
     }
 
-    RowDelete(property, params) {
-        const { PageConfig } = this.Page.props;
-        const { ComplexView } = PageConfig
-        const key = ComplexView.PrimaryKey;
+    RowDelete(property, params, view) {
+        const key = view.PrimaryKey;
 
-        const dataList = ComplexView.GetDataList().filter(f => f[key] !== params[key])
-        ComplexView.SetDataList(dataList)
+        const dataList = view.GetDataList().filter(f => f[key] !== params[key])
+        view.SetDataList(dataList)
     }
 
-    RowSave(property, params) {
-        this.RowUpdate(property, params, false)
+    RowSave(property, params, view) {
+        this.RowUpdate(property, params, false, view)
     }
 
-    RowAdd(property, params) {
-        this.RowUpdate(property, params, true)
+    RowAdd(property, params, view) {
+        this.RowUpdate(property, params, true, view)
     }
 
-    RowUpdate(property, params, blNew) {
-        const { PageConfig } = this.Page.props;
-        const { ComplexView } = PageConfig
-        const key = ComplexView.PrimaryKey;
+    RowUpdate(property, params, blNew, view) {
+        const key = view.PrimaryKey;
         const id = params[key]
 
-        const rowProperty = ComplexView.GetRowProperty();
+        const rowProperty = view.GetRowProperty();
         const row = rowProperty[id]
         const data = {};
         let p = null, v = null, msg = "";
@@ -88,14 +81,11 @@ export default class ComplexDataGrid extends Index {
             params.IsDelete = true;
         }
 
-        const dataList = ComplexView.GetDataList().map(m => m);
-        ComplexView.SetDataList(dataList)
+        const dataList = view.GetDataList().map(m => m);
+        view.SetDataList(dataList)
     }
 
-    RowEdit(property, params) {
-        const { PageConfig } = this.Page.props;
-        const { ComplexView } = PageConfig
-
+    RowEdit(property, params, view) {
         params.IsAdd = false;
         params.IsEdit = false;
         params.IsRowEdit = true;
@@ -103,14 +93,11 @@ export default class ComplexDataGrid extends Index {
         params.IsCancel = true;
         params.IsDelete = false;
 
-        const dataList = ComplexView.GetDataList().map(m => m);
-        ComplexView.SetDataList(dataList)
+        const dataList = view.GetDataList().map(m => m);
+        view.SetDataList(dataList)
     }
 
-    RowCancel(property, params) {
-        const { PageConfig } = this.Page.props;
-        const { ComplexView } = PageConfig
-
+    RowCancel(property, params, view) {
         params.IsAdd = false;
         params.IsEdit = true;
         params.IsRowEdit = false;
@@ -118,7 +105,7 @@ export default class ComplexDataGrid extends Index {
         params.IsCancel = false;
         params.IsDelete = true;
 
-        const dataList = ComplexView.GetDataList().map(m => m);
-        ComplexView.SetDataList(dataList)
+        const dataList = view.GetDataList().map(m => m);
+        view.SetDataList(dataList)
     }
 }

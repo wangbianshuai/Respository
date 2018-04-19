@@ -5,6 +5,7 @@ import Button2 from "../controls/Button2"
 import Index from "./Index"
 import TextBox2 from "../controls/TextBox2"
 import Select2 from "../controls/Select2";
+import * as Common from "../utils/Common";
 
 export default class ComplexDataGrid extends Index {
     constructor(props) {
@@ -40,6 +41,15 @@ export default class ComplexDataGrid extends Index {
             })
             return dataList;
         };
+
+        const { EntityData } = this.props.View
+        if (EntityData) {
+            let dataList = EntityData[this.props.Property.PropertyName];
+            if (Common.IsArray(dataList)) {
+                dataList = dataList.map(m => { return { ...m, IsEdit: true, IsDelete: true } })
+                this.props.Property.SetDataList(dataList);
+            }
+        }
     }
 
     InitDataProperties() {

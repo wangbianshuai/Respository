@@ -9,9 +9,9 @@ export default class AButton extends Index {
     }
 
     ClickAction() {
-        const { Page, Property, Params, ClickAction } = this.props
-        if (ClickAction) ClickAction(Property, Params);
-        else Page.InvokeAction(Property, Params);
+        const { Page, Property, Params, ClickAction, View } = this.props
+        if (ClickAction) ClickAction(Property, Params, View);
+        else Page.InvokeAction(Property, Params, View);
     }
 
     render() {

@@ -211,6 +211,7 @@ export default class EntityEdit extends Index {
         const { PageConfig } = this.Page.props;
 
         PageConfig.TabViews.forEach(v => {
+            v.EntityData = entityData;
             if (v.EditView) this.SetViewEntityData(v, entityData, isReadonly);
             else if (v.SetValue) v.SetValue(entityData);
         })

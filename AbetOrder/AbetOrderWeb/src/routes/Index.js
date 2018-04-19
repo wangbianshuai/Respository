@@ -50,12 +50,12 @@ class Index extends Component {
         this.EventActions.ComplexDataGrid = new ComplexDataGridAction({ Page: this });
     }
 
-    InvokeAction(property, params) {
+    InvokeAction(property, params, view) {
         if (property.ActionType === "ExpandPage" && this.ExpandActions[property.ActionName]) {
-            this.ExpandActions[property.ActionName](property, params);
+            this.ExpandActions[property.ActionName](property, params, view);
         }
         if (this.EventActions[property.ActionType] && this.EventActions[property.ActionType][property.ActionName]) {
-            this.EventActions[property.ActionType][property.ActionName](property, params);
+            this.EventActions[property.ActionType][property.ActionName](property, params, view);
         }
     }
 

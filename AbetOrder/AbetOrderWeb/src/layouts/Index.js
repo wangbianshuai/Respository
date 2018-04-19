@@ -20,9 +20,9 @@ export default class Index extends Component {
 
         for (let i = 0; i < actionList.length; i++) {
             if (i > 0) list.push(<Divider type="vertical" key={i} />)
-            if (actionList[i].IsConfrim) list.push(<Popconfirm2 Property={actionList[i]} Page={this.props.Page} Params={record} key={actionList[i].Name} />)
+            if (actionList[i].IsConfrim) list.push(<Popconfirm2 Property={actionList[i]} Page={this.props.Page} View={this.props.Property} Params={record} key={actionList[i].Name} />)
             else if (actionList[i].IsToPage) list.push(this.GetLinkAction(actionList[i], record));
-            else list.push(<AButton Property={actionList[i]} Page={this.props.Page} Params={record} key={actionList[i].Name} ClickAction={actionList[i].ClickAction} />)
+            else list.push(<AButton Property={actionList[i]} Page={this.props.Page} View={this.props.Property} Params={record} key={actionList[i].Name} ClickAction={actionList[i].ClickAction} />)
         }
 
         return (<span>{list.map(m => m)}</span>)
@@ -138,7 +138,7 @@ export default class Index extends Component {
                 if (!Common.IsNullOrEmpty(text)) {
                     let url = "";
                     const dataValue = record[p.PropertyName];
-                    if (dataValue) url = p.PageUrl.replace("{" + p.PropertyName + "}", escape(dataValue));
+                    if (dataValue) url = p.PageUrl.replace("{" + p.PropertyName + "}", p.IsEscape === false ? dataValue : escape(dataValue));
 
                     if (p.IsAddToken) {
                         const { LoginUser } = this.props.Page;
