@@ -20,7 +20,6 @@ namespace AbetOrder.Entity
         public decimal PaidDeposit { get; set; }
         public double DiscountRate { get; set; }
         public decimal ProcessAmount { get; set; }
-        public string RemarkItemIds { get; set; }
         public Guid CustomerId { get; set; }
         public string Remark { get; set; }
         public Guid CreateUser { get; set; }
@@ -116,8 +115,26 @@ namespace AbetOrder.Entity
         public decimal Price { get; set; }
         public double Number { get; set; }
         public decimal Amount { get; set; }
-        public string ProcessItemIds { get; set; }
         public string Remark { get; set; }
         public byte DetailType { get; set; }
+        public string FontColor { get; set; }
+        public string FontSize { get; set; }
+        public string FontFamily { get; set; }
+        public byte IsBold { get; set; }
+        public byte IsUnderline { get; set; }
+    }
+
+    [TableProperty(Name = "t_d_OrderRemark", PrimaryKey = "Id")]
+    public class OrderRemark : EntityModel, IEntity
+    {
+        public Guid Id { get; set; }
+        public Guid OrderId { get; set; }
+        public int DisplayIndex { get; set; }
+        public string Remark { get; set; }
+        public string FontColor { get; set; }
+        public string FontSize { get; set; }
+        public string FontFamily { get; set; }
+        public byte IsBold { get; set; }
+        public byte IsUnderline { get; set; }
     }
 }

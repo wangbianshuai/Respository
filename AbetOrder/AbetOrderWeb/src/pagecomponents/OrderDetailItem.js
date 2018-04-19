@@ -1,6 +1,6 @@
 import React from "react"
 import Index from "./Index"
-import { Input, InputNumber, Row, Col, Checkbox } from "antd";
+import { Input, InputNumber, Row, Col, Checkbox, Divider } from "antd";
 import * as Common from "../utils/Common";
 const { TextArea } = Input;
 
@@ -110,10 +110,10 @@ export default class OrderDetailItem extends Index {
                 <Col span={2}>
                     {this.RenderInputNumber("DisplayIndex", "", 99, 1, 1, 2, !this.props.IsEdit)}
                 </Col>
-                <Col span={3}>
+                <Col span={2}>
 
                 </Col>
-                <Col span={3}>
+                <Col span={2}>
 
                 </Col>
                 <Col span={3}>
@@ -132,21 +132,34 @@ export default class OrderDetailItem extends Index {
                     {this.RenderInputNumber("Amount", "金额", 1000000000, 0, 1, 10, !this.props.IsEdit)}
                 </Col>
                 {this.props.IsEdit ?
-                    <Col span={1}>
+                    <Col span={3}>
                         <a style={{ lineHeight: "32px" }} onClick={this.props.Delete}>删除</a>
                     </Col> : null}
             </Row>
             <Row gutter={6} style={{ padding: "8px 8px", borderBottom: "1px solid #e8e8e8" }}>
-                <Col span={24}>
+                <Col span={21}>
                     {this.RenderRemark()}
+                </Col>
+                <Col span={3}>
+                    <a style={{ lineHeight: "32px" }} onClick={this.SelectRemarkItem.bind(this)}>常用备注</a>
+                    <Divider type="vertical" />
+                    <a style={{ lineHeight: "32px" }} onClick={this.SetStyle.bind(this)}>样式</a>
                 </Col>
             </Row>
         </div>)
     }
 
+    SelectRemarkItem() {
+
+    }
+
+    SetStyle() {
+
+    }
+
     RenderRemark() {
         return <TextArea rows={2}
-            placeholder={"附加费备注"}
+            placeholder={"备注"}
             onChange={this.OnChangeRemark.bind(this)}
             maxLength={200}
             readOnly={!this.props.IsEdit}
@@ -158,46 +171,16 @@ export default class OrderDetailItem extends Index {
         this.setState({ Remark: e.target.value })
     }
 
-    CheckBoxChange(value) {
-        const ids = value.length === 0 ? "" : value.join(",");
-        this.props.Data.ProcessItemIds = ids;
-        this.setState({ ProcessItemIds: ids })
-    }
-
-    RenderCheckBoxList() {
-        let value = this.state.ProcessItemIds || "";
-        if (!Common.IsNullOrEmpty(value)) value = value.split(",");
-        else value = [];
-
-        if (this.props.IsEdit) {
-            return <Checkbox.Group value={value} onChange={this.CheckBoxChange.bind(this)} options={this.state.ProcessItems}></Checkbox.Group>
-        }
-        else {
-            let options = [];
-            const ids = this.state.ProcessItemIds || "";
-            this.state.ProcessItems.forEach(r => {
-                if (ids.indexOf(r.value) >= 0) options.push(r);
-            });
-
-            return <Checkbox.Group value={value}
-                options={options}></Checkbox.Group>
-        }
-    }
-
-    GetCheckBox(data) {
-        return { label: data.Name, value: data.Id };
-    }
-
     Render1() {
         return (<div>
             <Row gutter={6} style={{ padding: "8px 8px" }}>
                 <Col span={2}>
                     {this.RenderInputNumber("DisplayIndex", "", 99, 1, 1, 2, !this.props.IsEdit)}
                 </Col>
-                <Col span={3}>
+                <Col span={2}>
                     {this.RenderInputNumber("Height", "高度(mm)", 9999, 1, 0, 4, !this.props.IsEdit)}
                 </Col>
-                <Col span={3}>
+                <Col span={2}>
                     {this.RenderInputNumber("Width", "宽度(mm)", 9999, 1, 0, 4, !this.props.IsEdit)}
                 </Col>
                 <Col span={3}>
@@ -216,13 +199,18 @@ export default class OrderDetailItem extends Index {
                     {this.RenderInputNumber("Amount", "金额", 1000000000, 0, 1, 10, !this.props.IsEdit)}
                 </Col>
                 {this.props.IsEdit ?
-                    <Col span={1}>
+                    <Col span={3}>
                         <a style={{ lineHeight: "32px" }} onClick={this.props.Delete}>删除</a>
                     </Col> : null}
             </Row>
             <Row gutter={6} style={{ padding: "8px 8px", borderBottom: "1px solid #e8e8e8" }}>
-                <Col span={24}>
-                    {this.RenderCheckBoxList()}
+                <Col span={21}>
+                    {this.RenderRemark()}
+                </Col>
+                <Col span={3}>
+                    <a style={{ lineHeight: "32px" }} onClick={this.SelectRemarkItem.bind(this)}>常用备注</a>
+                    <Divider type="vertical" />
+                    <a style={{ lineHeight: "32px" }} onClick={this.SetStyle.bind(this)}>样式</a>
                 </Col>
             </Row>
         </div>)

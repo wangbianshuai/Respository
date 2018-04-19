@@ -5,12 +5,13 @@ import styles from "../styles/OrderDetail.css"
 import OrderDetailItem from "./OrderDetailItem"
 import Button2 from "../controls/Button2"
 import * as Common from "../utils/Common"
+import OrderRemarkItem from "./OrderRemarkItem"
 
 export default class OrderDetail extends Index {
     constructor(props) {
         super(props)
 
-        this.state = { IsEdit: !props.Page.IsEdit, RemarkItemIds: "", Details: [], ProcessItems: [], TotalAmount1: 0, TotalAmount2: 0, TotalArea: 0, TotalNumber: 0, RemarkItemOptions: [] }
+        this.state = { IsEdit: !props.Page.IsEdit, RemarkItemIds: "", Remarks: [], Details: [], ProcessItems: [], TotalAmount1: 0, TotalAmount2: 0, TotalArea: 0, TotalNumber: 0, RemarkItemOptions: [] }
     }
 
     componentWillMount() {
@@ -189,6 +190,58 @@ export default class OrderDetail extends Index {
         }
     }
 
+    ExcelImport() {
+
+    }
+
+    ExcelExport() {
+
+    }
+
+    SelectRemarkList() {
+
+    }
+
+    SetRemarkDisplayIndex() {
+
+    }
+
+    RenderOrderRemarkList() {
+        return <div>
+            {this.state.IsEdit ?
+                <Row gutter={6} style={{ padding: "8px 8px" }}>
+                    <Col span={24}>
+                        <Button onClick={this.SetRemarkDisplayIndex.bind(this)}>重新排序</Button>
+                        <Button onClick={this.SelectRemarkList.bind(this)} style={{ marginLeft: "20px" }}>常用备注</Button>
+                    </Col>
+                </Row> : null}
+            <Row gutter={6} className={styles.RowHeader}>
+                <Col span={2}>
+                    序号
+            </Col>
+                <Col span={19}>
+                    备注
+            </Col>
+                {this.state.IsEdit ?
+                    <Col span={3}>
+                        操作
+            </Col> : null}
+            </Row>
+            {this.state.Remarks.map(m => <OrderRemarkItem Data={m}
+                key={m.Id}
+                IsEdit={this.state.IsEdit}
+                SetTotalAmount={this.SetTotalAmount.bind(this)}
+                ProcessItems={this.state.ProcessItems}
+                Delete={this.Delete.bind(this, m)} />)}
+            {this.state.IsEdit ?
+                <Row gutter={16}>
+                    <Col span={24}>
+                        {this.GetAddButton("AddRemark", "添加备注")}
+                    </Col>
+                </Row> : null}
+        </div>
+    }
+
     render() {
         return (
             <div>
@@ -197,16 +250,18 @@ export default class OrderDetail extends Index {
                     <Row gutter={6} style={{ padding: "8px 8px" }}>
                         <Col span={24}>
                             <Button onClick={this.SetDisplayIndex.bind(this)}>重新排序</Button>
+                            <Button onClick={this.ExcelImport.bind(this)} style={{ marginLeft: "20px" }}>Excel导入</Button>
+                            <Button onClick={this.ExcelExport.bind(this)} style={{ marginLeft: "20px" }}>Excel导出</Button>
                         </Col>
                     </Row> : null}
                 <Row gutter={6} className={styles.RowHeader}>
                     <Col span={2}>
                         序号
                     </Col>
-                    <Col span={3}>
+                    <Col span={2}>
                         高度(mm)
                     </Col>
-                    <Col span={3}>
+                    <Col span={2}>
                         宽度(mm)
                     </Col>
                     <Col span={3}>
@@ -225,7 +280,7 @@ export default class OrderDetail extends Index {
                         金额
                     </Col>
                     {this.state.IsEdit ?
-                        <Col span={1}>
+                        <Col span={3}>
                             操作
                     </Col> : null}
                 </Row>
@@ -244,7 +299,7 @@ export default class OrderDetail extends Index {
                             {this.GetAddButton("AddDetail2", "添加附加费")}
                         </Col>
                     </Row> : null}
-                <Card title="备注" bordered={false}>{this.RenderRemarkCheckBoxList()}</Card>
+                <Card title="备注" bordered={false}>{this.RenderOrderRemarkList()}</Card>
             </div>
         )
     }
