@@ -45,7 +45,7 @@
             Url: "ViewUser?$select=UserId,UserName&$orderby=CreateDate&$filter=DataRight eq 1", DataKey: "ViewUser", Method: "GET"
         },
         {
-            ActionName: "GetOrderImageList", StateName: "OrderImageList", DataKey: "OrderImage", Method: "GET", IsRefresh: true
+            ActionName: "GetOrderImageList", IsUrlParams: true, StateName: "OrderImageList", DataKey: "OrderImage", Method: "GET", IsRefresh: true
         }]
     }
 

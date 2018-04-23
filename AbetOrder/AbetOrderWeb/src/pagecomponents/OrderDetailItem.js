@@ -2,17 +2,57 @@ import React from "react"
 import Index from "./Index"
 import { Input, InputNumber, Row, Col, Checkbox, Divider } from "antd";
 import * as Common from "../utils/Common";
+import ModalDialog from "../components/ModalDialog";
 const { TextArea } = Input;
 
 export default class OrderDetailItem extends Index {
     constructor(props) {
         super(props)
 
-        this.state = Object.assign({}, props.Data, { ProcessItems: this.GetCheckBoxItems(props.ProcessItems) });
+        this.state = Object.assign({}, props.Data, { ProcessItemNames: [], ProcessItems: this.GetCheckBoxItems(props.ProcessItems) });
+    }
+
+    componentWillMount() {
+        this.SelectRemarkProperty = {
+            Title: "常用加工选择备注", Width: 700, Visible: false,
+            GetComponent: () => this.GetCheckBoxRemarkItems(),
+            OnOk: this.SetSelectRemark.bind(this)
+        };
+
+        const view = { IsVisible: true, Properties: this.GetStyleEditProperties() }
+
+
+        this.StyleEditView = this.InitSetView(view)
+
+        this.RemarkStyleProperty = {
+            Title: "设置备注样式", Visible: false, IsOk: false,
+            Component: this.GetStyleEdit()
+        };
+    }
+
+    GetStyleEdit() {
+        return this.RenderView(this.StyleEditView);
+    }
+
+    GetStyleEditProperties() {
+        return [{ Label: "字体", Name: "FontFamily", DataType: "string", MaxLength: 50 },
+        { Label: "大小", Name: "FontSize", DataType: "string", Type: "Select", DataSource: this.GetFontSizeDataSource() },
+        { Label: "颜色", Name: "FontColor", DataType: "string", MaxLength: 20 },
+        { Label: "加粗", Name: "IsBold", Type: "CheckBox", DataType: "byte", },
+        { Label: "下划线", Name: "IsUnderline", Type: "CheckBox", DataType: "byte" }]
+    }
+
+    GetFontSizeDataSource() {
+        return [{ Value: "12px", Text: "12px" }, { Value: "14px", Text: "14px" },
+        { Value: "16px", Text: "16px" }, { Value: "18px", Text: "18px" },
+        { Value: "20px", Text: "20px" }, { Value: "22px", Text: "22px" },
+        { Value: "24px", Text: "24px" }, { Value: "26px", Text: "26px" },
+        { Value: "28px", Text: "28px" }, { Value: "30px", Text: "30px" },
+        { Value: "32px", Text: "32px" }, { Value: "34px", Text: "34px" }, { Value: "36px", Text: "36px" }]
     }
 
     GetCheckBoxItems(list) {
-        return list.map(m => { return { label: m.Name, value: m.Id } });
+        return list.map(m => { return { label: m.Name, value: m.Name } });
     }
 
     componentWillReceiveProps(nextProps) {
@@ -141,20 +181,44 @@ export default class OrderDetailItem extends Index {
                     {this.RenderRemark()}
                 </Col>
                 <Col span={3}>
-                    <a style={{ lineHeight: "32px" }} onClick={this.SelectRemarkItem.bind(this)}>常用备注</a>
-                    <Divider type="vertical" />
                     <a style={{ lineHeight: "32px" }} onClick={this.SetStyle.bind(this)}>样式</a>
                 </Col>
             </Row>
+            {this.RenderRemarkStyleDialog()}
         </div>)
     }
 
-    SelectRemarkItem() {
+    RenderRemarkStyleDialog() {
+        return <ModalDialog Property={this.RemarkStyleProperty} Page={this.props.Page} />
+    }
 
+    RenderSelectRemarkDialog() {
+        return <ModalDialog Property={this.SelectRemarkProperty} ProcessItemNames={this.state.ProcessItemNames} Page={this.props.Page} />
+    }
+
+    SelectRemarkItem() {
+        this.SelectRemarkProperty.SetVisible(true);
+    }
+
+    SetSelectRemark(e, p, dailog) {
+        let remark = this.state.Remark || "";
+        remark += this.state.ProcessItemNames.join("、");
+        this.setState({ Remark: remark });
+        dailog.Cancel();
     }
 
     SetStyle() {
+        this.RemarkStyleProperty.SetVisible(true);
+    }
 
+    CheckBoxChange(value) {
+        this.setState({ ProcessItemNames: value })
+    }
+
+    GetCheckBoxRemarkItems() {
+        return <Checkbox.Group value={this.state.ProcessItemNames}
+            onChange={this.CheckBoxChange.bind(this)}
+            options={this.state.ProcessItems}></Checkbox.Group>
     }
 
     RenderRemark() {
@@ -213,6 +277,8 @@ export default class OrderDetailItem extends Index {
                     <a style={{ lineHeight: "32px" }} onClick={this.SetStyle.bind(this)}>样式</a>
                 </Col>
             </Row>
+            {this.RenderSelectRemarkDialog()}
+            {this.RenderRemarkStyleDialog()}
         </div>)
     }
 }

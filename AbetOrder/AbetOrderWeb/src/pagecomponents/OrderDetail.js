@@ -11,7 +11,7 @@ export default class OrderDetail extends Index {
     constructor(props) {
         super(props)
 
-        this.state = { IsEdit: !props.Page.IsEdit, RemarkItemIds: "", Remarks: [], Details: [], ProcessItems: [], TotalAmount1: 0, TotalAmount2: 0, TotalArea: 0, TotalNumber: 0, RemarkItemOptions: [] }
+        this.state = { IsEdit: !props.Page.IsEdit, Remarks: [], Details: [], ProcessItems: [], TotalAmount1: 0, TotalAmount2: 0, TotalArea: 0, TotalNumber: 0, RemarkItemOptions: [] }
     }
 
     componentWillMount() {
@@ -230,8 +230,6 @@ export default class OrderDetail extends Index {
             {this.state.Remarks.map(m => <OrderRemarkItem Data={m}
                 key={m.Id}
                 IsEdit={this.state.IsEdit}
-                SetTotalAmount={this.SetTotalAmount.bind(this)}
-                ProcessItems={this.state.ProcessItems}
                 Delete={this.Delete.bind(this, m)} />)}
             {this.state.IsEdit ?
                 <Row gutter={16}>
