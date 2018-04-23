@@ -39,7 +39,7 @@ namespace AbetOrder.Web.Controllers
                 OpenDataAccess.Entity.IEntityData order = new OpenDataAccess.Entity.EntityData("Order");
                 order.SetValue("OrderId", "061135d5-021f-4c1e-b07c-511fd3a73f5f");
 
-                html = new Component.TemplateResolve().ResolveContent(html, order);
+                html = new Component.TemplateResolve().ResolveContent(html, "Order", order);
 
                 using (TextReader reader = new StreamReader(AppDomain.CurrentDomain.BaseDirectory + "\\css\\" + cssName))
                 {

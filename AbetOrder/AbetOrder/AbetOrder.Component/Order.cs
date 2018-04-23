@@ -222,7 +222,7 @@ namespace AbetOrder.Component
                 string html = template.GetStringValue("Html");
                 string css = template.GetStringValue("Css");
 
-                html = new TemplateResolve().ResolveContent(html, order);
+                html = new TemplateResolve().ResolveContent(html, "Order", order);
 
                 string fileName = "PdfFiles\\" + (type == 1 ? "Order" : "Process");
 

@@ -755,6 +755,67 @@ namespace OpenDataAccess.Utility
             return date.Value.ToString("yyyy-MM-dd HH:mm:ss");
         }
 
+        public static Type GetType(string typeName)
+        {
+            switch (typeName.Trim().ToLower())
+            {
+                case "string":
+                    {
+                        return typeof(string);
+                    }
+                case "long":
+                    {
+                        return typeof(long);
+                    }
+                case "int":
+                    {
+                        return typeof(int);
+                    }
+                case "short":
+                    {
+                        return typeof(short);
+                    }
+                case "byte":
+                    {
+                        return typeof(byte);
+                    }
+                case "bool":
+                    {
+                        return typeof(bool);
+                    }
+                case "decimal":
+                    {
+                        return typeof(decimal);
+                    }
+                case "double":
+                    {
+                        return typeof(double);
+                    }
+                case "float":
+                    {
+                        return typeof(float);
+                    }
+                case "guid":
+                    {
+                        return typeof(Guid);
+                    }
+                case "datetime":
+                    {
+                        return typeof(DateTime);
+                    }
+                case "time": return typeof(DateTime);
+                default:
+                    {
+                        return typeof(string);
+                    }
+            }
+        }
+
+        public static object ChangeType(object value, string typeName)
+        {
+            return ChangeType(value, GetType(typeName));
+        }
+
         public static object ChangeType(object value, Type type)
         {
             if (value == null)
@@ -933,6 +994,20 @@ namespace OpenDataAccess.Utility
         public static string ToJson(object obj)
         {
             return JsonConvert.SerializeObject(obj);
+        }
+
+        public static bool IsEquals(object a, object b, bool blIgnoreCase = true)
+        {
+            if (a == null && b == null) return true;
+
+            if ((a == null || b != null) || (a != null || b == null)) return false;
+
+            if (a is string && b is string)
+            {
+                if (blIgnoreCase) return a.ToString().ToLower().Equals(b.ToString().ToLower());
+                else return a.ToString().Equals(b.ToString());
+            }
+            return a.Equals(b);
         }
     }
 }

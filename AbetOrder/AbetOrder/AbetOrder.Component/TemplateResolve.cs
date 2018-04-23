@@ -26,22 +26,24 @@ namespace AbetOrder.Component
         {
         }
 
-        public string ResolveContent(string templateContent, IEntityData data)
+        public string ResolveContent(string templateContent, string entityName, IEntityData data)
         {
             if (string.IsNullOrEmpty(templateContent)) return string.Empty;
 
             //解析步骤
+            Dictionary<string, string> valueDict = new Dictionary<string, string>();
+            string replaceId = string.Empty;
+
+            foreach (var kvp in data.ToDictionary())
+            {
+                replaceId = Guid.NewGuid().ToString();
+                valueDict.Add(replaceId, kvp.Value == null ? string.Empty : kvp.Value.ToString());
+                templateContent = templateContent.Replace(string.Concat("${", entityName.ToLower(), kvp.Key, "}"), replaceId);
+            }
 
             //获取内容标签信息列表
             List<IEntityData> contentTagList = GetContentTagList();
             List<OpenDataAccess.Utility.TagInfo> tagInfoList = new List<OpenDataAccess.Utility.TagInfo>();
-
-            //替换内容标签内容
-            contentTagList.ForEach(c =>
-            {
-                string ps = c.GetStringValue("PropertyNames");
-                c.SetValue("PropertyNameList", string.IsNullOrEmpty(ps) ? new List<string>() : ps.Split(new char[] { ',', '，' }).ToList());
-            });
 
             List<string> nameList = contentTagList.Select(s => s.GetStringValue("Name")).ToList();
 
@@ -55,6 +57,11 @@ namespace AbetOrder.Component
             {
                 templateContent = templateContent.Replace(t.ReplaceId.ToString(), t.ResolveContent);
             });
+
+            foreach (var kvp in valueDict)
+            {
+                templateContent = templateContent.Replace(kvp.Key, kvp.Value);
+            }
 
             return templateContent;
         }
@@ -79,7 +86,7 @@ namespace AbetOrder.Component
             {
                 List<System.Data.IDbDataParameter> parameterList = new List<System.Data.IDbDataParameter>();
 
-                parameterNames.ForEach(n => parameterList.Add(this.CurrentDataBase.InParameter("@" + n, GetTagAttrValue(n, tagInfo.TagAttributes, tagData, data))));
+                parameterNames.ForEach(n => parameterList.Add(this.CurrentDataBase.InParameter(GetParameterName(n), GetTagAttrValue(n, tagInfo.TagAttributes, tagData, data))));
 
                 IDataReader reader = this.CurrentDataBase.ExecSqlReader(sql, parameterList);
                 dataList = this.CurrentDataBase.DataReaderToDictionaryList(reader);
@@ -119,15 +126,15 @@ namespace AbetOrder.Component
 
             tagData[tagInfo.TagName] = data;
 
+            Dictionary<string, string> valueDict = new Dictionary<string, string>();
+            string replaceId = string.Empty;
+
             foreach (var kvp in data)
             {
-                content = content.Replace(string.Concat("${", tagInfo.TagName, ".", kvp.Key, "}"), kvp.Value == null ? string.Empty : kvp.Value.ToString());
+                replaceId = Guid.NewGuid().ToString();
+                valueDict.Add(replaceId, kvp.Value == null ? string.Empty : kvp.Value.ToString());
+                content = content.Replace(string.Concat("${", tagInfo.TagName, ".", kvp.Key, "}"), replaceId);
             }
-
-            tagInfo.PropertyNameList.ForEach(p =>
-            {
-                content = content.Replace(string.Concat("${", tagInfo.TagName, ".", p, "}"), string.Empty);
-            });
 
             tagInfo.ChildTags.ForEach(t =>
             {
@@ -139,6 +146,11 @@ namespace AbetOrder.Component
             {
                 content = content.Replace(t.ReplaceId.ToString(), t.ResolveContent);
             });
+
+            foreach (var kvp in valueDict)
+            {
+                content = content.Replace(kvp.Key, kvp.Value);
+            }
 
             return content;
         }
@@ -153,24 +165,32 @@ namespace AbetOrder.Component
             return OpenDataAccess.Utility.Common.ParseJsonContent(result);
         }
 
-        object GetTagAttrValue(string name, Dictionary<string, object> dict, Dictionary<string, Dictionary<string,object>> tagData, IEntityData data)
+        string GetParameterName(string name)
+        {
+            return "@" + name.Split('|')[0];
+        }
+
+        object GetTagAttrValue(string name, Dictionary<string, object> dict, Dictionary<string, Dictionary<string, object>> tagData, IEntityData data)
         {
             if (dict == null) return null;
 
-            name = "@" + name;
+            string[] ns = name.Split('|');
+            name = "@" + ns[0];
+
+            string dataType = ns.Length == 2 ? ns[1] : "string";
 
             if (dict.ContainsKey(name))
             {
                 object value = dict[name];
-                if (value is string)
+                if (value != null)
                 {
                     string str = value.ToString();
                     if (str.StartsWith("${") && str.EndsWith("}"))
                     {
                         str = str.Substring(2, str.Length - 3);
                         string[] names = str.Split('.');
-                        if (names.Length == 1) return data.GetValue(str);
-                        else if (names.Length == 2 && tagData.ContainsKey(names[0])) return tagData[names[0]].GetValue(names[1]);
+                        if (names.Length == 1) return OpenDataAccess.Utility.Common.ChangeType(data.GetValue(str), dataType);
+                        else if (names.Length == 2 && tagData.ContainsKey(names[0])) return OpenDataAccess.Utility.Common.ChangeType(tagData[names[0]].GetValue(names[1]), dataType);
                         else return null;
                     }
                 }
@@ -184,6 +204,7 @@ namespace AbetOrder.Component
         List<IEntityData> GetContentTagList()
         {
             IQuery query = new Query(_ContentTagEntity.TableName);
+            query.Where("where IsDelete=0");
             return this.SelectEntities(query);
         }
     }
