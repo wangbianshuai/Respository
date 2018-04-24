@@ -217,6 +217,7 @@ export default class OrderDetailItem extends Index {
         let remark = this.state.Remark || "";
         remark += this.state.ProcessItemNames.join("、");
         this.setState({ Remark: remark });
+        this.props.Data.Remark = remark;
         dailog.Cancel();
     }
 

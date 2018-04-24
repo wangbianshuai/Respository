@@ -44,7 +44,15 @@ export default class OrderDetail extends Index {
         }
 
         data.Details = details;
-        data.RemarkItemIds = value.RemarkItemIds;
+
+        let remarks = value.Remarks || [];
+        if (Common.IsArray(remarks)) {
+            remarks.forEach(d => d.RemarkId = Common.CreateGuid());
+            remarks = remarks.sort((a, b) => a.DisplayIndex > b.DisplayIndex ? 1 : -1);
+        }
+
+        data.Remarks = remarks;
+
         data.IsEdit = value.OrderStatus === 0;
         this.setState(data);
     }
@@ -68,7 +76,13 @@ export default class OrderDetail extends Index {
             return m
         });
 
-        return { Details: details, RemarkItemIds: this.state.RemarkItemIds };
+        const remarks = this.state.Remarks.map((m, i) => {
+            m.DisplayIndex = i + 1;
+            if (m.RemarkId) delete m.RemarkId
+            return m
+        });
+
+        return { Details: details, Remarks: remarks };
     }
 
     JudgeNullable(data, noNullNames) {

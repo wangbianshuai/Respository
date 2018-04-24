@@ -16,6 +16,7 @@ namespace AbetOrder.Component
     {
         EntityType _OrderDetailEntity { get; set; }
         EntityType _OrderImageEntity { get; set; }
+        EntityType _OrderRemarkEntity { get; set; }
         Dictionary<string, EntityType> _ComplexDictionary { get; set; }
         EntityType _TemplateHtmlEntity { get; set; }
         EntityType _OrderPdfEntity { get; set; }
@@ -32,8 +33,10 @@ namespace AbetOrder.Component
         {
             _OrderDetailEntity = EntityType.GetEntityType<Entity.OrderDetail>();
             _OrderImageEntity = EntityType.GetEntityType<Entity.OrderImage>();
+            _OrderRemarkEntity = EntityType.GetEntityType<Entity.OrderRemark>();
             _ComplexDictionary = new Dictionary<string, EntityType>();
             _ComplexDictionary.Add("Details", _OrderDetailEntity);
+            _ComplexDictionary.Add("Remarks", _OrderRemarkEntity);
             _ComplexDictionary.Add("Images", _OrderImageEntity);
 
             _TemplateHtmlEntity = EntityType.GetEntityType<Entity.TemplateHtml>();
@@ -291,6 +294,7 @@ namespace AbetOrder.Component
     {
         EntityType _OrderDetailEntity { get; set; }
         EntityType _OrderImageEntity { get; set; }
+        EntityType _OrderRemarkEntity { get; set; }
         Dictionary<string, EntityType> _ComplexDictionary { get; set; }
 
         public ViewOrder()
@@ -302,9 +306,11 @@ namespace AbetOrder.Component
         {
             _OrderDetailEntity = EntityType.GetEntityType<Entity.OrderDetail>();
             _OrderImageEntity = EntityType.GetEntityType<Entity.OrderImage>();
+            _OrderRemarkEntity = EntityType.GetEntityType<Entity.OrderRemark>();
             _ComplexDictionary = new Dictionary<string, EntityType>();
             _ComplexDictionary.Add("Details", _OrderDetailEntity);
             _ComplexDictionary.Add("Images", _OrderImageEntity);
+            _ComplexDictionary.Add("Remarks", _OrderRemarkEntity);
 
             this.QueryGroupByInfo = (data, wherqSql, parameterList) => this.QueryBillGroupByInfo(data, wherqSql, parameterList);
         }
