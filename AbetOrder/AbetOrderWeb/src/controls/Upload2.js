@@ -110,7 +110,7 @@ export default class Upload2 extends Index {
                 beforeUpload={this.BeforeUpload.bind(this)}
                 onChange={this.OnChange.bind(this)} >
                 <Button disabled={this.state.Disabled}>
-                    <Icon type="upload" /> 上传
+                    <Icon type="upload" />  {Property.UploadText || "上传"}
                 </Button>
             </Upload>
         );

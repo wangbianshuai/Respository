@@ -1,4 +1,5 @@
-﻿using OpenDataAccess.Utility;
+﻿using OpenDataAccess.Entity;
+using OpenDataAccess.Utility;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -15,8 +16,10 @@ namespace AbetOrder.Web
 
         public void ProcessRequest(HttpContext context)
         {
+            string entityName = Code.Common.GetParameterValue(context.Request.QueryString, "EntityName");
             context.Response.ContentType = "text/plain";
-            context.Response.Write(this.Upload(context));
+            if (entityName == "OrderExcelImport") context.Response.Write(this.OrderExcelImport(context));
+            else context.Response.Write(this.Upload(context));
         }
 
         private string GetMessage(string message)
@@ -71,6 +74,61 @@ namespace AbetOrder.Web
             catch (Exception ex)
             {
                 return this.GetMessage("上传失败，" + Code.Common.GetInnerException(ex).Message);
+            }
+        }
+
+        string OrderExcelImport(HttpContext context)
+        {
+            try
+            {
+                if (context.Request.Files.Count == 0) return GetMessage("未有上传文件！");
+
+                var file = context.Request.Files[0];
+
+                string ft = Path.GetExtension(file.FileName).ToLower();
+
+                byte[] bs = new byte[file.ContentLength];
+                file.InputStream.Read(bs, 0, file.ContentLength);
+
+                Stream stream = new MemoryStream(bs);
+
+                Func<List<string>, string> validateColumn = (list) =>
+                {
+                    return string.Empty;
+                };
+
+                Func<Dictionary<string, string>, string> validateData = (dict) =>
+                {
+                    return string.Empty;
+                };
+
+                List<List<Dictionary<string, string>>> dataList = null;
+                List<string> columnNameList = null;
+                List<string> dateColumnNameList = new List<string>();
+
+                if (ft == ".xls")
+                {
+                    dataList = new List<List<Dictionary<string, string>>>();
+                    dataList.Add(ExcelUtility2.Excel2003Import(stream, out columnNameList, validateColumn, validateData, 10000));
+                }
+                else
+                {
+                    dataList = ExcelUtility2.Excel2007Import(stream, out columnNameList, dateColumnNameList, validateColumn, validateData, 10000);
+                }
+                if (dataList.Count == 0)
+                {
+                    return GetMessage("对不起，未有相应数据！");
+                }
+                else
+                {
+                    Component.Order order = new Component.Order();
+
+                    return Parse.ToJson(order.ExcelImportDetail(columnNameList, dataList));
+                }
+            }
+            catch (Exception ex)
+            {
+                return this.GetMessage("导入失败，" + Code.Common.GetInnerException(ex).Message);
             }
         }
 

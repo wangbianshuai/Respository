@@ -109,6 +109,9 @@
             ActionName: "UpdateStatus", StateName: "UpdateStatusInfo", DataKey: "", Method: "PUT"
         },
         {
+            ActionName: "ExcelExportDetail", StateName: "ExcelExportDetail", DataKey: "", Method: "POST", Url: "Order/ExcelExportDetail"
+        },
+        {
             ActionName: "GetTemplateHtmlList", StateName: "TemplateHtmlList",
             Url: "ViewTemplateHtml?$select=Id,Name&$orderby=CreateDate", DataKey: "ViewTemplateHtml", Method: "GET"
         },

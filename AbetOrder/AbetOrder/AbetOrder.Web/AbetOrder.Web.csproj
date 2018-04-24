@@ -105,6 +105,7 @@
     <Content Include="css\Order1.css" />
     <Content Include="css\ProcessOrder1.css" />
     <Content Include="Default.aspx" />
+    <Content Include="download.aspx" />
     <Content Include="GenPdf.aspx" />
     <Content Include="Global.asax" />
     <Content Include="HtmlPage1.html" />
@@ -132,6 +133,13 @@
     </Compile>
     <Compile Include="Default.aspx.designer.cs">
       <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="download.aspx.cs">
+      <DependentUpon>download.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="download.aspx.designer.cs">
+      <DependentUpon>download.aspx</DependentUpon>
     </Compile>
     <Compile Include="GenPdf.aspx.cs">
       <DependentUpon>GenPdf.aspx</DependentUpon>

@@ -7,12 +7,18 @@ import Button2 from "../controls/Button2"
 import * as Common from "../utils/Common"
 import OrderRemarkItem from "./OrderRemarkItem"
 import ModalDialog from "../components/ModalDialog";
+import Upload2 from "../controls/Upload2"
 
 export default class OrderDetail extends Index {
     constructor(props) {
         super(props)
 
-        this.state = { IsEdit: !props.Page.IsEdit, Remarks: [], Details: [], ProcessItems: [], RemarkItemNames: [], TotalAmount1: 0, TotalAmount2: 0, TotalArea: 0, TotalNumber: 0, RemarkItemOptions: [] }
+        this.state = {
+            IsEdit: !props.Page.IsEdit, Remarks: [], Details: [],
+            ExcelImportDisabled: false, ExcelExportDisabled: false,
+            ProcessItems: [], RemarkItemNames: [], TotalAmount1: 0, TotalAmount2: 0, TotalArea: 0,
+            TotalNumber: 0, RemarkItemOptions: []
+        }
     }
 
     componentWillMount() {
@@ -22,6 +28,9 @@ export default class OrderDetail extends Index {
             OnOk: this.SetSelectRemark.bind(this)
         };
 
+        this.InitExcelImport();
+        this.InitColumns();
+
         this.GetDataSource({}, "GetProcessItemList", "ProcessItems");
         this.GetDataSource({}, "GetRemarkItemList", "RemarkItemOptions", (list) => {
             this.setState({ RemarkItemOptions: this.GetCheckBoxItems(list) });
@@ -29,6 +38,45 @@ export default class OrderDetail extends Index {
 
         const { EntityData } = this.Page.props.PageConfig
         if (EntityData) this.SetValue(EntityData);
+    }
+
+    InitExcelImport() {
+        this.UploadProperty = {
+            Id: Common.CreateGuid(),
+            Name: "ExcelImport",
+            UploadUrl: "?EntityName=OrderExcelImport&ft=Excel",
+            IsEdit: false,
+            UploadText: "Excel导入",
+            IsInitState: true,
+            FileSize: 1024 * 1024, FileSizeText: "1M"
+        };
+
+        this.UploadProperty.Accept = ".xls,.xlsx";
+
+        this.UploadProperty.SetUploadResponse = this.SetExcelImportResponse.bind(this);
+    }
+
+    SetExcelImportResponse(response) {
+        this.SetValue(response);
+    }
+
+    InitColumns() {
+        this.Columns = {
+            DisplayIndex: "序号",
+            Height: "高度",
+            Width: "宽度",
+            Thickness: "厚度",
+            Number: "数量",
+            Area: "面积",
+            Price: "单价",
+            Amount: "金额",
+            Remark: "备注",
+            FontFamily: "字体",
+            FontSize: "字体大小",
+            FontColor: "字体颜色",
+            IsBold: "是否加粗",
+            IsUnderline: "是否下划线"
+        }
     }
 
     SetValue(value) {
@@ -236,12 +284,51 @@ export default class OrderDetail extends Index {
         return <ModalDialog Property={this.SelectRemarkProperty} RemarkItemNames={this.state.RemarkItemNames} Page={this.props.Page} />
     }
 
-    ExcelImport() {
-
+    ExcelExport() {
+        this.Page.ShowConfirm("确认Excel导出吗？", () => this.ExcelExportDetail());
     }
 
-    ExcelExport() {
+    ExcelExportDetail() {
+        const action = this.Page.GetAction("ExcelExportDetail");
+        if (!action) return;
 
+        let details = [];
+        this.GetExportDetailList(details, this.state.Details)
+        this.GetExportDetailList(details, this.state.Remarks)
+
+        const data = {};
+        data.Order = { Details: details, Columns: this.Columns };
+
+        this.setState({ ExcelExportDisabled: true });
+
+        const property = { Id: Common.CreateGuid() };
+        property.ActionType = "Page";
+        property.ActionName = "Request"
+
+        property.SetResponse = (res) => {
+            if (res && res.FileName) {
+                this.setState({ ExcelExportDisabled: false });
+
+                let url = Common.DataApiUrl.replace("api/", "download.aspx")
+                url += "?fn=" + res.FileName;
+
+                window.open(url, "_self")
+            }
+        };
+
+        property.payload = data;
+        this.Page.InvokeAction(property, action);
+    }
+
+    GetExportDetailList(details, list) {
+        let d = null;
+        list.forEach((m, i) => {
+            d = Object.assign({}, m);
+            d.DisplayIndex = i + 1;
+            d.IsBold = Common.GetIntValue(d.IsBold) === 1 ? "是" : "否";
+            d.IsUnderline = Common.GetIntValue(d.IsUnderline) === 1 ? "是" : "否";
+            details.push(d);
+        });
     }
 
     SelectRemarkList() {
@@ -283,6 +370,11 @@ export default class OrderDetail extends Index {
         </div>
     }
 
+    RenderUpload() {
+        const props = { Page: this.props.Page, Property: this.UploadProperty, View: {} }
+        return <Upload2 {...props} key={this.UploadProperty.Id} />
+    }
+
     render() {
         return (
             <div>
@@ -290,11 +382,16 @@ export default class OrderDetail extends Index {
                 {this.state.IsEdit ?
                     <Row gutter={6} style={{ padding: "8px 8px" }}>
                         <Col span={24}>
-                            <Button onClick={this.SetDisplayIndex.bind(this)}>重新排序</Button>
-                            <Button onClick={this.ExcelImport.bind(this)} style={{ marginLeft: "20px" }}>Excel导入</Button>
-                            <Button onClick={this.ExcelExport.bind(this)} style={{ marginLeft: "20px" }}>Excel导出</Button>
+                            <div style={{ float: "left" }}><Button onClick={this.SetDisplayIndex.bind(this)}>重新排序</Button></div>
+                            <div style={{ marginLeft: "20px", float: "left" }}>{this.RenderUpload()}</div>
+                            <div style={{ marginLeft: "20px", float: "left" }}><Button onClick={this.ExcelExport.bind(this)} disabled={this.state.ExcelExportDisabled}>Excel导出</Button></div>
                         </Col>
-                    </Row> : null}
+                    </Row> :
+                    <Row gutter={6} style={{ padding: "8px 8px" }}>
+                        <Col span={24}>
+                            <Button onClick={this.ExcelExport.bind(this)} disabled={this.state.ExcelExportDisabled} >Excel导出</Button>
+                        </Col>
+                    </Row>}
                 <Row gutter={6} className={styles.RowHeader}>
                     <Col span={2}>
                         序号

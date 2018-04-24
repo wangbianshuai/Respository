@@ -288,6 +288,83 @@ namespace AbetOrder.Component
 
             return orderIntCode + 1;
         }
+
+        public object ExcelExportDetail()
+        {
+            string fileName = "F" + DateTime.Now.Millisecond.ToString() + new Random().Next(10000, 100000).ToString();
+            fileName = "订单明细_" + fileName;
+
+            IEntityData entityData = this._Request.Entities[this.EntityType.Name].FirstOrDefault();
+
+            List<Dictionary<string, object>> dictList = entityData.GetValue<List<Dictionary<string, object>>>("Details");
+            Dictionary<string, object> columnDict = entityData.GetValue<Dictionary<string, object>>("Columns");
+
+            Dictionary<string, string> headerDict = new Dictionary<string, string>();
+            foreach (var kvp in columnDict) headerDict[kvp.Key] = kvp.Value.ToString();
+
+
+            DataCache.CacheExcelExportData(fileName, dictList, headerDict);
+
+            Dictionary<string, object> dict = new Dictionary<string, object>();
+            dict.Add("FileName", OpenDataAccess.Utility.FileHelper.Encrypt(fileName));
+            return dict;
+        }
+
+        public object ExcelImportDetail(List<string> columnNameList, List<List<Dictionary<string, string>>> dataList)
+        {
+            List<Dictionary<string, string>> dictList = dataList[0];
+
+            if (dictList.Count > 100) return GetMessageDict("导入数据行数超过100！");
+
+            Dictionary<string, object> order = new Dictionary<string, object>();
+
+            List<Dictionary<string, object>> details = new List<Dictionary<string, object>>();
+            List<Dictionary<string, object>> remarks = new List<Dictionary<string, object>>();
+
+            Dictionary<string, object> d = null;
+
+            foreach (var dict in dictList)
+            {
+                d = new Dictionary<string, object>();
+
+                d["DisplayIndex"] = dict.GetValue<int>("序号");
+                d["Remark"] = dict.GetStringValue("备注");
+
+                d["FontFamily"] = dict.GetStringValue("字体");
+                d["FontSize"] = dict.GetStringValue("字体大小");
+                d["FontColor"] = dict.GetStringValue("字体颜色");
+                d["IsBold"] = dict.GetStringValue("是否加粗") == "是" ? 1 : 0;
+                d["IsUnderline"] = dict.GetStringValue("是否下划线") == "是" ? 1 : 0;
+
+                decimal amount = dict.GetValue<int>("金额");
+                if (amount == 0)
+                {
+                    d["Id"] = Guid.NewGuid();
+                    remarks.Add(d);
+                }
+                else
+                {
+                    d["Amount"] = amount;
+                    d["Height"] = dict.GetValue<int>("高度");
+                    d["Width"] = dict.GetValue<int>("宽度");
+                    d["Thickness"] = dict.GetValue<int>("厚度");
+                    d["Number"] = dict.GetValue<int>("数量");
+                    d["Area"] = dict.GetValue<decimal>("面积");
+                    d["Price"] = dict.GetValue<int>("单价");
+                    d["OrderDetailId"] = Guid.NewGuid();
+                    d["DetailType"] = (int)d["Height"] > 0 ? 1 : 2;
+
+                    details.Add(d);
+                }
+            }
+
+            order["Details"] = details;
+            order["Remarks"] = remarks;
+            order["IsSuccess"] = true;
+            order["OrderStatus"] = 0;
+
+            return order;
+        }
     }
 
     public class ViewOrder : EntityRequest
