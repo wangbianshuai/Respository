@@ -46,6 +46,9 @@ namespace AbetOrder.Component
         {
             Guid billTypeId = Guid.Parse(System.Configuration.ConfigurationManager.AppSettings["PaidDepositBillTypeId"]);
             IEntityData bill = GetOrderPaidDepositBill(orderId);
+
+            if (bill == null && amount == 0) return true;
+
             IEntityData data = new EntityData(this.EntityType);
 
             data.SetValue("Amount", amount);
@@ -63,6 +66,14 @@ namespace AbetOrder.Component
 
                 object primaryKey = null;
                 return this.InsertEntity(data, out primaryKey);
+            }
+            else if (amount == 0)
+            {
+                object id = bill.GetValue("Id");
+                data.SetValue("Id", id);
+                data.SetValue("IsDelete", 1);
+
+                return this.UpdateEntityByPrimaryKey(id, data);
             }
             else
             {
