@@ -11,6 +11,7 @@ import AutoComplete2 from "../controls/AutoComplete2";
 import Radio2 from "../controls/Radio2";
 import CheckBoxGroup2 from "../controls/CheckBoxGroup2";
 import CheckBox2 from "../controls/CheckBox2";
+import ColorPicker2 from "../controls/ColorPicker2";
 
 export default class Index extends Component {
     constructor(props) {
@@ -34,6 +35,7 @@ export default class Index extends Component {
             case "Radio": return <Radio2 {...props} key={property.Id} />
             case "CheckBoxGroup": return <CheckBoxGroup2 {...props} key={property.Id} />
             case "CheckBox": return <CheckBox2 {...props} key={property.Id} />
+            case "ColorPicker": return <ColorPicker2 {...props} key={property.Id} />
             default: return null;
         }
     }

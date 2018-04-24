@@ -6,15 +6,22 @@ import OrderDetailItem from "./OrderDetailItem"
 import Button2 from "../controls/Button2"
 import * as Common from "../utils/Common"
 import OrderRemarkItem from "./OrderRemarkItem"
+import ModalDialog from "../components/ModalDialog";
 
 export default class OrderDetail extends Index {
     constructor(props) {
         super(props)
 
-        this.state = { IsEdit: !props.Page.IsEdit, Remarks: [], Details: [], ProcessItems: [], TotalAmount1: 0, TotalAmount2: 0, TotalArea: 0, TotalNumber: 0, RemarkItemOptions: [] }
+        this.state = { IsEdit: !props.Page.IsEdit, Remarks: [], Details: [], ProcessItems: [], RemarkItemNames: [], TotalAmount1: 0, TotalAmount2: 0, TotalArea: 0, TotalNumber: 0, RemarkItemOptions: [] }
     }
 
     componentWillMount() {
+        this.SelectRemarkProperty = {
+            Title: "常用备注", Width: 700, Visible: false,
+            GetComponent: () => this.RenderRemarkCheckBoxList(),
+            OnOk: this.SetSelectRemark.bind(this)
+        };
+
         this.GetDataSource({}, "GetProcessItemList", "ProcessItems");
         this.GetDataSource({}, "GetRemarkItemList", "RemarkItemOptions", (list) => {
             this.setState({ RemarkItemOptions: this.GetCheckBoxItems(list) });
@@ -75,7 +82,7 @@ export default class OrderDetail extends Index {
     }
 
     GetCheckBoxItems(list) {
-        return list.map(m => { return { label: m.Name, value: m.Id } });
+        return list.map(m => { return { label: m.Name, value: m.Name } });
     }
 
     RenderTotalAmount() {
@@ -120,6 +127,7 @@ export default class OrderDetail extends Index {
     }
 
     AddDetail(text) {
+        if (text === "添加备注") return this.AddRemark();
         let details = this.state.Details;
         const detailType = text === "添加明细" ? 1 : 2;
         let price = 0;
@@ -135,6 +143,35 @@ export default class OrderDetail extends Index {
         details.push(detail);
 
         this.SetDisplayIndex();
+    }
+
+    AddRemark() {
+        let remarks = this.state.Remarks;
+        let remark = { Id: Common.CreateGuid(), DisplayIndex: remarks.length + 1 }
+        remarks.push(remark);
+
+        this.SetRemarkDisplayIndex();
+    }
+
+    SetRemarkDisplayIndex() {
+        let remarks = this.state.Remarks;
+        remarks = remarks.sort((a, b) => a.DisplayIndex > b.DisplayIndex ? 1 : -1);
+
+        this.SetRemarks(remarks);
+    }
+
+    SetRemarks(remarks) {
+        remarks = remarks.map((d, i) => {
+            if (d.DisplayIndex === i + 1 && d.RemarkId !== undefined) return d;
+            else d.DisplayIndex = i + 1; d.RemarkId = Common.CreateGuid(); return d;
+        });
+
+        this.setState({ Remarks: remarks });
+    }
+
+    DeleteRemark(d) {
+        const remarks = this.state.Remarks.filter(f => f.Id !== d.Id);
+        this.SetRemarks(remarks);
     }
 
     Delete(d) {
@@ -163,31 +200,26 @@ export default class OrderDetail extends Index {
     }
 
     CheckBoxChange(value) {
-        const ids = value.length === 0 ? "" : value.join(",");
-        this.setState({ RemarkItemIds: ids })
+        this.setState({ RemarkItemNames: value })
+    }
+
+    SetSelectRemark(e, p, dailog) {
+        let remarks = this.state.Remarks
+        remarks = remarks.concat(this.state.RemarkItemNames.map((m, i) => {
+            return { DisplayIndex: remarks.length + i + 1, Remark: m, RemarkId: Common.CreateGuid(), Id: Common.CreateGuid() }
+        }))
+        this.setState({ Remarks: remarks.map(m => m) });
+        dailog.Cancel();
     }
 
     RenderRemarkCheckBoxList() {
-        let value = this.state.RemarkItemIds || "";
-        if (!Common.IsNullOrEmpty(value)) value = value.split(",");
-        else value = [];
+        return <Checkbox.Group value={this.state.RemarkItemNames}
+            className={styles.DivRemark}
+            onChange={this.CheckBoxChange.bind(this)} options={this.state.RemarkItemOptions}></Checkbox.Group>
+    }
 
-        if (this.state.IsEdit) {
-            return <Checkbox.Group value={value}
-                className={styles.DivRemark}
-                onChange={this.CheckBoxChange.bind(this)} options={this.state.RemarkItemOptions}></Checkbox.Group>
-        }
-        else {
-            let options = [];
-            const ids = this.state.RemarkItemIds || "";
-            this.state.RemarkItemOptions.forEach(r => {
-                if (ids.indexOf(r.value) >= 0) options.push(r);
-            });
-
-            return <Checkbox.Group value={value}
-                className={styles.DivRemark}
-                options={options}></Checkbox.Group>
-        }
+    RenderSelectRemarkDialog() {
+        return <ModalDialog Property={this.SelectRemarkProperty} RemarkItemNames={this.state.RemarkItemNames} Page={this.props.Page} />
     }
 
     ExcelImport() {
@@ -199,11 +231,7 @@ export default class OrderDetail extends Index {
     }
 
     SelectRemarkList() {
-
-    }
-
-    SetRemarkDisplayIndex() {
-
+        this.SelectRemarkProperty.SetVisible(true);
     }
 
     RenderOrderRemarkList() {
@@ -228,15 +256,16 @@ export default class OrderDetail extends Index {
             </Col> : null}
             </Row>
             {this.state.Remarks.map(m => <OrderRemarkItem Data={m}
-                key={m.Id}
+                key={m.RemarkId}
                 IsEdit={this.state.IsEdit}
-                Delete={this.Delete.bind(this, m)} />)}
+                Delete={this.DeleteRemark.bind(this, m)} />)}
             {this.state.IsEdit ?
                 <Row gutter={16}>
                     <Col span={24}>
                         {this.GetAddButton("AddRemark", "添加备注")}
                     </Col>
                 </Row> : null}
+            {this.state.IsEdit ? this.RenderSelectRemarkDialog() : null}
         </div>
     }
 

@@ -9,25 +9,37 @@ export default class OrderDetailItem extends Index {
     constructor(props) {
         super(props)
 
-        this.state = Object.assign({}, props.Data, { ProcessItemNames: [], ProcessItems: this.GetCheckBoxItems(props.ProcessItems) });
+        this.state = Object.assign({}, props.Data, { ProcessItemNames: [], RemarkStyleId: "", ProcessItems: this.GetCheckBoxItems(props.ProcessItems) });
     }
 
     componentWillMount() {
         this.SelectRemarkProperty = {
-            Title: "常用加工选择备注", Width: 700, Visible: false,
+            Title: "常用加工选项备注", Width: 700, Visible: false,
             GetComponent: () => this.GetCheckBoxRemarkItems(),
             OnOk: this.SetSelectRemark.bind(this)
         };
 
         const view = { IsVisible: true, Properties: this.GetStyleEditProperties() }
+        view.Properties.forEach(p => {
+            p.Id = Common.CreateGuid();
+            p.RowId = Common.CreateGuid();
+            p.ColId = Common.CreateGuid()
+        });
 
-
+        this.StyleView = view;
         this.StyleEditView = this.InitSetView(view)
 
         this.RemarkStyleProperty = {
-            Title: "设置备注样式", Visible: false, IsOk: false,
-            Component: this.GetStyleEdit()
+            Title: "设置备注样式", Visible: false,
+            Component: this.GetStyleEdit(),
+            OnOk: this.SetRemarkStyle.bind(this)
         };
+    }
+
+    SetRemarkStyle(e, p, dailog) {
+        this.StyleView.Properties.forEach(p => this.props.Data[p.Name] = p.GetValue());
+        dailog.Cancel();
+        this.setState({ RemarkStyleId: Common.CreateGuid() });
     }
 
     GetStyleEdit() {
@@ -35,11 +47,11 @@ export default class OrderDetailItem extends Index {
     }
 
     GetStyleEditProperties() {
-        return [{ Label: "字体", Name: "FontFamily", DataType: "string", MaxLength: 50 },
-        { Label: "大小", Name: "FontSize", DataType: "string", Type: "Select", DataSource: this.GetFontSizeDataSource() },
-        { Label: "颜色", Name: "FontColor", DataType: "string", MaxLength: 20 },
-        { Label: "加粗", Name: "IsBold", Type: "CheckBox", DataType: "byte", },
-        { Label: "下划线", Name: "IsUnderline", Type: "CheckBox", DataType: "byte" }]
+        return [{ Label: "字体", Name: "FontFamily", ColSpan: 20, X: 1, Y: 1, Type: "TextBox", DataType: "string", MaxLength: 50 },
+        { Label: "大小", Name: "FontSize", ColSpan: 20, X: 2, Y: 1, DefaultValue: "14px", DataType: "string", Type: "Select", DataSource: this.GetFontSizeDataSource() },
+        { Label: "颜色", Name: "FontColor", ColSpan: 20, X: 3, Y: 1, Type: "ColorPicker", DataType: "string", MaxLength: 20 },
+        { Label: "是否加粗", Text: "加粗", ColSpan: 20, X: 4, Y: 1, Name: "IsBold", Type: "CheckBox", DataType: "byte", },
+        { Label: "是否下划线", Text: "下划线", ColSpan: 20, X: 5, Y: 1, Name: "IsUnderline", Type: "CheckBox", DataType: "byte" }]
     }
 
     GetFontSizeDataSource() {
@@ -180,11 +192,12 @@ export default class OrderDetailItem extends Index {
                 <Col span={21}>
                     {this.RenderRemark()}
                 </Col>
-                <Col span={3}>
-                    <a style={{ lineHeight: "32px" }} onClick={this.SetStyle.bind(this)}>样式</a>
-                </Col>
+                {this.props.IsEdit ?
+                    <Col span={3}>
+                        <a style={{ lineHeight: "32px" }} onClick={this.SetStyle.bind(this)}>样式</a>
+                    </Col> : null}
             </Row>
-            {this.RenderRemarkStyleDialog()}
+            {this.props.IsEdit ? this.RenderRemarkStyleDialog() : null}
         </div>)
     }
 
@@ -208,6 +221,13 @@ export default class OrderDetailItem extends Index {
     }
 
     SetStyle() {
+        let v = null;
+        this.StyleView.Properties.forEach(p => {
+            v = this.props.Data[p.Name];
+            if (p.Name === "FontSize" && Common.IsNullOrEmpty(v)) v = "14px";
+            if (p.SetValue) p.SetValue(v);
+            else p.Value = v;
+        });
         this.RemarkStyleProperty.SetVisible(true);
     }
 
@@ -222,10 +242,19 @@ export default class OrderDetailItem extends Index {
     }
 
     RenderRemark() {
+        const d = this.props.Data;
+        const s = {};
+        if (d.FontFamily) s.fontFamily = d.FontFamily;
+        if (d.FontSize) s.fontSize = d.FontSize;
+        if (d.FontColor) s.color = d.FontColor;
+        if (d.IsBold) s.fontWeight = 700;
+        if (d.IsUnderline) s.textDecoration = "underline";
+
         return <TextArea rows={2}
             placeholder={"备注"}
             onChange={this.OnChangeRemark.bind(this)}
             maxLength={200}
+            style={s}
             readOnly={!this.props.IsEdit}
             value={this.state.Remark} />
     }
@@ -271,14 +300,15 @@ export default class OrderDetailItem extends Index {
                 <Col span={21}>
                     {this.RenderRemark()}
                 </Col>
-                <Col span={3}>
-                    <a style={{ lineHeight: "32px" }} onClick={this.SelectRemarkItem.bind(this)}>常用备注</a>
-                    <Divider type="vertical" />
-                    <a style={{ lineHeight: "32px" }} onClick={this.SetStyle.bind(this)}>样式</a>
-                </Col>
+                {this.props.IsEdit ?
+                    <Col span={3}>
+                        <a style={{ lineHeight: "32px" }} onClick={this.SelectRemarkItem.bind(this)}>常用备注</a>
+                        <Divider type="vertical" />
+                        <a style={{ lineHeight: "32px" }} onClick={this.SetStyle.bind(this)}>样式</a>
+                    </Col> : null}
             </Row>
-            {this.RenderSelectRemarkDialog()}
-            {this.RenderRemarkStyleDialog()}
+            {this.props.IsEdit ? this.RenderSelectRemarkDialog() : null}
+            {this.props.IsEdit ? this.RenderRemarkStyleDialog() : null}
         </div>)
     }
 }

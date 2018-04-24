@@ -28,4 +28,8 @@ input:read-only{
     white-space:nowrap;
     display:block;
   }
+
+  .ColorPicker{
+      margin-top: 5px;
+  }
   

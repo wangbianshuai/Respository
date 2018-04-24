@@ -10,14 +10,14 @@ export default class CheckBox2 extends Index {
         this.Name = "CheckBox2";
     }
 
-    CheckBoxChange(value) {
-        this.setState({ Value: value ? 1 : 0 });
+    CheckBoxChange(e) {
+        this.setState({ Value: e.target.checked ? 1 : 0 });
     }
 
     render() {
         const { Property } = this.props
 
-        let checked = Common.IsNullOrEmpty(this.state.Value) ? false : this.state.Value.toString().toCaseLower() === "true" || parseInt(this.state.Value, 10) === 1;
+        let checked = Common.IsNullOrEmpty(this.state.Value) ? false : this.state.Value.toString().toLowerCase() === "true" || parseInt(this.state.Value, 10) === 1;
 
         if (this.state.IsReadonly) {
             return <Checkbox checked={checked}>{Property.Text}</Checkbox>
