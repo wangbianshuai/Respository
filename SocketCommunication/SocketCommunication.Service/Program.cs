@@ -10,6 +10,12 @@ namespace SocketCommunication.Service
     {
         static void Main(string[] args)
         {
+            SocketCore.SocketServer server = new SocketCore.SocketServer();
+            server.Start();
+
+            Console.WriteLine("启动服务");
+         
+            Console.ReadLine();
         }
     }
 }
