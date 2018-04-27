@@ -25,6 +25,6 @@ namespace SocketCommunication.SocketCore
         public static readonly Guid DataId = new Guid("0B522FBD-9AC1-4E83-9003-6893356E28CC");
 
         public static readonly int BufferSize = 1024 * 1024;
-        public static readonly int StepSize = 1024 * 1000;
+        public static readonly int StepSize = 1000 * 1024;
     }
 }

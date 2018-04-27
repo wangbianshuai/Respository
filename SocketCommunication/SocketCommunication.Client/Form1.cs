@@ -30,12 +30,14 @@ namespace SocketCommunication.Client
             this.Invoke(new Action(() =>
             {
                 this.richTextBox1.Text += content + "\n";
+                this.richTextBox2.Text += DateTime.Now.Ticks.ToString() + ":" + content.Length + "\n";
             }));
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            _SocketClient.Send(this.textBox1.Text);
+            _SocketClient.Send(this.richTextBox2.Text);
+            this.richTextBox1.Text += DateTime.Now.Ticks.ToString() + ":" + this.richTextBox2.Text.Length + "\n";
         }
     }
 }

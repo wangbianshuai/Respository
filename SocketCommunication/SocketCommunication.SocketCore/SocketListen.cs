@@ -26,13 +26,12 @@ namespace SocketCommunication.SocketCore
             _Socket.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.ReuseAddress, true);
             _Socket.Bind(new IPEndPoint(IPAddress.Any, port));
             _Socket.Listen(backlog);
-            _Socket.Blocking = false;
             _Socket.SendTimeout = 3000;
             _Socket.ReceiveTimeout = 3000;
             _Socket.SendBufferSize = AppSettings.BufferSize;
             _Socket.ReceiveBufferSize = AppSettings.BufferSize;
 
-            Task.Run(() => LoopAcceptAsync());
+            LoopAcceptAsync();
         }
 
         private void _AcceptAsyncEventArgs_Completed(object sender, SocketAsyncEventArgs e)

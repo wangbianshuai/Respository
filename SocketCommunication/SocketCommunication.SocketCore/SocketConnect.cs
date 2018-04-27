@@ -16,23 +16,30 @@ namespace SocketCommunication.SocketCore
 
         SocketClient _SocketClient { get; set; }
 
-        public SocketConnect(string serviceHost, int port, SocketClient socketClient)
+        bool _IsSend { get; set; }
+
+        public SocketConnect(string serviceHost, int port, SocketClient socketClient, bool isSend)
         {
             _SocketClient = socketClient;
+            _IsSend = isSend;
 
-            _Socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-            _Socket.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.ReuseAddress, true);
-            _Socket.Blocking = false;
-            _Socket.SendTimeout = 3000;
-            _Socket.ReceiveTimeout = 3000;
-            _Socket.SendBufferSize = AppSettings.BufferSize;
-            _Socket.ReceiveBufferSize = AppSettings.BufferSize;
+            Init();
 
             _ServicePoint = new IPEndPoint(IPAddress.Parse(serviceHost), port);
 
             Connect();
 
             _IsCheckConnect = true;
+        }
+
+        void Init()
+        {
+            _Socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+            _Socket.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.ReuseAddress, true);
+            _Socket.SendTimeout = 3000;
+            _Socket.ReceiveTimeout = 3000;
+            _Socket.SendBufferSize = AppSettings.BufferSize;
+            _Socket.ReceiveBufferSize = AppSettings.BufferSize;
         }
 
         async void Connect()
@@ -74,33 +81,40 @@ namespace SocketCommunication.SocketCore
         {
             if (e.SocketError == SocketError.Success)
             {
-                Task.Run(() => LoopReceiveAsync());
+                LoopReceiveAsync();
 
                 Task.Run(() => LoopCheckConnect());
 
                 //发送ID
-                Send(AddDataId(this._SocketClient.Id.ToByteArray()));
+                _SocketClient.SendDataList.Enqueue(new SendState(AddDataId(this._SocketClient.Id.ToByteArray())));
+                SendData();
             }
             else
             {
-                var ex = new SocketException((int)e.SocketError);
-                if (SocketClient.AlertAction != null)
+                if (!_IsSend)
                 {
-                    SocketClient.AlertAction(string.Format("{0}\n请检查YXINMT.MeetingSystem.WindowsSocketService是否启动！", Common.GetInnerException(ex).Message));
+                    var ex = new SocketException((int)e.SocketError);
+                    if (SocketClient.AlertAction != null)
+                    {
+                        SocketClient.AlertAction(string.Format("{0}\n请检查YXINMT.MeetingSystem.WindowsSocketService是否启动！", Common.GetInnerException(ex).Message));
+                    }
+                    LoggerProxy.Exception("SocketConnect", "ProcessConnect", ex);
                 }
-                LoggerProxy.Exception("SocketConnect", "ProcessConnect", ex);
             }
         }
 
-        async void Send(byte[] data)
+        async Task Send(SendState state)
         {
             try
             {
-                byte[] data2 = AddDataId(data);
+                _SocketClient.SendStateDictionary.AddOrUpdate(state.Id, state, (key, value) => state);
+
+                byte[] data2 = AddDataId(state.Data);
                 var e = new SocketAsyncEventArgs();
-                e.Completed += _SendAsynsEventArgs_Completed;
+                e.Completed += _SendAsyncEventArgs_Completed;
                 e.SetBuffer(data2, 0, data2.Length);
-                await SendAsync(e);
+
+                await SendAsync(e, state);
             }
             catch (Exception ex)
             {
@@ -108,10 +122,11 @@ namespace SocketCommunication.SocketCore
             }
         }
 
-        async Task SendAsync(SocketAsyncEventArgs e)
+        async Task SendAsync(SocketAsyncEventArgs e, SendState state)
         {
             var taskSource = new TaskCompletionSource<bool>();
-            e.UserToken = taskSource;
+
+            e.UserToken = new SendTaskState() { State = state, TaskSource = taskSource };
 
             if (_Socket.SendAsync(e))
             {
@@ -119,15 +134,34 @@ namespace SocketCommunication.SocketCore
             }
             else
             {
-                this.ProcessSend(e);
+                this.ProcessSend(e, state);
             }
         }
 
-        void ProcessSend(SocketAsyncEventArgs e)
+        void ProcessSend(SocketAsyncEventArgs e, SendState state)
         {
+            if (state != null)
+            {
+                state.IsSuccess = e.SocketError == SocketError.Success;
+                state.SendCount += 1;
+
+                if (_SocketClient.SendStateDictionary.ContainsKey(state.Id))
+                {
+                    SendState value = null;
+                    if (state.IsSuccess) _SocketClient.SendStateDictionary.TryRemove(state.Id, out value);
+                    //30秒之内重发三次
+                    else if (state.Ticks + 30 * 1000 > DateTime.Now.Ticks && state.SendCount < 3)
+                    {
+                        //重发
+                        _SocketClient.SendDataList.Enqueue(state);
+                        SendData();
+                    }
+                }
+            }
+
             if (e.SocketError != SocketError.Success)
             {
-                ReConnect();
+                Dispose();
                 SocketException ex = new SocketException((int)e.SocketError);
                 LoggerProxy.Exception("SocketConnect", "ProcessSend", ex);
             }
@@ -200,38 +234,31 @@ namespace SocketCommunication.SocketCore
             taskSource.TrySetResult(true);
         }
 
-        public bool IsSending { get; set; }
+        object _IsSendingLock = new object();
 
-        static object _SendDataLock = new object();
+        bool _IsSending { get; set; }
 
-        public void SendData()
+        public async void SendData()
         {
-            lock (_SendDataLock)
-            {
-                if (IsSending || _SocketClient.SendDataList.IsEmpty) return;
+            if (!_IsSending) _IsSending = true;
+            else return;
 
-                byte[] item = null;
+            while (_IsSending && IsConnected)
+            {
+                SendState item = null;
                 if (_SocketClient.SendDataList.TryDequeue(out item))
                 {
-                    IsSending = true;
-
-                    Task.Run(() => Send(item));
+                    await Send(item);
                 }
+
+                Thread.Sleep(30);
             }
         }
 
         void Receive(byte[] buffer)
         {
             try
-            {
-                //发送数据后接收客户端数据表示客户端已接收。
-                if (buffer.Length == 1 && buffer[0] == 1)
-                {
-                    IsSending = false;
-                    SendData();
-                    return;
-                }
-
+            {  
                 if (buffer.Length <= 16) return;
 
                 byte[] dataIdbs = new byte[16];
@@ -247,9 +274,6 @@ namespace SocketCommunication.SocketCore
                 Guid dataId = new Guid(dataIdbs);
                 if (dataId != AppSettings.DataId) return;
 
-                //回服务端已接收。
-                _Socket.Send(new byte[] { 1 });
-
                 if (_SocketClient.Receive != null) _SocketClient.Receive(data);
             }
             catch (Exception ex)
@@ -258,11 +282,11 @@ namespace SocketCommunication.SocketCore
             }
         }
 
-        private void _SendAsynsEventArgs_Completed(object sender, SocketAsyncEventArgs e)
+        private void _SendAsyncEventArgs_Completed(object sender, SocketAsyncEventArgs e)
         {
-            var taskSource = e.UserToken as TaskCompletionSource<bool>;
-            this.ProcessSend(e);
-            taskSource.TrySetResult(true);
+            var taskState = e.UserToken as SendTaskState;
+            this.ProcessSend(e, taskState.State);
+            taskState.TaskSource.TrySetResult(true);
         }
 
         private void _ConnectAsyncEventArgs_Completed(object sender, SocketAsyncEventArgs e)
@@ -311,7 +335,7 @@ namespace SocketCommunication.SocketCore
                     LoopCheckConnect();
                 }
             }
-            catch (ObjectDisposedException) {
+            catch (ObjectDisposedException) {  
             }
             catch (Exception ex)
             {
@@ -321,11 +345,11 @@ namespace SocketCommunication.SocketCore
 
         void ReConnect()
         {
+            if (_Socket == null) Init();
             if (!_Socket.Connected)
             {
                 _Socket.Close();
                 _Socket.Connect(_ServicePoint);
-                IsSending = false;
                 SendData();
             }
         }
@@ -340,7 +364,6 @@ namespace SocketCommunication.SocketCore
                     _Socket.Dispose();
                     _Socket = null;
                     _IsCheckConnect = false;
-                    IsSending = false;
                 }
             }
             catch

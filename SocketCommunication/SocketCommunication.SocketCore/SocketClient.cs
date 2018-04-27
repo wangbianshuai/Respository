@@ -11,7 +11,9 @@ namespace SocketCommunication.SocketCore
     {
         public static Action<string> AlertAction { get; set; }
 
-        public System.Collections.Concurrent.ConcurrentQueue<byte[]> SendDataList { get; set; }
+        public ConcurrentQueue<SendState> SendDataList { get; set; }
+
+        public ConcurrentDictionary<Guid, SendState> SendStateDictionary { get; set; }
 
         public Guid Id { get; set; }
 
@@ -30,10 +32,10 @@ namespace SocketCommunication.SocketCore
             try
             {
                 //发送Socket
-                _SendSocket = new SocketConnect(_ServiceHost, _SendPort, this);
+                _SendSocket = new SocketConnect(_ServiceHost, _SendPort, this, true);
 
                 //接收Socket
-                _ReceiveSocket = new SocketConnect(_ServiceHost, _ReceivePort, this);
+                _ReceiveSocket = new SocketConnect(_ServiceHost, _ReceivePort, this, false);
             }
             catch (Exception ex)
             {
@@ -55,7 +57,8 @@ namespace SocketCommunication.SocketCore
 
             Id = Guid.NewGuid();
 
-            SendDataList = new System.Collections.Concurrent.ConcurrentQueue<byte[]>();
+            SendDataList = new ConcurrentQueue<SendState>();
+            SendStateDictionary = new ConcurrentDictionary<Guid, SendState>();
 
             _ReciveDataDictionary = new ConcurrentDictionary<Guid, List<ReceiveItem>>();
 
@@ -94,8 +97,8 @@ namespace SocketCommunication.SocketCore
                 index += 1;
             }
 
-            SendDataList.Enqueue(data2);
-            if (!_SendSocket.IsSending) _SendSocket.SendData();
+            SendDataList.Enqueue(new SendState(data2));
+           _SendSocket.SendData();
         }
 
         /// <summary>
@@ -140,15 +143,13 @@ namespace SocketCommunication.SocketCore
 
         ConcurrentDictionary<Guid, List<ReceiveItem>> _ReciveDataDictionary { get; set; }
 
-        static object _SetReceiveLock = new object();
-
         private void SetReceive(byte[] content)
         {
             Task.Run(() =>
             {
                 try
                 {
-                    lock (_SetReceiveLock) { ParseReceiveData(content); }
+                    ParseReceiveData(content);
                 }
                 catch (Exception ex)
                 {
@@ -223,6 +224,8 @@ namespace SocketCommunication.SocketCore
                     {
                         if (_Receive != null) _Receive(Encoding.UTF8.GetString(data));
                         if (_ReceiveBytes != null) _ReceiveBytes(data);
+
+                        _ReciveDataDictionary.TryRemove(id, out itemList);
                     }
                 }
             }

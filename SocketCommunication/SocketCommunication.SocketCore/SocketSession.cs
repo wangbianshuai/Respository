@@ -1,9 +1,11 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace SocketCommunication.SocketCore
@@ -30,14 +32,14 @@ namespace SocketCommunication.SocketCore
 
             AddMessage(string.Format("{0}已链接", _Socket.RemoteEndPoint.ToString()));
 
-            Task.Run(() => LoopReceiveAsync());
+            LoopReceiveAsync();
         }
 
         private void _SendAsyncEventArgs_Completed(object sender, SocketAsyncEventArgs e)
         {
-            var taskSource = e.UserToken as TaskCompletionSource<bool>;
-            this.ProcessSend(e);
-            taskSource.TrySetResult(true);
+            var taskState = e.UserToken as SendTaskState;
+            this.ProcessSend(e, taskState.State);
+            taskState.TaskSource.TrySetResult(true);
         }
 
         private void _ReceiveAsyncEventArgs_Completed(object sender, SocketAsyncEventArgs e)
@@ -51,36 +53,42 @@ namespace SocketCommunication.SocketCore
         {
             _MessageList.Add(string.Format("{0}:{1},Date:{2}", _SocketListen.IsSend ? "发送" : "接收", message, DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")));
         }
-        
-        public bool IsSending { get; set; }
 
-        static object _SendDataLock = new object();
+        bool _IsSending { get; set; }
 
-        public void SendData()
+        object _IsSendingLock = new object();
+
+        public async void SendData()
         {
-            lock (_SendDataLock)
-            {
-                if (_SessionState == null || IsSending || _SessionState.SendDataList.IsEmpty) return;
+            if (!_IsSending) _IsSending = true;
+            else return;
 
-                byte[] item = null;
+            while (_IsSending && IsConnected && _SessionState != null)
+            {
+                _IsSending = _SessionState.SendDataList.Count > 0;
+
+                SendState item = null;
                 if (_SessionState.SendDataList.TryDequeue(out item))
                 {
-                    IsSending = true;
-
-                    Task.Run(() => Send(item));
+                    await Send(item);
                 }
+
+                Thread.Sleep(30);
             }
         }
 
-        async void Send(byte[] data)
+        async Task Send(SendState state)
         {
             try
             {
-                byte[] data2 = AddDataId(data);
+                if (_SessionState != null) _SessionState.SendStateDictionary.AddOrUpdate(state.Id, state, (key, value) => state);
+   
+                byte[] data2 = AddDataId(state.Data);
                 var e = new SocketAsyncEventArgs();
                 e.Completed += _SendAsyncEventArgs_Completed;
                 e.SetBuffer(data2, 0, data2.Length);
-                await SendAsync(e);
+
+                await SendAsync(e, state);
             }
             catch(Exception ex)
             {
@@ -98,10 +106,11 @@ namespace SocketCommunication.SocketCore
             return data2;
         }
 
-        async Task SendAsync(SocketAsyncEventArgs e)
+        async Task SendAsync(SocketAsyncEventArgs e, SendState state)
         {
             var taskSource = new TaskCompletionSource<bool>();
-            e.UserToken = taskSource;
+
+            e.UserToken = new SendTaskState() { State = state, TaskSource = taskSource };
 
             if (_Socket.SendAsync(e))
             {
@@ -109,12 +118,30 @@ namespace SocketCommunication.SocketCore
             }
             else
             {
-                this.ProcessSend(e);
+                this.ProcessSend(e, state);
             }
         }
 
-        void ProcessSend(SocketAsyncEventArgs e)
+        void ProcessSend(SocketAsyncEventArgs e, SendState state)
         {
+            if (state != null) {
+                state.IsSuccess = e.SocketError == SocketError.Success;
+                state.SendCount += 1;
+
+                if (_SessionState != null && _SessionState.SendStateDictionary.ContainsKey(state.Id))
+                {
+                    SendState value = null;
+                    if (state.IsSuccess) _SessionState.SendStateDictionary.TryRemove(state.Id, out value);
+                    //30秒之内重发三次
+                    else if (state.Ticks + 30 * 1000 > DateTime.Now.Ticks && state.SendCount < 3)
+                    {
+                        //重发
+                        _SessionState.SendDataList.Enqueue(state);
+                        SendData();
+                    }
+                }
+            }
+
             if (e.SocketError != SocketError.Success)
             {
                 Dispose();
@@ -127,14 +154,6 @@ namespace SocketCommunication.SocketCore
         {
             try
             {
-                //发送数据后接收客户端数据表示客户端已接收。
-                if (buffer.Length == 1 && buffer[0] == 1)
-                {
-                    IsSending = false;
-                    SendData();
-                    return;
-                }
-
                 if (buffer.Length <= 16) return;
 
                 byte[] dataIdbs = new byte[16];
@@ -168,17 +187,15 @@ namespace SocketCommunication.SocketCore
                     {
                         this.Id = new Guid(data2);
                         _SessionState = AddSession();
+                        if (_SocketListen.IsSend) SendData();
                         return;
                     }
                 }
 
-                //回客户端已接收。
-                _Socket.Send(new byte[] { 1 });
-
                 //分发数据
                 Task.Run(() => SendToClient(data));
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 LoggerProxy.Exception("SocketSession", "Receive", ex);
             }
@@ -236,8 +253,8 @@ namespace SocketCommunication.SocketCore
 
             stateList.ForEach(s =>
             {
-                s.SendDataList.Enqueue(data2);
-                if (s.SendSession != null && !s.SendSession.IsSending) s.SendSession.SendData();
+                s.SendDataList.Enqueue(new SendState(data2));
+                if (s.SendSession != null) s.SendSession.SendData();
             });
 
             AddMessage(string.Concat("收到数据字节数：", data.Length, ",发送客户端IP集合：", string.Join(",", stateList.Select(s => s.Ip))));
@@ -261,8 +278,9 @@ namespace SocketCommunication.SocketCore
                 {
                     state = new SessionState();
                     state.Id = this.Id;
+                    state.SendStateDictionary = new ConcurrentDictionary<Guid, SendState>();
                     state.Ip = ((IPEndPoint)_Socket.RemoteEndPoint).Address.ToString();
-                    state.SendDataList = new System.Collections.Concurrent.ConcurrentQueue<byte[]>();
+                    state.SendDataList = new ConcurrentQueue<SendState>();
 
                     if (this._SocketListen.IsSend) state.SendSession = this;
                     else state.ReceiveSession = this;
@@ -271,9 +289,6 @@ namespace SocketCommunication.SocketCore
                 }
 
                 RemoveSession();
-
-                IsSending = false;
-                SendData();
 
                 return state;
             }
@@ -374,7 +389,6 @@ namespace SocketCommunication.SocketCore
                     _Socket.Dispose();
                     _Socket = null;
 
-                    IsSending = false;
                     LoggerProxy.Info("SocketSession", "Dispose", _MessageList);
 
                     RemoveSession();
