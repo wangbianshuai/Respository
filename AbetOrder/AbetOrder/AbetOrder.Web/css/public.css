@@ -1,0 +1,57 @@
+﻿* {
+    margin: 0;
+    padding: 0px;
+    list-style-type: none;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+}
+
+
+.HtmlPage {
+    width: 100%;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.DivTop {
+    width: 1190px;
+    height: 80px;
+    margin: 0 auto;
+}
+
+    .DivTop input {
+        height: 40px;
+        width: 120px;
+        float: right;
+        margin-right: 30px;
+        margin-top: 20px;
+    }
+
+.DivContent {
+    width: 1190px;
+    height: 1684px;
+    margin: 0 auto;
+}
+
+.DivContent2 {
+    border: 1px solid #d3e1f0;
+    width: 1190px;
+    height: 1684px;
+    margin: 0 auto;
+}
+
+.DivBottom {
+    width: 1190px;
+    height: 80px;
+    margin: 0 auto;
+}
+
+    .DivBottom input {
+        height: 40px;
+        width: 120px;
+        margin-right: 30px;
+        margin-top: 20px;
+    }

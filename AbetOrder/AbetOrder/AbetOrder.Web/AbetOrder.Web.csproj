@@ -104,15 +104,23 @@
     <Content Include="configs\User.json" />
     <Content Include="css\Order1.css" />
     <Content Include="css\ProcessOrder1.css" />
+    <Content Include="css\public.css" />
     <Content Include="Default.aspx" />
     <Content Include="download.aspx" />
     <Content Include="GenPdf.aspx" />
     <Content Include="Global.asax" />
+    <Content Include="Html2Image.html" />
     <Content Include="HtmlPage1.html" />
+    <Content Include="html\Order1.html" />
+    <Content Include="images\bg.jpg" />
     <Content Include="index.css" />
     <Content Include="index.html" />
     <Content Include="index.js" />
+    <Content Include="js\canvas2image.js" />
+    <Content Include="js\html2canvas.min.js" />
+    <Content Include="js\jquery-3.3.1.min.js" />
     <Content Include="OperationLog.aspx" />
+    <Content Include="pagejs\Order1.js" />
     <Content Include="static\UserAvatar.fda3837f.png" />
     <Content Include="templates\Order1.html" />
     <Content Include="templates\ProcessOrder1.html" />
@@ -151,6 +159,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="ImageToPdfHandler.ashx.cs">
+      <DependentUpon>ImageToPdfHandler.ashx</DependentUpon>
+    </Compile>
     <Compile Include="OperationLog.aspx.cs">
       <DependentUpon>OperationLog.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -170,6 +181,7 @@
     <Content Include="UploadHandler.ashx" />
     <Content Include="configs\DealingsBill.json" />
     <Content Include="configs\DealingsBillType.json" />
+    <Content Include="ImageToPdfHandler.ashx" />
     <None Include="Properties\PublishProfiles\AbetOrderWeb.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -180,7 +192,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="images\" />
     <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>

@@ -52,6 +52,46 @@ namespace OpenDataAccess.Utility
             MemoryStream cssStream = new MemoryStream(System.Text.Encoding.UTF8.GetBytes(css));
             XMLWorkerHelper.GetInstance().ParseXHtml(writer, doc, stream, cssStream, System.Text.Encoding.UTF8, new SongFontFactory());
         }
+
+        public static void CreatePdfFromImage(List<byte[]> imageList, string fileName)
+        {
+            Common.SaveFile(CreatePdfFromImage(imageList), fileName);
+        }
+
+        public static byte[] CreatePdfFromImage(List<byte[]> imageList)
+        {
+            //内存流
+            using (MemoryStream ms = new MemoryStream())
+            {
+                Document doc = new Document(PageSize.A4, 0, 0, 0, 0);
+                //为该Document创建一个Writer实例
+                PdfWriter writer = PdfWriter.GetInstance(doc, ms);
+                writer.CloseStream = false;
+                //打开
+                doc.Open();
+
+                imageList.ForEach(i =>
+                {
+                    Image image = Image.GetInstance(i);
+                    image.ScaleAbsolute(image.Width / 4, image.Height / 4);
+
+                    doc.NewPage();
+                    doc.Add(image);
+                });
+
+                // 重置页面数量 
+                doc.ResetPageCount();
+                //关闭目标文件 
+                doc.Close();
+                //关闭写入流 
+                writer.Close();
+
+                ms.Position = 0;
+                ms.Flush();
+
+                return ms.ToArray();
+            }
+        }
     }
 
     /// <summary>

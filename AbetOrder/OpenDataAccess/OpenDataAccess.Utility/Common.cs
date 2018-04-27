@@ -996,6 +996,11 @@ namespace OpenDataAccess.Utility
             return JsonConvert.SerializeObject(obj);
         }
 
+        public static T JsonTo<T>(string json)
+        {
+            return JsonConvert.DeserializeObject<T>(json);
+        }
+
         public static bool IsEquals(object a, object b, bool blIgnoreCase = true)
         {
             if (a == null && b == null) return true;
