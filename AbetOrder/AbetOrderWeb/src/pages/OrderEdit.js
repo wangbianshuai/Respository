@@ -163,20 +163,16 @@ export default class OrderEdit {
     }
 
     OrderPdf(property, params) {
-        this.OpenPdf("OrderPdfPath", "订单");
+        this.OpenPdf("B17DC2B1-AF38-4C79-AAE3-3C784CAC6F98", "订单");
     }
 
     ProcessOrderPdf(property, params) {
-        this.OpenPdf("ProcessPdfPath", "加工单");
+        this.OpenPdf("B395A96C-C7D3-4597-862B-8B717BBCC200", "加工单");
     }
 
     OpenPdf(name, label) {
         const { EntityData } = this.PageConfig;
-        let url = EntityData && EntityData[name] ? EntityData[name] : "";
-        if (Common.IsNullOrEmpty(url)) {
-            this.Page.ShowMessage(label + "PDF未生成或异步还未生成好，请稍后刷新数据查看！")
-            return;
-        }
+        let url = "Order.aspx?Name=" + name + "&Id=" + EntityData.OrderId;
 
         if (url.toLowerCase().indexOf("http") !== 0) url = Common.DataApiUrl.replace("api/", "") + url;
 

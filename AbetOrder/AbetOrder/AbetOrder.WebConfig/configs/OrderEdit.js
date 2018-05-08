@@ -112,10 +112,6 @@
             ActionName: "ExcelExportDetail", StateName: "ExcelExportDetail", DataKey: "", Method: "POST", Url: "Order/ExcelExportDetail"
         },
         {
-            ActionName: "GetTemplateHtmlList", StateName: "TemplateHtmlList",
-            Url: "ViewTemplateHtml?$select=Id,Name&$orderby=CreateDate", DataKey: "ViewTemplateHtml", Method: "GET"
-        },
-        {
             ActionName: "GetProcessItemList", StateName: "ProcessItemList",
             Url: "ViewProcessItem?$select=Id,Name&$orderby=DisplayIndex", DataKey: "ViewProcessItem", Method: "GET"
         },
@@ -170,18 +166,6 @@
         },
         { Label: "订单日期", Type: "Date", Name: "OrderDate", ColSpan: 11, LabelCol: 4, WrapperCol: 20, X: 3, Y: 1, PlaceHolder: "默认系统当前日期", DataType: "DateTime", MaxLength: 10, IsNullable: true },
         { Label: "发货日期", Type: "Date", Name: "DeliveryDate", ColSpan: 11, LabelCol: 4, WrapperCol: 20, X: 3, Y: 2, DataType: "DateTime", MaxLength: 10, IsNullable: true },
-        {
-            Label: "订单模板", Name: "OrderTemplateHtmlId", X: 4, Y: 1,
-            AllowClear: true,
-            ColSpan: 11, LabelCol: 4, WrapperCol: 20,
-            DataType: "Guid", Type: "Select", ServiceDataSource: GetTemplateHtmlDataSource()
-        },
-        {
-            Label: "加工单模板", Name: "ProcessTemplateHtmlId", X: 4, Y: 2,
-            AllowClear: true,
-            ColSpan: 11, LabelCol: 4, WrapperCol: 20,
-            DataType: "Guid", Type: "Select", ServiceDataSource: GetTemplateHtmlDataSource()
-        },
         { Label: "明细总金额", Max: 100000000, Min: 0, Step: 1, IsReadonly: true, PlaceHolder: "只读，计算其值", Type: "TextBox", ControlType: "InputNumber", Name: "Amount", ColSpan: 11, LabelCol: 4, WrapperCol: 20, X: 6, Y: 1, DataType: "int", MaxLength: 10, IsNullable: true },
         { Label: "折扣比(%)", Max: 100, Min: 0, Step: 1, PlaceHolder: "百份比1~100之间值", Type: "TextBox", ControlType: "InputNumber", Name: "DiscountRate", ColSpan: 11, LabelCol: 4, WrapperCol: 20, X: 6, Y: 2, DataType: "int", MaxLength: 10, IsNullable: true },
         { Label: "附加费", Max: 100000000, Min: 0, Step: 1, IsReadonly: true, PlaceHolder: "只读，计算其值", Type: "TextBox", ControlType: "InputNumber", Name: "ExtraCharge", ColSpan: 11, LabelCol: 4, WrapperCol: 20, X: 7, Y: 1, DataType: "int", MaxLength: 10, IsNullable: true },
@@ -213,14 +197,6 @@
             TabLabel: "订单设计图",
             IsTabView: true,
             PageComponentName: "OrderImage"
-        }
-    }
-
-    function GetTemplateHtmlDataSource() {
-        return {
-            ActionName: "GetTemplateHtmlList",
-            ValueName: "Id",
-            TextName: "Name"
         }
     }
 

@@ -29,8 +29,6 @@ namespace AbetOrder.Component
             Guid orderId = entityData.GetValue<Guid>("OrderId");
             int type = entityData.GetValue<int>("PdfType");
 
-            new Order().GenPdf(orderId, type, this._Request.RootPath, userId);
-
             return GetBoolDict(true);
         }
     }

@@ -5,7 +5,7 @@
         EntityName: "Order",
         PrimaryKey: "OrderId",
         TemplateName: "EntityListPage",
-        SelectNames: ["OrderId", "RowVersion", "OrderStatus", "OrderCode", "OrderDate", "DeliveryDate", "CustomerName", "OrderPdfPath", "CreateUserName", "CreateUser", "ActualAmount", "CostAmount2", "ProcessAmount2", "Profit", "PaidDeposit", "ShouldPayBalance", "OrderStatusName"],
+        SelectNames: ["OrderId", "RowVersion", "OrderStatus", "OrderCode", "OrderDate", "DeliveryDate", "CustomerName", "CreateUserName", "CreateUser", "ActualAmount", "CostAmount2", "ProcessAmount2", "Profit", "PaidDeposit", "ShouldPayBalance", "OrderStatusName"],
         SearchNames: ["OrderCode", "CustomerId", "CreateUser", "OrderStatus", "StartDate", "EndDate", "StartDate2", "EndDate2"],
         DataColumnNames: ["OrderCode", "CustomerName", "OrderDate", "DeliveryDate", "OrderStatusName", , "ActualAmount", "ProcessAmount2", "PaidDeposit", "ShouldPayBalance", "CreateUserName"],
         EditNames: ["PaidDeposit", "BillDate"],
@@ -80,7 +80,7 @@
                 DataType: "Guid", Type: "Select", ServiceDataSource: GetUserDataSource(), OperateLogic: "=", AllowClear: true, ColSpan: 5
             },
             { Label: "收款日期", Type: "Date", IsDate: true, IsDefaultNow: true, Name: "BillDate", PlaceHolder: "默认系统当前日期", DataType: "DateTime", MaxLength: 20, IsNullable: true },
-            { Label: "订单编号", Name: "OrderCode", IsOpenPage: true, IsRandom: false, SearchProperty: { PropertyName: null }, PropertyName: "OrderPdfPath", PageUrl: "{OrderPdfPath}", ColumnWidth: 100, DataType: "string", X: 2, Y: 1, ColSpan: 5, MaxLength: 50, IsNullable: true },
+            { Label: "订单编号", Name: "OrderCode", IsOpenPage: true, IsRandom: false, SearchProperty: { PropertyName: null }, PropertyName: "OrderId", PageUrl: "Order.aspx?Name=B17DC2B1-AF38-4C79-AAE3-3C784CAC6F98&Id={OrderId}", ColumnWidth: 100, DataType: "string", X: 2, Y: 1, ColSpan: 5, MaxLength: 50, IsNullable: true },
             { Label: "订单状态", Name: "OrderStatusName", ColumnWidth: 80 },
             { Label: "客户", Name: "CustomerName", ColumnWidth: 120, IsTooltip: true },
             { Label: "销售员", Name: "CreateUserName", ColumnWidth: 80 },

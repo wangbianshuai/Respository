@@ -28,10 +28,6 @@ namespace AbetOrder.Entity
         public Guid FactoryId { get; set; }
         public byte IsDelete { get; set; }
         public DateTime CreateDate { get; set; }
-        public string OrderPdfPath { get; set; }
-        public string ProcessPdfPath { get; set; }
-        public Guid OrderTemplateHtmlId { get; set; }
-        public Guid ProcessTemplateHtmlId { get; set; }
         public string RowVersion { get; set; }
 
         public override void InsertValidate(List<Func<IValidate, IEntityData, string>> validateList)
@@ -60,8 +56,6 @@ namespace AbetOrder.Entity
         public string UpdateUserName { get; set; }
         public string CustomerName { get; set; }
         public byte DataRight { get; set; }
-        public string OrderTemplateHtmlName { get; set; }
-        public string ProcessTemplateHtmlName { get; set; }
         public decimal ProcessAmount2 { get; set; }
         public decimal CostAmount2 { get; set; }
         public string OrderName2 { get; set; }

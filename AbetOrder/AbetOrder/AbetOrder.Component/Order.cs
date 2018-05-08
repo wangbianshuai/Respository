@@ -78,7 +78,6 @@ namespace AbetOrder.Component
                 Guid orderId = (obj as Dictionary<string, object>).GetValue<Guid>("PrimaryKey");
                 if (orderId != Guid.Empty)
                 {
-                    GenOrderPdf(orderId, 1, this._Request.RootPath, userId);
                     decimal paidDeposit = entityData.GetValue<decimal>("PaidDeposit");
                     if (paidDeposit > 0) new Bill().EditBill(orderId, entityData.GetStringValue("OrderCode"), Guid.Parse(this._Request.OperationUser), paidDeposit, entityData.GetValue<DateTime>("OrderDate"));
                 }
@@ -111,7 +110,6 @@ namespace AbetOrder.Component
             {
                 if ((obj as Dictionary<string, object>).ContainsKey("Succeed"))
                 {
-                    GenOrderPdf(orderId, 1, this._Request.RootPath, userId);
                     decimal paidDeposit = entityData.GetValue<decimal>("PaidDeposit");
                     new Bill().EditBill(orderId, entityData.GetStringValue("OrderCode"), Guid.Parse(this._Request.OperationUser), paidDeposit, entityData.GetValue<DateTime>("OrderDate"));
                 }
@@ -184,7 +182,6 @@ namespace AbetOrder.Component
                 entityData.SetValue("ProcessAmount", null);
                 new DealingsBill().DeleteOrderDealingsBill(orderId);
             }
-            else if (orderStatus == 1) GenOrderPdf(orderId, 2, this._Request.RootPath, userId);
             else if (orderStatus == 3)
             {
                 if (oldEntityData.GetValue<Guid>("CreateUser") != userId) return GetMessageDict("审核加工费需销售员确认操作！");
@@ -198,79 +195,6 @@ namespace AbetOrder.Component
             }
             
             return this.Update();
-        }
-
-        void GenOrderPdf(Guid orderId, int type, string rootPath, Guid userId)
-        {
-            Task.Run(() => GenPdf(orderId, type, rootPath, userId));
-        }
-
-        public void GenPdf(Guid orderId, int type, string rootPath, Guid userId)
-        {
-            IEntityData orderPdf = new EntityData(this._OrderPdfEntity);
-            orderPdf.SetValue("OrderId", orderId);
-            orderPdf.SetValue("PdfType", type);
-            orderPdf.SetValue("CreateUser", userId);
-
-            try
-            {
-                IEntityData order = this.SelectEntityByPrimaryKey(orderId);
-                object templateHtmlId = type == 1 ? order.GetValue("OrderTemplateHtmlId") : order.GetValue("ProcessTemplateHtmlId");
-                if (templateHtmlId == null) throw new Exception(string.Format("未选择{0}模板！", type == 1 ? "订单" : "加工单"));
-
-                order.SetValue("TemplateHtmlId", templateHtmlId);
-                IEntityData template = GetTemplateHtml((Guid)templateHtmlId);
-                if (templateHtmlId == null) throw new Exception("模板不存在！");
-
-                string html = template.GetStringValue("Html");
-                string css = template.GetStringValue("Css");
-
-                html = new TemplateResolve().ResolveContent(html, "Order", order);
-
-                string fileName = "PdfFiles\\" + (type == 1 ? "Order" : "Process");
-
-                string path = rootPath + fileName;
-                if (!Directory.Exists(path)) Directory.CreateDirectory(path);
-
-                fileName += "\\" + DateTime.Now.ToString("yyyyMMddHHmmssfff") + new Random().Next(100000, 999999) + ".pdf";
-                path = rootPath + fileName;
-
-                OpenDataAccess.Utility.PdfDocument.CreatePdfFromHtml(html, css, path);
-
-                string pdfPath = fileName.Replace("\\", "/");
-                IEntityData entityData = new EntityData(this.EntityType);
-                entityData.SetValue("OrderId", orderId);
-                entityData.SetValue(type == 1 ? "OrderPdfPath" : "ProcessPdfPath", pdfPath);
-
-                this.UpdateEntityByPrimaryKey(orderId, entityData);
-
-                orderPdf.SetValue("PdfPath", pdfPath);
-                orderPdf.SetValue("GenStatus", 1);
-            }
-            catch (Exception ex)
-            {
-                orderPdf.SetValue("GenStatus", 2);
-                orderPdf.SetValue("FailMessage", ex.Message);
-
-                OpenDataAccess.Utility.LoggerProxy.Exception("Order", "GenPdf", ex);
-            }
-
-            try
-            {
-                object primaryKey = null;
-                this.InsertEntity(_OrderPdfEntity, orderPdf, out primaryKey);
-            }
-            catch (Exception ex)
-            {
-                OpenDataAccess.Utility.LoggerProxy.Exception("Order", "InsertOrderPdf", ex);
-            }
-        }
-
-        IEntityData GetTemplateHtml(Guid templateHtmlId)
-        {
-            IQuery query = new Query(_TemplateHtmlEntity.TableName);
-            query.Where(string.Format("where Id='{0}'", templateHtmlId));
-            return this.SelectEntity(query);
         }
 
         int GetOrderCode(DateTime orderDate)
