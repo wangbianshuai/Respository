@@ -112,11 +112,17 @@
     <Content Include="Html2Image.html" />
     <Content Include="HtmlPage1.html" />
     <Content Include="html\Order1.html" />
+    <Content Include="html\ProcessOrder1.html" />
     <Content Include="images\bg.jpg" />
+    <Content Include="images\Checked24.png" />
+    <Content Include="images\logo.png" />
     <Content Include="index.css" />
     <Content Include="index.html" />
     <Content Include="index.js" />
     <Content Include="js\canvas2image.js" />
+    <Content Include="js\Common.js" />
+    <Content Include="js\DataAccess.js" />
+    <Content Include="js\DataType.js" />
     <Content Include="js\html2canvas.min.js" />
     <Content Include="js\jquery-3.3.1.min.js" />
     <Content Include="OperationLog.aspx" />

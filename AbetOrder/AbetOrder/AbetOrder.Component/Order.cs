@@ -357,5 +357,38 @@ namespace AbetOrder.Component
 
             return entityData;
         }
+
+        public object GetOrder2()
+        {
+            Dictionary<string, EntityType> dict = new Dictionary<string, EntityType>();
+            dict.Add("Details", _OrderDetailEntity);
+            dict.Add("Remarks", _OrderRemarkEntity);
+
+            IEntityData entityData = EntityByComplexTypeOperation.GetEntityData<ViewOrder>(this, dict) as IEntityData;
+
+            if (entityData != null)
+            {
+                entityData.SetValue("User",  GetUser(entityData.GetValue<Guid>("CreateUser")));
+                entityData.SetValue("Customer", GetCustomer(entityData.GetValue<Guid>("CustomerId")));
+            }
+
+            return entityData;
+        }
+
+        IEntityData GetUser(Guid userId)
+        {
+            IQuery query = new Query("t_d_User");
+            query.Select("UserName,Phone,BankCardNo,OpenBank");
+            query.Where(string.Format("where UserId='{0}'", userId));
+            return this.SelectEntity(query);
+        }
+
+        IEntityData GetCustomer(Guid customerId)
+        {
+            IQuery query = new Query("t_d_Customer");
+            query.Select("Name,CompanyName,DepotName,DepotAddress,Consignee,ConsigneePhone");
+            query.Where(string.Format("where Id='{0}'", customerId));
+            return this.SelectEntity(query);
+        }
     }
 }

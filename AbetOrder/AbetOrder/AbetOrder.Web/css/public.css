@@ -55,3 +55,25 @@ body {
         margin-right: 30px;
         margin-top: 20px;
     }
+
+.DivContent .DivHeader {
+    text-align: left;
+    height: 130px;
+}
+
+    .DivContent .DivHeader .DivLogo {
+        float: left;
+        width: 328px;
+    }
+
+    .DivContent .DivHeader .DivTitle {
+        text-align: center;
+        float: left;
+        width: 534px;
+    }
+
+        .DivContent .DivHeader .DivTitle span {
+            line-height: 130px;
+            font-size: 60px;
+            letter-spacing: 40px;
+        }

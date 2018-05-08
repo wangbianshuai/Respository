@@ -174,6 +174,11 @@ export default class OrderEdit {
         const { EntityData } = this.PageConfig;
         let url = "Order.aspx?Name=" + name + "&Id=" + EntityData.OrderId;
 
+        const { LoginUser } = this.Page;
+        url = Common.AddUrlParams(url, "LoginUserId", LoginUser.UserId)
+        url = Common.AddUrlParams(url, "Token", LoginUser.Token)
+        url = Common.AddUrlRandom(url);
+
         if (url.toLowerCase().indexOf("http") !== 0) url = Common.DataApiUrl.replace("api/", "") + url;
 
         window.open(url);

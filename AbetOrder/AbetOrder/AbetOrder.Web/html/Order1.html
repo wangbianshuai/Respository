@@ -3,12 +3,17 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title></title>
-    <link href="css/public.css" rel="stylesheet" />
+    <link href="css/public.css?v=${Version}" rel="stylesheet" />
     <script src="js/jquery-3.3.1.min.js"></script>
     <script src="js/html2canvas.min.js"></script>
     <script src="js/canvas2image.js"></script>
-    <script src="pagejs/Order1.js"></script>
-
+    <script src="js/Common.js?v=${Version}"></script>
+    <script src="js/DataType.js?v=${Version}"></script>
+    <script src="js/DataAccess.js?v=${Version}"></script>
+    <script src="pagejs/Order1.js?v=${Version}"></script>
+    <script type="text/javascript">
+        $(document).ready(function () { new Order().Load(); });
+    </script>
 </head>
 <body>
     <div class="HtmlPage">
@@ -16,12 +21,6 @@
             <input type="button" id="btnExportPdf" value="导出PDF" />
         </div>
         <div class="DivContent2" id="contentList">
-            <div id="content1" class="DivContent">
-                测试1
-            </div>
-            <div id="content2" style="display: none;" class="DivContent">
-                测试2
-            </div>
         </div>
         <div class="DivBottom">
             <input type="button" id="btnPre" value="上一页" />

@@ -85,7 +85,7 @@
         { Label: "状态", Name: "BillStatusName" },
         { Label: "记账人", Name: "CreateUserName" },
         { Label: "审核人", Name: "ApproveUserName" },
-        { Label: "订单", Name: "OrderName2", IsOpenPage: true, IsRandom: false, PropertyName: "DataId", PageUrl: "Order.aspx?Name=B395A96C-C7D3-4597-862B-8B717BBCC200&Id={DataId}", DataType: "string" },
+        { Label: "订单", Name: "OrderName2", IsOpenPage: true, IsAddToken: true, PropertyName: "DataId", PageUrl: "Order.aspx?Name=B395A96C-C7D3-4597-862B-8B717BBCC200&Id={DataId}", DataType: "string" },
         { Label: "金额", Name: "Amount2", Scale: 2, IsCurrency: true, FontColor: "#1890ff" }]
     }
 
