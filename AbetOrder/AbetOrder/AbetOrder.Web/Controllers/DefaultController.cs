@@ -84,7 +84,7 @@ namespace AbetOrder.Web.Controllers
 
             return new HttpResponseMessage(HttpStatusCode.OK)
             {
-                Content = new StringContent(new OpenDataAccess.Service.RequestHandler().ProcessRequest(Code.Request.GetRequest(this, blGet), getClassType, entityName, methodName), Encoding.UTF8, "application/json")
+                Content = new StringContent(new OpenDataAccess.Service.RequestHandler().ProcessRequest(Code.Request.GetRequest(this, blGet, entityName, methodName), getClassType, entityName, methodName), Encoding.UTF8, "application/json")
             };
         }
 

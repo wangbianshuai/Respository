@@ -75,7 +75,7 @@ namespace OpenDataAccess.Service
                 }
                 this.SetEntityAndMethodName(request, request.EntityName, request.MethodName);
 
-                if (JudgeRight(request))
+                if (JudgeRight(request) || request.IsDirectRequest())
                 {
                     obj = this.InvokeMethod(request, getClassType);
                     responseContent = Parse.ToJson(obj);

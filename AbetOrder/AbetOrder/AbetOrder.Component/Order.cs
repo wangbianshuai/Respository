@@ -368,8 +368,19 @@ namespace AbetOrder.Component
 
             if (entityData != null)
             {
-                entityData.SetValue("User",  GetUser(entityData.GetValue<Guid>("CreateUser")));
+                entityData.SetValue("User", GetUser(entityData.GetValue<Guid>("CreateUser")));
                 entityData.SetValue("Customer", GetCustomer(entityData.GetValue<Guid>("CustomerId")));
+
+                DateTime deliveryDate = entityData.GetValue<DateTime>("DeliveryDate");
+                DateTime orderDate = entityData.GetValue<DateTime>("OrderDate");
+                if (deliveryDate > orderDate) entityData.SetValue("Days", (deliveryDate - orderDate).Days);
+
+                List<IEntityData> details = entityData.GetValue<List<IEntityData>>("Details").Where(w => w.GetValue<int>("DetailType") == 1).ToList();
+
+                entityData.SetValue("TotalArea", details.Sum(s => s.GetValue<decimal>("Area")).ToString("0.0000"));
+                entityData.SetValue("TotalNumber", details.Sum(s => s.GetValue<int>("Number")));
+
+                entityData.SetValue("AmountUpper", OpenDataAccess.Utility.Common.ToCurrencyUpper(entityData.GetValue<decimal>("ActualAmount")));
             }
 
             return entityData;
@@ -386,7 +397,7 @@ namespace AbetOrder.Component
         IEntityData GetCustomer(Guid customerId)
         {
             IQuery query = new Query("t_d_Customer");
-            query.Select("Name,CompanyName,DepotName,DepotAddress,Consignee,ConsigneePhone");
+            query.Select("Name,CompanyName,Address,Fax,DepotName,DepotAddress,Consignee,ConsigneePhone");
             query.Where(string.Format("where Id='{0}'", customerId));
             return this.SelectEntity(query);
         }

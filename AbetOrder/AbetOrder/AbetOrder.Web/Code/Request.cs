@@ -11,7 +11,17 @@ namespace AbetOrder.Web.Code
 {
     public class Request
     {
-        public static OpenDataAccess.Service.Request GetRequest(ApiController controller, bool blGet)
+        static List<string> _DirectRequestList { get; set; }
+
+        static Request()
+        {
+            _DirectRequestList = new List<string>()
+            {
+                "vieworder/getorder2"
+            };
+        }
+
+        public static OpenDataAccess.Service.Request GetRequest(ApiController controller, bool blGet, string entityName, string methodName)
         {
             OpenDataAccess.Service.Request request = new OpenDataAccess.Service.Request();
 
@@ -23,6 +33,7 @@ namespace AbetOrder.Web.Code
             request.RawUrl = controller.Request.RequestUri.AbsoluteUri;
             request.RootPath = AppDomain.CurrentDomain.BaseDirectory;
             request.RequestType = blGet ? "GET" : "POST";
+            request.IsDirectRequest = () => JudgeDirectRequest(entityName, string.IsNullOrEmpty(methodName) ? string.Empty : methodName);
 
             int index = request.PathAndQuery.IndexOf("api/");
             if (index >= 0)
@@ -35,6 +46,12 @@ namespace AbetOrder.Web.Code
             }
 
             return request;
+        }
+
+        public static bool JudgeDirectRequest(string entityName, string methodName)
+        {
+            methodName = methodName.Split('(')[0];
+            return _DirectRequestList.Contains(string.Concat(entityName.ToLower(), "/", methodName.ToLower()));
         }
 
         private static NameValueCollection GetQueryString(ApiController controller)
