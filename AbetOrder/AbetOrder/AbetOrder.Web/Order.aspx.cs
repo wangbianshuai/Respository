@@ -28,8 +28,8 @@ namespace AbetOrder.Web
                     html = reader.ReadToEnd();
                 }
 
-                //html = html.Replace("${Version}", "98498749845");
-                html = html.Replace("${Version}", Guid.NewGuid().ToString().Substring(0, 8));
+                html = html.Replace("${Version}", "98498749845");
+                //html = html.Replace("${Version}", Guid.NewGuid().ToString().Substring(0, 8));
 
                 this.Response.Write(html);
             }

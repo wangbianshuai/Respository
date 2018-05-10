@@ -4,11 +4,6 @@
             this.QueryString = Common.GetPageQueryString();
 
             this.Id = Common.GetObjValue(this.QueryString, "Id");
-            this.LoginUserId = Common.GetObjValue(this.QueryString, "LoginUserId");
-            this.Token = Common.GetObjValue(this.QueryString, "Token");
-
-            Common.SetStorage("LoginUserId", this.LoginUserId);
-            Common.SetStorage("Token", this.Token);
 
             LoadOrder.call(this);
 

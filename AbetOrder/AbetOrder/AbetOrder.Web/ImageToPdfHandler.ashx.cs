@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
 
@@ -28,7 +29,12 @@ namespace AbetOrder.Web
                 List<byte[]> imageList = (from a in list
                                           select Convert.FromBase64String(a)).ToList();
 
-                string fileName = "PdfFiles/" + DateTime.Now.ToString("yyyyMMddHHmmssfff") + ".pdf";
+                string path = "PdfFiles/" + DateTime.Now.ToString("yyyy-MM-dd");
+
+                string path2 = context.Server.MapPath(path);
+                if (!Directory.Exists(path2)) Directory.CreateDirectory(path2);
+
+                string fileName = path + "/" + DateTime.Now.ToString("yyyyMMddHHmmssfff") + ".pdf";
 
                 OpenDataAccess.Utility.PdfDocument.CreatePdfFromImage(imageList, context.Server.MapPath(fileName));
 
