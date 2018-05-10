@@ -36,8 +36,6 @@
 
             html.push(GetHeaderHtml());
 
-            html.push(GetCustomerUserHtml(data));
-
             html.push("<div class=\"DivName\"><span style=\"color:#666;\">订购门板花式：</span><span>" + data.OrderName + "</span></div>");
 
             html.push("<div id=\"divDetailList1\"></div>");
@@ -51,8 +49,6 @@
             GetOrderDetailsHtml(data);
 
             if (data.Remarks) GetRemarkHtml(data);
-            
-            GetCreateUserHtml(data)
         }
 
         function AddContentPage(pageCount) {
@@ -74,24 +70,9 @@
             });
 
             for (var i = 0; i < data.Details.length; i++) {
-               GetDetailRow(data.Details[i], i === data.Details.length - 1);
+                GetDetailRow(data.Details[i], i === data.Details.length - 1);
             }
 
-            var id = Guid.NewGuid();
-            AppendDetailRow(GetTotalRow(data, id), id);
-
-            id = Guid.NewGuid();
-            AppendDetailRow(GetAmountTotalRow(data, id), id);
-        }
-
-        function GetRemarkHtml(data) {
-            data.Remarks = data.Remarks.sort(function (a, b) {
-                return a.DisplayIndex > b.DisplayIndex ? 1 : -1;
-            });
-
-            for (var i = 0; i < data.Remarks.length; i++) {
-               GetRemarkRow(data.Remarks[i], i === 0);
-            }
 
             var html = [];
             var id = Guid.NewGuid();
@@ -101,6 +82,16 @@
             html.push("</table>");
 
             AppendDetailRow(html.join(""), id);
+        }
+
+        function GetRemarkHtml(data) {
+            data.Remarks = data.Remarks.sort(function (a, b) {
+                return a.DisplayIndex > b.DisplayIndex ? 1 : -1;
+            });
+
+            for (var i = 0; i < data.Remarks.length; i++) {
+                GetRemarkRow(data.Remarks[i], i === 0);
+            }
         }
 
         function GetRemarkRow(data, blFirst) {
@@ -167,12 +158,12 @@
 
             html.push("<tr>")
             html.push("<td class=\"Td60\">" + GetLabelValue("序号", detail.DisplayIndex) + "</td>");
-            html.push("<td class=\"Td40\">" + GetLabelValue("金额(RMB)", detail.Amount) + "</td>");
+            html.push("<td class=\"Td40\"></td>");
             html.push("</tr>");
             if (detail.DetailType === 1) {
                 html.push("<tr>")
                 html.push("<td class=\"Td60\">" + GetLabelValue("面积(㎡)", detail.Height + "<span style=\"color:#666;\">(mm)×</span>" + detail.Width + "<span style=\"color:#666;\">(mm)×</span>" + detail.Number + "<span style=\"color:#666;\">=</span>" + detail.Area.toFixed(4)) + "</td>");
-                html.push("<td class=\"Td40\">" + GetLabelValue("单价(元/㎡)", detail.Price) + "</td>");
+                html.push("<td class=\"Td40\"></td>");
                 html.push("</tr>");
             }
 
@@ -387,7 +378,7 @@
 
             html.push("<div class=\"DivHeader\">");
             html.push("<div class=\"DivLogo\"><img alt=\"\" border=\"0\" src=\"images/logo.png\" width=\"328\" height=\"130\" /></div>");
-            html.push("<div class=\"DivTitle\"><span>销售订单</span></div>");
+            html.push("<div class=\"DivTitle\"><span>加工单</span></div>");
             html.push("<div class=\"DivLogo\"></div>");
             html.push("</div>");
             return html.join("");

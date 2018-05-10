@@ -41,6 +41,7 @@ body {
     width: 1190px;
     height: 1684px;
     margin: 0 auto;
+    margin-top:10px;
 }
 
 .DivBottom {
@@ -143,12 +144,11 @@ body {
             .DivDetail span {
                 line-height: 48px;
             }
-
-    .DivDetail .Td60 {
+.Td60 {
      width:60%;
     }
 
-     .DivDetail .Td40 {
+.Td40 {
      width:40%;
     }
 
@@ -172,4 +172,12 @@ body {
 
   .TdAmountTotal span {
     line-height:60px;
+    }
+
+.TdRemarkSplit {
+    height: 2px;
+}
+
+    .TdRemarkSplit td {
+          border-bottom: 2px solid #999;
     }

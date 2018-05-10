@@ -381,6 +381,9 @@ namespace AbetOrder.Component
                 entityData.SetValue("TotalNumber", details.Sum(s => s.GetValue<int>("Number")));
 
                 entityData.SetValue("AmountUpper", OpenDataAccess.Utility.Common.ToCurrencyUpper(entityData.GetValue<decimal>("ActualAmount")));
+
+                entityData.SetValue("PaidDepositName", entityData.GetValue<decimal>("PaidDeposit").ToString("C"));
+                entityData.SetValue("ShouldPayBalanceName", entityData.GetValue<decimal>("ShouldPayBalance").ToString("C"));
             }
 
             return entityData;

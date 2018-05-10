@@ -128,6 +128,7 @@
     <Content Include="OperationLog.aspx" />
     <Content Include="Order.aspx" />
     <Content Include="pagejs\Order1.js" />
+    <Content Include="pagejs\ProcessOrder1.js" />
     <Content Include="static\UserAvatar.fda3837f.png" />
     <Content Include="templates\Order1.html" />
     <Content Include="templates\ProcessOrder1.html" />
