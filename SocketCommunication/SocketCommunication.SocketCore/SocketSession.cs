@@ -271,7 +271,11 @@ namespace SocketCommunication.SocketCore
                     int k = 0;
                     for (int i = 0; i < idsbs.Length; i++)
                     {
-                        if (i % 16 == 0) ids = new byte[16];
+                        if (i % 16 == 0)
+                        {
+                            ids = new byte[16];
+                            ids[0] = idsbs[i];
+                        }
                         else
                         {
                             k = i / 16 * 16;
