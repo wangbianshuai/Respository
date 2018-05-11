@@ -38,6 +38,7 @@ namespace SocketCommunication.SocketCore
             _Socket.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.ReuseAddress, true);
             _Socket.SendTimeout = 3000;
             _Socket.ReceiveTimeout = 3000;
+            _Socket.Blocking = false;
             _Socket.SendBufferSize = AppSettings.BufferSize;
             _Socket.ReceiveBufferSize = AppSettings.BufferSize;
         }
@@ -46,6 +47,7 @@ namespace SocketCommunication.SocketCore
         {
             try
             {
+                _IsSending = false;
                 var e = new SocketAsyncEventArgs();
                 e.RemoteEndPoint = _ServicePoint;
                 e.Completed += _ConnectAsyncEventArgs_Completed;
@@ -79,27 +81,34 @@ namespace SocketCommunication.SocketCore
 
         void ProcessConnect(SocketAsyncEventArgs e)
         {
-            if (e.SocketError == SocketError.Success)
+            try
             {
-                LoopReceiveAsync();
-
-                Task.Run(() => LoopCheckConnect());
-
-                //发送ID
-                _SocketClient.SendDataList.Enqueue(new SendState(AddDataId(this._SocketClient.Id.ToByteArray())));
-                SendData();
-            }
-            else
-            {
-                if (!_IsSend)
+                if (e.SocketError == SocketError.Success)
                 {
-                    var ex = new SocketException((int)e.SocketError);
-                    if (SocketClient.AlertAction != null)
-                    {
-                        SocketClient.AlertAction(string.Format("{0}\n请检查YXINMT.MeetingSystem.WindowsSocketService是否启动！", Common.GetInnerException(ex).Message));
-                    }
-                    LoggerProxy.Exception("SocketConnect", "ProcessConnect", ex);
+                    LoopReceiveAsync();
+
+                    Task.Run(() => LoopCheckConnect());
+
+                    //发送ID
+                    _SocketClient.SendDataList.Enqueue(new SendState(AddDataId(this._SocketClient.Id.ToByteArray())));
+                    SendData();
                 }
+                else
+                {
+                    if (!_IsSend)
+                    {
+                        var ex = new SocketException((int)e.SocketError);
+                        if (SocketClient.AlertAction != null)
+                        {
+                            SocketClient.AlertAction(string.Format("{0}\n请检查YXINMT.MeetingSystem.WindowsSocketService是否启动！", Common.GetInnerException(ex).Message));
+                        }
+                        LoggerProxy.Exception("SocketConnect", "ProcessConnect", ex);
+                    }
+                }
+            }
+            catch(Exception ex)
+            {
+                LoggerProxy.Exception("SocketConnect", "ProcessConnect", ex);
             }
         }
 
@@ -107,14 +116,17 @@ namespace SocketCommunication.SocketCore
         {
             try
             {
-                _SocketClient.SendStateDictionary.AddOrUpdate(state.Id, state, (key, value) => state);
+                if (IsConnected)
+                {
+                    _SocketClient.SendStateDictionary.AddOrUpdate(state.Id, state, (key, value) => state);
 
-                byte[] data2 = AddDataId(state.Data);
-                var e = new SocketAsyncEventArgs();
-                e.Completed += _SendAsyncEventArgs_Completed;
-                e.SetBuffer(data2, 0, data2.Length);
+                    byte[] data2 = AddDataId(state.Data);
+                    var e = new SocketAsyncEventArgs();
+                    e.Completed += _SendAsyncEventArgs_Completed;
+                    e.SetBuffer(data2, 0, data2.Length);
 
-                await SendAsync(e, state);
+                    await SendAsync(e, state);
+                }
             }
             catch (Exception ex)
             {
@@ -140,29 +152,36 @@ namespace SocketCommunication.SocketCore
 
         void ProcessSend(SocketAsyncEventArgs e, SendState state)
         {
-            if (state != null)
+            try
             {
-                state.IsSuccess = e.SocketError == SocketError.Success;
-                state.SendCount += 1;
-
-                if (_SocketClient.SendStateDictionary.ContainsKey(state.Id))
+                if (state != null)
                 {
-                    SendState value = null;
-                    if (state.IsSuccess) _SocketClient.SendStateDictionary.TryRemove(state.Id, out value);
-                    //30秒之内重发三次
-                    else if (state.Ticks + 30 * 1000 > DateTime.Now.Ticks && state.SendCount < 3)
+                    state.IsSuccess = e.SocketError == SocketError.Success;
+                    state.SendCount += 1;
+
+                    if (_SocketClient.SendStateDictionary.ContainsKey(state.Id))
                     {
-                        //重发
-                        _SocketClient.SendDataList.Enqueue(state);
-                        SendData();
+                        SendState value = null;
+                        if (state.IsSuccess) _SocketClient.SendStateDictionary.TryRemove(state.Id, out value);
+                        //30秒之内重发三次
+                        else if (state.Ticks + 30 * 1000 > DateTime.Now.Ticks && state.SendCount < 3)
+                        {
+                            //重发
+                            _SocketClient.SendDataList.Enqueue(state);
+                            SendData();
+                        }
                     }
                 }
-            }
 
-            if (e.SocketError != SocketError.Success)
+                if (e.SocketError != SocketError.Success)
+                {
+                    SocketException ex = new SocketException((int)e.SocketError);
+                    LoggerProxy.Exception("SocketConnect", "ProcessSend", ex);
+                    Dispose();
+                }
+            }
+            catch(Exception ex)
             {
-                Dispose();
-                SocketException ex = new SocketException((int)e.SocketError);
                 LoggerProxy.Exception("SocketConnect", "ProcessSend", ex);
             }
         }
@@ -186,6 +205,7 @@ namespace SocketCommunication.SocketCore
                 }
                 catch (Exception ex)
                 {
+                    _Socket.Disconnect(true);
                     ReConnect();
                     LoggerProxy.Exception("SocketConnect", "LoopReceiveAsync", ex);
                     break;
@@ -210,28 +230,44 @@ namespace SocketCommunication.SocketCore
 
         void ProcessReceive(SocketAsyncEventArgs e)
         {
-            if (e.SocketError == SocketError.Success)
+            try
             {
-                if (e.BytesTransferred > 0)
+                if (e.SocketError == SocketError.Success)
                 {
-                    byte[] data = new byte[e.BytesTransferred];
-                    for (int i = 0; i < e.BytesTransferred; i++) data[i] = e.Buffer[i];
-                    Receive(data);
+                    if (e.BytesTransferred > 0)
+                    {
+                        byte[] data = new byte[e.BytesTransferred];
+                        for (int i = 0; i < e.BytesTransferred; i++) data[i] = e.Buffer[i];
+                        Receive(data);
+                    }
+                }
+                else
+                {
+                    SocketException ex = new SocketException((int)e.SocketError);
+                    LoggerProxy.Exception("SocketConnect", "ProcessReceive", ex);
+
+                    _Socket.Disconnect(true);
+                    ReConnect();
                 }
             }
-            else
+            catch (Exception ex)
             {
-                ReConnect();
-                SocketException ex = new SocketException((int)e.SocketError);
                 LoggerProxy.Exception("SocketConnect", "ProcessReceive", ex);
             }
         }
 
         private void _ReceiveAsyncEventArgs_Completed(object sender, SocketAsyncEventArgs e)
         {
-            var taskSource = e.UserToken as TaskCompletionSource<bool>;
-            this.ProcessReceive(e);
-            taskSource.TrySetResult(true);
+            try
+            {
+                var taskSource = e.UserToken as TaskCompletionSource<bool>;
+                this.ProcessReceive(e);
+                taskSource.TrySetResult(true);
+            }
+            catch (Exception ex)
+            {
+                LoggerProxy.Exception("SocketConnect", "_ReceiveAsyncEventArgs_Completed", ex);
+            }
         }
 
         object _IsSendingLock = new object();
@@ -240,18 +276,27 @@ namespace SocketCommunication.SocketCore
 
         public async void SendData()
         {
-            if (!_IsSending) _IsSending = true;
-            else return;
-
-            while (_IsSending && IsConnected)
+            try
             {
-                SendState item = null;
-                if (_SocketClient.SendDataList.TryDequeue(out item))
-                {
-                    await Send(item);
-                }
+                if (!_IsSending) _IsSending = true;
+                else return;
 
-                Thread.Sleep(30);
+                while (_IsSending)
+                {
+                    _IsSending = _SocketClient.SendDataList.Count > 0;
+
+                    SendState item = null;
+                    if (_SocketClient.SendDataList.TryDequeue(out item))
+                    {
+                        await Send(item);
+                    }
+
+                    Thread.Sleep(30);
+                }
+            }
+            catch(Exception ex)
+            {
+                LoggerProxy.Exception("SocketConnect", "SendData", ex);
             }
         }
 
@@ -284,17 +329,31 @@ namespace SocketCommunication.SocketCore
 
         private void _SendAsyncEventArgs_Completed(object sender, SocketAsyncEventArgs e)
         {
-            var taskState = e.UserToken as SendTaskState;
-            this.ProcessSend(e, taskState.State);
-            taskState.TaskSource.TrySetResult(true);
+            try
+            {
+                var taskState = e.UserToken as SendTaskState;
+                this.ProcessSend(e, taskState.State);
+                taskState.TaskSource.TrySetResult(true);
+            }
+            catch(Exception ex)
+            {
+                LoggerProxy.Exception("SocketConnect", "_SendAsyncEventArgs_Completed", ex);
+            }
         }
 
         private void _ConnectAsyncEventArgs_Completed(object sender, SocketAsyncEventArgs e)
         {
-            var taskSource = e.UserToken as TaskCompletionSource<bool>;
-            this.ProcessConnect(e);
-            taskSource.TrySetResult(true);
-        }
+            try
+            {
+                var taskSource = e.UserToken as TaskCompletionSource<bool>;
+                this.ProcessConnect(e);
+                taskSource.TrySetResult(true);
+            }
+            catch (Exception ex)
+            {
+                LoggerProxy.Exception("SocketConnect", "_ConnectAsyncEventArgs_Completed", ex);
+            }
+}
 
         byte[] AddDataId(byte[] data)
         {
@@ -345,12 +404,18 @@ namespace SocketCommunication.SocketCore
 
         void ReConnect()
         {
-            if (_Socket == null) Init();
-            if (!_Socket.Connected)
+            try
             {
-                _Socket.Close();
-                _Socket.Connect(_ServicePoint);
-                SendData();
+                if (_Socket == null) Init();
+                if (!_Socket.Connected)
+                {
+                    Connect();
+                    SendData();
+                }
+            }
+            catch (Exception ex)
+            {
+                LoggerProxy.Exception("SocketConnect", "ReConnect", ex);
             }
         }
 

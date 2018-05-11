@@ -11,6 +11,8 @@ namespace SocketCommunication.SocketCore
     {
         public static Action<string> AlertAction { get; set; }
 
+        public static Guid ClientId { get; set; }
+
         public ConcurrentQueue<SendState> SendDataList { get; set; }
 
         public ConcurrentDictionary<Guid, SendState> SendStateDictionary { get; set; }
@@ -55,7 +57,7 @@ namespace SocketCommunication.SocketCore
 
             _ServiceHost = AppSettings.SocketServiceHost;
 
-            Id = Guid.NewGuid();
+            Id = ClientId == Guid.Empty ? Guid.NewGuid() : ClientId;
 
             SendDataList = new ConcurrentQueue<SendState>();
             SendStateDictionary = new ConcurrentDictionary<Guid, SendState>();

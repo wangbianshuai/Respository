@@ -37,16 +37,30 @@ namespace SocketCommunication.SocketCore
 
         private void _SendAsyncEventArgs_Completed(object sender, SocketAsyncEventArgs e)
         {
-            var taskState = e.UserToken as SendTaskState;
-            this.ProcessSend(e, taskState.State);
-            taskState.TaskSource.TrySetResult(true);
+            try
+            {
+                var taskState = e.UserToken as SendTaskState;
+                this.ProcessSend(e, taskState.State);
+                taskState.TaskSource.TrySetResult(true);
+            }
+            catch(Exception ex)
+            {
+                LoggerProxy.Exception("SocketSession", "_SendAsyncEventArgs_Completed", ex);
+            }
         }
 
         private void _ReceiveAsyncEventArgs_Completed(object sender, SocketAsyncEventArgs e)
         {
-            var taskSource = e.UserToken as TaskCompletionSource<bool>;
-            this.ProcessReceive(e);
-            taskSource.TrySetResult(true);
+            try
+            {
+                var taskSource = e.UserToken as TaskCompletionSource<bool>;
+                this.ProcessReceive(e);
+                taskSource.TrySetResult(true);
+            }
+            catch (Exception ex)
+            {
+                LoggerProxy.Exception("SocketSession", "_SendAsyncEventArgs_Completed", ex);
+            }
         }
 
         void AddMessage(string message)
@@ -60,20 +74,27 @@ namespace SocketCommunication.SocketCore
 
         public async void SendData()
         {
-            if (!_IsSending) _IsSending = true;
-            else return;
-
-            while (_IsSending && IsConnected && _SessionState != null)
+            try
             {
-                _IsSending = _SessionState.SendDataList.Count > 0;
+                if (!_IsSending) _IsSending = true;
+                else return;
 
-                SendState item = null;
-                if (_SessionState.SendDataList.TryDequeue(out item))
+                while (_IsSending && _SessionState != null)
                 {
-                    await Send(item);
-                }
+                    _IsSending = _SessionState.SendDataList.Count > 0;
 
-                Thread.Sleep(30);
+                    SendState item = null;
+                    if (_SessionState.SendDataList.TryDequeue(out item))
+                    {
+                        await Send(item);
+                    }
+
+                    Thread.Sleep(30);
+                }
+            }
+            catch(Exception ex)
+            {
+                LoggerProxy.Exception("SocketSession", "SendData", ex);
             }
         }
 
@@ -81,14 +102,17 @@ namespace SocketCommunication.SocketCore
         {
             try
             {
-                if (_SessionState != null) _SessionState.SendStateDictionary.AddOrUpdate(state.Id, state, (key, value) => state);
-   
-                byte[] data2 = AddDataId(state.Data);
-                var e = new SocketAsyncEventArgs();
-                e.Completed += _SendAsyncEventArgs_Completed;
-                e.SetBuffer(data2, 0, data2.Length);
+                if (IsConnected)
+                {
+                    if (_SessionState != null) _SessionState.SendStateDictionary.AddOrUpdate(state.Id, state, (key, value) => state);
 
-                await SendAsync(e, state);
+                    byte[] data2 = AddDataId(state.Data);
+                    var e = new SocketAsyncEventArgs();
+                    e.Completed += _SendAsyncEventArgs_Completed;
+                    e.SetBuffer(data2, 0, data2.Length);
+
+                    await SendAsync(e, state);
+                }
             }
             catch(Exception ex)
             {
@@ -124,28 +148,37 @@ namespace SocketCommunication.SocketCore
 
         void ProcessSend(SocketAsyncEventArgs e, SendState state)
         {
-            if (state != null) {
-                state.IsSuccess = e.SocketError == SocketError.Success;
-                state.SendCount += 1;
-
-                if (_SessionState != null && _SessionState.SendStateDictionary.ContainsKey(state.Id))
+            try
+            {
+                if (state != null)
                 {
-                    SendState value = null;
-                    if (state.IsSuccess) _SessionState.SendStateDictionary.TryRemove(state.Id, out value);
-                    //30秒之内重发三次
-                    else if (state.Ticks + 30 * 1000 > DateTime.Now.Ticks && state.SendCount < 3)
+                    state.IsSuccess = e.SocketError == SocketError.Success;
+                    state.SendCount += 1;
+
+                    if (_SessionState != null && _SessionState.SendStateDictionary.ContainsKey(state.Id))
                     {
-                        //重发
-                        _SessionState.SendDataList.Enqueue(state);
-                        SendData();
+                        SendState value = null;
+                        if (state.IsSuccess) _SessionState.SendStateDictionary.TryRemove(state.Id, out value);
+                        //30秒之内重发三次
+                        else if (state.Ticks + 30 * 1000 > DateTime.Now.Ticks && state.SendCount < 3)
+                        {
+                            //重发
+                            _SessionState.SendDataList.Enqueue(state);
+                            SendData();
+                        }
                     }
                 }
-            }
 
-            if (e.SocketError != SocketError.Success)
+                if (e.SocketError != SocketError.Success)
+                {
+                    SocketException ex = new SocketException((int)e.SocketError);
+                    LoggerProxy.Exception("SocketSession", "ProcessSend", ex);
+
+                    Dispose();
+                }
+            }
+            catch (Exception ex)
             {
-                Dispose();
-                SocketException ex = new SocketException((int)e.SocketError);
                 LoggerProxy.Exception("SocketSession", "ProcessSend", ex);
             }
         }
@@ -203,61 +236,68 @@ namespace SocketCommunication.SocketCore
 
         void SendToClient(byte[] data)
         {
-            byte[] idcountbs = new byte[4];
-            for (int i = 0; i < 4; i++) idcountbs[i] = data[i];
-
-            byte[] data2 = null;
-
-            List<SessionState> stateList = null;
-            int count = BitConverter.ToInt32(idcountbs, 0);
-            if (count == 0)
+            try
             {
-                data2 = new byte[data.Length - 4];
-                for (int i = 4; i < data.Length; i++) data2[i - 4] = data[i];
+                byte[] idcountbs = new byte[4];
+                for (int i = 0; i < 4; i++) idcountbs[i] = data[i];
 
-                stateList = (from a in _SocketListen.SessionList
-                             where a.Key != this.Id
-                             select a.Value).ToList();
-            }
-            else
-            {
-                byte[] idsbs = new byte[count];
-                data2 = new byte[data.Length - 4 - count];
+                byte[] data2 = null;
 
-                for (int i = 4; i < data.Length; i++)
+                List<SessionState> stateList = null;
+                int count = BitConverter.ToInt32(idcountbs, 0);
+                if (count == 0)
                 {
-                    if (i - 4 < count) idsbs[i - 4] = data[i];
-                    else data2[i - 4 - count] = data[i];
+                    data2 = new byte[data.Length - 4];
+                    for (int i = 4; i < data.Length; i++) data2[i - 4] = data[i];
+
+                    stateList = (from a in _SocketListen.SessionList
+                                 where a.Key != this.Id
+                                 select a.Value).ToList();
                 }
-
-                List<Guid> idList = new List<Guid>();
-
-                byte[] ids = null;
-                int k = 0;
-                for (int i = 0; i < idsbs.Length; i++)
+                else
                 {
-                    if (i % 16 == 0) ids = new byte[16];
-                    else
+                    byte[] idsbs = new byte[count];
+                    data2 = new byte[data.Length - 4 - count];
+
+                    for (int i = 4; i < data.Length; i++)
                     {
-                        k = i / 16 * 16;
-                        ids[i - k] = idsbs[i];
-                        if (i - k == 15) idList.Add(new Guid(ids));
+                        if (i - 4 < count) idsbs[i - 4] = data[i];
+                        else data2[i - 4 - count] = data[i];
                     }
+
+                    List<Guid> idList = new List<Guid>();
+
+                    byte[] ids = null;
+                    int k = 0;
+                    for (int i = 0; i < idsbs.Length; i++)
+                    {
+                        if (i % 16 == 0) ids = new byte[16];
+                        else
+                        {
+                            k = i / 16 * 16;
+                            ids[i - k] = idsbs[i];
+                            if (i - k == 15) idList.Add(new Guid(ids));
+                        }
+                    }
+
+                    stateList = (from a in _SocketListen.SessionList
+                                 from b in idList
+                                 where a.Key != this.Id && a.Key == b
+                                 select a.Value).ToList();
                 }
 
-                stateList = (from a in _SocketListen.SessionList
-                             from b in idList
-                             where a.Key != this.Id && a.Key == b
-                             select a.Value).ToList();
+                stateList.ForEach(s =>
+                {
+                    s.SendDataList.Enqueue(new SendState(data2));
+                    if (s.SendSession != null) s.SendSession.SendData();
+                });
+
+                AddMessage(string.Concat("收到数据字节数：", data.Length, ",发送客户端IP集合：", string.Join(",", stateList.Select(s => s.Ip))));
             }
-
-            stateList.ForEach(s =>
+            catch(Exception ex)
             {
-                s.SendDataList.Enqueue(new SendState(data2));
-                if (s.SendSession != null) s.SendSession.SendData();
-            });
-
-            AddMessage(string.Concat("收到数据字节数：", data.Length, ",发送客户端IP集合：", string.Join(",", stateList.Select(s => s.Ip))));
+                LoggerProxy.Exception("SocketSession", "SendToClient", ex);
+            }
         }
 
         static object _AddSessionLock = new object();
@@ -351,19 +391,27 @@ namespace SocketCommunication.SocketCore
 
         void ProcessReceive(SocketAsyncEventArgs e)
         {
-            if (e.SocketError == SocketError.Success)
+            try
             {
-                if (e.BytesTransferred > 0)
+                if (e.SocketError == SocketError.Success)
                 {
-                    byte[] data = new byte[e.BytesTransferred];
-                    for (int i = 0; i < e.BytesTransferred; i++) data[i] = e.Buffer[i];
-                    Receive(data);
+                    if (e.BytesTransferred > 0)
+                    {
+                        byte[] data = new byte[e.BytesTransferred];
+                        for (int i = 0; i < e.BytesTransferred; i++) data[i] = e.Buffer[i];
+                        Receive(data);
+                    }
+                }
+                else
+                {
+                    SocketException ex = new SocketException((int)e.SocketError);
+                    LoggerProxy.Exception("SocketSession", "ProcessReceive", ex);
+
+                    Dispose();
                 }
             }
-            else
+            catch(Exception ex)
             {
-                Dispose();
-                SocketException ex = new SocketException((int)e.SocketError);
                 LoggerProxy.Exception("SocketSession", "ProcessReceive", ex);
             }
         }
@@ -375,7 +423,14 @@ namespace SocketCommunication.SocketCore
         {
             get
             {
-                return _Socket != null && _Socket.Connected;
+                try
+                {
+                    return _Socket != null && _Socket.Connected;
+                }
+                catch
+                {
+                    return false;
+                }
             }
         }
 

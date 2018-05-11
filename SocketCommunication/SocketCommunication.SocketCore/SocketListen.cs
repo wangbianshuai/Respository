@@ -28,6 +28,7 @@ namespace SocketCommunication.SocketCore
             _Socket.Listen(backlog);
             _Socket.SendTimeout = 3000;
             _Socket.ReceiveTimeout = 3000;
+            _Socket.Blocking = false;
             _Socket.SendBufferSize = AppSettings.BufferSize;
             _Socket.ReceiveBufferSize = AppSettings.BufferSize;
 
@@ -36,9 +37,16 @@ namespace SocketCommunication.SocketCore
 
         private void _AcceptAsyncEventArgs_Completed(object sender, SocketAsyncEventArgs e)
         {
-            var taskSource = e.UserToken as TaskCompletionSource<bool>;
-            this.ProcessAccept(e);
-            taskSource.TrySetResult(true);
+            try
+            {
+                var taskSource = e.UserToken as TaskCompletionSource<bool>;
+                this.ProcessAccept(e);
+                taskSource.TrySetResult(true);
+            }
+            catch(Exception ex)
+            {
+                LoggerProxy.Exception("SocketListen", "_AcceptAsyncEventArgs_Completed", ex);
+            }
         }
 
         /// <summary>
@@ -86,13 +94,20 @@ namespace SocketCommunication.SocketCore
 
         private void ProcessAccept(SocketAsyncEventArgs e)
         {
-            if (e.SocketError == SocketError.Success)
+            try
             {
-                new SocketSession(e.AcceptSocket, this);
+                if (e.SocketError == SocketError.Success)
+                {
+                    new SocketSession(e.AcceptSocket, this);
+                }
+                else
+                {
+                    LoggerProxy.Exception("SocketListen", "ProcessAccept", new SocketException((int)e.SocketError));
+                }
             }
-            else
+            catch (Exception ex)
             {
-                LoggerProxy.Exception("SocketListen", "ProcessAccept", new SocketException((int)e.SocketError));
+                LoggerProxy.Exception("SocketListen", "ProcessAccept", ex);
             }
         }
 
