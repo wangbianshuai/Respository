@@ -1,5 +1,5 @@
 import React from "react"
-import { Modal, Button } from "antd"
+import { Modal, Button } from "antd-mobile"
 import * as Common from "../utils/Common"
 import DataGridView from "../components/DataGridView"
 import Index from "./Index"

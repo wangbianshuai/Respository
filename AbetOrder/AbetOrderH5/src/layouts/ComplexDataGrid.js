@@ -1,5 +1,5 @@
 import React from "react"
-import { Card } from "antd"
+import { Flex } from "antd-mobile"
 import DataGridView from "../components/DataGridView"
 import Button2 from "../controls/Button2"
 import Index from "./Index"
@@ -155,10 +155,10 @@ export default class ComplexDataGrid extends Index {
         }
         else {
             return (
-                <Card title={this.props.Property.Title} bordered={false}>
+                <Flex title={this.props.Property.Title} bordered={false}>
                     {this.RenderDataView()}
                     {this.RenderAddPanel()}
-                </Card>
+                </Flex>
             );
         }
     }

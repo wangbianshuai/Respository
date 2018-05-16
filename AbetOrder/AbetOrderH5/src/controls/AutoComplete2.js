@@ -1,7 +1,7 @@
 import React from "react"
 import * as Common from "../utils/Common"
 import Index from "./Index"
-import { AutoComplete } from "antd"
+import { InputItem } from "antd-mobile"
 
 export default class AutoComplete2 extends Index {
     constructor(props) {
@@ -39,7 +39,7 @@ export default class AutoComplete2 extends Index {
 
         const value = Common.IsNullOrEmpty(this.state.Value) ? "" : this.state.Value
 
-        return (<AutoComplete placeholder={Property.PlaceHolder}
+        return (<InputItem placeholder={Property.PlaceHolder}
             style={{ width: width }}
             onChange={this.OnChange.bind(this)}
             maxLength={Property.MaxLength}

@@ -1,6 +1,6 @@
 import React, { Component } from "react"
 import { connect } from "dva"
-import { message, Modal } from "antd"
+import { Toast, Modal } from "antd-mobile"
 import * as Common from "../utils/Common"
 import IndexModel from "../models/Index"
 import Panel from "../components/Panel"
@@ -97,8 +97,8 @@ class Index extends Component {
     }
 
     SetLoading(nextProps) {
-        if (nextProps.Loading) message.loading("加载中……", 0)
-        else if (nextProps.Loading === false) message.destroy()
+        if (nextProps.Loading) Toast.loading("加载中……", 0)
+        else if (nextProps.Loading === false) Toast.hide()
     }
 
     SetResponseMessage(d, stateName) {
@@ -128,7 +128,7 @@ class Index extends Component {
     }
 
     ShowMessage(msg) {
-        message.warning(msg, 3)
+        Toast.fail(msg, 3)
     }
 
     ShowSuccess(msg) {

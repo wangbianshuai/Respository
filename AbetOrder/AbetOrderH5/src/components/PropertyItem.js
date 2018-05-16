@@ -1,7 +1,7 @@
 import React from "react"
 import * as Common from "../utils/Common"
 import Index from "./Index"
-import { Form } from "antd"
+import { Flex } from "antd-mobile"
 
 export default class PropertyItem extends Index {
     constructor(props) {
@@ -17,12 +17,12 @@ export default class PropertyItem extends Index {
         const wrapperCol = Property.WrapperCol || 18;
 
         if (Common.IsNullOrEmpty(Property.Label)) {
-            return (<Form.Item>{this.GetReactComponent(Property)}</Form.Item>)
+            return (<Flex>{this.GetReactComponent(Property)}</Flex>)
         }
         else {
-            return (<Form.Item label={Property.Label}
+            return (<Flex label={Property.Label}
                 labelCol={{ span: labelCol }} required={Property.IsEdit && !Property.IsNullable}
-                wrapperCol={{ span: wrapperCol }} >{this.GetReactComponent(Property)}</Form.Item>)
+                wrapperCol={{ span: wrapperCol }} >{this.GetReactComponent(Property)}</Flex>)
         }
     }
 }

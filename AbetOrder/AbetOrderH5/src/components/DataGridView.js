@@ -1,7 +1,7 @@
 import React from "react"
 import Index from "./Index"
-import { Table, Alert } from "antd"
-const { Column } = Table;
+import { List, Toast } from "antd-mobile"
+const { Item } = List;
 
 export default class DataGridView extends Index {
     constructor(props) {
@@ -11,9 +11,9 @@ export default class DataGridView extends Index {
     }
 
     GetColumn(p) {
-        if (p.IsData === false) return (<Column title={p.Label} key={p.Name} render={p.Render} width={p.ColumnWidth} fixed={p.Fixed} />)
+        if (p.IsData === false) return (<Item title={p.Label} key={p.Name} render={p.Render} width={p.ColumnWidth} fixed={p.Fixed} />)
 
-        return (<Column title={p.Label} dataIndex={p.Name} key={p.Name} render={p.Render} width={p.ColumnWidth} fixed={p.Fixed} />)
+        return (<Item title={p.Label} dataIndex={p.Name} key={p.Name} render={p.Render} width={p.ColumnWidth} fixed={p.Fixed} />)
     }
 
     GetPagination() {
@@ -36,7 +36,7 @@ export default class DataGridView extends Index {
     RenderGroupByInfoAlert() {
         if (!this.props.GroupByInfo || !this.props.GroupByInfoHtml) return null;
 
-        return <Alert message={this.RenderGroupByInfo()} type="info" showIcon={true} style={{ marginBottom: "8px" }} />
+        return <Toast message={this.RenderGroupByInfo()} type="info" showIcon={true} style={{ marginBottom: "8px" }} />
     }
 
     RenderGroupByInfo() {
@@ -52,10 +52,10 @@ export default class DataGridView extends Index {
         return (
             <div>
                 {this.RenderGroupByInfoAlert()}
-                <Table dataSource={this.props.DataList} loading={this.props.IsLoading} scroll={this.props.TableScroll}
+                <List dataSource={this.props.DataList} loading={this.props.IsLoading} scroll={this.props.TableScroll}
                     pagination={this.GetPagination()} expandedRowRender={this.props.ExpandedRowRender}>
                     {this.props.DataProperties.map(p => this.GetColumn(p))}
-                </Table>
+                </List>
             </div>
         );
     }

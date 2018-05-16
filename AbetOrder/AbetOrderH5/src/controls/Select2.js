@@ -1,8 +1,7 @@
 import React from "react"
 import * as Common from "../utils/Common"
 import Index from "./Index"
-import { Select, Input } from "antd"
-const Option = Select.Option;
+import {  InputItem } from "antd-mobile";
 
 export default class Select2 extends Index {
     constructor(props) {
@@ -28,7 +27,7 @@ export default class Select2 extends Index {
             value = d[this.ValueName]
 
             if (this.JudgePush(d, parentValue)) {
-                options.push(<Option value={value} key={value}>{d[this.TextName]}</Option>)
+                options.push(<option value={value} key={value}>{d[this.TextName]}</option>)
                 this.ValueList.push(value);
             }
         });
@@ -69,7 +68,7 @@ export default class Select2 extends Index {
         if (this.state.IsReadonly) {
             const text = this.GetSelectText();
 
-            return <Input readOnly={this.state.IsReadonly}
+            return <InputItem readOnly={this.state.IsReadonly}
                 type="text"
                 placeholder={Property.PlaceHolder}
                 style={{ width: width }}
@@ -78,7 +77,7 @@ export default class Select2 extends Index {
 
         const value = this.GetSelectValue()
 
-        return (<Select disabled={this.state.Disabled}
+        return (<select disabled={this.state.Disabled}
             style={{ width: width }}
             value={value}
             onChange={this.OnChange.bind(this)}
@@ -86,6 +85,6 @@ export default class Select2 extends Index {
             mode={Property.Mode}
             maxTagCount={Property.MaxTagCount}
             placeholder={Property.PlaceHolder}
-            defaultValue={Property.DefaultValue} >{this.state.Options}</Select>)
+            defaultValue={Property.DefaultValue} >{this.state.Options}</select>)
     }
 }

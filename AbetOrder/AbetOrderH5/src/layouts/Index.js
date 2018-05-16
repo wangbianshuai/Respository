@@ -1,5 +1,5 @@
 import React, { Component } from "react"
-import { Row, Col, Divider, Tooltip } from "antd"
+import { Flex} from "antd-mobile"
 import * as Common from "../utils/Common"
 import PropertyItem from "../components/PropertyItem"
 import AButton from "../controls/AButton"
@@ -19,7 +19,7 @@ export default class Index extends Component {
         const list = []
 
         for (let i = 0; i < actionList.length; i++) {
-            if (i > 0) list.push(<Divider type="vertical" key={i} />)
+            if (i > 0) list.push(<Flex type="vertical" key={i} />)
             if (actionList[i].IsConfrim) list.push(<Popconfirm2 Property={actionList[i]} Page={this.props.Page} View={this.props.Property} Params={record} key={actionList[i].Name} />)
             else if (actionList[i].IsToPage) list.push(this.GetLinkAction(actionList[i], record));
             else list.push(<AButton Property={actionList[i]} Page={this.props.Page} View={this.props.Property} Params={record} key={actionList[i].Name} ClickAction={actionList[i].ClickAction} />)
@@ -76,11 +76,11 @@ export default class Index extends Component {
     }
 
     RendRowCols(view, rowId, colList) {
-        return (<Row key={rowId} type="flex" justify="start" align="top" gutter={16}>{colList.map(c => this.RenderColumn(view, c))}</Row>);
+        return (<Flex key={rowId} type="flex" justify="start" align="top" gutter={16}>{colList.map(c => this.RenderColumn(view, c))}</Flex>);
     }
 
     RenderColumn(view, col) {
-        return (<Col key={col.ColId} span={col.ColSpan}>{this.GetPropertyItem(view, col)}</Col>);
+        return (<Flex key={col.ColId} span={col.ColSpan}>{this.GetPropertyItem(view, col)}</Flex>);
     }
 
     GetPropertyItem(view, p) {
@@ -159,9 +159,9 @@ export default class Index extends Component {
         else if (p.IsTooltip && p.Render === undefined) {
             p.Render = (text, record) => {
                 if (!Common.IsNullOrEmpty(text)) {
-                    return (<Tooltip title={text}>
+                    return (<Flex title={text}>
                         <span className={styles.TooltipSpan} style={{ width: p.ColumnWidth }}>{text}</span>
-                    </Tooltip>)
+                    </Flex>)
                 }
                 return text;
             };

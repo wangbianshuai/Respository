@@ -1,7 +1,7 @@
 import React from "react"
 import * as Common from "../utils/Common"
 import Index from "./Index"
-import { Radio, Input } from "antd"
+import { Radio, InputItem } from "antd-mobile"
 const RadioGroup = Radio.Group
 const RadioButton = Radio.Button;
 
@@ -51,7 +51,7 @@ export default class Radio2 extends Index {
         if (this.state.IsReadonly) {
             const text = this.GetSelectText(value);
 
-            return <Input readOnly={this.state.IsReadonly}
+            return <InputItem readOnly={this.state.IsReadonly}
                 type="text"
                 value={text} />
         }

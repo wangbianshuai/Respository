@@ -1,6 +1,6 @@
 import React from "react"
 import Index from "./Index"
-import { Button } from "antd"
+import { Button } from "antd-mobile"
 
 export default class Button2 extends Index {
     constructor(props) {

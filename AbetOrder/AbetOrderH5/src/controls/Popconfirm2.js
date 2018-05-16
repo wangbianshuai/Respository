@@ -1,6 +1,6 @@
 import React from "react"
 import Index from "./Index"
-import { Popconfirm } from "antd"
+import { Modal } from "antd-mobile"
 
 export default class Popconfirm2 extends Index {
     constructor(props) {
@@ -19,9 +19,9 @@ export default class Popconfirm2 extends Index {
         const text = Property.Label || Property.Text
 
         return (
-            <Popconfirm title={Property.Title} onConfirm={this.ConfirmAction.bind(this)} okText="确定" cancelText="取消">
+            <Modal title={Property.Title} onConfirm={this.ConfirmAction.bind(this)} okText="确定" cancelText="取消">
                 <a>{text}</a>
-            </Popconfirm>
+            </Modal>
         )
     }
 }

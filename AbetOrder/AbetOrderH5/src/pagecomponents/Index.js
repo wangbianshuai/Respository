@@ -1,6 +1,6 @@
 import { Component } from "react"
 import * as Common from "../utils/Common"
-import { Row, Col } from "antd"
+import { Flex } from "antd-mobile"
 import PropertyItem from "../components/PropertyItem";
 
 export default class Index extends Component {
@@ -104,11 +104,11 @@ export default class Index extends Component {
     }
 
     RendRowCols(view, rowId, colList) {
-        return (<Row key={rowId} type="flex" justify="start" align="top" gutter={16}>{colList.map(c => this.RenderColumn(view, c))}</Row>);
+        return (<Flex key={rowId} type="flex" justify="start" align="top" gutter={16}>{colList.map(c => this.RenderColumn(view, c))}</Flex>);
     }
 
     RenderColumn(view, col) {
-        return (<Col key={col.ColId} span={col.ColSpan}>{this.GetPropertyItem(view, col)}</Col>);
+        return (<Flex key={col.ColId} span={col.ColSpan}>{this.GetPropertyItem(view, col)}</Flex>);
     }
 
     GetPropertyItem(view, p) {

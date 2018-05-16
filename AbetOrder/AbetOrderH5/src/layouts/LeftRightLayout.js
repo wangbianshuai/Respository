@@ -1,6 +1,6 @@
 import React, { Component } from "react"
 import * as Common from "../utils/Common"
-import { Layout, Menu, Icon, Form, Dropdown, Avatar, Modal, Input, message } from 'antd';
+import { Modal, Flex, InputItem, Toast } from 'antd-mobile';
 import styles from "../styles/LeftRightLayout.css"
 import { Link } from "dva/router";
 import * as Request from "../utils/Request"
@@ -130,17 +130,17 @@ export default class LeftRightLayout extends Component {
         Request.Post(url, data).then(res => {
             if (res.IsSuccess === false) this.ShowMessage(res.Message);
             else {
-                message.success("修改成功！", 1.5, () => this.CloseModal());
+                Toast.success("修改成功！", 1.5, () => this.CloseModal());
             }
         });
     }
 
     ShowMessage(msg) {
-        message.warning(msg, 3)
+        Toast.warning(msg, 3)
     }
 
     ShowSuccess(msg) {
-        message.success(msg, 3);
+        Toast.success(msg, 3);
     }
 
     SelectMenuClick(item) {
@@ -148,11 +148,11 @@ export default class LeftRightLayout extends Component {
     }
 
     RenderUserRightMenuList() {
-        return (<Menu selectedKeys={[]} className={styles.UserRightMenu} onClick={this.SelectMenuClick.bind(this)}>
-            <Menu.Item key="ChangePassword" className={styles.UserRightMenuItem} ><Icon type="setting" /><span>修改密码</span></Menu.Item>
-            <Menu.Divider />
-            <Menu.Item key="logout" className={styles.UserRightMenuItem}><Link to="/Login"><Icon type="logout" /><span>退出登录</span></Link></Menu.Item>
-        </Menu>)
+        return (<Flex selectedKeys={[]} className={styles.UserRightMenu} onClick={this.SelectMenuClick.bind(this)}>
+            <Flex key="ChangePassword" className={styles.UserRightMenuItem} ><Flex type="setting" /><span>修改密码</span></Flex>
+            <Flex />
+            <Flex key="logout" className={styles.UserRightMenuItem}><Link to="/Login"><Flex type="logout" /><span>退出登录</span></Link></Flex>
+        </Flex>)
     }
 
     CloseModal() {
@@ -166,91 +166,89 @@ export default class LeftRightLayout extends Component {
     }
 
     render() {
-        const { Header, Sider, Content } = Layout;
-
         const selectedKeys = this.GetCurrentMenuSelectedKeys();
 
         const pageName = selectedKeys.length > 0 ? selectedKeys[0] : "";
 
-        return (<Layout style={{ minHeight: "100%" }}>
-            <Sider trigger={null}
+        return (<Flex style={{ minHeight: "100%" }}>
+            <Flex trigger={null}
                 collapsible
                 collapsed={this.state.collapsed}>
                 <div className={styles.logo} >
                     <span>{this.state.Name}</span>
                 </div>
-                <Menu theme="dark" mode="inline" selectedKeys={selectedKeys}>
+                <Flex theme="dark" mode="inline" selectedKeys={selectedKeys}>
                     {
                         this.MenuList.map(m => (
-                            <Menu.Item key={m.PageName}>
+                            <Flex key={m.PageName}>
                                 {
                                     Common.IsEquals(m.PageName, pageName, true) ?
                                         <div>
-                                            <Icon type={m.IconType} />
+                                            <Flex type={m.IconType} />
                                             <span>{m.MenuName}</span>
                                         </div> :
                                         <Link to={"/" + m.PageName}>
-                                            <Icon type={m.IconType} />
+                                            <Flex type={m.IconType} />
                                             <span>{m.MenuName}</span>
                                         </Link>
                                 }
-                            </Menu.Item>
+                            </Flex>
                         ))
                     }
-                </Menu>
+                </Flex>
                 <div style={{ height: 30 }}></div>
-            </Sider>
-            <Layout>
-                <Header style={{ background: '#fff', padding: 0, margin: 0 }}>
-                    <Icon
+            </Flex>
+            <Flex>
+                <Flex style={{ background: '#fff', padding: 0, margin: 0 }}>
+                    <Flex
                         className={styles.trigger}
                         type={this.state.collapsed ? 'menu-unfold' : 'menu-fold'}
                         onClick={this.toggle}
                     />
                     {this.CurrentUser.LoginName ? (
-                        <Dropdown overlay={this.RenderUserRightMenuList()} >
+                        <Flex overlay={this.RenderUserRightMenuList()} >
                             <span className={styles.Dropdown}>
-                                <Avatar size="small" src={require("../assets/UserAvatar.png")} className={styles.avatar} />
+                                <Flex size="small" src={require("../assets/UserAvatar.png")} className={styles.avatar} />
                                 {this.CurrentUser.LoginName}
                             </span>
-                        </Dropdown>
+                        </Flex>
                     ) : null}
-                </Header>
-                <Content style={{ margin: '24px 16px', padding: 24, background: '#fff', minHeight: 450 }}>
+                </Flex>
+                <Flex style={{ margin: '24px 16px', padding: 24, background: '#fff', minHeight: 450 }}>
                     <SwitchRoute MenuList={this.MenuList} App={this.props.App} PageName={pageName} href={window.location.href} />
-                </Content>
+                </Flex>
                 <Modal
                     title="修改登录密码"
                     visible={this.state.IsChangePassword}
                     onOk={this.ChangeLoginPassword.bind(this)}
                     onCancel={this.CloseModal.bind(this)}
                 >
-                    <Form.Item
+                    <Flex
                         labelCol={{ span: 5 }}
                         wrapperCol={{ span: 15 }}
                         required={true}
                         label="原密码"
                     >
-                        <Input placeholder="请输入原密码" type="password" onChange={this.OnChange.bind(this, "OldPassword")} value={this.state.OldPassword} />
-                    </Form.Item>
-                    <Form.Item
+                        <InputItem placeholder="请输入原密码" type="password" onChange={this.OnChange.bind(this, "OldPassword")} value={this.state.OldPassword} />
+                    </Flex>
+                    <Flex
                         labelCol={{ span: 5 }}
                         wrapperCol={{ span: 15 }}
                         required={true}
                         label="新密码"
                     >
-                        <Input placeholder="请输入新密码" type="password" onChange={this.OnChange.bind(this, "NewPassword")} value={this.state.NewPassword} />
-                    </Form.Item>
-                    <Form.Item
+                        <InputItem placeholder="请输入新密码" type="password" onChange={this.OnChange.bind(this, "NewPassword")} value={this.state.NewPassword} />
+                    </Flex>
+                    <Flex
                         labelCol={{ span: 5 }}
                         wrapperCol={{ span: 15 }}
                         required={true}
                         label="确认新密码"
                     >
-                        <Input placeholder="请再次输入新密码" type="password" onChange={this.OnChange.bind(this, "AgainPassword")} value={this.state.AgainPassword} />
-                    </Form.Item>
+                        <InputItem placeholder="请再次输入新密码" type="password" onChange={this.OnChange.bind(this, "AgainPassword")} value={this.state.AgainPassword} />
+                    </Flex>
                 </Modal>
-            </Layout>
-        </Layout>)
+            </Flex>
+        </Flex>)
     }
 }

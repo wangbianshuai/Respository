@@ -1,5 +1,5 @@
 import React from "react"
-import { Card } from "antd"
+import { Flex } from "antd-mobile"
 import * as Common from "../utils/Common"
 import ComplexDataGrid from "./ComplexDataGrid"
 import Index from "./Index"
@@ -35,7 +35,7 @@ export default class EntityEditPage extends Index {
 
     RenderEditView() {
         if (!Common.IsNullOrEmpty(this.props.Property.EditView.Title)) {
-            return <Card title={this.props.Property.EditView.Title} bordered={false}>{this.RenderView(this.EditView)}</Card>
+            return <Flex title={this.props.Property.EditView.Title} bordered={false}>{this.RenderView(this.EditView)}</Flex>
         }
         else return this.RenderView(this.EditView)
     }

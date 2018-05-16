@@ -1,6 +1,6 @@
 import React from "react"
 import Index from "./Index"
-import { Modal, Button } from "antd"
+import { Modal, Button } from "antd-mobile"
 
 export default class ModalDialog extends Index {
     constructor(props) {

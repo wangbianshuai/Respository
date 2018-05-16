@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Form, Input, Button, Icon, message } from 'antd';
+import { Flex, List, InputItem, Button, Toast } from "antd-mobile";
 import styles from '../styles/Login.css';
 import * as Request from "../utils/Request";
 import ComputeMd5 from "../utils/Md5";
@@ -25,12 +25,12 @@ class Login extends Component {
     }
 
     ShowMessage(msg) {
-        message.warning(msg, 3)
+        Toast.info(msg, 3)
     }
 
-    OnChange(name, e) {
+    OnChange(name, value) {
         const data = {};
-        data[name] = e.target.value;
+        data[name] = value;
         this.setState(data)
     }
 
@@ -69,22 +69,20 @@ class Login extends Component {
 
     render() {
         return (
-            <div className={styles.DivContainer}>
-                <div className={styles.DivLogin}>
-                    <Form.Item>
-                        <div className={styles.DivHeader}><span>Abet Order</span></div>
-                    </Form.Item>
-                    <Form.Item>
-                        <Input size="large" onPressEnter={this.OnLogin.bind(this)} prefix={<Icon type="user" className={styles.prefixIcon} />} placeholder="登录名" onChange={this.OnChange.bind(this, "LoginName")} value={this.state.LoginName} />
-                    </Form.Item>
-                    <Form.Item>
-                        <Input size="large" onPressEnter={this.OnLogin.bind(this)} prefix={<Icon type="lock" className={styles.prefixIcon} />} type="password" placeholder="密码" onChange={this.OnChange.bind(this, "LoginPassword")} value={this.state.LoginPassword} />
-                    </Form.Item>
-                    <Form.Item>
-                        <Button size="large" style={{ width: "100%" }} loading={this.state.IsLogining} type="primary" onClick={this.OnLogin.bind(this)}>登录</Button>
-                    </Form.Item>
-                </div>
-            </div>
+            <Flex style={{ width: "100%", height: "100%" }} className={styles.DivContainer}>
+                <Flex.Item>
+                    <List>
+                        <List.Item>
+                            <div className={styles.DivHeader}><span>Abet Order</span></div>
+                        </List.Item>
+                        <InputItem size="large" placeholder="登录名" onChange={this.OnChange.bind(this, "LoginName")} value={this.state.LoginName} />
+                        <InputItem size="large" type="password" placeholder="密码" onChange={this.OnChange.bind(this, "LoginPassword")} value={this.state.LoginPassword} />
+                        <List.Item>
+                            <Button size="large" style={{ width: "100%" }} loading={this.state.IsLogining} type="primary" onClick={this.OnLogin.bind(this)}>登录</Button>
+                        </List.Item>
+                    </List>
+                </Flex.Item>
+            </Flex>
         );
     }
 }

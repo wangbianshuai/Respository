@@ -1,8 +1,7 @@
 import React from "react"
 import * as Common from "../utils/Common"
 import Index from "./Index"
-import { Input, InputNumber } from "antd";
-const { TextArea } = Input;
+import { InputItem } from "antd-mobile";
 
 export default class TextBox2 extends Index {
     constructor(props) {
@@ -36,7 +35,7 @@ export default class TextBox2 extends Index {
         const value = Common.IsNullOrEmpty(this.state.Value) ? "" : this.state.Value
 
         if (Property.ControlType === "TextArea") {
-            return (<TextArea rows={rows}
+            return (<InputItem rows={rows}
                 placeholder={Property.PlaceHolder}
                 onChange={this.OnChange.bind(this)}
                 maxLength={Property.MaxLength}
@@ -48,7 +47,7 @@ export default class TextBox2 extends Index {
         if (Property.ControlType === "InputNumber" && !this.state.IsReadonly) {
             const width = Property.Width || "100%"
 
-            return (<InputNumber placeholder={Property.PlaceHolder}
+            return (<InputItem placeholder={Property.PlaceHolder}
                 style={{ width: width }}
                 onChange={this.InputNumberChange.bind(this)}
                 maxLength={Property.MaxLength}
@@ -63,7 +62,7 @@ export default class TextBox2 extends Index {
         const type = this.state.IsReadonly ? "text" : (Property.ControlType || "text");
 
         return (
-            <Input placeholder={Property.PlaceHolder}
+            <InputItem placeholder={Property.PlaceHolder}
                 onChange={this.OnChange.bind(this)}
                 maxLength={Property.MaxLength}
                 readOnly={this.state.IsReadonly}

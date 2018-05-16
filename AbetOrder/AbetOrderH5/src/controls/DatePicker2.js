@@ -1,8 +1,7 @@
 import React from "react"
 import * as Common from "../utils/Common"
 import Index from "./Index"
-import { DatePicker, Input } from "antd"
-import moment from "moment"
+import { DatePicker, InputItem } from "antd-mobile"
 
 export default class DatePicker2 extends Index {
     constructor(props) {
@@ -28,8 +27,8 @@ export default class DatePicker2 extends Index {
 
     GetMomentValue(value) {
         if (!Common.IsNullOrEmpty(value)) {
-            if (this.Property.IsShowTime) value = moment(value, "YYYY-MM-DD HH:mm:ss")
-            else value = moment(value, "YYYY-MM-DD")
+            //if (this.Property.IsShowTime) value = moment(value, "YYYY-MM-DD HH:mm:ss")
+            //else value = moment(value, "YYYY-MM-DD")
         }
 
         return Common.IsNullOrEmpty(value) ? null : value;
@@ -45,7 +44,7 @@ export default class DatePicker2 extends Index {
         if (this.state.IsReadonly) {
             if (!Property.IsShowTime && !Common.IsNullOrEmpty(value)) value = value.substr(0, 10);
 
-            return <Input readOnly={this.state.IsReadonly}
+            return <InputItem readOnly={this.state.IsReadonly}
                 type="text"
                 style={{ width: width }}
                 value={value} />

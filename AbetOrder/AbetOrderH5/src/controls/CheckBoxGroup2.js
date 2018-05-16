@@ -1,7 +1,7 @@
 import React from "react"
 import * as Common from "../utils/Common"
 import Index from "./Index"
-import { Checkbox } from "antd"
+import { Checkbox } from "antd-mobile"
 
 export default class CheckBoxGroup2 extends Index {
     constructor(props) {
