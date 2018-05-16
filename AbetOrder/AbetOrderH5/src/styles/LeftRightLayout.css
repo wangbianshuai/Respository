@@ -1,0 +1,55 @@
+ .trigger {
+    font-size: 18px;
+    line-height: 64px;
+    padding: 0 16px;
+    cursor: pointer;
+    transition: color .3s;
+  }
+  
+ .trigger:hover {
+    color: #108ee9;
+  }
+  
+ .logo {
+    height: 32px;
+    background: #333;
+    border-radius: 6px;
+    margin: 16px;
+    text-align: center;
+  }
+
+  .logo span{
+    line-height: 32px;
+    color: #ffffff;
+  }
+
+  .UserRightMenu{
+    width: 160px;
+  }
+
+  .Dropdown{
+float: right;
+margin-right: 20px;
+padding: 0px 12px 0 12px;
+  }
+
+  .Dropdown:hover{
+    background: #e6f7ff;
+  }
+
+  .UserRightMenuItem{
+    height: 40px;
+    line-height: 40px;
+    display:flex;
+    align-items: center;
+  }
+
+  .UserRightMenuItem span{
+    margin-left: 20px;
+  }
+
+  .avatar {
+    margin: 20px 8px 20px 0;
+    background: rgba(255, 255, 255, .85);
+    vertical-align: middle;
+  }

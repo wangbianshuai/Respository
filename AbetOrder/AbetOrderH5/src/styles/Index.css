@@ -1,0 +1,35 @@
+.DivLabel2{
+    line-height: 32px;
+    padding-right: 8px;
+    display:inline-block;
+    vertical-align: middle;
+    text-align: right;
+}
+
+.DivLabel2 label{
+color:rgba(0,0,0,.85);
+touch-action: manipulation;
+font-size: 14px;
+}
+
+.DivTextBox2{
+    display:inline-block;
+    vertical-align: middle;
+    line-height: 32px;
+}
+
+input:read-only{
+    color: #1890ff;
+}
+
+.TooltipSpan {
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+    display:block;
+  }
+
+  .ColorPicker{
+      margin-top: 5px;
+  }
+  
