@@ -19,7 +19,7 @@ export default class Index extends Component {
         const list = []
 
         for (let i = 0; i < actionList.length; i++) {
-            if (i > 0) list.push(<Flex type="vertical" key={i} />)
+            if (i > 0) list.push(<div key={i}>|</div>)
             if (actionList[i].IsConfrim) list.push(<Popconfirm2 Property={actionList[i]} Page={this.props.Page} View={this.props.Property} Params={record} key={actionList[i].Name} />)
             else if (actionList[i].IsToPage) list.push(this.GetLinkAction(actionList[i], record));
             else list.push(<AButton Property={actionList[i]} Page={this.props.Page} View={this.props.Property} Params={record} key={actionList[i].Name} ClickAction={actionList[i].ClickAction} />)
@@ -80,7 +80,7 @@ export default class Index extends Component {
     }
 
     RenderColumn(view, col) {
-        return (<Flex key={col.ColId} span={col.ColSpan}>{this.GetPropertyItem(view, col)}</Flex>);
+        return (<Flex.Item key={col.ColId} span={col.ColSpan}>{this.GetPropertyItem(view, col)}</Flex.Item>);
     }
 
     GetPropertyItem(view, p) {
@@ -159,9 +159,9 @@ export default class Index extends Component {
         else if (p.IsTooltip && p.Render === undefined) {
             p.Render = (text, record) => {
                 if (!Common.IsNullOrEmpty(text)) {
-                    return (<Flex title={text}>
+                    return (<div title={text}>
                         <span className={styles.TooltipSpan} style={{ width: p.ColumnWidth }}>{text}</span>
-                    </Flex>)
+                    </div>)
                 }
                 return text;
             };
