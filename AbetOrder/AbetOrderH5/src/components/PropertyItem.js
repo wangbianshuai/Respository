@@ -11,18 +11,13 @@ export default class PropertyItem extends Index {
     }
 
     render() {
-        const { Property } = this.props
-
-        const labelCol = Property.LabelCol || 6;
-        const wrapperCol = Property.WrapperCol || 18;
+        const { Property } = this.props;
 
         if (Common.IsNullOrEmpty(Property.Label)) {
             return (<Flex>{this.GetReactComponent(Property)}</Flex>)
         }
         else {
-            return (<Flex label={Property.Label}
-                labelCol={{ span: labelCol }} required={Property.IsEdit && !Property.IsNullable}
-                wrapperCol={{ span: wrapperCol }} >{this.GetReactComponent(Property)}</Flex>)
+            return (<Flex>{this.GetReactComponent(Property)}</Flex>)
         }
     }
 }

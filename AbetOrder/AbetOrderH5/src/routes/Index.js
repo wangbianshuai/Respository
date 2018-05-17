@@ -22,9 +22,13 @@ class Index extends Component {
         super(props)
 
         this.Id = Common.CreateGuid();
+
+        this.state = {};
+
+        this.componentWillMount2();
     }
 
-    componentWillMount() {
+    componentWillMount2() {
         this.props.InitConfigState()
 
         this.EventActions = {};
@@ -83,7 +87,7 @@ class Index extends Component {
         this.GetPageConfig()
     }
 
-    componentWillReceiveProps(nextProps) {
+    componentWillReceiveProps2(nextProps) {
         this.SetLoading(nextProps)
         this.SetPageConfig(nextProps)
         this.PropsChanged(nextProps)
@@ -195,7 +199,13 @@ class Index extends Component {
         this.props.PageConfig && this.props.PageConfig.ActionList && this.props.InitState(this.props.PageConfig.Name, this.props.PageConfig.ActionList)
     }
 
+    static getDerivedStateFromProps(nextProps, prevState) {
+        return { ReceivePropsId: Common.CreateGuid() };
+    }
+
     shouldComponentUpdate(nextProps, nextState) {
+        nextState.ReceivePropsId !== this.state.ReceivePropsId && this.componentWillReceiveProps2(nextProps);
+
         if (!this.IsPageLoad) return true;
 
         let blChangedProps = false;

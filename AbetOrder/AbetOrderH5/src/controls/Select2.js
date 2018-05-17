@@ -81,10 +81,6 @@ export default class Select2 extends Index {
             style={{ width: width }}
             value={value}
             onChange={this.OnChange.bind(this)}
-            allowClear={Property.AllowClear}
-            mode={Property.Mode}
-            maxTagCount={Property.MaxTagCount}
-            placeholder={Property.PlaceHolder}
             defaultValue={Property.DefaultValue} >{this.state.Options}</select>)
     }
 }

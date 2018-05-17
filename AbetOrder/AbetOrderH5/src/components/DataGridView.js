@@ -52,9 +52,7 @@ export default class DataGridView extends Index {
         return (
             <div>
                 {this.RenderGroupByInfoAlert()}
-                <List dataSource={this.props.DataList} loading={this.props.IsLoading} scroll={this.props.TableScroll}
-                    pagination={this.GetPagination()} expandedRowRender={this.props.ExpandedRowRender}>
-                    {this.props.DataProperties.map(p => this.GetColumn(p))}
+                <List>
                 </List>
             </div>
         );

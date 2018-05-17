@@ -16,9 +16,11 @@ class Login extends Component {
             LoginName: "",
             LoginPassword: ""
         }
+
+        this.componentWillMount2();
     }
 
-    componentWillMount() {
+    componentWillMount2() {
         Common.SetStorage("LoginUserInfo", "")
         Common.SetStorage("Token", "")
         Common.SetStorage("LoginUserId", "");
@@ -61,7 +63,7 @@ class Login extends Component {
                 Common.SetStorage("Token", res.User.Token);
                 Common.SetStorage("LoginUserId", res.User.UserId);
                 Common.SetStorage("LoginUserInfo", JSON.stringify(res.User));
-                const pageUrl = res.User.DataRight === 2 ? "/ProcessOrderList" : "/OrderList"
+                const pageUrl = "/DealingsBill";
                 this.props.ToPage(pageUrl);
             }
         }, res => this.ShowMessage(res.Message));
