@@ -1,7 +1,7 @@
 import React from "react"
 import * as Common from "../utils/Common"
 import Index from "./Index"
-import {  InputItem } from "antd-mobile";
+import { Picker, List, InputItem } from "antd-mobile";
 
 export default class Select2 extends Index {
     constructor(props) {
@@ -27,7 +27,7 @@ export default class Select2 extends Index {
             value = d[this.ValueName]
 
             if (this.JudgePush(d, parentValue)) {
-                options.push(<option value={value} key={value}>{d[this.TextName]}</option>)
+                options.push({ value: value, label: d[this.TextName] })
                 this.ValueList.push(value);
             }
         });
@@ -36,7 +36,7 @@ export default class Select2 extends Index {
     }
 
     OnChange(value) {
-        this.setState({ Value: value })
+        this.setState({ Value: value[0] })
     }
 
     ValueChange(value) {
@@ -63,24 +63,31 @@ export default class Select2 extends Index {
     render() {
         const { Property } = this.props
 
-        const width = Property.Width || "100%"
-
         if (this.state.IsReadonly) {
             const text = this.GetSelectText();
 
             return <InputItem readOnly={this.state.IsReadonly}
                 type="text"
                 placeholder={Property.PlaceHolder}
-                style={{ width: width }}
                 value={text} />
         }
 
         const value = this.GetSelectValue()
 
-        return (<select disabled={this.state.Disabled}
-            style={{ width: width }}
-            value={value}
+        const value2 = Common.IsNullOrEmpty(value) ? [] : [value];
+
+        const extra = "请选择" + (Property.IsNullable === false ? "" : "(可选)");
+
+        return (<Picker disabled={this.state.Disabled}
+            value={value2}
+            cascade={false}
             onChange={this.OnChange.bind(this)}
-            defaultValue={Property.DefaultValue} >{this.state.Options}</select>)
+            onOk={this.OnChange.bind(this)}
+            data={[this.state.Options]}
+            title={Property.Label}
+            extra={extra}
+            defaultValue={Property.DefaultValue}>
+            <List.Item arrow="horizontal">{Property.Label}</List.Item>
+        </Picker>)
     }
 }

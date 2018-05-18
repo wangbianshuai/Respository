@@ -328,3 +328,80 @@ export function IsImageUrl(url) {
 
     return reg.test(ext)
 }
+
+export function ConvertToDate(dateString, format) {
+    var year, month, day, hh, mm, ss, timeFormat, time, newDate;
+    if (format !== undefined) {
+        if (format.substring(0, 10) === "yyyy-MM-dd" || format.substring(0, 10) === "yyyy/MM/dd") {
+            year = dateString.substring(0, 4);
+            month = dateString.substring(5, 7);
+            day = dateString.substring(8, 10);
+            newDate = month + "-" + day + "-" + year;
+            if (format.length > 10) timeFormat = Trim(format.substring(10, format.length));
+            if (format.length > 10) time = Trim(dateString.substring(10, dateString.length));
+        }
+        if (format.substring(0, 10) === "MM-dd-yyyy" || format.substring(0, 10) === "MM/dd/yyyy") {
+            year = dateString.substring(6, 10);
+            month = dateString.substring(0, 2);
+            day = dateString.substring(3, 5);
+            newDate = month + "-" + day + "-" + year;
+            if (format.length > 10) timeFormat = Trim(format.substring(10, format.length));
+            if (format.length > 10) time = Trim(dateString.substring(10, dateString.length));
+        }
+        if (format.substring(0, 8) === "yyyyMMdd") {
+            year = dateString.substring(0, 4);
+            month = dateString.substring(4, 6);
+            day = dateString.substring(6, 8);
+            newDate = month + "-" + day + "-" + year;
+            if (format.length > 8) timeFormat = Trim(format.substring(8, format.length));
+            if (format.length > 8) time = Trim(dateString.substring(8, dateString.length));
+        }
+        if (format.substring(0, 8) === "MMddyyyy") {
+            year = dateString.substring(4, 8);
+            month = dateString.substring(0, 2);
+            day = dateString.substring(2, 4);
+            newDate = month + "-" + day + "-" + year;
+            if (format.length > 8) timeFormat = Trim(format.substring(8, format.length));
+            if (format.length > 8) time = Trim(dateString.substring(8, dateString.length));
+        }
+        if (!IsNullOrEmpty(time) && !IsNullOrEmpty(timeFormat)) {
+            if (!IsNullOrEmpty(timeFormat) && timeFormat === "HH:mm:ss") {
+                hh = time.substring(0, 2);
+                mm = time.substring(3, 5);
+                ss = time.substring(6, 8);
+                newDate += " " + hh + ":" + mm + ":" + ss;
+            }
+            else if (!IsNullOrEmpty(timeFormat) && timeFormat === "HHmmss") {
+                hh = time.substring(0, 2);
+                mm = time.substring(2, 4);
+                ss = time.substring(4, 6);
+                newDate += " " + hh + ":" + mm + ":" + ss;
+            }
+        }
+        if (!IsNullOrEmpty(newDate)) {
+            dateString = newDate;
+        }
+    }
+
+    if (IsFirefox()) {
+        if (!IsNullOrEmpty(newDate)) {
+            if (!IsNullOrEmpty(time) && !IsNullOrEmpty(timeFormat)) {
+                return new Date(year, month, day, hh, mm, ss);
+            }
+            else {
+                return new Date(year, month, day);
+            }
+        }
+        else {
+            return new Date(dateString);
+        }
+    }
+    else {
+        return new Date(dateString);
+    }
+}
+
+export function IsFirefox() {
+    const reg = new RegExp("firefox");
+    return reg.test(navigator.userAgent.toLowerCase());
+}

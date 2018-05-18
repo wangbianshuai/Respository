@@ -4,6 +4,7 @@ import { TabBar, Flex, Icon } from 'antd-mobile';
 import SwitchRoute from "./SwitchRoute"
 import { routerRedux } from 'dva/router';
 import { connect } from "dva";
+import styles from '../styles/Index.css';
 
 class LeftRightLayout extends Component {
     constructor(props) {
@@ -81,9 +82,11 @@ class LeftRightLayout extends Component {
         const pageName = selectedKeys.length > 0 ? selectedKeys[0] : "";
         this.CurrentPageName = pageName;
 
-        return (<Flex style={{ minHeight: "100%" }}>
-            <Flex.Item>
+        return (<Flex style={{ minHeight: "100%", width: "100%" }} direction="column" justify="end">
+            <Flex.Item style={{ width: "100%", marginBottom: "60px" }}>
                 <SwitchRoute MenuList={this.MenuList} App={this.props.App} PageName={pageName} href={window.location.href} />
+            </Flex.Item>
+            <Flex.Item className={styles.DivTabBar}>
                 <TabBar>
                     {
                         this.MenuList.map(m => (

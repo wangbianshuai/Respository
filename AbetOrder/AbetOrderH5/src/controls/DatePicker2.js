@@ -1,7 +1,7 @@
 import React from "react"
 import * as Common from "../utils/Common"
 import Index from "./Index"
-import { DatePicker, InputItem } from "antd-mobile"
+import { DatePicker, InputItem, List } from "antd-mobile"
 
 export default class DatePicker2 extends Index {
     constructor(props) {
@@ -14,8 +14,9 @@ export default class DatePicker2 extends Index {
         if (this.Property.ValueChange) this.Property.ValueChange(value);
     }
 
-    OnChange(value, valueString) {
-        this.setState({ Value: valueString })
+    OnChange(value) {
+        const { Property } = this.props
+        this.setState({ Value: Common.GetDateString(value, !Property.IsShowTime) })
     }
 
     GetDefaultValue() {
@@ -27,8 +28,8 @@ export default class DatePicker2 extends Index {
 
     GetMomentValue(value) {
         if (!Common.IsNullOrEmpty(value)) {
-            //if (this.Property.IsShowTime) value = moment(value, "YYYY-MM-DD HH:mm:ss")
-            //else value = moment(value, "YYYY-MM-DD")
+            if (this.Property.IsShowTime) value = Common.ConvertToDate(value, "yyyy-MM-dd HH:mm:ss")
+            else value = Common.ConvertToDate(value, "yyyy-MM-dd")
         }
 
         return Common.IsNullOrEmpty(value) ? null : value;
@@ -52,15 +53,22 @@ export default class DatePicker2 extends Index {
 
         const mv = this.GetMomentValue(value);
 
+        const extra = "请选择" + (Property.IsNullable === false ? "" : "(可选)");
+
         return (<DatePicker placeholder={Property.PlaceHolder}
             style={{ width: width }}
             onChange={this.OnChange.bind(this)}
+            onOk={this.OnChange.bind(this)}
             maxLength={Property.MaxLength}
-            readOnly={this.state.IsReadonly}
             disabled={this.state.Disabled}
-            showTime={Property.IsShowTime}
+            mode={Property.IsShowTime ? "datetime" : "date"}
             defaultValue={this.GetDefaultValue()}
             format={Property.IsShowTime ? "YYYY-MM-DD HH:mm:ss" : "YYYY-MM-DD"}
-            value={mv} />)
+            title={Property.Label}
+            extra={extra}
+            value={mv}>
+            <List.Item arrow="horizontal">{Property.Label}</List.Item>
+        </DatePicker>
+        )
     }
 }

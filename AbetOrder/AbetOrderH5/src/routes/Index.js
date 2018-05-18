@@ -124,7 +124,7 @@ class Index extends Component {
     }
 
     ShowConfirm(msg, onOk) {
-        Modal.confirm({
+        Modal.alert({
             title: "确认信息",
             content: msg,
             onOk: onOk
@@ -136,7 +136,7 @@ class Index extends Component {
     }
 
     ShowSuccess(msg) {
-        Modal.success({
+        Modal.alert({
             title: "成功信息",
             content: msg,
             okText: "确定"
@@ -144,7 +144,7 @@ class Index extends Component {
     }
 
     ShowModalMessage(msg) {
-        Modal.warning({
+        Modal.alert({
             title: "提示信息",
             content: msg,
             okText: "确定"

@@ -1,7 +1,7 @@
 import React from "react"
 import * as Common from "../utils/Common"
 import Index from "./Index"
-import { InputItem } from "antd-mobile";
+import { InputItem, TextareaItem } from "antd-mobile";
 
 export default class TextBox2 extends Index {
     constructor(props) {
@@ -10,8 +10,8 @@ export default class TextBox2 extends Index {
         this.Name = "TextBox2";
     }
 
-    OnChange(e) {
-        this.setState({ Value: e.target.value })
+    OnChange(value) {
+        this.setState({ Value: value })
     }
 
     InputNumberChange(value) {
@@ -35,28 +35,27 @@ export default class TextBox2 extends Index {
         const value = Common.IsNullOrEmpty(this.state.Value) ? "" : this.state.Value
 
         if (Property.ControlType === "TextArea") {
-            return (<InputItem rows={rows}
+            return (<TextareaItem rows={rows}
                 placeholder={Property.PlaceHolder}
                 onChange={this.OnChange.bind(this)}
                 maxLength={Property.MaxLength}
-                readOnly={this.state.IsReadonly}
+                editable={!this.state.IsReadonly}
                 disabled={this.state.Disabled}
+                clear={true}
+                title={Property.Label}
                 value={value} />)
         }
 
         if (Property.ControlType === "InputNumber" && !this.state.IsReadonly) {
-            const width = Property.Width || "100%"
 
             return (<InputItem placeholder={Property.PlaceHolder}
-                style={{ width: width }}
                 onChange={this.InputNumberChange.bind(this)}
                 maxLength={Property.MaxLength}
-                max={Property.Max}
-                min={Property.Min}
-                step={Property.Step || 1}
-                readOnly={this.state.IsReadonly}
+                type="number"
+                editable={!this.state.IsReadonly}
                 disabled={this.state.Disabled}
-                value={value} />)
+                value={value} >{Property.Label}</InputItem>
+            )
         }
 
         const type = this.state.IsReadonly ? "text" : (Property.ControlType || "text");
@@ -65,10 +64,11 @@ export default class TextBox2 extends Index {
             <InputItem placeholder={Property.PlaceHolder}
                 onChange={this.OnChange.bind(this)}
                 maxLength={Property.MaxLength}
-                readOnly={this.state.IsReadonly}
+                editable={!this.state.IsReadonly}
                 disabled={this.state.Disabled}
                 type={type}
-                value={value} />
+                clear={true}
+                value={value}>{Property.Label}</InputItem>
         );
     }
 }

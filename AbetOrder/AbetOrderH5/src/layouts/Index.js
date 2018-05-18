@@ -1,5 +1,5 @@
 import React, { Component } from "react"
-import { Flex} from "antd-mobile"
+import { List } from "antd-mobile"
 import * as Common from "../utils/Common"
 import PropertyItem from "../components/PropertyItem"
 import AButton from "../controls/AButton"
@@ -76,15 +76,18 @@ export default class Index extends Component {
     }
 
     RendRowCols(view, rowId, colList) {
-        return (<Flex key={rowId} type="flex" justify="start" align="top" gutter={16}>{colList.map(c => this.RenderColumn(view, c))}</Flex>);
+        return (<List key={rowId}>{colList.map(c => this.RenderColumn(view, c))}</List>);
     }
 
     RenderColumn(view, col) {
-        return (<Flex.Item key={col.ColId} span={col.ColSpan}>{this.GetPropertyItem(view, col)}</Flex.Item>);
+        if (col.Type === "Button") {
+            return (<List.Item key={col.ColId}>{this.GetPropertyItem(view, col)}</List.Item>);
+        }
+        else return this.GetPropertyItem(view, col);
     }
 
     GetPropertyItem(view, p) {
-        return (<PropertyItem Property={p} Page={this.props.Page} View={view} />)
+        return (<PropertyItem Property={p} Page={this.props.Page} View={view} key={p.ColId} />)
     }
 
     shouldComponentUpdate(nextProps, nextState) {
