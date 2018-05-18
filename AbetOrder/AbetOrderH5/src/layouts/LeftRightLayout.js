@@ -83,7 +83,7 @@ class LeftRightLayout extends Component {
         this.CurrentPageName = pageName;
 
         return (<Flex style={{ minHeight: "100%", width: "100%" }} direction="column" justify="end">
-            <Flex.Item style={{ width: "100%", marginBottom: "60px" }}>
+            <Flex.Item className={styles.DivPage}>
                 <SwitchRoute MenuList={this.MenuList} App={this.props.App} PageName={pageName} href={window.location.href} />
             </Flex.Item>
             <Flex.Item className={styles.DivTabBar}>

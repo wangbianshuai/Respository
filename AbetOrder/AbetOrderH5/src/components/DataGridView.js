@@ -1,6 +1,6 @@
 import React from "react"
 import Index from "./Index"
-import { List, Toast } from "antd-mobile"
+import { List } from "antd-mobile"
 const { Item } = List;
 
 export default class DataGridView extends Index {
@@ -36,7 +36,7 @@ export default class DataGridView extends Index {
     RenderGroupByInfoAlert() {
         if (!this.props.GroupByInfo || !this.props.GroupByInfoHtml) return null;
 
-        return <Toast message={this.RenderGroupByInfo()} type="info" showIcon={true} style={{ marginBottom: "8px" }} />
+        return <div style={{ marginBottom: "8px" }} >{this.RenderGroupByInfo()}</div>
     }
 
     RenderGroupByInfo() {
