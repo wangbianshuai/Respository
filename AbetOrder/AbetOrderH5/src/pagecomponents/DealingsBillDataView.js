@@ -7,7 +7,7 @@ import * as Common from "../utils/Common";
 export default class DealingsBillDataView extends Index {
     constructor(props) {
         super(props)
-        this.state = { DealingsUserList: [], TabsActiveKey: "" }
+        this.state = { DealingsUserList: [], TabIndex: 0 }
     }
 
     componentWillMount() {
@@ -83,20 +83,26 @@ export default class DealingsBillDataView extends Index {
     }
 
     RenderTabPanel(d) {
-        const tab = d.UserType === 1 ? d.DealingsUserName : "与" + d.DealingsUserName + "的往来";
-        return (<Tabs.TabPane tab={tab} key={d.DealingsUser}>
+        return (<div key={d.DealingsUser}>
             {this.RenderDataView(d)}
-        </Tabs.TabPane>)
+        </div>)
     }
 
-    TabsChange(activeKey) {
-        this.setState({ TabsActiveKey: activeKey });
-        this.QueryData(activeKey);
+    GetTabList() {
+        return this.state.DealingsUserList.map(d => {
+            const title = d.UserType === 1 ? d.DealingsUserName : "与" + d.DealingsUserName + "的往来";
+            return { title: title, ActiveKey: d.DealingsUser }
+        })
+    }
+
+    TabsChange(tab, index) {
+        this.setState({ TabIndex: index });
+        this.QueryData(tab.ActiveKey);
     }
 
     render() {
         return (
-            <Tabs activeKey={this.state.TabsActiveKey} onChange={this.TabsChange.bind(this)}>
+            <Tabs initialPage={this.state.TabIndex} tabs={this.GetTabList()} onChange={this.TabsChange.bind(this)}>
                 {this.state.DealingsUserList.map(m => this.RenderTabPanel(m))}
             </Tabs>
         )

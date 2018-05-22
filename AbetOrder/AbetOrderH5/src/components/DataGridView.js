@@ -1,7 +1,8 @@
 import React from "react"
 import Index from "./Index"
-import { List } from "antd-mobile"
-const { Item } = List;
+import { List, Pagination, Icon, WhiteSpace } from "antd-mobile"
+import * as Common from "../utils/Common";
+import DataGridViewRows from "../DataGridViewRows/Index"
 
 export default class DataGridView extends Index {
     constructor(props) {
@@ -10,33 +11,10 @@ export default class DataGridView extends Index {
         this.Name = "DataGridView";
     }
 
-    GetColumn(p) {
-        if (p.IsData === false) return (<Item title={p.Label} key={p.Name} render={p.Render} width={p.ColumnWidth} fixed={p.Fixed} />)
-
-        return (<Item title={p.Label} dataIndex={p.Name} key={p.Name} render={p.Render} width={p.ColumnWidth} fixed={p.Fixed} />)
-    }
-
-    GetPagination() {
-        if (this.props.IsPaging === false) return false;
-        const { PageInfo } = this.props
-
-        return {
-            current: PageInfo.PageIndex,
-            total: PageInfo.PageRecord,
-            pageSize: PageInfo.PageSize,
-            showTotal: (total, range) => `当前${range[0]}-${range[1]}，共 ${total} 条记录`,
-            showQuickJumper: true,
-            showSizeChanger: true,
-            pageSizeOptions: ['10', '20', '30', '50'],
-            onShowSizeChange: this.props.PageIndexChange,
-            onChange: this.props.PageIndexChange
-        }
-    }
-
     RenderGroupByInfoAlert() {
         if (!this.props.GroupByInfo || !this.props.GroupByInfoHtml) return null;
 
-        return <div style={{ marginBottom: "8px" }} >{this.RenderGroupByInfo()}</div>
+        return <div style={{ marginBottom: "8px", height: "60px", lineHeight: "60px", marginLeft: "16px" }} >{this.RenderGroupByInfo()}</div>
     }
 
     RenderGroupByInfo() {
@@ -48,12 +26,39 @@ export default class DataGridView extends Index {
         return <div dangerouslySetInnerHTML={{ __html: html }}></div>
     }
 
+    PageChange(e) {
+        const { PageInfo } = this.props;
+
+        this.props.PageIndexChange(e, PageInfo.PageSize);
+    }
+
+    RenderRow(d, i) {
+        return DataGridViewRows(this.props.Page, d, i);
+    }
+
     render() {
+        const { PageInfo, DataList } = this.props
+
+        const dataList = Common.IsArray(DataList) ? DataList : [];
+
         return (
             <div>
                 {this.RenderGroupByInfoAlert()}
                 <List>
+                    {dataList.map((m, i) => this.RenderRow(m, i))}
                 </List>
+                <WhiteSpace />
+                <WhiteSpace />
+                {this.props.IsPaging === false ? null :
+                    <Pagination total={PageInfo.PageCount}
+                        current={PageInfo.PageCount > 0 ? 1 : 0}
+                        locale={{
+                            prevText: (<span style={{ display: "flex", alignItems: "center" }}><Icon type="left" />上一页</span>),
+                            nextText: (<span style={{ display: "flex", alignItems: "center" }}>下一页<Icon type="right" /></span>),
+                        }}
+                        onChange={this.PageChange.bind(this)}
+                    />
+                }
             </div>
         );
     }
