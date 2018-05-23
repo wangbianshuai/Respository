@@ -1,6 +1,6 @@
 import React, { Component } from "react"
 import * as Common from "../utils/Common"
-import { TabBar, Flex, Icon, Button } from 'antd-mobile';
+import { TabBar, Flex, Icon } from 'antd-mobile';
 import SwitchRoute from "./SwitchRoute"
 import { routerRedux } from 'dva/router';
 import { connect } from "dva";
