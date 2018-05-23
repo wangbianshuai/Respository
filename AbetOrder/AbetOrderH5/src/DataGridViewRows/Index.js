@@ -1,9 +1,9 @@
 import DealingsBillDataRow from "./DealingsBillDataRow";
 
-export default (page, data, index) => {
+export default (page, dataGridView, data, index) => {
     const name = page.props.PageConfig.DataRowName || page.props.PageName
     switch (name) {
-        case "DealingsBill": return DealingsBillDataRow(page, data, index);
+        case "DealingsBill": return DealingsBillDataRow(page, dataGridView, data, index);
         default: return null;
     }
 };

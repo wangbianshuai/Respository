@@ -45,10 +45,10 @@ export default class DatePicker2 extends Index {
         if (this.state.IsReadonly) {
             if (!Property.IsShowTime && !Common.IsNullOrEmpty(value)) value = value.substr(0, 10);
 
-            return <InputItem readOnly={this.state.IsReadonly}
+            return <InputItem editable={!this.state.IsReadonly}
+                disabled={this.state.Disabled}
                 type="text"
-                style={{ width: width }}
-                value={value} />
+                value={value}>{Property.Label}</InputItem>
         }
 
         const mv = this.GetMomentValue(value);

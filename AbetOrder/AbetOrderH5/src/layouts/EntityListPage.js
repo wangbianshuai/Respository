@@ -1,5 +1,5 @@
 import React from "react"
-import { Modal, Button } from "antd-mobile"
+import { Modal } from "antd-mobile"
 import * as Common from "../utils/Common"
 import DataGridView from "../components/DataGridView"
 import Index from "./Index"
@@ -184,6 +184,7 @@ export default class EntityListPage extends Index {
     }
 
     EditOk(e) {
+        e = e || window.event;
         if (this.OkProperty.SetDisabled === undefined) {
             this.OkProperty.Element = e.target;
             this.OkProperty.SetDisabled = (disabled) => { this.OkProperty.Element.disabled = disabled }
@@ -199,12 +200,11 @@ export default class EntityListPage extends Index {
 
     RenderEditModal() {
         const { EditModalTitle, EditModalVisible, EditModaIsEdit } = this.state;
-        const { EditView } = this.props.Property;
 
         if (EditModaIsEdit === false) {
             return (
                 <Modal title={EditModalTitle} visible={EditModalVisible}
-                    width={EditView.Width} onCancel={this.EditCancel.bind(this)}
+                    transparent={true} style={{ width: "98%" }}
                     footer={this.RenderLookFooter()}>
                     {this.RenderView(this.EditView)}
                 </Modal>
@@ -213,20 +213,20 @@ export default class EntityListPage extends Index {
         else {
             return (
                 <Modal title={EditModalTitle} visible={EditModalVisible}
-                    okText={this.OkProperty.Text} cancelText="取消" width={EditView.Width}
-                    onOk={this.EditOk.bind(this)} onCancel={this.EditCancel.bind(this)} >
+                    transparent={true} style={{ width: "98%" }}
+                    footer={this.RenderFooter()} >
                     {this.RenderView(this.EditView)}
                 </Modal>
             )
         }
     }
 
+    RenderFooter() {
+        return [{ text: '取消', onPress: this.EditCancel.bind(this) }, { text: '确定', onPress: this.EditOk.bind(this) }];
+    }
+
     RenderLookFooter() {
-        return (
-            <div>
-                <Button onClick={this.EditCancel.bind(this)}>取消</Button>
-            </div>
-        )
+        return [{ text: '取消', onPress: this.EditCancel.bind(this) }];
     }
 
     RenderModalDialog() {

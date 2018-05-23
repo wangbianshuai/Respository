@@ -51,9 +51,10 @@ export default class Radio2 extends Index {
         if (this.state.IsReadonly) {
             const text = this.GetSelectText(value);
 
-            return <InputItem readOnly={this.state.IsReadonly}
+            return <InputItem editable={!this.state.IsReadonly}
+                disabled={this.state.Disabled}
                 type="text"
-                value={text} />
+                value={text}>{Property.Label}</InputItem>
         }
 
         return (<RadioGroup disabled={this.state.Disabled}

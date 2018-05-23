@@ -1,8 +1,8 @@
 import React, { Component } from "react"
-import { List } from "antd-mobile"
+import { List, Flex } from "antd-mobile"
 import * as Common from "../utils/Common"
 import PropertyItem from "../components/PropertyItem"
-import AButton from "../controls/AButton"
+import Button2 from "../controls/Button2"
 import Popconfirm2 from "../controls/Popconfirm2"
 import SpanText from "../controls/SpanText"
 import { Link } from "dva/router";
@@ -19,13 +19,12 @@ export default class Index extends Component {
         const list = []
 
         for (let i = 0; i < actionList.length; i++) {
-            if (i > 0) list.push(<div key={i}>|</div>)
-            if (actionList[i].IsConfrim) list.push(<Popconfirm2 Property={actionList[i]} Page={this.props.Page} View={this.props.Property} Params={record} key={actionList[i].Name} />)
+            if (actionList[i].IsConfrim) list.push(<Flex.Item key={actionList[i].Name}><Popconfirm2 Property={actionList[i]} Page={this.props.Page} View={this.props.Property} Params={record} key={actionList[i].Name} /></Flex.Item>)
             else if (actionList[i].IsToPage) list.push(this.GetLinkAction(actionList[i], record));
-            else list.push(<AButton Property={actionList[i]} Page={this.props.Page} View={this.props.Property} Params={record} key={actionList[i].Name} ClickAction={actionList[i].ClickAction} />)
+            else list.push(<Flex.Item key={actionList[i].Name}><Button2 Property={actionList[i]} Page={this.props.Page} View={this.props.Property} Params={record} key={actionList[i].Name} ClickAction={actionList[i].ClickAction} /></Flex.Item>)
         }
 
-        return (<span>{list.map(m => m)}</span>)
+        return (<Flex>{list.map(m => m)}</Flex>)
     }
 
     GetLinkAction(p, record) {

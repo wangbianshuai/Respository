@@ -33,7 +33,7 @@ export default class DataGridView extends Index {
     }
 
     RenderRow(d, i) {
-        return DataGridViewRows(this.props.Page, d, i);
+        return DataGridViewRows(this.props.Page, this, d, i);
     }
 
     render() {

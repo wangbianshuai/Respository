@@ -60,23 +60,31 @@ export default class Select2 extends Index {
         return selectData[this.TextName] === undefined ? "" : selectData[this.TextName];
     }
 
+    Exists(value) {
+        const option = Common.ArrayFirst(this.state.Options, (f) => Common.IsEquals(f.value, value, true));
+        return !Common.IsEmptyObject(option)
+    }
+
     render() {
         const { Property } = this.props
 
         if (this.state.IsReadonly) {
             const text = this.GetSelectText();
 
-            return <InputItem readOnly={this.state.IsReadonly}
+            return <InputItem placeholder={Property.PlaceHolder}
+                editable={!this.state.IsReadonly}
+                disabled={this.state.Disabled}
                 type="text"
-                placeholder={Property.PlaceHolder}
-                value={text} />
+                value={text}>{Property.Label}</InputItem>
         }
 
         const value = this.GetSelectValue()
 
-        const value2 = Common.IsNullOrEmpty(value) ? [] : [value];
+        let value2 = Common.IsNullOrEmpty(value) ? [] : [value];
 
         const extra = "请选择" + (Property.IsNullable === false ? "" : "(可选)");
+
+        if (!this.Exists(value)) value2 = [];
 
         return (<Picker disabled={this.state.Disabled}
             value={value2}

@@ -43,10 +43,10 @@ export default class AutoComplete2 extends Index {
             style={{ width: width }}
             onChange={this.OnChange.bind(this)}
             maxLength={Property.MaxLength}
-            readOnly={this.state.IsReadonly}
+            editable={!this.state.IsReadonly}
             dataSource={this.state.Options}
             disabled={this.state.Disabled}
             filterOption={(inputValue, option) => option.props.children.toUpperCase().indexOf(inputValue.toUpperCase()) !== -1}
-            value={value} />)
+            value={value} >{Property.Label}</InputItem>)
     }
 }
