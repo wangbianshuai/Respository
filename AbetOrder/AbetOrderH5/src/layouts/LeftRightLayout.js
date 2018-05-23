@@ -1,10 +1,11 @@
 import React, { Component } from "react"
 import * as Common from "../utils/Common"
-import { TabBar, Flex, Icon } from 'antd-mobile';
+import { TabBar, Flex, Icon, Button } from 'antd-mobile';
 import SwitchRoute from "./SwitchRoute"
 import { routerRedux } from 'dva/router';
 import { connect } from "dva";
 import styles from '../styles/Index.css';
+import PopoverNavBar from "../components/PopoverNavBar"
 
 class LeftRightLayout extends Component {
     constructor(props) {
@@ -76,13 +77,23 @@ class LeftRightLayout extends Component {
         this.props.ToPage("/" + m.PageName);
     }
 
+    GetMenuName(pageName) {
+        const menu = Common.ArrayFirst(this.MenuList, (f) => Common.IsEquals(pageName, f.PageName, true))
+        return menu && menu.MenuName ? menu.MenuName : ""
+    }
+
     render() {
         const selectedKeys = this.GetCurrentMenuSelectedKeys();
 
         const pageName = selectedKeys.length > 0 ? selectedKeys[0] : "";
         this.CurrentPageName = pageName;
 
+        const menuName = this.GetMenuName(pageName);
+
         return (<Flex style={{ minHeight: "100%", width: "100%" }} direction="column" justify="end">
+            <Flex.Item className={styles.DivNavBar}>
+                <PopoverNavBar Title={menuName} Logout={() => this.props.ToPage("/Login")} />
+            </Flex.Item>
             <Flex.Item className={styles.DivPage}>
                 <SwitchRoute MenuList={this.MenuList} App={this.props.App} PageName={pageName} href={window.location.href} />
             </Flex.Item>

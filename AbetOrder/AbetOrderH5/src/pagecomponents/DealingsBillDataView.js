@@ -7,7 +7,7 @@ import * as Common from "../utils/Common";
 export default class DealingsBillDataView extends Index {
     constructor(props) {
         super(props)
-        this.state = { DealingsUserList: [], TabIndex: 0 }
+        this.state = { DealingsUserList: [], TabIndex: 0, TabsActiveKey: "" }
     }
 
     componentWillMount() {
@@ -96,7 +96,7 @@ export default class DealingsBillDataView extends Index {
     }
 
     TabsChange(tab, index) {
-        this.setState({ TabIndex: index });
+        this.setState({ TabIndex: index, TabsActiveKey: tab.ActiveKey });
         this.QueryData(tab.ActiveKey);
     }
 
