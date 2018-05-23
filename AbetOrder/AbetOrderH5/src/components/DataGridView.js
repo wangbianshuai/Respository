@@ -41,6 +41,8 @@ export default class DataGridView extends Index {
 
         const dataList = Common.IsArray(DataList) ? DataList : [];
 
+        const current = PageInfo.PageCount > 0 ? PageInfo.PageIndex : 0;
+
         return (
             <div>
                 {this.RenderGroupByInfoAlert()}
@@ -51,7 +53,7 @@ export default class DataGridView extends Index {
                 <WhiteSpace />
                 {this.props.IsPaging === false ? null :
                     <Pagination total={PageInfo.PageCount}
-                        current={PageInfo.PageCount > 0 ? 1 : 0}
+                        current={current}
                         locale={{
                             prevText: (<span style={{ display: "flex", alignItems: "center" }}><Icon type="left" />上一页</span>),
                             nextText: (<span style={{ display: "flex", alignItems: "center" }}>下一页<Icon type="right" /></span>),
