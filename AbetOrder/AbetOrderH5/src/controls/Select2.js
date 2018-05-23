@@ -71,8 +71,7 @@ export default class Select2 extends Index {
         if (this.state.IsReadonly) {
             const text = this.GetSelectText();
 
-            return <InputItem placeholder={Property.PlaceHolder}
-                editable={!this.state.IsReadonly}
+            return <InputItem editable={!this.state.IsReadonly}
                 disabled={this.state.Disabled}
                 type="text"
                 value={text}>{Property.Label}</InputItem>
