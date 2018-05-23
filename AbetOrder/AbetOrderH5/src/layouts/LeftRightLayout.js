@@ -92,7 +92,7 @@ class LeftRightLayout extends Component {
 
         return (<Flex style={{ minHeight: "100%", width: "100%" }} direction="column" justify="end">
             <Flex.Item className={styles.DivNavBar}>
-                <PopoverNavBar Title={menuName} Logout={() => this.props.ToPage("/Login")} />
+                <PopoverNavBar Title={menuName} Logout={() => this.props.ToPage("/Login")} UserName={this.CurrentUser.LoginName || ""} />
             </Flex.Item>
             <Flex.Item className={styles.DivPage}>
                 <SwitchRoute MenuList={this.MenuList} App={this.props.App} PageName={pageName} href={window.location.href} />
@@ -102,8 +102,8 @@ class LeftRightLayout extends Component {
                     {
                         this.MenuList.map(m => (
                             <TabBar.Item key={m.PageName} title={m.MenuName}
-                                icon={<Icon type="star-0" size="md" />}
-                                selectedIcon={<Icon type="star" size="md" />}
+                                icon={<Icon type="ellipsis" size="md" />}
+                                selectedIcon={<Icon type="ellipsis" size="md" />}
                                 onPress={this.TabBarItemPress.bind(this, m)}
                                 selected={Common.IsEquals(m.PageName, pageName, true)}>
                             </TabBar.Item>

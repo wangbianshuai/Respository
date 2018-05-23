@@ -10,12 +10,12 @@ export default (page, dataGridView, data, index) => {
                 <Flex.Item>{data.BillDate}</Flex.Item>
             </Flex>
             <Flex justify="between">
+                <Flex.Item>{data.IncomePaymentName}</Flex.Item>
                 <Flex.Item><span style={{ color: data.Amount2 >= 0 ? "#1890ff" : "red" }}>{data.Amount2}</span></Flex.Item>
-                <Flex.Item>{data.BillStatusName}</Flex.Item>
             </Flex>
             <Flex justify="between">
+                <Flex.Item>{data.BillStatusName}</Flex.Item>
                 <Flex.Item>{data.CreateUserName}</Flex.Item>
-                <Flex.Item>{data.ApproveUserName}</Flex.Item>
             </Flex>
             <Flex>
                 <Flex.Item>{data.Remark}</Flex.Item>

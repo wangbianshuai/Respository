@@ -1,9 +1,7 @@
 import React from "react"
 import * as Common from "../utils/Common"
 import Index from "./Index"
-import { Radio, InputItem } from "antd-mobile"
-const RadioGroup = Radio.Group
-const RadioButton = Radio.Button;
+import { SegmentedControl, InputItem } from "antd-mobile"
 
 export default class Radio2 extends Index {
     constructor(props) {
@@ -20,22 +18,14 @@ export default class Radio2 extends Index {
         const options = [];
 
         this.Property.DataSource.forEach(d => {
-            if (this.Property.IsButton) {
-                const style = {}
-                if (this.Property.ButtonWidth > 0) {
-                    style.width = this.Property.ButtonWidth;
-                    style.textAlign = "center";
-                }
-                options.push(<RadioButton style={style} value={d[this.ValueName]} key={d[this.ValueName]}>{d[this.TextName]}</RadioButton>)
-            }
-            else options.push(<Radio value={d[this.ValueName]} key={d[this.ValueName]}>{d[this.TextName]}</Radio>)
+            options.push(d[this.TextName])
         });
 
         return options;
     }
 
-    OnChange(e) {
-        this.setState({ Value: e.target.value })
+    OnChange(value) {
+        this.setState({ Value: this.GetSelectValue(value) })
     }
 
     GetSelectText(value) {
@@ -43,10 +33,28 @@ export default class Radio2 extends Index {
         return d === null ? "" : d[this.TextName]
     }
 
+    GetSelectedIndex(value) {
+        let index = -1;
+
+        for (let i = 0; i < this.Property.DataSource.length; i++) {
+            if (Common.IsEquals(this.Property.DataSource[i][this.ValueName], value, true)) {
+                index = i;
+                break;
+            }
+        }
+
+        return index;
+    }
+
+    GetSelectValue(text) {
+        const d = Common.ArrayFirst(this.Property.DataSource, (f) => Common.IsEquals(f[this.TextName], text));
+        return d === null ? "" : d[this.ValueName]
+    }
+
     render() {
         const { Property } = this.props
 
-        const value = Common.IsNullOrEmpty(this.state.Value) ? undefined : this.state.Value.toString()
+        const value = Common.IsNullOrEmpty(this.state.Value) ? "" : this.state.Value.toString()
 
         if (this.state.IsReadonly) {
             const text = this.GetSelectText(value);
@@ -57,9 +65,14 @@ export default class Radio2 extends Index {
                 value={text}>{Property.Label}</InputItem>
         }
 
-        return (<RadioGroup disabled={this.state.Disabled}
+        let selectedIndex = this.GetSelectedIndex(value);
+        if (selectedIndex === -1) selectedIndex = this.GetSelectedIndex(Property.DefaultValue);
+
+        return (<SegmentedControl disabled={this.state.Disabled}
             value={value}
-            onChange={this.OnChange.bind(this)}
-            defaultValue={Property.DefaultValue} >{this.state.Options}</RadioGroup>)
+            values={this.state.Options}
+            selectedIndex={selectedIndex}
+            onValueChange={this.OnChange.bind(this)}
+        />)
     }
 }

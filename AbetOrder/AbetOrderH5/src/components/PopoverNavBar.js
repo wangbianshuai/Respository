@@ -30,7 +30,7 @@ export default class PopoverNavBar extends Component {
                     overlayStyle={{ color: 'currentColor' }}
                     visible={this.state.PopoverVisible}
                     overlay={[
-                        <Item key="1" value="Logout" icon={<Icon type="left" />}>退出登录</Item>
+                        <Item key="1" value="Logout" icon={<Icon type="left" />}>{"退出登录(" + this.props.UserName + ")"}</Item>
                     ]}
                     align={{
                         overflow: { adjustY: 0, adjustX: 0 },
