@@ -95,7 +95,7 @@ namespace AbetOrder.Web.Controllers
             if (this.Request.Headers.Referrer.Host != this.Request.RequestUri.Host) return false;
 
             string localPath = this.Request.Headers.Referrer.LocalPath.ToLower();
-            if (localPath != "/" && !localPath.Contains("default.aspx") && !localPath.Contains("order.aspx")) return false;
+            if (localPath != "/" && !localPath.Contains("default.aspx") && !localPath.Contains("order.aspx") && !localPath.Contains("h5.aspx")) return false;
 
             return true;
         }

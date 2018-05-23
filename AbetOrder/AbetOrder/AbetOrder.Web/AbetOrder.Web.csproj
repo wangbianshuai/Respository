@@ -109,6 +109,10 @@
     <Content Include="download.aspx" />
     <Content Include="GenPdf.aspx" />
     <Content Include="Global.asax" />
+    <Content Include="H5.aspx" />
+    <Content Include="h5\index.css" />
+    <Content Include="h5\index.html" />
+    <Content Include="h5\index.js" />
     <Content Include="Html2Image.html" />
     <Content Include="HtmlPage1.html" />
     <Content Include="html\Order1.html" />
@@ -166,6 +170,13 @@
     </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="H5.aspx.cs">
+      <DependentUpon>H5.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="H5.aspx.designer.cs">
+      <DependentUpon>H5.aspx</DependentUpon>
     </Compile>
     <Compile Include="ImageToPdfHandler.ashx.cs">
       <DependentUpon>ImageToPdfHandler.ashx</DependentUpon>

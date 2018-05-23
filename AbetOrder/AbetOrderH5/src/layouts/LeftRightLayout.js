@@ -90,8 +90,8 @@ class LeftRightLayout extends Component {
 
         const menuName = this.GetMenuName(pageName);
 
-        return (<Flex style={{ minHeight: "100%", width: "100%" }} direction="column" justify="end">
-            <Flex.Item className={styles.DivNavBar}>
+        return (<Flex style={{ minHeight: "100%", width: "100%" }} direction="column">
+            <Flex.Item className={styles.DivNavBar} style={{ flex: 0 }}>
                 <PopoverNavBar Title={menuName} Logout={() => this.props.ToPage("/Login")} UserName={this.CurrentUser.LoginName || ""} />
             </Flex.Item>
             <Flex.Item className={styles.DivPage}>
