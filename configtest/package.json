@@ -1,0 +1,10 @@
+{
+    "scripts": {
+        "start": "hotnode server.js",
+        "lint": "eslint --ext .js src test",
+        "precommit": "npm run lint"
+    },
+    "dependencies": {
+        "hotnode": "0.0.8"
+    }
+}
