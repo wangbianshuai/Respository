@@ -1,0 +1,20 @@
+{
+    "devDependencies": {
+        "babel-plugin-add-module-exports": "^1.0.0",
+        "babel-polyfill": "^6.26.0",
+        "babel-preset-env": "^1.7.0",
+        "babel-preset-react": "^6.24.1",
+        "babel-register": "^6.26.0",
+        "hotnode": "0.0.8"
+    },
+    "scripts": {
+        "start": "hotnode ./src/server/server.dev.js"
+    },
+    "dependencies": {
+        "dva": "^2.4.0",
+        "koa": "^2.6.1",
+        "koa-router": "^7.4.0",
+        "react": "^16.5.2",
+        "react-dom": "^16.5.2"
+    }
+}
