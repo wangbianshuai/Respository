@@ -1,3 +1,5 @@
 export default {
-    "/": "home/index.js"
-}
+    "/": "home/index",
+    "/index.html": "home/index",
+    "/404.html": "common/404"
+};
