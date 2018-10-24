@@ -5,6 +5,7 @@ const path = require('path');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const pageConfig = require("./webpack.page.js");
+const _externals = require('externals-dependencies');
 
 const cacheGroups = {};
 
@@ -49,6 +50,22 @@ module.exports = [merge(common, {
         filename: '[name].js',
         chunkFilename: 'chunk.[name].js'
     },
+    resolve: {
+        extensions: [".js"]
+    },
+    target: 'node',
+    externals: _externals(),
+    context: __dirname,
+    node: {
+        console: true,
+        global: true,
+        process: true,
+        Buffer: true,
+        __filename: true,
+        __dirname: true,
+        setImmediate: true,
+        path: true
+    },
     mode: "production",
     module: {
         rules: [{
@@ -58,14 +75,13 @@ module.exports = [merge(common, {
                 loader: 'babel-loader',
                 options: {
                     presets: ["@babel/preset-react", "@babel/preset-env"],
-                    plugins: ['@babel/transform-runtime']
+                    plugins: ['@babel/transform-runtime', "@babel/plugin-transform-modules-commonjs", "add-module-exports"],
                 }
             }
         }]
     },
-    resolve: { modules: [path.resolve(__dirname, 'node_modules')], extensions: [".js", ".json"] },
+    resolve: { extensions: [".js"] },
     plugins: [
-        new UglifyJSPlugin(),
-        new OptimizeCssAssetsPlugin()
+        new UglifyJSPlugin()
     ]
 }];

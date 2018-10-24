@@ -5,25 +5,44 @@ import { renderToStaticMarkup } from 'react-dom/server';
 import request from "request";
 import ejs from 'ejs';
 
-const router = new Router();
+export default class IndexRouter {
+    constructor() {
+        this.router = new Router();
+        this.GetRouterList();
+    }
 
-for (let key in config) router.get(key, async (ctx) => {
-    const root = renderToStaticMarkup(React.createElement(require(`../controllers/${config[key]}.js`), { ctx }));
-    await GetHtml(config[key]).then(res => ctx.body = ejs.render(res, { root }), res => ctx.body = res);
-});
+    Init() {
+        this.RouterList.forEach(r => this.router.get(r.key, this.InitRouter(r.path, r.component)));
 
-function GetHtml(url) {
-    url = `http://localhost:8090/views/${url}.html`;
+        return this.router;
+    }
 
-    return new Promise((resolve, reject) => {
-        request(url, (error, response, body) => {
-            if (!error && response.statusCode == 200) {
-                resolve(body)
-            }
-            else reject("获取html失败");
+    GetRouterList() {
+        this.RouterList = [];
+        for (let key in config) {
+            this.RouterList.push({ key, path: `${config[key]}.html`, component: require(`../controllers/${config[key]}.js`) })
+        }
+    }
+
+    InitRouter(path, component) {
+        return async (ctx) => {
+            const root = renderToStaticMarkup(React.createElement(component, { ctx }));
+            await this.GetHtml(path).then(res => ctx.body = ejs.render(res, { root }), res => ctx.body = res);
+        }
+    }
+
+    GetHtml(url) {
+        url = `http://localhost:8090/views/${url}`;
+
+        return new Promise((resolve, reject) => {
+            request(url, (error, response, body) => {
+                if (!error && response.statusCode == 200) {
+                    resolve(body)
+                }
+                else reject("获取html失败");
+            });
         });
-    });
+    }
 }
 
-export default router
 

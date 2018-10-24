@@ -3,12 +3,29 @@ import Router from 'koa-router';
 import React from 'react'
 import { renderToStaticMarkup } from 'react-dom/server';
 
-const router = new Router();
+export default class IndexRouter {
+    constructor() {
+        this.router = new Router();
+        this.GetRouterList();
+    }
 
-for (let key in config) router.get(key, async (ctx) => {
-    const html = renderToStaticMarkup(React.createElement(require(`../controllers/${config[key]}.js`), { ctx }));
-    await ctx.render(`${config[key]}.html`, { root: html });
-});
+    Init() {
+        this.RouterList.forEach(r => this.router.get(r.key, this.InitRouter(r.path, r.component)));
 
-export default router
+        return this.router;
+    }
 
+    GetRouterList() {
+        this.RouterList = [];
+        for (let key in config) {
+            this.RouterList.push({ key, path: `${config[key]}.html`, component: require(`../controllers/${config[key]}.js`) })
+        }
+    }
+
+    InitRouter(path, component) {
+        return async (ctx) => {
+            const html = renderToStaticMarkup(React.createElement(component, { ctx }));
+            await ctx.render(path, { root: html });
+        }
+    }
+}

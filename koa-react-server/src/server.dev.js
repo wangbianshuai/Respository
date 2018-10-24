@@ -6,11 +6,11 @@ require('babel-register')({
 });
 
 const koa = require("koa");
-const router = require("./server/routes/index.dev");
+const IndexRouter = require("./server/routes/index.dev");
 
 const app = new koa();
 
 //配置路由
-app.use(router.routes());
+app.use(new IndexRouter().Init().routes());
 
 app.listen(8080);
