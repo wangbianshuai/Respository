@@ -1,0 +1,710 @@
+<!Doctype html>
+<html lang="zh-cn" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" th:href="@{${global.staticHost}+'/pc/'+${global.xxdVersion}+'/build/css/i/favicon.ico'}">
+    <link rel="Bookmark" th:href="@{${global.staticHost}+'/pc/'+${global.xxdVersion}+'/build/css/i/favicon.ico'}">
+    <title>我的资料-个人资料-我的新新贷</title>
+    <meta name="keywords" content="新新贷，P2P网贷，P2P理财，投资理财，网上理财，新元宝，月月派，新手专享，投融资，贷款，企业贷款，无抵押小额贷款，借款"/>
+    <meta name="description"
+          content="新新贷是中国专业的互联网金融P2P网络借贷信息中介平台，为出借人和借款人提供省心的互联网金融信息服务。资金银行存管、严格的风控体系、信息披露透明等多重安全保障措施。"/>
+    <link th:href="@{${global.staticHost}+'/pc/'+${global.xxdVersion}+'/build/mods/user/personalData/personalInfo/_.css'}"
+          rel="stylesheet">
+</head>
+<body>
+<div id="J_wrapBody" th:with="userType=${userInfo.usertype}" >
+    <!--头部 start-->
+    <div th:replace="common/header::header"></div>
+    <!--头部 end-->
+    <div class="g-top">
+        <div class="g-top-con">
+            <div class="container-1200">
+                <a href="../../">首页</a> &gt; <a href="/usercenter/accountInfo.html">我的新新贷</a> &gt;
+                <a href="javascript:void(0);">个人资料</a> &gt; <a href="javascript:void(0);">我的资料</a>
+            </div>
+        </div>
+    </div>
+    <div class="info-contaner clearfix">
+        <div th:replace="usercenter/common/menu::menu('personalData', 'personalInfo')"></div>
+        <div class="g-right" th:with="userDetailInfo = ${globalData.userDetailInfo.data.userDetailInfo}">
+            <div class="m-con-wrap" th:with="baseInfo = ${globalData.userDetailInfo.data.baseInfo}">
+                <div th:class="'m-con-hd user-title ' + ${!#strings.isEmpty(baseInfo.usertype) ? 'hide' : ''}" id='absenceTitle'>
+                    <li>个人信息</li>
+                </div>
+                <div th:class="'m-con-hd user-title ' + ${!#strings.equals(baseInfo.usertype, '1') ? 'hide' : ''}" id='J_tabs'>
+                    <li class='active'><a href="#">基本资料</a></li>
+                    <li><a href="#">固定资产</a></li>
+                    <li><a href="#">私营业主</a></li>
+                    <li><a href="#">财务状况</a></li>
+                    <li><a href="#">联系方式</a></li>
+                </div>
+                <div th:class="'m-con-hd user-title ' + ${!#strings.equals(baseInfo.usertype, '2') ? 'hide' : ''}" id='J_firmTabs'>
+                    <li class='active'><a href="#">基本资料</a></li>
+                    <li><a href="#">企业信息</a></li>
+                </div>
+                <!--基本资料-->
+                <div class='j_tabContent j_firmContent clearfix'>
+                    <div class="m-con-bd clearfix">
+                        <div class="filed-user w100">完善个人基本信息，加速审核流程，同时您可享受更多服务哟~</div>
+                        <div class="filed-user w100 J_perosonal1"><span>用户类型:</span>
+
+                            <p th:if="${#strings.isEmpty(baseInfo.usertype)}">未知</p>
+                            <p th:if="${#strings.equals(baseInfo.usertype, '1')}">个人</p>
+                            <p th:if="${#strings.equals(baseInfo.usertype, '2')}">企业</p>
+                            <p th:if="${#strings.equals(baseInfo.usertype, '3')}">企业</p>
+                        </div>
+                        <div class="filed-user">
+                            <span>真实姓名:</span>
+                            <p>[[${baseInfo.realname}]]</p>
+                            <a href='/personal/info.html' th:text="${#strings.isEmpty(baseInfo.realname) ? '未认证' : ''}"></a>
+                        </div>
+                        <div class="filed-user">
+                            <span>用户名:</span>[[${userDetailInfo.nickname}]]
+                        </div>
+                        <div class='J_perosonal2 po-relative'>
+                            <div class="filed-user">
+                                <span>证件号码:</span>
+                                <p>[[${baseInfo.idcardno}]]</p>
+                                <a href='/personal/info.html' th:text="${#strings.isEmpty(baseInfo.idcardno) ? '未认证' : ''}"></a>
+                            </div>
+                            <div class="filed-user">
+                                <span>性别:</span>
+                                <label><input th:checked="${#strings.equals(baseInfo.gender, '1')}" name="sex" type="radio" value="1" class='J_gender'/>男</label>
+                                <label><input th:checked="${#strings.equals(baseInfo.gender, '0')}" name="sex" type="radio" value="0" class='J_gender'/>女 </label>
+                            </div>
+                        </div>
+                        <div id='personageInput'>
+                            <div class='J_perosonal3 po-relative'>
+                                <div class="filed-user"><span>手机号码:</span><label>[[${userDetailInfo.mobile}]]</label>
+                                    <a href='/personal/info.html' th:text="${#strings.isEmpty(userDetailInfo.mobile) ? '未绑定' : '更改绑定'}"></a>
+                                </div>
+                                <div class="filed-user"><span>家庭电话:</span>
+                                    <input th:value="${baseInfo.hometel}" type="tel" class='J_homeNumber'/>
+                                </div>
+                            </div>
+                            <div class='J_perosonal4 po-relative'>
+                                <div class="filed-user">
+                                    <span>电子邮箱:</span><label>[[${userDetailInfo.email}]]</label>
+                                    <a href='/personal/info.html' th:text="${#strings.isEmpty(userDetailInfo.email) ? '未绑定' : '更改绑定'}"></a>
+                                </div>
+                                <div class="filed-user"><span>学历:</span>
+                                    <select class='J_education' th:switch="${baseInfo.degree}">
+                                        <option th:selected="${#strings.isEmpty(baseInfo.degree)}" value=''>--请选择--</option>
+                                        <option th:selected="${#strings.equals(baseInfo.degree, '10')}" value='10'>未知</option>
+                                        <option th:selected="${#strings.equals(baseInfo.degree, '11')}" value='11'>小学</option>
+                                        <option th:selected="${#strings.equals(baseInfo.degree, '21')}" value='21'>初中</option>
+                                        <option th:selected="${#strings.equals(baseInfo.degree, '12')}" value='12'>高中</option>
+                                        <option th:selected="${#strings.equals(baseInfo.degree, '13')}" value='13'>中专</option>
+                                        <option th:selected="${#strings.equals(baseInfo.degree, '14')}" value='14'>专科</option>
+                                        <option th:selected="${#strings.equals(baseInfo.degree, '15')}" value='15'>本科</option>
+                                        <option th:selected="${#strings.equals(baseInfo.degree, '16')}" value='16'>硕士</option>
+                                        <option th:selected="${#strings.equals(baseInfo.degree, '18')}" value='18'>博士</option>
+                                        <option th:selected="${#strings.equals(baseInfo.degree, '19')}" value='19'>博士后</option>
+                                        <option th:selected="${#strings.equals(baseInfo.degree, '20')}" value='20'>其他</option>
+                                    </select><i>*</i></div>
+                            </div>
+                            <div class='J_perosonal5 po-relative'>
+                                <div class="filed-user"><span>出生日期:</span>
+                                    <input th:value="${baseInfo.birthdayStr}" type="text" class='J_birthday user-date' onkeyup="this.value=this.value.replace(/\s+/g,'')"><i>*</i>
+                                </div>
+                                <div class="filed-user"><span>职业状态:</span>
+                                    <select class='J_profession'>
+                                        <option th:selected="${#strings.isEmpty(baseInfo.occupation)}" value=''>--请选择--</option>
+                                        <option th:selected="${#strings.equals(baseInfo.occupation, '01')}" value='01'>工薪族</option>
+                                        <option th:selected="${#strings.equals(baseInfo.occupation, '02')}" value='02'>个体商户</option>
+                                        <option th:selected="${#strings.equals(baseInfo.occupation, '03')}" value='03'>私营业主</option>
+                                        <option th:selected="${#strings.equals(baseInfo.occupation, '04')}" value='04'>在校学生</option>
+                                        <option th:selected="${#strings.equals(baseInfo.occupation, '05')}" value='05'>其他</option>
+                                    </select><i>*</i>
+                                </div>
+                            </div>
+                        </div>
+                        <!--用户类型为企业时显示-->
+                        <div id='firmInput' class='hide'>
+                            <div class="filed-user"><span>手机号码:</span>
+                                <label>[[${userDetailInfo.mobile}]]</label>
+                                <a href='/personal/info.html'th:text="${#strings.isEmpty(userDetailInfo.mobile) ? '未绑定' : '更改绑定'}"></a>
+                            </div>
+                            <div class="filed-user">
+                                <span>电子邮箱:</span><label>[[${userDetailInfo.email}]]</label>
+                                <a href='/personal/info.html'th:text="${#strings.isEmpty(userDetailInfo.email) ? '未绑定' : '更改绑定'}"></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="m-con-bd clearfix last" id='lastBox'>
+                        <div class='J_perosonal6 po-relative'>
+                            <div class="filed-user"><span>籍贯:</span>
+                                <input th:value="${baseInfo.nativeplace}" type="text" class='J_nativePlace' onkeyup="this.value=this.value.replace(/\s+/g,'')"><i>*</i>
+                            </div>
+                            <div class="filed-user"><span>婚姻状况:</span>
+                                <select class='J_maritalStatus'>
+                                    <option th:selected="${#strings.isEmpty(baseInfo.maritalstatus)}" value=''>--请选择--</option>
+                                    <option th:selected="${#strings.equals(baseInfo.maritalstatus, '1')}" value='1'>未婚</option>
+                                    <option th:selected="${#strings.equals(baseInfo.maritalstatus, '2')}" value='2'>已婚</option>
+                                    <option th:selected="${#strings.equals(baseInfo.maritalstatus, '3')}" value='3'>离异</option>
+                                    <option th:selected="${#strings.equals(baseInfo.maritalstatus, '4')}" value='4'>丧偶</option>
+                                </select><i>*</i>
+                            </div>
+                        </div>
+                        <!--用户类型未确定的时候 start -->
+                        <div id='absenceInput'>
+                            <div class='J_perosonal7 po-relative'>
+                                <div class="filed-user"><span>现居住地址:</span>
+                                    <input th:value="${baseInfo.homeaddr}" type="text" class='J_nowAddress'><i>*</i>
+                                </div>
+                                <div class="filed-user "><span>所在地点:</span>
+                                    <select class="twoSelect J_nowProvince">
+                                        <option value=''>--请选择--</option>
+                                        <option th:each="province : ${globalData.provinceList.data.provinceList}"
+                                                th:selected="${#strings.equals(baseInfo.province, province.code)}"
+                                                th:text="${province.name}" th:value="${province.code}"></option>
+                                    </select>
+                                    <select class="twoSelect ml10 J_nowTown">
+                                        <option value=''>--请选择--</option>
+                                        <option th:each="city : ${globalData.cityList.data.cityList}"
+                                                th:selected="${#strings.equals(baseInfo.city, city.code)}"
+                                                th:text="${city.name}" th:value="${city.code}"></option>
+                                    </select><i>*</i>
+                                </div>
+                            </div>
+                            <div class="filed-user "><span>兴趣爱好:</span>
+                                <input th:value="${baseInfo.interest}" type="text" class='J_hobbytwo'>
+                            </div>
+                            <div class="filed-user"><span>个人能力:</span>
+                                <input th:value="${baseInfo.ability}" type="text" class='J_abilityTwo'>
+                            </div>
+                        </div>
+                        <!--用户类型未确定的时候 end -->
+                        <!--用户类型为个人的时候 start -->
+                        <div class='hide' id='selectedInput'>
+                            <div class='J_perosonal8 po-relative'>
+                                <div class="filed-user"><span>现居住地址:</span>
+                                    <input th:value="${baseInfo.homeaddr}" type="text" class='J_nowAddresstwo'><i>*</i>
+                                </div>
+                                <div class="filed-user"><span>个人能力:</span>
+                                    <input th:value="${baseInfo.ability}" type="text" class='J_myAbility'>
+                                </div>
+                            </div>
+                            <div class="filed-user"><span>兴趣爱好:</span>
+                                <input th:value="${baseInfo.interest}" type="text" class='J_hobby'>
+                            </div>
+                            <div class="filed-user"><span>其他备注:</span>
+                                <input th:value="${baseInfo.note}" type="text" class='J_twoElse'>
+                            </div>
+                        </div>
+                        <!--用户类型为个人的时候 end -->
+                        <!--企业类型的时候start-->
+                        <div class='hide J_perosonal9 po-relative' id='firmsInput'>
+                            <div class="filed-user"><span>现居住地址:</span>
+                                <input th:value="${baseInfo.homeaddr}" type="text" class='J_nowAddressthree'><i>*</i>
+                            </div>
+                            <div class="filed-user"><span>其他备注:</span>
+                                <input th:value="${baseInfo.note}" type="text" class='J_oneElse'>
+                            </div>
+                        </div>
+                        <!--企业类型的时候end-->
+                    </div>
+                    <!--用户类型为个人的时候-->
+                    <div class="m-con-bd clearfix last hide" id='selectedData'>
+                        <div class='J_perosonal10 po-relative'>
+                            <div class="filed-user"><span>公司电话:</span>
+                                <input th:value="${baseInfo.companytel}" type="text" class='J_companyTel'><i>*</i></div>
+                            <div class="filed-user"><span>公司行业:</span>
+                                <select class='J_industry'>
+                                    <option value=''>--请选择--</option>
+                                    <option th:selected="${#strings.equals(baseInfo.companyindustry, '农、林、牧、渔业')}" value="农、林、牧、渔业">农、林、牧、渔业</option>
+                                    <option th:selected="${#strings.equals(baseInfo.companyindustry, '制造业')}" value="制造业">制造业</option>
+                                    <option th:selected="${#strings.equals(baseInfo.companyindustry, '电力、热力、燃气及水生产和供应业')}" value="电力、热力、燃气及水生产和供应业">电力、热力、燃气及水生产和供应业</option>
+                                    <option th:selected="${#strings.equals(baseInfo.companyindustry, '建筑业')}" value="建筑业">建筑业</option>
+                                    <option th:selected="${#strings.equals(baseInfo.companyindustry, '交通运输、仓储和邮政业')}" value="交通运输、仓储和邮政业">交通运输、仓储和邮政业</option>
+                                    <option th:selected="${#strings.equals(baseInfo.companyindustry, '信息传输、软件和信息技术服务业')}" value="信息传输、软件和信息技术服务页">信息传输、软件和信息技术服务页</option>
+                                    <option th:selected="${#strings.equals(baseInfo.companyindustry, '批发和零售业')}" value="批发和零售业">批发和零售业</option>
+                                    <option th:selected="${#strings.equals(baseInfo.companyindustry, '金融业')}" value="金融业">金融业</option>
+                                    <option th:selected="${#strings.equals(baseInfo.companyindustry, '房地产业')}" value="房地产业">房地产业</option>
+                                    <option th:selected="${#strings.equals(baseInfo.companyindustry, '采矿业')}" value="采矿业">采矿业</option>
+                                    <option th:selected="${#strings.equals(baseInfo.companyindustry, '租赁和商务服务业')}" value="租赁和商务服务业">租赁和商务服务业</option>
+                                    <option th:selected="${#strings.equals(baseInfo.companyindustry, '科学研究和技术服务业')}" value="科学研究和技术服务业">科学研究和技术服务业</option>
+                                    <option th:selected="${#strings.equals(baseInfo.companyindustry, '水利、环境和公共设施管理业')}" value="水利、环境和公共设施管理业">水利、环境和公共设施管理业</option>
+                                    <option th:selected="${#strings.equals(baseInfo.companyindustry, '居民服务、修理和其他服务业')}" value="居民服务、修理和其他服务业">居民服务、修理和其他服务业</option>
+                                    <option th:selected="${#strings.equals(baseInfo.companyindustry, '教育')}" value="教育">教育</option>
+                                    <option th:selected="${#strings.equals(baseInfo.companyindustry, '卫生和社会工作')}" value="卫生和社会工作">卫生和社会工作</option>
+                                    <option th:selected="${#strings.equals(baseInfo.companyindustry, '文化、体育和娱乐业')}" value="文化、体育和娱乐业">文化、体育和娱乐业</option>
+                                    <option th:selected="${#strings.equals(baseInfo.companyindustry, '公共管理、社会保障和社会组织')}" value="公共管理、社会保障和社会组织">公共管理、社会保障和社会组织</option>
+                                    <option th:selected="${#strings.equals(baseInfo.companyindustry, '国际组织')}" value="国际组织 ">国际组织</option>
+                                    <option th:selected="${#strings.equals(baseInfo.companyindustry, '其他')}" value="其他">其他</option>
+                                </select><i>*</i></div>
+                        </div>
+                        <div class='J_perosonal11 po-relative'>
+                            <div class="filed-user"><span>月收入:</span>
+                                <select class='J_monthIncome'>
+                                    <option value=''>--请选择--</option>
+                                    <option th:selected="${#strings.equals(baseInfo.income, '10000以下')}" value="10000以下"> 10000以下</option>
+                                    <option th:selected="${#strings.equals(baseInfo.income, '10001-20000')}" value="10001-20000"> 10001-20000</option>
+                                    <option th:selected="${#strings.equals(baseInfo.income, '20001-30000')}" value="20001-30000"> 20001-30000</option>
+                                    <option th:selected="${#strings.equals(baseInfo.income, '30000以上')}" value="30000以上"> 30000以上</option>
+                                </select></div>
+                            <div class="filed-user"><span>公司地址:</span>
+                                <input th:value="${baseInfo.companyaddr}" type="text" class='J_firmAddressone'><i>*</i></div>
+                        </div>
+                        <div class='J_perosonal12 po-relative'>
+                            <div class="filed-user"><span>社保卡号:</span>
+                                <input th:value="${baseInfo.socialinsurcode}" type="text" class='J_socialID'><i>*</i></div>
+                            <div class="filed-user"><span>工作地点:</span>
+                                <select class="twoSelect J_workAddressone">
+                                    <option value=''>--请选择--</option>
+                                    <option th:each="province : ${globalData.provinceList.data.provinceList}"
+                                            th:selected="${#strings.equals(baseInfo.province, province.code)}"
+                                            th:text="${province.name}" th:value="${province.code}"></option>
+                                </select>
+                                <select class="twoSelect ml10 J_workAddresstwo">
+                                    <option value=''>--请选择--</option>
+                                    <option th:each="city : ${globalData.cityList.data.cityList}"
+                                            th:selected="${#strings.equals(baseInfo.city, city.code)}"
+                                            th:text="${city.name}" th:value="${city.code}"></option>
+                                </select><i>*</i></div>
+                        </div>
+                    </div>
+                    <div class="filed-user clearfix submit">
+                        <a class="btn J_submitBasicInfor">确认提交</a>
+                    </div>
+                </div>
+
+                <!--用户类型是个人时-固定资产-->
+                <div class="hide j_tabContent">
+                    <div class="m-con-bd clearfix">
+                        <div class='fixedAssets1 po-relative'>
+                            <div class="filed-user h40"><span>是否购房:</span>
+                                <label><input name="buyHouseYN" type="radio" value="是"/>是 </label>
+                                <label><input name="buyHouseYN" type="radio" value="否" checked="checked"/>否
+                                </label>
+                            </div>
+                            <div class="filed-user"><span>购房时间:</span>
+                                <select disabled="disabled" class="twoSelect J_buyHouseYear disabled">
+                                    <option selected value=''>--请选择--</option>
+                                    <option value='2018'>2018年</option>
+                                    <option value='2017'>2017年</option>
+                                    <option value='2016'>2016年</option>
+                                    <option value='2015'>2015年</option>
+                                    <option value='2014'>2014年</option>
+                                    <option value='2013'>2013年</option>
+                                    <option value='2012'>2012年</option>
+                                    <option value='2011'>2011年</option>
+                                    <option value='2010'>2010年</option>
+                                    <option value='2009'>2009年</option>
+                                    <option value='2008'>2008年</option>
+                                    <option value='2007'>2007年</option>
+                                    <option value='2006'>2006年</option>
+                                    <option value='2005'>2005年</option>
+                                    <option value='2004'>2004年</option>
+                                    <option value='2003'>2003年</option>
+                                    <option value='2002'>2002年</option>
+                                    <option value='2001'>2001年</option>
+                                    <option value='2000'>2000年</option>
+                                    <option value='2000年以前'>2000年以前</option>
+                                </select>
+                                <select disabled="disabled" class="twoSelect ml10 J_buyHouseMonth disabled">
+                                    <option selected value=''>--请选择--</option>
+                                    <option value='1'>1月</option>
+                                    <option value='2'>2月</option>
+                                    <option value='3'>3月</option>
+                                    <option value='4'>4月</option>
+                                    <option value='5'>5月</option>
+                                    <option value='6'>6月</option>
+                                    <option value='7'>7月</option>
+                                    <option value='8'>8月</option>
+                                    <option value='9'>9月</option>
+                                    <option value='10'>10月</option>
+                                    <option value='11'>11月</option>
+                                    <option value='12'>12月</option>
+                                </select><i>*</i>
+                            </div>
+                        </div>
+                        <div class='fixedAssets2 po-relative'>
+                            <div class="filed-user"><span>房产地址:</span>
+                                <input disabled="disabled" type="text" placeholder="请输入房产地址" class='J_houseProperty disabled'><i>*</i>
+                            </div>
+                            <div class="filed-user"><span>供房状况:</span>
+                                <select disabled="disabled" class='J_paymentHouse disabled'>
+                                    <option selected value=''>--请选择--</option>
+                                    <option value='1'>自购-清房</option>
+                                    <option value='2'>自购-按揭</option>
+                                    <option value='3'>自建</option>
+                                    <option value='4'>租赁</option>
+                                    <option value='5'>商住两用</option>
+                                    <option value='6'>抵押</option>
+                                    <option value='7'>其他</option>
+                                </select><i>*</i>
+                            </div>
+                        </div>
+                        <div class='fixedAssets3 po-relative'>
+                            <div class="filed-user"><span>房产面积:</span>
+                                <input disabled="disabled" type="text" class="w198 J_houseArea disabled"><i>*平方米</i>
+                            </div>
+                            <div class="filed-user"><span>产权份额:</span>
+                                <input disabled="disabled" type="text" class="w198 J_housePercent disabled"><i>*百分之几</i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="m-con-bd clearfix">
+                        <div class='fixedAssets4 po-relative'>
+                            <div class="filed-user h40"><span>是否购车:</span>
+                                <label><input name="buyCarYN" type="radio" value="是"/>是 </label>
+                                <label><input name="buyCarYN" type="radio" value="否" checked="checked"/>否
+                                </label>
+                            </div>
+                            <div class="filed-user"><span>购车时间:</span>
+                                <select disabled="disabled" class="twoSelect J_buyCarYear disabled">
+                                    <option selected value=''>--请选择--</option>
+                                    <option value='2018'>2018年</option>
+                                    <option value='2017'>2017年</option>
+                                    <option value='2016'>2016年</option>
+                                    <option value='2015'>2015年</option>
+                                    <option value='2014'>2014年</option>
+                                    <option value='2013'>2013年</option>
+                                    <option value='2012'>2012年</option>
+                                    <option value='2011'>2011年</option>
+                                    <option value='2010'>2010年</option>
+                                    <option value='2009'>2009年</option>
+                                    <option value='2008'>2008年</option>
+                                    <option value='2007'>2007年</option>
+                                    <option value='2006'>2006年</option>
+                                    <option value='2005'>2005年</option>
+                                    <option value='2004'>2004年</option>
+                                    <option value='2003'>2003年</option>
+                                    <option value='2002'>2002年</option>
+                                    <option value='2001'>2001年</option>
+                                    <option value='2000'>2000年</option>
+                                    <option value='2000年以前'>2000年以前</option>
+                                </select><select disabled="disabled" class="twoSelect ml10 J_buyCarMonth disabled">
+                                    <option selected value=''>--请选择--</option>
+                                    <option value='1'>1月</option>
+                                    <option value='2'>2月</option>
+                                    <option value='3'>3月</option>
+                                    <option value='4'>4月</option>
+                                    <option value='5'>5月</option>
+                                    <option value='6'>6月</option>
+                                    <option value='7'>7月</option>
+                                    <option value='8'>8月</option>
+                                    <option value='9'>9月</option>
+                                    <option value='10'>10月</option>
+                                    <option value='11'>11月</option>
+                                    <option value='12'>12月</option>
+                                </select><i>*</i>
+                            </div>
+                        </div>
+                        <div class='fixedAssets5 po-relative'>
+                            <div class="filed-user"><span>车辆型号:</span>
+                                <input disabled="disabled" type="text" placeholder="" class="w133 J_carFront disabled">
+                                <input disabled="disabled" type="text" placeholder="" class="w133 ml10 J_carNext disabled"><i>*</i>
+                            </div>
+                            <div class="filed-user"><span>供车状况:</span>
+                                <select disabled="disabled" class='J_paymentCar disabled'>
+                                    <option selected value=''>--请选择--</option>
+                                    <option value='1'>自购-清车</option>
+                                    <option value='2'>自购-按揭</option>
+                                    <option value='3'>抵押</option>
+                                    <option value='4'>其他</option>
+                                </select><i>*</i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="m-con-bd clearfix last">
+                        <div class="filed-user"><span>其他备注:</span>
+                            <input type="text" class='J_elseRemark'>
+                        </div>
+                    </div>
+                    <div class="filed-user submit">
+                        <a class="btn J_submitFixedAssets">确认提交</a>
+                    </div>
+                </div>
+
+                <!--用户类型是个人时-私营业主-->
+                <div class="hide j_tabContent">
+                    <div class="m-con-bd clearfix">
+                        <div class='J_owner1 po-relative'>
+                            <div class="filed-user"><span>企业类型:</span>
+                                <select class='J_firmType'>
+                                    <option selected value=''>--请选择--</option>
+                                    <option value='1'>国有企业</option>
+                                    <option value='2'>集体所有制企业</option>
+                                    <option value='3'>私营企业</option>
+                                    <option value='4'>股份制企业</option>
+                                    <option value='5'>外营企业</option>
+                                    <option value='6'>外商投资企业</option>
+                                    <option value='7'>港、澳、台投资企业</option>
+                                    <option value='8'>股份合作企业</option>
+                                </select></div>
+                            <div class="filed-user"><span>税务编号:</span>
+                                <input type="text" class='J_dutyParagraph'
+                                       onkeyup="value=value.replace(/[^\d]/g,'')"><i>*</i>
+                            </div>
+                        </div>
+                        <div class='J_owner2 po-relative'>
+                            <div class="filed-user"><span>公司名称:</span>
+                                <input type="text" class='J_firmName'><i>*</i></div>
+                            <div class="filed-user"><span>工商登记号:</span>
+                                <input type="text" class='J_firmDirectory'
+                                       onkeyup="value=value.replace(/[^\d]/g,'')"><i>*</i></div>
+                        </div>
+                        <div class='J_owner3 po-relative'>
+                            <div class="filed-user"><span>注册时间:</span>
+                                <input type="text" class="w110 mr10 J_firmSignYear" onkeyup="value=value.replace(/[^\d]/g,'')">年
+                                <input type="text" class="w110 mr10 ml10 J_firmSignMonth" onkeyup="value=value.replace(/[^\d]/g,'')">月<i>*</i>
+                            </div>
+                            <div class="filed-user"><span>公司地址:</span>
+                                <input type="text" class='J_firmAddress'><i>*</i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="m-con-bd clearfix last">
+                        <div class="filed-user"><span>其他备注:</span>
+                            <input type="text" class='J_firmElse'>
+                        </div>
+                    </div>
+                    <div class="filed-user submit">
+                        <a class="btn J_submitFirmDetail">确认提交</a>
+                    </div>
+                </div>
+
+                <!--用户类型是个人时-财务状况-->
+                <div class="hide j_tabContent">
+                    <div class="m-con-bd clearfix last">
+                        <div class="filed-user financial J_finance1"><span>每月无抵押还款额:</span>
+                            <input type="text" placeholder="请输入人民币金额" class='J_payByPledge'><i>元*</i>
+                        </div>
+                        <div class="filed-user financial J_finance2"><span>每月房屋按揭金额:</span>
+                            <input type="text" placeholder="请输入人民币金额" class='J_payByHouse'><i>元*</i>
+                        </div>
+                        <div class="filed-user financial J_finance3"><span>每月汽车按揭金额:</span>
+                            <input type="text" placeholder="请输入人民币金额" class='J_payByCar'><i>元*</i>
+                        </div>
+                        <div class="filed-user financial J_finance4"><span>每月信用卡还款额:</span>
+                            <input type="text" placeholder="请输入人民币金额" class='J_payByCredit'><i>元*</i>
+                        </div>
+                        <div class="filed-user financial J_finance5"><span>其他还款情况:</span>
+                            <input type="text" class='J_payElse'>
+                        </div>
+                    </div>
+                    <div class="filed-user submit">
+                        <a class="btn mlf348 J_submitPayMoney">确认提交</a>
+                    </div>
+                </div>
+
+                <!--用户类型是个人时-联系方式-->
+                <div class="hide j_tabContent">
+                    <div class="m-con-bd clearfix">
+                        <div class='J_relation1 po-relative'>
+                            <div class="filed-user"><span>用户QQ:</span>
+                                <input type="text" placeholder="请输入qq号" class='J_userQQ'><i>*</i></div>
+                            <div class="filed-user"><span>阿里旺旺:</span>
+                                <input type="text" placeholder="请输入阿里旺旺号" class='J_userAliWang'></div>
+                        </div>
+                    </div>
+                    <div class="m-con-bd clearfix">
+                        <div class="filed-user w100 J_relation2"><span>第一联系人:</span>
+                            <input type="text" placeholder="必须为直系亲属" class='J_firstPeople'><i>*</i>
+                        </div>
+                        <div class='J_relation3 po-relative'>
+                            <div class="filed-user"><span>电话:</span>
+                                <input type="text" placeholder="请输入电话号码" class='J_firstPTel' onkeyup="value=value.replace(/[^\d]/g,'')"><i>*</i></div>
+                            <div class="filed-user"><span>地址:</span>
+                                <input type="text" placeholder="请输入联系地址" class='J_firstPAddress'><i>*</i></div>
+                        </div>
+                    </div>
+                    <div class="m-con-bd clearfix">
+                        <div class="filed-user w100 J_relation4"><span>第二联系人:</span>
+                            <input type="text" placeholder="同事或朋友" class='J_nextPeople'><i>*</i>
+                        </div>
+                        <div class='J_relation5 po-relative'>
+                            <div class="filed-user"><span>电话:</span>
+                                <input type="text" placeholder="请输入电话号码" class='J_nextPTel' onkeyup="value=value.replace(/[^\d]/g,'')"><i>*</i></div>
+                            <div class="filed-user"><span>地址:</span>
+                                <input type="text" placeholder="请输入联系地址" class='J_nextPAddress'><i>*</i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="m-con-bd clearfix">
+                        <div class="filed-user w100"><span>第三联系人:</span>
+                            <input type="text" placeholder="同事或朋友" class='J_lastPeople'>
+                        </div>
+                        <p class="pop-error hide p_lastPeople block">错误提示!</p>
+                        <div class="filed-user"><span>电话:</span>
+                            <input type="text" placeholder="请输入电话号码" class='J_lastPTel' onkeyup="value=value.replace(/[^\d]/g,'')"></div>
+                        <div class="filed-user"><span>地址:</span>
+                            <input type="text" placeholder="请输入联系地址" class='J_lastPAddress'>
+                        </div>
+                    </div>
+                    <div class="m-con-bd clearfix last">
+                        <div class="filed-user"><span>其他备注:</span>
+                            <input type="text" placeholder="请输入其他备注" class='J_relationElse'>
+                        </div>
+                    </div>
+                    <div class="filed-user submit">
+                        <a class="btn J_submitRelation">确认提交</a>
+                    </div>
+                </div>
+
+
+                <!--企业信息-->
+                <div class="hide j_firmContent" th:with="companyInfos = ${globalData.companyInfos != null ? globalData.companyInfos.data.companyInfo : null}">
+                    <!-- 没有企业信息时显示录入界面 -->
+                    <div th:class="'firm-empty ' + ${!#lists.isEmpty(companyInfos) ? 'hide' : ''}">
+                        <div class="m-con-bd clearfix companyInfo">
+                            <div class='J_company1 po-relative'>
+                                <div class="filed-user"><span class="font14">法定代表人真实姓名:</span>
+                                    <input type="text" placeholder="请输入法人代表真实姓名" class='J_legalPerson'><i>*</i>
+                                </div>
+                                <div class="filed-user"><span class="font14">法定代表人身份证号:</span>
+                                    <input type="text" placeholder="" class='J_legalID'><i>*</i>
+                                </div>
+                            </div>
+                            <div class='J_company2 po-relative'>
+                                <div class="filed-user"><span>手机号码:</span>
+                                    <input type="tel" placeholder="银行预留手机号码" class='J_legalNumber'><i>*</i>
+                                </div>
+                                <div class="filed-user"><span class="font14">常用联系人真实姓名:</span>
+                                    <input type="text" placeholder="" class='J_frequentName'><i>*</i>
+                                </div>
+                            </div>
+                            <div class='J_company3 po-relative'>
+                                <div class="filed-user">
+                                    <span class="font14">联系人手机号码:</span>
+                                    <input type="text" placeholder="" class='J_frequentNumber'><i>*</i>
+                                </div>
+                                <div class="filed-user">
+                                    <span class="font14">电子邮箱:</span>
+                                    <input type="email" placeholder="" class='J_firmEmail'><i>*</i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="m-con-bd clearfix companyInfo">
+                            <div class='J_company4 po-relative'>
+                                <div class="filed-user"><span>公司名称:</span>
+                                    <input type="text" placeholder="" class='J_companyName'><i>*</i></div>
+                                <div class="filed-user"><span>公司规模:</span>
+                                    <select class='J_companyPeople'>
+                                        <option selected value=''>--请选择--</option>
+                                        <option value='1'>少于50人</option>
+                                        <option value='2'>50人-150人</option>
+                                        <option value='3'>150人-500人</option>
+                                        <option value='4'>500人-1000人</option>
+                                        <option value='5'>1000人-5000人</option>
+                                        <option value='6'>5000人-10000人</option>
+                                        <option value='7'>10000人以上</option>
+                                    </select><i>*</i>
+                                </div>
+                            </div>
+                            <div class='J_company5 po-relative'>
+                                <div class="filed-user"><span>公司地址:</span>
+                                    <input type="text" class='J_companyAddress'><i>*</i></div>
+                                <div class="filed-user"><span>注册时间:</span>
+                                    <input type="text" class='J_timeRegister user-date'><i>*</i></div>
+                            </div>
+                            <div class='J_company6 po-relative'>
+                                <div class="filed-user"><span>注册资本:</span>
+                                    <input type="text" class="w235 J_moneyRegister"><i>万元*</i></div>
+                                <div class="filed-user"><span>实缴资本:</span>
+                                    <input type="text" class='w235 J_moneyActual'><i>万元*</i></div>
+                            </div>
+                            <div class='J_company7 po-relative'>
+                                <div class="filed-user"><span>股东名称:</span>
+                                    <input type="text" placeholder="" class='J_shareholderName'><i>*</i>
+                                </div>
+                                <div class="filed-user"><span>经营区域:</span>
+                                    <input type="text" placeholder="" class='J_manageArea'><i>*</i></div>
+                                <strong class='share-tip'>股份最大股东</strong>
+                            </div>
+                            <div class="filed-user"><span>股东类型:</span>
+                                <select class='J_shareholderType'>
+                                    <option selected value=''>--请选择--</option>
+                                    <option value='1'>自然人股东</option>
+                                    <option value='2'>法人股东</option>
+                                    <option value='3'>自然人股东和法人股东</option>
+                                </select></div>
+                            <div class="filed-user"><span>股东证件类型:</span>
+                                <select class='J_shareholderPapers'>
+                                    <option selected value=''>--请选择--</option>
+                                    <option value='1'>身份证</option>
+                                    <option value='2'>营业执照</option>
+                                    <option value='3'>身份证和营业执照</option>
+                                </select></div>
+                            <div class='J_company8 po-relative'>
+                                <div class="filed-user"><span class="font14">组织机构代码编号:</span>
+                                    <input type="text" class='J_organizingCode'>
+                                </div>
+                                <div class="filed-user"><span>税务登记本编号:</span>
+                                    <input type="text" class='J_taxCode'></div>
+                            </div>
+                            <div class="filed-user w100 J_company9">
+                                <span class="font14">营业执照副本编号:</span>
+                                <input type="text" class='J_businessLicense'><i>*</i>
+                                <label class="ml20">若三证合一，只需填写营业执照副本编号。</label>
+                            </div>
+                            <div class="filed-user w100 J_company10"><span>注册地址:</span>
+                                <input type="text" placeholder="" class="w80 J_registerAddress"><i>*</i>
+                            </div>
+                            <div class="filed-user w100 J_company11"><span class="font14 mr15">营业执照副本图片</span>
+                                <p class="openbank">
+                                    <span class="fadetip s_tipLicense" value="">请上传正面证件照</span>
+                                    <i>选择&nbsp;&gt;</i></p>
+                                <form id="formLicense" enctype="multipart/form-data">
+                                    <input type="file" class='J_businessLicensePhoto' name='file'>
+                                </form>
+                                <i>*</i>
+                            </div>
+                            <div class="filed-user w100 J_company12"><span class='mr15'>组织机构图片</span>
+                                <p class="openbank"><span class="fadetip s_tipOrganize" value="">请上传正面证件照</span><i>选择&nbsp;
+                                    &gt;</i></p>
+                                <form id="formOrganization" enctype="multipart/form-data">
+                                    <input type="file" class='J_organizationPhoto' name='file'>
+                                </form>
+                            </div>
+                            <div class="filed-user w100 J_company13"><span class="font14 mr15">税务登记证图片</span>
+                                <p class="openbank"><span class="fadetip s_tipTaxPhoto" value="">请上传正面证件照</span><i>选择&nbsp;
+                                    &gt;</i></p>
+                                <form id="formTaxPhoto" enctype="multipart/form-data">
+                                    <input type="file" class='J_taxPhoto' name='file'>
+                                </form>
+                            </div>
+                            <div class="filed-user w100 sweet-tip">
+                                <p>温馨提示：</p>
+                                <p>1、请上传营业执照、组织机构代码、税务登记证三证图片</p>
+                                <p>2、若三证合一，只需上传营业执照副本图片</p>
+                                <p>3、上传图片单张不超过5M</p>
+                            </div>
+                        </div>
+                        <div class="filed-user submit">
+                            <a class="btn J_submitCompany">确认提交</a>
+                            <a class="btn J_reviseCompany hide">确认修改</a>
+                            <a class="btn J_noCompany hide">不可修改</a>
+                        </div>
+                    </div>
+                    <!-- 有企业信息时显示列表 -->
+                    <div th:class="'firm-gather clearfix ' + ${#lists.isEmpty(companyInfos) ? 'hide' : ''}">
+                        <table>
+                            <tr th:each="companyInfo : ${companyInfos}">
+                                <td th:attr="companyId=${companyInfo.id}">[[${companyInfo.companyName}]]</td>
+                                <td><a class="change-company J_changeFirm">更改信息</a></td>
+                                <td><a class="delete-company J_deleteFirm">删除</a></td>
+                            </tr>
+                        </table>
+                        <input type="button" value='新增企业' class='J_addCompany'>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--尾部 start-->
+    <div th:replace="common/footer::footer (${globalData},${global.xxdVersion})"></div>
+    <!--尾部 end-->
+</div>
+<!--[if lt IE 9]>
+<iframe id="ifr_cover" frameborder="0" class="hide" scrolling="no"></iframe>
+<div id="alertBoxWrap" class="hide"></div>
+<![endif]-->
+</body>
+<script th:src="@{${global.staticHost}+'/pc/'+${global.xxdVersion}+'/build/mods/user/personalData/personalInfo/_.js'}"></script>
+</html>

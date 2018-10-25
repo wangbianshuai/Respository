@@ -1,4 +1,6 @@
-import $ from "jquery";
 import "./index.css";
+import Index from "../../common/pages/home/index";
+import DvaIndex from "../../common/dva/Index";
 
-$(document.body).append("<div>544545</div>")
+const dva = new DvaIndex(Index, window.InitialState);
+dva.Init("/", "root");

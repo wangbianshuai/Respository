@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="zh-Hans" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="shortcut icon" th:href="@{${global.staticHost}+'/pc/'+${global.xxdVersion}+'/build/css/i/favicon.ico'}">
+  <link rel="Bookmark" th:href="@{${global.staticHost}+'/pc/'+${global.xxdVersion}+'/build/css/i/favicon.ico'}">
+  <title>我的资料-个人资料-我的新新贷</title>
+  <meta name="keywords" content="P2P网贷,P2P理财,投融资,P2P贷款,无抵押小额贷款"/>
+  <meta name="description"
+    content="新新贷是中国领先的P2P投资理财及借贷款平台。严格的风控体系及银行托管风险准备金制度保障您资金安全。新手标7天期13%、活期7%+1%，秒杀标月进斗金、省心理财新元宝1个月起等优质理财产品；新商贷，新车贷，新房贷等专业贷款产品，满足您投资及贷款的不同需求。5秒注册即可获赠新手红包108元。P2P理财、P2P贷款、小额投资、无抵押贷款信用贷款，就上新新贷！"/>
+  
+  <link th:href="@{${global.staticHost}+'/pc/'+${global.xxdVersion}+'/build/css/reset.css'}" rel="stylesheet">
+  <link rel="stylesheet" th:href="@{${global.staticHost}+'/pc/'+${global.xxdVersion}+'/build/mods/company/account/_.css'}"/>
+</head>
+<body>
+<div id="J_wrapBody">
+  <!--头部 start-->
+  <div th:replace="common/header::company-header(true)"></div>
+  <!--头部 end-->
+  <div class="g-top">
+      <div class="g-top-con">
+          <div class="container-1200">
+              <a href="/">首页</a> &gt; <a href="/usercenter/accountInfo.html">我的新新贷</a> &gt; <a
+                  href="javascript:void(0);">企业用户</a> &gt; <a href="javascript:void(0);">我的账户</a>
+          </div>
+      </div>
+  </div>
+  <div class="info-contaner clearfix">
+    <!--左侧菜单-->
+    <div th:replace="usercenter/common/menu::company-menu('home', 'account')"></div>
+    <div class="g-right">
+      <div class="m-con-wrap" id="account">
+        <div class="m-con-hd title">
+          我的账户<span>（企业版）</span>
+        </div>
+        <div class="user-detail flex-container">
+          <div class="boad flex-item" th:with="nowHours=${#dates.createNow().hours}">
+            <div class="boad-title">
+              <span style="color:#333;" th:if="${nowHours lt 6}">凌晨好，</span>
+              <span style="color:#333;" th:if="${nowHours ge 6} and ${nowHours lt 12}">上午好，</span>
+              <span style="color:#333;" th:if="${nowHours ge 12} and ${nowHours lt 18}">下午好，</span>
+              <span style="color:#333;" th:if="${nowHours ge 18} and ${nowHours le 23}">晚上好，</span>
+              <span th:text="${globalData.nickName}">xxxx公司</span></div>
+            <div class="boad-extra">上次登录：[[${globalData.userDetailInfo.data.userDetailInfo.lastLoginTime}]]</div>
+          </div>
+          <div class="boad flex-item">
+            <div>账户余额(元)</div>
+            <div class="blue-num">[[${companyDetailInfo.accountBalance}]]</div>
+          </div>
+          <div class="boad flex-item">
+            <div>待还总额(元)</div>
+            <div class="orange-num">[[${companyDetailInfo.returnedAmount}]]</div>
+          </div>
+          <div class="boad flex-item">
+            <div>累计借款(元)</div>
+            <div class="blue-num">[[${companyDetailInfo.accumulatedLoan}]]</div>
+          </div>
+        </div>
+        <div class="flex-container user-btns">
+          <div class="boad flex-item">
+            <button class="m-btn m-btn-primary" onclick="window.location.href='/myloan/loan/9.html'" style="width:200px"><span>我要借款</span></button>
+          </div>
+          <div class="boad flex-item">
+            <button onclick="window.location.href='/usercenter/company/recharge.html'" class="m-btn m-btn-primary"><span>充值</span></button>
+          </div>
+          <div class="boad flex-item">
+            <button onclick="window.location.href='/usercenter/company/withdraw.html'" class="m-btn"><span>提现</span></button>
+          </div>
+          <div class="boad flex-item">
+            <button onclick="window.location.href='/account/repaydetail.html'" class="m-btn"><span>还款</span></button>
+          </div>
+        </div>
+        <div class="m-con-hd title">我的借款</div>
+        <div class="table">
+          <table>
+            <thead>
+              <tr>
+                <th>下一个还款日</th>
+                <th>借款标题</th>
+                <th>借款类型</th>
+                <th>借款金额</th>
+                <th>年利率</th>
+                <th>期限</th>
+                <th>操作</th>
+              </tr>
+            </thead>
+    
+            <tbody>
+              <tr th:if="not ${companyLoanInfoList.empty}" th:each="companyLoanInfo : ${companyLoanInfoList}">
+                <td th:text="${#dates.format(companyLoanInfo.repaymentTime, 'yyyy-MM-dd')}"></td>
+                <td th:text="${companyLoanInfo.loanTitle}"></td>
+                <td th:text="${companyLoanInfo.loanType}"></td>
+                <td th:text="${companyLoanInfo.loanAmount}"></td>
+                <td th:text="${companyLoanInfo.annualRate}"></td>
+                <td th:text="${companyLoanInfo.term}"></td>
+                <td><a href="/account/repaydetail.html">查看</a></td>
+              </tr>
+
+              <tr th:if="${companyLoanInfoList.empty}" >
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--尾部 start-->
+  <div th:replace="common/footer::footer (${globalData},${global.xxdVersion})"></div>
+  <!--尾部 end-->
+</div>
+<script type="text/javascript" th:src="@{${global.staticHost}+'/pc/'+${global.xxdVersion}+'/build/mods/company/account/_.js'}"></script>
+</body>
+</html>

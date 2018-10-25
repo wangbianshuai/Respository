@@ -4,7 +4,8 @@ const PageConfigs = [], CopyConfigs = [];
 //*配置
 //html页配置
 const HtmlPageConfigs = {
-    "home/index": { chunks: ["js/jquery"] }
+    "home/index": { chunks: ["js/jquery"] },
+    "common/404": { chunks: ["js/jquery"] }
 };
 
 //复制路径列表

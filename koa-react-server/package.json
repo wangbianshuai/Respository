@@ -7,7 +7,7 @@
   "author": "",
   "license": "ISC",
   "scripts": {
-    "server": "hotnode ./src/server.dev.js",
+    "server": "hotnode ./src/server/server.dev.js",
     "start": "webpack-dev-server --open --config webpack.dev.js",
     "build": "webpack --config webpack.prod.js && gulp"
   },
@@ -21,6 +21,7 @@
     "babel-core": "^6.26.3",
     "babel-loader": "^8.0.4",
     "babel-plugin-add-module-exports": "^1.0.0",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "babel-polyfill": "^6.26.0",
     "babel-preset-env": "^1.7.0",
     "babel-preset-react": "^6.24.1",
@@ -62,9 +63,16 @@
     "ejs": "^2.6.1",
     "jquery": "^3.3.1",
     "koa": "^2.6.1",
+    "koa-bodyparser": "^4.2.1",
+    "koa-compress": "^3.0.0",
+    "koa-convert": "^1.2.0",
+    "koa-json": "^2.0.2",
+    "koa-logger": "^3.2.0",
     "koa-router": "^7.4.0",
+    "koa-session": "^5.9.0",
     "koa-static": "^5.0.0",
     "koa-views": "^6.1.4",
+    "log4js": "^3.0.6",
     "react": "^16.5.2",
     "react-dom": "^16.5.2",
     "request": "^2.88.0"

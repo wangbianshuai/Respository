@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="keywords" content="登录新新贷_新新贷">
+    <meta name="description" content="新新贷为中小微企业及民间个人提供无抵押小额贷款，企业项目融资，小额投资，P2P网贷，P2P贷款,P2P理财，P2P网络投资，无抵押贷款信用贷款服务。以专业的服务提供了有保障，高收益，低风险的投资方案。">
+    <title>登录-新新贷</title>
+    <link rel="shortcut icon" th:href="@{${global.staticHost}+'/pc/'+${global.xxdVersion}+'/build/css/i/favicon.ico'}">
+    <link rel="Bookmark" th:href="@{${global.staticHost}+'/pc/'+${global.xxdVersion}+'/build/css/i/favicon.ico'}">
+    <link th:href="@{${global.staticHost}+'/pc/'+${global.xxdVersion}+'/build/mods/company/login/_.css'}" rel="stylesheet">
+</head>
+<body>
+<div id="J_wrapBody">
+    <!--头部 start-->
+    <div th:replace="common/header::header"></div>
+    <!--头部 end-->
+    <!-- login-center -->
+    <div class="container">
+        <div class="regtips clearfix">
+            <p class="detail">
+                还没有账号？<a href="/usercenter/company/register.html" class="right-blue">立即注册</a>
+            </p>
+        </div>
+        <div class="account-box">
+            <div class="layout clearfix">
+                <div class="account-left">
+                    <img th:src="@{${global.staticHost}+'/pc/'+${global.xxdVersion}+'/build/img/login_banner.png'}"  alt=""/>
+                </div>
+
+                <div class="account-right">
+                    <form id="form">
+                        <div class="error-tips tips-border" id="tipsBorder" style='visibility: hidden;'>
+                            <span id="errorTips"></span>
+                            <button id="closeBtn" class="close"></button>
+                        </div>
+                        <div class="username  userinfo clearfix">
+                            <input type="text" name="username" th:value="${username}" autocomplete="off" class="user" placeholder="请输入手机号／邮箱／用户名" id="username">
+                        </div>
+                        <div class="userpsw userinfo">
+                            <input type="password" name="userpsw" placeholder="请输入登录密码" id="userpsw" class="psw">
+                        </div>
+                        <div class="yzm clearfix">
+                            <input type="text" name="yzm" class="verifyCode" placeholder="请输入验证码" id="verifyCode" maxlength="4" autocomplete="off">
+                            <div class="getVerify">
+                                <div class="getLayout clearfix">
+                                    <img src="/userCenter/kaptcha.jpg" class="verifyurl" id="verifyUrl">
+                                    <div class="resetVerify" id="resetVerify">
+                                        <img th:src="@{${global.staticHost}+'/pc/'+${global.xxdVersion}+'/build/img/refresh.png'}"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="login_remb clearfix">
+                            <input type="checkbox"  id="remember" name="remember"><span>
+                		记住登录名</span>
+                            <a href="/user/iforgetpassword.html" class="forgot-psw">忘记密码？</a>
+                        </div>
+                        <div class="login-submit clearfix">
+                            <button  id="submit">立即登录</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- login-center end  -->
+    <!--尾部 start-->
+    <!--底部-->
+    <div th:replace="common/mini-footer::footer (${globalData})"></div>
+    <!--尾部 end-->
+</div>
+<!--[if lt IE 9]>
+<iframe id="ifr_cover" frameborder="0" class="hide" scrolling="no"></iframe>
+<div id="alertBoxWrap" class="hide"></div>
+<![endif]-->
+</body>
+<script th:src="@{${global.staticHost}+'/pc/'+${global.xxdVersion}+'/build/mods/company/login/_.js'}"></script>
+</html>

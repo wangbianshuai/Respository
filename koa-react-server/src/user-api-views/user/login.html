@@ -1,0 +1,77 @@
+<!Doctype html>
+<html lang="zh-cn" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" th:href="@{${global.staticHost}+'/pc/'+${global.xxdVersion}+'/build/css/i/favicon.ico'}">
+    <link rel="Bookmark" th:href="@{${global.staticHost}+'/pc/'+${global.xxdVersion}+'/build/css/i/favicon.ico'}">
+    <title>【新新贷官网】专业透明的网络借贷平台，P2P网贷，网上贷款借款、投融资信息中介平台</title>
+    <meta name="keywords" content="新新贷，P2P网贷，P2P理财，投资理财，网上理财，新元宝，月月派，新手专享，投融资，贷款，企业贷款，无抵押小额贷款，借款"/>
+    <meta name="description"
+          content="新新贷是中国专业的互联网金融P2P网络借贷信息中介平台，为出借人和借款人提供省心的互联网金融信息服务。资金银行存管、严格的风控体系、信息披露透明等多重安全保障措施。"/>
+    <link th:href="@{${global.staticHost}+'/pc/'+${global.xxdVersion}+'/build/mods/user/login/_.css'}" rel="stylesheet">
+</head>
+<body>
+<div id="J_wrapBody">
+    <div th:replace="common/header::header"></div>
+    <div class="container">
+        <div class="regtips clearfix">
+            <p class="detail">
+                还没有忘记账号？<a href="/user/iregister.html" class="right-blue">立即注册</a>
+            </p>
+        </div>
+        <div class="account-box">
+            <div class="layout clearfix">
+                <div class="account-left">
+                    <img th:src="@{${global.staticHost}+'/pc/'+${global.xxdVersion}+'/build/img/login_banner.png'}" />
+                </div>
+
+                <div class="account-right">
+                    <form id="form">
+                        <div class="error-tips tips-border" id="tipsBorder" style='visibility: hidden;'>
+                            <span id="errorTips"></span>
+                            <button id="closeBtn" class="close"></button>
+                        </div>
+                        <div class="username  userinfo clearfix">
+                            <input type="text" name="username" autocomplete="off" class="user" placeholder="请输入手机号／邮箱／用户名" id="username">
+                        </div>
+                        <div class="userpsw userinfo">
+                            <input type="password" name="userpsw" placeholder="请输入登录密码" id="userpsw" class="psw">
+                        </div>
+                        <div class="yzm clearfix">
+                            <input type="text" name="yzm" class="verifyCode" placeholder="请输入验证码" id="verifyCode" maxlength="4">
+                            <div class="getVerify">
+                                <div class="getLayout clearfix">
+
+                                    <img src="/randCode/getVerifyCode.html" class="verifyurl" id="verifyUrl">
+                                    <div class="resetVerify" id="resetVerify">
+                                        <img th:src="@{${global.staticHost}+'/pc/'+${global.xxdVersion}+'/build/img/refresh.png'}" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="login_remb clearfix">
+                            <input type="checkbox"  id="remember" name="remember"><span>
+                		记住登录名
+                	</span>
+                            <a href="/user/iforgetpassword.html" class="forgot-psw">忘记密码？</a>
+                        </div>
+                        <div class="login-submit clearfix">
+                            <button  id="submit">立即登录</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div th:replace="common/mini-footer::footer (${globalData})"></div>
+</div>
+<!--[if lt IE 9]>
+<iframe id="ifr_cover" frameborder="0" class="hide" scrolling="no"></iframe>
+<div id="alertBoxWrap" class="hide"></div>
+<![endif]-->
+</body>
+<script th:src="@{${global.staticHost}+'/pc/'+${global.xxdVersion}+'/build/js/common/require.min.js'}"></script>
+<script th:src="@{${global.staticHost}+'/pc/'+${global.xxdVersion}+'/build/mods/user/login/_.js'}"></script>
+</html>

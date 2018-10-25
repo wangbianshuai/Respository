@@ -44,7 +44,7 @@ module.exports = [merge(common, {
     }
 }),
 {
-    entry: { server: './src/server.prod.js' },
+    entry: { server: './src/server/server.prod.js' },
     output: {
         path: path.resolve(__dirname, 'dist/server'),
         filename: '[name].js',

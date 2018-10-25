@@ -1,0 +1,67 @@
+<!Doctype html>
+<html lang="zh-cn" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" th:href="@{${global.staticHost}+'/pc/'+${global.xxdVersion}+'/build/css/i/favicon.ico'}">
+    <link rel="Bookmark" th:href="@{${global.staticHost}+'/pc/'+${global.xxdVersion}+'/build/css/i/favicon.ico'}">
+    <title>新新贷-系统提示</title>
+    <meta name="keywords" content="新新贷，P2P网贷，P2P理财，投资理财，网上理财，新元宝，月月派，新手专享，投融资，贷款，企业贷款，无抵押小额贷款，借款"/>
+    <meta name="description"
+          content="新新贷是中国专业的互联网金融P2P网络借贷信息中介平台，为出借人和借款人提供省心的互联网金融信息服务。资金银行存管、严格的风控体系、信息披露透明等多重安全保障措施。"/>
+    <link th:href="@{${global.staticHost}+'/pc/'+${global.xxdVersion}+'/build/mods/detail/purchaseSuccess/_.css'}"
+          rel="stylesheet">
+</head>
+<body>
+<div id="J_wrapBody">
+    <div th:replace="common/header::header"></div>
+
+    <div class="detail-crumbs">
+        <div class="crumbs">
+            <a href="//www.xinxindai.com/">首页</a> &gt; <a href='/usercenter/accountInfo.html'>我的新新贷</a> &gt; <b>操作成功</b>
+        </div>
+    </div>
+
+    <div class='container'>
+        <div class='success'>
+            <div class='success-focus'>
+                <!--<h2><i></i>恭喜您，操作成功！</h2>-->
+                <!--<div class='start-time'>-->
+                <!--<p><i class='clock'></i><span class="start-date"></span></p>-->
+                <!--<p class='start-info'>开始计息</p>-->
+                <!--</div>-->
+                <!--<div class='arrows'></div>-->
+                <!--<div class='end-time'>-->
+                <!--<p><i class='saving-pot'></i><span class="end-date"></span></p>-->
+                <!--<p class='end-info'>到期退出</p>-->
+                <!--</div>-->
+                <!--<input type="button" value='继续投标' class='purchase'>-->
+                <!--<a class='record' target='_blank'>我的出借记录</a>-->
+                <h2><i></i>恭喜您，加入成功！</h2>
+                <div class="button-warp">
+                    <input type="button" value='查看我的加入记录' class='record'>
+                    <input type="button" value='继续投标' class='purchase'>
+                </div>
+            </div>
+            <div class="notice-txt">
+                【重要提醒】根据政策对您权益保障的合规性要求，您需要在服务期到期后，在加入记录中点击”申请退出“按钮进行债权转让，全部债权转让完成后资金将返至您新新贷账户
+            </div>
+            <!--<a class='invitation' href='/popularize/gomypopularizeactivity.html' target='_blank'><i></i>邀好友，赢奖金</a>-->
+        </div>
+        <div class='recommend'>
+            <h3><i></i>向你推荐</h3>
+            <div class='recommend-focus'>
+            </div>
+        </div>
+    </div>
+    <div th:replace="common/footer::footer (${globalData},${global.xxdVersion})"></div>
+</div>
+<!--[if lt IE 9]>
+<iframe id="ifr_cover" frameborder="0" class="hide" scrolling="no"></iframe>
+<div id="alertBoxWrap" class="hide"></div>
+<![endif]-->
+</body>
+<script th:src="@{${global.staticHost}+'/pc/'+${global.xxdVersion}+'/build/js/common/require.min.js'}"></script>
+<script th:src="@{${global.staticHost}+'/pc/'+${global.xxdVersion}+'/build/mods/detail/purchaseSuccess/_.js'}"></script>
+</html>

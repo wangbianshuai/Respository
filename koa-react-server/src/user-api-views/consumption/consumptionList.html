@@ -1,0 +1,112 @@
+<!Doctype html>
+<html lang="zh-cn" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" th:href="@{${global.staticHost}+'/pc/'+${global.xxdVersion}+'/build/css/i/favicon.ico'}">
+    <link rel="Bookmark" th:href="@{${global.staticHost}+'/pc/'+${global.xxdVersion}+'/build/css/i/favicon.ico'}">
+    <title>散标直投_新宜贷</title>
+    <meta name="keywords" content="新新贷，P2P网贷，P2P理财，投资理财，网上理财，新元宝，月月派，新手专享，投融资，贷款，企业贷款，无抵押小额贷款，借款"/>
+    <meta name="description"
+          content="新新贷是中国专业的互联网金融P2P网络借贷信息中介平台，为出借人和借款人提供省心的互联网金融信息服务。资金银行存管、严格的风控体系、信息披露透明等多重安全保障措施。"/>
+    <link th:href="@{${global.staticHost}+'/pc/'+${global.xxdVersion}+'/build/mods/detail/consumptionList/_.css'}" rel="stylesheet">
+</head>
+<body>
+<div id="J_wrapBody">
+    <div th:replace="common/header::header"></div>
+
+    <div class="detail-crumbs">
+        <div class="crumbs">
+            <a href="//www.xinxindai.com/">首页</a> &gt; <b>新宜贷</b>
+        </div>
+    </div>
+
+    <div class='container'>
+        <h3>新宜贷<span><i></i>资金由存管银行全程监控</span></h3>
+        <div class='main-product'>
+            <div class='main-catalogue'>
+                <p class="borrow-item">近期借款项目</p>
+                <div class='catalogue clearfix'>
+                    <!--<div class='rate-catalogue'>
+                        <span>利率：</span>
+                        <a href="javascript:;" class='allRate'>全部</a>
+                        <a href ="javascript:;">1-8%</a>
+                        <a href="javascript:;">8-12%</a>
+                        <a href="javascript:;">12-18%</a>
+                        <a href="javascript:;">18%以上</a>
+                    </div>-->
+                    <div class='pagination page-catalogue'>
+
+                    </div>
+                </div>
+            </div>
+            <div class='consumption'>
+                <div class="consumption-list" th:each="item,itemStat : ${globalData.bids.data.items}">
+                    <div class='list clearfix'>
+                        <div class='list-infomation'>
+
+                            <div class='account-img f-left'>
+                                <div th:class="${'img-bg grade'+item.riskGrade}">
+                                    <p>新新贷根据内部风控部门制定的风险定价策略，将借款项目按从低到高分为 A-E 5个风险评级，不同的风险评级将对应不同的借款利率及风险，请您谨慎选择<i></i></p>
+
+                                </div>
+                            </div>
+                            <div class='list-focus f-left'>
+                                <h4><a th:href="${'/detail/consumption/' + item.bidCode + '.html'}" target='_blank'>[[${item.bidName}]]</a><span class='consumption-icon'><i><b></b></i>新宜贷</span></h4>
+                                <p>历史年化收益：<span class='annualized-returns'
+                                                th:text="${#numbers.formatDecimal(item.plannedAnnualRate,1,'COMMA',2,'POINT')}"></span><i>%</i></p>
+                                <p class='time-limit'>期限：<span class='limit-month'
+                                                               th:text="${item.leastPeriodValue}"></span>个月</p>
+                            </div>
+                        </div>
+                        <div class='f-left consumption-detail'>
+                            <p class='surplus'>剩余：<span
+                                    th:text="${#numbers.formatDecimal(item.leftTenderAmount,1,'COMMA',2,'POINT')}"></span>元
+                            </p>
+                            <div class='progress-bar'>
+                                <div class='existing'
+                                     th:style="${'width: ' + #numbers.formatInteger(((item.bidAmount - item.leftTenderAmount)*1.0) / item.bidAmount * 100, 0) + '%'}"></div>
+                            </div>
+                            <p>借款金额：<span
+                                    th:text="${#numbers.formatDecimal(item.bidAmount,1,'COMMA',2,'POINT')}"></span>元
+                            </p>
+                            <div th:switch="${item.status.code}">
+                                <a th:href="${'/detail/consumption/' + item.bidCode + '.html'}" target="_blank" th:case="BIDDING" class='purchase'>立即加入</a>
+                                <a href="javascript:;" th:case="*" class='purchase no-purchase'>已抢光</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class='pagination consumption-page'>
+
+            </div>
+        </div>
+        <div class='consumption-tabs'>
+            <ul class='clearfix nav' id='consumptionNav'>
+                <li class='active problems-btn'><a href="javascript:;">常见问题</a></li>
+            </ul>
+            <div class='tab-content' id='tab-content'>
+                <div class='j_tabContent tab-desc ask-answer'>
+                    <ul class='clearfix'>
+                        <li><a href="/help/notice.html#help_0" target='_blank'>投标后可以提前赎回吗？</a></li>
+                        <li><a href="/help/notice.html#help_1" target='_blank'>什么是自动投标?</a></li>
+                        <li><a href="/help/notice.html#help_2" target='_blank'>提现的时间是怎样安排的？</a></li>
+                        <li><a href="/news/newsList/story.html" target='_blank'>新新贷出借人的故事</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div th:replace="common/footer::footer (${globalData},${global.xxdVersion})"></div>
+</div>
+<!--[if lt IE 9]>
+<iframe id="ifr_cover" frameborder="0" class="hide" scrolling="no"></iframe>
+<div id="alertBoxWrap" class="hide"></div>
+<![endif]-->
+</body>
+<script th:src="@{${global.staticHost}+'/pc/'+${global.xxdVersion}+'/build/js/common/require.min.js'}"></script>
+<script th:src="@{${global.staticHost}+'/pc/'+${global.xxdVersion}+'/build/mods/detail/consumptionList/_.js'}"></script>
+</html>
