@@ -29,7 +29,7 @@ pageConfig.PageConfigs.forEach(p => { entry[p.name] = p.jsPath; pluginsList.push
 
 pageConfig.CommonJsConfigs.forEach(c => {
     if (!entry[c.name]) entry[c.name] = c.jsName;
-    if (!alias[c.aliasPath] && c.aliasPath) alias[c.jsName] = path.resolve(__dirname, c.aliasPath)
+    if (!alias[c.aliasPath] && c.aliasPath) alias[c.jsName] = path.resolve(__dirname, c.aliasPath);
 });
 
 module.exports = {

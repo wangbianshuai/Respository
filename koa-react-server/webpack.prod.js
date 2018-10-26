@@ -7,16 +7,18 @@ const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const pageConfig = require("./webpack.page.js");
 const _externals = require('externals-dependencies');
 
-const cacheGroups = {};
+const cacheGroups = {}, alias = {};
 
 pageConfig.CommonJsConfigs.forEach(c => {
     cacheGroups[c.jsName] = {
-        test: new RegExp(c.jsName),
-        chunks: "initial",
+        test: c.test,
         name: c.name,
-        priority: c.priority,
-        enforce: true
+        chunks: "initial",
+        enforce: true,
+        priority: c.priority
     }
+
+    if (!alias[c.aliasPath] && c.aliasPath) alias[c.jsName] = path.resolve(__dirname, c.aliasPath);
 });
 
 module.exports = [merge(common, {
@@ -27,6 +29,9 @@ module.exports = [merge(common, {
         publicPath: '/'
     },
     mode: "production",
+    performance: {
+        hints: false
+    },
     plugins: [
         new CleanWebpackPlugin(['dist']),
         new UglifyJSPlugin(),
@@ -75,12 +80,15 @@ module.exports = [merge(common, {
                 loader: 'babel-loader',
                 options: {
                     presets: ["@babel/preset-react", "@babel/preset-env"],
-                    plugins: ['@babel/transform-runtime', "@babel/plugin-transform-modules-commonjs", "add-module-exports"],
+                    plugins: ['@babel/transform-runtime', "@babel/plugin-transform-modules-commonjs", "add-module-exports"]
                 }
             }
         }]
     },
-    resolve: { extensions: [".js"] },
+    resolve: {
+        extensions: [".js"],
+        alias: alias
+    },
     plugins: [
         new UglifyJSPlugin()
     ]

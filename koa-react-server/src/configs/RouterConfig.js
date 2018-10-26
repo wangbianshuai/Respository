@@ -5,7 +5,7 @@ const r = (entryPath, routePath, chunks) => { return { entryPath, routePath, chu
 //entryPath:打包入口路径（controller js）、koa视图路径、react组件路径（react-components js）三者相对路径一致。
 //chunks：打包通用js集合
 
-const chunks1 = ["react", "react-dom", "dav", "dva-common", "utils-common"];
+const chunks1 = ["react-dva", "util-common", "dva-common"];
 const chunks2 = ["jquery"]
 
 const RouterConfigs = [
@@ -21,7 +21,7 @@ RouterConfigs.forEach(c => {
 
     const template = `./src/views/index.html`;
     const jsPath = `./src/controllers/${c.entryPath}.js`;
-    const filename = `${c.entryPath}.html`;
+    const filename = `views/${c.entryPath}.html`;
     let chunks = c.chunks || [];
     chunks = chunks.map(a => `js/${a}`);
     chunks = chunks.concat(["manifest", c.entryPath]);

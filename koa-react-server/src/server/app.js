@@ -26,7 +26,7 @@ app.use(async (ctx, next) => {
         //开始进入到下一个中间件
         await next();
 
-        if (ctx.body === undefined) ctx.redirect("/404.html");
+        //if (ctx.body === undefined) ctx.redirect("/404.html");
 
         ms = new Date() - start;
         //记录响应日志

@@ -5,7 +5,7 @@ import { renderToStaticMarkup } from 'react-dom/server';
 import request from "request";
 import ejs from 'ejs';
 import LogUtil from "../utils/LogUtil";
-import DvaIndex from "../../common/dva/Index";
+import DvaIndex from "../../dva-common/Index";
 
 export default class IndexRouter {
     constructor(isProd) {
@@ -30,19 +30,22 @@ export default class IndexRouter {
         let v = null;
         for (let key in KoaRoutes) {
             v = KoaRoutes[key];
-            this.RouterList.push({ key, path: `${v}.html`, component: require(`../../react-components/${v}.js`) })
+            this.RouterList.push({ key, path: `${v}.html`, component: require(`../../components/${v}.js`) })
         }
     }
 
     InitRouter(path, component) {
         return async (ctx) => {
             try {
-                const dva = new DvaIndex(component, {}, { ctx });
+                const Page = {};
+                const dva = new DvaIndex(component, {}, { ctx, Page });
                 const root = renderToStaticMarkup(React.createElement(dva.Init()));
                 const initialState = JSON.stringify(dva.GetState());
+                const model = Page.Model || {};
 
-                if (this.IsProd) await ctx.render(path, { root, initialState });
-                else await this.GetHtml(path).then(res => ctx.body = ejs.render(res, { root, initialState }), res => ctx.body = res);
+                const data = { root, initialState, ...model };
+                if (this.IsProd) await ctx.render(path, data);
+                else await this.GetHtml(path).then(res => ctx.body = ejs.render(res, data), res => ctx.body = res);
             }
             catch (error) {
                 LogUtil.Error("页面请求异常", { path, error });
@@ -53,7 +56,7 @@ export default class IndexRouter {
 
     GetHtml(url) {
         url = `http://localhost:8090/views/${url}`;
-
+        console.log(url);
         return new Promise((resolve, reject) => {
             request(url, (error, response, body) => {
                 if (!error && response.statusCode === 200) resolve(body);

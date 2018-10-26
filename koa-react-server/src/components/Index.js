@@ -8,6 +8,12 @@ export default class Index extends Component {
         this.state = {};
 
         this.Id = Common.CreateGuid();
+
+        if (props.Page) props.Page.Model = this.GetModel();
+    }
+
+    GetModel() {
+        return {};
     }
 
     static MapDispatchToProps(dispatch) {

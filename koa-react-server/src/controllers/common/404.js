@@ -1,4 +1,4 @@
-import Page404 from "../../react-components/common/404";
+import Page404 from "../../components/common/404";
 import DvaIndex from "DavCommon";
 
 const dva = new DvaIndex(Page404, window.InitialState);

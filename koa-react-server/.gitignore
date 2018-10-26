@@ -5,3 +5,6 @@ mock
 npm-debug.log*
 package-lock.json
 .vscode
+*/logs/
+logs/
+**/*/logs/
