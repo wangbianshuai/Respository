@@ -9,7 +9,7 @@ export default class Index {
         this.props = props || {};
     }
 
-    Init(path, rootId) {
+    Init(rootId, path) {
         const history = rootId ? createBrowserHistory() : createMemoryHistory();
         path && history.push(path);
 
@@ -24,7 +24,7 @@ export default class Index {
     }
 
     LoadModels() {
-
+        //this.app.model(require("./models/user").default);
     }
 
     GetState() {

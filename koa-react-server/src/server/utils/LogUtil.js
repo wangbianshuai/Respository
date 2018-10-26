@@ -1,9 +1,18 @@
 var log4js = require('log4js');
 
-var log_config = require('../configs/Log4Config');
-
-//加载配置文件
-log4js.configure(log_config);
+//加载配置
+log4js.configure({
+    appenders: {
+        errorLogger: { type: 'dateFile', alwaysIncludePattern: true, pattern: "-yyyy-MM-dd-hh.log", filename: "logs/error/error" },
+        resLogger: { type: 'dateFile', category: "resLogger", alwaysIncludePattern: true, pattern: "-yyyy-MM-dd-hh.log", filename: "logs/trace/trace" },
+        infoLogger: { type: 'dateFile', category: "infoLogger", alwaysIncludePattern: true, pattern: "-yyyy-MM-dd-hh.log", filename: "logs/info/info" },
+    },
+    categories: {
+        default: { appenders: ['errorLogger'], level: "ERROR" },
+        resLogger: { appenders: ["resLogger"], level: "TRACE" },
+        infoLogger: { appenders: ["infoLogger"], level: "INFO" },
+    }
+});
 
 var logUtil = {};
 

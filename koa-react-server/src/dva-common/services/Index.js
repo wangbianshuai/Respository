@@ -1,9 +1,5 @@
-import * as Request from "../../utils/Request"
-import * as Common from "../../utils/Common";
-
-var Request = {};
-if (typeof (global) !== "undefined") Request = require("../../../server/utils/Request");
-else Request = require("../../utils/Request");
+import * as Request from "./Request"
+import { Common } from "UtilsCommon";
 
 export default class Index {
     constructor(services) {

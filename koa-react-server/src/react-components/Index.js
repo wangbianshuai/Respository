@@ -1,5 +1,5 @@
 import { Component } from "react"
-import * as Common from "../utils/Common";
+import { Common } from "UtilsCommon";
 
 export default class Index extends Component {
     constructor(props) {

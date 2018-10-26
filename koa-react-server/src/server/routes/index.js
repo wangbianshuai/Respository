@@ -1,4 +1,4 @@
-import config from '../configs/RouteConfig';
+import { KoaRoutes } from "../../configs/RouterConfig";
 import Router from 'koa-router';
 import React from 'react'
 import { renderToStaticMarkup } from 'react-dom/server';
@@ -27,8 +27,10 @@ export default class IndexRouter {
 
     GetRouterList() {
         this.RouterList = [];
-        for (let key in config) {
-            this.RouterList.push({ key, path: `${config[key]}.html`, component: require(`../../common/pages/${config[key]}.js`) })
+        let v = null;
+        for (let key in KoaRoutes) {
+            v = KoaRoutes[key];
+            this.RouterList.push({ key, path: `${v}.html`, component: require(`../../react-components/${v}.js`) })
         }
     }
 
@@ -36,7 +38,7 @@ export default class IndexRouter {
         return async (ctx) => {
             try {
                 const dva = new DvaIndex(component, {}, { ctx });
-                const root = renderToStaticMarkup(React.createElement(dva.Init(path)));
+                const root = renderToStaticMarkup(React.createElement(dva.Init()));
                 const initialState = JSON.stringify(dva.GetState());
 
                 if (this.IsProd) await ctx.render(path, { root, initialState });

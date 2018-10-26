@@ -1,4 +1,4 @@
-import * as Common from "../../common/utils/Common"
+import { Common } from "UtilsCommon";
 import fetch from 'dva/fetch';
 
 export function Get(url, resKey) {
