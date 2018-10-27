@@ -5,7 +5,9 @@ import logger from 'koa-logger';
 import session from 'koa-session';
 import compress from 'koa-compress';
 import convert from 'koa-convert';
+import cors from "koa2-cors";
 import LogUtil from "./utils/LogUtil";
+import { Env, SetEnv } from "../configs/EnvConfig";
 
 const app = new Koa();
 
@@ -14,6 +16,7 @@ app.use(convert(session(app)));
 app.use(compress());
 app.use(bodyParser());
 app.use(json());
+app.use(cors());
 app.use(logger());
 
 // logger
@@ -23,10 +26,15 @@ app.use(async (ctx, next) => {
     //响应间隔时间
     var ms;
     try {
+        //设置环境
+        if (Env === null) SetEnv(ctx);
+
         //开始进入到下一个中间件
         await next();
 
-        //if (ctx.body === undefined) ctx.redirect("/404.html");
+        const isApi = ctx.originalUrl.toLowerCase().indexOf("/api") === 0
+
+        if (ctx.body === undefined && ctx.method === "GET" && !isApi) ctx.redirect("/404.html");
 
         ms = new Date() - start;
         //记录响应日志

@@ -111,7 +111,7 @@ export function GetRootPath() {
     let path = ""
     if (names.length > 1) {
         names.splice(names.length - 1, 1);
-        path = "/" + names.join("/");
+        path = "/" + names.join("/") + "/";
     }
 
     return window.location.protocol + "//" + window.location.host + path;

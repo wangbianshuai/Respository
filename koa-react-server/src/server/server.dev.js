@@ -19,4 +19,9 @@ const IndexRouter = require("./routes/index");
 //配置路由
 app.use(new IndexRouter(false).Init());
 
+const apiRouter = require("./routes/api");
+
+app.use(apiRouter.routes());
+app.use(apiRouter.allowedMethods());
+
 app.listen(8080);

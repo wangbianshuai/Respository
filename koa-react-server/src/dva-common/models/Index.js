@@ -1,12 +1,14 @@
 import Service from "../services/Index";
 import { Common } from "UtilsCommon";
+import { GetServiceUrl } from "../../configs/EnvConfig";
 
 export default class Index {
     constructor(config) {
-        this.namespace = config.Name
+        this.namespace = config.Name;
+        this.GetServiceUrl = config.ServiceName ? GetServiceUrl(config.ServiceName) : null;
         this.state = { Loading: false }
 
-        this.Service = new Service(config.ActionList)
+        this.Service = new Service(config.ActionList, this.GetServiceUrl);
 
         this.ActionList = []
         if (config.ActionList) {

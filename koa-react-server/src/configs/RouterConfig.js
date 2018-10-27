@@ -2,7 +2,7 @@ const r = (entryPath, routePath, chunks) => { return { entryPath, routePath, chu
 
 //路由配置
 //routePath:koa访问路由路径，多个用字符串数
-//entryPath:打包入口路径（controller js）、koa视图路径、react组件路径（react-components js）三者相对路径一致。
+//entryPath:打包入口路径（controller js）、koa视图路径、react组件路径（components js）三者相对路径一致。
 //chunks：打包通用js集合
 
 const chunks1 = ["react-dva", "util-common", "dva-common"];

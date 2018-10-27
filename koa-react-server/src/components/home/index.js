@@ -6,7 +6,7 @@ class Index extends BaseIndex {
     constructor(props) {
         super(props);
 
-       
+
     }
 
     GetModel() {
@@ -16,21 +16,34 @@ class Index extends BaseIndex {
             description: "新新贷是中国专业的互联网金融P2P网络借贷信息中介平台，为出借人和借款人提供省心的互联网金融信息服务。资金银行存管、严格的风控体系、信息披露透明等多重安全保障措施。"
         }
     }
-    
-    componentDidMount() {
 
+    componentDidMount() {
+        this.props.UserInfo === undefined && this.Dispatch("User", "GetUserInfo");
     }
 
     PropsChanged(nextProps) {
+        //用户信息
+        this.ReceiveUserInfo(nextProps);
     }
+
+    ReceiveUserInfo(nextProps) {
+        if (this.JudgeChanged(nextProps, "UserInfo") && nextProps.UserInfo.UserId) {
+        }
+    }
+
 
     TestClick() {
         alert("123")
     }
 
     render() {
+        const userInfo = this.GetPropsValue("UserInfo", "UserId", {});
+
         return (
             <div className="VideoTopic">
+                <div>姓名：{userInfo.name}</div>
+                <div>性别：{userInfo.gender}</div>
+                <div>年龄：{userInfo.age}</div>
                 <input type="button" value="测试" onClick={this.TestClick.bind(this)} />
             </div>
         )
@@ -39,9 +52,10 @@ class Index extends BaseIndex {
 
 function mapStateToProps(state, ownProps) {
     const props = {
+        UserInfo: state.User.UserInfo
     };
 
-    //console.log(props);
+    console.log(props);
 
     return props;
 }

@@ -46,6 +46,11 @@ export default class Index extends Component {
     PropsChanged(nextProps) {
     }
 
+    GetPropsValue(key, idName, defaultValue) {
+        const value = this.props[key]
+        return value && value[idName] ? value : defaultValue;
+    }
+
     SetLoading(nextProps) {
         //if (nextProps.Loading) Toast.loading("加载中……", 0)
         //else if (nextProps.Loading === false) Toast.hide()

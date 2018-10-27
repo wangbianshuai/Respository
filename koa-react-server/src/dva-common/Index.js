@@ -1,6 +1,9 @@
 import dva from "dva";
 import React from "react";
 import { createBrowserHistory, createMemoryHistory } from "history";
+import ModelsConfig from "../configs/ModelsConfig";
+import ModelsIndex from "./models/Index";
+import { Common } from "UtilsCommon";
 
 export default class Index {
     constructor(component, initialState, props) {
@@ -24,7 +27,7 @@ export default class Index {
     }
 
     LoadModels() {
-        //this.app.model(require("./models/user").default);
+        ModelsConfig.forEach(m => this.app.model(Common.ToModels(new ModelsIndex(m))));
     }
 
     GetState() {
