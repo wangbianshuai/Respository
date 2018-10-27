@@ -1,6 +1,6 @@
 import Service from "../services/Index";
 import { Common } from "UtilsCommon";
-import { GetServiceUrl } from "../../configs/EnvConfig";
+import { GetServiceUrl, IsServer } from "../../configs/EnvConfig";
 
 export default class Index {
     constructor(config) {
@@ -80,7 +80,7 @@ export default class Index {
                 if (this[fnName]) state[a.StateName] = this[fnName](state, action)
                 else state[a.StateName] = action.payload
 
-                if (!Common.IsServer && window && window.localStorage) Common.SetStorage("DvaState", JSON.stringify(state));
+                if (!IsServer && window && window.localStorage) Common.SetStorage("DvaState", JSON.stringify(state));
                 return state
             }
         });

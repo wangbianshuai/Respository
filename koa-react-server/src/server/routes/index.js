@@ -56,7 +56,7 @@ export default class IndexRouter {
 
     GetHtml(url) {
         url = `http://localhost:8090/views/${url}`;
-        console.log(url);
+
         return new Promise((resolve, reject) => {
             request(url, (error, response, body) => {
                 if (!error && response.statusCode === 200) resolve(body);

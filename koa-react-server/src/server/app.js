@@ -27,14 +27,15 @@ app.use(async (ctx, next) => {
     var ms;
     try {
         //设置环境
-        if (Env === null) SetEnv(ctx);
+        if (Env === null) SetEnv(ctx, LogUtil);
 
         //开始进入到下一个中间件
         await next();
 
-        const isApi = ctx.originalUrl.toLowerCase().indexOf("/api") === 0
+        const url = ctx.originalUrl.toLowerCase();
+        const isApi = url.indexOf("/api") === 0;
 
-        if (ctx.body === undefined && ctx.method === "GET" && !isApi) ctx.redirect("/404.html");
+        if (ctx.body === undefined && ctx.method === "GET" && !isApi && url.indexOf("404.html") < 0) ctx.redirect("/404.html");
 
         ms = new Date() - start;
         //记录响应日志

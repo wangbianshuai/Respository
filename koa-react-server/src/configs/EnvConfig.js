@@ -2,15 +2,17 @@ const ServiceConfig = {
     ApiService: GetApiSericeUrl
 };
 
-var Env = null;
+var Env = null, IsServer = false, LogUtil = null;
 
 //ctx koa对象，ctx不为空表示是服务器
-function SetEnv(ctx) {
+function SetEnv(ctx, logUtil) {
+    if (logUtil) LogUtil = logUtil;
     if (ctx) return GetServerEnv(ctx);
     else return GetWebEnv();
 }
 
 function GetServerEnv(ctx) {
+    IsServer = true;
     var h = ctx.request.hostname.toLowerCase();
     if (h.indexOf("localhost") >= 0) return "local"
     else if (h.indexOf("stage") >= 0) return "stage"
@@ -44,5 +46,7 @@ function GetServiceUrl(serverName) {
 export {
     GetServiceUrl,
     SetEnv,
-    Env
+    Env,
+    LogUtil,
+    IsServer
 }

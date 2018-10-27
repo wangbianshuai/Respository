@@ -9,15 +9,15 @@ const chunks1 = ["react-dva", "util-common", "dva-common"];
 const chunks2 = ["jquery"]
 
 const RouterConfigs = [
-    r("home/index", ["/", "index"], chunks1),
-    r("common/404", "404.html", chunks1)
+    r("home/index", ["/", "/index.html"], chunks1),
+    r("common/404", "/404.html", chunks1)
 ];
 
 const KoaRoutes = {}, WebpackPageConfigs = [];
 
 RouterConfigs.forEach(c => {
     if (c.routePath.forEach) c.routePath.forEach(p => KoaRoutes[p] = c.entryPath);
-    else KoaRoutes[c] = c.entryPath;
+    else KoaRoutes[c.routePath] = c.entryPath;
 
     const template = `./src/views/index.html`;
     const jsPath = `./src/controllers/${c.entryPath}.js`;

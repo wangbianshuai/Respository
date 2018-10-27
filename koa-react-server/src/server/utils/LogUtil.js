@@ -23,7 +23,7 @@ var infoLogger = log4js.getLogger('infoLogger');
 logUtil.Error = function (title, obj) {
     const list = [];
     //错误信息开始
-    list.push(`\n*************** ${title} error log start ***************`);
+    list.push(`\n\n*************** ${title} error log start ***************`);
 
     for (let key in obj) list.push(`${key}：${obj[key]}`)
 
@@ -38,7 +38,7 @@ logUtil.Error = function (title, obj) {
 logUtil.Info = function (title, obj) {
     const list = [];
     //信息开始
-    list.push(`\n*************** ${title} info log start ***************`);
+    list.push(`\n\n*************** ${title} info log start ***************`);
 
     for (let key in obj) list.push(`${key}：${obj[key]}`)
 

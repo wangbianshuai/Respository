@@ -318,7 +318,3 @@ export function GetIntValue(value) {
     const i = parseInt(value, 10)
     return isNaN(i) ? 0 : i;
 }
-
-export function IsServer() {
-    return typeof (global) !== "undefined";
-}

@@ -6,7 +6,11 @@ class Index extends BaseIndex {
     constructor(props) {
         super(props);
 
+        this.Init();
+    }
 
+    Init() {
+        this.props.UserInfo === undefined && this.Dispatch("User", "GetUserInfo");
     }
 
     GetModel() {
@@ -18,7 +22,7 @@ class Index extends BaseIndex {
     }
 
     componentDidMount() {
-        this.props.UserInfo === undefined && this.Dispatch("User", "GetUserInfo");
+
     }
 
     PropsChanged(nextProps) {
