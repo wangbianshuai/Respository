@@ -30,14 +30,16 @@ export default class Index {
     }
 
     InvokeService(fn, type) {
-        return function* ({ payload, isloading }, { call, put }) {
+        return function* ({ payload, isloading, callback }, { call, put }) {
             if (isloading !== false) yield put({ type: "ChangeLoading", payload: true })
 
             const response = yield call(fn, payload)
 
             if (isloading !== false) yield put({ type: "ChangeLoading", payload: false })
 
-            yield put({ type: `Set_${type}`, payload: response })
+            yield put({ type: `Set_${type}`, payload: response });
+
+            if (IsServer && callback) callback(response)
         }
     }
 

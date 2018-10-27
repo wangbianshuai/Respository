@@ -39,7 +39,11 @@ export default class IndexRouter {
             try {
                 const Page = {};
                 const dva = new DvaIndex(component, {}, { ctx, Page });
-                const root = renderToStaticMarkup(React.createElement(dva.Init()));
+                const App = dva.Init();
+
+                await this.SyncDispatch(dva.app);
+
+                const root = renderToStaticMarkup(React.createElement(App));
                 const initialState = JSON.stringify(dva.GetState());
                 const model = Page.Model || {};
 
@@ -52,6 +56,17 @@ export default class IndexRouter {
                 ctx.body = error.toString();
             }
         }
+    }
+
+    SyncDispatch(app) {
+        return new Promise((resolve, reject) => {
+            try {
+                app._store.dispatch({
+                    type: "User/GetUserInfo", payload: {}, isloading: false, callback: (res) => resolve(res)
+                });
+            }
+            catch (err) { reject(err); }
+        });
     }
 
     GetHtml(url) {

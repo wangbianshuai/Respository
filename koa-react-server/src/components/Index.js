@@ -22,11 +22,20 @@ export default class Index extends Component {
 
     static MapDispatchToProps(dispatch) {
         return {
-            Dispatch(type, payload, isloading) { dispatch({ type: type, payload: payload, isloading: isloading }) }
+            Dispatch(type, payload, isloading, callback) { dispatch({ type, payload, isloading, callback }) }
         }
     }
 
-    Dispatch(name, actionName, payload) {
+    SyncDispatch(name, actionName, payload) {
+        return new Promise((resolve, reject) => {
+            try {
+                this.Dispatch(name, actionName, payload, (res) => resolve(res));
+            }
+            catch (err) { reject(err); }
+        });
+    }
+
+    Dispatch(name, actionName, payload, callback) {
         let isloading = true;
 
         const action = this.GetModelAction(name, actionName);
@@ -35,7 +44,7 @@ export default class Index extends Component {
             else isloading = !(this.props[action.StateName] !== undefined && this.props[action.StateName].IsSuccess !== false)
         }
 
-        this.props.Dispatch(name + "/" + actionName, payload, isloading)
+        this.props.Dispatch(name + "/" + actionName, payload, isloading, callback)
     }
 
     SetActionState(name, actionName, payload) {

@@ -1,16 +1,10 @@
 import React from "react"
 import { connect } from "dva"
-import BaseIndex from "../Index"
+import BaseIndex from "../Index";
 
 class Index extends BaseIndex {
     constructor(props) {
         super(props);
-
-        this.Init();
-    }
-
-    Init() {
-        this.props.UserInfo === undefined && this.Dispatch("User", "GetUserInfo");
     }
 
     GetModel() {
@@ -22,7 +16,7 @@ class Index extends BaseIndex {
     }
 
     componentDidMount() {
-
+        this.props.UserInfo === undefined && this.Dispatch("User", "GetUserInfo");
     }
 
     PropsChanged(nextProps) {
@@ -34,7 +28,6 @@ class Index extends BaseIndex {
         if (this.JudgeChanged(nextProps, "UserInfo") && nextProps.UserInfo.UserId) {
         }
     }
-
 
     TestClick() {
         alert("123")
@@ -59,8 +52,7 @@ function mapStateToProps(state, ownProps) {
         UserInfo: state.User.UserInfo
     };
 
-    console.log(props);
-
+    console.log(props)
     return props;
 }
 
