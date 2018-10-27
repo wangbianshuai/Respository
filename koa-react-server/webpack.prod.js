@@ -14,8 +14,7 @@ pageConfig.CommonJsConfigs.forEach(c => {
         test: c.test,
         name: c.name,
         chunks: "initial",
-        enforce: true,
-        priority: c.priority
+        enforce: true
     }
 
     if (!alias[c.aliasPath] && c.aliasPath) alias[c.jsName] = path.resolve(__dirname, c.aliasPath);
