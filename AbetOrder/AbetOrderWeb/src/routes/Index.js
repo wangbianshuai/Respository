@@ -14,6 +14,7 @@ import EntityEditPageLayout from "../layouts/EntityEditPage";
 import TabsEntityEditPageLayout from "../layouts/TabsEntityEditPage";
 import EntityEditAction from "../actions/EntityEdit"
 import ComplexDataGridAction from "../actions/ComplexDataGrid"
+import DataGridAction from "../actions/DataGrid"
 import PageExpand from "../pages/Index"
 import { routerRedux } from 'dva/router';
 
@@ -25,7 +26,7 @@ class Index extends Component {
     }
 
     componentWillMount() {
-        this.props.InitConfigState()
+        this.props.InitConfigState(this.props.PageName)
 
         this.EventActions = {};
         this.ExpandActions = {};
@@ -48,6 +49,8 @@ class Index extends Component {
         this.EventActions.EntityEdit = new EntityEditAction({ Page: this });
         //复杂对象编辑行为
         this.EventActions.ComplexDataGrid = new ComplexDataGridAction({ Page: this });
+        //复杂对象编辑行为
+        this.EventActions.DataGrid = new DataGridAction({ Page: this });
     }
 
     InvokeAction(property, params, view) {
@@ -63,7 +66,7 @@ class Index extends Component {
         let url = Common.ConfigApiUrl + this.props.PageName
         if (Common.IsDist) url += ".json";
 
-        this.props.Dispatch("Config/GetConfig", { Url: url })
+        this.props.Dispatch("Config/" + this.props.PageName + "_GetConfig", { Url: url })
     }
 
     Dispatch(action, payload) {
@@ -103,6 +106,8 @@ class Index extends Component {
 
     SetResponseMessage(d, stateName) {
         if (d && d.IsSuccess === false && d.Message) {
+            if (d.IsLogin === false) { this.props.ToPage("/Login"); return; }
+            
             let blModalMessage = false;
 
             if (this.props.PageConfig && this.props.PageConfig.ActionList) {
@@ -191,7 +196,7 @@ class Index extends Component {
     }
 
     componentWillUnmount() {
-        this.props.InitConfigState();
+        this.props.InitConfigState(this.props.PageName);
         this.props.PageConfig && this.props.PageConfig.ActionList && this.props.InitState(this.props.PageConfig.Name, this.props.PageConfig.ActionList)
     }
 
@@ -256,11 +261,11 @@ function InitTemplateConfig(config, pageId) {
 function mapStateToProps(state, ownProps) {
     const props = {}
 
-    if (state.Config.Data && state.Config.Data.Name !== ownProps.PageName) {
+    if (state.Config[ownProps.PageName] && state.Config[ownProps.PageName].Name !== ownProps.PageName) {
         props.PageConfig = undefined;
     }
     else {
-        let pageConfig = InitTemplateConfig(state.Config.Data, ownProps.PageId);
+        let pageConfig = InitTemplateConfig(state.Config[ownProps.PageName], ownProps.PageId);
         props.PageConfig = pageConfig;
 
         if (pageConfig && pageConfig.IsLoad) {
@@ -284,7 +289,7 @@ function mapStateToProps(state, ownProps) {
 
 function mapDispatchToProps(dispatch) {
     return {
-        InitConfigState() { dispatch({ type: "Config/Set_GetConfig", payload: undefined }) },
+        InitConfigState(name) { dispatch({ type: "Config/Set_" + name + "_GetConfig", payload: undefined }) },
         InitState(entityName, actionList) { actionList.forEach(a => dispatch({ type: `${entityName}/Set_${a.ActionName}`, payload: undefined })) },
         Dispatch(type, payload) { dispatch({ type: type, payload: payload }) },
         ToPage(url) { url = Common.AddUrlRandom(url); dispatch(routerRedux.replace(url)) }

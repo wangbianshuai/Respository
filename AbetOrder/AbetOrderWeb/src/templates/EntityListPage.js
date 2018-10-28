@@ -21,12 +21,13 @@ Config配置结构：
 }
 */
 
-var EntityListPageConfig = {};
+const EntityListPageConfig = {};
 
 export default function EntityListPage(config, pageId) {
-    if (EntityListPageConfig.PageId === pageId) return EntityListPageConfig;
+    const currentConfig = EntityListPageConfig[config.Name];
+    if (currentConfig && currentConfig.PageId === pageId) return currentConfig;
 
-    if (config.PageId && config.PageId === EntityListPageConfig.PageId) return;
+    if (config.PageId && currentConfig && config.PageId === currentConfig.PageId) return;
 
     config.PageId = pageId;
 
@@ -58,7 +59,7 @@ export default function EntityListPage(config, pageId) {
     InitActionList(_Config);
 
 
-    EntityListPageConfig = _Config;
+    EntityListPageConfig[config.Name] = _Config;
 
     return _Config
 }
@@ -84,6 +85,7 @@ function InitConfig(a, b) {
     a.PageIndex = 1
     a.IsGroupByInfo = false;
     a.IsInitQuery = true;
+    a.IsClearSearch = true;
     a.InitEventActionList = []
     a.ActionList = [];
     a.DataView = { Properties: [], StateName: "DataList", Name: "DataView" };
@@ -92,8 +94,8 @@ function InitConfig(a, b) {
     const copyNames = ["Title", "EntityName", "PrimaryKey", "SearchNames", "SelectNames", "DataUrl", "EditPageUrl", "TableWidth", "OperationColumnWidth",
         "IsNewAdd", "IsUpdate", "IsDelete", "IsPaging", "PageSize", "EditNames", "OrderByList", "Name", "ActionList", "UpdateStatusUrl",
         "InsertUrl", "UpdateUrl", "OperationColumnFixed", "DefaultConditions", "IsInitQuery", "DataViewComponentName",
-        "GetEntityDataUrl", "GroupByInfoHtml", "IsGroupByInfo", "QueryUrl", "IsSelfOpeartion", "SelfPropertyName",
-        "InitEventActionList", "Properties", "DataColumnNames", "DataView"];
+        "GetEntityDataUrl", "GroupByInfoHtml", "IsGroupByInfo", "QueryUrl", "IsSelfOpeartion", "SelfPropertyName", "IsRowSelection",
+        "InitEventActionList", "Properties", "DataColumnNames", "DataView", "IsExcelExport", "IsExcelImport", "IsClearSearch"];
 
     Common.Copy(a, b, copyNames)
 }
@@ -127,7 +129,7 @@ function InitSearchView(config) {
     const searchButton = {
         Name: "SearchAction",
         Type: "Button",
-        Text: "查询",
+        Text: "搜索",
         ButtonType: "primary",
         X: maxX,
         Y: maxY + 1,
@@ -136,6 +138,20 @@ function InitSearchView(config) {
     };
 
     config.SearchView.Properties.push(searchButton);
+
+    if (config.IsClearSearch) {
+        const clearButton = {
+            Name: "ClearAction",
+            Type: "Button",
+            Text: "清空",
+            X: maxX,
+            Y: maxY + 2,
+            ActionType: "Query",
+            ActionName: "ClearSearch"
+        };
+
+        config.SearchView.Properties.push(clearButton);
+    }
 
     if (config.IsInitQuery) {
         config.InitEventActionList.push({
@@ -168,11 +184,47 @@ function InitOperationView(config) {
             ActionName: "NewAdd"
         });
     }
+
+    if (config.IsExcelExport) {
+        y += 1;
+        config.OperationView.Properties.push({
+            Name: "ExcelExport",
+            Type: "Button",
+            Text: "Excel导出",
+            Icon: "file-excel",
+            X: x,
+            Y: y,
+            ActionType: "Query",
+            ActionName: "ExcelExport"
+        });
+    }
+
+    if (config.IsExcelImport) {
+        y += 1;
+        config.OperationView.Properties.push({
+            Name: "ExcelImport",
+            Type: "ExcelImport",
+            Text: "Excel导入",
+            X: x,
+            Y: y
+        });
+    }
+
+    if (Common.IsArray(config.Config.OperationProperties)) {
+        let p = null;
+        for (let i = 0; i < config.Config.OperationProperties.length; i++) {
+            y += 1;
+            p = Object.assign({ X: x, Y: y }, config.Config.OperationProperties[i]);
+            config.OperationView.Properties.push(p);
+        }
+    }
 }
 
 function InitActionList(config) {
-    config.ActionList.push(AddAction("QueryData", "DataList", "View" + config.EntityName, true));
+    const dataKey = config.QueryDataKey ? config.QueryDataKey : "View" + config.EntityName;
+    config.ActionList.push(AddAction("QueryData", "DataList", dataKey, true));
     config.ActionList.push(AddAction("QueryPage", "PageInfo", "PageInfo"));
+    if (config.IsExcelExport) config.ActionList.push(AddAction("ExcelExport", "ExcelExport"));
     let a = AddAction("GetEntityData", "EntityData", config.EntityName);
     a.Method = "GET";
     config.ActionList.push(a);

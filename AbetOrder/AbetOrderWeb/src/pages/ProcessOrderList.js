@@ -1,4 +1,5 @@
 import ProcessOrderAttach from "../pagecomponents/ProcessOrderAttach";
+import * as Common from "../utils/Common";
 
 export default class ProcessOrderList {
     constructor(pageConfig, page) {
@@ -21,18 +22,20 @@ export default class ProcessOrderList {
         const title = "查看" + params.OrderCode + "附件";
 
         if (this.AttachView === undefined) {
-            this.AttachView = { Title: title, Width: 900, Visible: true, IsOk: false };
-            this.AttachView.Component = this.GetComponent(params.OrderId);
+            this.AttachView = { Id: Common.CreateGuid(), Title: title, Width: 900, Visible: true, IsOk: false };
+            this.AttachView.PageId = Common.CreateGuid();
+            this.AttachView.Component = this.GetComponent(params.OrderId, 2);
             this.Page.SetModalDialog(this.AttachView);
         }
-        else this.Load(params.OrderId);
+        else { this.AttachView.Title = title; this.Load(params.OrderId, 2); }
     }
 
-    GetComponent(orderId) {
-        return <ProcessOrderAttach Property={this.AttachView} Page={this.Page} OrderId={orderId} />
+
+    GetComponent(orderId, fileType) {
+        return <ProcessOrderAttach PageId={this.AttachView.PageId} Property={this.AttachView} Page={this.Page} OrderId={orderId} FileType={fileType} />
     }
 
-    Load(orderId) {
-        this.AttachView.LoadData && this.AttachView.LoadData(orderId);
+    Load(orderId, fileType) {
+        this.AttachView.LoadData && this.AttachView.LoadData(orderId, fileType);
     }
 }

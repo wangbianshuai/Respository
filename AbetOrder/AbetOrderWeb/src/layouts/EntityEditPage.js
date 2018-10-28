@@ -43,7 +43,7 @@ export default class EntityEditPage extends Index {
     RenderComplexView() {
         if (!this.props.Property.ComplexView) return null;
 
-        return <ComplexDataGrid Property={this.props.Property.ComplexView} Page={this.props.Page} />
+        return <ComplexDataGrid Property={this.props.Property.ComplexView} View={this.props.Property} Page={this.props.Page} />
     }
 
     render() {

@@ -7,7 +7,7 @@ export default class Button2 extends Index {
         super(props)
 
         this.state = {
-            Disabled: false,
+            Disabled: this.Property.Disabled === undefined ? false : this.Property.Disabled,
             IsVisible: this.Property.IsVisible !== false && this.Property.IsDataRight !== false
         };
     }

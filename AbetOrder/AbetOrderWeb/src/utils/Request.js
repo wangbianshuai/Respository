@@ -50,6 +50,8 @@ function GetResponse(d, resKey) {
     else if (d) obj = d
     else obj = { IsSuccess: false, Message: "请求异常！" }
 
+    if (d && d.IsLogin === false && obj.IsSuccess === false) obj.IsLogin = false;
+
     return Promise.resolve(obj);
 }
 

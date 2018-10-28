@@ -12,6 +12,4 @@ export default (view, props) => {
         case "DealingsBillDataView": return <DealingsBillDataView {...props} />
         default: return null;
     }
-
-
 };

@@ -328,3 +328,22 @@ export function IsImageUrl(url) {
 
     return reg.test(ext)
 }
+
+export function AddClassName(className, name) {
+    if (IsNullOrEmpty(className)) return name
+
+    const list = className.split(" ")
+
+    const n = ArrayFirst(list, f => f === name);
+    if (n === null) list.push(name)
+
+    return list.join(" ")
+}
+
+export function RemoveClassName(className, name) {
+    if (IsNullOrEmpty(className)) return className
+
+    const list = className.split(" ").filter(f => f !== name)
+
+    return list.join(" ")
+}

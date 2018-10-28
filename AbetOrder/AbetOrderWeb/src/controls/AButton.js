@@ -15,8 +15,9 @@ export default class AButton extends Index {
     }
 
     render() {
-        const { Property } = this.props
-        const text = Property.Label || Property.Text
+        const { Property, DataText } = this.props
+        let text = DataText;
+        text = text || (Property.Label || Property.Text)
 
         return (<a onClick={this.ClickAction.bind(this)}>{text}</a>)
     }

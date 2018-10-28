@@ -11,17 +11,17 @@ export default class ProcessOrderAttach extends Index {
     }
 
     componentWillMount() {
-        this.Property.LoadData = (orderId) => this.LoadData(orderId);
+        this.Property.LoadData = (orderId, fileType) => this.LoadData(orderId, fileType);
 
         this.DataProperties = this.InitDataProperties();
 
-        this.LoadData(this.props.OrderId)
+        this.LoadData(this.props.OrderId, this.props.FileType);
     }
 
     InitDataProperties() {
         return [{ Name: "DisplayIndex", Label: "序号" }, { Name: "Name", Label: "名称" }, {
             Name: "ImageUrl",
-            Label: "缩略图或路径",
+            Label: "路径",
             Render: (text, record) => this.RenderImageUrl(text, record)
         }]
     }
@@ -30,29 +30,26 @@ export default class ProcessOrderAttach extends Index {
         let url = "";
         if (!Common.IsNullOrEmpty(text)) url = Common.DataApiUrl.replace("api/", "") + text;
 
-        return <a href={url} target="_blank">
-            {
-                Common.IsImageUrl(url) ? <img src={url} alt="" border="0" width="120" height="90" /> : text
-            }
-        </a>
+        return <a href={url} target="_blank">{text}</a>
     }
 
-    LoadData(orderId) {
+    LoadData(orderId, fileType) {
         this.Property.SetVisible(true);
 
         this.setState({ IsDataLoading: true });
 
         const action = this.Page.GetAction("GetOrderImageList");
 
-        action.Url = `OrderImage?&$orderby=DisplayIndex&$filter=FileType eq 2 and OrderId eq '${orderId}'`;
+        action.Url = `OrderImage?&$orderby=DisplayIndex&$filter=FileType eq ${fileType} and OrderId eq '${orderId}'`;
 
-        this.GetDataSource({ IsResponse: true }, "GetOrderImageList", "OrderImageList", (list) => {
+        this.GetDataSource({ IsResponse: true, IsInitState: true }, "GetOrderImageList", "OrderImageList", (list) => {
             this.SetDataList(list);
         }, action);
     }
 
     SetDataList(list) {
         const dataList = Common.IsArray(list) ? list : [];
+        dataList.forEach((d, i) => { d.key = d.Id; d.DisplayIndex = i + 1; });
         this.setState({ DataList: dataList, IsDataLoading: false })
     }
 

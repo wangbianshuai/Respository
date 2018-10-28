@@ -27,7 +27,7 @@ export default class Index {
             if (payload.Url !== undefined) { for (let key in payload) if (key !== "Url") data[key] = payload[key]; }
             else data = payload;
 
-            if (s.ActionName === "GetConfig") return Request.Get(url, s.DataKey)
+            if (s.ActionName2 === "GetConfig") return Request.Get(url, s.DataKey)
             else return Request.Post(url, data, s.DataKey)
         }
     }

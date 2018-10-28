@@ -15,7 +15,7 @@ export default class EntityListPage extends Index {
             EditModalTitle: "",
             IsDataLoading: false,
             EditModaIsEdit: true,
-            ModalDialogProperty: null
+            ModalDialogPropertyList: []
         }
     }
 
@@ -43,7 +43,13 @@ export default class EntityListPage extends Index {
 
         this.props.Property.EditView.SetEdit = (data) => this.SetEdit(data);
 
-        this.props.Page.SetModalDialog = (p) => this.setState({ ModalDialogProperty: p });
+        this.props.Page.SetModalDialog = (p) => this.SetModalDialog(p);
+    }
+
+    SetModalDialog(p) {
+        const list = this.state.ModalDialogPropertyList;
+        list.push(p);
+        this.setState({ ModalDialogPropertyList: list.map(m => m) });
     }
 
     InitSearchConditionDefalutValue(searchView) {
@@ -155,8 +161,8 @@ export default class EntityListPage extends Index {
 
         if (this.props.Property.DataViewComponentName) return this.SetDataViewComponent(tableScroll, expandedRowRender)
 
-        return (<DataGridView Page={this.props.Page} DataList={this.DataList} PageInfo={this.PageInfo}
-            TableScroll={tableScroll} ExpandedRowRender={expandedRowRender}
+        return (<DataGridView Page={this.props.Page} DataList={this.DataList} PageInfo={this.PageInfo} IsPaging={this.props.Property.IsPaging}
+            TableScroll={tableScroll} ExpandedRowRender={expandedRowRender} IsRowSelection={this.props.Property.IsRowSelection}
             PageIndexChange={this.PageIndexChange.bind(this)} GroupByInfo={this.GroupByInfo} GroupByInfoHtml={this.props.Property.GroupByInfoHtml}
             IsLoading={this.state.IsDataLoading} DataProperties={this.DataProperties} />)
     }
@@ -230,14 +236,15 @@ export default class EntityListPage extends Index {
     }
 
     RenderModalDialog() {
-        if (this.state.ModalDialogProperty === null) return null;
+        if (this.state.ModalDialogPropertyList.length === 0) return null;
 
-        return <ModalDialog Property={this.state.ModalDialogProperty} Page={this.props.Page} />
+        return this.state.ModalDialogPropertyList.map(m => <ModalDialog key={m.Id} Property={m} Page={this.props.Page} />)
     }
 
     render() {
+        const style = this.props.Property.Config.PageStyle;
         return (
-            <div>
+            <div style={style}>
                 {this.RenderView(this.SearchView)}
                 {this.RenderView(this.OperationView)}
                 {this.RenderDataView()}

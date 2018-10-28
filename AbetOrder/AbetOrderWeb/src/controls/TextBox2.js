@@ -30,7 +30,7 @@ export default class TextBox2 extends Index {
 
     render() {
         const { Property } = this.props
-
+        
         const rows = Property.Rows || 4
 
         const value = Common.IsNullOrEmpty(this.state.Value) ? "" : this.state.Value

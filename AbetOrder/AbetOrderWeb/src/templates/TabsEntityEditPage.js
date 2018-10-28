@@ -1,12 +1,13 @@
 import * as Common from "../utils/Common"
 import EntityEditPage from "./EntityEditPage";
 
-var TabsEntityEditPageConfig = {};
+const TabsEntityEditPageConfig = {};
 
 export default function TabsEntityEditPage(config, pageId) {
-    if (TabsEntityEditPageConfig.PageId === pageId) return TabsEntityEditPageConfig;
+    const currentConfig = TabsEntityEditPageConfig[config.Name];
+    if (currentConfig && currentConfig.PageId === pageId) return currentConfig;
 
-    if (config.PageId && config.PageId === TabsEntityEditPageConfig.PageId) return;
+    if (config.PageId && currentConfig && config.PageId === currentConfig.PageId) return;
 
     config.PageId = pageId;
 
@@ -26,7 +27,7 @@ export default function TabsEntityEditPage(config, pageId) {
     //行为列表
     InitActionList(_Config);
 
-    TabsEntityEditPageConfig = _Config;
+    TabsEntityEditPageConfig[config.Name] = _Config;
 
     return _Config
 }
@@ -117,6 +118,38 @@ function InitOperationView(config) {
             config.OperationView.Properties.push(p);
         }
     }
+
+    x = 1;
+    y += 1;
+    config.OperationView.Properties.push({
+        Name: "UpRecord",
+        Type: "Button",
+        Text: "上一条",
+        Icon: "up",
+        X: x,
+        Y: y,
+        IsEditEnable: true,
+        IsVisible: false,
+        Disabled: true,
+        ActionType: "EntityEdit",
+        ActionName: "UpRecord"
+    });
+
+    x = 1;
+    y += 1;
+    config.OperationView.Properties.push({
+        Name: "DownRecord",
+        Type: "Button",
+        Text: "下一条",
+        Icon: "down",
+        X: x,
+        Y: y,
+        IsEditEnable: true,
+        IsVisible: false,
+        Disabled: true,
+        ActionType: "EntityEdit",
+        ActionName: "DownRecord"
+    });
 }
 
 function InitActionList(config) {

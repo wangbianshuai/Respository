@@ -1,12 +1,13 @@
 import * as Common from "../utils/Common"
 
-var EntityEditPageConfig = {};
+const EntityEditPageConfig = {};
 
 export default function EntityEditPage(config, pageId) {
+    const currentConfig = EntityEditPageConfig[config.Name];
     if (!config.IsTabView) {
-        if (EntityEditPageConfig.PageId === pageId) return EntityEditPageConfig;
+        if (currentConfig && currentConfig.PageId === pageId) return currentConfig;
 
-        if (config.PageId && config.PageId === EntityEditPageConfig.PageId) return;
+        if (config.PageId && currentConfig && config.PageId === currentConfig.PageId) return;
 
         config.PageId = pageId;
     }
@@ -37,7 +38,7 @@ export default function EntityEditPage(config, pageId) {
     //复杂对象视图
     InitComplexView(_Config);
 
-    if (!config.IsTabView) { EntityEditPageConfig = _Config; }
+    if (!config.IsTabView) { EntityEditPageConfig[config.Name] = _Config; }
 
     return _Config
 }
@@ -73,7 +74,7 @@ function InitConfig(a, b) {
     a.StateList = [{ Name: b.Name, StateName: "Loading" }];
 
     const copyNames = ["Title", "EntityName", "PrimaryKey", "Name", "InsertUrl", "UpdateUrl", "GetEntityDataUrl",
-        "InitEventActionList", "ActionList", "Properties"];
+        "InitEventActionList", "ActionList", "Properties", "IsNewAdd", "IsUpdate", "IsDelete"];
 
     Common.Copy(a, b, copyNames)
 }

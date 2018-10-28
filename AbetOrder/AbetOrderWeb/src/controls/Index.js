@@ -9,6 +9,7 @@ export default class Index extends Component {
 
         this.Property = props.Property;
         this.View = props.View;
+        this.IsLoadValue = props.Property.IsLoadValue === true;
 
         this.SetDateDefaultValue();
 

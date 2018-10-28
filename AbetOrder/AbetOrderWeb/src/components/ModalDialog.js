@@ -7,6 +7,7 @@ export default class ModalDialog extends Index {
         super(props)
 
         this.state = { Visible: props.Property.Visible }
+        this.OkProperty = {}
     }
 
     componentWillMount() {
@@ -14,13 +15,12 @@ export default class ModalDialog extends Index {
     }
 
     Ok(e) {
-        if (!this.OkProperty) {
-            this.OkProperty = {};
+        if (this.OkProperty.SetDisabled === undefined) {
             this.OkProperty.Element = e.target;
             this.OkProperty.SetDisabled = (disabled) => { this.OkProperty.Element.disabled = disabled }
         }
-        if (this.props.Property.OnOk) this.props.Property.OnOk(e, this.OkProperty, this);
-        else this.Cancel();
+
+        if (this.props.Property.OnOk) this.props.Property.OnOk(e, this.OkProperty);
     }
 
     Cancel() {
@@ -32,14 +32,14 @@ export default class ModalDialog extends Index {
     render() {
         if (!this.props.Property) return null;
 
-        const { IsOk, Title, Width, GetComponent, Component, OkText, Style } = this.props.Property;
+        const { IsOk, Title, Width, Component, OkText, Style } = this.props.Property;
 
         if (IsOk === false) {
             return (
                 <Modal title={Title} visible={this.state.Visible} style={Style}
                     width={Width} onCancel={this.Cancel.bind(this)}
                     footer={this.RenderLookFooter()}>
-                    {Component || GetComponent()}
+                    {Component}
                 </Modal>
             )
         }
@@ -48,7 +48,7 @@ export default class ModalDialog extends Index {
                 <Modal title={Title} visible={this.state.Visible} style={Style}
                     okText={OkText || "确定"} cancelText="取消" width={Width}
                     onOk={this.Ok.bind(this)} onCancel={this.Cancel.bind(this)} >
-                    {Component || GetComponent()}
+                    {Component}
                 </Modal>
             )
         }

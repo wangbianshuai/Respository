@@ -29,9 +29,9 @@ export default class EntityEdit extends Index {
         if (this.Page.JudgeChanged(nextProps, "InsertInfo")) {
             if (nextProps.InsertInfo && nextProps.InsertInfo.Succeed) {
                 const { PageConfig } = props;
+                const id = nextProps.InsertInfo.PrimaryKey;
 
                 if (PageConfig.IsEditPage) {
-                    const id = nextProps.InsertInfo.PrimaryKey;
                     const url = `/${PageConfig.Name}?${PageConfig.PrimaryKey}=${id}`
                     props.ToPage(url);
                 }
@@ -39,9 +39,9 @@ export default class EntityEdit extends Index {
                     const { EditView } = PageConfig;
 
                     EditView.SetEdit && EditView.SetEdit({ IsVisible: false });
-
+                    
                     //刷新查询
-                    this.Page.EventActions.Query.Refresh("Insert");
+                    this.Page.EventActions.Query.Refresh("Insert", id);
                 }
             }
             else this.SetOkDisabled(false);
@@ -61,11 +61,12 @@ export default class EntityEdit extends Index {
                 }
                 else {
                     const { EditView } = PageConfig;
+                    const { EntityData } = EditView;
 
                     EditView.SetEdit && EditView.SetEdit({ IsVisible: false });
-
+                    const id = EntityData ? EntityData[PageConfig.PrimaryKey] : ""
                     //刷新查询
-                    this.Page.EventActions.Query.Refresh("Update");
+                    this.Page.EventActions.Query.Refresh("Update", id);
                 }
             }
             else this.SetOkDisabled(false);
@@ -83,11 +84,13 @@ export default class EntityEdit extends Index {
                 }
                 else {
                     const { EditView } = PageConfig;
+                    const { EntityData } = EditView;
 
                     EditView.SetEdit && EditView.SetEdit({ IsVisible: false });
 
+                    const id = EntityData ? EntityData[PageConfig.PrimaryKey] : ""
                     //刷新查询
-                    this.Page.EventActions.Query.Refresh("Update");
+                    this.Page.EventActions.Query.Refresh("Update", id);
                 }
             }
             else if (this.UpdateProperty) {
@@ -146,12 +149,14 @@ export default class EntityEdit extends Index {
     }
 
     NewAdd(property, params) {
-        if (Common.IsNullOrEmpty(property.EditPageUrl)) this.EditEntityData(null);
+        const title = property.GetTitle === undefined ? null : property.GetTitle(params);
+        if (Common.IsNullOrEmpty(property.EditPageUrl)) this.EditEntityData(null, title);
         else this.Page.props.ToPage(property.EditPageUrl);
     }
 
     Edit(property, params) {
-        if (Common.IsNullOrEmpty(property.EditPageUrl)) this.EditEntityData(params);
+        const title = property.GetTitle === undefined ? null : property.GetTitle(params);
+        if (Common.IsNullOrEmpty(property.EditPageUrl)) this.EditEntityData(params, title);
         else {
             let url = property.EditPageUrl;
             const { PageConfig } = this.Page.props;
@@ -184,14 +189,14 @@ export default class EntityEdit extends Index {
         }
     }
 
-    EditEntityData(entityData) {
+    EditEntityData(entityData, title) {
         const { PageConfig } = this.Page.props;
 
         this.SetEntityData(null, false)
         this.GetEntityData(entityData);
 
         if (!PageConfig.TabViews) {
-            const title = (entityData === null ? "新增" : "修改") + PageConfig.Title
+            title = title || (entityData === null ? "新增" : "修改") + PageConfig.Title
 
             const { EditView } = PageConfig
 
@@ -216,7 +221,34 @@ export default class EntityEdit extends Index {
             else if (v.SetValue) v.SetValue(entityData);
         })
 
+        if (entityData != null) {
+            const upRecordProperty = Common.ArrayFirst(PageConfig.OperationView.Properties, (f) => f.Name === "UpRecord");
+            const downRecordProperty = Common.ArrayFirst(PageConfig.OperationView.Properties, (f) => f.Name === "DownRecord");
+
+            if (upRecordProperty && upRecordProperty.SetDisabled) upRecordProperty.SetDisabled(Common.IsNullOrEmpty(entityData.UpId));
+            if (downRecordProperty && downRecordProperty.SetDisabled) downRecordProperty.SetDisabled(Common.IsNullOrEmpty(entityData.DownId));
+        }
+
         PageConfig.EntityData = entityData;
+    }
+
+    UpRecord(property, params) {
+        this.ToRecord("UpId");
+    }
+
+    DownRecord(property, params) {
+        this.ToRecord("DownId");
+    }
+
+    ToRecord(name) {
+        const { PageConfig, ToPage } = this.Page.props;
+        const { EntityData, Name, PrimaryKey } = PageConfig;
+
+        if (EntityData && EntityData[name]) {
+            const id = EntityData[name]
+            const url = `/${Name}?${PrimaryKey}=${id}`
+            ToPage(url);
+        }
     }
 
     SetViewEntityData(view, entityData, isReadonly) {
@@ -244,12 +276,15 @@ export default class EntityEdit extends Index {
         else {
             EditView.Properties.forEach(p => {
                 p.IsReadonly = isReadonly;
+
                 if (p.Value2 !== undefined) p.DefaultValue = p.Value2;
 
                 if (p.InitState !== undefined) {
                     if (p.Value2 !== undefined) p.InitState({ IsReadonly: isReadonly, Value: p.Value2 });
                     else p.InitState({ IsReadonly: isReadonly });
                 }
+
+                if (p.IsExpandControl && p.SetValue) p.SetValue(null);
             });
         }
 
@@ -384,11 +419,15 @@ export default class EntityEdit extends Index {
 
         let data = {};
 
-        let p = null, v = null, msg = "";
+        let p = null, v = null, msg = "", blSuccess = true;
         for (let i = 0; i < EditView.Properties.length; i++) {
             p = EditView.Properties[i];
             if (p.IsEdit && p.GetValue) {
                 v = p.GetValue();
+                if (p.IsExpandControl && v === false) {
+                    blSuccess = false;
+                    break;
+                }
                 if (!p.IsNullable && p.DataType === "Array" && (Common.IsNullOrEmpty(v) || v.length === 0)) {
                     msg = "请选择" + p.Label + "！"
                     break;
@@ -400,6 +439,8 @@ export default class EntityEdit extends Index {
                 data[p.Name] = v;
             }
         }
+
+        if (blSuccess === false) return false;
 
         if (Common.IsNullOrEmpty(msg)) msg = this.JudgeNoNullableGroupNames(EditView, data);
 

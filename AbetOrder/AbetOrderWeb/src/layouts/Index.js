@@ -106,6 +106,8 @@ export default class Index extends Component {
     }
 
     SetDataProperty(p) {
+        if (!p.IsData && p.Sorter === undefined) p.Sorter = true;
+        
         if (p.IsCurrency && p.Render === undefined) {
             p.Render = (text, record) => {
                 if (parseFloat(text) < 0) return <SpanText Style={{ color: "red" }} Text={Common.ToCurrency(text, p.IsFixed2)} />
@@ -113,6 +115,15 @@ export default class Index extends Component {
                 if (p.FontColor) return <SpanText Style={{ color: p.FontColor }} Text={Common.ToCurrency(text, p.IsFixed2)} />
 
                 return Common.ToCurrency(text, p.IsFixed2)
+            };
+        }
+        else if (p.IsAddSub && p.Render === undefined) {
+            p.Render = (text, record) => {
+                if (parseFloat(text) < 0) return <SpanText Style={{ color: "red" }} Text={text} />
+
+                if (p.FontColor && parseFloat(text) > 0) return <SpanText Style={{ color: p.FontColor }} Text={"+" + text} />
+
+                return text;
             };
         }
         else if (p.IsDate && p.Render === undefined) {
@@ -164,6 +175,16 @@ export default class Index extends Component {
                     </Tooltip>)
                 }
                 return text;
+            };
+        }
+        else if (p.Actions && p.Render === undefined) {
+            p.Render = (text, record) => {
+                return this.RenderActions(p.Actions, record);
+            };
+        }
+        else if (p.IsDataAction && p.Render === undefined) {
+            p.Render = (text, record) => {
+                return <AButton Property={p} DataText={text} Page={this.props.Page} View={this.props.Property} Params={record} key={p.Name} ClickAction={p.ClickAction} />
             };
         }
         return p;

@@ -100,6 +100,7 @@ export default class Upload2 extends Index {
 
     render() {
         const { Property } = this.props;
+        const text = Property.Text || "上传";
 
         return (
             <Upload name={Property.Name}
@@ -110,7 +111,7 @@ export default class Upload2 extends Index {
                 beforeUpload={this.BeforeUpload.bind(this)}
                 onChange={this.OnChange.bind(this)} >
                 <Button disabled={this.state.Disabled}>
-                    <Icon type="upload" />  {Property.UploadText || "上传"}
+                    <Icon type="upload" /> {text}
                 </Button>
             </Upload>
         );

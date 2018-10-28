@@ -28,8 +28,16 @@ input:read-only{
     white-space:nowrap;
     display:block;
   }
-
-  .ColorPicker{
-      margin-top: 5px;
-  }
   
+  .ColorPicker{
+    margin-top: 5px;
+}
+
+  .DivList{
+      width: 100%;
+  }
+
+  .DivList .DivText{
+      width: 100%;
+      line-height: 40px;
+  }

@@ -1,7 +1,7 @@
 import { Component } from "react"
 import * as Common from "../utils/Common"
 import { Row, Col } from "antd"
-import PropertyItem from "../components/PropertyItem";
+import PropertyItem from "../components/PropertyItem"
 
 export default class Index extends Component {
     constructor(props) {
@@ -64,9 +64,11 @@ export default class Index extends Component {
 
         action = action || Page.GetAction(actionName);
 
+        if (property.IsInitState) this.Page.SetActionState(action);
+
         if (action.IsFirst === undefined) action.IsFirst = true;
 
-        const list = action.IsFirst || action.IsRefresh ? undefined : Page.props[action.StateName];
+        const list = action.IsFirst || property.IsInitState ? undefined : Page.props[action.StateName];
         if (list === undefined) Page.InvokeAction(property, action);
         else property.SetDataSource(list);
 
@@ -114,4 +116,5 @@ export default class Index extends Component {
     GetPropertyItem(view, p) {
         return (<PropertyItem Property={p} Page={this.props.Page} View={view} />)
     }
+
 }

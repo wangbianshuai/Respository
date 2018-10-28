@@ -16,7 +16,7 @@
         UpdateStatusUrl: "Order/UpdateStatus",
         UpdateStatusActionName: "UpdateStatus",
         TableWidth: 1300,
-        OperationColumnWidth: 180,
+        OperationColumnWidth: 200,
         GroupByInfoHtml: GetGroupByInfoHtml(),
         QueryUrl: "ViewOrder/Select2",
         UpdateUrl: "Order/Update3",
@@ -55,6 +55,9 @@
             ActionName: "UpdateStatus", StateName: "UpdateStatusInfo", DataKey: "", Method: "PUT"
         },
         {
+            ActionName: "GetOrderImageList", IsUrlParams: true, StateName: "OrderImageList", DataKey: "OrderImage", Method: "GET", IsRefresh: true
+        },
+        {
             ActionName: "GetUserList", StateName: "UserList",
             Url: "ViewUser?$select=UserId,UserName&$orderby=CreateDate&$filter=DataRight eq 1", DataKey: "ViewUser", Method: "GET"
         }]
@@ -80,7 +83,7 @@
                 DataType: "Guid", Type: "Select", ServiceDataSource: GetUserDataSource(), OperateLogic: "=", AllowClear: true, ColSpan: 5
             },
             { Label: "收款日期", Type: "Date", IsDate: true, IsDefaultNow: true, Name: "BillDate", PlaceHolder: "默认系统当前日期", DataType: "DateTime", MaxLength: 20, IsNullable: true },
-            { Label: "订单编号", Name: "OrderCode", IsOpenPage: true, IsAddToken: false, SearchProperty: { PropertyName: null }, PropertyName: "OrderId", PageUrl: "Order.aspx?Name=B17DC2B1-AF38-4C79-AAE3-3C784CAC6F98&Id={OrderId}", ColumnWidth: 100, DataType: "string", X:3, Y: 1, ColSpan: 5, MaxLength: 50, IsNullable: true },
+            { Label: "订单编号", Name: "OrderCode", IsOpenPage: true, IsAddToken: false, SearchProperty: { PropertyName: null }, PropertyName: "OrderId", PageUrl: "Order.aspx?Name=B17DC2B1-AF38-4C79-AAE3-3C784CAC6F98&Id={OrderId}", ColumnWidth: 100, DataType: "string", X: 3, Y: 1, ColSpan: 5, MaxLength: 50, IsNullable: true },
             { Label: "订单状态", Name: "OrderStatusName", ColumnWidth: 80 },
             { Label: "客户", Name: "CustomerName", ColumnWidth: 120, IsTooltip: true },
             { Label: "销售员", Name: "CreateUserName", ColumnWidth: 80 },

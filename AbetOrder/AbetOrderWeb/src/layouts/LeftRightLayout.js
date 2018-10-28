@@ -165,6 +165,22 @@ export default class LeftRightLayout extends Component {
         this.setState(data)
     }
 
+    GetMenuItem(m, pageName) {
+        return <Menu.Item key={m.PageName}>
+            {
+                Common.IsEquals(m.PageName, pageName, true) ?
+                    <div>
+                        <Icon type={m.IconType} />
+                        <span>{m.MenuName}</span>
+                    </div> :
+                    <Link to={"/" + m.PageName}>
+                        <Icon type={m.IconType} />
+                        <span>{m.MenuName}</span>
+                    </Link>
+            }
+        </Menu.Item>
+    }
+
     render() {
         const { Header, Sider, Content } = Layout;
 
@@ -179,23 +195,13 @@ export default class LeftRightLayout extends Component {
                 <div className={styles.logo} >
                     <span>{this.state.Name}</span>
                 </div>
-                <Menu theme="dark" mode="inline" selectedKeys={selectedKeys}>
+                <Menu theme="dark" mode="inline" defaultOpenKeys={["Product"]} selectedKeys={selectedKeys}>
                     {
-                        this.MenuList.map(m => (
-                            <Menu.Item key={m.PageName}>
-                                {
-                                    Common.IsEquals(m.PageName, pageName, true) ?
-                                        <div>
-                                            <Icon type={m.IconType} />
-                                            <span>{m.MenuName}</span>
-                                        </div> :
-                                        <Link to={"/" + m.PageName}>
-                                            <Icon type={m.IconType} />
-                                            <span>{m.MenuName}</span>
-                                        </Link>
-                                }
-                            </Menu.Item>
-                        ))
+                        this.MenuList.map(m => m.Children ?
+                            <Menu.SubMenu key={m.PageName} title={<span><Icon type="appstore" /><span>{m.MenuName}</span></span>}>
+                                {m.Children.map(c => this.GetMenuItem(c, pageName))}
+                            </Menu.SubMenu>
+                            : this.GetMenuItem(m, pageName))
                     }
                 </Menu>
                 <div style={{ height: 30 }}></div>
