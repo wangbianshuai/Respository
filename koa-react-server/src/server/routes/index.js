@@ -16,7 +16,7 @@ export default class IndexRouter {
     Init() {
         try {
             this.GetRouterList();
-            this.RouterList.forEach(r => this.router.get(r.key, this.InitRouter(r.path, r.component, r.controller)));
+            this.RouterList.forEach(r => this.router.get(r.key, this.InitRouter(r.path, r.component)));
 
             return this.router.routes();
         }
@@ -30,27 +30,27 @@ export default class IndexRouter {
         let v = null;
         for (let key in KoaRoutes) {
             v = KoaRoutes[key];
-            this.RouterList.push({ key, path: `${v}.html`, component: require(`../../components/${v}.js`), controller: require(`../controllers/${v}.js`) });
+            this.RouterList.push({ key, path: `${v}.html`, component: require(`../../components/${v}.js`) });
         }
     }
 
-    InitRouter(path, component, controller) {
+    InitRouter(path, component) {
         return async (ctx) => {
             try {
+                const Page = {};
                 //初始化 dva
-                const dva = new DvaIndex(component, {}, { ctx });
+                const dva = new DvaIndex(component, {}, { ctx, Page });
                 const App = dva.Init();
 
-                //初始化 koa controller
-                const ctl = new controller(ctx, dva);
-                await ctl.LoadData();
+                //加载数据
+                if (component.LoadData) await component.LoadData(ctx, dva.app);
 
                 //渲染react组件
                 const root = renderToStaticMarkup(React.createElement(App));
                 //获取dva state数据
                 const initialState = JSON.stringify(dva.GetState());
                 //获取实体数据
-                const model = ctl.Model || {};
+                const model = Page.Model || {};
 
                 const data = { root, initialState, ...model };
 

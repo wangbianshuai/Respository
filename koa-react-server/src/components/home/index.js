@@ -6,7 +6,12 @@ class Index extends BaseIndex {
     constructor(props) {
         super(props);
     }
-    
+
+    //服务器渲染加载数据
+    static LoadData(ctx, app) {
+        return BaseIndex.Dispatch(app._store.dispatch, "User", "GetUserInfo");
+    }
+
     componentDidMount() {
         this.props.UserInfo === undefined && this.Dispatch("User", "GetUserInfo");
     }
