@@ -33,7 +33,7 @@ export default class OrderImage extends Index {
         let msg = "", d = null;
         for (let i = 0; i < this.state.Images.length; i++) {
             d = this.state.Images[i];
-            if (Common.IsNullOrEmpty(d.ImageUrl)) msg = "订单设计图新增设计图，请先上传图片或附件！";
+            if (Common.IsNullOrEmpty(d.ImageUrl)) msg = "订单附件新增附件，请先上传附件！";
             if (!Common.IsNullOrEmpty(msg)) break;
         }
 
@@ -41,7 +41,7 @@ export default class OrderImage extends Index {
 
         const images = this.state.Images.map((m, i) => {
             m.DisplayIndex = i + 1;
-            if (Common.IsNullOrEmpty(m.Name)) m.Name = (m.FileType === 1 ? "图" : "附件") + m.DisplayIndex;
+            if (Common.IsNullOrEmpty(m.Name)) m.Name = (m.FileType === 1 ? "订单附件" : "加工单附件") + m.DisplayIndex;
             if (m.ImageId) delete m.ImageId
             return m
         });
@@ -62,7 +62,7 @@ export default class OrderImage extends Index {
 
     AddImage(text) {
         let images = this.state.Images;
-        const image = { Id: Common.CreateGuid(), FileType: text === "添加设计图" ? 1 : 2, DisplayIndex: images.length + 1 }
+        const image = { Id: Common.CreateGuid(), FileType: text === "添加订单附件" ? 1 : 2, DisplayIndex: images.length + 1 }
 
         images.push(image);
 
@@ -108,12 +108,15 @@ export default class OrderImage extends Index {
                     <Col span={4}>
                         名称
                     </Col>
+                    <Col span={2}>
+                        类型
+                    </Col>
                     <Col span={8}>
-                        缩略图/路径
+                        路径
                     </Col>
                     {this.state.IsEdit ?
-                        <Col span={8}>
-                            上传图片
+                        <Col span={6}>
+                            上传
                     </Col> : null}
                     {this.state.IsEdit ?
                         <Col span={2}>
@@ -124,10 +127,10 @@ export default class OrderImage extends Index {
                 {this.state.IsEdit ?
                     <Row gutter={16}>
                         <Col span={12}>
-                            {this.GetAddButton("AddDetailImage", "添加设计图")}
+                            {this.GetAddButton("AddDetailImage", "添加订单附件")}
                         </Col>
                         <Col span={12}>
-                            {this.GetAddButton("AddDetailAttach", "添加附件")}
+                            {this.GetAddButton("AddDetailAttach", "添加加工单附件")}
                         </Col>
                     </Row> : null
                 }

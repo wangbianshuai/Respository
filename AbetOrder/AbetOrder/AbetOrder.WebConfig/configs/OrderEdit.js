@@ -194,7 +194,7 @@
     function GetOrderImageView() {
         return {
             Name: "OrderImage",
-            TabLabel: "订单设计图",
+            TabLabel: "订单附件",
             IsTabView: true,
             PageComponentName: "OrderImage"
         }

@@ -6,7 +6,7 @@
         PrimaryKey: "OrderId",
         TemplateName: "EntityListPage",
         SelectNames: ["OrderId", "OrderCode", "OrderName", "ProcessAmount", "BillStatus", "BillStatusName", "OrderDate", "DeliveryDate", "CreateUserName"],
-        SearchNames: ["OrderCode", "CreateUser", "StartDate", "EndDate", "StartDate2", "EndDate2", "BillStatus"],
+        SearchNames: ["OrderCode", "CreateUser", "OrderName", "StartDate", "EndDate", "StartDate2", "EndDate2", "BillStatus"],
         DataColumnNames: ["OrderCode", "OrderName", "OrderDate", "DeliveryDate", "CreateUserName", "ProcessAmount", "BillStatusName"],
         OrderByList: [{ Name: "OrderIntCode", IsDesc: true }],
         ActionList: GetActionList(),
@@ -51,21 +51,21 @@
 
     function GetProperties() {
         return [{
-            Label: "销售员", Name: "CreateUser", X: 2, Y: 2,
+            Label: "销售员", Name: "CreateUser", X: 2, Y: 1,
             DataType: "Guid", Type: "Select", ServiceDataSource: GetUserDataSource(), OperateLogic: "=", AllowClear: true, ColSpan: 5
         },
         {
-            Label: "状态", Name: "BillStatus", ColSpan: 5, X: 2, Y: 3,
+            Label: "状态", Name: "BillStatus", ColSpan: 5, X: 2, Y: 2,
             DataType: "int", Type: "Select", DataSource: GetStatusDataSource(), OperateLogic: "=", AllowClear: true, SearchProperty: { ColSpan: 5 }
         },
-        { Label: "订单编号", Name: "OrderCode", IsOpenPage: true, IsAddToken: false, SearchProperty: { PropertyName: null }, PropertyName: "OrderId", PageUrl: "Order.aspx?Name=B395A96C-C7D3-4597-862B-8B717BBCC200&Id={OrderId}", DataType: "string", ColSpan: 5, X: 2, Y: 1, MaxLength: 50, IsNullable: true },
+        { Label: "订单编号", Name: "OrderCode", IsOpenPage: true, IsAddToken: false, SearchProperty: { PropertyName: null }, PropertyName: "OrderId", PageUrl: "Order.aspx?Name=B395A96C-C7D3-4597-862B-8B717BBCC200&Id={OrderId}", DataType: "string", ColSpan: 5, X: 2, Y: 3, MaxLength: 50, IsNullable: true },
         { Label: "订单日期", Type: "Date", IsDate: true, Name: "OrderDate", DataType: "DateTime", MaxLength: 20, IsNullable: true },
         { Label: "订单日期", Type: "Date", X: 1, Y: 1, ColSpan: 5, OperateLogic: ">=", PropertyName: "OrderDate", Name: "StartDate", PlaceHolder: "大于或等于其值", DataType: "DateTime", MaxLength: 20, IsNullable: true },
         { Label: "至", Type: "Date", ColSpan: 5, X: 1, Y: 2, OperateLogic: "<", PropertyName: "OrderDate", Name: "EndDate", PlaceHolder: "小于或等于其值", DataType: "DateTime", MaxLength: 20, IsNullable: true },
         { Label: "发货日期", Type: "Date", ColSpan: 5, OperateLogic: ">=", X: 1, Y: 3, PropertyName: "DeliveryDate", Name: "StartDate2", PlaceHolder: "大于或等于其值", DataType: "DateTime", MaxLength: 20, IsNullable: true },
         { Label: "至", Type: "Date", ColSpan: 5, OperateLogic: "<", X: 1, Y: 4, PropertyName: "DeliveryDate", Name: "EndDate2", PlaceHolder: "小于或等于其值", DataType: "DateTime", MaxLength: 20, IsNullable: true },
         { Label: "销售员", Name: "CreateUserName" },
-        { Label: "门板花式", Name: "OrderName" },
+        { Label: "门板花式", Name: "OrderName", DataType: "string", X: 2, Y: 4, ColSpan: 5, MaxLength: 50, IsNullable: true },
         { Label: "状态", Name: "BillStatusName" },
         { Label: "加工费", Name: "ProcessAmount", Max: 100000000, Min: 1, Step: 1, IsCurrency: true, IsFixed2: false, FontColor: "#1890ff", Type: "TextBox", ControlType: "InputNumber", DataType: "decimal", MaxLength: 10, IsNullable: false },
         { Label: "发货日期", Name: "DeliveryDate", IsDate: true }]

@@ -5,9 +5,9 @@
         EntityName: "Order",
         PrimaryKey: "OrderId",
         TemplateName: "EntityListPage",
-        SelectNames: ["OrderId", "RowVersion", "OrderStatus", "OrderCode", "OrderDate", "DeliveryDate", "CustomerName", "CreateUserName", "CreateUser", "ActualAmount", "CostAmount2", "ProcessAmount2", "Profit", "PaidDeposit", "ShouldPayBalance", "OrderStatusName"],
-        SearchNames: ["OrderCode", "CustomerId", "CreateUser", "OrderStatus", "StartDate", "EndDate", "StartDate2", "EndDate2"],
-        DataColumnNames: ["OrderCode", "CustomerName", "OrderDate", "DeliveryDate", "OrderStatusName", , "ActualAmount", "ProcessAmount2", "PaidDeposit", "ShouldPayBalance", "CreateUserName"],
+        SelectNames: ["OrderId", "RowVersion", "OrderName", "OrderStatus", "OrderCode", "OrderDate", "DeliveryDate", "CustomerName", "CreateUserName", "CreateUser", "ActualAmount", "CostAmount2", "ProcessAmount2", "Profit", "PaidDeposit", "ShouldPayBalance", "OrderStatusName"],
+        SearchNames: ["OrderCode", "OrderName", "CustomerId", "CreateUser", "OrderStatus", "StartDate", "EndDate", "StartDate2", "EndDate2"],
+        DataColumnNames: ["OrderCode", "CustomerName", "OrderName", "OrderDate", "DeliveryDate", "OrderStatusName", , "ActualAmount", "ProcessAmount2", "PaidDeposit", "ShouldPayBalance", "CreateUserName"],
         EditNames: ["PaidDeposit", "BillDate"],
         OrderByList: [{ Name: "OrderIntCode", IsDesc: true }],
         ActionList: GetActionList(),
@@ -69,21 +69,22 @@
             { Label: "至", Type: "Date", ColSpan: 5, OperateLogic: "<", X: 1, Y: 4, PropertyName: "DeliveryDate", Name: "EndDate2", PlaceHolder: "小于或等于其值", DataType: "DateTime", MaxLength: 20, IsNullable: true },
             {
                 Label: "订单状态", Name: "OrderStatus",
-                DataType: "int", Type: "Select", DataSource: GetDataSource(), OperateLogic: "=", AllowClear: true, ColSpan: 5, X: 2, Y: 4
+                DataType: "int", Type: "Select", DataSource: GetDataSource(), OperateLogic: "=", AllowClear: true, ColSpan: 5, X: 2, Y: 3
             },
             {
-                Label: "客户", Name: "CustomerId", AllowClear: true, OperateLogic: "=", X: 2, Y: 2,
+                Label: "客户", Name: "CustomerId", AllowClear: true, OperateLogic: "=", X: 2, Y: 1,
                 DataType: "Guid", Type: "Select", ServiceDataSource: GetCustomerListDataSource(), IsNullable: false, ColSpan: 5
             },
             {
-                Label: "销售员", Name: "CreateUser", X: 2, Y: 3,
+                Label: "销售员", Name: "CreateUser", X: 2, Y: 2,
                 DataType: "Guid", Type: "Select", ServiceDataSource: GetUserDataSource(), OperateLogic: "=", AllowClear: true, ColSpan: 5
             },
             { Label: "收款日期", Type: "Date", IsDate: true, IsDefaultNow: true, Name: "BillDate", PlaceHolder: "默认系统当前日期", DataType: "DateTime", MaxLength: 20, IsNullable: true },
-            { Label: "订单编号", Name: "OrderCode", IsOpenPage: true, IsAddToken: false, SearchProperty: { PropertyName: null }, PropertyName: "OrderId", PageUrl: "Order.aspx?Name=B17DC2B1-AF38-4C79-AAE3-3C784CAC6F98&Id={OrderId}", ColumnWidth: 100, DataType: "string", X: 2, Y: 1, ColSpan: 5, MaxLength: 50, IsNullable: true },
+            { Label: "订单编号", Name: "OrderCode", IsOpenPage: true, IsAddToken: false, SearchProperty: { PropertyName: null }, PropertyName: "OrderId", PageUrl: "Order.aspx?Name=B17DC2B1-AF38-4C79-AAE3-3C784CAC6F98&Id={OrderId}", ColumnWidth: 100, DataType: "string", X:3, Y: 1, ColSpan: 5, MaxLength: 50, IsNullable: true },
             { Label: "订单状态", Name: "OrderStatusName", ColumnWidth: 80 },
             { Label: "客户", Name: "CustomerName", ColumnWidth: 120, IsTooltip: true },
             { Label: "销售员", Name: "CreateUserName", ColumnWidth: 80 },
+            { Label: "门板花式", Name: "OrderName", ColumnWidth: 100, DataType: "string", X: 3, Y: 2, ColSpan: 5, MaxLength: 50, IsNullable: true },
             { Label: "发货日期", Name: "DeliveryDate", IsDate: true, ColumnWidth: 110 },
             { Label: "订单金额", Name: "ActualAmount", ColumnWidth: 80, IsCurrency: true, IsFixed2: false, FontColor: "#1890ff" },
             { Label: "加工费", Name: "ProcessAmount2", ColumnWidth: 80, IsCurrency: true, IsFixed2: false, FontColor: "#1890ff" },

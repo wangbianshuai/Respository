@@ -15,13 +15,11 @@ export default class OrderImageItem extends Index {
         this.UploadProperty = {
             Id: Common.CreateGuid(),
             Name: "FileUpload",
-            UploadUrl: "?EntityName=OrderImage&ft=image",
+            UploadUrl: "?EntityName=OrderImage",
             IsEdit: false,
             IsInitState: true,
             FileSize: 1024 * 1024, FileSizeText: "1M"
         };
-
-        if (this.state.FileType === 1) this.UploadProperty.Accept = ".jpg,.png,.gif";
 
         this.UploadProperty.SetUploadResponse = this.SetFileUploadResponse.bind(this);
     }
@@ -93,17 +91,16 @@ export default class OrderImageItem extends Index {
                     {this.RenderInputNumber("DisplayIndex", "", 99, 1, 1, 2, !this.props.IsEdit)}
                 </Col>
                 <Col span={4}>
-                    {this.RenderInput("Name", "图片名称，为空，则保存为\"图+序号\"")}
+                    {this.RenderInput("Name", "附件名称，为空，则保存为\"附件+序号\"")}
+                </Col>
+                <Col span={2}>
+                    <span>{this.props.Data.FileType === 1 ? "订单" : "加工单"}</span>
                 </Col>
                 <Col span={8}>{!Common.IsNullOrEmpty(url) ?
-                    <a href={url} target="_blank" >{
-                        this.state.FileType === 1 || Common.IsImageUrl(url) ?
-                            <img src={url} alt="" border="0" width="120" height="90" />
-                            : <span>{url}</span>}
-                    </a> : null}
+                    <a href={url} target="_blank" ><span>{url}</span></a> : null}
                 </Col>
                 {this.props.IsEdit ?
-                    <Col span={8}>
+                    <Col span={6}>
                         {this.RenderUpload()}
                     </Col> : null}
                 {this.props.IsEdit ?
