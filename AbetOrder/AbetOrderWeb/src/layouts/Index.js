@@ -105,11 +105,16 @@ export default class Index extends Component {
         return blChangedProps;
     }
 
+    EmptyRender() {
+        return { children: null, props: { colSpan: 0 } }
+    }
+
     SetDataProperty(p) {
-        if (!p.IsData && p.Sorter === undefined) p.Sorter = true;
-        
+        if (!p.IsData && p.Sorter === undefined) p.Sorter = false;
+
         if (p.IsCurrency && p.Render === undefined) {
-            p.Render = (text, record) => {
+            p.Render = (text, record, index) => {
+                if (p.IsRender && !p.IsRender(text, record, index)) return this.EmptyRender();
                 if (parseFloat(text) < 0) return <SpanText Style={{ color: "red" }} Text={Common.ToCurrency(text, p.IsFixed2)} />
 
                 if (p.FontColor) return <SpanText Style={{ color: p.FontColor }} Text={Common.ToCurrency(text, p.IsFixed2)} />
@@ -118,7 +123,8 @@ export default class Index extends Component {
             };
         }
         else if (p.IsAddSub && p.Render === undefined) {
-            p.Render = (text, record) => {
+            p.Render = (text, record, index) => {
+                if (p.IsRender && !p.IsRender(text, record, index)) return this.EmptyRender();
                 if (parseFloat(text) < 0) return <SpanText Style={{ color: "red" }} Text={text} />
 
                 if (p.FontColor && parseFloat(text) > 0) return <SpanText Style={{ color: p.FontColor }} Text={"+" + text} />
@@ -127,13 +133,15 @@ export default class Index extends Component {
             };
         }
         else if (p.IsDate && p.Render === undefined) {
-            p.Render = (text, record) => {
+            p.Render = (text, record, index) => {
+                if (p.IsRender && !p.IsRender(text, record, index)) return this.EmptyRender();
                 if (!Common.IsNullOrEmpty(text)) text = text.substr(0, 10);
                 return text;
             };
         }
         else if (p.IsToPage && p.Render === undefined) {
-            p.Render = (text, record) => {
+            p.Render = (text, record, index) => {
+                if (p.IsRender && !p.IsRender(text, record, index)) return this.EmptyRender();
                 if (!Common.IsNullOrEmpty(text)) {
                     const dataValue = record[p.PropertyName];
                     let url = p.PageUrl.replace("{" + p.PropertyName + "}", escape(dataValue));
@@ -145,7 +153,8 @@ export default class Index extends Component {
             };
         }
         else if (p.IsOpenPage && p.Render === undefined) {
-            p.Render = (text, record) => {
+            p.Render = (text, record, index) => {
+                if (p.IsRender && !p.IsRender(text, record, index)) return this.EmptyRender();
                 if (!Common.IsNullOrEmpty(text)) {
                     let url = "";
                     const dataValue = record[p.PropertyName];
@@ -168,7 +177,8 @@ export default class Index extends Component {
             };
         }
         else if (p.IsTooltip && p.Render === undefined) {
-            p.Render = (text, record) => {
+            p.Render = (text, record, index) => {
+                if (p.IsRender && !p.IsRender(text, record, index)) return this.EmptyRender();
                 if (!Common.IsNullOrEmpty(text)) {
                     return (<Tooltip title={text}>
                         <span className={styles.TooltipSpan} style={{ width: p.ColumnWidth }}>{text}</span>
@@ -178,13 +188,21 @@ export default class Index extends Component {
             };
         }
         else if (p.Actions && p.Render === undefined) {
-            p.Render = (text, record) => {
+            p.Render = (text, record, index) => {
+                if (p.IsRender && !p.IsRender(text, record, index)) return this.EmptyRender();
                 return this.RenderActions(p.Actions, record);
             };
         }
         else if (p.IsDataAction && p.Render === undefined) {
-            p.Render = (text, record) => {
+            p.Render = (text, record, index) => {
+                if (p.IsRender && !p.IsRender(text, record, index)) return this.EmptyRender();
                 return <AButton Property={p} DataText={text} Page={this.props.Page} View={this.props.Property} Params={record} key={p.Name} ClickAction={p.ClickAction} />
+            };
+        }
+        else if (p.IsRender && p.Render === undefined) {
+            p.Render = (text, record, index) => {
+                if (p.IsRender && !p.IsRender(text, record, index)) return this.EmptyRender();
+                return text;
             };
         }
         return p;

@@ -95,10 +95,10 @@ export default class EntityListPage extends Index {
                 IsData: false,
                 ColumnWidth: this.props.Property.OperationColumnWidth,
                 Fixed: this.props.Property.OperationColumnFixed,
-                Render: (text, record) => {
-                    let list = this.SetSelfOperationActionList(actionList, record);
-                    if (DataView.ExpandSetOperation) list = DataView.ExpandSetOperation(list, record);
-                    return this.RenderActions(list, record);
+                Render: (text, record, index) => {
+                    let list = this.SetSelfOperationActionList(actionList, record, index);
+                    if (DataView.ExpandSetOperation) list = DataView.ExpandSetOperation(list, record, index);
+                    return this.RenderActions(list, record, index);
                 }
             })
         }
@@ -161,7 +161,12 @@ export default class EntityListPage extends Index {
 
         if (this.props.Property.DataViewComponentName) return this.SetDataViewComponent(tableScroll, expandedRowRender)
 
-        return (<DataGridView Page={this.props.Page} DataList={this.DataList} PageInfo={this.PageInfo} IsPaging={this.props.Property.IsPaging}
+        let dataList = this.DataList;
+        if (this.props.Property.DataView.ExpandedSetDataList) dataList = this.props.Property.DataView.ExpandedSetDataList(dataList);
+
+        const isPartPaging = this.props.Property.DataView.IsPartPaging
+
+        return (<DataGridView Page={this.props.Page} DataList={dataList} IsPartPaging={isPartPaging} PageInfo={this.PageInfo} IsPaging={this.props.Property.IsPaging}
             TableScroll={tableScroll} ExpandedRowRender={expandedRowRender} IsRowSelection={this.props.Property.IsRowSelection}
             PageIndexChange={this.PageIndexChange.bind(this)} GroupByInfo={this.GroupByInfo} GroupByInfoHtml={this.props.Property.GroupByInfoHtml}
             IsLoading={this.state.IsDataLoading} DataProperties={this.DataProperties} />)

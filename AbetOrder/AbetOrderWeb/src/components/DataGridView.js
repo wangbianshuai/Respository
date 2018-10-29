@@ -1,6 +1,6 @@
 import React from "react"
 import Index from "./Index"
-import { Table, Alert } from "antd"
+import { Table, Alert, Pagination } from "antd"
 const { Column } = Table;
 
 export default class DataGridView extends Index {
@@ -108,9 +108,10 @@ export default class DataGridView extends Index {
                 {this.RenderGroupByInfoAlert()}
                 <Table dataSource={this.props.DataList} loading={this.props.IsLoading} scroll={this.props.TableScroll}
                     rowSelection={rowSelection} onChange={this.OnChange.bind(this)} onRow={this.onRow.bind(this)}
-                    pagination={this.GetPagination()} expandedRowRender={this.props.ExpandedRowRender}>
+                    pagination={this.props.IsPartPaging ? false : this.GetPagination()} expandedRowRender={this.props.ExpandedRowRender}>
                     {this.props.DataProperties.map(p => this.GetColumn(p))}
                 </Table>
+                {this.props.IsPartPaging ? <div style={{ width: "100%", height: "60px", display: "flex", alignItems: "center", justifyContent: "flex-end" }}><Pagination {...this.GetPagination()} /></div> : null}
             </div>
         );
     }

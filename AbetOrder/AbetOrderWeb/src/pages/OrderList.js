@@ -9,10 +9,61 @@ export default class OrderList {
     }
 
     InitLoad() {
-        this.PageConfig.DataView.ExpandSetOperation = (actionList, record) => this.ExpandSetOperation(actionList, record);
+        this.PageConfig.DataView.ExpandSetOperation = (actionList, record, index) => this.ExpandSetOperation(actionList, record, index);
+        this.PageConfig.DataView.Properties.forEach(p => {
+            if (p.Name === "OrderCode") this.SetOrderCodeRender(p);
+            else p.IsRender = (text, record, index) => index % 2 !== 0;
+        });
+        this.PageConfig.DataView.IsPartPaging = true;
+        this.PageConfig.DataView.ExpandedSetDataList = (dataList) => this.ExpandedSetDataList(dataList);
     }
 
-    ExpandSetOperation(actionList, record) {
+    ExpandedSetDataList(dataList) {
+        const list = [];
+        dataList.forEach(d => {
+            list.push({ key: Common.CreateGuid(), OrderName: d.OrderName, CustomerName: d.CustomerName });
+            list.push(d);
+        })
+        return list;
+    }
+
+    SetOrderCodeRender(p) {
+        p.Render = (text, record, index) => {
+            if (index % 2 === 0) {
+                return {
+                    children: <div style={{ width: "100%" }}>
+                        <div style={{ width: "50%", float: "left" }} ><span>客户：</span> <span style={{ color: "#1890ff" }}>{record.CustomerName}</span></div>
+                        <div style={{ width: "50%", float: "left" }} ><span>门板花式：</span> <span style={{ color: "#1890ff", marginLeft: "20px" }}>{record.OrderName}</span></div>
+                    </div>,
+                    props: {
+                        colSpan: 9
+                    }
+                };
+            }
+            else if (!Common.IsNullOrEmpty(text)) {
+                let url = "";
+                const dataValue = record[p.PropertyName];
+                if (dataValue) url = p.PageUrl.replace("{" + p.PropertyName + "}", p.IsEscape === false ? dataValue : escape(dataValue));
+
+                if (p.IsAddToken) {
+                    const { LoginUser } = this.props.Page;
+                    url = Common.AddUrlParams(url, "LoginUserId", LoginUser.UserId)
+                    url = Common.AddUrlParams(url, "Token", LoginUser.Token)
+                }
+                if (p.IsRandom !== false) url = Common.AddUrlRandom(url);
+
+                if (Common.IsNullOrEmpty(url)) return text;
+                else {
+                    if (url.toLowerCase().indexOf("http") !== 0) url = Common.DataApiUrl.replace("api/", "") + url;
+                    return <a href={url} target="_blank">{text}</a>
+                }
+            }
+            return text;
+        }
+    }
+
+    ExpandSetOperation(actionList, record, index) {
+        if (index % 2 === 0) return { children: null, props: { colSpan: 0 } };
         const billAction = { Name: "OrderBill", Text: "收支", IsToPage: true, PropertyNames: ["OrderCode", "OrderId"], PageUrl: "/Bill?OrderName2={OrderCode}&OrderId={OrderId}" };
         const lookAttach = { Name: "LookAttach", Text: "附件", ClickAction: this.LookAttach.bind(this) };
 
