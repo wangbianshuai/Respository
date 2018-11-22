@@ -1,0 +1,183 @@
+<!Doctype html>
+<html lang="zh-cn" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" th:href="@{${global.staticHost}+'/pc/'+${global.xxdVersion}+'/build/css/i/favicon.ico'}">
+    <link rel="Bookmark" th:href="@{${global.staticHost}+'/pc/'+${global.xxdVersion}+'/build/css/i/favicon.ico'}">
+    <title>交易明细-资金记录-我的新新贷</title>
+    <meta name="keywords" content="新新贷，P2P网贷，P2P理财，投资理财，网上理财，新元宝，月月派，新手专享，投融资，贷款，企业贷款，无抵押小额贷款，借款"/>
+    <meta name="description"
+          content="新新贷是中国专业的互联网金融P2P网络借贷信息中介平台，为出借人和借款人提供省心的互联网金融信息服务。资金银行存管、严格的风控体系、信息披露透明等多重安全保障措施。"/>
+    <link th:href="@{${global.staticHost}+'/pc/'+${global.xxdVersion}+'/build/css/reset.css?'+ ${new java.util.Date().getTime()} }" rel="stylesheet">
+    <link th:href="@{${global.staticHost}+'/pc/'+${global.xxdVersion}+'/build/mods/company/dealDetail/_.css'}" rel="stylesheet">
+</head>
+<body>
+
+
+<div id="J_wrapBody">
+    <!--头部 start-->
+    <div th:replace="common/header::company-header(false)"></div>
+    <!--头部 end-->
+    <div class="g-top">
+        <div class="g-top-con">
+            <div class="container-1200">
+                <a href="http://www.xinxindai.com/">首页</a> &gt; <a href="/usercenter/company/account.html">我的新新贷</a> &gt;
+                <a href="javascript:void(0);">企业用户</a> &gt;
+                <a href="javascript:void(0);">交易明细</a>
+            </div>
+        </div>
+    </div>
+    <div class="info-contaner clearfix">
+        <!--左侧菜单-->
+        <div th:replace="usercenter/common/menu::company-menu('userinfo', 'dealDetail')"></div>
+        <!--右侧内容区域-->
+        <div class="g-right">
+            <div class="m-con-wrap">
+                <div class="m-con-hd user-title" id='J_tabs'>
+                    <li class='active'><a href="#">资金记录</a></li>
+                    <li><a href="#">充值记录</a></li>
+                    <li><a href="#">提现记录</a></li>
+                </div>
+                <div class='data-box'>
+                    <div class='deal-data j_tabContent'>
+                        <div class='filt-box J_capitalUl'>
+                            <ul class='J_capitalType'>
+                                <li>资金类别：</li>
+                                <a href='javascript:;' class='active'>全部</a>
+                                <a href='javascript:;'>投标</a>
+                                <a href='javascript:;'>借款</a>
+                                <a href='javascript:;'>还款</a>
+                                <a href='javascript:;'>充值</a>
+                                <a href='javascript:;'>提现</a>
+                                <a href='javascript:;'>奖励</a>
+                                <a href='javascript:;'>收款</a>
+                                <a href='javascript:;'>冻结</a>
+                                <a href='javascript:;'>其他</a>
+                            </ul>
+                            <ul class='time-filt J_capitalLimit'>
+                                <li>时间范围：</li>
+                                <a href='javascript:;' class='active'>全部</a>
+                                <a href='javascript:;'>最近一周</a>
+                                <a href='javascript:;'>1个月</a>
+                                <a href='javascript:;'>2个月</a>
+                                <a href='javascript:;'>3个月</a>
+                                <a href='javascript:;'>6个月</a>
+                                <a href='javascript:;'>12个月</a>
+                                <a href='javascript:;'>12个月以上</a>
+                            </ul>
+                        </div>
+                        <div class='deal-table table-box'>
+                            <table id='capitalTable'>
+                                <tr class='title'>
+                                    <th class='one'>日期&nbsp;&nbsp;|&nbsp;&nbsp;交易流水号</th>
+                                    <th class='two'>类型</th>
+                                    <th class='three'>发生金额(元)</th>
+                                    <th class='four'>可用余额(元)</th>
+                                    <th>备注</th>
+                                </tr>
+                            </table>
+                            <div class="pagination capitalRecord-page">
+                            </div>
+                        </div>
+                    </div>
+                    <div class='recharge-data j_tabContent hide'>
+                        <div class='filt-box J_rechargeUl'>
+                            <ul class='usable-data'>
+                                <li>可用余额：</li>
+                                <li>[[${#numbers.formatDecimal(globalData.overview.data.availableBalance, 1, 'COMMA', 2, 'POINT')}]]元</li>
+                                <li class='next-li'>冻结金额：</li>
+                                <li>[[${#numbers.formatDecimal(globalData.overview.data.frozenAmount, 1, 'COMMA', 2, 'POINT')}]]元</li>
+                            </ul>
+                            <ul class='J_rechargeStatus'>
+                                <li>充值状态：</li>
+                                <a href='javascript:;' class='active'>全部</a>
+                                <a href='javascript:;'>处理中</a>
+                                <a href='javascript:;'>成功</a>
+                                <a href='javascript:;'>失败</a>
+                            </ul>
+                            <ul class='time-filt J_rechargeLimit'>
+                                <li>时间范围：</li>
+                                <a href='javascript:;' class='active'>全部</a>
+                                <a href='javascript:;'>最近一周</a>
+                                <a href='javascript:;'>1个月</a>
+                                <a href='javascript:;'>2个月</a>
+                                <a href='javascript:;'>3个月</a>
+                                <a href='javascript:;'>6个月</a>
+                                <a href='javascript:;'>12个月</a>
+                                <a href='javascript:;'>12个月以上</a>
+                            </ul>
+                        </div>
+                        <div class='recharge-table table-box'>
+                            <table id='rechargeTable'>
+                                <tr class='title'>
+                                    <th class='one'>充值时间&nbsp;&nbsp;|&nbsp;&nbsp;流水单账号</th>
+                                    <th class='two'>充值方式</th>
+                                    <th class='three'>充值金额(元)</th>
+                                    <th class='four'>支付方式</th>
+                                    <th>充值状态</th>
+                                </tr>
+                            </table>
+                            <div class="pagination rechargeRecord-page">
+                            </div>
+                        </div>
+                    </div>
+                    <div class='withdraw-data j_tabContent hide'>
+                        <div class='filt-box J_withdrawUl'>
+                            <ul class='usable-data'>
+                                <li>可用余额：</li>
+                                <li>[[${#numbers.formatDecimal(globalData.overview.data.availableBalance, 1, 'COMMA', 2, 'POINT')}]]元</li>
+                                <li class='next-li'>冻结金额：</li>
+                                <li>[[${#numbers.formatDecimal(globalData.overview.data.frozenAmount, 1, 'COMMA', 2, 'POINT')}]]元</li>
+                            </ul>
+                            <ul class='J_withdrawStatus'>
+                                <li>提现状态：</li>
+                                <a href='javascript:;' class='active'>全部</a>
+                                <a href='javascript:;'>处理中</a>
+                                <a href='javascript:;'>成功</a>
+                                <a href='javascript:;'>失败</a>
+                            </ul>
+                            <ul class='time-filt J_withdrawLimit'>
+                                <li>时间范围：</li>
+                                <a href='javascript:;' class='active'>全部</a>
+                                <a href='javascript:;'>最近一周</a>
+                                <a href='javascript:;'>1个月</a>
+                                <a href='javascript:;'>2个月</a>
+                                <a href='javascript:;'>3个月</a>
+                                <a href='javascript:;'>6个月</a>
+                                <a href='javascript:;'>12个月</a>
+                                <a href='javascript:;'>12个月以上</a>
+                            </ul>
+                        </div>
+                        <div class='withdraw-table table-box'>
+                            <table id='withdrawTable'>
+                                <tr class='title'>
+                                    <th class='one'>提现时间&nbsp;&nbsp;|&nbsp;&nbsp;流水单账号</th>
+                                    <th class='two'>提现银行&nbsp;&nbsp;|&nbsp;&nbsp;提现账号</th>
+                                    <th class='three'>提现总额(元)</th>
+                                    <th class='four'>到账金额(元)</th>
+                                    <th class='five'>手续费(元)</th>
+                                    <th>状态</th>
+                                </tr>
+                            </table>
+                            <div class="pagination withdrawRecord-page">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--尾部 start-->
+    <div th:replace="common/footer::footer (${globalData},${global.xxdVersion})"></div>
+    <!--尾部 end-->
+</div>
+<!--[if lt IE 9]>
+<iframe id="ifr_cover" frameborder="0" class="hide" scrolling="no"></iframe>
+<div id="alertBoxWrap" class="hide"></div>
+<![endif]-->
+</body>
+<script th:src="@{${global.staticHost}+'/pc/'+${global.xxdVersion}+'/build/mods/company/dealDetail/_.js'}"></script>
+</html>

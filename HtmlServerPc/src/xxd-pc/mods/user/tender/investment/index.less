@@ -1,0 +1,56 @@
+@import "../../side";
+@import "../../../../css/laydate.css";
+@dottedPath: "../../../../";
+@import "@{dottedPath}css/reset";
+@import "@{dottedPath}css/variable";
+@path: "@{dottedPath}tmp/merge/";
+@import "@{path}tip.index.css";
+@import "@{path}dialog.index.css";
+@import "@{path}backTop.index-1.css";
+@import "@{path}dialog-float.index.css";
+@import "@{path}rotate.index.css";
+
+@import "../../../header";
+@import "../../../footer";
+
+.filtrate-box{
+  input{
+    border:1px solid #cccccc;
+    border-radius:3px;
+    width:98px;
+    height:38px;
+    padding-left: 10px;
+    margin:0 !important;
+    font-size: 14px;
+    vertical-align: middle;
+  }
+  .ml{
+    margin-left: 10px !important;
+  }
+  select{
+    background:#fff;
+    border:1px solid #cccccc;
+    border-radius:2px;
+    width:118px;
+    height:38px;
+    font-size: 14px;
+  }
+  a{
+    margin-left: 10px;
+  }
+}
+table{
+  .borrower{
+    a{
+      display: inline-block;
+      font-size:12px;
+      color:#fff !important;
+      background:#57a8ff;
+      border-radius:3px;
+      padding:2px 5px;
+      &:hover{
+        background: @hoverColor;
+      }
+    }
+  }
+}

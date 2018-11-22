@@ -1,0 +1,237 @@
+<!Doctype html>
+<html lang="zh-cn" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" th:href="@{${global.staticHost}+'/pc/'+${global.xxdVersion}+'/build/css/i/favicon.ico'}">
+    <link rel="Bookmark" th:href="@{${global.staticHost}+'/pc/'+${global.xxdVersion}+'/build/css/i/favicon.ico'}">
+    <title>散标直投_新宜贷</title>
+    <meta name="keywords" content="新新贷，P2P网贷，P2P理财，投资理财，网上理财，新元宝，月月派，新手专享，投融资，贷款，企业贷款，无抵押小额贷款，借款"/>
+    <meta name="description"
+          content="新新贷是中国专业的互联网金融P2P网络借贷信息中介平台，为出借人和借款人提供省心的互联网金融信息服务。资金银行存管、严格的风控体系、信息披露透明等多重安全保障措施。"/>
+    <link th:href="@{${global.staticHost}+'/pc/'+${global.xxdVersion}+'/build/mods/detail/consumptionDetail/_.css'}"
+          rel="stylesheet">
+</head>
+<body>
+<div id="J_wrapBody">
+    <div th:replace="common/header::header"></div>
+
+    <div class="detail-crumbs">
+        <div class="crumbs">
+            <a href="//www.xinxindai.com/">首页</a> &gt; <b>新宜贷</b> &gt; <b>标的详情</b>
+        </div>
+    </div>
+    <div class='container'>
+        <h2>[[${globalData.bidDetail.data.bidName}]]&nbsp;&nbsp;&nbsp;借款编号：[[${globalData.bidDetail.data.bidCode}]] <a
+                href="/detail/consumptionList.html">返回标的列表</a></h2>
+        <div class='loan-container'>
+            <div class='loan clearfix'>
+                <div class='loan-focus'>
+                    <table>
+                        <tr>
+                            <th>借款金额</th>
+                            <th>历史年化收益<p class='yearReturns-tip'>?<span>历史年化收益率是指参考同类型项目的历史数据得出的收益率<i></i></span></p></th>
+                            <th>借款期限</th>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span><i id='borrowMoney'>[[${#numbers.formatDecimal(globalData.bidDetail.data.bidAmount,1,'COMMA',2,'POINT')}]]</i>元</span>
+                            </td>
+                            <td><span id='tableEarnings'>[[${#numbers.formatDecimal(globalData.bidDetail.data.plannedAnnualRate,1,'COMMA',2,'POINT')}]]</span>%
+                            </td>
+                            <td><span id='leastPeriod'>[[${globalData.bidDetail.data.leastPeriodValue}]]</span>个月</td>
+                        </tr>
+                    </table>
+                    <div class='consumption-icon'><i><b></b></i>新宜贷</div>
+                    <p th:switch="${globalData.bidDetail.data.repaymentType.code}">
+                        <em>借款用途：[[${globalData.bidDetail.data.loanPurpose.message}]]</em>
+                        <span>还款方式：<i id='modeRepay'>[[${globalData.bidDetail.data.repaymentType.message}]]</i></span>
+                        <em class='modeRepay-tip' th:case="'001'">?
+                            <span>
+                                每月应还本息=[借款金额×历史年化收益÷12×（1+历史年化收益÷12）^借款期限]÷[（1+历史年化收益÷12）^借款期限－1] 。应还总利息为每月应还利息总合。应还本金为借款金额。
+                                <i></i>
+                            </span>
+                        </em>
+                    </p>
+                    <p>
+                        <em>最低投标：[[${#numbers.formatDecimal(globalData.bidDetail.data.tenderAmountDown,1,'COMMA',2,'POINT')}]]元</em><span>债权转让：[[${globalData.bidDetail.data.isSupportCreditAssignment.message}]]</span>
+                    </p>
+                    <p><em>投标奖励：无</em><span>投标且复审成功后可获得奖励</span></p>
+                    <p><em>标的状态：[[${globalData.bidDetail.data.status.message}]]</em><span>预计起息时间：[[${globalData.bidDetail.data.plannedValueDate}]]</span></p>
+                    <p><em>风险等级：[[${globalData.bidDetail.data.riskGrade}]]</em><span>募集截止日期：[[${globalData.bidDetail.data.endTime}]]</span></p>
+                </div>
+                <div class='available-balance'>
+                    <h3>剩余可投金额</h3>
+                    <span class='rem-amount'><i id='remAmount'>[[${#numbers.formatDecimal(globalData.bidDetail.data.leftTenderAmount,1,'COMMA',2,'POINT')}]]</i>元</span>
+                    <div class='progress-tip'>
+                        <span>进度：<i>[[${globalData.bidDetail.data.percent}]]</i>%</span>
+                        <div class='progress-bar'>
+                            <div class='existing'
+                                 th:style="${'width: ' + globalData.bidDetail.data.percent  + '%'}"></div>
+                        </div>
+                    </div>
+                    <div th:if="${globalData.isLogin}" class='account-balance '>
+                        <span>账户余额：<i id='accountBalance'>[[${#numbers.formatDecimal(globalData.overview.data.availableBalance,1,'COMMA',2,'POINT')}]]</i>元</span>
+                        <a href='/usercenter/recharge.html'>充值</a>
+                        <a id='allInvest'>全投</a>
+                    </div>
+                    <p>投标金额：<input type="text" th:placeholder="${globalData.bidDetail.data.tenderAmountDown + '元起投'}"
+                                   id='investMoney'>元</p>
+                    <p>平均历史收益：<span id='earnings'>0.00</span>元</p>
+                    <p class='risk-protocol hide'><input type="checkbox">我已充分阅读本<a target='_blank'
+                                                                                   href="/user/regRiskWarning.html">《资金出借风险提示函》</a>，知晓包括债权转让风险在内的相关风险提示，并将根据风险承受能力谨慎出借并承担风险。
+                    </p>
+                    <p class='error-tip hide'></p>
+                    <div id='J_buyWrap'>
+                        <a th:if="${!globalData.isLogin}" class='button' href='/user/ilogin.html'>立即登录</a>
+                        <a th:if="${globalData.isLogin}" class='button' id='toBid'>立即加入</a>
+                    </div>
+                </div>
+            </div>
+            <div class='loan-info'>
+                <div th:utext="${globalData.bidDetail.data.expenseExplanation}"></div>
+                <p>合同范本：<a href="/html/commitment/index.html" target='_blank'>查看详情</a></p>
+            </div>
+        </div>
+        <div class='consumption-tabs'>
+            <ul class='clearfix nav' id='consumptionNav'>
+                <li class='active details-btn'><a href="javascript:;">借款详情</a></li>
+                <!--<li class='record-btn'><a href="javascript:;">贷款记录</a></li>-->
+                <li class=''><a href="javascript:;">还款记录</a></li>
+                <li class=''><a href="javascript:;">投标记录</a></li>
+                <li class=''><a href="javascript:;">安全保障</a></li>
+                <li class=''><a href="javascript:;">项目风险提示</a></li>
+            </ul>
+            <div class='tab-content' id='tab-content' th:with="show = ${globalData.infoDisclosures.code == 200000}">
+                <div class='j_tabContent tab-desc loan-details '>
+                    <p th:if="${!globalData.isLogin}" class='login-tip '>只有 <a href="/user/iregister.html">注册</a>
+                        用户才可以查看借款人详细信息！现在 <a href="/user/ilogin.html">登录</a></p>
+                    <div th:if="${globalData.isLogin}" class='borrower-details'>
+                        <h6>借款人详情</h6>
+                        <div>
+                            <p><span>借款人姓名：[[${globalData.bidBorrowerInfo.data.realname}]]</span><span>身份证号码：[[${globalData.bidBorrowerInfo.data.idCardNo}]]</span>
+                            </p>
+                            <p><span>借款人主体: 自然人</span><span>年龄：[[${globalData.bidBorrowerInfo.data.age}]] 岁</span>
+                            </p>
+                            <p><span>性别：[[${globalData.bidBorrowerInfo.data.gender}]]</span><span>所在地：[[${globalData.bidBorrowerInfo.data.location}]] </span>
+                            </p>
+                            <p><span>所属行业：[[${globalData.infoDisclosures.data.industry}]]</span><span>工作性质：[[${globalData.infoDisclosures.data.workType}]]</span>
+                            </p>
+                            <p><span>收入情况：[[${globalData.infoDisclosures.data.incomeStr}]]</span><span>负债情况：[[${#strings.isEmpty(globalData.infoDisclosures.data.liabilityStr)?'无重大负债':globalData.infoDisclosures.data.liabilityStr}]]</span>
+                            </p>
+                        </div>
+                        <h6>借款相关</h6>
+                        <div>
+                            <p><span>逾期次数：[[${globalData.bidBorrowerInfo.data.overdueCount}]]</span><span>逾期金额：[[${globalData.bidBorrowerInfo.data.overdueSumAmount}]]</span>
+                                <span>成功借款次数：[[${globalData.bidBorrowerInfo.data.successLoanNum}]] </span>
+                            </p>
+                        </div>
+                        <h6>征信报告</h6>
+                        <div th:if="${#lists.isEmpty(globalData.infoDisclosures.data.pbocInfoList)}">
+                            <p>
+                                <span>借款人未提供</span>
+                            </p>
+                        </div>
+                        <div th:if="${#lists.size(globalData.infoDisclosures.data.pbocInfoList) > 0}" class='credit'>
+                            <table>
+                                <tr>
+                                    <th></th>
+                                    <th>账户数</th>
+                                    <th>未清算/未销户账户数</th>
+                                    <th>发生逾期的账户数</th>
+                                    <th>发生过90天以上逾期的账户数</th>
+                                    <th>为他人担保笔数</th>
+                                </tr>
+                                <tr th:each="item : ${globalData.infoDisclosures.data.pbocInfoList}">
+                                    <td th:if="${#strings.equals(item.creditType, '1')}">信用卡</td>
+                                    <td th:if="${#strings.equals(item.creditType, '2')}">购房贷款</td>
+                                    <td th:if="${#strings.equals(item.creditType, '3')}">其他贷款</td>
+                                    <td th:text="${item.accountNum}"></td>
+                                    <td th:text="${item.osAccountNum}"></td>
+                                    <td th:text="${item.overdueAccountNum}"></td>
+                                    <td th:text="${item.overdue90AccountNum}"></td>
+                                    <td th:text="${item.guaranteeNum}"></td>
+                                </tr>
+                            </table>
+                        </div>
+                        <h6>借款描述</h6>
+                        <p>[[${globalData.bidBorrowerInfo.data.bidInfo}]]</p>
+                        <div th:if="${globalData.bidDetail.data.bidAmount <= 200000}">
+                            <h6>在其他网络借贷平台借款情况</h6>
+                            <div th:utext="${globalData.managementText}"></div>
+                        </div>
+                        <h6 th:if="${show && #strings.equals(globalData.bidDetail.data.status.code, 'REPAYING') && globalData.infoDisclosures.data.updateDate != null}">其他相关信息（更新时间：[[${#dates.format(globalData.infoDisclosures.data.updateDate,
+                            'yyyy/MM/dd')}]]）</h6>
+                        <div th:if="${show && #strings.equals(globalData.bidDetail.data.status.code, 'REPAYING') && globalData.infoDisclosures.data.updateDate != null}" class='others'>
+                            <p>资金运用情况：[[${globalData.infoDisclosures.data.fundsUse}]]</p>
+                            <p>借款人还款能力变化：[[${globalData.infoDisclosures.data.repaymentAbilityChange}]]</p>
+                            <p>借款人涉诉及受行政处罚情况：[[${globalData.infoDisclosures.data.complaintsAdmPenalties}]]</p>
+                        </div>
+                    </div>
+                </div>
+                <!--<div class='j_tabContent tab-desc loan-record hide'>
+                    <ul class='loan-total'>
+                        <p><span>累计借款：<i id='totalLoan'></i>元</span><span>待还金额：<i id='noRepay'></i>元</span></p>
+                        <p><span>正常还清：<i id='repayTimes'></i>次</span><span>逾期还清：<i id='noRepayTimes'></i>次</span><span>首次借款时间：<i
+                                id='firstLoan'></i></span></p>
+                    </ul>
+                    <div class='table-content '>
+                        <table id="J_loanRecord">
+                            <tr>
+                                <th>借款标题</th>
+                                <th>借款金额</th>
+                                <th>借款利率</th>
+                                <th>借款期限</th>
+                                <th>状态</th>
+                            </tr>
+                        </table>
+                        <div class='pagination loanRecord-page'></div>
+                    </div>
+                </div>-->
+                <div class='j_tabContent tab-desc repayment-record hide'>
+                    <div class='table-content '>
+                        <table id="J_repaymentRecord">
+                            <tr>
+                                <th>期数</th>
+                                <th>待还日期</th>
+                                <th>实还日期</th>
+                                <th>已还金额</th>
+                                <th>待还金额</th>
+                                <th>状态</th>
+                            </tr>
+                        </table>
+                        <div class='pagination repayment-page'></div>
+                    </div>
+                </div>
+                <div class='j_tabContent tab-desc tender-record hide'>
+                    <div class='table-content '>
+                        <table id="J_tenderRecord">
+                            <tr>
+                                <th>投标人</th>
+                                <th>投标金额</th>
+                                <th>投标时间</th>
+                                <th>状态</th>
+                            </tr>
+                        </table>
+                        <div class='pagination tenderRecord-page'></div>
+                    </div>
+                </div>
+                <div class='j_tabContent tab-desc safeguard hide' th:utext="${globalData.guaranteeText}">
+                </div>
+                <div class='j_tabContent tab-desc risk-warning hide' th:utext="${globalData.projectRiskText}">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div th:replace="common/footer::footer (${globalData},${global.xxdVersion})"></div>
+</div>
+<!--[if lt IE 9]>
+<iframe id="ifr_cover" frameborder="0" class="hide" scrolling="no"></iframe>
+<div id="alertBoxWrap" class="hide"></div>
+<![endif]-->
+</body>
+<script th:src="@{${global.staticHost}+'/pc/'+${global.xxdVersion}+'/build/js/common/require.min.js'}"></script>
+<script th:src="@{${global.staticHost}+'/pc/'+${global.xxdVersion}+'/build/mods/detail/consumptionDetail/_.js'}"></script>
+</html>

@@ -1,0 +1,60 @@
+<!Doctype html>
+<html lang="zh-cn" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" th:href="@{${global.staticHost}+'/pc/'+${global.xxdVersion}+'/build/css/i/favicon.ico'}">
+    <link rel="Bookmark" th:href="@{${global.staticHost}+'/pc/'+${global.xxdVersion}+'/build/css/i/favicon.ico'}">
+    <title>新新贷-访问受限</title>
+    <meta name="keywords" content="新新贷，P2P网贷，P2P理财，投资理财，网上理财，新元宝，月月派，新手专享，投融资，贷款，企业贷款，无抵押小额贷款，借款"/>
+    <meta name="description"
+          content="新新贷是中国专业的互联网金融P2P网络借贷信息中介平台，为出借人和借款人提供省心的互联网金融信息服务。资金银行存管、严格的风控体系、信息披露透明等多重安全保障措施。"/>
+    <link th:href="@{${global.staticHost}+'/pc/'+${global.xxdVersion}+'/build/mods/failure/_.css'}" rel="stylesheet">
+</head>
+<body>
+<div id="J_wrapBody">
+    <div th:replace="common/header::header"></div>
+
+    <div class="detail-crumbs">
+        <div class="crumbs">
+            <a href="//www.xinxindai.com/">首页</a> &gt; <a href='/usercenter/accountInfo.html'>我的新新贷</a> &gt; <b>操作失败</b>
+        </div>
+    </div>
+
+
+    <div class='container'>
+        <div class='not-found'>
+            <h2>404</h2>
+            <h6>没有找到您要访问的页面，请确认你输入的网址正确</h6>
+            <div class='bottom clearfix'>
+                <div class='hot'>
+                    <p>看看热门产品</p>
+                    <ul>
+                        <li><a href="/detail/thirtytender.html">新手专享</a>&nbsp;|</li>
+                        <li><a href="/detail/monthgold.html">月进斗金</a>&nbsp;|</li>
+                        <li><a href="/xplan/search/list.html">新元宝</a></li>
+                    </ul>
+                </div>
+                <div class='code'>
+                    <img th:src="@{${global.staticHost}+'/pc/'+${global.xxdVersion}+'/build/img/QR-code.png'}"/>
+                </div>
+                <div class='tip'>
+                    <p>扫一扫下载手机APP</p>
+                    <span>随时随地掌控出借动态</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div th:replace="common/footer::footer (${globalData},${global.xxdVersion})"></div>
+</div>
+<!--[if lt IE 9]>
+<iframe id="ifr_cover" frameborder="0" class="hide" scrolling="no"></iframe>
+<div id="alertBoxWrap" class="hide"></div>
+<![endif]-->
+</body>
+<script th:src="@{${global.staticHost}+'/pc/'+${global.xxdVersion}+'/build/js/common/require.min.js'}"></script>
+<script th:src="@{${global.staticHost}+'/pc/'+${global.xxdVersion}+'/build/mods/failure/_.js'}"></script>
+</html>

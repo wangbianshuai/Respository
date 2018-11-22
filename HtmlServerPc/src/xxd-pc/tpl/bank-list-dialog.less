@@ -1,0 +1,46 @@
+.bankListDialog {
+    .title {
+        height:46px;
+        width: 96%;
+        margin:0 auto;
+        border-bottom:1px solid #eee;
+        color:#4ca2ff;
+        font:normal 18px/46px #666;
+        a {
+            float: right;
+            color: #999;
+            text-shadow: 0 1px 0 #ffffff;
+            font:bold 20px/46px #666;
+            &:hover {
+                color:#000;
+            }
+        }
+    }
+    ul {
+        width: 800px;
+        padding: 15px;
+        li {
+            float:left;
+            width:198px;
+            height: 38px;
+            background: greenyellow;
+            border:1px solid white;
+            cursor: pointer;
+            &.active {
+                position: relative;
+                border:1px solid red;
+                i {
+                    position: absolute;
+                    right:0;
+                    bottom:0;
+                    color:red;
+                    background: #4ca2ff;
+                    width: 15px;
+                    height: 15px;
+                    background: url("//www.xinxindai.com/static/images/account/bj-bank.jpg");
+                }
+            }
+        }
+
+    }
+}

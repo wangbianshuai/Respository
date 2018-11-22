@@ -1,0 +1,64 @@
+@dottedPath: "../../../";
+@import "@{dottedPath}/css/reset";
+@path: "@{dottedPath}tmp/merge/";
+@import "@{dottedPath}tpl/bank-list-dialog";
+@import "@{path}/tip.index.css";
+@import "@{path}/dialog.index.css";
+@import "@{path}/backTop.index-1.css";
+@import "@{path}/dialog-float.index.css";
+@import "../../header";
+@import "../../footer";
+@import "../detail";
+
+.container{
+  height: 364px;
+  background: #fff;
+  overflow: hidden;
+
+}
+h3{
+  font-size:20px;
+  color:#ff908c;
+  margin: 50px 0;
+  text-align: center;
+  i{
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    background: url("../i/failed-face.png") 0 0 no-repeat;
+    vertical-align: middle;
+    margin:0 10px 3px 0;
+  }
+}
+.demand{
+  display: inline-block;
+  margin-left: 400px;
+  h5{
+    font-size:16px;
+    color:#666666;
+    margin:0;
+  }
+  p{
+    font-size:14px;
+    color:#999999;
+    margin:10px 0;
+  }
+}
+.open-account{
+  display: block;
+  margin:100px auto 0;
+  background:#2096e9;
+  -webkit-border-radius:5px;
+  -moz-border-radius:5px;
+  border-radius:5px;
+  width:280px;
+  height:40px;
+  line-height: 40px;
+  border:0;
+  color: #fff;
+  text-align: center;
+  font-size: 16px;
+  &:hover {
+    background: #0266be;
+  }
+}

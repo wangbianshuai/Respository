@@ -1,0 +1,323 @@
+@dottedPath: "../../../";
+@import "@{dottedPath}/css/reset";
+@path: "@{dottedPath}tmp/merge/";
+@import "@{dottedPath}tpl/bank-list-dialog";
+@import "@{path}/tip.index.css";
+@import "@{path}/dialog.index.css";
+@import "@{path}/backTop.index-1.css";
+@import "@{path}/dialog-float.index.css";
+@import "../../header";
+@import "../../footer";
+@import "../detail";
+
+@borderColor: #EEEEEE;
+@titleColor: #333333;
+@fontColor: #666666;
+@impColor: #ff685d;
+@mainColor: #2096e9;
+@hoverColor: #0266be;
+
+.container {
+  width: 1198px;
+  background: #fff;
+  border: 1px solid @borderColor;
+  margin: 26px auto 50px;
+  * {
+    font-weight: 300;
+  }
+  b {
+    font-weight: bold;
+  }
+  i {
+    font-style: normal;
+  }
+  h2 {
+    border-bottom: 1px solid @borderColor;
+    width: 1168px;
+    height: 56px;
+    color: @titleColor;
+    letter-spacing: -0.43px;
+    padding-left: 30px;
+    font: 400 18px/56px 'microsoft yahei';
+    a {
+      font: 300 14px/57px 'microsoft yahei';
+      float: right;
+      margin: 0 30px 0 0;
+      color: #666;
+    }
+  }
+}
+
+.loan-container {
+  padding: 15px 30px 20px;
+  * {
+    font-weight: 400;
+  }
+  .loan, .loan-info {
+    background: #F4F5F9;
+  }
+  .loan {
+    position: relative;
+  }
+}
+
+.loan-focus {
+  float: left;
+  padding: 20px;
+  table {
+    width: 550px;
+    text-align: left;
+    th {
+      color: @titleColor;
+      font-size: 16px;
+      text-align: left;
+    }
+    td {
+      color: @titleColor;
+      font-size: 14px;
+      padding: 10px 0;
+      span {
+        color: @impColor;
+        font-size: 28px;
+      }
+    }
+  }
+  p {
+    font-size: 16px;
+    color: #878d96;
+    line-height: 30px;
+    em {
+      font-style: normal;
+      float: left;
+      width: 250px;
+    }
+  }
+  .consumption-icon {
+    position: relative;
+    left: 0;
+    top: 0;
+    margin: 10px 0;
+  }
+  .yearReturns-tip, .modeRepay-tip {
+    display: inline-block;
+    width: 20px;
+    height: 21px;
+    line-height: 21px;
+    vertical-align: middle;
+    margin: -2px 0 0 5px;
+    cursor: pointer;
+    background: #000;
+    color: #fff;
+    border-radius: 50%;
+    text-align: center;
+    background: #dedede;
+    position: relative;
+    span {
+      position: absolute;
+      display: inline-block;
+      width: 200px;
+      bottom: 35px;
+      left: -98px;
+      background: #666;
+      padding: 5px;
+      color: #fff;
+      font: 300 12px "microsoft yahei";
+      border-radius: 5px;
+      display: none;
+      i {
+        display: inline-block;
+        width: 0;
+        height: 0;
+        border: 10px solid #666;
+        border-color: #666 transparent transparent transparent;
+        position: absolute;
+        bottom: -20px;
+        left: 46%;
+      }
+    }
+    &:hover {
+      background: #666;
+      span {
+        display: block;
+      }
+    }
+  }
+  .modeRepay-tip {
+    float: none;
+  }
+}
+
+.loan-info {
+  color: #878d96;
+  padding: 0 20px 20px 20px;
+  font: 400 16px/30px 'microsoft yahei';
+  p {
+    font: 400 16px/30px 'microsoft yahei';
+    color: #878d96;
+  }
+  span {
+    display: block;
+    text-indent: 5em;
+  }
+  a {
+    color: @mainColor;
+  }
+}
+
+.nav {
+  border-top: 1px solid @borderColor;
+  a {
+    font-weight: 400;
+  }
+}
+
+.tab-desc {
+  padding: 22px 30px;
+  .borrower-details {
+    h6 {
+      color: @titleColor;
+      border-bottom: 1px dashed @borderColor;
+      font: 400 14px/40px 'Microsoft YaHei';
+    }
+    div {
+      padding: 10px 0;
+      span {
+        display: inline-block;
+        width: 45%;
+      }
+    }
+    p {
+      margin-top: 10px;
+      color: #999;
+      font: 300 16px/30px "microsoft yahei";
+    }
+    .credit {
+      width: 900px;
+      table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+      tr {
+        display: inline-block;
+        margin: -5px;
+      }
+      th, td {
+        font: normal 14px/30px "microsoft yahei";
+        color: #8A8B8C;
+        text-align: center;
+        border-right: 1px solid #fff;
+        display: block;
+        width: 220px;
+        border: 0;
+        height: 30px;
+      }
+      .bg {
+        background: #F2F2F2;
+      }
+      td:nth-child(2n+1) {
+        background: #F2F2F2;
+      }
+      th:nth-child(2n+1) {
+        background: #F2F2F2;
+      }
+    }
+    .others {
+      span {
+        font: 400 16px/30px "microsoft yahei";
+      }
+    }
+  }
+}
+
+.tab-content {
+  color: #999;
+  font-size: 16px;
+  line-height: 30px;
+}
+
+.loan-details {
+  .login-tip {
+    font-size: 14px;
+    margin-bottom: 70px;
+    a {
+      color: @mainColor;
+    }
+  }
+}
+
+.loan-total {
+  p {
+    color: #999;
+    font: 300 16px/30px "microsoft yahei";
+  }
+  span {
+    display: inline-block;
+    width: 26%;
+  }
+}
+
+.safeguard {
+  p {
+    color: #999;
+    font: 300 16px/40px "microsoft yahei";
+  }
+}
+
+.table-content {
+  padding: 20px 0;
+}
+
+.serial-number {
+  font-style: normal;
+}
+
+.discount, .expect-income {
+  margin: 0 !important;
+}
+
+.authorization {
+  width: auto !important;
+}
+
+.dimension {
+  em {
+    font-style: normal;
+  }
+  .act-pay, span {
+    width: 280px;
+  }
+}
+
+.pagination {
+  li {
+    margin: 0 auto;
+    height: auto;
+    list-style-type: disc;
+    color: #878d96;
+    font: 12px/1.5 "microsoft yahei";
+    width: auto;
+    &:hover {
+      color: #878d96;
+    }
+    a {
+      float: left;
+      font: 12px/1.5 "microsoft yahei";
+      color: rgb(135, 141, 150);
+      width: auto;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      vertical-align: middle;
+      &:hover {
+        color: rgb(135, 141, 150);
+      }
+    }
+  }
+}
+
+.investment-focus {
+  .headline {
+    display: block !important;
+    width: auto !important;
+  }
+}

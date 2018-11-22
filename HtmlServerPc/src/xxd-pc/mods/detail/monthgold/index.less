@@ -1,0 +1,249 @@
+@dottedPath: "../../../";
+@import "@{dottedPath}/css/reset";
+@path: "@{dottedPath}tmp/merge/";
+@import "@{dottedPath}tpl/bank-list-dialog";
+@import "@{path}/tip.index.css";
+@import "@{path}/dialog.index.css";
+@import "@{path}/backTop.index-1.css";
+@import "@{path}/dialog-float.index.css";
+@import "../../header";
+@import "../../footer";
+@import "../detail";
+@clickColor: #5ea8f8;
+.product-info {
+	width: 1198px;
+	margin: 20px 0;
+	border: 1px solid @borderColor;
+	background: #fff;
+	.main-product {
+		float: left;
+		width: 747px;
+		padding-top: 25px;
+		.title {
+			background: url("../i/mothgold-tit.png") 0 0 no-repeat;
+			width: 382px;
+			height: 66px;
+			color: #fff;
+			margin-left: -14px;
+			padding-left: 40px;
+			font:normal 20px/55px @xxd-font;
+			span {
+				font-size: 14px;
+			}
+		}
+		table {
+			text-align: left;
+			position: relative;
+			margin: 20px 0 20px 50px;
+			td, th {
+				width: 150px;
+				height: 50px;
+			}
+			th {
+				color: @fontColor;
+				font:400 14px/14px @xxd-font;
+			}
+			td {
+				font-size: 30px;
+				color: #333333;
+				span {
+					font-size: 16px;
+				}
+			}
+			.money{
+				font-size: 16px;
+			}
+			.rate {
+				font-size: 30px;
+			}
+		}
+		
+		.some-tip{
+			display: inline-block;
+			float: left;
+			margin-top: 20px;
+			p {
+				padding-left: 50px;
+				font-size: 14px;
+				color: @fontColor;
+				height: 28px;
+				line-height: 28px;
+				margin: 0;
+				a {
+					color: #5ea8f8;
+				}
+			}
+		}
+		.waiting{
+			margin-left:30px;
+			padding:0 56px;
+			text-align: center;
+			float: left;
+			color: @fontColor;
+			background:#f3f3f3;
+			font:normal 14px/106px @xxd-font;
+		}
+		.count {
+			padding:0 30px;
+			float: left;
+			margin: 20px 60px;
+			font-size:14px;
+			color: @fontColor;
+			background:#f3f3f3;
+			p{
+				height: 28px;
+				line-height: 28px;
+				margin-top: 6px;
+			}
+			.count-down{
+				font-size: 30px;
+				position: relative;
+				span{
+					display: inline-block;
+					width: 30px;
+					margin-right: 3px;
+					text-align: center;
+					border-radius: 3px;
+					font:normal 20px/40px @xxd-font;
+					background: #000;
+					color: #fff;
+				}
+				i{
+					font-style: normal;
+					margin-right: 2px;
+					color: #000;
+				}
+				.line{
+					position: absolute;
+					top: 24px;
+					top:20px\9;   //ie8
+					left: 0;
+					width: 99%;
+					height: 1px;
+					background: @borderColor;
+					opacity:0.6;
+				}
+			}
+			.count-tip{
+				margin: 6px 0 6px;
+				width: 100%;
+				i{
+					font-style: normal;
+					display: inline-block;
+					width: 33.33%;
+					text-align: center;
+				}
+			}
+		}
+	}
+	.active {
+		border-color: #FF7369 !important;
+		color: #FF7369 !important;
+	}
+}
+.count-rate {
+	background: #fff;
+	width: 1198px;
+	border: 1px solid @borderColor;
+	margin-bottom: 20px;
+	text-align: center;
+	ul {
+		padding-left: 24px;
+		text-align: left;
+		height: 56px;
+		border-bottom: 1px solid #EEEEEE;
+		a {
+			display: inline-block;
+			color: #333;
+			font: normal 18px/56px "micsoft yahei";
+			border-bottom: 2px solid #33A9FF;
+		}
+	}
+	.rate-img{
+		img{
+			width:70%;
+			margin: 20px auto;
+		}
+	}
+}
+
+.detail-desc {
+	margin-bottom: 50px;
+	table {
+		margin: 20px 30px;
+		border-spacing: 0;
+		border-right: 1px solid #EEE;
+		border-bottom: 1px solid #EEE;
+		tr {
+			display: block;
+		}
+		th, td {
+			line-height: 50px;
+			font-size: 16px;
+			color: @fontColor;
+			border-left: 1px solid #EEE;
+			border-top: 1px solid #EEE;
+			text-align: center;
+			p{
+				font-size: 16px;
+			}
+		}
+		.title{
+			background: #F9F9F9;
+		}
+		th {
+			width: 260px;
+		}
+		.infor {
+			height: 110px;
+			line-height: 110px;
+		}
+		.h90{
+			height: 90px;
+			line-height: 90px;
+		}
+		td {
+			width: 980px;
+			a {
+				color: @clickColor;
+			}
+			>div{
+				display: inline-block;
+				position: relative;
+			}
+			.plus{
+				display: inline-block;
+				.xszx-tip{
+					position: absolute;
+					font: normal 12px/24px "micsoft yahei";
+					width: 94px;
+					height: 24px !important;
+					background: #ff7365;
+					margin: 0;
+					text-align: center;
+					left: 25px;
+					color: #fff;
+					top: 6px;
+					border-radius: 4px;
+					padding:0;
+					i{
+						display: inline-block;
+						position: absolute;
+						border: 8px solid #ff7365;
+						width: 0;
+						height: 0;
+						border-color: #ff7365 transparent transparent transparent;
+						bottom: -13px;
+						left: 16px;
+					}
+				}
+			}
+		}
+		.infor-con{
+			padding: 10px 20px;
+			width: 937px;
+			line-height: 24px;
+			text-align: left;
+		}
+	}
+}

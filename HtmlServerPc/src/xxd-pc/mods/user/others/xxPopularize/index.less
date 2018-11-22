@@ -1,0 +1,104 @@
+@import "../../side";
+
+@dottedPath: "../../../../";
+@import "@{dottedPath}css/reset";
+@import "@{dottedPath}css/variable";
+@path: "@{dottedPath}tmp/merge/";
+@import "@{path}tip.index.css";
+@import "@{path}dialog.index.css";
+@import "@{path}backTop.index-1.css";
+@import "@{path}dialog-float.index.css";
+@import "@{path}rotate.index.css";
+
+@import "../../../header";
+@import "../../../footer";
+.btn() {
+  display: inline-block;
+  background: #2096e9;
+  width: 280px;
+  height: 40px;
+  line-height: 40px;
+  font-size: 16px;
+  color: #fff;
+  text-align: center;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-left: 30px;
+  &:hover {
+    background-color: #0266be;
+    cursor: pointer;
+  }
+}
+
+.g-right {
+  .m-con-wrap {
+    .m-con-bd {
+      border-bottom: none;
+      text-align: center;
+      a {
+        .btn();
+      }
+      .pop-content {
+        margin-top: 20px;
+        height: 548px;
+        padding-top: 30px;
+        overflow-y: auto;
+        border: 1px solid @col-ccc;
+        p {
+          padding-bottom: 10px;
+          font-size: @font14px;
+          color: @col-666;
+          text-align: left;
+        }
+      }
+    }
+    .xxPop {
+      margin-top: 25px;
+      margin-bottom: 30px;
+      width: 920px;
+      height: 260px;
+      background: url("@{imgurl}xxPop.png") no-repeat center;
+    }
+  }
+}
+
+.xxPop-tips {
+  position: relative;
+  width: 400px;
+  padding-bottom: 45px;
+  background: #fff;
+  box-shadow: 0 2px 3px 0 rgba(0, 0, 0, .16);
+  -webkit-border-radius: 6px;
+  -moz-border-radius: 6px;
+  border-radius: 6px;
+  text-align: center;
+  .c_close {
+    position: absolute;
+    top: -48px;
+    right: 0px;
+    font-size: 33px;
+    color: #fff;
+    font-style: normal;
+  }
+  .m-con-hd {
+    height: 52px;
+    line-height: 52px;
+    text-align: center;
+    font-size: @font18px;
+    color: @col-333;
+    border-bottom: 1px solid @col-eee;
+  }
+  .tip-content {
+    margin: 20px auto;
+    p {
+      font-size: @font16px;
+      text-align: center;
+    }
+  }
+  .btn {
+    .btn();
+    margin:0;
+  }
+}

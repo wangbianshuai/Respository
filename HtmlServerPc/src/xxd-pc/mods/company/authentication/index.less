@@ -1,0 +1,705 @@
+@import "../side";
+@relativePath: "../../../";
+@import "@{relativePath}css/laydate.css";
+@import "@{relativePath}css/reset";
+@import "@{relativePath}css/variable";
+@import "@{relativePath}css/cropper.min.css";
+@path: "@{relativePath}tmp/merge/";
+@import "@{path}tip.index.css";
+@import "@{path}dialog.index.css";
+@import "@{path}backTop.index-1.css";
+@import "@{path}dialog-float.index.css";
+@import "@{path}rotate.index.css";
+@import "../../header";
+@import "../../footer";
+
+button{
+  border: 0 none;
+  outline: none;
+  background-image: none;
+  text-shadow: none;
+}
+input{
+  margin: 0;
+  padding: 0;
+  border: none;
+  outline: none;
+}
+input:focus{
+  box-shadow:none;
+}
+input::-moz-placeholder {
+  color: #999;
+}
+input::-webkit-placeholder {
+  color: #999;
+}
+input::placeholder{
+  color: #999;
+}
+.hidden{
+  visibility: hidden;
+}
+.disnone{
+  display: none;
+}
+body{
+  font-family: "Microsoft YaHei","Glyphicons Halflings";
+  font-size: 13px;
+  background-color: #f6f6f6;
+  color: #666666;
+}
+
+.pages-list{
+  width: 100%;
+  min-width: 1200px;
+  height: 34px;
+  background-color: #57A8FF;
+  .g-top-con{
+    width: 1200px;
+    min-width: 1200px;
+    margin: 0 auto;
+    height: 34px;
+    line-height: 34px;
+    font-size: 14px;
+    color: #fff;
+    a{
+      font-size: 14px;
+      color: #fff;
+    }
+  }
+}
+.container{
+  width:1200px;
+  min-width: 1200px;
+  margin:16px auto 50px;
+  background-color: #fff;
+  //步骤显示
+  .step-lists{
+    padding-top: 50px;
+    margin: 0 auto;
+    ul{
+      overflow: hidden;
+      margin-left: 50px;
+      li{
+        float: left;
+        width: 234px;
+        height: 63px;
+        background: url("../i/gray.png") no-repeat;
+        background-size: 100% 100%;
+        b{
+          color: #fff;
+          font-size: 30px;
+          font-family: "Arial";
+          line-height: 60px;
+          margin-left: 26px;
+        }
+        span{
+          font-size: 18px;
+          color: #fff;
+          text-align: left;
+        }
+      }
+      .step-first{
+        background: url("../i/highlight1.png") no-repeat;
+      }
+      .step-common{
+        margin-left: -20px;
+      }
+      .highlight{
+        background: url("../i/highlight2.png") no-repeat;
+      }
+    }
+  }
+  .content-step{
+    width: 1200px;
+    margin: 0 auto;
+    min-height: 475px;
+    h3{
+      padding-top: 48px;
+      padding-bottom: 40px;
+      text-align: center;
+      font-size: 18px;
+      color: #333;
+    }
+    label{
+      font-family: "Microsoft YaHei";
+      font-size: 18px;
+      color: #666666;
+    }
+    input{
+      font-size: 16px;
+      border: 1px solid #ccc;
+      text-indent: 10px;
+    }
+    select{
+      display: inline-block;
+      font-size: 16px;
+      color: #999;
+      text-indent:10px;
+      border: 1px solid #ccc;
+      background-color: #fff;
+    }
+    .error-tips{
+      margin: 15px auto 11px;
+      width: 278px;
+      height: 22px;
+      line-height: 22px;
+      color: #FF0000;
+      font-size: 12px;
+      border: 1px solid #FF0000;
+      border-radius: 3px;
+      text-indent: 10px;
+      overflow: hidden;
+      white-space:nowrap;
+      text-overflow:ellipsis;
+    }
+    .step-btn{
+      display:inline-block;
+      width: 280px;
+      height: 40px;
+      line-height:40px;
+      font-size:16px;
+      color: #fff;
+      text-align: center;
+      background-color: #2096E9;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .step-special{
+      background-color: #ccc;
+    }
+  }
+  .identify-common{
+    input{
+      width: 280px;
+      height: 38px;
+      line-height: 38px;
+    }
+    .read-info{
+      background-color: #F6F6F6;
+    }
+    label{
+      display: inline-block;
+      width: 450px;
+      text-align: right;
+      margin-right: 10px;
+    }
+    .user-id{
+      margin-top: 25px;
+    }
+    .step1-error,.step-btn{
+      margin-left:460px;
+    }
+    .step-btn{
+      display: inline-block;
+    }
+    .user-common{
+      margin-top: 25px;
+    }
+    .user-common:nth-child(1){
+      margin-top: 0;
+    }
+    .step1{
+      .step1-artificial{
+        font-size: 14px;
+        color: #2096E9;
+        margin-left: 18px;
+        line-height: 40px;
+      }
+    }
+    .step2{
+      .step2-upload{
+        width: 278px;
+        height: 178px;
+        border: 1px dashed #ccc;
+        background-color: #F6F6F6;
+        border-radius: 5px;
+        margin: 25px auto 0;
+        position: relative;
+        .upload-default{
+          width: 278px;
+          height: 178px;
+          overflow:hidden;
+          i{
+            display: block;
+            width: 40px;
+            height: 40px;
+            background: url("../i/add.png") no-repeat;
+            background-size: 100% 100%;
+            margin: 48px auto 0;
+          }
+          span{
+            display: block;
+            text-align: center;
+            font-size: 18px;
+            margin-top:20px;
+            color: #999;
+          }
+          input{
+            position: absolute;
+            right: 0;
+            top: 0;
+            opacity: 0;
+            border: none;
+            width: 100%;
+            height: 100%;
+            cursor: pointer;
+            z-index: 10;
+          }
+        }
+        .upload-behind{
+          position: absolute;
+          left: 0;
+          top: 0;
+          z-index: 10;
+          //background-color: rgba(0,0,0,0.6);
+        }
+        .upload-img{
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          img{
+            width: 100%;
+            height: 100%;
+          }
+        }
+      }
+    }
+  }
+  .first-step{
+    .step1{
+      height: 403px;
+    }
+    .step2{
+      height: 829px;
+    }
+  }
+  //企业认证
+  .second-step{
+    .step1{
+      height: 475px;
+    }
+    .user-firm-id input{
+      text-indent: 4px;
+    }
+    .step2{
+      overflow: hidden;
+      .user-select{
+        margin-top: 25px;
+        .firm-upload{
+          display: inline-block;
+          input{
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            vertical-align: middle;
+          }
+          span{
+            display: inline-block;
+            margin-left: 10px;
+            font-size: 18px;
+            color: #666;
+          }
+          .upload-false{
+            margin-left: 100px;
+          }
+        }
+      }
+      .firm-true{
+        display: block;
+        margin: 0 auto 290px;
+      }
+      .firm-false{
+        margin-bottom: 50px;
+      }
+    }
+  }
+  .third-step{
+    .step1,.step2{
+      min-height: 475px;
+    }
+    .user-bank{
+      select{
+        width: 278px;
+        height: 38px;
+      }
+    }
+    .user-linkBank-num{
+      position: relative;
+      margin-top: 25px;
+      input{
+        width: 242px;
+      }
+      .linkBank-select{
+        position: absolute;
+        display: inline-block;
+        width: 40px;
+        height: 38px;
+        text-align: center;
+        line-height: 38px;
+        font-size: 18px;
+        background-color: #fff;
+        color: #666666;
+        border: 1px solid #ccc;
+        border-radius: 0 4px 4px 0;
+        margin-left: -8px;
+        cursor: pointer;
+        span{
+          display: inline-block;
+          width: 100%;
+          height: 100%;
+          background: url("../i/query.png") center center no-repeat;
+          background-size: 65% 65%;
+        }
+      }
+      a{
+        margin-left: 40px;
+        text-decoration: underline;
+        font-size: 14px;
+        color: #2096E9;
+      }
+    }
+    .user-area{
+      margin-top: 25px;
+      select{
+        text-indent: 4px;
+        width: 118px;
+        height: 38px;
+      }
+      span{
+        display: inline-block;
+        color: #666;
+        font-size: 18px;
+        //margin-left: 5px;
+      }
+      .area-name,.city-name{
+        text-indent: 4px;
+        width: 116px;
+        height: 38px;
+      }
+    }
+    .bank-num{
+      margin-top: 25px;
+    }
+  }
+  .fourth-step{
+    padding-bottom: 50px;
+    .fourth-list{
+      margin-left: 50px;
+      margin-top: 25px;
+      .fourth-info{
+        position: relative;
+        display: inline-block;
+        label{
+          display: inline-block;
+          width: 130px;
+          text-align: left;
+          font-size:16px;
+          margin-right: 16px;
+        }
+        .cur-tips{
+          position: absolute;
+          right: -18px;
+          top:10px;
+        }
+        .cur-special{
+          right: -50px;
+        }
+        .label-big{
+          font-size:18px;
+        }
+        .label-small{
+          font-size: 14px;
+        }
+        input{
+          width: 278px;
+          height: 38px;
+        }
+        .read-info{
+          border: none;
+        }
+        span{
+          display: inline-block;
+          margin-left: 10px;
+          font-size: 16px;
+          color: #FF0000;
+        }
+        .company-scale,.shareholder-type,.profession{
+          width:278px;
+          height:38px;
+        }
+        .info-error{
+          position: absolute;
+          margin-left: 146px;
+          text-align: left;
+          height: 25px;
+          line-height: 25px;
+          font-size: 16px;
+          color: #FF0000;
+        }
+      }
+      .fourth-info-last{
+        display: inline-block;
+        margin-left: 150px;
+      }
+      .info-capital input{
+        width: 248px;
+      }
+
+    }
+    //文件上传
+    .fourth-file{
+      .file-upload{
+        display: inline-block;
+        width: 278px;
+        height: 38px;
+        line-height: 38px;
+        border: 1px solid #ccc;
+        position:relative;
+        border-radius:3px;
+        p{
+          display: inline-block;
+          width:198px;
+          text-indent: 10px;
+          font-size: 16px;
+          color: #999;
+          overflow: hidden;
+          vertical-align: middle;
+          white-space: nowrap;
+          text-overflow: ellipsis;
+        }
+        i{
+          display: inline-block;
+          background-color: #F5F5F5;
+          width: 78px;
+          height: 38px;
+          font-style:normal;
+          font-size: 16px;
+          color: #2096E9;
+          text-align: center;
+          line-height: 38px;
+          border-left: 1px solid #ccc;
+          float: right;
+        }
+        input{
+          position: absolute;
+          right:0;
+          top:0;
+          opacity:0;
+          border: none;
+          width: 78px;
+          height: 38px;
+          cursor: pointer;
+        }
+      }
+    }
+    .fourth-first{
+      margin-top: 0;
+    }
+    .fourth-check{
+      .select-operate{
+        display: inline-block;
+        width: 278px;
+        input{
+          display: inline-block;
+          width: 20px;
+          height: 20px;
+          vertical-align: middle;
+        }
+        span{
+          display: inline-block;
+          margin-left: 10px;
+          font-size: 18px;
+          color: #666;
+        }
+        .select-false{
+          margin-left: 100px;
+        }
+      }
+    }
+    .fourth-btn{
+      display: block;
+      margin: 30px auto 0;
+    }
+    hr{
+      display: block;
+      width: 1100px;
+      border: none;
+      height: 1px;
+      margin: 50px auto 0;
+      background-color: #EEEEEE;
+    }
+  }
+  .fifth-step{
+    padding-bottom:50px;
+    .user-common{
+      margin-top: 25px;
+    }
+    .fifth-step-one{
+      margin-top: 0;
+    }
+    .user-area{
+      select{
+        width: 118px;
+        height: 38px;
+        text-indent: 0;
+        color: #666;
+      }
+      span{
+        display: inline-block;
+        color: #333;
+        font-size: 16px;
+        margin-left: 5px;
+      }
+      .city-name{
+        margin-left: 10px;
+      }
+    }
+    .user-check{
+      margin: 20px auto 0;
+      text-align:center;
+      input{
+        display: inline-block;
+        width: 14px;
+        height: 14px;
+      }
+      span{
+        display: inline-block;
+        margin-left: 10px;
+        font-size: 14px;
+        color: #999999;
+      }
+      a{
+        display: inline-block;
+        font-size: 14px;
+        color: #1E81E3;
+      }
+    }
+    .fifth-btn{
+      display: block;
+      margin: 0px auto 50px;
+
+    }
+  }
+  .show-artificial{
+    height: 475px;
+    text-align: center;
+    .artificial-cur{
+      margin: 90px auto 0;
+    }
+    span{
+      display: block;
+      margin: 46px auto 0;
+      width: 280px;
+      height: 40px;
+      line-height: 40px;
+      background-color: #F6F6F6;
+      border: 1px solid #BFBFBF;
+      border-radius: 5px;
+      font-size: 16px;
+      color: #666;
+      text-align: center;
+    }
+  }
+}
+.dialog-tips{
+  position: fixed;
+  z-index: 10;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.5);
+  .content-tips{
+    position: absolute;
+    left: 50%;
+    top:50%;
+    margin-left: -250px;
+    margin-top: -127px;
+    width: 500px;
+    height: 254px;
+    background-color: #fff;
+    border-radius: 6px;
+    text-align: center;
+    i{
+      position: absolute;
+      right: 0;
+      top:-30px;
+      width: 16px;
+      height: 16px;
+      background: url("../i/close-tips.png") no-repeat;
+      background-size: 100% 100%;
+      cursor: pointer;
+    }
+    h4{
+      width: 100%;
+      height: 56px;
+      line-height: 56px;
+      text-align: center;
+      font-size: 18px;
+      color: #333;
+      border-bottom: 1px solid #ccc;
+    }
+    p{
+      width: 400px;
+      margin:30px auto 0;
+      font-size: 16px;
+      color: #666;
+      text-align: left;
+    }
+    .open-btn{
+      width: 368px;
+      margin: 30px auto 0;
+      button{
+        width: 170px;
+        height: 40px;
+        line-height: 40px;
+        margin: 0 auto;
+        background-color: #2096E9;
+        border-radius: 5px;
+        font-size: 16px;
+        color:#fff;
+        cursor: pointer;
+      }
+      .tips-btn{
+        margin-left: 20px;
+        height: 38px;
+        line-height: 38px;
+        background-color: #fff;
+        border: 1px solid #CCCCCC;
+        border-radius: 5px;
+        color:#666;
+      }
+    }
+  }
+  .third-dialog{
+    margin-top: -100px;
+    height: 200px;
+    p{
+      text-align: center;
+    }
+  }
+  .tips-special{
+    p{
+      text-align: center;
+    }
+    .go-to{
+      width: 364px;
+      margin: 30px auto 0;
+      button{
+        padding: 0 60px;
+        height: 40px;
+        line-height: 40px;
+        margin: 0 auto;
+        background-color: #2096E9;
+        border-radius: 5px;
+        font-size: 16px;
+        color:#fff;
+        cursor: pointer;
+      }
+    }
+  }
+}

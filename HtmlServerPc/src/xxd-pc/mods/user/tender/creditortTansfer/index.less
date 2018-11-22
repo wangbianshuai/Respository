@@ -1,0 +1,147 @@
+@import "../../side";
+@import "../../../../css/laydate.css";
+
+@dottedPath: "../../../../";
+@import "@{dottedPath}css/reset";
+@import "@{dottedPath}css/variable";
+@path: "@{dottedPath}tmp/merge/";
+@import "@{path}tip.index.css";
+@import "@{path}dialog.index.css";
+@import "@{path}backTop.index-1.css";
+@import "@{path}dialog-float.index.css";
+@import "@{path}rotate.index.css";
+
+@import "../../../header";
+@import "../../../footer";
+
+.amount {
+  height: 40px;
+  padding: 20px 25px;
+  border-bottom: 1px solid #eee;
+  > div {
+    background: #f4f5f9;
+    height: 40px;
+    padding-left: 10px;
+    p {
+      display: inline-block;
+      font: normal 16px/40px "microsoft yahei";
+      color: #666666;
+      span {
+        color: #FC0D1B;
+      }
+      &.amount-earn {
+        margin-left: 20px;
+      }
+    }
+  }
+}
+
+.investment-focus {
+  em {
+    font: normal 16px "microsoft yahei" !important;
+  }
+  .transfer {
+    display: block;
+  }
+  .service-tip{
+    position: relative;
+    display: inline-block;
+  }
+  .service-charge{
+    width:auto !important;
+    margin-right: 10px;
+  }
+  .default-mark {
+    display: inline-block;
+    background: #2096e9;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    color: #fff;
+    text-align: center;
+    cursor: pointer;
+    font:normal 14px "microsoft yahei";
+    &:hover {
+      background: @hoverColor;
+    }
+  }
+  .default-tip {
+    background: rgba(0, 0, 0, 0.7);
+    border-radius: 5px;
+    width: 167px;
+    height: 48px;
+    position: absolute;
+    top: -60px;
+    right: -77px;
+    color: #fff;
+    text-align: center;
+    font: normal 14px/24px "microsoft yahei";
+    i {
+      display: inline-block;
+      position: absolute;
+      top: 48px;
+      left: 70px;
+      width: 0;
+      height: 0;
+      border: 10px solid rgba(0, 0, 0, 0.7);
+      border-color: rgba(0, 0, 0, 0.7) transparent transparent transparent;
+    }
+  }
+  .authorization{
+    display: block;
+  }
+  .no-privileges{
+    input{
+      height:auto;
+    }
+  }
+  .btn{
+    display: inline-block;
+    width: 170px;
+    height: 40px;
+    background: #fff;
+    color: #666;
+    border: 1px solid #ccc;
+  }
+  .next{
+    margin-left:10px;
+    &:hover{
+      background:#fff !important;
+      color: #666 !important;
+      border: 1px solid #ccc !important;
+    }
+  }
+  .active{
+    background: #2096e9;
+    color: #fff;
+    border: 0;
+  }
+}
+
+
+.tip-content{
+  padding: 20px !important;
+  p{
+    margin-bottom:10px !important;
+  }
+  .allbtn{
+    text-align: center;
+    .pop-error{
+      margin-top:30px !important;
+    }
+    a{
+      display: inline-block !important;
+      width: 130px !important;
+      font-size: 16px;
+      &.next{
+        background: #eee;
+        color: #888;
+        margin-left:20px !important;
+        &:hover{
+          background: #eee;
+          color: #888;
+        }
+      }
+    }
+  }
+}

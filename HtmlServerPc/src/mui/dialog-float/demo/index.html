@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .mui-dialog-float {
+            width: 267px;
+            height: 162px;
+            text-align: center;
+            background: white;
+            box-shadow:inset 1px 1px 4px #d9d9d9;
+            border: #d9d9d9 1px solid;
+        }
+        .mui-float-title {
+            display: inline-block;
+            font:normal 18px/50px "microsoft yahei";
+            color: #808080;
+            margin-top:10px;
+            padding-left:20px;
+            background: url("../i/normal.png") left center no-repeat;
+        }
+
+        .mui-float-content {
+            font:normal 15px/20px "microsoft yahei";
+            padding:10px;
+        }
+
+        .mui-float-confirm {
+            display: inline-block;
+            width: 150px;
+            height: 38px;
+            text-align: center;
+            color:white;
+            background: #3F9BFF;
+            font:normal 15px/38px "microsoft yahei";
+            text-decoration: none;
+        }
+        .mui-preview {
+            position: relative;
+            display: inline-block;
+            width: 700px;
+            height:700px;
+            background: red;
+        }
+        .mui-preview .close{
+            position: absolute;
+            right:3px;
+            top:2px;
+            color: #999;
+            text-shadow: 0 1px 0 #ffffff;
+            font:bold 20px/46px "tahoma,arial,'Hiragino Sans GB','\5b8b\4f53',sans-serif";
+            text-decoration: none;
+        }
+        .mui-preview .close:hover {
+            color:#000;
+        }
+
+        .mui-preview img{
+            max-height: 700px;
+            max-width: 700px;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="mui-dialog-float">
+        <span class="mui-float-title">提示</span>
+        <div class="mui-float-content">Are you sure?</div>
+        <a href="#" class="mui-float-confirm">确定</a>
+    </div>
+
+
+    <div class="mui-preview">
+        <a href="#" class="c_close close">×</a>
+        <img src="//www.xinxindai.com/static/images/xxd_date/yezz_01.png" width="200"  />
+        <div class="after"></div>
+    </div>
+</body>
+</html>

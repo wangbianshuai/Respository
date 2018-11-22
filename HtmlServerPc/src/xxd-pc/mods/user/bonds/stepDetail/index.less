@@ -1,0 +1,82 @@
+@import "../../side";
+@dottedPath: "../../../../";
+@import "@{dottedPath}css/reset";
+@import "@{dottedPath}css/variable";
+@path: "@{dottedPath}tmp/merge/";
+@import "@{path}tip.index.css";
+@import "@{path}dialog.index.css";
+@import "@{path}backTop.index-1.css";
+@import "@{path}dialog-float.index.css";
+@import "@{path}rotate.index.css";
+
+@import "../../../header";
+@import "../../../footer";
+
+.record-title{
+  margin-top:100px;
+  border-top: 1px solid #eee;
+}
+
+.quit .investment-focus{
+  width: 590px;
+  .top-info{
+    line-height: 35px;
+    height:auto;
+    i{
+      font-style: normal;
+    }
+  }
+  .amount-exit{
+    margin:8px 0 16px;
+    position: relative;
+    input{
+      margin-left: 17px;
+      width: 278px;
+      font:normal 16px "microsoft yahei";
+    }
+    a{
+      margin-left:0;
+    }
+
+  }
+  .money-tip{
+    display: block;
+    font-style:normal;
+    margin-left: 102px;
+    span{
+      width: auto;
+      color: #FC0D1B;
+    }
+  }
+  .password-box{
+    margin-top: 8px;
+    input{
+      width: 278px !important;
+    }
+    .forgot{
+      margin:0;
+    }
+  }
+  .btn{
+    display: inline-block;
+    width:170px;
+    height:40px;
+    background: #fff;
+    color: #666 !important;
+    border:1px solid #ccc;
+    &.active{
+      background:#2096e9;
+      color: #fff !important;
+      border:0;
+    }
+    &.next{
+      margin-left:20px;
+    }
+  }
+}
+.table-box{
+  min-height: initial;
+}
+
+
+

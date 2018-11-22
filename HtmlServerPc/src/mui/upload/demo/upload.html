@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .bar {
+            height: 18px;
+            background: green;
+        }
+    </style>
+</head>
+<body>
+<input id="fileupload" type="file" name="files[]" data-url="server/java/" multiple>
+<div id="progress">
+    <div class="bar" style="width: 0%;"></div>
+</div>
+</body>
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+<script src="js/vendor/jquery.ui.widget.js"></script>
+<script src="js/jquery.iframe-transport.js"></script>
+<script src="js/jquery.fileupload.js"></script>
+<script>
+    //http://www.jq22.com/jquery-info230
+    //http://www.zhangxinxu.com/wordpress/2011/09/%E5%9F%BA%E4%BA%8Ehtml5%E7%9A%84%E5%8F%AF%E9%A2%84%E8%A7%88%E5%A4%9A%E5%9B%BE%E7%89%87ajax%E4%B8%8A%E4%BC%A0/
+    $(function () {
+        $('#fileupload').fileupload({
+            dataType: 'json',
+//            done: function (e, data) {
+//                $.each(data.result.files, function (index, file) {
+//                    $('<p/>').text(file.name).appendTo(document.body);
+//                });
+//            },
+//            progressall: function (e, data) {
+//                var progress = parseInt(data.loaded / data.total * 100, 10);
+//                $('#progress .bar').css(
+//                        'width',
+//                        progress + '%'
+//                );
+//            }
+
+//            add: function (e, data) {
+//                data.context = $('<p/>').text('Uploading...').appendTo(document.body);
+//                data.submit();
+//            },
+//            done: function (e, data) {
+//                data.context.text('Upload finished.');
+//            }
+
+
+            add: function (e, data) {
+                data.context = $('<button/>').text('Upload')
+                        .appendTo(document.body)
+                        .click(function () {
+                            $(this).replaceWith($('<p/>').text('Uploading...'));
+                            data.submit();
+                        });
+            },
+            done: function (e, data) {
+                data.context.text('Upload finished.');
+            }
+        });
+    });
+</script>
+</html>

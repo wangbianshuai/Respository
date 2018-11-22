@@ -1,0 +1,32 @@
+<div id="J_header" class="header clearfix" th:fragment="header" >
+    <div class="header-wrap">
+        <div class="header-nav clearfix">
+            <div class="nav-left">
+                <span>客服电话：4000-169-521 （9:00-18:00工作日）</span>
+                <span class="phone j_qrCodeTip" position="bottom" th:tipContent="@{${global.staticHost}+'/pc/'+${global.xxdVersion}+'/build/css/i/qr-code-phone.png'}"><i></i></span>
+                <span><a href="/html/promotion/index.html">手机客户端</a></span>
+                <span class="weibo" position="bottom" th:tipContent="@{${global.staticHost}+'/pc/'+${global.xxdVersion}+'/build/css/i/qr-weibo.png'}">
+                    <a href="http://weibo.com/xinxindai" target="_blank" class='weibo-icon'></a>
+                    <i></i>
+                </span>
+                <span class="wechat j_qrCodeTip" position="bottom" th:tipContent="@{${global.staticHost}+'/pc/'+${global.xxdVersion}+'/build/css/i/qr-code-wechat.png'}"><i></i></span>
+                <span>市场有风险，出借需谨慎</span>
+            </div>
+            <!--企业用户登录成功-->
+            <div class="nav-right">
+                <p class="nav-user j_userDropdown" position="bottom" tipcontent="html">欢迎<span id="J_companyName">[[${globalData.nickName}]]</span></p>
+                <a href="javascript:void(0);" id="J_safeLogout">安全退出</a>
+            </div>
+        </div>
+    </div>
+    <div class="header-menu company-menu">
+        <a href="/" class="logo">
+            <i></i>
+        </a>
+        <!--企业用户登录成功-->
+        <ul class="menu disnone" id="J_showMenu">
+            <li><a href="/myloan/loan/9.html">我要借款</a></li>
+            <li><a href="/usercenter/company/account.html">我的账户</a></li>
+        </ul>
+    </div>
+</div>

@@ -1,0 +1,203 @@
+@import "../../side";
+@dottedPath: "../../../../";
+@import "@{dottedPath}css/reset";
+@import "@{dottedPath}css/variable";
+@import "@{dottedPath}css/cropper.min.css";
+@path: "@{dottedPath}tmp/merge/";
+@import "@{path}tip.index.css";
+@import "@{path}dialog.index.css";
+@import "@{path}backTop.index-1.css";
+@import "@{path}dialog-float.index.css";
+@import "@{path}rotate.index.css";
+@import "../../../header";
+@import "../../../footer";
+.g-left{
+	.menu{
+		h2{
+			background: #57a8ff;
+			a{
+				display: block;
+			}
+		}
+	}
+}
+
+.invate-title-text{
+	font-size: 20px;
+	font-weight: normal;
+	font-stretch: normal;
+	line-height: 36px;
+	letter-spacing: 0px;
+	color: #5c6366;
+	font-family: 'Lantinghei SC Demibold';
+}
+
+.invate-num-text{
+	font-family: 'Lantinghei SC Demibold';
+	font-style:normal;
+	font-size: 26px;
+	font-weight: normal;
+	font-stretch: normal;
+	letter-spacing: 0px;
+	color: #44a2ff;
+}
+.g-right{
+	width:970px;
+	.invate-title{
+		width: 100%;
+		display:flex;
+		justify-content:space-between;
+		align-items:center;
+		box-sizing: border-box;
+		> span{
+			font-family: "microsoft yahei";
+			font-size: 18px;
+			font-weight: normal;
+			font-stretch: normal;
+			line-height: 36px;
+			letter-spacing: 0px;
+			color: #666;
+		}
+		>a{
+			font-size: 18px !important;
+			.invate-title-text;
+			color: #44a2ff;
+		}
+	}
+	.invate-detail {
+		width: 100%;
+		
+		.invate-content{
+			width: 600px;
+			padding: 30px 0;
+			border-right: 1px solid #eee;
+			border-bottom:1px solid #eee;
+			float: left;
+			.title{
+				width:100%;
+				font-size: 0;
+				color: #333;
+				text-align: center;
+				margin-bottom: 40px;
+				i {
+					display: inline-block;
+					width: 200px;
+					height: 0px;
+					border-top: 1px dashed #ccc;
+					vertical-align: middle;
+				}
+				span {
+					font-size: 16px;
+					line-height: 1;
+					margin: 0 15px;
+					vertical-align: middle;
+				}
+			}
+			
+			.list-wrapper {
+				width: 100%;
+				overflow: hidden;
+				li {
+					float: left;
+					width: 175px;
+					padding-left: 25px;
+					font-size: 16px;
+					line-height: 1;
+					color: #999;
+					div:first-child {
+						color: #333;
+						margin-bottom: 22px;
+						.num {
+							font-size: 22px;
+						}
+					}
+				}
+				&.record-list {
+					margin-bottom: 60px;
+				}
+				&.grade-list {
+					margin-bottom: 40px;
+				}
+			}
+			.grade-notify {
+				padding: 0 25px;
+				font-size: 14px;
+				color: #999;
+			}
+		}
+		.scanQ{
+			width:367px;
+			height:375px;
+			padding-top: 80px;
+			border-bottom:1px solid #eee;
+			float: left;
+			.scanQ-container{
+				.scanQ-image{
+					width:100px;
+					height:100px;
+					background-image:url(../../../../img/QR-code.png);
+					margin: 0 auto 20px;
+				}
+				.scanQ-text{
+					text-align: center;
+					font-size: 16px;
+					color: #666;
+					margin-bottom: 60px;
+				}
+			}
+			.invate-content-notify{
+				padding-left:25px;
+				padding-right:25px;
+				font-size: 14px;
+				font-weight: normal;
+				font-stretch: normal;
+				line-height: 30px;
+				letter-spacing: 0px;
+				color: #ff0000;
+			}
+		}
+	}
+	.invitefriends-tab{
+		>nav{
+			height:100%;
+			>ul{
+				height:100%;
+				>li{
+					display:inline-block;
+					width:145px;
+					>span{
+						font-family: 'Lantinghei SC Demibold';
+						font-size: 22px;
+						font-weight: normal;
+						font-stretch: normal;
+						color: #5a5a5d;
+						display:block;
+						box-sizing:border-box;
+						height:100%;
+						vertical-align:middle;
+						line-height:100%;
+						text-align:center;
+						&:hover{
+							border-bottom:#44a2ff solid 4px;
+						}
+					}
+					>.active{
+							border-bottom:#44a2ff solid 4px!important;
+					}
+				}
+			}
+		}
+	}
+	.data-box{
+		tr>th{
+			text-align:center;
+		}
+		tr>td{
+			text-align:center;
+		}
+		#rewardD{
+			display:none;
+		}
+	}
+}
+

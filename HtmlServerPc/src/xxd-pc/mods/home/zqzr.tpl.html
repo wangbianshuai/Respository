@@ -1,0 +1,38 @@
+{@each items as it,index}
+<ul class="clearfix">
+    <li class='grade'>
+        {@if it.riskGrade=='A'}<i class='gradeA'></i>
+        {@else if it.riskGrade=='A1'}<i class='gradeA1'></i>
+        {@else if it.riskGrade=='A2'}<i class='gradeA2'></i>
+        {@else if it.riskGrade=='A3'}<i class='gradeA3'></i>
+        {@else if it.riskGrade=='B'}<i class='gradeB'></i>
+        {@else if it.riskGrade=='C'}<i class='gradeC'></i>
+        {@else if it.riskGrade=='D'}<i class='gradeD'></i>
+        {@else if it.riskGrade=='E'}<i class='gradeE'></i>
+        {@else}<i class='grade'></i>{@/if}
+    </li>
+    <li>
+        {@if it.label=='ic-xfd'}<i class="icon house-icon"></i>
+        {@else if it.label=='ic-xcd'}<i class="icon car-icon"></i>
+        {@else if it.label=='ic-xsd'}<i class="icon business-icon"></i>
+        {@else if it.label=='ic-xstd'}<i class="icon new-icon"></i>
+        {@else}<i class="icon"></i>{@/if}
+    </li>
+    <li class="name"><a href='traderequest/requestDetail/${it.id}.html' target="_blank" title="${it.name}">${it.name}</a></li>
+    <li class="rate"><span>${it.plannedAnnualRate}</span>%</li>
+    <li class="time"><span>${it.leastPeriod + it.leastPeriodUnit}</span></li>
+    <li class="money">转让价：${it.transferPriceFormat}元</li>
+    <li class="buy">
+        {@if it.status.code=='WAIT_TO_SELL'}<a href="traderequest/requestDetail/${it.id}.html" target="_blank" class="snapped disable">${it.status.message}</a>
+        {@else if it.status.code=='SELLING'}<a href="traderequest/requestDetail/${it.id}.html" target="_blank"
+                                           class="snapped ga-click xa-click" ga-commnd="send,ec:addProduct,ec:setAction"
+                                           ga-ec-addProduct="{id:'${it.id}',name:'散标直投',category:'散标直投${it.plannedAnnualRate}%/${it.leastPeriod + it.leastPeriodUnit}'}"
+                                           ga-ec-setAction='{"list":"首页散标直投"}'
+                                           ga-ec-setAction-command="click"
+                                           ga-hitType="event" ga-category="增强电商" ga-action="产品点击" ga-label="散标直投"
+                                           xa-category="pc_borrow_in" xa-action="index_buy_once" xa-label="立即加入">立即加入</a>
+        {@else}<a href="traderequest/requestDetail/${it.id}.html" target="_blank" class="snapped disable">${it.status.message}</a>{@/if}
+    </li>
+</ul>
+{@/each}
+

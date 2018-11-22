@@ -1,0 +1,73 @@
+@import "../../side";
+
+@dottedPath: "../../../../";
+@import "@{dottedPath}css/reset";
+@path: "@{dottedPath}tmp/merge/";
+@import "@{path}tip.index.css";
+@import "@{path}dialog.index.css";
+@import "@{path}backTop.index-1.css";
+@import "@{path}dialog-float.index.css";
+@import "@{path}rotate.index.css";
+@import "../../../header";
+@import "../../../footer";
+
+.info-contaner{
+  min-width: 1200px;
+  margin: 0 auto;
+  background: #fff;
+  overflow: hidden;
+  .warning{
+    width: 1100px;
+    margin: 0 auto;
+    text-align: center;
+    background:#f3dede;
+    height:110px;
+    padding-top: 50px;
+    margin-top: 30px;
+    p{
+      font-size:16px;
+      color:#ab4340;
+      letter-spacing:-0.38px;
+      i{
+        display: inline-block;
+        width: 21px;
+        height: 24px;
+        margin-right: 4px;
+        vertical-align: middle;
+        background: url("../../../img/warning.png") 0 0 no-repeat;
+      }
+    }
+    span{
+      display: block;
+      margin-top: 12px;
+      font-size:12px;
+      color:#ab4340;
+      letter-spacing:-0.29px;
+    }
+  }
+  .button{
+    width: 100%;
+    margin-top: 30px;
+    text-align: center;
+    margin-bottom: 200px;
+    input{
+      margin: 0 auto;
+      background:#2096e9;
+      border-radius:5px;
+      width:280px;
+      height:40px;
+      line-height: 40px;
+      font-size:16px;
+      color:#ffffff;
+      text-align: center;
+      -webkit-border-radius: 5px;
+      -moz-border-radius: 5px;
+      border-radius: 5px;
+      border:0;
+      cursor: pointer;
+      &:hover{
+        background-color: #0266be;
+      }
+    }
+  }
+}

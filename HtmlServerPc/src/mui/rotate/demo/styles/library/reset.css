@@ -1,0 +1,8 @@
+*{padding:0; margin:0; font-family:'microsoft yahei'; -webkit-tap-highlight-color:transparent; -webkit-touch-callout:none;}
+li{list-style-type:none;}
+a{text-decoration:none;}
+img{display:block; border:none;}
+html{font-size:100%;}
+input[type="text"],button{-webkit-appearance:none; outline:0;}
+.hides{display:none;}
+.clear{clear:both;}

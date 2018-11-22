@@ -1,0 +1,1 @@
+define(function(){return '<div class="mui-preview c_confirm"><a href="#" class="c_close close">×</a><img id="J_muiPreviewImg" src="${imgUrl}"/><div class="after"></div></div>'});

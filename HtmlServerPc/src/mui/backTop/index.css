@@ -1,0 +1,23 @@
+.backToTop {
+  z-index: 999;
+  bottom: 0;
+  /*_top:expression(documentElement.scrollTop+600>document.body.clientHeight?documentElement.clientHeight+document.body.clientHeight-750:documentElement.scrollTop +documentElement.clientHeight-150);*/
+  /*_top:expression(documentElement.scrollTop+1250>document.body.clientHeight?documentElement.clientHeight+document.body.clientHeight-1400:documentElement.scrollTop +documentElement.clientHeight-150);*/
+  width: 40px;
+  height: 40px;
+  line-height: 1.2;
+  color: #fff;
+  font-size: 12px;
+  text-align: center;
+  position: fixed;
+  right: 10px;
+  bottom: 100px;
+  cursor: pointer;
+  overflow: visible;
+  margin-left: 260px;
+  background: url(i/top.png);
+  overflow: hidden;
+}
+.backToTop:hover {
+  background: url("i/top-over.png");
+}

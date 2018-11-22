@@ -1,0 +1,1073 @@
+@import "../../css/variable";
+
+@borderColor: #dedede;
+@fontColor: #666;
+@detailPath: "../";
+@titleColor: #333333;
+@borderColor: #EEEEEE;
+@fontColor: #666666;
+@impColor: #ff685d;
+@mainColor: #2096e9;
+@hoverColor: #0266be;
+.border(@bgcolor:#eee) {
+  border: 1px solid @bgcolor;
+}
+.disnone{
+  display: none !important;
+}
+.container {
+  width: @main-width;
+  margin: 0 auto;
+}
+
+.f-left {
+  float: left;
+}
+
+.f-right {
+  float: right;
+}
+
+/*面包屑 有时间重写*/
+.detail-crumbs {
+  margin-bottom: 20px;
+  background: #57a8ff;
+  .crumbs {
+    margin: 0 auto;
+    width: @main-width;
+    font: normal 14px/34px @xxd-font;
+    color: #fff;
+    a, b {
+      color: #fff;
+    }
+  }
+}
+
+a {
+  cursor: pointer;
+}
+
+/*index*/
+.detail-focus {
+  float: left;
+  padding-top: 22px;
+  padding-left: 40px;
+  border-left: 1px solid @borderColor;
+  p {
+    font: normal 14px/28px @xxd-font;
+    color: @fontColor;
+    max-width: 372px;
+    a, span {
+      color: #5ea8f8;
+    }
+    i {
+      float: left;
+      width: 20px;
+      height: 20px;
+      background: url("@{detailPath}i/umbrella.png") 0 0 no-repeat;
+      margin: 5px 6px 0 0;
+    }
+    &.risk-protocol {
+      margin-top: 10px;
+      width: 372px;
+      font: 400 12px/20px "microsoft yahei";
+      input {
+        margin-right: 10px;
+      }
+      a {
+        color: #5ea8f8;
+        &:hover {
+          color: @hoverColor;
+        }
+      }
+    }
+    &.test-tip, &.red {
+      font: normal 14px/20px "microsoft yahei";
+    }
+    &.red {
+      color: red;
+      margin-top: 10px;
+    }
+  }
+  .money {
+    width: 410px;
+    button {
+      display: inline-block;
+      font-size: 14px;
+      color: #666666;
+      padding: 5px 14px;
+      margin: 10px 10px 0 0;
+      border: 1px solid @borderColor;
+      cursor: pointer;
+      border-radius: 4px;
+      outline: none;
+      background: transparent;
+    }
+  }
+  .btn {
+    display: inline-block;
+    width: 320px;
+    border-radius: 3px;
+    font: normal 20px/42px @xxd-font;
+    background: #3f9bff;
+    text-align: center;
+    border: 0;
+    color: #ffffff;
+    margin: 10px 0 30px;
+    &:hover {
+      background: #0266be;
+    }
+  }
+  .month-btn {
+    background: #FF7369;
+    &:hover {
+      background: #DD5B52;
+    }
+  }
+  .error-tip {
+    border: 1px solid #FFBBBB;
+    width: 293px;
+    border-radius: 3px;
+    padding-left: 25px;
+    background: #FFDDDD;
+    color: #FF0000;
+    margin-top: 5px;
+    a {
+      color: @mainColor !important;
+    }
+  }
+  .number-box {
+    margin: 10px 0;
+    span {
+      float: left;
+      display: inline-block;
+      width: 22px;
+      text-align: center;
+      line-height: 36px;
+      background: #fff;
+      border: 1px solid #eee;
+      margin-right: 10px;
+      cursor: pointer;
+      color: #999;
+    }
+    input {
+      float: left;
+      border: 1px solid #eeeeee;
+      width: 238px;
+      height: 36px;
+      margin-right: 10px;
+      padding-left: 20px;
+      font-size: 14px;
+      color: #999;
+      border-radius: 0;
+      background: #fff;
+    }
+  }
+  .month-color, .number-box .month-color {
+    color: #FF7369;
+  }
+  .no-condition {
+    padding: 55px 30px;
+    p {
+      color: #666666;
+      font: 400 20px/30px "microsoft yahei";
+    }
+    span, a {
+      color: #5ea8f8;
+    }
+    a {
+      text-align: right;
+      display: block;
+      margin: 66px 56px 90px 0;
+      font-size: 20px;
+    }
+  }
+  .no-thirty-condition {
+    width: 370px;
+    p {
+      margin: 70px auto 0;
+      font: normal 20px/32px "microsoft yahei";
+      width: 226px;
+    }
+    a {
+      display: block;
+      width: 320px;
+      height: 42px;
+      background: #3F9BFF;
+      border-radius: 3px;
+      border: 0;
+      text-align: center;
+      font: normal 20px/42px "microsoft yahei";
+      color: #fff;
+      margin: 50px auto 90px;
+      &:hover {
+        background: #0266be;
+      }
+    }
+  }
+  .noAssessment {
+    margin: 16px 0;
+    a {
+      background: #5ea8f8;
+      height: 30px;
+      width: 100px;
+      display: inline-block;
+      color: #fff;
+      text-align: center;
+      border-radius: 5px;
+      &:hover {
+        background: #0266be;
+      }
+    }
+  }
+}
+
+.product-tabs {
+  background: #fff;
+  width: 1198px;
+  border: 1px solid @borderColor;
+  .nav {
+    background: #fff;
+    border-bottom: 1px solid #eee;
+    width: 1198px;
+    height: 54px;
+    li {
+      float: left;
+      height: 54px;
+      line-height: 54px;
+      padding: 0 20px;
+      color: #333;
+      cursor: pointer;
+      a {
+        display: inline-block;
+        color: #333;
+        font: 500 18px/54px @xxd-font;
+      }
+      &.active, &:hover {
+        a {
+          border-bottom: 2px solid #33a9ff;
+        }
+      }
+    }
+  }
+}
+
+.detail-desc {
+  .desc-block {
+    width: 1150px;
+    padding: 54px 0;
+    margin: 0 auto;
+    border-bottom: 1px dashed @borderColor;
+    > div {
+      display: inline-block;
+      overflow: hidden;
+      width: 530px;
+      margin-left: 50px;
+      .title {
+        color: #5ea8f8;
+        margin-bottom: 20px;
+        border-bottom: 0;
+        font: 400 26px/26px @xxd-font;
+      }
+      p {
+        color: #666;
+        margin-bottom: 10px;
+        font: 400 18px/30px @xxd-font;
+        span {
+          color: #e74849;
+        }
+      }
+    }
+    img {
+      margin: 0 100px;
+    }
+  }
+  .last {
+    border: 0;
+    div {
+      margin-top: 60px;
+    }
+  }
+}
+
+.table-content, .debenture-money {
+  padding: 60px 20px 20px;
+  p {
+    margin: 10px 0;
+    font-size: 16px;
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    tr {
+      border-bottom: 1px solid #ddd;
+      background: #f3f3f3;
+      &.last {
+        border: 0;
+      }
+      &:hover {
+        background: #fdfdfd !important;
+      }
+    }
+    th, td {
+      line-height: 30px;
+      font-size: 14px;
+      color: #878d96;
+      text-align: center;
+      border-right: 1px solid #fff;
+      a {
+        color: #878d96;
+        &:hover {
+          color: #00498a;
+        }
+      }
+    }
+    tr:nth-child(odd) {
+      background: #f9f9f9;
+    }
+    .no-record {
+      background: #f9f9f9 !important;
+      border: 0;
+      &:hover {
+        background: #f9f9f9 !important;
+      }
+    }
+    .tr-title {
+      &:hover {
+        background: #f3f3f3;
+      }
+    }
+  }
+}
+
+.debenture-money {
+  padding: 20px;
+}
+
+.ask-answer {
+  padding: 30px 20px;
+  h6 {
+    font-weight: 900;
+    color: #525252;
+    font-size: 14px;
+    //height: 30px;
+    line-height: 30px;
+  }
+  p {
+    text-indent: 2em;
+    font-size: 13px;
+    font-weight: 300;
+    //height: 30px;
+    line-height: 30px;
+  }
+}
+
+.risk-warning {
+  padding: 30px 30px;
+  h5 {
+    text-align: center;
+    font-weight: 400;
+    margin: 20px 0;
+    font-size: 18px;
+  }
+  h6 {
+    text-indent: 2em;
+    font-weight: 400;
+    color: #525252;
+    font-size: 16px;
+  }
+  p, span {
+    text-indent: 2em;
+    font-size: 16px;
+    font-weight: 300;
+    line-height: 2;
+  }
+  span {
+    display: block;
+    text-align: right;
+  }
+}
+
+.pagination {
+  display: inline-block;
+  width: 100%;
+  margin-top: 20px;
+  .total-page {
+    padding: 2px 12px;
+  }
+  ul {
+    float: right;
+    display: inline-block;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    overflow: hidden;
+  }
+  li {
+    float: left;
+    border-right: 1px solid #ddd;
+    margin: 0 auto;
+    text-align: center;
+    color: #878d96;
+    overflow: hidden;
+    font: 12px/1.5 "microsoft yahei";
+    span, a {
+      color: #878d96;
+      text-align: left;
+      margin: 0 auto;
+    }
+    a {
+      float: left;
+      padding: 2px 10px;
+      &:hover {
+        background: #eeeeee;
+      }
+    }
+    &.last {
+      border-right: none;
+    }
+    &.active {
+      background: #33a9ff;
+      a {
+        color: #fff;
+        &:hover {
+          background: #33a9ff !important;
+          color: #fff;
+        }
+      }
+    }
+    .total-page, .allpages {
+      padding: 2px 12px;
+    }
+  }
+
+}
+
+//弹框
+.dimension {
+  color: #666;
+  position: relative;
+  font-size: 16px;
+  .c_close {
+    position: absolute;
+    top: -45px;
+    right: 0;
+    font-size: 30px;
+    font-style: normal;
+    color: #fff;
+    cursor: pointer;
+  }
+  h5 {
+    height: 57px;
+    line-height: 57px;
+    font-size: 18px;
+    color: #333;
+    font-weight: 400;
+    border-bottom: 1px solid #ccc;
+    text-align: center;
+  }
+  .investment-focus {
+    padding: 20px 30px;
+    width: 580px;
+  }
+  p {
+    height: 35px;
+    font-size: 16px;
+    &.verification-tip {
+      margin: 20px 0;
+    }
+    input {
+      vertical-align: middle;
+      margin-right: 10px;
+    }
+  }
+  .actualPayment {
+    font-style: normal;
+    color: #FF7365;
+  }
+  span {
+    display: inline-block;
+    height: 35px;
+    width: 240px;
+    i {
+      font-style: normal;
+      color: #FF7365;
+    }
+  }
+  .past-earnings, .expect-income {
+    margin-left: 30px;
+  }
+  input {
+    border: 1px solid #D7D7D7;
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    border-radius: 2px;
+    height: 38px;
+    line-height: 38px;
+    padding-left: 10px;
+  }
+  .password {
+    width: 240px;
+    margin-left: 16px;
+  }
+  a {
+    color: #3f9bff;
+    margin-left: 20px;
+    font-size: 14px;
+  }
+  .act-pay {
+    font-size: 16px;
+    display: inline-block;
+    width: 240px;
+  }
+  .discount {
+    display: inline-block;
+    margin-left: 30px;
+    font-size: 16px;
+  }
+  .discount-tip, .discount-coupon {
+    display: inline-block;
+    height: 30px;
+    padding: 8px 0;
+  }
+  .verification-tip, .verification-box {
+    display: inline-block;
+  }
+  .verification-code {
+    width: 168px;
+  }
+  .verification-box {
+    height: 40px;
+    line-height: 40px;
+    border: 1px solid #D7D7D7;
+    vertical-align: middle;
+    margin-left: 10px;
+    img {
+      height: 100%;
+      display: inline-block;
+      float: left;
+      cursor: pointer;
+    }
+    a {
+      display: inline-block;
+      width: 40px;
+      height: 100%;
+      background: #2096E9;
+      float: left;
+      margin: 0;
+      i {
+        display: inline-block;
+        width: 18px;
+        height: 20px;
+        margin: 9px 0 0 12px;
+        background: url("@{detailPath}i/refresh.png") 0 0 no-repeat;
+      }
+    }
+  }
+  .authorization {
+    display: inline-block;
+    height: 35px;
+    font-size: 14px;
+    input {
+      vertical-align: middle;
+      margin-right: 10px;
+      width: 12px;
+      height: 12px;
+      padding: 0 !important;
+    }
+    a {
+      margin-left: 0;
+    }
+  }
+  .btn {
+    height: 40px;
+    line-height: 40px;
+    display: block;
+    width: 280px;
+    border-radius: 3px;
+    font: normal 20px/42px #666;
+    background: #3f9bff;
+    text-align: center;
+    border: 0;
+    color: #ffffff;
+    margin: 10px;
+    font-size: 18px;
+    margin: 10px 0 10px 96px;
+    &:hover {
+      background: #0266be;
+    }
+  }
+  .waiting {
+    border: 1px solid #cccccc;
+    background: #F3F3F3;
+    color: #cccccc;
+    font-size: 14px;
+    &:hover {
+      background: #F3F3F3 !important;
+    }
+  }
+  .pop-error {
+    font-size: 12px;
+    border: 1px solid #FBB;
+    width: 268px;
+    border-radius: 3px;
+    padding-left: 10px;
+    background: #FDD;
+    color: red;
+    margin: 0 0 0 96px;
+    height: auto;
+    line-height: 30px;
+    a {
+      font-size: 12px;
+      margin: 0;
+    }
+  }
+  .past-returns {
+    font-style: normal;
+  }
+  .past-floatApr {
+    font: 400 12px "micsoft yahei";
+    color: #FF7365;
+    position: relative;
+    i {
+      position: absolute;
+      top: -28px;
+      left: -2px;
+      width: 78px;
+      height: 24px;
+      display: inline-block;
+      background: url("@{detailPath}i/limitAddThirty.png") 0 0 no-repeat;
+    }
+  }
+}
+
+.disable {
+  background: #f3f3f3 !important;
+  color: #cfcfcf !important;
+}
+
+.focus-disable:active, .focus-disable:focus {
+  border-color: #dedede !important;
+  -webkit-box-shadow: none !important;
+  box-shadow: none !important;
+}
+
+.measurement-tip {
+  background-color: #fff;
+  border: 1px solid rgba(0, 0, 0, .2);
+  border-radius: 6px;
+  -webkit-box-shadow: 0 3px 9px rgba(0, 0, 0, .5);
+  box-shadow: 0 3px 9px rgba(0, 0, 0, .5);
+  width: 520px;
+  h3 {
+    height: 40px;
+    line-height: 40px;
+    padding-left: 20px;
+    color: #00498a;
+    font-size: 16px;
+    border-bottom: 1px solid #EEEEEE;
+    i {
+      display: inline-block;
+      vertical-align: middle;
+      background: url("@{detailPath}i/questionnaire-tip.png") 0 0 no-repeat;
+      width: 20px;
+      height: 20px;
+    }
+    span {
+      float: right;
+      margin: 0px 20px 0 0;
+      color: #878d96;
+    }
+  }
+  p {
+    height: 60px;
+    line-height: 60px;
+    color: #3EB462;
+    font-size: 14px;
+    border-bottom: 1px solid #EEEEEE;
+    padding-left: 20px;
+  }
+  > div {
+    height: 26px;
+    padding: 15px;
+    a {
+      display: inline-block;
+      float: right;
+      color: #fff;
+      background: #2096e9;
+      width: 76px;
+      height: 26px;
+      font-size: 14px;
+      -moz-border-radius: 5px;
+      -webkit-border-radius: 5px;
+      border-radius: 5px;
+      text-align: center;
+      line-height: 26px;
+      cursor: pointer;
+    }
+  }
+
+}
+
+.progress-bar {
+  background: #dddddd;
+  -moz-border-radius: 8px;
+  -webkit-border-radius: 8px;
+  border-radius: 8px;
+  width: 200px;
+  height: 8px;
+  margin-bottom: 10px;
+  position: relative;
+  overflow: hidden;
+  .existing {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 70%;
+    height: 100%;
+    background: #2A97E5;
+    -moz-border-radius: 8px;
+    -webkit-border-radius: 8px;
+    border-radius: 8px;
+  }
+}
+
+.consumption-icon {
+  display: inline-block;
+  margin-left: 20px;
+  vertical-align: sub;
+  background: #ecedef;
+  height: 20px;
+  line-height: 20px;
+  font-size: 12px;
+  color: #333333;
+  font-weight: 300;
+  text-align: center;
+  -webkit-border-radius: 5px 0 0 5px;
+  -moz-border-radius: 5px 0 0 5px;
+  border-radius: 5px 0 0 5px;
+  overflow: hidden;
+  padding: 0 10px 0 0;
+  i {
+    vertical-align: top;
+    text-align: center;
+    display: inline-block;
+    background: #1f96e8;
+    width: 28px;
+    height: 20px;
+    -webkit-border-radius: 5px 0 0 5px;
+    -moz-border-radius: 5px 0 0 5px;
+    border-radius: 5px 0 0 5px;
+    margin-right: 10px;
+    b {
+      display: inline-block;
+      background: url("@{detailPath}i/sprites.png") -95px -55px no-repeat;
+      width: 16px;
+      height: 17px;
+      margin-top: 2px;
+    }
+  }
+}
+
+.consumption-tabs {
+  .nav {
+    border-bottom: 1px solid @borderColor;
+    height: 38px;
+    line-height: 38px;
+    padding-left: 5px;
+    li {
+      float: left;
+      padding: 0 25px;
+      a {
+        float: left;
+        height: 36px;
+        line-height: 35px;
+        font-size: 14px;
+        color: @titleColor;
+      }
+      &.active {
+        a {
+          border-bottom: 2px solid #33a9ff;
+        }
+      }
+      &:hover {
+        a {
+          border-bottom: 2px solid #33a9ff;
+        }
+      }
+    }
+  }
+}
+
+.tab-desc {
+  padding: 22px 0 30px;
+  li {
+    float: left;
+    margin: 0 95px 0 50px;
+    height: 40px;
+    list-style-type: disc;
+    color: @mainColor;
+    font-size: 12px;
+    width: 224px;
+    &:hover {
+      color: #00498a;
+      a {
+        color: #00498a;
+      }
+    }
+    a {
+      display: inline-block;
+      font-size: 14px;
+      color: @mainColor;
+      width: 224px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      vertical-align: middle;
+    }
+  }
+}
+
+.available-balance {
+  background: #ffffff;
+  border: 1px solid #dedede;
+  border-radius: 10px;
+  padding: 10px 20px 20px;
+  overflow: hidden;
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  max-width: 440px;
+  h3 {
+    font-size: 16px;
+    color: @titleColor;
+  }
+  .rem-amount {
+    font-size: 28px;
+    color: @impColor;
+  }
+  .progress-tip {
+    display: inline-block;
+    vertical-align: bottom;
+    text-align: center;
+    margin-left: 10px;
+    span {
+      font-size: 14px;
+      color: @fontColor;
+      display: inline-block;
+      margin-bottom: 4px;
+    }
+  }
+  p {
+    font-size: 16px;
+    color: @fontColor;
+    margin: 8px 0;
+    input {
+      background: #ffffff;
+      border: 1px solid #cccccc;
+      -moz-box-shadow: inset 1px 1px 1px 0 rgba(0, 0, 0, 0.50);
+      -webkit-box-shadow: inset 1px 1px 1px 0 rgba(0, 0, 0, 0.50);
+      box-shadow: inset 1px 1px 1px 0 rgba(0, 0, 0, 0.50);
+      -moz-border-radius: 3px;
+      -webkit-border-radius: 3px;
+      border-radius: 3px;
+      width: 138px;
+      height: 38px;
+      padding-left: 10px;
+      font-size: 14px;
+      color: #999;
+      margin-right: 10px;
+    }
+    span {
+      color: @impColor;
+    }
+    &.risk-protocol {
+      margin-top: 10px;
+      width: 370px;
+      font: 400 12px/20px "microsoft yahei";
+      input {
+        margin-right: 10px;
+        width: auto;
+        height: auto;
+        border: 0;
+        padding: 0;
+      }
+      a {
+        color: #5ea8f8;
+        &:hover {
+          color: @hoverColor;
+        }
+      }
+    }
+    &.red,&.test-tip{
+      font: normal 12px/20px "micsoft yahei";
+      margin: 0;
+    }
+  }
+  .account-balance {
+    margin: 6px 0;
+    padding-bottom: 10px;
+    font-size: 16px;
+    color: @fontColor;
+    border-bottom: 1px solid @borderColor;
+    i {
+      color: @impColor;
+    }
+    a {
+      display: inline-block;
+      background: @mainColor;
+      border-radius: 4px;
+      text-align: center;
+      width: 50px;
+      height: 22px;
+      margin-left: 10px;
+      color: #fff;
+      cursor: pointer;
+      border: 0;
+      vertical-align: text-bottom;
+      font: 400 14px/22px "microsoft yahei";
+      &:hover {
+        background: @hoverColor;
+      }
+    }
+  }
+  .button {
+    display: block;
+    background: @mainColor;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+    width: 280px;
+    height: 40px;
+    line-height: 40px;
+    border: 0;
+    color: #fff;
+    text-align: center;
+    margin: 0 auto;
+    font-size: 16px;
+    &:hover {
+      background: @hoverColor;
+    }
+  }
+  .disable {
+    border: 1px solid @borderColor;
+    background: #f7f7f7;
+    color: #999;
+    cursor: default;
+    &:hover {
+      background: #f7f7f7;
+    }
+  }
+  .error-tip {
+    font: 400 14px/28px "microsoft yahei";
+    margin: 10px auto;
+    width: 252px;
+    border: 1px solid #FFBBBB;
+    border-radius: 3px;
+    padding-left: 25px;
+    background: #FFDDDD;
+    color: #FF0000;
+    margin: 10px auto;
+  }
+}
+
+.profiting {
+  background: #f3f3f3 !important;
+  color: #999 !important;
+  border: 1px solid !important;
+  cursor: default !important;
+  &:hover {
+    background: #f3f3f3 !important;
+  }
+}
+
+.hide {
+  display: none !important;
+}
+
+.detail-desc-tender {
+  table {
+    margin: 20px 30px;
+    border-spacing: 0 5px;
+    tr {
+      display: block;
+    }
+    th, td {
+      line-height: 36px;
+      font-size: 14px;
+      color: @fontColor;
+    }
+    th {
+      width: 200px;
+      background: #f1faff;
+      border: 1px solid #f0f1f2;
+      text-align: center;
+    }
+    .infor {
+      height: 110px;
+      line-height: 110px;
+    }
+    td {
+      border: 1px solid #f0f1f2;
+      border-left: 0;
+      width: 980px;
+      padding-left: 20px;
+      span {
+        display: block;
+        i {
+          font-style: normal;
+          color: #e73735;
+        }
+      }
+      a {
+        color: #5ea8f8;
+      }
+    }
+    .infor-con {
+      line-height: 25px;
+      padding: 10px 150px 10px 20px;
+      width: 820px;
+    }
+  }
+}
+
+.operate-tip {
+  min-width: 400px;
+  .tip-content {
+    padding: 25px 25px 0;
+    width: 400px;
+  }
+  p, span {
+    width: 100%;
+    text-align: left;
+    font-size: 16px;
+    color: #333333;
+    font: normal 16px/26px "microsoft yahei";
+    height: auto !important;
+  }
+  i {
+    font: normal 16px "microsoft yahei";
+  }
+  .btn {
+    margin: 20px auto 32px !important
+  }
+  a.small-btn {
+    display: inline-block;
+    width: 100px;
+    background: #dedede;
+    color: #888;
+    border: 0;
+    &:hover {
+      background: #dedede;
+    }
+    &.next{
+      margin: 20px 0 0 190px!important;
+      background: #3f9bff;
+      color: #fff;
+      &:hover{
+        background: #0266be;
+      }
+    }
+  }
+}

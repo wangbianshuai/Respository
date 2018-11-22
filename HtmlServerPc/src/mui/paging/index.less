@@ -1,0 +1,37 @@
+.mui-pagination-ul {
+	float: right;
+	min-width:300px;
+	display: inline-block;
+	border-radius: 5px;
+	border: 1px solid #ddd;
+	overflow: hidden;
+	.total-page {
+		padding: 2px 12px;
+	}
+	li {
+		float: left;
+		border-right: 1px solid #ddd;
+		margin: 0 auto;
+		text-align: center;
+		color: #878d96;
+		overflow: hidden;
+		a {
+			float: left;
+			padding: 2px 10px;
+		}
+		a , span {
+			color: #878d96;
+			text-align: left;
+			margin: 0 auto;
+		}
+		&.active {
+			background: #33a9ff;
+			a {
+				color: #fff;
+			}
+		}
+	}
+	li.last {
+		border-right: none;
+	}
+}

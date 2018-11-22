@@ -1,0 +1,343 @@
+<!Doctype html>
+<html lang="zh-cn" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" th:href="@{${global.staticHost}+'/pc/'+${global.xxdVersion}+'/build/css/i/favicon.ico'}">
+    <link rel="Bookmark" th:href="@{${global.staticHost}+'/pc/'+${global.xxdVersion}+'/build/css/i/favicon.ico'}">
+    <title>【新新贷官网】专业透明的P2P网络借贷平台，P2P网贷，网上贷款借款、投融资信息中介平台</title>
+    <meta name="keywords" content="新新贷，P2P网贷，P2P理财，投资理财，网上理财，新元宝，月月派，新手专享，投融资，贷款，企业贷款，无抵押小额贷款，借款"/>
+    <meta name="description"
+          content="新新贷是中国专业的互联网金融P2P网络借贷信息中介平台，为出借人和借款人提供省心的互联网金融信息服务。资金银行存管、严格的风控体系、信息披露透明等多重安全保障措施。"/>
+    <link th:href="@{${global.staticHost}+'/pc/'+${global.xxdVersion}+'/build/mods/detail/thirtytender/_.css'}"
+          rel="stylesheet">
+</head>
+<body>
+<div id="J_wrapBody">
+    <div th:replace="/common/header::header"></div>
+    <div class="detail-crumbs">
+        <div class="crumbs">
+            <a href="//www.xinxindai.com/">首页</a> &gt; <b>我要出借</b> &gt; <b>新元宝（新手专享）</b>
+        </div>
+    </div>
+    <div class='container clearfix'>
+        <div class='product-info clearfix'>
+            <div class='main-product'>
+                <p class='title'>[[${globalData.detailThirtyTender.data.name}]]、限投1次</p>
+                <table>
+                    <tr>
+                        <td class='rate'>[[${globalData.detailThirtyTender.data.apr}]]%
+                            <div th:if="${globalData.detailThirtyTender.data.floatApr !=0}">
+                                +[[${globalData.detailThirtyTender.data.floatApr}]]%
+                                <p th:if="${globalData.detailThirtyTender.data.floatApr !=0}" class='new-hot xszx-tip'>
+                                    新手专享加息
+                                    <i></i>
+                                </p>
+                            </div>
+                        </td>
+                        <td>[[${globalData.detailThirtyTender.data.period}]]<span>个月</span></td>
+                        <td>[[${globalData.detailThirtyTender.data.lowestTender}]]<span>元</span></td>
+                    </tr>
+                    <tr>
+                        <th>历史年化收益</th>
+                        <th>后可申请转让</th>
+                        <th>起投金额</th>
+                    </tr>
+                </table>
+                <p>
+                    加入上限：<span>[[${#numbers.formatDecimal(globalData.detailThirtyTender.data.mostTender,1,'COMMA',2,'POINT')}]]</span>元
+                </p>
+                <p class='new-tip'>注：新手专享加息奖励每个账户仅限1次</p>
+                <p>合同范本：<a th:href="@{'/commpd/agree/XSCP30T_agree_' + ${globalData.detailThirtyTender.data.id} + '.html?productSign=XSCP30T'}">《新元宝（新手专享）服务协议》</a></p>
+                <p>募集成功后次日开始计息</p>
+            </div>
+            <div class='detail-focus'>
+                <p th:if="${!globalData.isLogin}">账户余额：<a class='tologin'>登录</a>后可见</p>
+                <p th:if="${globalData.isLogin}">
+                    账户余额：[[${#numbers.formatDecimal(globalData.detailThirtyTender.data.usable,1,'COMMA',2,'POINT')}]] <a
+                        href='/usercenter/recharge.html' id="recharge">充值</a></p>
+                <div class='J_noCondition'>
+                    <p>加入金额：（[[${globalData.detailThirtyTender.data.step}]]的整数倍递增）</p>
+                    <div class='money' id="J_money">
+                        <button type='button' value='500'
+                                th:class="${globalData.detailThirtyTender.data.mostTender ge 500}? '' : 'disable'">500元
+                        </button>
+                        <button type='button' value='800'
+                                th:class="${globalData.detailThirtyTender.data.mostTender ge 800}? '' : 'disable'">800元
+                        </button>
+                        <button type='button' value='1000'
+                                th:class="${globalData.detailThirtyTender.data.mostTender ge 1000}? '' : 'disable'">
+                            1000元
+                        </button>
+                        <button type='button' value='3000'
+                                th:class="${globalData.detailThirtyTender.data.mostTender ge 3000}? '' : 'disable'">
+                            3000元
+                        </button>
+                        <button type='button' value='5000'
+                                th:class="${globalData.detailThirtyTender.data.mostTender ge 5000}? '' : 'disable'">
+                            5000元
+                        </button>
+                        <button type='button' value='8000'
+                                th:class="${globalData.detailThirtyTender.data.mostTender ge 8000}? '' : 'disable'">
+                            8000元
+                        </button>
+                        <button type='button' value='10000'
+                                th:class="${globalData.detailThirtyTender.data.mostTender ge 10000}? '' : 'disable'">
+                            10000元
+                        </button>
+                    </div>
+                    <p class='number-box clearfix' id="J_numberBox">
+                        <span xxd-sign="minus" class='add-subtract'>-</span>
+                        <input th:value="${globalData.detailThirtyTender.data.lowestTender}"
+                               onkeyup="value=value.replace(/[^\d]/g,'')" autocomplete="new-password">
+                        <span xxd-sign="plus" class='add-subtract'>+</span>
+                    </p>
+                    <p>历史收益：<span id="J_income">0</span>元</p>
+                    <p><i></i>资金由存管银行全程监控</p>
+                    <p class='risk-protocol hide'><input type="checkbox">我已充分阅读本<a target='_blank'
+                                                                                   href="/user/regRiskWarning.html">《资金出借风险提示函》</a>，知晓包括债权转让风险在内的相关风险提示，并将根据风险承受能力谨慎出借并承担风险。
+                    </p>
+                    <p class="error-tip hide">错误提示</p>
+                    <div id="J_buyWrap">
+                        <a class='btn tologin' th:if="${!globalData.isLogin}">立即登录</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="count-rate">
+            <ul>
+                <li><a href="#">计划示意图</a></li>
+            </ul>
+            <div class="rate-img">
+                <img th:src="@{${global.staticHost}+'/pc/'+${global.xxdVersion}+'/build/img/thirtytender_img@2x.png'}">
+            </div>
+            <!--<p th:if="${globalData.detailThirtyTender.data.floatApr > 0}">-->
+                <!--历史收益=出借金额 * [[${globalData.detailThirtyTender.data.apr}]]%/12 + 出借金额 *-->
+                <!--[[${globalData.detailThirtyTender.data.floatApr}]]%/12-->
+            <!--</p>-->
+            <!--<p th:if="${globalData.detailThirtyTender.data.floatApr <= 0}">-->
+                <!--历史收益=出借金额 * [[${globalData.detailThirtyTender.data.apr}]]%/12-->
+            <!--</p>-->
+            <!--<table>-->
+                <!--<tr>-->
+                    <!--<th>出借金额(元)</th>-->
+                    <!--<th>历史年化收益率</th>-->
+                    <!--<th>锁定期限</th>-->
+                    <!--<th>历史收益(元)<i id='earningsTip'></i>-->
+                        <!--<div id='tipContent' class='hide'>收益采取截断法，保留2位小数点。<span></span></div>-->
+                    <!--</th>-->
+                <!--</tr>-->
+                <!--<tr>-->
+                    <!--<td>100</td>-->
+                    <!--<td>-->
+                        <!--<p th:if="${globalData.detailThirtyTender.data.floatApr > 0}">-->
+                            <!--[[${globalData.detailThirtyTender.data.apr}]]%-->
+                            <!--<span class="plus">+[[${globalData.detailThirtyTender.data.floatApr}]]%</span>-->
+                        <!--</p>-->
+                        <!--<p th:if="${globalData.detailThirtyTender.data.floatApr <= 0}">-->
+                            <!--[[${globalData.detailThirtyTender.data.apr}]]%-->
+                        <!--</p>-->
+
+                    <!--</td>-->
+
+                    <!--<td>[[${globalData.detailThirtyTender.data.period}]]个月</td>-->
+                    <!--<td>[[${globalData.detailThirtyTender.data.income100}]]-->
+                    <!--</td>-->
+                <!--</tr>-->
+                <!--<tr>-->
+                    <!--<td>1000</td>-->
+                    <!--<td>-->
+                        <!--<p th:if="${globalData.detailThirtyTender.data.floatApr > 0}">-->
+                            <!--[[${globalData.detailThirtyTender.data.apr}]]%-->
+                            <!--<span class="plus">+[[${globalData.detailThirtyTender.data.floatApr}]]%</span>-->
+                        <!--</p>-->
+                        <!--<p th:if="${globalData.detailThirtyTender.data.floatApr <= 0}">-->
+                            <!--[[${globalData.detailThirtyTender.data.apr}]]%-->
+                        <!--</p>-->
+
+                    <!--</td>-->
+                    <!--<td>[[${globalData.detailThirtyTender.data.period}]]个月</td>-->
+                    <!--<td>[[${globalData.detailThirtyTender.data.income1000}]]-->
+                    <!--</td>-->
+                <!--</tr>-->
+                <!--<tr>-->
+                    <!--<td>5000</td>-->
+                    <!--<td>-->
+                        <!--<p th:if="${globalData.detailThirtyTender.data.floatApr > 0}">-->
+                            <!--[[${globalData.detailThirtyTender.data.apr}]]%-->
+                            <!--<span class="plus">+[[${globalData.detailThirtyTender.data.floatApr}]]%</span>-->
+                        <!--</p>-->
+                        <!--<p th:if="${globalData.detailThirtyTender.data.floatApr <= 0}">-->
+                            <!--[[${globalData.detailThirtyTender.data.apr}]]%-->
+                        <!--</p>-->
+
+                    <!--</td>-->
+                    <!--<td>[[${globalData.detailThirtyTender.data.period}]]个月</td>-->
+                    <!--<td>[[${globalData.detailThirtyTender.data.income5000}]]-->
+                    <!--</td>-->
+                <!--</tr>-->
+                <!--<tr>-->
+                    <!--<td>10000</td>-->
+                    <!--<td>-->
+                        <!--<p th:if="${globalData.detailThirtyTender.data.floatApr > 0}">-->
+                            <!--[[${globalData.detailThirtyTender.data.apr}]]%-->
+                            <!--<span class="plus">+[[${globalData.detailThirtyTender.data.floatApr}]]%</span>-->
+                        <!--</p>-->
+                        <!--<p th:if="${globalData.detailThirtyTender.data.floatApr <= 0}">-->
+                            <!--[[${globalData.detailThirtyTender.data.apr}]]%-->
+                        <!--</p>-->
+
+                    <!--</td>-->
+                    <!--<td>[[${globalData.detailThirtyTender.data.period}]]个月</td>-->
+                    <!--<td>[[${globalData.detailThirtyTender.data.income10000}]]-->
+                    <!--</td>-->
+                <!--</tr>-->
+            <!--</table>-->
+        </div>
+        <div class='product-tabs'>
+            <ul class='nav' id="J_tabs">
+                <li class='active pro-info'><a href="#">服务介绍</a></li>
+                <li class='in-record'><a
+                        href="#">加入记录<span>（[[${globalData.thirtyTenderRecord.data.totalCount}]]）</span></a>
+                </li>
+                <li class='debenture'><a href="#">债权列表</a></li>
+                <li class='problems'><a href="#">常见问题</a></li>
+                <li class='risk'><a href="#">风险提示</a></li>
+            </ul>
+            <div class='content'>
+                <div class='j_tabContent detail-desc'>
+                    <table>
+                        <tbody>
+                        <tr>
+                            <th class='title'>名称</th>
+                            <td class='title'>新元宝（新手专享）</td>
+                        </tr>
+                        <tr>
+                            <th class="infor">服务介绍</th>
+                            <td class="infor-con">
+                                新元宝（新手专享）是新元宝计划系列中专门针对新手推出的一种福利计划，未曾在新新贷投标过的用户均有一次机会参与，仅限首次加入。 <br>
+                                该服务计划在用户认可的标的范围内，对符合要求的标的进行自动投标，服务期结束后，用户可申请债权转让退出，债权转让完成后所获相应本金利息及新手专享加息补贴，将返至您新新贷账户的“可用余额”。服务期结束至债权转让成功期间，该服务计划不计息。
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>服务期</th>
+                            <td>[[${globalData.detailThirtyTender.data.period}]]个月</td>
+                        </tr>
+                        <tr>
+                            <th class='h90'>历史年化收益率</th>
+                            <td class='h90'>
+                                <div th:if="${globalData.detailThirtyTender.data.floatApr > 0}">
+                                    [[${globalData.detailThirtyTender.data.apr}]]%
+                                    <div class="plus">+[[${globalData.detailThirtyTender.data.floatApr}]]%
+                                        <p th:if="${globalData.detailThirtyTender.data.floatApr !=0}" class='new-hot xszx-tip'>
+                                            新手专享加息
+                                            <i></i>
+                                        </p>
+                                    </div>
+                                </div>
+                                <div th:if="${globalData.detailThirtyTender.data.floatApr <= 0}">
+                                    [[${globalData.detailThirtyTender.data.apr}]]%
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>加入条件</th>
+                            <td><b>未曾在新新贷投标过的新用户，仅限参与一次</b></td>
+                        </tr>
+                        <tr>
+                            <th>加入规则</th>
+                            <td><b>100元起投，并以100元倍数递增，上限10000元</b></td>
+                        </tr>
+                        <tr>
+                            <th>退出方式</th>
+                            <!--<td>服务期内不支持提前退出。服务期结束后，用户可申请债权转让退出，成功转让后资金返至出借人账户中，并可在新新贷账户的“可用余额”查询。债权转让时间由债权转让交易撮合情况而定，历史平均转让成功时间为1-3个工作日。</td>-->
+                            <td class="quit-con">服务期内不支持提前退出。服务期结束后由出借人手动申请退出进行债权转让，具体时长视债权转让交易情况而定。债权成功转让后资金返至出借人的新新贷账户中，并可在账户的“可用余额”查询。</td>
+                        </tr>
+                        <tr>
+                            <th>收益计算规则</th>
+                            <td>
+                                <b th:if="${globalData.detailThirtyTender.data.floatApr > 0}">
+                                    历史收益=加入金额*[[${globalData.detailThirtyTender.data.apr}]]%/12 +
+                                    加入金额*[[${globalData.detailThirtyTender.data.floatApr}]]%/12
+                                </b>
+                                <b th:if="${globalData.detailThirtyTender.data.floatApr <= 0}">
+                                    历史收益=加入金额*[[${globalData.detailThirtyTender.data.apr}]]%/12
+                                </b>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>费用</th>
+                            <td>
+                                加入费用0元 <br>
+                                退出费用0元
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>服务协议</th>
+                            <td><a target="_blank" th:href="@{'/commpd/agree/XSCP30T_agree_' + ${globalData.detailThirtyTender.data.id} + '.html?productSign=XSCP30T'}">《新元宝（新手专享）服务协议》</a></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class='j_tabContent table-content hide'>
+                    <table id="J_tableRecord">
+                        <tr>
+                            <th>序号</th>
+                            <th>出借人</th>
+                            <th>加入金额</th>
+                            <th>加入时间</th>
+                        </tr>
+                        <tr th:each="item,itemStat : ${globalData.thirtyTenderRecord.data.items}">
+                            <td>[[${itemStat.count}]]</td>
+                            <td>[[${item.userName}]]</td>
+                            <td>[[${item.account}]]</td>
+                            <td>
+                                <span>[[${#calendars.format(new java.util.Date(item.addTime),'yyyy-MM-dd  HH:mm:ss')}]]</span>
+                            </td>
+                        </tr>
+                    </table>
+                    <div class='pagination table-page'>
+
+                    </div>
+                </div>
+                <div class='j_tabContent debenture-money hide'>
+                    <p>近期借款项目（您的资金将可能出借到以下任意一个或多个项目中，您可在出借后前往我的新新贷-出借管理查询详细的匹配记录。）</p>
+                    <table id="J_debenture">
+                        <tr>
+                            <th>项目名称</th>
+                            <th>借款金额</th>
+                            <th>借款利率</th>
+                            <th>借款期限</th>
+                        </tr>
+                    </table>
+                    <div class='pagination debenture-page'>
+
+                    </div>
+                </div>
+                <div class='j_tabContent ask-answer hide'>
+                    <h6>1.我为什么无法出借新元宝（新手专享）？</h6>
+                    <p>新元宝（新手专享）仅针对未在新新贷平台出借过的新用户，且每位用户只能参与一次。</p>
+                    <h6>2.新元宝（新手专享）产品可以使用红包吗？</h6>
+                    <p>不可以。红包仅限用于新元宝等普通产品，请详见红包使用说明。</p>
+                    <h6>3.新元宝（新手专享）如何退出？</h6>
+                    <p>服务期内不支持提前退出。服务期结束后由出借人手动申请退出进行债权转让，具体时长视债权转让交易情况而定。债权成功转让后资金返至出借人的新新贷账户中，并可在账户的“可用余额”查询。</p>
+
+                    <!--<h6>3.新元宝（新手专享）什么时候回款？</h6>-->
+                    <!--<p>本产品在锁定期结束后，通过新新贷债权转让平台退出，到时可至您的银行存管账户查询。</p>-->
+                </div>
+                <div class='j_tabContent risk-warning hide' th:utext="${globalData.projectRiskText}">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div th:replace="common/footer::footer (${globalData},${global.xxdVersion})"></div>
+</div>
+<!--[if lt IE 9]>
+<iframe id="ifr_cover" frameborder="0" class="hide" scrolling="no"></iframe>
+<div id="alertBoxWrap" class="hide"></div>
+<![endif]-->
+</body>
+<script th:src="@{${global.staticHost}+'/pc/'+${global.xxdVersion}+'/build/js/common/require.min.js'}"></script>
+<script th:src="@{${global.staticHost}+'/pc/'+${global.xxdVersion}+'/build/mods/detail/thirtytender/_.js'}"></script>
+</html>

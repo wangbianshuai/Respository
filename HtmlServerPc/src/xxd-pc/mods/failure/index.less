@@ -1,0 +1,122 @@
+@import "../../css/reset";
+@import "../../css/variable";
+@path:"../../tmp/merge/";
+@import "@{path}backTop.index-1.css";
+@import "@{path}dialog.index.css";
+@import "@{path}dialog-float.index.css";
+@import "@{path}rotate.index.css";
+@import "@{path}tip.index.css";
+@import "../header";
+@import "../footer";
+
+.detail-crumbs {
+  margin-bottom: 20px;
+  background: #57a8ff;
+  .crumbs {
+    margin: 0 auto;
+    width: @main-width;
+    font: normal 14px/34px @xxd-font;
+    color: #fff;
+    a, b {
+      color: #fff;
+    }
+  }
+}
+.container{
+  width: 1200px;
+  margin:30px auto 30px;
+  background: #fff;
+  border:1px solid #eee;
+  text-align: center;
+}
+h2{
+  color:#ff686d;
+  font:500 100px/100px "microsoft yahei";
+  margin:50px 0 10px;
+  text-align: center;
+}
+h6{
+  color:#333;
+  font:400 16px "microsoft yahei";
+  margin-bottom: 30px;
+  text-align: center;
+
+}
+.not-found{
+  margin:100px auto 0;
+  img{
+    margin-right: 20px;
+  }
+  .busy-box{
+    display: inline-block;
+    p{
+      font-size:16px;
+      color:#333333;
+      margin:0;
+      line-height:30px;
+    }
+    a{
+      display: inline-block;
+      background:#57a8ff;
+      border-radius:5px;
+      width:170px;
+      height:40px;
+      cursor: pointer;
+      color: #fff;
+      text-align: center;
+      font:normal 16px/40px "microsoft yahei";
+      margin-top: 10px;
+      &:hover{
+        background: #00498a;
+      }
+    }
+  }
+
+}
+.bottom{
+  margin: 30px 0 100px;
+  display: inline-block;
+  width:480px;
+  >div{
+    float: left;
+    li{
+      display: inline-block;
+    }
+  }
+  .hot{
+    text-align: left;
+    margin-top: 22px;
+    p{
+      margin:0;
+    }
+    ul{
+      padding:0;
+      font-size: 16px;
+      color: #333;
+      margin:0;
+      li{
+        font-size:12px;
+      }
+      a{
+        font-size:12px;
+        color:#57a8ff;
+      }
+    }
+  }
+  .code{
+    width: 100px;
+    height: 100px;
+    margin: 0 28px;
+  }
+  .tip{
+    margin-top: 28px;
+    p,span{
+      font:400 16px/24px "microsoft yahei";
+      color: #333;
+      margin:0;
+    }
+    span{
+      color: #57a8ff;
+    }
+  }
+}

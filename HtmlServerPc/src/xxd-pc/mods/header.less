@@ -1,0 +1,339 @@
+@import "../css/variable";
+
+.header {
+  margin: 0 auto;
+  width: 100%;
+  .header-wrap {
+    height: 28px;
+    width: 100%;
+    background: #f4f5f9;
+    border-bottom: 1px solid #dedede;
+  }
+  .header-nav {
+    width: @main-width;
+    height: 28px;
+    margin: 0 auto;
+    background: #f4f5f9;
+    border-bottom: 1px solid #dedede;
+    .nav-left {
+      float: left;
+      width: 700px;
+      font: normal 12px/28px @xxd-font;
+      span {
+        display: inline-block;
+        position: relative;
+        &.phone, &.weibo, &.wechat {
+          width: 24px;
+          height: 20px;
+          i {
+            display: inline-block;
+            position: absolute;
+            width: 24px;
+            height: 20px;
+            cursor: pointer;
+          }
+        }
+        &.phone i {
+          background: url(@icon-phone) no-repeat center;
+          top: 4px;
+        }
+        &.weibo {
+          margin: 0 8px;
+          i {
+            background: url(@icon-weibo) no-repeat center;
+            top: 4px;
+          }
+        }
+        &.wechat {
+          margin: 0 10px;
+          i {
+            background: url(@icon-wechat) no-repeat center;
+            top: 5px;
+          }
+        }
+        a{
+          color: #666 !important;
+          &.weibo-icon{
+            position: absolute;
+            display: block;
+            width: 24px;
+            height: 27px;
+            z-index: 6666;
+          }
+        }
+      }
+    }
+    .nav-right {
+      float: right;
+      a {
+        display: inline-block;
+        font: normal 12px/28px @xxd-font;
+        padding: 0 5px;
+        color: @font-color;
+      }
+      .nav-user {
+        position: relative;
+        display: inline-block;
+        padding-right: 15px;
+        cursor: pointer;
+        &, .cursor-default {
+          cursor: default;
+        }
+        span{
+          color: #4894FF;
+        }
+        i {
+          position: absolute;
+          display: inline-block;
+          width: 0;
+          height: 0;
+          top: 7px;
+          right: 0px;
+          vertical-align: top;
+          border-top: 4px solid #000000;
+          border-right: 4px solid transparent;
+          border-left: 4px solid transparent;
+          content: "";
+          opacity: 0.3;
+        }
+      }
+    }
+  }
+  .header-menu {
+    position: relative;
+    margin: 0 auto;
+    width: @main-width;
+    height: 82px;
+    .logo {
+      display: inline-block;
+      position: absolute;
+      top: 0;
+      left: 0;
+      i {
+        display: inline-block;
+        height: 82px;
+        width: 304px;
+        background: url(@bg-logo) no-repeat center;
+      }
+    }
+    .menu {
+      float: right;
+      margin-top: 30px;
+      li {
+        float: left;
+        padding: 5px 20px;
+        &.active a {
+          border-bottom: 2px solid #57A8FF;
+        }
+        a {
+          position: relative;
+          text-shadow: none;
+          color: #000;
+          font: 300 16px/30px @xxd-font;
+          i {
+            position: absolute;
+            right: -18px;
+            top: 9px;
+            display: inline-block;
+            width: 12px;
+            height: 8px;
+            background: url(@arrow-bottom-logo) no-repeat;
+          }
+          &:hover {
+            color: #00498a;
+          }
+          &.dropdown-hover {
+            color: #00498a;
+            i {
+              top: 6px;
+              right: -16px;
+              width: 8px;
+              height: 12px;
+              background: url(@arrow-right-logo) no-repeat;
+            }
+          }
+        }
+        .new-hot span {
+          display: inline-block;
+          position: absolute;
+          right: -30px;
+          top: -10px;
+          width: 31px;
+          height: 14px;
+          background: url(@new-hot) no-repeat;
+          background-size: 100% 100%;
+        }
+      }
+    }
+  }
+  .company-menu{
+    .logo {
+      display: inline-block;
+      position: absolute;
+      top: 0;
+      left: 0;
+      i {
+        display: inline-block;
+        height: 83px;
+        width: 365px;
+        background: url(@company-logo) no-repeat center;
+      }
+    }
+  }
+}
+
+.wrap-weibo {
+  padding: 5px 8px;
+  text-align: center;
+}
+
+.qr-code-img {
+  width: 100px;
+  height: 100px;
+  overflow: hidden;
+  text-align: center;
+}
+.header-code-img{
+  height: 126px !important;
+}
+.invest-dropdown, .user-dropdown {
+  padding: 4px 0;
+  li {
+    padding: 1px 0;
+    a {
+      display: block;
+      padding:0 20px;
+      text-align: center;
+      font: normal 16px/26px @xxd-font;
+      color: #666;
+      &:hover {
+        color: #428bca;
+      }
+    }
+  }
+  .hot {
+    position: relative;
+    i {
+      position: absolute;
+      right: 5px;
+      top: 5px;
+      width: 22px;
+      height: 8px;
+      background: url(@my-new-logo) no-repeat;
+      background-size: 22px 8px;
+    }
+  }
+}
+
+#J_dialogState .mui-dialog-inner {
+  overflow: visible !important;
+}
+
+.state-wrap {
+  position: relative;
+  width: 66px;
+  height: 15px;
+  .state-bg {
+    position: absolute;
+    width: 1200px;
+    height: 570px;
+    left: -567px;
+    top: -260px;
+    background: url(@dialog-state) no-repeat;
+  }
+  .c_close { //997 × 729
+    position: absolute;
+    display: block;
+    top: -255px;
+    right: -170px;
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+  }
+  a{
+    cursor: pointer;
+  }
+  .state-img {
+    display: block;
+    width: 464px;
+    height: 475px;
+    position: absolute;
+    top: -254px;
+    left: -286px;
+  }
+  .state-btn{
+    display: block;
+    width: 237px;
+    height: 88px;
+    position: absolute;
+    top: 221px;
+    left: -194px;
+  }
+}
+.disnone{
+  display: none;
+}
+//企业注册弹窗
+#J_dialogBorrow .mui-dialog-inner{
+  background: none;
+}
+.dialog-borrow{
+  position: fixed;
+  z-index: 10;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  //background-color: rgba(0,0,0,.5);
+  .content-tips{
+    position: absolute;
+    left: 50%;
+    top:160px;
+    margin-left: -250px;
+    width: 500px;
+    height: 254px;
+    background-color: #fff;
+    border-radius: 6px;
+    text-align: center;
+    i{
+      position: absolute;
+      right: 0;
+      top:-30px;
+      width: 16px;
+      height: 16px;
+      background: url(@close-tips) no-repeat;
+      background-size: 100% 100%;
+    }
+    h4{
+      width: 100%;
+      height: 56px;
+      line-height: 56px;
+      text-align: center;
+      font-size: 18px;
+      color: #333;
+      border-bottom: 1px solid #ccc;
+    }
+    p{
+      width: 400px;
+      margin:30px auto 0;
+      font-size: 16px;
+      color: #666;
+      text-align: center;
+    }
+    .go-to{
+      width: 364px;
+      margin: 30px auto 0;
+      button{
+        width: 280px;
+        height: 40px;
+        line-height: 40px;
+        margin: 0 auto;
+        background-color: #2096E9;
+        border-radius: 5px;
+        font-size: 16px;
+        color:#fff;
+        cursor: pointer;
+      }
+    }
+  }
+}

@@ -1,0 +1,1141 @@
+/*css样式*/
+@import "../../../tmp/merge/tip.index.css";
+@import "../../../tmp/merge/dialog.index.css";
+@import "../../../tmp/merge/backTop.index-1.css";
+@import "../../../tmp/merge/dialog-float.index.css";
+@import "../../../tmp/merge/rotate.index.css";
+.mui-slider img {
+  border: 0;
+  background: url('//static.xinxindai.com/pc/1.4.0/build/css/i/load-image.png') center no-repeat;
+}
+.clearfix:after {
+  display: block;
+  clear: both;
+  height: 0;
+  content: ".";
+  visibility: hidden;
+}
+*html.clearfix {
+  height: 1%;
+}
+.clearfix {
+  display: block;
+}
+html {
+  height: 100%;
+  overflow: hidden;
+  width: 100%;
+  font: 12px/1.5 "microsoft yahei";
+}
+body {
+  height: 100%;
+  max-height: 100%;
+  overflow: hidden;
+  position: relative;
+  _position: static;
+  width: 100%;
+}
+html,
+body {
+  overflow-x: hidden;
+  margin: 0;
+  padding: 0;
+}
+a {
+  text-decoration: none;
+}
+body,
+dl,
+dt,
+dd,
+ul,
+ol,
+li,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+form,
+fieldset,
+legend,
+input,
+button,
+textarea,
+p,
+th,
+td,
+figure,
+font a {
+  margin: 0;
+  padding: 0;
+  font: 12px/1.5 "microsoft yahei";
+  color: #666;
+}
+input,
+textarea {
+  ontline: none;
+  resize: none;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+input:focus,
+textarea:focus,
+input:active,
+textarea:active {
+  border-color: rgba(82, 168, 236, 0.8) !important;
+  outline: 0;
+  outline: thin dotted \9;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(82, 168, 236, 0.6);
+  -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(82, 168, 236, 0.6);
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(82, 168, 236, 0.6);
+}
+.fl,
+.left {
+  float: left;
+}
+.fr,
+.right {
+  float: right;
+}
+.hide {
+  display: none !important;
+}
+input {
+  outline: none;
+}
+ul {
+  list-style-type: none;
+}
+ul li {
+  list-style: none;
+}
+.disable {
+  background: #f3f3f3!important;
+  color: #cfcfcf!important;
+  border: 1px solid #dedede!important;
+}
+#J_wrapBody,
+.wrapBody {
+  width: 100%;
+  height: 100%;
+  background: #f9f9f9;
+  overflow-y: scroll;
+}
+.red {
+  color: red !important;
+}
+/*@bg-logo:'@{abspath}css/i/logo-2.png';*/
+.header {
+  margin: 0 auto;
+  width: 100%;
+}
+.header .header-wrap {
+  height: 28px;
+  width: 100%;
+  background: #f4f5f9;
+  border-bottom: 1px solid #dedede;
+}
+.header .header-nav {
+  width: 1200px;
+  height: 28px;
+  margin: 0 auto;
+  background: #f4f5f9;
+  border-bottom: 1px solid #dedede;
+}
+.header .header-nav .nav-left {
+  float: left;
+  width: 700px;
+  font: normal 12px/28px "microsoft yahei";
+}
+.header .header-nav .nav-left span {
+  display: inline-block;
+  position: relative;
+}
+.header .header-nav .nav-left span.phone,
+.header .header-nav .nav-left span.weibo,
+.header .header-nav .nav-left span.wechat {
+  width: 24px;
+  height: 20px;
+}
+.header .header-nav .nav-left span.phone i,
+.header .header-nav .nav-left span.weibo i,
+.header .header-nav .nav-left span.wechat i {
+  display: inline-block;
+  position: absolute;
+  width: 24px;
+  height: 20px;
+  cursor: pointer;
+}
+.header .header-nav .nav-left span.phone i {
+  background: url('//static.xinxindai.com/pc/1.4.0/build/css/i/mobile.png') no-repeat center;
+  top: 4px;
+}
+.header .header-nav .nav-left span.weibo {
+  margin: 0 8px;
+}
+.header .header-nav .nav-left span.weibo i {
+  background: url('//static.xinxindai.com/pc/1.4.0/build/css/i/weibo.png') no-repeat center;
+  top: 4px;
+}
+.header .header-nav .nav-left span.wechat {
+  margin: 0 10px;
+}
+.header .header-nav .nav-left span.wechat i {
+  background: url('//static.xinxindai.com/pc/1.4.0/build/css/i/weixin.png') no-repeat center;
+  top: 5px;
+}
+.header .header-nav .nav-left span a {
+  color: #666 !important;
+}
+.header .header-nav .nav-left span a.weibo-icon {
+  position: absolute;
+  display: block;
+  width: 24px;
+  height: 27px;
+  z-index: 6666;
+}
+.header .header-nav .nav-right {
+  float: right;
+}
+.header .header-nav .nav-right a {
+  display: inline-block;
+  font: normal 12px/28px "microsoft yahei";
+  padding: 0 5px;
+  color: #666666;
+}
+.header .header-nav .nav-right .nav-user {
+  position: relative;
+  display: inline-block;
+  padding-right: 15px;
+  cursor: pointer;
+}
+.header .header-nav .nav-right .nav-user,
+.header .header-nav .nav-right .nav-user .cursor-default {
+  cursor: default;
+}
+.header .header-nav .nav-right .nav-user span {
+  color: #4894FF;
+}
+.header .header-nav .nav-right .nav-user i {
+  position: absolute;
+  display: inline-block;
+  width: 0;
+  height: 0;
+  top: 7px;
+  right: 0px;
+  vertical-align: top;
+  border-top: 4px solid #000000;
+  border-right: 4px solid transparent;
+  border-left: 4px solid transparent;
+  content: "";
+  opacity: 0.3;
+}
+.header .header-menu {
+  position: relative;
+  margin: 0 auto;
+  width: 1200px;
+  height: 82px;
+}
+.header .header-menu .logo {
+  display: inline-block;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+.header .header-menu .logo i {
+  display: inline-block;
+  height: 82px;
+  width: 304px;
+  background: url('//static.xinxindai.com/pc/1.4.0/build/css/i/logo-3.png') no-repeat center;
+}
+.header .header-menu .menu {
+  float: right;
+  margin-top: 30px;
+}
+.header .header-menu .menu li {
+  float: left;
+  padding: 5px 20px;
+}
+.header .header-menu .menu li.active a {
+  border-bottom: 2px solid #57A8FF;
+}
+.header .header-menu .menu li a {
+  position: relative;
+  text-shadow: none;
+  color: #000;
+  font: 300 16px/30px "microsoft yahei";
+}
+.header .header-menu .menu li a i {
+  position: absolute;
+  right: -18px;
+  top: 9px;
+  display: inline-block;
+  width: 12px;
+  height: 8px;
+  background: url('//static.xinxindai.com/pc/1.4.0/build/css/i/arrow-bottom.png') no-repeat;
+}
+.header .header-menu .menu li a:hover {
+  color: #00498a;
+}
+.header .header-menu .menu li a.dropdown-hover {
+  color: #00498a;
+}
+.header .header-menu .menu li a.dropdown-hover i {
+  top: 6px;
+  right: -16px;
+  width: 8px;
+  height: 12px;
+  background: url('//static.xinxindai.com/pc/1.4.0/build/css/i/arrow-right.png') no-repeat;
+}
+.header .header-menu .menu li .new-hot span {
+  display: inline-block;
+  position: absolute;
+  right: -30px;
+  top: -10px;
+  width: 31px;
+  height: 14px;
+  background: url('//static.xinxindai.com/pc/1.4.0/build/css/i/new-hot.png') no-repeat;
+  background-size: 100% 100%;
+}
+.header .company-menu .logo {
+  display: inline-block;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+.header .company-menu .logo i {
+  display: inline-block;
+  height: 83px;
+  width: 365px;
+  background: url('//static.xinxindai.com/pc/1.4.0/build/css/i/logo.png') no-repeat center;
+}
+.wrap-weibo {
+  padding: 5px 8px;
+  text-align: center;
+}
+.qr-code-img {
+  width: 100px;
+  height: 100px;
+  overflow: hidden;
+  text-align: center;
+}
+.header-code-img {
+  height: 126px !important;
+}
+.invest-dropdown,
+.user-dropdown {
+  padding: 4px 0;
+}
+.invest-dropdown li,
+.user-dropdown li {
+  padding: 1px 0;
+}
+.invest-dropdown li a,
+.user-dropdown li a {
+  display: block;
+  padding: 0 20px;
+  text-align: center;
+  font: normal 16px/26px "microsoft yahei";
+  color: #666;
+}
+.invest-dropdown li a:hover,
+.user-dropdown li a:hover {
+  color: #428bca;
+}
+.invest-dropdown .hot,
+.user-dropdown .hot {
+  position: relative;
+}
+.invest-dropdown .hot i,
+.user-dropdown .hot i {
+  position: absolute;
+  right: 5px;
+  top: 5px;
+  width: 22px;
+  height: 8px;
+  background: url('//static.xinxindai.com/pc/1.4.0/build/css/i/myNew.png') no-repeat;
+  background-size: 22px 8px;
+}
+#J_dialogState .mui-dialog-inner {
+  overflow: visible !important;
+}
+.state-wrap {
+  position: relative;
+  width: 66px;
+  height: 15px;
+}
+.state-wrap .state-bg {
+  position: absolute;
+  width: 1200px;
+  height: 570px;
+  left: -567px;
+  top: -260px;
+  background: url('//static.xinxindai.com/pc/1.4.0/build/css/i/dialog-state.png?v1') no-repeat;
+}
+.state-wrap .c_close {
+  position: absolute;
+  display: block;
+  top: -255px;
+  right: -170px;
+  width: 40px;
+  height: 40px;
+  cursor: pointer;
+}
+.state-wrap a {
+  cursor: pointer;
+}
+.state-wrap .state-img {
+  display: block;
+  width: 464px;
+  height: 475px;
+  position: absolute;
+  top: -254px;
+  left: -286px;
+}
+.state-wrap .state-btn {
+  display: block;
+  width: 237px;
+  height: 88px;
+  position: absolute;
+  top: 221px;
+  left: -194px;
+}
+.disnone {
+  display: none;
+}
+#J_dialogBorrow .mui-dialog-inner {
+  background: none;
+}
+.dialog-borrow {
+  position: fixed;
+  z-index: 10;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+}
+.dialog-borrow .content-tips {
+  position: absolute;
+  left: 50%;
+  top: 160px;
+  margin-left: -250px;
+  width: 500px;
+  height: 254px;
+  background-color: #fff;
+  border-radius: 6px;
+  text-align: center;
+}
+.dialog-borrow .content-tips i {
+  position: absolute;
+  right: 0;
+  top: -30px;
+  width: 16px;
+  height: 16px;
+  background: url('//static.xinxindai.com/pc/1.4.0/build/css/i/close-tips.png') no-repeat;
+  background-size: 100% 100%;
+}
+.dialog-borrow .content-tips h4 {
+  width: 100%;
+  height: 56px;
+  line-height: 56px;
+  text-align: center;
+  font-size: 18px;
+  color: #333;
+  border-bottom: 1px solid #ccc;
+}
+.dialog-borrow .content-tips p {
+  width: 400px;
+  margin: 30px auto 0;
+  font-size: 16px;
+  color: #666;
+  text-align: center;
+}
+.dialog-borrow .content-tips .go-to {
+  width: 364px;
+  margin: 30px auto 0;
+}
+.dialog-borrow .content-tips .go-to button {
+  width: 280px;
+  height: 40px;
+  line-height: 40px;
+  margin: 0 auto;
+  background-color: #2096E9;
+  border-radius: 5px;
+  font-size: 16px;
+  color: #fff;
+  cursor: pointer;
+}
+.footer {
+  margin: 0 auto;
+}
+.footer .footer-wrap {
+  width: 1200px;
+  margin: 30px auto 0;
+  background-color: #4b78c6;
+}
+.footer .footer-info {
+  margin: 0 30px;
+  padding: 30px 0;
+}
+.footer .about-us {
+  float: left;
+}
+.footer .about-us .call-us {
+  display: block;
+  width: 400px;
+  height: 40px;
+  background: url(//www.xinxindai.com/static/images/public/xxd-v6.png) no-repeat 0 0;
+}
+.footer .about-us .qr-code-list {
+  margin-top: 70px;
+}
+.footer .about-us .qr-code-list span {
+  color: #fff;
+  font: normal 14px/30px "microsoft yahei";
+  vertical-align: 8px;
+}
+.footer .about-us .qr-code-list i {
+  display: inline-block;
+  margin: 0 5px;
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
+}
+.footer .about-us .qr-code-list .weibo-icon {
+  background: url(//www.xinxindai.com/static/images/public/xxd-v6.png) no-repeat -114px -59px;
+}
+.footer .about-us .qr-code-list .wechat-icon {
+  background: url(//www.xinxindai.com/static/images/public/xxd-v6.png) no-repeat -84px -59px;
+}
+.footer .about-us .qr-code-list .ios-icon {
+  background: url(//www.xinxindai.com/static/images/public/xxd-v6.png) no-repeat -144px -59px;
+}
+.footer .about-us .qr-code-list .android-icon {
+  background: url('//static.xinxindai.com/pc/1.4.0/build/css/i/android.png') no-repeat;
+}
+.footer .footer-intro,
+.footer .footer-safe,
+.footer .footer-newer,
+.footer .footer-phone {
+  float: right;
+  width: 90px;
+  margin-left: 15px;
+}
+.footer .footer-intro ul,
+.footer .footer-safe ul,
+.footer .footer-newer ul,
+.footer .footer-phone ul {
+  position: relative;
+}
+.footer .footer-intro li,
+.footer .footer-safe li,
+.footer .footer-newer li,
+.footer .footer-phone li {
+  text-align: right;
+  font: normal 14px/38px "microsoft yahei";
+}
+.footer .footer-intro li a,
+.footer .footer-safe li a,
+.footer .footer-newer li a,
+.footer .footer-phone li a {
+  color: #fff;
+}
+.footer .footer-intro li.first,
+.footer .footer-safe li.first,
+.footer .footer-newer li.first,
+.footer .footer-phone li.first {
+  padding-bottom: 15px;
+}
+.footer .footer-intro .borrow-scan,
+.footer .footer-safe .borrow-scan,
+.footer .footer-newer .borrow-scan,
+.footer .footer-phone .borrow-scan {
+  position: absolute;
+  top: 0;
+  left: -90px;
+}
+.footer .footer-link {
+  position: relative;
+  border-top: 1px dashed #fff;
+  padding-top: 15px;
+  margin: 0 30px 20px;
+}
+.footer .footer-link.close-down ul {
+  height: 25px;
+  overflow: hidden;
+}
+.footer .footer-link .footer-link-title,
+.footer .footer-link ul li {
+  font: normal 14px/25px "microsoft yahei";
+  float: left;
+  color: #fff;
+}
+.footer .footer-link ul li {
+  float: left;
+  padding-right: 15px;
+}
+.footer .footer-link ul li a {
+  color: #fff;
+}
+.footer .footer-link.close-down .switch-icon {
+  background: url('//static.xinxindai.com/pc/1.4.0/build/css/i/footer-arrow-down.png') no-repeat;
+}
+.footer .footer-link .switch-icon {
+  position: absolute;
+  display: block;
+  width: 14px;
+  height: 15px;
+  right: 0px;
+  top: 20px;
+  cursor: pointer;
+  background: url('//static.xinxindai.com/pc/1.4.0/build/css/i/footer-arrow-up.png') no-repeat;
+}
+.footer .footer-bottom {
+  margin: 0 auto;
+  text-align: center;
+  background: white;
+  padding: 20px 0 10px 0;
+}
+.footer .footer-bottom .text,
+.footer .footer-bottom .text a {
+  color: #666;
+  font: normal 13px/20px "microsoft yahei";
+}
+.footer .footer-bottom .text:hover,
+.footer .footer-bottom .text a:hover {
+  color: #428bca;
+}
+.footer .footer-bottom .text .chapter,
+.footer .footer-bottom .text a .chapter {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  margin-left: 8px;
+  background: url('//static.xinxindai.com/pc/1.4.0/build/css/i/chapter.png') no-repeat center;
+  margin-bottom: -4px;
+}
+.footer .footer-icons {
+  margin: 10px auto 0;
+  text-align: center;
+}
+.footer .x1 {
+  width: 140px;
+  height: 28px;
+  display: inline-block;
+  background: url(//www.xinxindai.com/static/images/public/hlwjb.png) no-repeat 0px -37px;
+  position: relative;
+  color: #fff;
+}
+.footer .x2 {
+  width: 28px;
+  height: 28px;
+  display: inline-block;
+  background: url(//www.xinxindai.com/static/images/public/foot-new.png) no-repeat -2px -156px;
+}
+.footer .x3 {
+  width: 67px;
+  height: 26px;
+  display: inline-block;
+  background: url(//www.xinxindai.com/static/images/public/foot-new.png) no-repeat -3px -97px;
+}
+.footer .x4 {
+  width: 75px;
+  height: 28px;
+  display: inline-block;
+  background: url(//www.xinxindai.com/static/images/public/foot-new.png) no-repeat -3px -35px;
+}
+.footer .x5 {
+  width: 130px;
+  height: 28px;
+  display: inline-block;
+  background: url('//static.xinxindai.com/pc/1.4.0/build/css/i/x5.png') no-repeat 0px -35px;
+}
+.footer .x6 {
+  width: 76px;
+  height: 28px;
+  display: inline-block;
+  background: url('//static.xinxindai.com/pc/1.4.0/build/css/i/x6.png') no-repeat;
+}
+body {
+  font-family: "Microsoft YaHei", "Glyphicons Halflings";
+  background-color: #f6f6f6;
+}
+.header {
+  background-color: #fff;
+}
+button {
+  border: 0 none;
+  outline: none;
+  background-image: none;
+  text-shadow: none;
+}
+input {
+  margin: 0;
+  padding: 0;
+  border: none;
+  outline: none;
+}
+input:focus {
+  box-shadow: none;
+}
+input::-moz-placeholder {
+  color: #999;
+}
+input::-webkit-placeholder {
+  color: #999;
+}
+input::placeholder {
+  color: #999;
+}
+.disnone {
+  display: none !important;
+}
+.hidden {
+  visibility: hidden;
+}
+.clearafter:before,
+.clearafter:after {
+  display: table;
+  content: "";
+}
+.container {
+  width: 1200px !important;
+  margin: 0 auto;
+  clear: both;
+}
+.regtips {
+  margin: 64px 0 13px;
+}
+.regtips .detail {
+  float: right;
+  right: 0;
+  font-size: 14px;
+  font-weight: 300;
+  color: #878d96;
+}
+.regtips .right-blue {
+  font-size: 14px;
+  font-weight: normal;
+  color: #2096E9;
+}
+.layout {
+  width: 100%;
+}
+/*layout part*/
+.account-box {
+  margin: 0 auto;
+  clear: both;
+  background: #fff;
+  height: 450px;
+  border: 1px solid #e7e7e7;
+}
+.register-left {
+  float: left;
+  width: 718px;
+  height: 450px;
+}
+.register-left img {
+  width: 100%;
+  height: 100%;
+}
+.register-right {
+  float: right;
+  width: 480px;
+  height: 450px;
+}
+.reright-top {
+  width: 100%;
+  height: 37px;
+  padding-top: 23px;
+  border-bottom: 1px solid #e7e7e7;
+  margin-bottom: 8px;
+}
+.register-right .blueborder {
+  border: 1px solid #3899ff !important;
+}
+.register-right .redborder {
+  border: 1px solid #ff9090 !important;
+  -webkit-border-bottom-left-radius: 0;
+  -moz-border-bottom-left-radius: 0;
+  border-bottom-left-radius: 0;
+  -webkit-border-bottom-right-radius: 0;
+  -moz-border-bottom-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+.reright-top ul {
+  list-style: none;
+  margin: 0;
+  padding: 0 60px;
+}
+.reright-top ul li {
+  position: relative;
+  width: 36%;
+  float: left;
+  display: inline-block;
+  line-height: 18px;
+  vertical-align: middle;
+  font-size: 16px;
+}
+.reright-top ul li.last {
+  width: 23%;
+  text-align: right;
+}
+.reright-top ul li.second {
+  float: left;
+  padding-left: 16px;
+  letter-spacing: 2px;
+}
+.reright-top ul li span {
+  position: absolute;
+  top: 10px;
+  display: inline-block;
+  height: 2px;
+  width: 70px;
+  border-top: 1px solid #666;
+  left: 70px;
+}
+.reright-top ul li span.second {
+  left: 90px;
+}
+.bluecolor {
+  color: #2096E9;
+}
+.reright-top ul li i {
+  font-style: normal;
+}
+.reright-top ul li .bgt-deblue {
+  border-top: 1px solid #2096E9;
+}
+.reright-top ul li .bgt-degray {
+  border-top: 1px solid #666;
+}
+/*error tips common*/
+.user-common {
+  margin-left: 60px;
+  position: relative;
+}
+.tips-common .error-tips {
+  position: relative;
+  width: 348px;
+  height: 22px;
+  color: #F00;
+  line-height: 22px;
+  background: #FFE6E6;
+  vertical-align: middle;
+  border-radius: 3px;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  margin-bottom: 5px;
+  padding-left: 10px;
+}
+.tips-common .close {
+  position: absolute;
+  right: 10px;
+  top: 25%;
+  width: 12px;
+  height: 12px;
+  background: url("../i/close.png") no-repeat;
+}
+.tips-common .tips-border {
+  border: 1px solid #FF3232;
+}
+/*input框*/
+.usernum,
+.userpsw,
+.username {
+  width: 358px;
+  height: 38px;
+  text-align: center;
+  position: relative;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+  border: 1px solid #dedede;
+  margin-bottom: 8px;
+}
+.user-common input {
+  width: 270px;
+  height: 38px;
+  margin: 0 auto;
+  position: relative;
+  display: inline-block;
+  background-color: #fff;
+  overflow: hidden;
+  color: #333;
+  font-size: 14px;
+}
+.user-common .imgicon {
+  position: absolute;
+  left: 0;
+  width: 40px;
+  height: 38px;
+  line-height: 38px;
+  display: inline-block;
+  text-align: center;
+  background-color: #f4f5f9;
+}
+.user-common .imgicon img {
+  max-width: 100%;
+  vertical-align: middle;
+}
+.user-common .user-company {
+  width: 312px;
+  margin-right: 0;
+  float: right;
+}
+/*RIGHT TIPS*/
+.tipright {
+  width: 20px;
+  height: 20px;
+  position: absolute;
+  right: 30px;
+  top: 40px;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  border-radius: 50%;
+  background: url("../i/right.png") no-repeat;
+}
+.phone-special-right {
+  top: 30px;
+}
+/*?psw x */
+.user-common .userpsw .eye {
+  position: absolute;
+  width: 20px;
+  height: 10px;
+  right: 12px;
+  top: 14px;
+}
+.user-common .userpsw .eye-open {
+  background: url("../i/reg_eye_open.png") no-repeat;
+  background-size: 20px 10px;
+}
+.user-common .userpsw .eye-close {
+  background: url("../i/reg_eye_close.png") no-repeat;
+  background-size: 20px 10px;
+}
+/*yzm*/
+.yzm {
+  margin-bottom: 20px;
+}
+.user-yzm .verifyCode {
+  float: left;
+  width: 158px;
+  height: 38px;
+  padding-left: 10px;
+  border: 1px solid #C5C5C5;
+  border-radius: 3px;
+  vertical-align: middle;
+}
+.user-yzm .getVerify {
+  float: left;
+  margin-left: 20px;
+}
+.user-yzm .getLayout {
+  width: 100%;
+}
+.user-yzm .getVerify .verifyurl {
+  float: left;
+  width: 131px;
+  height: 38px;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+  border: 1px solid #2096E9;
+  vertical-align: middle;
+}
+.user-yzm .getVerify .resetVerify {
+  float: left;
+  margin-left: -3px;
+  width: 40px;
+  height: 40px;
+  background: #2096E9;
+  border-radius: 3px;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  cursor: pointer;
+}
+.user-yzm .getVerify .resetVerify img {
+  margin: 10px;
+}
+/*下一步*/
+.step-next {
+  width: 360px;
+  height: 40px;
+}
+.step-next button {
+  width: 100%;
+  height: 100%;
+  font-size: 16px;
+  color: #fff;
+  background-color: #2096e9;
+  background-image: none;
+  border: 0 none;
+  outline: none;
+  text-shadow: none;
+  cursor: pointer;
+  -webkit-appearance: button;
+  text-align: center;
+  border-radius: 3px;
+}
+.step-next button[disabled] {
+  border: 1px solid #c1c1c1;
+  color: #c1c1c1;
+  background-color: #f3f3f3;
+}
+.login-tips {
+  padding-top: 10px;
+  width: 360px;
+  text-align: right;
+  font-size: 14px;
+  color: #999;
+}
+.login-tips a {
+  color: #2096E9;
+  font-size: 14px;
+  text-decoration: underline;
+}
+/*verify phone number*/
+.agree-special {
+  padding-top: 27px;
+}
+.phone-special {
+  margin-bottom: 16px;
+}
+.phone-yzm-special {
+  margin-bottom: 0;
+}
+.phone-special .get-voice-yzm {
+  display: inline-block;
+  width: 170px;
+  margin-left: 190px;
+  text-align: center;
+  font-size: 14px;
+  color: #2096E9;
+}
+.phone-special .get-voice-yzm:hover {
+  color: #2096E9;
+}
+.phone-yzm .getVerify .msg-phone {
+  width: 170px;
+  height: 40px;
+  text-align: center;
+  background: #2096E9;
+  color: #fff;
+  font-size: 14px;
+  border-radius: 3px;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  cursor: pointer;
+}
+.phone-yzm .getVerify .message_yzm {
+  background-color: #ccc;
+}
+.phone-special .send-msg {
+  width: 100%;
+  padding: 12px 0;
+  font-size: 14px;
+  color: #666666;
+}
+.phone-special .send-msg .send-clur {
+  display: inline-block;
+  vertical-align: middle;
+  width: 20px;
+  height: 20px;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  border-radius: 50%;
+  background: url("../i/right.png") no-repeat;
+}
+.phone-special .send-msg span {
+  display: inline-block;
+  vertical-align: middle;
+  margin-left: 8px;
+}
+/*agree register*/
+.agree-register {
+  width: 360px;
+  height: 40px;
+  text-align: center;
+  color: #fff;
+  font-size: 14px;
+  background: #2096E9;
+  border-radius: 3px;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  cursor: pointer;
+}
+.xxd-agreement {
+  width: 360px;
+  text-align: center;
+  display: block;
+  padding-top: 10px;
+  color: #2096E9;
+  font-size: 14px;
+}
+.xxd-top {
+  padding-top: 4px;
+}
+.dialog-tips {
+  position: fixed;
+  z-index: 10;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+.dialog-tips .content-tips {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  margin-left: -200px;
+  margin-top: -105px;
+  width: 400px;
+  height: 210px;
+  background-color: #fff;
+  border-radius: 6px;
+  text-align: center;
+}
+.dialog-tips .content-tips i {
+  position: absolute;
+  right: 0;
+  top: -30px;
+  width: 16px;
+  height: 16px;
+  background: url("../i/close-tips.png") no-repeat;
+  background-size: 100% 100%;
+}
+.dialog-tips .content-tips h4 {
+  width: 100%;
+  height: 56px;
+  line-height: 56px;
+  text-align: center;
+  font-size: 18px;
+  color: #333;
+  border-bottom: 1px solid #ccc;
+}
+.dialog-tips .content-tips p {
+  width: 325px;
+  margin: 0 auto;
+  height: 70px;
+  line-height: 70px;
+  font-size: 16px;
+  color: #333;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.dialog-tips .content-tips button {
+  width: 280px;
+  height: 40px;
+  line-height: 40px;
+  margin: 0 auto;
+  background-color: #2096E9;
+  border-radius: 5px;
+  font-size: 16px;
+  color: #fff;
+  cursor: pointer;
+}

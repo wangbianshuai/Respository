@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="keywords" content="登录新新贷_新新贷">
+    <meta name="description" content="新新贷为中小微企业及民间个人提供无抵押小额贷款，企业项目融资，小额投资，P2P网贷，P2P贷款,P2P理财，P2P网络投资，无抵押贷款信用贷款服务。以专业的服务提供了有保障，高收益，低风险的投资方案。">
+    <title>注册-新新贷</title>
+    <link rel="shortcut icon" th:href="@{${global.staticHost}+'/pc/'+${global.xxdVersion}+'/build/css/i/favicon.ico'}">
+    <link rel="Bookmark" th:href="@{${global.staticHost}+'/pc/'+${global.xxdVersion}+'/build/css/i/favicon.ico'}">
+    <link th:href="@{${global.staticHost}+'/pc/'+${global.xxdVersion}+'/build/mods/company/register/_.css'}"  rel="stylesheet">
+</head>
+<body>
+<div id="J_wrapBody">
+    <!--头部 start-->
+    <div th:replace="common/header::header"></div>
+    <!--头部end-->
+    <div class="container">
+        <div class="regtips clearfix">
+            <p class="detail">
+                已有账号？<a href="/usercenter/company/login.html" class="right-blue">立即登录</a>
+            </p>
+        </div>
+        <!--user info start-->
+        <div class="account-box register-account " id="J_stepFirst">
+            <div class="layout clearfix">
+                <div class="register-left">
+                    <img th:src="@{${global.staticHost}+'/pc/'+${global.xxdVersion}+'/build/img/register_banner1.png'}"/>
+                </div>
+                <div class="register-right">
+                    <div class="reright-top">
+                        <ul class="clearafter">
+                            <li><i class="bluecolor">账户信息</i><span class="bgt-deblue"></span></li>
+                            <li class="second"><i>验证手机</i><span class="second"></span></li>
+                            <li class="last">注册成功</li>
+                        </ul>
+                    </div>
+                        <!-- company name -->
+                        <div class="user-name user-common tips-common">
+                            <!-- 报错信息 -->
+                            <div class="error-tips tips-border hidden" id="J_nameTiperror">
+                                <span>请输入企业名称</span>
+                                <button class="close"></button>
+                            </div>
+                            <div class="username" id="J_nameBorder">
+                                <span class="imgicon imgname"><img th:src="@{${global.staticHost}+'/pc/'+${global.xxdVersion}+'/build/img/reg_company.png'}"></span>
+                                <input id="userName" class="user-company" type="text" placeholder="请输入企业名称"  name="userName" maxlength="100" />
+                            </div>
+                            <!--输入正确即时提示图标-->
+                            <i class="tipright hidden" id="J_nameTipRight"></i>
+                        </div>
+                        <!-- phone -->
+                        <div class="user-phone user-common tips-common">
+                            <!-- 报错信息 -->
+                            <div class="error-tips tips-border hidden" id="J_numTiperror">
+                                <span>请输入正确的手机号码</span>
+                                <button class="close"></button>
+                            </div>
+                            <div class="usernum" id="J_numBorder">
+                                <span class="imgicon imgphone"><img th:src="@{${global.staticHost}+'/pc/'+${global.xxdVersion}+'/build/img/reg_phone.png'}"></span>
+                                <input id="userNum" class="user-number" type="text" placeholder="请输入您的手机号码，用于接收验证码"  name="phoneNo" maxlength="11" />
+                            </div>
+                            <!--输入正确即时提示图标-->
+                            <i class="tipright hidden" id="J_numTipRight"></i>
+                        </div>
+                        <!-- password -->
+                        <div class="user-password user-common tips-common">
+                            <!-- 报错信息 -->
+                            <div class="error-tips tips-border hidden" id="J_pswTiperror" >
+                                <span>请输入正确密码：6-16位数字，字母组合</span>
+                                <button class="close"></button>
+                            </div>
+                            <div class="userpsw" id="J_pswBorder">
+                                <span class="imgicon imgphone"><img th:src="@{${global.staticHost}+'/pc/'+${global.xxdVersion}+'/build/img/reg_lock.png'}"></span>
+                                <input id="userPsw" class="user-password" type="password" placeholder="请设置6-16位数字，字母组合密码"  name="pswNum" maxlength="16" />
+                                <span id="J_pswEye" class="eye eye-open eye-close"></span>
+                            </div>
+                            <!--输入正确即时提示图标-->
+                            <i class="tipright hidden" id="J_pswTipRight"></i>
+                        </div>
+                        <!-- 验证码s -->
+                        <div class="yzm user-common tips-common clearfix">
+                            <!-- 报错信息 -->
+                            <div class="error-tips tips-border hidden" id="J_yzmTipError" >
+                                <span>请输入的验证码不正确</span>
+                                <button class="close"></button>
+                            </div>
+                            <div class="user-yzm" id="J_verifyBorder">
+                                <input type="text" name="yzm" class="verifyCode" placeholder="请输入验证码" id="verifyCode" maxlength="4">
+                                <div class="getVerify">
+                                    <div class="getLayout clearfix">
+                                        <img src="/userCenter/kaptcha.jpg" title="验证码" class="verifyurl" id="verifyurl">
+                                        <div class="resetVerify" id="resetVerify"><img th:src="@{${global.staticHost}+'/pc/'+${global.xxdVersion}+'/build/img/refresh.png'}"/></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <i class="tipright hidden" id="J_yzmTipRight"></i>
+                        </div>
+                        <div class="step-next user-common">
+                            <button id="J_nextStep" class="operate-step">下一步</button>
+                        </div>
+                    </div>
+                    <!--<p class="login-tips user-common" id="have-logged">使用已有账号<a class="have-login">登录</a></p>-->
+            </div>
+        </div>
+        <!--user info start-->
+        <!--next step-->
+        <div class="account-box register-number disnone" id="J_stepSecond">
+            <div class="layout clearfix">
+                <div class="register-left">
+                    <img th:src="@{${global.staticHost}+'/pc/'+${global.xxdVersion}+'/build/img/register_banner2.png'}"/>
+                </div>
+                <div class="register-right">
+                    <!--operate status show-->
+                    <div class="reright-top">
+                        <ul class="clearafter">
+                            <li><i class="bluecolor">账户信息</i><span class="bgt-deblue"></span></li>
+                            <li class="second bluecolor"><i>验证手机</i><span class="second"></span></li>
+                            <li class="last">注册成功</li>
+                        </ul>
+                    </div>
+                    <!--input select-->
+                    <!--phone-->
+                    <div class="user-phone user-common tips-common">
+                        <!-- 报错信息 -->
+                        <div class="error-tips tips-border hidden" id="J_stepNumError">
+                            <span>请输入正确的手机号码</span>
+                            <button class="close"></button>
+                        </div>
+                        <div class="usernum" id="J_stepUserNum">
+                            <span class="imgicon imgphone"><img th:src="@{${global.staticHost}+'/pc/'+${global.xxdVersion}+'/build/img/reg_phone.png'}"></span>
+                            <input id="J_userNum" class="user-number" type="text" placeholder="请输入您的手机号码，用于接收验证码"   name="J_phoneNo" maxlength="11" />
+                        </div>
+                        <!--输入正确即时提示图标-->
+                        <i class="tipright hidden" id="J_stepNumRight"></i>
+                    </div>
+                    <!--message yzm-->
+                    <div class="yzm user-common tips-common phone-special disnone clearfix" id="J_verifyPart">
+                        <!-- 报错信息 -->
+                        <div class="error-tips tips-border hidden" id="J_stepYzmError" >
+                            <span>请输入的验证码不正确</span>
+                            <button id="J-closeBtn" class="close"></button>
+                        </div>
+                        <div class="user-yzm">
+                            <input type="text" name="yzm" class="verifyCode" placeholder="请输入验证码" id="J_verifyCode" maxlength="4">
+                            <div class="getVerify">
+                                <div class="getLayout clearfix">
+                                    <img src="/userCenter/kaptcha.jpg" title="验证码" class="verifyurl" id="J_verifyUrl">
+                                    <div class="resetVerify" id="J_resetVerify">
+                                        <img th:src="@{${global.staticHost}+'/pc/'+${global.xxdVersion}+'/build/img/refresh.png'}"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--输入正确即时提示图标-->
+                        <i class="tipright hidden" id="J_stepYzmRight"></i>
+                    </div>
+                    <!--message yzm end-->
+                    <!--message phone yzm-->
+                    <div class="yzm user-common tips-common phone-special phone-yzm-special clearfix">
+                        <!-- 报错信息 -->
+                        <div class="error-tips tips-border disnone" id="J_stepYyError" >
+                            <span>请输入的验证码不正确</span>
+                            <button class="close"></button>
+                        </div>
+                        <a href="javascript:void(0);" class="get-voice-yzm disnone" id="J_getVoiceYzm">获取语音验证码</a>
+                        <div class="user-yzm phone-yzm clearfix">
+                            <input type="text" name="yzm" class="verifyCode" placeholder="请输入短信验证码" id="J_yyVerifyCode" maxlength="4">
+                            <div class="getVerify">
+                                <div class="getLayout clearfix">
+                                    <button class="msg-phone message_yzm" disabled id="J_StepSend">发送验证码到手机</button>
+                                </div>
+                            </div>
+                        </div>
+                        <i class="tipright phone-special-right hidden" id="J_stepYyRight"></i>
+                        <div class="send-msg hidden" id="J_sendSuccessTips">
+                            <i class="send-clur"></i><span>验证码已发送至您的手机，请查收</span>
+                        </div>
+                    </div>
+                    <!--message phone yzm end-->
+                    <button class="agree-register user-common" id="J_agreeRegister">同意注册</button>
+                    <a href="/user/reg-agreement.html" class="user-common xxd-agreement" target="_blank">《新新贷注册服务协议》</a>
+                    <a href="/user/regRiskWarning.html" class="user-common xxd-agreement xxd-top" target="_blank">《资金出借风险提示函》</a>
+                </div>
+            </div>
+        </div>
+        <!--verify number end-->
+    </div>
+    <div class="dialog-tips disnone" id="J_dialogTips">
+        <div class="content-tips">
+            <i id="J_close"></i>
+            <h4>提示</h4>
+            <p  id="J_tipsMsg">充值成功 !</p>
+            <button class="tips-btn" id="J_tipsBtn">确认</button>
+        </div>
+    </div>
+    <div th:replace="common/mini-footer::footer (${globalData})"></div>
+    <input id="BUSICODE_REGISTER" value="BUSICODE_REGISTER" type="hidden">
+    <input id="uuid" name="uuid" value="" type="hidden">
+    <input id="register" value="register" type="hidden">
+    <input id="regFrom" value="" type="hidden">
+</div>
+<!--[if lt IE 9]>
+<iframe id="ifr_cover" frameborder="0" class="hide" scrolling="no"></iframe>
+<div id="alertBoxWrap" class="hide"></div>
+<![endif]-->
+</body>
+<script th:src="@{${global.staticHost}+'/pc/'+${global.xxdVersion}+'/build/mods/company/register/_.js'}"></script>
+</html>

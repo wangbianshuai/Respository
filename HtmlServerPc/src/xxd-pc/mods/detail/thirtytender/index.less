@@ -1,0 +1,275 @@
+@dottedPath: "../../../";
+@import "@{dottedPath}/css/reset";
+@path: "@{dottedPath}tmp/merge/";
+@import "@{dottedPath}tpl/bank-list-dialog";
+@import "@{path}/tip.index.css";
+@import "@{path}/dialog.index.css";
+@import "@{path}/backTop.index-1.css";
+@import "@{path}/dialog-float.index.css";
+@import "../../header";
+@import "../../footer";
+@import "../detail";
+@clickColor: #5ea8f8;
+
+.main-product {
+	float: left;
+	width: 747px;
+	padding-top: 25px;
+	.title {
+		width: 382px;
+		height: 66px;
+		margin-left: -14px;
+		padding-left: 40px;
+		background: url("../i/sevengold-tit.png") 0 0 no-repeat;
+		font: normal 20px/55px @xxd-font;
+		color: #fff;
+		span {
+			font-size: 14px;
+		}
+	}
+	table {
+		text-align: left;
+		position: relative;
+		margin: 25px 50px 10px;
+		td, th {
+			width: 180px;
+			height: 50px;
+		}
+		th {
+			font-size: 14px;
+			color: @fontColor;
+			font-weight: 400;
+			height: 66px;
+		}
+		td {
+			font-size: 30px;
+			color: #333333;
+			span {
+				position: relative;
+				font-size: 16px;
+			}
+		}
+		.rate {
+			font-size: 30px;
+			color: #5ea8f8;
+			div {
+				display: inline-block;
+				color: #FF7365;
+				position: relative;
+			}
+		}
+		.xszx-tip{
+			position: absolute;
+			font: normal 12px/24px "micsoft yahei";
+			width: 94px;
+			height: 24px !important;
+			background: #ff7365;
+			margin: 0;
+			text-align: center;
+			left: 6px;
+			color: #fff;
+			top: -25px;
+			border-radius: 4px;
+			padding:0;
+			i{
+				display: inline-block;
+				position: absolute;
+				border: 8px solid #ff7365;
+				width: 0;
+				height: 0;
+				border-color: #ff7365 transparent transparent transparent;
+				bottom: -13px;
+				left: 16px;
+			}
+		}
+	}
+	p {
+		padding-left: 50px;
+		margin: 0;
+		color: @fontColor;
+		font:normal 14px/30px @xxd-font;
+		.tip {
+			color: #fe7474;
+			margin-left: 30px;
+		}
+		a {
+			color: #5ea8f8;
+		}
+	}
+	.new-tip{
+		color: #fe7474 !important;
+	}
+}
+.product-info {
+	background: #fff;
+	width: 1198px;
+	margin: 20px 0;
+	border: 1px solid @borderColor;
+	.money .active {
+		border-color: #5ea8f8;
+		color: #5ea8f8;
+	}
+}
+
+.count-rate {
+	background: #fff;
+	width: 1198px;
+	border: 1px solid @borderColor;
+	margin-bottom: 20px;
+	text-align: center;
+	ul {
+		padding-left: 24px;
+		text-align: left;
+		height: 56px;
+		border-bottom: 1px solid #EEEEEE;
+		a{
+			display: inline-block;
+			color: #333;
+			font: normal 18px/56px "micsoft yahei";
+			border-bottom: 2px solid #33A9FF;
+		}
+	}
+	p{
+		margin: 25px 0 10px;
+		color: #333;
+		font-size: 14px;
+	}
+	.rate-img{
+		img{
+			width:70%;
+			margin: 20px auto;
+		}
+
+	}
+	table{
+		border-spacing: 0;
+		margin: 0 25px 50px;
+		border-right: 1px solid #EEE;
+		border-bottom: 1px solid #EEE;
+		th{
+			background: #eee;
+			position: relative;
+			i{
+				display: inline-block;
+				width: 21px;
+				height: 21px;
+				background: url("../i/question-tip.png") 0 0 no-repeat;
+				vertical-align: bottom;
+				margin-left: 4px;
+			}
+			div{
+				position: absolute;
+				bottom: 56px;
+				left: 111px;
+				width: 130px;
+				height: 40px;
+				background: rgba(0,0,0,0.5);
+				color: #fff;
+				font: normal 14px/20px "micsoft yahei";
+				padding: 10px;
+				border-radius: 10px;
+				span{
+					position: absolute;
+					bottom: -20px;
+					left: 70px;
+					display: inline-block;
+					border: 10px solid rgba(0,0,0,0.5);
+					border-color: rgba(0,0,0,0.5) transparent transparent transparent;
+				}
+			}
+		}
+		td,th{
+			width: 288px;
+			height: 50px;
+			text-align: center;
+			font:normal 16px "microsoft yahei";
+			color: #333;
+			border-left: 1px solid #EEE;
+			border-top: 1px solid #EEE;
+		}
+	}
+}
+
+.detail-desc {
+	margin-bottom: 50px;
+	table {
+		margin: 20px 30px;
+		border-spacing: 0;
+		border-right: 1px solid #EEE;
+		border-bottom: 1px solid #EEE;
+		tr {
+			display: block;
+		}
+		th, td {
+			line-height: 50px;
+			font-size: 16px;
+			color: @fontColor;
+			border-left: 1px solid #EEE;
+			border-top: 1px solid #EEE;
+			text-align: center;
+			p{
+				font-size: 16px;
+			}
+		}
+		.title{
+			background: #F9F9F9;
+		}
+		th {
+			width: 260px;
+		}
+		.infor {
+			height: 110px;
+			line-height: 110px;
+		}
+		.h90{
+			height: 90px;
+			line-height: 90px;
+		}
+		td {
+			width: 980px;
+			a {
+				color: @clickColor;
+			}
+			>div{
+				display: inline-block;
+				position: relative;
+			}
+			.plus{
+				display: inline-block;
+				.xszx-tip{
+					position: absolute;
+					font: normal 12px/24px "micsoft yahei";
+					width: 94px;
+					height: 24px !important;
+					background: #ff7365;
+					margin: 0;
+					text-align: center;
+					left: 25px;
+					color: #fff;
+					top: 6px;
+					border-radius: 4px;
+					padding:0;
+					i{
+						display: inline-block;
+						position: absolute;
+						border: 8px solid #ff7365;
+						width: 0;
+						height: 0;
+						border-color: #ff7365 transparent transparent transparent;
+						bottom: -13px;
+						left: 16px;
+					}
+				}
+			}
+		}
+		.infor-con,.quit-con{
+			padding: 10px 20px;
+			width: 937px;
+			line-height: 24px;
+			text-align: left;
+		}
+	}
+}
+.plus{
+	color: #FF7365 !important;
+}

@@ -1,0 +1,287 @@
+/*@bg-logo:'@{abspath}css/i/logo-2.png';*/
+.mui-slider img {
+  border: 0;
+  background: url('//static.xinxindai.com/pc/1.4.0/build/css/i/load-image.png') center no-repeat;
+}
+.clearfix:after {
+  display: block;
+  clear: both;
+  height: 0;
+  content: ".";
+  visibility: hidden;
+}
+*html.clearfix {
+  height: 1%;
+}
+.clearfix {
+  display: block;
+}
+html {
+  height: 100%;
+  overflow: hidden;
+  width: 100%;
+  font: 12px/1.5 "microsoft yahei";
+}
+body {
+  height: 100%;
+  max-height: 100%;
+  overflow: hidden;
+  position: relative;
+  _position: static;
+  width: 100%;
+}
+html,
+body {
+  overflow-x: hidden;
+  margin: 0;
+  padding: 0;
+}
+a {
+  text-decoration: none;
+}
+body,
+dl,
+dt,
+dd,
+ul,
+ol,
+li,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+form,
+fieldset,
+legend,
+input,
+button,
+textarea,
+p,
+th,
+td,
+figure,
+font a {
+  margin: 0;
+  padding: 0;
+  font: 12px/1.5 "microsoft yahei";
+  color: #666;
+}
+input,
+textarea {
+  ontline: none;
+  resize: none;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+input:focus,
+textarea:focus,
+input:active,
+textarea:active {
+  border-color: rgba(82, 168, 236, 0.8) !important;
+  outline: 0;
+  outline: thin dotted \9;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(82, 168, 236, 0.6);
+  -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(82, 168, 236, 0.6);
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(82, 168, 236, 0.6);
+}
+.fl,
+.left {
+  float: left;
+}
+.fr,
+.right {
+  float: right;
+}
+.hide {
+  display: none !important;
+}
+input {
+  outline: none;
+}
+ul {
+  list-style-type: none;
+}
+ul li {
+  list-style: none;
+}
+.disable {
+  background: #f3f3f3!important;
+  color: #cfcfcf!important;
+  border: 1px solid #dedede!important;
+}
+#J_wrapBody,
+.wrapBody {
+  width: 100%;
+  height: 100%;
+  background: #f9f9f9;
+  overflow-y: scroll;
+}
+.red {
+  color: red !important;
+}
+.bandCardDialog {
+  width: 616px;
+  height: 483px;
+}
+.bandCardDialog .title {
+  height: 46px;
+  width: 96%;
+  margin: 0 auto;
+  border-bottom: 1px solid #eee;
+  color: #4ca2ff;
+  font: normal 18px/46px "microsoft yahei";
+}
+.bandCardDialog .title a {
+  float: right;
+  color: #999;
+  text-shadow: 0 1px 0 #ffffff;
+  font: bold 20px/46px "microsoft yahei";
+}
+.bandCardDialog .title a:hover {
+  color: #000;
+}
+.bandCardDialog input {
+  font-size: 16px;
+  color: #999;
+}
+input::-webkit-input-placeholder {
+  font-size: 16px;
+  color: #999;
+}
+.btn-user {
+  display: inline-block;
+  background: #2096e9;
+  width: 280px;
+  height: 40px;
+  line-height: 40px;
+  font-size: 16px;
+  color: #fff;
+  text-align: center;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.btn-user:hover {
+  background-color: #0266be;
+}
+.filed-user {
+  margin-top: 20px;
+}
+.filed-user p {
+  display: inline-block;
+}
+.filed-user p.openname span {
+  width: auto;
+  margin-right: 10px;
+}
+.filed-user p.openname i {
+  font-style: normal;
+  font-size: 16px;
+  color: #999999;
+}
+.filed-user p.openbank {
+  display: inline-block;
+  width: 280px;
+  height: 40px;
+  line-height: 40px;
+  border: 1px solid #ccc;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  border-radius: 2px;
+}
+.filed-user p.openbank span {
+  width: 190px;
+  text-align: left;
+  padding-left: 10px;
+  color: #999;
+  margin-right: 0;
+}
+.filed-user p.openbank i {
+  display: inline-block;
+  border-left: 1px solid #ccc;
+  width: 79px;
+  font-style: normal;
+  font-size: 16px;
+  color: #2096e9;
+  background-color: #f5f5f5;
+  text-align: center;
+  cursor: pointer;
+}
+.filed-user p.opensub {
+  position: relative;
+}
+.filed-user p.opensub select {
+  width: 120px;
+  height: 40px;
+  line-height: 40px;
+  font-size: 16px;
+  color: #999;
+  background-color: #fff;
+}
+.filed-user p.opensub input {
+  width: 150px;
+}
+.filed-user p.opensub label {
+  padding: 0 10px;
+}
+.filed-user p.opensub i {
+  display: inline-block;
+  width: 21px;
+  height: 21px;
+  vertical-align: middle;
+  margin-left: 5px;
+  background: url("../../../img/bluetip.png") no-repeat center;
+  cursor: pointer;
+}
+.filed-user p.opensub strong {
+  position: absolute;
+  display: inline-block;
+  width: 207px;
+  height: 115px;
+  top: -112px;
+  right: -99px;
+  padding: 14px 0px 0px 12px;
+  letter-spacing: 1px;
+  font-size: 14px;
+  text-align: left;
+  color: #fff;
+  background: url("../../../img/bluetip_hover.png") no-repeat center;
+}
+.filed-user p.warmtips {
+  font-size: 14px;
+  color: #999;
+}
+.filed-user span {
+  display: inline-block;
+  width: 104px;
+  text-align: right;
+  font-size: 16px;
+  color: #666666;
+  margin-right: 20px;
+}
+.filed-user input {
+  width: 280px;
+  height: 40px;
+  line-height: 40px;
+  padding-left: 10px;
+}
+.filed-user .wrong-tip {
+  font-size: 13px;
+  width: auto;
+  height: 28px;
+  line-height: 28px;
+  background-color: #FDD;
+  border: 1px solid #FBB;
+  border-radius: 2px;
+  color: #F00;
+  padding: 0 6px;
+}
+.filed-user .wt-pos {
+  margin-left: 128px;
+}
+.mt10 {
+  margin-top: 10px;
+}

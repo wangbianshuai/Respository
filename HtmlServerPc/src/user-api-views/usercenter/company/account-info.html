@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="zh-Hans" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="shortcut icon" th:href="@{${global.staticHost}+'/pc/'+${global.xxdVersion}+'/build/css/i/favicon.ico'}">
+    <link rel="Bookmark" th:href="@{${global.staticHost}+'/pc/'+${global.xxdVersion}+'/build/css/i/favicon.ico'}">
+    <title>企业实名认证</title>
+    <meta name="keywords" content="登录新新贷_新新贷">
+    <meta name="description" content="新新贷为中小微企业及民间个人提供无抵押小额贷款，企业项目融资，小额投资，P2P网贷，P2P贷款,P2P理财，P2P网络投资，无抵押贷款信用贷款服务。以专业的服务提供了有保障，高收益，低风险的投资方案。">
+    <link th:href="@{${global.staticHost}+'/pc/'+${global.xxdVersion}+'/build/css/reset.css'}" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{${global.staticHost}+'/pc/'+${global.xxdVersion}+'/build/mods/company/account-info/_.css'}"/>
+</head>
+<body>
+<div id="J_wrapBody">
+    <!--头部start-->
+    <div th:replace="common/header::company-header(false)"></div>
+    <!--头部end-->
+    <div class="g-top">
+        <div class="g-top-con">
+            <div class="container-1200">
+                <a href="../../">首页</a> &gt; <a href="/usercenter/accountInfo.html">我的新新贷</a> &gt; <a
+                    href="javascript:void(0);">企业用户</a> &gt; <a href="javascript:void(0);">我的账户</a>
+            </div>
+        </div>
+    </div>
+    <div class="info-contaner clearfix">
+        <div th:replace="usercenter/common/menu::company-menu('userinfo', 'account-info')"></div>
+        <div class="g-right">
+        <div class="m-con-wrap" id="account">
+          <div class="m-con-hd title">
+            企业信息
+          </div>
+            <!--企业信息-->
+            <div class="content-step fourth-step" id="J_fourth">
+
+                <div class="m-con-bd">
+                    <div class="fourth-list fourth-first">
+                        <div class="fourth-info">
+                            <label for="J_firmTitle">公司名称:</label>
+                            <input type="text" id="J_firmTitle"  name="firmTitle" disabled/>
+                            <span class="cur-tips">*</span>
+                        </div>
+                        <div class="fourth-info fourth-info-last">
+                            <label for="J_firmAddress">公司地址:</label>
+                            <input type="text" id="J_firmAddress" name="firmAddress"/>
+                            <p class="info-error hidden" id="J_addrError">请输入公司地址</p>
+                            <span class="cur-tips">*</span>
+                        </div>
+                    </div>
+                    <div class="fourth-list">
+                        <div class="fourth-info">
+                            <label for="J_regTel">注册电话:</label>
+                            <input type="text" id="J_regTel"  name="firmTitle" maxlength="15"/>
+                            <p class="info-error hidden" id="J_telError"></p>
+                            <span class="cur-tips">*</span>
+                        </div>
+                        <div class="fourth-info fourth-info-last">
+                            <label for="J_workAddress">办公地址</label>
+                            <input type="text" id="J_workAddress" name="firmAddress"/>
+                            <!--<p class="info-error hidden" id="J_workAddressError">请输入公司名字</p>-->
+                            <!--<span class="cur-tips">*</span>-->
+                        </div>
+                    </div>
+                    <div class="fourth-list fourth-check">
+                        <div class="fourth-info">
+                            <label for="J_regTel">三证合一:</label>
+                            <div class="select-operate" id="J_selectOperate">
+                                <input name="regTel" type="radio" value="true" checked="checked" id="J_selectTrue" class="select-true"/><span>是</span>
+                                <input name="regTel" type="radio" value="false"  id="J_selectFalse" class="select-false"/><span>否</span>
+                            </div>
+                        </div>
+                        <div class="fourth-info fourth-info-last">
+                            <label for="J_businessNum">营业执照编号:</label>
+                            <input type="text" id="J_businessNum"  name="businessNum"/>
+                            <p class="info-error hidden">请输入公司名字</p>
+                            <span class="cur-tips">*</span>
+                        </div>
+                    </div>
+                    <!--否-->
+                    <div class="fourth-list disnone" id="J_falseOperate">
+                        <div class="fourth-info">
+                            <label for="J_organizationNum">组织机构代码证:</label>
+                            <input type="text" id="J_organizationNum"  name="organizationNum"/>
+                            <p class="info-error hidden" id="J_organizationNumError">请选择公司规模</p>
+                            <span class="cur-tips">*</span>
+                        </div>
+                        <div class="fourth-info fourth-info-last info-capital">
+                            <label for="J_taxNum">税务登记证:</label>
+                            <input type="text" id="J_taxNum"  name="taxNum"/>
+                        </div>
+                    </div>
+                    <div class="fourth-list">
+                        <div class="fourth-info">
+                            <label for="J_companyScale">公司规模:</label>
+                            <select id="J_companyScale" class="company-scale"></select>
+                            <p class="info-error hidden" id="J_companyError">请选择公司规模</p>
+                            <span class="cur-tips">*</span>
+                        </div>
+                        <div class="fourth-info fourth-info-last">
+                            <label for="J_regTime">注册时间:</label>
+                            <input type="text" id="J_regTime"  name="regTime"/>
+                            <p class="info-error hidden" id="J_regTimeError"></p>
+                            <span class="cur-tips">*</span>
+                        </div>
+                    </div>
+                    <div class="fourth-list">
+                        <div class="fourth-info">
+                            <label for="J_shareholderName">股东姓名:</label>
+                            <input type="text" id="J_shareholderName"  name="shareholderName"/>
+                            <p class="info-error hidden" id="J_shareholderError">股东姓名不能为空</p>
+                            <span class="cur-tips">*</span>
+                        </div>
+                        <div class="fourth-info fourth-info-last info-capital">
+                            <label for="J_regCapital">注册资本:</label>
+                            <input type="text" id="J_regCapital"  name="regCapital"/>
+                            <p class="info-error hidden" id="J_regCapitalError"></p>
+                            <span class="cur-tips cur-special">万元*</span>
+                        </div>
+                    </div>
+                    <div class="fourth-list">
+                        <div class="fourth-info">
+                            <label for="J_shareholderType">股东类型:</label>
+                            <select id="J_shareholderType" class="shareholder-type"></select>
+                        </div>
+                        <div class="fourth-info fourth-info-last">
+                            <label for="J_businessArea">经营区域:</label>
+                            <input type="text" id="J_businessArea"  name="businessArea"/>
+                        </div>
+                    </div>
+                    <div class="fourth-list">
+                        <div class="fourth-info">
+                            <label for="J_shareholderPapers">股东证件类型:</label>
+                            <select id="J_shareholderPapers" class="shareholder-type"></select>
+                            <p class="info-error hidden" id="J_shareholderPapersError">请选择股东证件类型</p>
+                            <span class="cur-tips">*</span>
+                        </div>
+                        <div class="fourth-info fourth-info-last info-capital">
+                            <label for="J_payCapital">实缴资本:</label>
+                            <input type="text" id="J_payCapital"  name="payCapital"/>
+                            <p class="info-error hidden" id="J_payCapitalError"></p>
+                            <span class="cur-tips cur-special">万元*</span>
+                        </div>
+                    </div>
+                    <div class="fourth-list">
+                        <div class="fourth-info">
+                            <label for="J_shareholderCardid">股东身份证号:</label>
+                            <input type="text" id="J_shareholderCardid"  name="shareholderCardid"/>
+                            <p class="info-error hidden" id="J_shareholderCardidError">股东身份证号不能为空</p>
+                            <span class="cur-tips" id="J_shareholderCardidCur">*</span>
+                        </div>
+                        <div class="fourth-info fourth-info-last">
+                            <label for="J_profession">所属行业:</label>
+                            <select id="J_profession" class="profession"></select>
+                            <p class="info-error hidden" id="J_professionError"></p>
+                            <span class="cur-tips">*</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="m-con-bd">
+
+                    <div class="fourth-list">
+                        <div class="fourth-info">
+                            <label for="J_legalName">法人姓名:</label>
+                            <input type="text" id="J_legalName" disabled name="legal-name"/>
+                        </div>
+                        <div class="fourth-info fourth-info-last">
+                            <label for="J_trueName">常用联系人姓名:</label>
+                            <input type="text" id="J_trueName"  name="trueName"/>
+                            <p class="info-error hidden" id="J_trueNameError"></p>
+                            <span class="cur-tips">*</span>
+                        </div>
+                    </div>
+                    <div class="fourth-list">
+                        <div class="fourth-info">
+                            <label for="J_legalID">法人身份证号:</label>
+                            <input type="text" id="J_legalID" disabled name="legalID"/>
+                        </div>
+                        <div class="fourth-info fourth-info-last">
+                            <label for="J_contactNum">常用联系人手机:</label>
+                            <input type="text" id="J_contactNum" name="legal-name" maxlength="11"/>
+                            <p class="info-error hidden" id="J_contactNumError"></p>
+                            <span class="cur-tips">*</span>
+                        </div>
+                    </div>
+                    <div class="fourth-list">
+                        <div class="fourth-info">
+                            <label for="J_mobileNum">法人手机号:</label>
+                            <input type="text" id="J_mobileNum"  name="legal-name" maxlength="11"/>
+                            <p class="info-error hidden" id="J_mobileNumError"></p>
+                            <span class="cur-tips">*</span>
+                        </div>
+                        <div class="fourth-info fourth-info-last">
+                            <label for="J_firmEmail">企业邮箱:</label>
+                            <input type="text" id="J_firmEmail"  name="trueName"/>
+                            <p class="info-error hidden" id="J_firmEmailError"></p>
+                            <span class="cur-tips">*</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bottom-upload">
+                    <div class="fourth-list">
+                        <div class="fourth-info fourth-file">
+                            <label for="J_licenseFile"  class="label-small">营业执照副本图片:</label>
+                            <div class="file-upload">
+                                <p>请选择要上传的照片</p>
+                                <i>选择&nbsp; &gt;</i>
+                                <input type="file" name="pic" id="J_licenseFile" data-pic=""/>
+                            </div>
+                            <p class="info-error hidden" id="J_licenseFileError"></p>
+                            <span class="cur-tips">*</span>
+                        </div>
+                    </div>
+                    <!--选择否的时候-->
+                    <div id="J_fileFalse" class="disnone">
+                    <div class="fourth-list">
+                        <div class="fourth-info fourth-file">
+                            <label for="J_organizationFile" class="label-small">组织机构图片:</label>
+                            <div class="file-upload">
+                                <p>请选择要上传的照片</p>
+                                <i>选择&nbsp; &gt;</i>
+                                <input type="file" name="pic" id="J_organizationFile" data-pic=""/>
+                            </div>
+                            <p class="info-error hidden" id="J_organizationFileError"></p>
+                            <span class="cur-tips">*</span>
+                        </div>
+                    </div>
+                    <div class="fourth-list">
+                        <div class="fourth-info fourth-file">
+                            <label for="J_taxFile"  class="label-small">税务登记证图片:</label>
+                            <div class="file-upload">
+                                <p>请选择要上传的照片</p>
+                                <i>选择&nbsp; &gt;</i>
+                                <input type="file" name="pic" id="J_taxFile" data-pic=""/>
+                            </div>
+                            <p class="info-error hidden" id="J_taxFileError"></p>
+                            <span class="cur-tips">*</span>
+                        </div>
+                    </div>
+                </div>
+                </div>
+                <botton class="submit-btn" id="J_infoSubmit">提交</botton>
+            </div>
+
+      </div>
+    </div>
+    </div>
+    <!--尾部 start-->
+    <div th:replace="common/footer::footer (${globalData},${global.xxdVersion})"></div>
+    <!--尾部 end-->
+</div>
+</body>
+<script type="text/javascript" th:src="@{${global.staticHost}+'/pc/'+${global.xxdVersion}+'/build/mods/company/account-info/_.js'}"></script>
+</html>

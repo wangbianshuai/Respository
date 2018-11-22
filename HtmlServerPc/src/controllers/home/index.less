@@ -1,0 +1,1297 @@
+@import "../../public/css/variable.less";
+
+@dottedPath: "/";
+
+.btn() {
+  width: 118px;
+  height: 36px;
+  line-height: 34px;
+  text-align: center;
+  border: 0;
+  color: #fff;
+  font-size: 18px;
+  border-radius: 3px;
+}
+
+.rotate-focus {
+  position: relative;
+  z-index: 99;
+  height: 390px;
+  width: 100%;
+  .focus {
+    position: relative;
+    width: @main-width;
+    height: 390px;
+    margin: 0 auto;
+    .focus-main, .focus-bg {
+      position: absolute;
+      height: 290px;
+      width: 250px;
+      top: -340px;
+      right: 0;
+      padding: 0 10px;
+    }
+    .focus-bg {
+      filter: alpha(opacity=50);
+      opacity: 0.5;
+      z-index: 997;
+      background: #000;
+    }
+    .focus-main {
+      z-index: 998;
+      .focus-title {
+        margin: 15px auto 5px;
+        text-align: center;
+        font-size: 16px;
+        color: white;
+      }
+      .focus-rate {
+        display: block;
+        margin: 0 auto;
+        padding: 0;
+        width: 85%;
+        height: 80px;
+        color: #fff;
+        text-align: center;
+        border-bottom: 1px solid #b1b1b1;
+        font: bold 38px/70px @xxd-font;
+        span {
+          font-size: 24px
+        }
+      }
+      .focus-hot {
+        text-align: center;
+        font: normal 12px/70px @xxd-font;
+        color: #b1b1b1;
+      }
+      .focus-register {
+        text-align: center;
+        position: relative;
+        a {
+          display: block;
+          margin: 0 auto;
+          padding: 5px 0;
+          height: 45px;
+          width: 90%;
+          background: #ff7f00;
+          font-size: 18px;
+          letter-spacing: 1px;
+          color: #fff;
+          border-radius: 3px;
+        }
+        .tip-wrap {
+          display: block;
+          position: relative;
+          height: 15px;
+          width: 100%;
+          padding: 0;
+          margin: 0;
+
+          b {
+            position: relative;
+            display: block;
+            z-index: 2;
+            margin: 3px auto;
+            width: 90px;
+            height: 12px;
+            font: normal 12px/12px "microsoft yahei";
+            background: #ff7f00;
+          }
+        }
+
+        .line {
+          position: absolute;
+          z-index: 1;
+          display: block;
+          height: 1px;
+          width: 60%;
+          left: 20%;
+          top: 5px;
+          background: white;
+        }
+        .my-xxd {
+          display: block;
+          width: 20px;
+          height: 20px;
+          background: url(i/header.png) no-repeat;
+          position: absolute;
+          top: 17px;
+          left: 50px;
+        }
+      }
+      .focus-my-xxd {
+        line-height: 45px;
+      }
+      .focus-login {
+        text-align: center;
+        color: #fff;
+        font: normal 14px/50px @xxd-font;
+        a {
+          color: #fff;
+          font-size: 14px;
+        }
+
+      }
+    }
+  }
+}
+
+.main {
+  z-index: 100;
+  position: relative;
+}
+
+.core {
+  width: 100%;
+  height: 100px;
+  background: none;
+  padding-top: 10px;
+  border-bottom: 1px solid #eee;
+  background: #fff;
+
+  ul {
+    margin: 0 auto;
+    width: @main-width;
+    overflow: hidden;
+    height: 99px;
+    background: white;
+  }
+  li {
+    float: left;
+    height: 90px;
+    width: 299px;
+    margin-left: -1px;
+    border-left: 1px dashed #eee;
+    div i {
+      display: block;
+      float: left;
+      margin: 15px;
+      width: 73px;
+      height: 58px;
+      background: url("i/c1.png") center no-repeat;
+      &.bg2 {
+        //background: url("i/c2.png") center no-repeat;
+        background: url("i/c2-2.png") center no-repeat;
+      }
+      &.bg3 {
+        //background: url("i/c3.png") center no-repeat;
+        background: url("i/c3-1.png") center no-repeat;
+      }
+      &.bg4 {
+        background: url("i/c4.png") center no-repeat;
+      }
+    }
+    p {
+      padding-right: 20px;
+      a {
+        color: @font-color;
+        cursor: pointer;
+        &:hover {
+          color: #428bca;
+        }
+      }
+      .title {
+        display: block;
+        margin-top: 0px;
+        height: 40px;
+        font: bold 16px/55px @xxd-font;
+        color: #666;
+      }
+      .desc {
+        font-size: 12px;
+      }
+    }
+  }
+}
+
+.product {
+  width: @main-width;
+  margin: 0 auto;
+}
+
+.product-invest {
+  float: left;
+  width: 850px;
+  .dimension {
+    position: relative;
+    margin-top: 35px;
+    padding: 0 0 30px 0;
+    border: 1px solid #eeeeee;
+    background: #fff;
+    border-top: none;
+  }
+  .dimension-thirtytender, .dimension-gold {
+    padding: 0;
+  }
+  .dimension-title {
+    position: relative;
+    height: 35px;
+    width: 100%;
+    background: #3F9BFF;
+    &.dimension-title-gold {
+      background: #ff7365;
+    }
+    &.dimension-title-group {
+      background: #f9ac3a;
+    }
+    .time {
+      padding-left: 174px;
+      font: normal 14px/35px @xxd-font;
+      color: white;
+    }
+    i {
+      position: absolute;
+      display: inline-block;
+      top: -15px;
+      left: 14px;
+      width: 154px;
+      height: 104px;
+      background: url("i/invest1.png") no-repeat;
+      &.gold {
+        background: url("i/invest2.png") no-repeat;
+      }
+      &.group {
+        background: url("i/invest3.png") no-repeat;
+      }
+    }
+    .tip {
+      position: absolute;
+      top: 135px;
+      left: 34px;
+      padding-left: 20px;
+      background: url("i/star.png") left no-repeat;
+      font: normal 16px/25px @xxd-font;
+      color: #4ca2ff;
+      &.tip-gold {
+        background: none;
+        color: #ff7365;
+        left: 20px;
+      }
+    }
+    .more {
+      float: right;
+      font: normal 14px/25px @xxd-font;
+      color: white;
+      position: absolute;
+      top: 6px;
+      right: 15px;
+    }
+  }
+  .dimension-title-thirty, .dimension-title-gold {
+    float: left;
+    width: 175px;
+    height: 199px;
+    background: #3F9BFF;
+    text-align: center;
+    h6 {
+      color: #fff;
+      font: 400 26px "micsoft yahei";
+      margin: 20px;
+    }
+    p {
+      font-size: 12px;
+      color: #fff;
+      margin-bottom: 40px;
+    }
+    a {
+      display: block;
+      width: 90px;
+      height: 26px;
+      border: 1px solid #fff;
+      border-radius: 5px;
+      font: normal 14px/26px "microsoft yahei";
+      color: #fff;
+      margin: 0 auto;
+    }
+    .time {
+      padding: 0;
+      font: normal 12px "microsoft yahei";
+      margin-bottom: 40px;
+    }
+  }
+  .dimension-title-gold {
+    background: #ff7365;
+  }
+  .dimension-con {
+    float: left;
+  }
+  .dimension-name {
+    margin: 20px 0 0 200px;
+    position: relative;
+    dt, dd {
+      float: left;
+      padding: 0 10px;
+      font: normal 20px/23px @xxd-font;
+    }
+    dd {
+      font: normal 14px/23px @xxd-font;
+      border: 1px solid #37bffd;
+      background-color: #e9f8ff;
+      border-radius: 3px;
+      margin-left: 10px;
+    }
+    &.dimension-name-gold {
+      dd {
+        background: #fff5f4;
+        border: 1px solid #ff9186;
+        color: #FF685D;
+      }
+    }
+    .j_countdown {
+      position: absolute;
+      width: 123px;
+      top: 0px;
+      left: 496px;
+      p {
+        font: normal 14px "micsoft yahei";
+      }
+      span {
+        margin: 0;
+        float: none;
+        color: #FF685D;
+        font: normal 18px "micsoft yahei";
+        letter-spacing: 2px;
+      }
+    }
+  }
+  .dimension-name {
+    margin: 30px 0 0 26px;
+    dt {
+      font: 400 20px/25px "microsoft yahei";
+      padding: 0;
+    }
+    dd {
+      margin-left: 20px;
+      color: #57A8FF;
+    }
+    span {
+      margin-left: 190px;
+      float: right;
+      color: #999;
+      font: normal 14px/26px "micsoft yahei";
+    }
+  }
+  .dimension-buy {
+    position: relative;
+    margin: 20px 0 0 180px;
+    li {
+      float: left;
+      position: relative;
+      margin-right: 45px;
+      text-align: center;
+      font: normal 14px/20px @xxd-font;
+      color: #999;
+      &.dimension-btn {
+        position: static;
+      }
+      span, .wrap {
+        display: inline-block;
+        height: 48px;
+        color: #666;
+        font: normal 22px/48px @xxd-font;
+        i {
+          font: normal 48px/48px @xxd-font;
+        }
+      }
+      &.rate {
+        margin-right: 80px;
+      }
+      &.rate .wrap, &.rate span {
+        position: relative;
+        color: #4ca2ff;
+        font: normal 24px/48px @xxd-font;
+        .plus {
+          color: #ff7365 !important;
+          display: inline-block;
+          position: relative;
+        }
+        .xszx-tip{
+          position: absolute;
+          font: normal 12px/24px "micsoft yahei";
+          width: 94px;
+          height: 24px !important;
+          background: #ff7365;
+          margin: 0;
+          text-align: center;
+          left: -14px;
+          color: #fff;
+          top: -25px;
+          border-radius: 4px;
+          i{
+            display: inline-block;
+            position: absolute;
+            border: 8px solid #ff7365;
+            width: 0;
+            height: 0;
+            border-color: #ff7365 transparent transparent transparent;
+            bottom: -13px;
+            left: 16px;
+          }
+        }
+      }
+      .btn-active {
+        position: absolute;
+        display: inline-block;
+        padding: 0px;
+        top: 30px;
+        left: 478px;
+        background: #4ca2ff;
+        .btn();
+        &:hover {
+          background: #3F9BFF;
+        }
+        &.disable {
+          border: 1px solid #c1c1c1;
+          color: #c1c1c1;
+          background: #f3f3f3;
+        }
+
+      }
+    }
+  }
+  .dimension-buy {
+    margin: 30px 0 0 26px;
+  }
+  .dimension-gold {
+    .dimension-buy .rate {
+
+      span {
+        color: #ff7365;
+      }
+    }
+    .btn-active {
+      background: #ff7365 !important;
+      left: 478px !important;
+    }
+    .btn-active:hover {
+      background: #FE5E65 !important;
+    }
+    .disable, .disable:hover {
+      background: #f3f3f3 !important;
+    }
+    .dimension-buy .count .j-process {
+      position: absolute !important;
+      width: 118px;
+      top: 10px;
+      left: -118px;
+      span {
+        position: absolute;
+        left: 0;
+        height: 100%;
+        width: 55%;
+        background: #FF7365;
+      }
+      .process-name {
+        position: absolute;
+        width: 100%;
+        text-align: center;
+        left: 0;
+        top: -25px;
+        color: #FF7365;
+        font: bold 18px/22px @xxd-font;
+      }
+    }
+  }
+
+  .dimension-group {
+    padding: 0;
+    border-bottom: none;
+  }
+
+  .count {
+    position: absolute !important;
+    text-align: right !important;
+    width: auto !important;
+    margin: 0 !important;
+    top: 5px;
+    right: 45px;
+    font-size: 15px;
+    color: #999;
+  }
+
+  .dimension-block {
+    border-bottom: 1px solid #eee;
+    position: relative;
+    overflow: hidden;
+    .wrap-img {
+      position: absolute;
+      z-index: 2;
+      top: 0px;
+      right: 10px;
+      i {
+        display: block;
+        width: 26px;
+      }
+      .icon-rry {
+        height: 60px;
+        background: url("i/rry.png") no-repeat;
+      }
+      .icon-bbgs {
+        height: 85px;
+        background: url("i/bbgs.png") no-repeat;
+      }
+      .icon-xyb {
+        height: 60px;
+        background: url("i/xyb.png") no-repeat;
+      }
+    }
+  }
+
+  .dimension-info {
+    position: relative;
+    margin-top: 20px;
+    padding-left: 30px;
+    h2 {
+      position: relative;
+      font: normal 20px/30px @xxd-font;
+      i {
+        display: inline-block;
+        padding: 0 4px;
+        margin-left: 10px;
+        background: #fff9f0;
+        border: 1px solid #f9ac3a;
+        font: normal 14px/28px @xxd-font;
+        color: #ff7365;
+        border-radius: 3px;
+      }
+      .logo {
+        position: absolute;
+        width: 22px;
+        height: 25px;
+        background: url("i/fire.png") no-repeat;
+        top: 0;
+        border: 0;
+        left: -30px;
+      }
+    }
+    h2, ul {
+      float: left;
+    }
+    ul li {
+      float: left;
+      padding: 0 8px;
+      font: normal 14px/30px @xxd-font;
+      color: #999;
+    }
+  }
+
+  .dimension-q {
+    position: relative;
+    padding: 5px 0 5px 30px;
+    height: 60px;
+    border-bottom: 1px dashed #d2d2d2;
+    overflow: hidden;
+    margin-bottom: -1px;
+    div {
+      float: left;
+      text-align: left;
+      font: normal 14px/60px @xxd-font;
+    }
+    .rate {
+      width: 342px;
+      span {
+        color: #f9ac3a;
+        font-size: 26px;
+      }
+      .plus {
+        color: red;
+        font: normal 15px/22px @xxd-font;
+        position: absolute;
+        top: 30px;
+        left: 224px;
+        i {
+          display: inline-block;
+          width: 34px;
+          height: 12px;
+          margin-left: 5px;
+          background: url(@hot-logo) no-repeat;
+          background-size: 34px 12px;
+        }
+      }
+    }
+    .limit {
+      width: 160px;
+      height:100%;
+      font: 400 14px/25px "microsoft yahei";
+      span,i{
+        display: inline-block;
+        vertical-align: middle;
+        font-style: normal;
+        text-align: center;
+      }
+      span:first-child,i:first-child{
+        height:100%;
+      }
+    }
+    .money {
+      width: 150px;
+    }
+    .btn-active {
+      position: absolute;
+      top: 18px;
+      right: 50px;
+      .btn();
+      color: #F9AC3A;
+      &:hover {
+        background: #f88701 !important;
+        color: #fff;
+      }
+      &.disable {
+        background: none;
+        color: #c1c1c1 !important;
+        border: 1px solid white;
+        &:hover {
+          background: #f3f3f3 !important;
+          border: 1px solid #c1c1c1 !important;
+        }
+      }
+    }
+    &:hover {
+      background: #F9F9F9;
+      .btn-active {
+        background: #f9ac3a;
+        color: #fff;
+      }
+      .disable {
+        background: none;
+        border: 1px solid #c1c1c1;
+      }
+    }
+    .dimension-mobile-btn {
+      position: absolute;
+      right: -5px;
+      top: 10px;
+      padding-left: 55px;
+      width: 140px;
+      height: 51px;
+      background: url("i/yyp-btn.png") no-repeat;
+      color: white;
+      font-size: 12px;
+      span {
+
+        color: white;
+        font-size: 16px;
+        padding-top: 7px;
+      }
+      i {
+        font: normal 12px/12px @xxd-font;
+      }
+    }
+  }
+  .w85{
+    display: inline-block !important;
+    width: 85px !important;
+  }
+  .scattered-and-assignment {
+    border: 1px solid #eeeeee;
+    margin-top: 30px;
+    background: #fff;
+    .tab {
+      position: relative;
+      overflow: hidden;
+      .more {
+        position: absolute;
+        right: 15px;
+        top: 0px;
+        color: #4ca2ff;
+        font: normal 13px/70px @xxd-font;
+      }
+      ul {
+        height: 70px;
+        border-bottom: 1px solid #ddd;
+      }
+      li {
+        float: left;
+        position: relative;
+        font: normal 16px/67px @xxd-font;
+        padding: 0 10px;
+        height: 67px;
+        cursor: pointer;
+        margin-left: 10px;
+        &.active {
+          border-bottom: 4px solid #00498a;
+          cursor: default;
+        }
+        i {
+          position: absolute;
+          width: 14px;
+          height: 14px;
+          top: 15px;
+          right: -5px;
+          background: url("i/j.png") no-repeat;
+        }
+      }
+    }
+    .scattered, .assignment {
+      width: 100%;
+      ul {
+        margin-top: -1px;
+        height: 76px;
+        border-top: 1px dashed #d2d2d2;
+        overflow: hidden;
+        li {
+          float: left;
+          text-align: center;
+          font: normal 14px/76px @xxd-font;
+        }
+        .grade{
+          width: 60px;
+          height: 60px;
+          padding: 16px 0 0 20px;
+          i{
+            display: inline-block;
+            width: 100%;
+            height: 100%;
+            position: relative;
+            &.gradeA{
+              background: url("@{dottedPath}img/gradeA.png") 0 0 no-repeat;
+              background-size: 100%;
+            }
+            &.gradeA1{
+              background: url("@{dottedPath}img/gradeA1.png") 0 0 no-repeat;
+              background-size: 100%;
+            }
+            &.gradeA2{
+              background: url("@{dottedPath}img/gradeA2.png") 0 0 no-repeat;
+              background-size: 100%;
+            }
+            &.gradeA3{
+              background: url("@{dottedPath}img/gradeA3.png") 0 0 no-repeat;
+              background-size: 100%;
+            }
+            &.gradeB{
+              background: url("@{dottedPath}img/gradeB.png") 0 0 no-repeat;
+              background-size: 100%;
+            }
+            &.gradeC{
+              background: url("@{dottedPath}img/gradeC.png") 0 0 no-repeat;
+              background-size: 100%;
+            }
+            &.gradeD{
+              background: url("@{dottedPath}img/gradeD.png") 0 0 no-repeat;
+              background-size: 100%;
+            }
+            &.gradeE{
+              background: url("@{dottedPath}img/gradeE.png") 0 0 no-repeat;
+              background-size: 100%;
+            }
+          }
+        }
+        &:hover {
+          background: #F9F9F9;
+          .buy a {
+            color: #ffffff;
+            background: #2096e9;
+            &.disable {
+              background: #f3f3f3 !important;
+              border: 1px solid #c1c1c1 !important;
+            }
+          }
+        }
+      }
+      .icon {
+        width: 82px;
+        height: 20px;
+        display: inline-block;
+        margin: 30px 5px 0 15px;
+        background: url(//www.xinxindai.com/static/images/public/xxd-v6.png) no-repeat -246px -482px;
+
+        &.house-icon {
+          background: url(//www.xinxindai.com/static/images/public/xxd-v6.png) no-repeat -82px -461px;
+        }
+        &.business-icon {
+          background: url(//www.xinxindai.com/static/images/public/xxd-v6.png) no-repeat  left -461px;
+        }
+        &.car-icon {
+          background: url(//www.xinxindai.com/static/images/public/xxd-v6.png) no-repeat   -246px -461px;
+        }
+        &.new-icon {
+          background: url(//www.xinxindai.com/static/images/public/xxd-v6.png) no-repeat  left -482px;
+        }
+
+      }
+      .name {
+        width: 150px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        text-align: left;
+        font: normal 14px/76px @xxd-font;
+        a {
+          color: #666
+        }
+      }
+      .rate {
+        width: 80px;
+        overflow: hidden;
+        color: #FF685D;
+        span {
+          font-size: 28px;
+        }
+      }
+      .time {
+        width: 80px;
+      }
+      .money {
+        position: relative;
+        width: 180px;
+        text-align: center;
+        font: normal 14px/76px @xxd-font;
+      }
+      .buy {
+        float: left;
+        width: 160px;
+        text-align: right;
+        font: normal 18px/76px @xxd-font;
+        a {
+          margin-right: 20px;
+          color: #4EA3FF;
+          border: 0;
+          display: inline-block;
+          width: 118px;
+          height: 36px;
+          line-height: 36px;
+          padding: 0px;
+          text-align: center;
+          border-radius: 3px;
+          &.disable {
+            border: 1px solid white;
+            color: #c1c1c1 !important;
+            background: white;
+            &:hover {
+              background: #f3f3f3 !important;
+              border: 1px solid #c1c1c1 !important;
+            }
+          }
+        }
+        a:hover {
+          color: #ffffff;
+          background: #3F9BFF;
+        }
+      }
+    }
+    .scattered {
+      .money {
+        font: normal 14px/65px @xxd-font;
+      }
+    }
+  }
+}
+
+.product-info {
+  float: right;
+  margin-top: 35px;
+  width: 330px;
+  background: #f9f9f9;
+  .volume-of-transaction {
+    height: 196px;
+    background: #f4faff;
+    border: 1px solid #eee;
+    ul {
+      li {
+        position: relative;
+        height: 62px;
+        padding-left: 20px;
+        font: normal 13px/35px @xxd-font;
+        &.li1 {
+          border-bottom: 1px dashed #d8ebf9;
+          a {
+            background: url("i/li1.png") left no-repeat;
+          }
+          i {
+            position: absolute;
+            display: block;
+            top: 3px;
+            left: 0;
+            width: 87px;
+            height: 23px;
+            background: url("//www.xinxindai.com/static/images/public/Amount.png");
+          }
+        }
+        a {
+          position: absolute;
+          top: 35px;
+          left: 20px;
+          padding-left: 55px;
+          color: #4ca2ff;
+          font: normal 20px/20px @xxd-font;
+        }
+        &.li2 a {
+          background: url("i/li2.png") left no-repeat;
+        }
+        &.li3 a {
+          background: url("i/li3.png") left no-repeat;
+        }
+      }
+    }
+  }
+  .notice, .billboard, .news {
+    margin-top: 35px;
+    width: 100%;
+    height: 196px;
+    border: 1px solid #eee;
+    overflow: hidden;
+    background: #fff;
+    ul {
+      margin-top: 8px;
+    }
+    .title {
+      position: relative;
+      padding-left: 20px;
+      height: 36px;
+      width: 100%;
+      font: normal 16px/36px @xxd-font;
+      border-bottom: 1px solid #eee;
+      .more {
+        position: absolute;
+        right: 30px;
+        top: 0px;
+        padding-right: 20px;
+        color: #00498a;
+        background: url("i/more.png") right no-repeat;
+        font: normal 14px/36px @xxd-font;
+      }
+      b {
+        position: absolute;
+        right: 30px;
+        top: 0px;
+        font: normal 12px/36px @xxd-font;
+        color: #999;
+      }
+    }
+    li {
+      padding: 0 20px;
+      font: normal 14px/28px @xxd-font;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      a {
+        color: #666;
+        &:hover {
+          color: #00498a;
+        }
+      }
+    }
+    table {
+      width: 100%;
+      th, td {
+        text-align: center;
+        font: normal 13px/28px @xxd-font;
+      }
+    }
+  }
+  .notice {
+    ul {
+      height: 140px;
+      overflow: hidden;
+    }
+  }
+  .billboard {
+    height: 230px;
+    .sort span {
+      display: inline-block;
+      width: 15px;
+      height: 16px;
+      background-color: #ff7365;
+      color: #fff;
+      text-align: center;
+      font: normal 12px/16px @xxd-font;
+    }
+    .money {
+      color: #ff7365;
+    }
+  }
+
+  .news {
+    height: 280px;
+    .menu {
+      display: inline-block;
+      padding: 0 5px;
+      cursor: pointer;
+      font: normal 16px/32px @xxd-font;
+      &.active {
+        border-bottom: 4px solid #00498a;
+        cursor: default;
+      }
+    }
+    background: #fff;
+  }
+  .ad {
+    margin-top: 35px;
+    img {
+      border: 0;
+    }
+  }
+  .qr-code {
+    margin-top: 35px;
+    padding: 10px 0;
+    background: #fff;
+    table {
+      width: 100%;
+    }
+    td {
+      width: 50%;
+      text-align: center;
+    }
+    .tr1, .tr3 {
+      height: 30px;
+    }
+  }
+}
+
+.partner {
+  position: relative;
+  width: @main-width;
+  margin: 30px auto 0;
+  border: 1px solid #eee;
+  overflow: hidden;
+  background: #fff;
+  .left, .right {
+    position: absolute;
+    display: block;
+    top: 70px;
+    width: 22px;
+    height: 40px;
+    cursor: pointer;
+  }
+  .left {
+    left: 50px;
+    background: url(@left-logo) no-repeat;
+  }
+  .right {
+    right: 50px;
+    background: url(@right-logo) no-repeat;
+  }
+  .title {
+    padding-left: 30px;
+    width: @main-width;
+    height: 43px;
+    font: normal 16px/43px @xxd-font;
+    border-bottom: 1px solid #eee;
+  }
+  .wrap-partner {
+    margin: 0 auto;
+    width: 1050px;
+    overflow: hidden;
+  }
+  ul {
+    margin: 0;
+    width: 10500px;
+    height: 125px;
+    overflow: hidden;
+    display: block !important;
+    padding-top: 10px;
+    li {
+      height: 150px;
+      div {
+        margin: 10px;
+        border: 1px solid #eee;
+        img {
+          height: 60px;
+          border: 0;
+        }
+        a {
+          display: inline-block;
+          width: 128px;
+          height: 60px;
+          overflow: hidden;
+          color: @font-color;
+          &:hover {
+            color: @font-hover-color;
+          }
+        }
+      }
+      float: left;
+      text-align: center;
+      a {
+        display: block;
+        text-align: center;
+        width: 148px;
+        border: 0;
+        color: @font-color;
+        &:hover {
+          color: @font-hover-color;
+        }
+      }
+    }
+  }
+}
+
+.j-process {
+  position: absolute;
+  background: #ddd;
+  height: 8px;
+  width: 100%;
+  top: 45px;
+  left: 0;
+  border-radius: 4px;
+  span {
+    display: block;
+    height: 100%;
+    left: 0;
+    top: 0;
+    background: #1F96E8;
+    width: 50%;
+    border-radius: 4px;
+  }
+}
+
+.ml-75 {
+  margin-left: 75px !important;
+}
+
+//顶部存管进度样式
+/*.deposit-schedule {
+    width: 1200px;
+    height: 80px;
+    overflow: hidden;
+    margin:0 auto;
+    h3 {
+        font-size: 20px;
+        line-height: 80px;
+        color: #333;
+        float: left;
+        margin-right: 20px;
+    }
+    .all-schedule {
+        display: inline-block;
+        margin-top: 13px;
+    }
+    .schedule-list {
+        display: inline-block;
+        color: #999;
+        margin-right: 15px;
+        cursor: pointer;
+        div{
+            float: left;
+            margin-top: 5px;
+        }
+        i {
+            display: inline-block;
+            float: left;
+            width: 48px;
+            height: 53px;
+            background: url("i/schedule.png") 0 0 no-repeat;
+            margin-right: 10px;
+        }
+        .list-img2{
+            background: url("i/schedule.png") 0 -53px no-repeat;
+        }
+        .list-img3{
+            background: url("i/schedule.png") 0 -106px no-repeat;
+        }
+        .list-img4{
+            background: url("i/schedule.png") 0 -159px no-repeat;
+        }
+        .list-img5{
+            background: url("i/schedule.png") 0 -212px no-repeat;
+        }
+        .list-img6{
+            background: url("i/schedule.png") 0 -265px no-repeat;
+        }
+        span {
+            font-weight: 600;
+            font-size: 14px;
+        }
+        em{
+            display: inline-block;
+            font:normal 400 12px "Microsoft Yahei";
+            color: #fff;
+            background: #1E90FF;
+            border-radius: 2px;
+            padding: 0 2px;
+            margin-left:4px;
+        }
+        p {
+            font:normal 400 12px "Microsoft Yahei";
+        }
+    }
+    .done{
+        color: #1E90FF;
+        p{
+            color: #1E90FF !important;
+        }
+    }
+    .done i{
+        background-position-x:-48px !important;
+    }
+    .hide{
+        display: none !important;
+    }
+    .show{
+        display: inline-block !important;
+    }
+}*/
+
+//新增标签
+.tag-hot {
+  display: inline-block;
+  padding: 0 10px;
+  background: #ff7365;
+  border-radius: 3px;
+  vertical-align: bottom;
+  margin: 0 0 0 20px;
+  height: 20px;
+  width: 62px;
+  overflow: hidden;
+  p {
+    position: relative;
+    height: 20px;
+    overflow: hidden;
+  }
+  span {
+    display: block;
+    color: #fff !important;
+    font: normal 12px/20px "micsoft yahei" !important;
+    position: absolute;
+    white-space: nowrap;
+    left: 0;
+    top: 0;
+  }
+  i {
+    display: inline-block;
+    width: 34px;
+    height: 12px;
+    margin-left: 5px;
+    background: url(@hot-logo) no-repeat;
+    background-size: 34px 12px;
+  }
+}
+
+.dimension-info .tag-hot {
+  float: left;
+  margin: 5px 0 0 7px;
+}
+
+.dimension-q .rate .tag-hot {
+  vertical-align: sub;
+  margin: 0 0 0 6px;
+  float: none;
+  position: absolute;
+}
+.dimension-block.overauto{
+  overflow: inherit;
+}
+.download-QRcode{
+  position: absolute;
+  right: 13px;
+  bottom: 8px;
+  width: 185px;
+  height: 185px;
+  background: #f9ac3a;
+  text-align: center;
+  -webkit-border-radius: 25px;
+  -moz-border-radius: 25px;
+  border-radius: 25px;
+  z-index:2;
+  display: none;
+  img{
+    width: 128px;
+    height: 128px;
+    margin: 20px auto 0;
+  }
+  p{
+    color: #ffffff;
+    font-size: 16px;
+  }
+}

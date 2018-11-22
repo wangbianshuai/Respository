@@ -1,0 +1,471 @@
+<!Doctype html>
+<html lang="zh-cn" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" th:href="@{${global.staticHost}+'/pc/'+${global.xxdVersion}+'/build/css/i/favicon.ico'}">
+    <link rel="Bookmark" th:href="@{${global.staticHost}+'/pc/'+${global.xxdVersion}+'/build/css/i/favicon.ico'}">
+    <title>【新新贷官网】专业透明的P2P网络借贷平台，P2P网贷，网上贷款借款、投融资信息中介平台</title>
+    <meta name="keywords" content="新新贷，P2P网贷，P2P理财，投资理财，网上理财，新元宝，月月派，新手专享，投融资，贷款，企业贷款，无抵押小额贷款，借款"/>
+    <meta name="description"
+          content="新新贷是中国专业的互联网金融P2P网络借贷信息中介平台，为出借人和借款人提供省心的互联网金融信息服务。资金银行存管、严格的风控体系、信息披露透明等多重安全保障措施。"/>
+    <link th:href="@{${global.staticHost}+'/pc/'+${global.xxdVersion}+'/build/mods/home/_.css'}" rel="stylesheet">
+</head>
+<body>
+<div id="J_wrapBody">
+    <div th:replace="common/header::header"></div>
+    <div class="rotate-focus">
+        <div id="J_rotate" class="mui-slider">
+        </div>
+        <div class="focus">
+            <div class="focus-main">
+                <div class="focus-title">累计注册人数</div>
+                <strong class="focus-rate">[[${globalData.achievement.data.totalRegister}]]</strong>
+                <div class="focus-hot">稳健运营六年 专业可信赖</div>
+                <div th:if="${globalData.isLogin == false}" class="focus-register">
+                    <a href="/user/iregister.html" class="ga-click" ga-category="注册" ga-action="第一步" ga-label="红包按钮">
+                        领取108元红包
+                        <div class="tip-wrap">
+                            <div class="line"></div>
+                            <b>10秒快速注册</b>
+                        </div>
+                    </a>
+                </div>
+                <div th:if="${globalData.isLogin == false}" class="focus-login">已有账号？<a
+                        href="/user/ilogin.html">立即登录</a></div>
+                <div th:if="${globalData.isLogin == true}" class="focus-register focus-my-xxd"><a
+                        href="/usercenter/accountInfo.html" class="ga-promo"><i class="my-xxd"></i>我的新新贷</a></div>
+            </div>
+            <div class="focus-bg"></div>
+        </div>
+    </div>
+    <div class="main">
+        <div class="core">
+            <ul>
+                <li>
+                    <div>
+                        <a href="/promotion/common/cifis.html" target="_blank"><i class="bg1"></i></a>
+                        <p>
+                            <a class="title" href="/promotion/common/cifis.html" target="_blank">互金协会成员</a>
+                            <a class="desc" href="/promotion/common/cifis.html"
+                               target="_blank">中国互联网金融协会首批会员</a>
+                        </p>
+                    </div>
+                </li>
+                <li>
+                    <div>
+                        <a href="javascript:void(0);"><i class="bg2"></i></a>
+                        <p style="padding-right: 30px">
+                            <a class="title" href="javascript:void(0);">国资系,新实力</a>
+                            <a class="desc" href="javascript:void(0);">国有企业战略投资</a>
+                        </p>
+                    </div>
+                </li>
+                <li>
+                    <div>
+                        <a href="/html/storagepage/index.html" target="_blank"><i class="bg3"></i></a>
+                        <p>
+                            <a class="title" href="/html/storagepage/index.html" target="_blank">资金银行存管</a>
+                            <a class="desc" href="/html/storagepage/index.html" target="_blank">用户资金与平台隔离，资金交易由存管银行全程监督</a>
+                        </p>
+                    </div>
+                </li>
+                <li>
+                    <div>
+                        <a href="/security/security.html?type=fxkz" target="_blank"><i class="bg4"></i></a>
+                        <p>
+                            <a class="title" href="/html/help/safesecurity.html" target="_blank">银行级别风控</a>
+                            <a class="desc" href="/html/help/safesecurity.html" target="_blank">媲美银行的CLAC风控审核系统"天权"信用评分模型行业领先</a>
+                        </p>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <div class="product clearfix">
+            <div class="product-invest">
+                <div th:if="${globalData.isPurchased == false}" class="dimension clearfix dimension-thirtytender" id="J_qtds">
+                    <div class="dimension-title dimension-title-thirty">
+                        <h6>新手专区</h6>
+                        <p>新手用户&nbsp;专享福利</p>
+                        <a href="/detail/thirtytender.html">查看详情</a>
+                    </div>
+                    <div class='dimension-con'>
+                        <dl class="dimension-name clearfix">
+                            <dt>新元宝（新手专享）</dt>
+                            <dd>限参与一次</dd>
+                            <span>已累计加入：[[${globalData.thirtyTender.data.accumulatedInvestors}]]</span>
+                        </dl>
+                        <ul class="dimension-buy clearfix">
+                            <li class="rate">
+                                <div class="wrap">
+                                    <i>[[${globalData.thirtyTender.data.plannedAnnualRate}]]</i>%
+                                    <div th:if="${globalData.thirtyTender.data.floatingRate gt 0}"
+                                          class="plus">+[[${globalData.thirtyTender.data.floatingRate}]]%
+                                        <p class='xszx-tip'>
+                                            新手专享加息
+                                            <i></i>
+                                        </p>
+                                    </div>
+                                </div>
+                                <br/>历史年化收益
+                            </li>
+                            <li>
+                                <span>[[${globalData.thirtyTender.data.leastPeriod}]][[${globalData.thirtyTender.data.leastPeriodUnit}]]</span><br/>
+                                后可申请转让
+                            </li>
+                            <li><span>[[${globalData.thirtyTender.data.leastTenderAmountLabel}]]</span><br/>起投金额</li>
+                            <li th:switch="${globalData.thirtyTender.data.status.code}" class="dimension-btn">
+                                <a target="_blank"
+                                   class="btn-active ga-click xa-click disable" ga-commnd="send,ec:addProduct,ec:setAction"
+                                   th:ga-ec-addProduct="'{\'id\':\'' + ${globalData.thirtyTender.data.id} + '\',\'name\':\'七天大胜\',\'category\':\'七天大胜/' + ${globalData.thirtyTender.data.plannedAnnualRate}+'%' + '/' +  ${globalData.thirtyTender.data.leastPeriod} + ${globalData.thirtyTender.data.leastPeriodUnit} + '\'}' "
+                                   ga-ec-setAction='{"list":"首页小试牛刀"}'
+                                   ga-ec-setAction-command="click" ga-hitType="event" ga-category="增强电商" ga-action="产品点击"
+                                   ga-label="七天大胜" xa-category="pc_sevengold_in" xa-action="index_buy_once"
+                                   xa-label="首页立即加入" th:case="'WAIT_TO_SELL'">[[${globalData.thirtyTender.data.status.message}]]</a>
+                                <a href="/detail/thirtytender.html" target="_blank" class="btn-active ga-click xa-click"
+                                   th:case="'SELLING'" ga-commnd="send,ec:addProduct,ec:setAction"
+                                   th:ga-ec-addProduct="'{\'id\':\'' + ${globalData.thirtyTender.data.id} + '\',\'name\':\'七天大胜\',\'category\':\'七天大胜/' + ${globalData.thirtyTender.data.plannedAnnualRate}+'%' + '/' +  ${globalData.thirtyTender.data.leastPeriod} + ${globalData.thirtyTender.data.leastPeriodUnit} + '\'}' "
+                                   ga-ec-setAction='{"list":"首页小试牛刀"}'
+                                   ga-ec-setAction-command="click" ga-hitType="event" ga-category="增强电商" ga-action="产品点击"
+                                   ga-label="七天大胜" xa-category="pc_sevengold_in" xa-action="index_buy_once"
+                                   xa-label="首页立即加入">立即加入</a>
+                                <a target="_blank"
+                                   class="btn-active ga-click xa-click disable" ga-commnd="send,ec:addProduct,ec:setAction"
+                                   th:ga-ec-addProduct="'{\'id\':\'' + ${globalData.thirtyTender.data.id} + '\',\'name\':\'七天大胜\',\'category\':\'七天大胜/' + ${globalData.thirtyTender.data.plannedAnnualRate}+'%' + '/' +  ${globalData.thirtyTender.data.leastPeriod} + ${globalData.thirtyTender.data.leastPeriodUnit} + '\'}' "
+                                   ga-ec-setAction='{"list":"首页小试牛刀"}'
+                                   ga-ec-setAction-command="click" ga-hitType="event" ga-category="增强电商" ga-action="产品点击"
+                                   ga-label="七天大胜" xa-category="pc_sevengold_in" xa-action="index_buy_once"
+                                   xa-label="首页立即加入" th:case="'SOLD_OUT'">[[${globalData.thirtyTender.data.status.message}]]</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="dimension dimension-gold clearfix">
+                    <div class="dimension-title dimension-title-gold">
+                        <h6>人气专区</h6>
+                        <div class="time">每天10:00、20:00发售</div>
+                        <a href="/detail/monthgold.html">查看详情</a>
+
+                    </div>
+                    <div class='dimension-con'>
+                        <dl class="dimension-name dimension-name-gold clearfix">
+                            <dt>月进斗金</dt>
+                            <dd>每日限量|先到先得</dd>
+                            <div class="tip tip-gold j_countdown" th:data-activite-time="${globalData.YJDJ.data.lefTime}"
+                             th:switch="${globalData.YJDJ.data.status.code}">
+                                <p>距离结束还剩：</p>
+                                <span></span>
+                            </div>
+                        </dl>
+                        <ul class="dimension-buy clearfix">
+                            <li class="rate"><span><i>[[${#numbers.formatInteger(globalData.YJDJ.data.plannedAnnualRate, 0)}]]</i>%</span><br/>历史年化收益
+                            </li>
+                            <li>
+                                <span>[[${globalData.YJDJ.data.leastPeriod}]][[${globalData.YJDJ.data.leastPeriodUnit}]]</span><br/>
+                                后可申请转让
+                            </li>
+                            <li>
+                                <span>[[${#numbers.formatInteger(globalData.YJDJ.data.plannedAmount,1,'COMMA')}]]元</span><br/>计划金额
+                            </li>
+                            <li th:switch="${globalData.YJDJ.data.status.code}" class="dimension-btn">
+                                <a target="_blank" class="btn-active disable"
+                                   th:case="'WAIT_TO_SELL'">[[${globalData.YJDJ.data.status.message}]]</a>
+                                <a href="/detail/monthgold.html" target="_blank" class="btn-active ga-click xa-click"
+                                   th:case="'SELLING'" ga-commnd="send,ec:addProduct,ec:setAction"
+                                   th:ga-ec-addProduct="'{\'id\':\'' + ${globalData.YJDJ.data.id} + '\',\'name\':\'月进斗金\',\'category\':\'月进斗金/' + ${globalData.YJDJ.data.plannedAnnualRate}+'%' + '/' + ${globalData.YJDJ.data.leastPeriod}+${globalData.YJDJ.data.leastPeriodUnit} + '\'}' "
+                                   ga-ec-setAction='{"list":"首页大显身手"}'
+                                   ga-ec-setAction-command="click" ga-hitType="event" ga-category="增强电商" ga-action="产品点击"
+                                   ga-label="月进斗金" xa-category="pc_monthgold_in" xa-action="index_buy_once"
+                                   xa-label="首页立即加入">立即加入</a>
+                                <a target="_blank" class="btn-active disable"
+                                   th:case="'SOLD_OUT'">本场已结束</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="dimension dimension-group">
+                    <div class="dimension-title dimension-title-group">
+                        <div class="time">自动投标工具，持有30天后可转让</div>
+                        <i class="group"></i>
+                    </div>
+                    <div class="dimension-block">
+                        <div class="dimension-info clearfix">
+                            <h2>新元宝</h2>
+                            <ul>
+                                <li>募集成功后次日起息</li>
+                            </ul>
+                            <div class="count">累计加入：[[${globalData.XYB.data.accumulatedInvestors}]]</div>
+                        </div>
+                        <div class="dimension-q clearfix" th:each="item,itemStat : ${globalData.XYB.data.items}">
+                            <div class="rate">历史年化收益：
+                                <span th:text="${item.plannedAnnualRateTo + '%'}" class='w85'></span>
+                                <div th:if="${!#strings.isEmpty(item.remark)}" class="tag-hot">
+                                    <p>
+                                        <span>[[${item.remark}]]</span>
+                                    </p>
+                                </div>
+                                <span th:if="${item.floatingRate gt 0}"
+                                      class="plus"> + [[${item.floatingRate}]]%</span>
+                            </div>
+                            <div class="limit"><i></i><i><span th:text="${item.frozenPeriod}"></span>个月<br>后可免费申请转让</i></div>
+                            <div class="money">起投金额：<span th:text="${item.leastTenderAmountLabel}"></span></div>
+                            <div th:switch="${item.status.code}">
+                                <a th:href="'/xplan/detail/' + ${item.id} + '.html'" target="_blank"
+                                   class="btn-active disable" th:case="'WAIT_TO_SELL'">[[${item.status.message}]]</a>
+                                <a th:href="'/xplan/detail/' + ${item.id} + '.html'" target="_blank"
+                                   class="btn-active ga-click xa-click" th:case="'SELLING'"
+                                   ga-commnd="send,ec:addProduct,ec:setAction"
+                                   th:ga-ec-addProduct="'{\'id\':\'' + ${item.id} + '\',\'name\':\'新元宝\',\'category\':\'新元宝/' + ${item.plannedAnnualRateTo} +'%' + '/' + ${item.frozenPeriod} + '个月\'}' "
+                                   ga-ec-setAction='{"list":"首页生财有道"}'
+                                   ga-ec-setAction-command="click" ga-hitType="event" ga-category="增强电商"
+                                   ga-action="产品点击" ga-label="新元宝" xa-category="pc_xplan_in" xa-action="index_buy_once"
+                                   xa-label="立即加入">立即加入</a>
+                                <a th:href="'/xplan/detail/' + ${item.id} + '.html'" target="_blank"
+                                   class="btn-active disable" th:case="'SOLD_OUT'">[[${item.status.message}]]</a>
+                                <a th:href="'/xplan/detail/' + ${item.id} + '.html'" target="_blank"
+                                   class="btn-active disable" th:case="'EARNING'">[[${item.status.message}]]</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="dimension-block overauto">
+                        <div class="dimension-info clearfix">
+                            <h2>月月派<i class="logo"></i>
+                            </h2>
+                            <div class="tag-hot" th:if="${!#strings.isEmpty(globalData.YYP.data.remark)}">
+                                <p><span>[[${globalData.YYP.data.remark}]]</span></p>
+                            </div>
+                            <ul>
+                                <li>每月派息</li>
+                                <li>募集成功后次日起息，持有30天后可转让</li>
+                            </ul>
+                        </div>
+                        <div class="dimension-q clearfix">
+                            <div class="rate">历史年化收益：
+                                <i><span>[[${globalData.YYP.data.plannedAnnualRateTo}]]%</span></i>
+                                <div th:if="${!#strings.isEmpty(globalData.YYP.data.floatingRate)}"
+                                     class="plus">+[[${globalData.YYP.data.floatingRate}]]%
+                                </div>
+                            </div>
+                            <div class="limit"><span></span><span>[[${globalData.YYP.data.frozenPeriod}]]<br>后可免费申请转让</span></div>
+                            <div class="money">起投金额：[[${globalData.YYP.data.leastTenderAmountLabel}]]</div>
+                            <a target="_blank" class="dimension-mobile-btn">
+                                <span>APP专享</span><br/>
+                                累计加入:<i>[[${globalData.YYP.data.accumulatedInvestors}]]</i>
+                            </a>
+                            <!--href="/promotion/yyp.html"-->
+                        </div>
+                        <div class="download-QRcode" id="download-qr-code">
+                            <img width="128" alt="新新贷app下载二维码" th:src="@{${global.staticHost}+'/pc/'+${global.xxdVersion}+'/build/img/qr-code-phone@2x.png'}">
+                            <p>手机APP下载</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="scattered-and-assignment">
+                    <div class="tab">
+                        <ul id="J_scatteredAndAssignment">
+                            <li class="active" tag="J_scattered">散标直投</li>
+                            <li tag="J_assignment">债权转让<i></i></li>
+                        </ul>
+                        <a class="more" href="/borrow/search/list.html" target="_blank">查看更多</a>
+                    </div>
+                    <div class="scattered" id="J_scattered">
+                        <ul class="clearfix" th:each="sbzt,itemStat : ${globalData.SBZT.data.items}">
+                            <li class='grade'>
+                                <i th:class="${'grade'+sbzt.riskGrade}"></i>
+                            </li>
+                            <li th:switch="${sbzt.label}">
+                                <i th:case="'ic-xfd'" class="icon house-icon"></i>
+                                <i th:case="'ic-xcd'" class="icon car-icon"></i>
+                                <i th:case="'ic-xsd'" class="icon business-icon"></i>
+                                <i th:case="'ic-xstd'" class="icon new-icon"></i>
+                                <i th:case="'ic-pxb'" class="icon"></i>
+                            </li>
+                            <li class="name"><a th:href="'borrow/detail/' + ${sbzt.id} + '.html'" target="_blank"
+                                                th:title="${sbzt.name}" th:text="${sbzt.name}"></a></li>
+                            <li class="rate"><span th:text="${sbzt.plannedAnnualRate}"></span>%</li>
+                            <li class="time"><span th:text="${sbzt.leastPeriod + sbzt.leastPeriodUnit}"></span></li>
+                            <li class="money">[[${'剩余：' + #numbers.formatDecimal(sbzt.leftAmount,1,'COMMA',2,'POINT') +
+                                '元'}]]
+                                <div class="j-process" position="bottom"
+                                     th:attr="tipContent=${#numbers.formatInteger(((sbzt.bidAmount - sbzt.leftAmount) * 1.00 / sbzt.bidAmount * 100), 0)}">
+                                    <span></span></div>
+                            </li>
+                            <li th:switch="${sbzt.status.code}" class="buy">
+                                <a th:href="'borrow/detail/' + ${sbzt.id} + '.html'" target="_blank"
+                                   class="snapped disable" th:case="'WAIT_TO_SELL'">[[${sbzt.status.message}]]</a>
+                                <a th:href="'borrow/detail/' + ${sbzt.id} + '.html'" target="_blank"
+                                   class="snapped ga-click xa-click" th:case="'SELLING'"
+                                   ga-commnd="send,ec:addProduct,ec:setAction"
+                                   th:ga-ec-addProduct="'{\'id\':\'' + ${sbzt.id} + '\',\'name\':\'散标直投\',\'category\':\'散标直投/' + ${sbzt.plannedAnnualRate}+'%' + '/' + ${sbzt.leastPeriod + sbzt.leastPeriodUnit} + '\'}' "
+                                   ga-ec-setAction='{"list":"首页散标直投"}'
+                                   ga-ec-setAction-command="click"
+                                   ga-hitType="event" ga-category="增强电商" ga-action="产品点击" ga-label="散标直投"
+                                   xa-category="pc_borrow_in" xa-action="index_buy_once" xa-label="立即加入">立即加入</a>
+                                <a th:href="'borrow/detail/' + ${sbzt.id} + '.html'" target="_blank"
+                                   class="snapped disable" th:case="'SOLD_OUT'">[[${sbzt.status.message}]]</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="assignment hide" id="J_assignment">
+                        <ul th:each="zqzr,itemStat : ${globalData.ZQZR.data.items}">
+                            <li class='grade'>
+                                <i th:class="${'grade'+zqzr.riskGrade}"></i>
+                            </li>
+                            <li th:switch="${zqzr.label}">
+                                <i th:case="'ic-xfd'" class="icon house-icon"></i>
+                                <i th:case="'ic-xcd'" class="icon car-icon"></i>
+                                <i th:case="'ic-xsd'" class="icon business-icon"></i>
+                                <i th:case="'ic-xstd'" class="icon new-icon"></i>
+                                <i th:case="'ic-pxb'" class="icon"></i>
+                            </li>
+                            <li class="name"><a th:href="'/traderequest/requestDetail/' + ${zqzr.id} + '.html'"
+                                                target="_blank" th:title="${zqzr.name}">[[${zqzr.name}]]</a></li>
+                            <li class="rate"><span th:text="${zqzr.plannedAnnualRate}"></span>%</li>
+                            <li class="time">剩余：<span th:text="${zqzr.leastPeriod + zqzr.leastPeriodUnit}"></span></li>
+                            <li class="money">[[${'转让价：' +
+                                #numbers.formatDecimal(zqzr.transferPrice,1,'COMMA',2,'POINT') + '元'}]]
+                            </li>
+                            <li th:switch="${zqzr.status.code}" class="buy">
+                                <a th:href="'/traderequest/requestDetail/' + ${zqzr.id} + '.html'" target="_blank"
+                                   class="snapped disable" th:case="'WAIT_TO_SELL'">[[${zqzr.status.message}]]</a>
+                                <a th:href="'/traderequest/requestDetail/' + ${zqzr.id} + '.html'" target="_blank"
+                                   class="snapped ga-click xa-click" th:case="'SELLING'"
+                                   ga-commnd="send,ec:addProduct,ec:setAction"
+                                   th:ga-ec-addProduct="'{\'id\':\'' +${zqzr.id} + '\',\'name\':\'债权转让\',\'category\':\'债权转让/' +  ${zqzr.plannedAnnualRate}+'%' + '/' +  ${zqzr.leastPeriod + zqzr.leastPeriodUnit} + '\'}' "
+                                   ga-ec-setAction=='{"list":"首页债权转让"}'
+                                   ga-ec-setAction-command="click" ga-hitType="event" ga-category="增强电商"
+                                   ga-action="产品点击" ga-label="债权转让" xa-category="pc_trade_in" xa-action="index_buy_once"
+                                   xa-label="立即加入">立即加入</a>
+                                <a th:href="'/traderequest/requestDetail/' + ${zqzr.id} + '.html'" target="_blank"
+                                   class="snapped disable" th:case="'SOLD_OUT'">[[${zqzr.status.message}]]</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="product-info">
+                <div class="volume-of-transaction">
+                    <ul>
+                        <li class="li1"><i></i><a href="/html/help/datadisclose.html"
+                                                  th:text="${globalData.achievement.data.totalTradeItem.amount + globalData.achievement.data.totalTradeItem.unit}"></a>
+                        </li>
+
+                        <li class="li3">[[${globalData.achievement.data.totalIncomeItem.name}]]<a
+                                href="/html/help/datadisclose.html"
+                                th:text="${globalData.achievement.data.totalIncomeItem.amount + globalData.achievement.data.totalIncomeItem.unit}"></a>
+                        </li>
+
+
+                        <li class="li2">[[${globalData.achievement.data.securityItem.name}]]<a
+                                href="/html/help/datadisclose.html" th:text="${globalData.achievement.data.securityItem.amount}"></a></li>
+                    </ul>
+                </div>
+                <div class="notice">
+                    <div class="title">最新公告<a href="/html/help/platform.html" class="more" target='_blank'>更多</a></div>
+                    <ul>
+                        <li th:each="item,itemStat : ${globalData.announcement.data.items}">
+                            <a th:href="${item.textHref}" th:text="${item.text}"></a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="billboard">
+                    <div class="title"><span th:text="${globalData.investmentRank.data.currentMonth}"></span>月用户风云榜<b>统计不含散标直投</b>
+                    </div>
+                    <table>
+                        <tr>
+                            <th width="30%">排名</th>
+                            <th width="30%">用户名</th>
+                            <th width="40%">出借金额</th>
+                        </tr>
+                        <tr th:each="rank,itemStat : ${globalData.investmentRank.data.items}">
+                            <td class="sort"><span th:text="${itemStat.count}"></span></td>
+                            <td th:text="${rank.nickName}"></td>
+                            <td class="money"
+                                th:text="${'￥' + #numbers.formatDecimal(rank.investmentAmount,1,'COMMA',2,'POINT') + '元'}"></td>
+                        </tr>
+                    </table>
+                </div>
+
+                <div class="news">
+                    <div class="title" id="J_titleNews">
+                        <span class="menu active" tag="J_newsList">新闻动态</span>
+                        <span class="menu" tag="J_mediaList">媒体报道</span>
+                        <a href="/html/help/newsreport.html" class="more">更多</a>
+                    </div>
+                    <ul class="news-list" id="J_newsList">
+                        <li th:each="item,itemStat : ${globalData.news.data.items}">
+                            <a th:href="${item.textHref}" th:text="${item.text}"></a>
+                        </li>
+                    </ul>
+                    <ul class="media-list hide" id="J_mediaList">
+                        <li th:each="item,itemStat : ${globalData.media.data.items}">
+                            <a th:href="${item.textHref}" th:text="${item.text}"></a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="ad">
+                    <a href="/html/introduce/guide.html" class="ga-click"
+                       ga-commnd="send,ec:addPromo,ec:addProduct,ec:setAction" ga-ec-addPromo='{"name":"新手红包奖励"}'
+                       ga-ec-setAction-command="promo_click"
+                       ga-hitType="event" ga-category="增强电商" ga-action="站内广告点击" ga-label="新手红包奖励"><img width="330"
+                                                                                                       th:src="@{${global.staticHost}+'/pc/'+${global.xxdVersion}+'/build/img/330-176-index.png'}"/></a>
+                </div>
+                <div class="qr-code">
+                    <table>
+                        <tr class="tr1">
+                            <td colspan="2">扫一扫下载/关注新新贷</td>
+                        </tr>
+                        <tr class="tr2">
+                            <td>
+                                <img th:src="@{${global.staticHost}+'/pc/'+${global.xxdVersion}+'/build/css/i/qr-code-phone.png'}"
+                                     width="92"/>
+                            </td>
+                            <td>
+                                <img th:src="@{${global.staticHost}+'/pc/'+${global.xxdVersion}+'/build/css/i/qr-code-wechat.png'}"
+                                     width="92"/>
+                            </td>
+                        </tr>
+                        <tr class="tr3">
+                            <td>手机客户端</td>
+                            <td>微信公众号</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="partner" id="J_partner">
+            <div class="title">合作伙伴</div>
+            <i class="left"></i>
+            <i class="right"></i>
+            <div class="wrap-partner">
+                <ul>
+                    <li th:each="partner,itemStat : ${globalData.partner.data.items}">
+                        <div><a th:href="${partner.textHref}" target="_blank"><img th:src="${partner.extendUrl}"/></a>
+                        </div>
+                        <a th:href="${partner.textHref}" target="_blank">[[${partner.text}]]</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="partner">
+            <div class="title">了解更多</div>
+            <ul class="ml-75">
+                <li th:each="more,itemStat : ${globalData.more.data.items}">
+                    <div><a th:href="${more.textHref}" target="_blank"><img th:src="${more.extendUrl}"/></a></div>
+                    <a th:href="${more.textHref}" target="_blank">[[${more.text}]]</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div th:replace="common/footer::footer (${globalData},${global.xxdVersion})"></div>
+</div>
+<!--[if lt IE 9]>
+<iframe id="ifr_cover" frameborder="0" class="hide" scrolling="no"></iframe>
+<div id="alertBoxWrap" class="hide"></div>
+<![endif]-->
+</body>
+
+<script th:src="@{${global.staticHost}+'/pc/'+${global.xxdVersion}+'/build/js/common/require.min.js'}"></script>
+<script th:src="@{${global.staticHost}+'/pc/'+${global.xxdVersion}+'/build/mods/home/_.js'}"></script>
+</html>

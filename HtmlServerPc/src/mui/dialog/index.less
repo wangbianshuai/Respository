@@ -1,0 +1,104 @@
+@xxd-version:"1.0.0";
+@mui-name:"dialog";
+@xxd-path:"//static.xinxindai.com/mui/@{xxd-version}/build/@{mui-name}/";
+.mui-dialog{
+  z-index:10000;
+  position: fixed;
+  _position: absolute;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  top:0;
+  left:0;
+  background:rgba(0,0,0,.5);
+  .mui-dialog-inner{
+    position: relative;
+    background: #fff;
+    text-align: left;
+    display: inline-block;
+    *display:inline;
+    *zoom:1;
+    vertical-align: middle;
+    color: black;
+    border-radius: 8px;
+    position:relative;
+    z-index:10002;
+  }
+
+  .mui-fix-phone-scroll {
+    position:absolute;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background:rgba(0,0,0,.1);
+  }
+
+
+  .after{
+    display:inline-block;
+    *display: inline;
+    *zoom:1;
+    vertical-align:middle;
+    width:0;
+    height:100%;
+  }
+}
+
+
+.mui-dialog .icon{
+  cursor: pointer;
+  position: absolute;
+  display: block;
+  width: 24px;
+  height: 24px;
+  right: 5px;
+  top:5px;
+  background: url("./i/close.png");
+}
+
+/*dialog*/
+#ifr_cover{
+  width:100%;
+  height:100%;
+  z-index: 888;
+  position: absolute;
+  top: 0;
+  left: 0;
+  filter:alpha(opacity=40);
+}
+
+#alertBoxWrap{
+  z-index: 999;
+  position:fixed;
+  _position: absolute;
+  left: 0;
+  top: 0;
+  background: #000;
+  width: 100%;
+  height: 100%;
+  opacity:0.5;
+  filter:alpha(opacity=50);
+}
+.dialog-content .dialog-close-icon{
+  display: block;
+  position: absolute;
+  right:5px;
+  top: 5px;
+  width: 18px;
+  height:18px;
+  background: url("./i/close.png");
+  cursor: pointer;
+}
+.dialog-content .dialog-title {
+  float: left;
+  position: absolute;
+  left:15px;
+  top:7px;
+  padding-right:20px;
+  height: 15px;
+  text-align: left;
+  font: normal 14px/15px "microsoft yahei";
+  color: #999;
+  overflow: hidden;
+}

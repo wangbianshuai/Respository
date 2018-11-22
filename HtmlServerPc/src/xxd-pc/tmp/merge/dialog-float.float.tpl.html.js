@@ -1,0 +1,1 @@
+define(function(){return '<div class="mui-dialog-float"><span class="mui-float-title">${title}</span><div class="mui-float-content">${content}</div><a href="#" class="mui-float-confirm c_confirm">确定</a></div>'});

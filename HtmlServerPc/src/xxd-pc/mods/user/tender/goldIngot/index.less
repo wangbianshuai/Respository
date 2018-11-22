@@ -1,0 +1,43 @@
+@import "../../side";
+@dottedPath: "../../../../";
+@import "@{dottedPath}css/reset";
+@import "@{dottedPath}css/variable";
+@path: "@{dottedPath}tmp/merge/";
+@import "@{path}tip.index.css";
+@import "@{path}dialog.index.css";
+@import "@{path}backTop.index-1.css";
+@import "@{path}dialog-float.index.css";
+@import "@{path}rotate.index.css";
+
+@import "../../../header";
+@import "../../../footer";
+
+.amount{
+  height: 40px;
+  padding:20px 25px;
+  border-bottom:1px solid #eee;
+  >div{
+    background: #f4f5f9;
+    height: 40px;
+    padding-left: 10px;
+    p{
+      display: inline-block;
+      font:normal 16px/40px "microsoft yahei";
+      color:#666666;
+      span{
+        color: #FC0D1B;
+      }
+      &.amount-earn{
+        margin-left:20px;
+      }
+    }
+  }
+}
+.table-box{
+  .one{
+    width: 220px !important;
+  }
+  .two{
+    width:100px !important;
+  }
+}

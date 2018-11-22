@@ -1,0 +1,194 @@
+@import "../../side";
+
+@dottedPath: "../../../../";
+@import "@{dottedPath}css/reset";
+@import "@{dottedPath}css/variable";
+@path: "@{dottedPath}tmp/merge/";
+@import "@{path}tip.index.css";
+@import "@{path}dialog.index.css";
+@import "@{path}backTop.index-1.css";
+@import "@{path}dialog-float.index.css";
+@import "@{path}rotate.index.css";
+
+@import "../../../header";
+@import "../../../footer";
+body,html{
+  position: relative;
+}
+.questionnaire-box {
+  .questionnaire {
+    display: inline-block;
+    float: left;
+    background: #f6f6f6;
+    border: 1px solid #e1e1e1;
+    border-radius: 10px;
+    width: 158px;
+    height: 158px;
+    text-align: center;
+    margin-bottom: 340px;
+    i {
+      display: block;
+      margin: 28px auto 10px;
+      width: 50px;
+      height: 52px;
+      background: url("../../i/userSprites.png") 0 0 no-repeat;
+    }
+    span {
+      display: block;
+      font: normal 14px/20px "microsoft yahei";
+      color: #999;
+      width: 140px;
+      margin: 0 auto;
+    }
+    &:hover {
+      border: 1px solid #57A8FF;
+      span {
+        color: #57A8FF;
+      }
+      i {
+        background: url("../../i/userSprites.png") -50px 0 no-repeat;
+      }
+    }
+  }
+  .success {
+    float: left;
+    padding: 26px;
+    h3{
+      border-bottom: 1px solid #dedede;
+      padding-left: 30px;
+      margin-bottom: 10px;
+      font: normal 16px/50px "microsoft yahei";
+    }
+    p {
+      color: #666;
+      font: 300 16px/26px "microsoft yahei";
+      text-indent: 2em;
+      span {
+        color: @col-2096;
+        margin:0;
+      }
+    }
+    .lastCount{
+      display: inline-block;
+      font: normal 16px/30px "micsoft yahei";
+      .count{
+        font: normal 16px/30px "micsoft yahei";
+        color: red;
+        cursor: pointer;
+        position: relative;
+        span{
+          position: absolute;
+          width: 270px;
+          top: -50px;
+          left: -80px;
+          background: rgba(0,0,0,0.7);
+          color: #fff;
+          text-align: center;
+          font: normal 14px/30px "micsoft yahei";
+          border-radius: 5px;
+          display: none;
+          i{
+            position: absolute;
+            display: block;
+            bottom: -20px;
+            width: 0;
+            height: 0;
+            left: 74px;
+            border: 10px solid #000;
+            border-color: rgba(0,0,0,0.7) transparent transparent transparent;
+          }
+        }
+        &:hover{
+          span{
+            display: block;
+          }
+        }
+      }
+    }
+    a{
+      display: inline-block;
+      margin: 50px 30px;
+      background: #2096e9;
+      -moz-border-radius: 5px;
+      -webkit-border-radius: 5px;
+      border-radius: 5px;
+      width: 160px;
+      height: 40px;
+      line-height: 40px;
+      border: 0;
+      color: #fff;
+      text-align: center;
+      font-size: 16px;
+      cursor: pointer;
+      &:hover{
+        background: #0266be;
+      }
+      &.disable{
+        background: #666;
+        border:0;
+        color: #888;
+        cursor: default;
+        &:hover{
+          background: #666;
+        }
+      }
+    }
+  }
+}
+
+.questions-box {
+  padding: 20px 0 0 25px;
+  h6 {
+    font: normal 16px/50px "microsoft yahei";
+    color: #333;
+  }
+  label {
+    font: normal 16px/24px "microsoft yahei";
+    cursor: pointer;
+    display: block;
+    input {
+      margin-right: 10px;
+    }
+  }
+  .btn {
+    margin-top: 30px;
+  }
+}
+
+.user-title {
+  .question-tip {
+    width: 100%;
+  }
+  .back {
+    font: normal 18px/52px "microsoft yahei";
+    float: right;
+    margin: 0;
+    cursor: pointer;
+    &:hover {
+      color: #00498a;
+    }
+  }
+}
+.operate-tip{
+  .tip-content{
+    width:400px;
+  }
+  p{
+    height: auto!important;
+    &.notes{
+      text-indent: 2em;
+      text-align: left !important;
+    }
+  }
+  em{
+    display: block;
+    margin-top: 10px;
+    font: normal 16px/30px "micsoft yahei";
+    color: #3f9bff;
+    cursor: pointer;
+    &:hover {
+      color: #00498a;
+    }
+  }
+
+}

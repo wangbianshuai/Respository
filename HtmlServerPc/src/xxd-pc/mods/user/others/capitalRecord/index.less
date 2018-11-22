@@ -1,0 +1,357 @@
+@import "../../side";
+@dottedPath: "../../../../";
+@import "@{dottedPath}css/reset";
+@path: "@{dottedPath}tmp/merge/";
+@import "@{dottedPath}tpl/bank-list-dialog";
+@import "@{path}/tip.index.css";
+@import "@{path}/dialog.index.css";
+@import "@{path}/backTop.index-1.css";
+@import "@{path}/dialog-float.index.css";
+@import "../../../header";
+@import "../../../footer";
+.g-right {
+  .m-con-wrap {
+    //提现
+    .withdraw {
+      .freetips {
+        margin-bottom: -25px;
+        margin-left: 111px;
+        color: #999;
+        p {
+          color: #999;
+        }
+      }
+      input {
+        font-size: 16px;
+        color: #999;
+      }
+      p {
+        padding-left: 0;
+      }
+      border-bottom: 1px dashed #eee;
+      padding-bottom: 25px;
+      &.last {
+        border-bottom: none;
+      }
+      .filed-user {
+        font-size: 16px;
+        color: #666666;
+        margin-top: 25px;
+        position: relative;
+        //体现到银行卡-已绑定的银行卡
+        .promptbox {
+          position: absolute;
+          width: 280px;
+          height: auto;
+          left: 108px;
+          text-align: center;
+          padding-top: 20px;
+          margin-top: 15px;
+          background: #f1f1f1;
+          border: 1px solid #cccccc;
+          border-radius: 5px;
+          z-index: 99;
+          //带边框的小三角
+          .triangle—down {
+            position: absolute;
+            left: 243px;
+            top: -12px;
+            width: 0;
+            height: 0;
+            border-width: 0 10px 12px;
+            border-color: transparent transparent #ccc transparent;
+            border-style: solid;
+            i {
+              position: absolute;
+              top: 1px;
+              left: -9px;
+              display: inline-block;
+              width: 0;
+              height: 0;
+              border-width: 0 9px 11px;
+              border-color: transparent transparent #eee transparent;
+              border-style: solid;
+            }
+          }
+          ul.contr{
+            display: inline-block;
+            width: 280px;
+            height: 60px;
+          }
+          li {
+            display: inline-block;
+            width: 238px;
+            height: 38px;
+            font-size: @font18px;
+            color: #333;
+            line-height: 38px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            margin-bottom: 20px;
+            background-color: #fff;
+            cursor: pointer;
+            &:hover {
+              border-color: #1F96E8;
+            }
+            img {
+              display: inline-block;
+              margin-bottom: -7px;
+              padding-right: 5px;
+            }
+            &.addbank {
+              border: 1px dashed #ccc;
+              p {
+                background: url("@{imgurl}add-blue.png") no-repeat 0px 7px;
+                padding-left: 25px;
+                font-size: @font14px;
+                color: #1e97e9;
+              }
+              &:hover {
+                border-color: #1F96E8;
+              }
+            }
+            //左上角默认银行卡小标示
+            &.defaullogos {
+              background: #fff url("@{imgurl}bk-defaults.png") no-repeat -1px -1px;
+            }
+          }
+        }
+        .priceShow{
+          width: 200px;
+        }
+        p {
+          display: inline-block;
+          a {
+            display: inline-block;
+            background: #2096e9;
+            width: 280px;
+            height: 40px;
+            line-height: 40px;
+            font-size: 16px;
+            color: #fff;
+            text-align: center;
+            -webkit-border-radius: 5px;
+            -moz-border-radius: 5px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 0;
+            &:hover {
+              background-color: #0266be;
+            }
+          }
+        }
+
+        p.intotime {
+          span {
+            width: auto;
+            margin-right: 10px;
+          }
+          i {
+            font-style: normal;
+            font-size: 16px;
+            color: #999999;
+          }
+
+        }
+        p.openbank {
+          display: inline-block;
+          width: 278px;
+          height: 38px;
+          line-height: 38px;
+          border: 1px solid #ccc;
+          -webkit-border-radius: 4px;
+          -moz-border-radius: 4px;
+          border-radius: 4px;
+          background: #f4f5f9;
+          span {
+            width: 188px;
+            text-align: left;
+            padding-left: 10px;
+            color: #333;
+            margin-right: 0;
+            img {
+              width: 127px;
+              height: 28px;
+              padding-right: 5px;
+              margin-bottom: 2px;
+              vertical-align: middle;
+            }
+          }
+          i {
+            display: inline-block;
+            border-left: 1px solid #ccc;
+            width: 79px;
+            font-style: normal;
+            font-size: 16px;
+            color: @col-2096;
+            background-color: #f5f5f5;
+            text-align: center;
+            cursor: pointer;
+            -webkit-border-radius: 0 4px 4px 0;
+            -moz-border-radius: 0 4px 4px 0;
+            border-radius: 0 4px 4px 0;
+          }
+        }
+
+        p.opensub {
+          position: relative;
+          select {
+            width: 120px;
+            height: 40px;
+            line-height: 40px;
+            font-size: 16px;
+            color: #999;
+            background-color: #fff;
+          }
+          input {
+            width: 150px;
+          }
+          label {
+            padding: 0 10px;
+          }
+        }
+        p.warmtips {
+          font-size: 14px;
+          color: #999;
+        }
+        span {
+          display: inline-block;
+          width: 104px;
+          text-align: left;
+          font-size: 16px;
+          color: #666666;
+          &.threetxt {
+            letter-spacing: 14px;
+          }
+          &.fourtxt {
+            letter-spacing: 4.38px;
+          }
+          &.red {
+            color: #FF0000;
+            font-size: @font18px;
+          }
+        }
+        input {
+          width: 270px;
+          height: 40px;
+          line-height: 40px;
+          padding-left: 10px;
+        }
+        a {
+          color: #2096e9;
+          cursor: pointer;
+          margin-left: 5px;
+        }
+      }
+
+      .wrong_tip {
+        font-size: 13px;
+        min-width: 267px;
+        height: 28px;
+        line-height: 28px;
+        background-color: #FDD;
+        border: 1px solid #FBB;
+        border-radius: 2.5px;
+        color: #F00;
+        padding: 0 6px;
+      }
+      .wt_pos {
+        display: inline-block;
+        margin-top: 5px;
+        margin-bottom: -25px;
+        margin-left: 110px;
+      }
+    }
+    .warmth-warn {
+      margin-top: 35px;
+    }
+  }
+}
+.openornot {
+  position: relative;
+  width: 560px;
+  padding-bottom: 45px;
+  background: @col-fff;
+  box-shadow: 0 2px 3px 0 rgba(0, 0, 0, 0.16);
+  -webkit-border-radius: 6px;
+  -moz-border-radius: 6px;
+  border-radius: 6px;;
+  .c_close {
+    position: absolute;
+    top: -48px;
+    right: 0px;
+    font-size: 33px;
+    color: @col-fff;
+  }
+  .m-con-hd {
+    height: 52px;
+    line-height: 52px;
+    text-align: center;
+    font-size: @font18px;
+    color: @col-333;
+    border-bottom: 1px solid @col-eee;
+  }
+
+  .filed-user {
+    position: relative;
+    margin: 0 auto;
+    width: 472px;
+    margin-top: 32px;
+    font-size: 16px;
+    color: #666666;
+
+    span {
+      display: inline-block;
+      width: 104px;
+      margin-right: 20px;
+      text-align: right;
+      font-size: 16px;
+      color: #666666;
+    }
+    p {
+      display: inline-block;
+      font-size: 16px;
+      color: #666;
+      width: 100%;
+      a {
+        position: static;
+        display: inline-block;
+        background: #2096e9;
+        width: 200px;
+        height: 40px;
+        line-height: 40px;
+        font-size: 16px;
+        color: #fff;
+        text-align: center;
+        -webkit-border-radius: 5px;
+        -moz-border-radius: 5px;
+        border-radius: 5px;
+        cursor: pointer;
+        margin: 0;
+        top:0;
+        &:hover {
+          background-color: #0266be;
+        }
+        &.btn_left{
+          left: 0;
+        }
+        &.btn_right {
+          background: #fff;
+          color: #2096e6;
+          border: 1px solid #2096e6;
+          height: 38px;
+          line-height: 38px;
+          width: 198px;
+          top: 0;
+          &:hover {
+            border: 1px solid #0266be;
+            color: #0266be;
+          }
+        }
+      }
+      &.cet{
+        text-align: center;
+      }
+    }
+  }
+}

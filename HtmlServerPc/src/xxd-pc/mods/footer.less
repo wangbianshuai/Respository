@@ -1,0 +1,179 @@
+@import "../css/variable";
+.footer {
+    margin:0 auto;
+    .footer-wrap {
+        width: 1200px;
+        margin: 30px auto 0;
+        background-color: #4b78c6;
+    }
+    .footer-info {
+        margin: 0 30px;
+        padding: 30px 0;
+    }
+    .about-us {
+        float:left;
+        .call-us {
+            display: block;
+            width: 400px;
+            height: 40px;
+            background: url(//www.xinxindai.com/static/images/public/xxd-v6.png) no-repeat 0 0;
+        }
+        .qr-code-list {
+            margin-top: 70px;
+            span {
+                color: #fff;
+                font:normal 14px/30px @xxd-font;
+                vertical-align: 8px;
+            }
+            i {
+                display: inline-block;
+                margin:0 5px;
+                width: 30px;
+                height: 30px;
+                cursor: pointer;
+            }
+            .weibo-icon {
+                background: url(//www.xinxindai.com/static/images/public/xxd-v6.png) no-repeat -114px -59px;
+            }
+            .wechat-icon {
+                background: url(//www.xinxindai.com/static/images/public/xxd-v6.png) no-repeat -84px -59px;
+            }
+            .ios-icon {
+                background: url(//www.xinxindai.com/static/images/public/xxd-v6.png) no-repeat -144px -59px;
+            }
+            .android-icon {
+                background: url(@icon-android) no-repeat;
+            }
+        }
+
+        .about-us-warn{
+            color: #fff;
+            vertical-align: 8px;
+            font: normal 14px/30px @xxd-font;
+            vertical-align: 8px;
+            margin-top: 10px;
+            font-size: 14px;
+        }
+    }
+    .footer-intro , .footer-safe ,.footer-newer ,.footer-phone {
+        float: right;
+        width: 90px;
+        margin-left: 15px;
+        ul{
+            position: relative;
+        }
+        li {
+            text-align: right;
+            font:normal 14px/38px @xxd-font;
+            a {
+                color: #fff;
+            }
+            &.first {
+                padding-bottom:15px;
+            }
+        }
+        .borrow-scan{
+            position: absolute;
+            top: 0;
+            left: -90px;
+        }
+    }
+    .footer-link {
+        position: relative;
+        border-top: 1px dashed #fff;
+        padding-top: 15px;
+        margin: 0 30px 20px;
+        &.close-down ul{
+            height: 25px;
+            overflow: hidden;
+        }
+        .footer-link-title , ul li {
+            font: normal 14px/25px @xxd-font;
+            float: left;
+            color: #fff;
+        }
+        ul li {
+            float: left;
+            padding-right: 15px;
+            a {
+                color: #fff;
+            }
+        }
+        &.close-down .switch-icon {
+            background: url(@footer-arrow-down) no-repeat;
+        }
+        .switch-icon {
+            position: absolute;
+            display: block;
+            width: 14px;
+            height: 15px;
+            right: 0px;
+            top: 20px;
+            cursor: pointer;
+            background: url(@footer-arrow-up) no-repeat;
+        }
+    }
+    .footer-bottom {
+        margin:0 auto;
+        text-align: center;
+        background: white;
+        padding:20px 0 10px 0;
+        .text  , .text a{
+            color:#666;
+            font:normal 13px/20px @xxd-font;
+            &:hover {
+                color:#428bca
+            }
+            .chapter{
+                display:inline-block;
+                width:20px;
+                height:20px;
+                margin-left:8px;
+                background: url(@chapter) no-repeat center;
+                margin-bottom:-4px;
+            }
+        }
+    }
+    .footer-icons {
+        margin: 10px auto 0;
+        text-align: center;
+    }
+    .x1 {
+        width: 140px;
+        height: 28px;
+        display: inline-block;
+        background: url(//www.xinxindai.com/static/images/public/hlwjb.png) no-repeat 0px -37px;
+        position: relative;
+        color: #fff;
+    }
+    .x2 {
+        width: 28px;
+        height: 28px;
+        display: inline-block;
+        background: url(//www.xinxindai.com/static/images/public/foot-new.png) no-repeat -2px -156px;
+    }
+    .x3 {
+        width: 67px;
+        height: 26px;
+        display: inline-block;
+        background: url(//www.xinxindai.com/static/images/public/foot-new.png) no-repeat -3px -97px;
+    }
+    .x4 {
+        width: 75px;
+        height: 28px;
+        display: inline-block;
+        background: url(//www.xinxindai.com/static/images/public/foot-new.png) no-repeat -3px -35px;
+    }
+    .x5{
+        width: 130px;
+        height: 28px;
+        display: inline-block;
+        background: url(@x5) no-repeat 0px -35px;
+    }
+    .x6 {
+        width: 76px;
+        height: 28px;
+        display: inline-block;
+        background: url(@x6) no-repeat;
+    }
+}

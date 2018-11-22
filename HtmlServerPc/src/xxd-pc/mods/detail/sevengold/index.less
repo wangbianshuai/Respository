@@ -1,0 +1,89 @@
+@dottedPath: "../../../";
+@import "@{dottedPath}/css/reset";
+@path: "@{dottedPath}tmp/merge/";
+@import "@{dottedPath}tpl/bank-list-dialog";
+@import "@{path}/tip.index.css";
+@import "@{path}/dialog.index.css";
+@import "@{path}/backTop.index-1.css";
+@import "@{path}/dialog-float.index.css";
+@import "../../header";
+@import "../../footer";
+@import "../detail";
+.main-product {
+	float: left;
+	width: 747px;
+	padding-top: 25px;
+	.title {
+		width: 382px;
+		height: 66px;
+		margin-left: -14px;
+		padding-left: 40px;
+		background: url("../i/sevengold-tit.png") 0 0 no-repeat;
+		font: normal 20px/55px @xxd-font;
+		color: #fff;
+		span {
+			font-size: 14px;
+		}
+	}
+	table {
+		text-align: left;
+		position: relative;
+		margin: 30px 50px;
+		td, th {
+			width: 150px;
+			height: 50px;
+		}
+		th {
+			font-size: 14px;
+			color: @fontColor;
+			font-weight: 400;
+		}
+		td {
+			font-size: 30px;
+			color: #333333;
+			span {
+				position: relative;
+				font-size: 16px;
+			}
+		}
+		.rate {
+			font-size: 30px;
+			color: #5ea8f8;
+			span {
+				color: #FF7365;
+			}
+		}
+		.new-hot {
+			position: absolute;
+			top: -28px;
+			left: -2px;
+			width: 78px;
+			height: 24px;
+			display: inline-block;
+			background: url("../i/newadd.png") 0 0 no-repeat;
+		}
+	}
+	p {
+		padding-left: 50px;
+		margin: 0;
+		color: @fontColor;
+		font:normal 14px/30px @xxd-font;
+		.tip {
+			color: #fe7474;
+			margin-left: 30px;
+		}
+		a {
+			color: #5ea8f8;
+		}
+	}
+}
+.product-info {
+	background: #fff;
+	width: 1198px;
+	margin: 20px 0;
+	border: 1px solid @borderColor;
+	.money .active {
+		border-color: #5ea8f8;
+		color: #5ea8f8;
+	}
+}

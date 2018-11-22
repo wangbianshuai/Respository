@@ -1,0 +1,200 @@
+@dottedPath: "../../../";
+@import "@{dottedPath}/css/reset";
+@path: "@{dottedPath}tmp/merge/";
+@import "@{dottedPath}tpl/bank-list-dialog";
+@import "@{path}/tip.index.css";
+@import "@{path}/dialog.index.css";
+@import "@{path}/backTop.index-1.css";
+@import "@{path}/dialog-float.index.css";
+@import "../../header";
+@import "../../footer";
+@import "../detail";
+@blueColor: #4895e3;
+@whiteColor: #ffffff;
+.success {
+  padding: 50px;
+  background: #fff;
+  border: 1px solid @borderColor;
+  text-align: center;
+  i {
+    display: inline-block;
+    vertical-align: sub;
+    margin-right: 10px;
+  }
+  .success-focus {
+    border-bottom: 1px dashed @borderColor;
+    text-align: center;
+    margin: 0 auto;
+    h2 {
+      height: 38px;
+      line-height: 38px;
+      font-size: 20px;
+      color: @blueColor;
+      i {
+        background: url("@{detailPath}i/sprites.png") -74px 0 no-repeat;
+        width: 21px;
+        height: 22px;
+      }
+    }
+    .start-time, .end-time {
+      color: @fontColor;
+      padding: 10px;
+      p {
+        font-size: 14px;
+        margin: 0;
+        margin: 0 auto;
+        height: 30px;
+      }
+      .clock, .saving-pot {
+        width: 23px;
+        height: 22px;
+        vertical-align: middle;
+        margin: 0 5px 0 7px;
+        background: url("@{detailPath}i/sprites.png") -95px -0px no-repeat;
+      }
+      .saving-pot {
+        height: 20px;
+        width: 20px;
+        background: url("@{detailPath}i/sprites.png") -54px 0 no-repeat;
+      }
+    }
+    .arrows {
+      width: 34px;
+      height: 80px;
+      background: url("@{detailPath}i/sprites.png") 0 0 no-repeat;
+      margin: 0 auto;
+    }
+    .purchase {
+      margin: 90px 25px 20px;
+      //display: block;
+      width: 265px;
+      height: 60px;
+      border: 0;
+      text-align: center;
+      color: #fff;
+      font-size: 18px;
+      background: @blueColor;
+      -webkit-border-radius: 5px;
+      -moz-border-radius: 5px;
+      border-radius: 5px;
+      cursor: pointer;
+      &:hover {
+        background-color: #0266be;
+      }
+    }
+    .record {
+      display: inline-block;
+      margin: 90px 25px 20px;
+      width: 290px;
+      height: 60px;
+      line-height: 60px;
+      border: 1px solid @blueColor;
+      text-align: center;
+      color: @blueColor;
+      font-size: 18px;
+      background: @whiteColor;
+      -webkit-border-radius: 5px;
+      -moz-border-radius: 5px;
+      border-radius: 5px;
+      cursor: pointer;
+      &:hover {
+        color: #0266be;
+      }
+    }
+  }
+  .notice-txt{
+    width: 95%;
+    margin: 20px auto 0;
+    text-align: left;
+    line-height: 30px;
+    color: red;
+    font-size: 15px;
+  }
+  .invitation {
+    color: #ff908c;
+    text-decoration: none;
+    font-size: 20px;
+    display: inline-block;
+    text-align: center;
+    margin-top: 50px;
+    &:hover {
+      color: red;
+      text-decoration: underline;
+    }
+    i {
+      width: 20px;
+      height: 22px;
+      background: url("@{detailPath}i/sprites.png") -34px 0 no-repeat;
+    }
+  }
+}
+
+.recommend {
+  h3 {
+    height: 24px;
+    line-height: 24px;
+    color: @fontColor;
+    font-size: 16px;
+    margin:10px 0;
+    i {
+      background: url("@{detailPath}i/sprites.png") -34px -22px no-repeat;
+      width: 17px;
+      height: 21px;
+    }
+  }
+  .recommend-focus {
+    border: 1px solid @borderColor;
+    background: #fff;
+    .recommend-list {
+      padding: 0 30px;
+      >div{
+        border-bottom: 1px solid @borderColor;
+        &.last{
+          border-bottom:0;
+        }
+      }
+    }
+    table {
+      float: left;
+      text-align: left;
+      font-size: 14px;
+      th {
+        color: @fontColor;
+        height: 50px;
+      }
+      td {
+        font-size:16px;
+        color:#333333;
+        height: 50px;
+      }
+      .first {
+        width: 430px;
+      }
+      .second {
+        width: 260px;
+      }
+      .third {
+        width: 180px;
+      }
+    }
+    .visit-product {
+      display: inline-block;
+      float: left;
+      width: 157px;
+      height: 46px;
+      line-height: 46px;
+      border: 0;
+      font-size: 18px;
+      color: #fff;
+      text-align: center;
+      background: @blueColor;
+      -webkit-border-radius: 3px;
+      -moz-border-radius: 3px;
+      border-radius: 3px;
+      margin-top: 32px;
+      &:hover {
+        background-color: #0266be;
+      }
+    }
+  }
+}

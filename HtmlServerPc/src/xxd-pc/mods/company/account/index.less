@@ -1,0 +1,197 @@
+@import "../side";
+@relativePath: "../../../";
+// @import "@{relativePath}css/reset";
+@import "@{relativePath}css/variable";
+@import "@{relativePath}css/cropper.min.css";
+@path: "@{relativePath}tmp/merge/";
+@import "@{path}tip.index.css";
+@import "@{path}dialog.index.css";
+@import "@{path}backTop.index-1.css";
+@import "@{path}dialog-float.index.css";
+@import "@{path}rotate.index.css";
+@import "../../header";
+@import "../../footer";
+
+html {
+  font: 12px/1.5 "microsoft yahei";
+}
+
+.g-left{
+  .menu{
+    h2{
+      background: #57a8ff;
+      a{
+        display: block;
+      }
+    }
+  }
+}
+.m-con-hd:not(:first-of-type) {
+  margin-top: 50px;
+  border-top: 1px solid #eee;
+}
+.m-btn {
+  &:hover {
+    border-color: #0266be;
+    color: #0266be;
+  }
+  line-height: 1.5;
+  display: inline-block;
+  font-weight: 400;
+  text-align: center;
+  -ms-touch-action: manipulation;
+  touch-action: manipulation;
+  cursor: pointer;
+  background-image: none;
+  border: 1px solid transparent;
+  white-space: nowrap;
+  padding: 0 15px;
+  font-size: 14px;
+  border-radius: 4px;
+  height: 30px;
+  width: 100px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  -webkit-transition: all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
+  transition: all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
+  position: relative;
+  color: #57A8FF;
+  background-color: #fff;
+  border-color: #57A8FF;
+}
+.m-btn-primary {
+  color: #fff;
+  background-color: #57A8FF;
+  // border-color: #57A8FF;
+  &:hover {
+    color: #fff;
+    background-color: #0266be;
+  }
+}
+
+.boad {
+  padding: 11px 21px;
+  font-size:16px;
+  font-family:MicrosoftYaHei;
+  color:#333;
+  height: 90px;
+  box-sizing: border-box;
+  .boad-title {
+    padding-top: 10px;
+    line-height:21px;
+    span {
+      color:#535353;
+    }
+  }
+  .boad-extra {
+    padding-top: 12px;
+    font-size:12px;
+    font-family:PingFangSC-Regular;
+    color:rgba(153,153,153,1);
+    line-height:17px;
+  }
+  .blue-num {
+    width:117px;
+    height:29px; 
+    padding-top: 20px;
+    font-size:22px;
+    font-family:MicrosoftYaHei;
+    color:#57A8FF;
+    line-height:29px;
+  }
+  .orange-num {
+    width:117px;
+    height:29px;
+    padding-top: 20px;
+    font-size:22px;
+    font-family:MicrosoftYaHei;
+    color: #FF5500;
+    line-height:29px;
+  }
+}
+
+.user-detail,
+.user-btns {
+  border-bottom: 1px solid #eee;
+}
+.user-btns {
+  .boad{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+.table {
+  text-align: center;
+  padding: 24px;
+  table {
+    width: 920px;
+    font-size: 14px;
+    border-spacing: 0;
+    border-bottom: 1px dashed #dedede;
+    thead {
+      color: #999;
+      background-color: #F4F5F9;
+      tr>th {
+        border-bottom: 1px solid #e8e8e8;
+      }
+    }
+    th, td {
+      line-height: 40px;
+      border: none;
+    }
+  }
+}
+.flex-container {
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-flex-wrap: nowrap;
+  -ms-flex-wrap: nowrap;
+  flex-wrap: nowrap;
+  -webkit-justify-content: space-around;
+  -ms-flex-pack: distribute;
+  justify-content: space-around;
+  -webkit-align-content: stretch;
+  -ms-flex-line-pack: stretch;
+  align-content: stretch;
+  -webkit-align-items: flex-start;
+  -ms-flex-align: start;
+  align-items: flex-start;
+  }
+
+.flex-item:nth-child(1) {
+  border-right: 1px solid #eee;
+  width: 37%;
+  -webkit-order: 0;
+  -ms-flex-order: 0;
+  order: 0;
+  -webkit-flex: 1 1 auto;
+  -ms-flex: 1 1 auto;
+  flex: 1 1 auto;
+  -webkit-align-self: auto;
+  -ms-flex-item-align: auto;
+  align-self: auto;
+  }
+
+.flex-item:nth-child(2),
+.flex-item:nth-child(3),
+.flex-item:nth-child(4) {
+  width: 21%;
+  -webkit-order: 0;
+  -ms-flex-order: 0;
+  order: 0;
+  -webkit-flex: 1 1 auto;
+  -ms-flex: 1 1 auto;
+  flex: 1 1 auto;
+  -webkit-align-self: auto;
+  -ms-flex-item-align: auto;
+  align-self: auto;
+  text-indent: 2em;
+  }

@@ -1,0 +1,25 @@
+<div class="mui-register">
+    <h2 class="mui-register-title">用户注册</h2>
+    <p class="mui-register-msg hide"></p>
+    <ul>
+        <li><input type="text" placeholder="请输入手机号" id="J_rUsername" /></li>
+        <li><input type="password" placeholder="请设置密码" id="J_rPassword" /></li>
+        <li>
+            <input type="text" placeholder="图片验证码" id="J_rImgCode" />
+            <em class="mui-img-code">
+                <img src="/feapi/randCode/createVerifyCode" id="J_registerImgCode">
+            </em>
+        </li>
+        <li>
+            <input type="text" class="reg-input" data-img="message" id="J_smsCode" placeholder="手机验证码">
+            <div class="mui-m-code">
+                <b id="J_sendMobileCode" class="disable">发送验证码</b>
+            </div>
+        </li>
+        <li>
+            <button class="c_confirm">立即注册</button>
+        </li>
+        <li><a href="#">已有账号？<span class="login" id="J_muiRegisterToMuiLogin">请登录</span></a></li>
+    </ul>
+    <em class="mui-close c_close"></em>
+</div>

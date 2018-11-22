@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+
+<body>
+
+
+<div id="J_header" class="header clearfix" th:fragment="header" >
+    <div class="header-wrap">
+        <div class="header-nav clearfix">
+            <div class="nav-left">
+                <span>客服电话：4000-169-521 （9:00-18:00工作日）</span>
+                <span class="phone j_qrCodeTip" position="bottom" th:tipContent="@{${global.staticHost}+'/pc/'+${global.xxdVersion}+'/build/css/i/qr-code-phone.png'}"><i></i></span>
+                <span><a href="/html/promotion/index.html">手机客户端</a></span>
+                <span class="weibo" position="bottom" th:tipContent="@{${global.staticHost}+'/pc/'+${global.xxdVersion}+'/build/css/i/qr-weibo.png'}">
+                    <a href="http://weibo.com/xinxindai" target="_blank" class='weibo-icon'></a>
+                    <i></i>
+                </span>
+                <span class="wechat j_qrCodeTip" position="bottom" th:tipContent="@{${global.staticHost}+'/pc/'+${global.xxdVersion}+'/build/css/i/qr-code-wechat.png'}"><i></i></span>
+                <span>投资有风险，选择需谨慎</span>
+            </div>
+            <div class="nav-right">
+                <!--/* not login  begin  */-->
+                <a th:if="${globalData.isLogin == false}" href="/user/ilogin.html">登录</a>
+                <a th:if="${globalData.isLogin == false}" href="/user/iregister.html" class="red ga-click" ga-category="注册" ga-action="第一步" ga-label="banner">注册</a>
+                <!--/* when not login  end */-->
+                <a th:if="${globalData.isLogin == false}" href="/usercenter/company/register.html">企业账户</a>
+                <!--/* when login  begin */-->
+                <span th:if="${globalData.isLogin == true}" class="nav-user j_userDropdown" position="bottom" tipContent="html" >欢迎:[[${globalData.nickName}]]<i></i></span>
+                <!--/* when login  end */-->
+                <!--<a href="/ask/askList.html">问答</a>-->
+                <!--<a th:if="${globalData.isLogin == true}" href="http://bbs.xinxindai.com">社区</a>-->
+                <a href="http://bbs.xinxindai.com">社区</a>
+            </div>
+        </div>
+    </div>
+    <div class="header-menu">
+        <a href="/" class="logo">
+            <i></i>
+        </a>
+        <ul class="menu">
+            <li><a href="/">首页</a></li>
+            <li class="j_investDropdown" position="bottom" tipContent="html"><a href="#" class='new-hot'>我要出借<i></i><span></span></a></li>
+            <li><a href="javascript:void(0)" id="J_borrowMoney">我要借款</a></li>
+            <li class="j_informationDropdown" position="bottom" tipContent="html"><a href="/html/help/organization.html">信息披露<i></i></a></li>
+            <li><a href="/html/introduce/guide.html">新手福利</a></li>
+            <li><a href="/xinsheng/list.html">新新学院</a></li>
+        </ul>
+    </div>
+</div>
+<div id="J_header" class="header clearfix" th:fragment="company-header(isHeader)" >
+    <div class="header-wrap">
+        <div class="header-nav clearfix">
+            <div class="nav-left">
+                <span>客服电话：4000-169-521 （9:00-18:00工作日）</span>
+                <span class="phone j_qrCodeTip" position="bottom" th:tipContent="@{${global.staticHost}+'/pc/'+${global.xxdVersion}+'/build/css/i/qr-code-phone.png'}"><i></i></span>
+                <span><a href="/html/promotion/index.html">手机客户端</a></span>
+                <span class="weibo" position="bottom" th:tipContent="@{${global.staticHost}+'/pc/'+${global.xxdVersion}+'/build/css/i/qr-weibo.png'}">
+                    <a href="http://weibo.com/xinxindai" target="_blank" class='weibo-icon'></a>
+                    <i></i>
+                </span>
+                <span class="wechat j_qrCodeTip" position="bottom" th:tipContent="@{${global.staticHost}+'/pc/'+${global.xxdVersion}+'/build/css/i/qr-code-wechat.png'}"><i></i></span>
+                <span>市场有风险，出借需谨慎</span>
+            </div>
+            <!--企业用户登录成功-->
+            <div class="nav-right">
+                <p class="nav-user j_userDropdown cursor-default" position="bottom" tipcontent="html">欢迎<span id="J_companyName">[[${globalData.nickName}]]</span></p>
+                <a href="javascript:void(0);" id="J_safeLogout">安全退出</a>
+            </div>
+        </div>
+    </div>
+    <div class="header-menu company-menu">
+        <a href="/" class="logo">
+            <i></i>
+        </a>
+        <!--企业用户登录成功-->
+        <ul class="menu" id="J_showMenu">
+            <li><a href="/myloan/loan/9.html">我要借款</a></li>
+            <li th:classappend="${isHeader}? 'active'"><a href="/usercenter/company/account.html">我的账户</a></li>
+        </ul>
+    </div>
+</div>
+
+</body>
+
+</html>

@@ -1,0 +1,515 @@
+@import "../../side";
+
+@dottedPath: "../../../../";
+@import "@{dottedPath}css/reset";
+@import "@{dottedPath}css/variable";
+@path: "@{dottedPath}tmp/merge/";
+@import "@{path}tip.index.css";
+@import "@{path}dialog.index.css";
+@import "@{path}backTop.index-1.css";
+@import "@{path}dialog-float.index.css";
+@import "@{path}rotate.index.css";
+
+@import "../../../header";
+@import "../../../footer";
+.g-right {
+  .m-con-wrap {
+    .bundled-number {
+      font-style: normal;
+      color: #999;
+    }
+    .m-con-bd {
+      border-bottom: 0 !important;
+      .filed-user {
+        font-size: 16px;
+        color: #666666;
+        margin-top: 25px;
+        position: relative;
+        span {
+          display: inline-block;
+          width: 104px;
+          text-align: left;
+          font-size: 16px;
+          color: #666666;
+          &.threetxt {
+            letter-spacing: 1px;
+          }
+          &.fourtxt {
+            letter-spacing: -1.2px;
+          }
+          &.fivetxt {
+            letter-spacing: 0px;
+          }
+          &.sixtxt {
+            letter-spacing: 14px;
+          }
+        }
+        input {
+          font-size: 16px;
+          width: 268px;
+          height: 38px;
+          line-height: 38px;
+          padding-left: 10px;
+          background:#f1f1f1;
+        }
+        div{
+          font-size: 16px;
+          width: 268px;
+          height: 38px;
+          line-height: 38px;
+          padding-left: 10px;
+          background:#f1f1f1;
+          display:inline-block;
+          img{
+            height:36px;
+            display:block;
+            margin:0 auto;
+            margin-top:1px;
+          }
+        }
+      }
+    }
+    //绑卡
+    .bundled {
+      border-bottom: none;
+      li {
+        
+        display: inline-block;
+        width: 373px;
+        height: 208px;
+        margin: 25px 70px 35px 0;
+        border: 1px solid #cccccc;
+        -webkit-border-radius: 12px;
+        -moz-border-radius: 12px;
+        border-radius: 12px;
+        background-color: @col-f6f;
+        letter-spacing: -.44px;
+        cursor: default;
+        p {
+          color: @col-333;
+        }
+        //银行logo,卡片属性
+        .mark {
+          padding: 25px 30px;
+          span {
+            display: inline-block;
+            width: 228px;
+            height: 30px;
+            background: none no-repeat top left;
+            //银行logo 位置 start
+            //建设银行logo
+            &.bklogo-js {
+              background-image: url("@{imgurl}bklogo_js.png");
+            }
+            //北京农村商业银行
+            &.bklogo-bjns {
+              background-image: url("@{imgurl}bklogo_bjns.png");
+            }
+            //中信银行
+            &.bklogo-zx {
+              background-image: url("@{imgurl}bklogo_zx.png");
+            }
+            //邮政
+            &.bklogo-yz {
+              background-image: url("@{imgurl}bklogo_yz.png");
+            }
+            //中国银行
+            &.bklogo-zg {
+              background-image: url("@{imgurl}bklogo_zg.png");
+            }
+            //招商银行
+            &.bklogo-zs {
+              background-image: url("@{imgurl}bklogo_zs.png");
+            }
+            //兴业银行
+            &.bklogo-xy {
+              background-image: url("@{imgurl}bklogo_xy.png");
+            }
+            //上海
+            &.bklogo-sh {
+              background-image: url("@{imgurl}bklogo_sh.png");
+            }
+            //上海农商银行
+            &.bklogo-shns {
+              background-image: url("@{imgurl}bklogo_shns.png");
+            }
+            //浦发银行
+            &.bklogo-pf {
+              background-image: url("@{imgurl}bklogo_pf.png");
+            }
+            //平安银行
+            &.bklogo-pa {
+              background-image: url("@{imgurl}bklogo_pa.png");
+            }
+            //农业银行
+            &.bklogo-ny {
+              background-image: url("@{imgurl}bklogo_ny.png");
+            }
+            //民生
+            &.bklogo-ns {
+              background-image: url("@{imgurl}bklogo_ns.png");
+            }
+            //交通
+            &.bklogo-jt {
+              background-image: url("@{imgurl}bklogo_jt.png");
+            }
+            //华夏
+            &.bklogo-hx {
+              background-image: url("@{imgurl}bklogo_hx.png");
+            }
+            //广发
+            &.bklogo-gf {
+              background-image: url("@{imgurl}bklogo_gf.png");
+            }
+            //光大
+            &.bklogo-gd {
+              background-image: url("@{imgurl}bklogo_gd.png");
+            }
+            //工商
+            &.bklogo-gs {
+              background-image: url("@{imgurl}bklogo_gs.png");
+            }
+            //北京
+            &.bklogo-bj {
+              background-image: url("@{imgurl}bklogo_bj.png");
+            }
+            //银行logo 位置 end
+            &.line {
+              display: inline-block;
+              width: 1px;
+              height: 24px;
+              margin-top: 2px;
+              border-right: 1px solid #dedede;
+            }
+          }
+          i {
+            display: inline-block;
+            width: 68px;
+            text-align: center;
+            height: 28px;
+            line-height: 28px;
+            font-size: @font18px;
+            color: @col-fff;
+            font-style: normal;
+            background: #00498a;
+            -webkit-border-radius: 5px;
+            -moz-border-radius: 5px;
+            border-radius: 5px;
+          }
+        }
+        //银行卡号
+        .cardno {
+          padding: 20px 30px 20px 30px;
+          span {
+            display: inline-block;
+            width: 75px;
+            text-align: left;
+            font-size: 30px;
+            height: 30px;
+            line-height: 30px;
+            vertical-align: middle;
+            &.last {
+              vertical-align: baseline;
+            }
+          }
+        }
+        //操作按钮
+        .btns-operat {
+          padding: 0 30px;
+          border-top: 1px solid @col-ccc;
+          height: 50px;
+          line-height: 50px;
+          span {
+            display: inline-block;
+            margin-right: 62px;
+            font-size: @font18px;
+            color: #0c4f9d;
+            a {
+              display: inline-block;
+              cursor: pointer;
+              &.disnone {
+                display: none;
+              }
+            }
+            &.last {
+              margin-right: 0;
+              width: auto;
+            }
+          }
+
+        }
+        //默认银行卡
+        &.bank-default {
+          border: 1px solid @col-1f96e;
+          background: @col-f6f url('@{imgurl}bk_default.png') no-repeat -1px -1px;
+        }
+        //银行卡解绑审核中
+        &.unbundled-ing {
+          position: relative;
+          //红章
+          .seal {
+            position: absolute;
+            width: 220px;
+            height: 160px;
+            background: url('@{imgurl}bk_unbundle.png') no-repeat center;
+            z-index: 10;
+            left: 50%;
+            margin-left: -110px;
+            top: 50%;
+            margin-top: -80px;
+          }
+          p {
+            color: @col-999;
+            i {
+              background: @col-999;
+            }
+          }
+          .mark {
+            span {
+              //置灰银行logo 位置 start
+              //建设银行logo 灰色
+              &.bklogo-jsd {
+                background-image: url("@{imgurl}bklogo_jsd.png");
+              }
+              //北京农村商业银行
+              &.bklogo-bjnsd {
+                background-image: url("@{imgurl}bklogo_bjnsd.png");
+              }
+              //中信银行
+              &.bklogo-zxd {
+                background-image: url("@{imgurl}bklogo_zxd.png");
+              }
+              //邮政
+              &.bklogo-yzd {
+                background-image: url("@{imgurl}bklogo_yzd.png");
+              }
+              //中国银行
+              &.bklogo-zgd {
+                background-image: url("@{imgurl}bklogo_zgd.png");
+              }
+              //招商银行
+              &.bklogo-zsd {
+                background-image: url("@{imgurl}bklogo_zsd.png");
+              }
+              //兴业银行
+              &.bklogo-xyd {
+                background-image: url("@{imgurl}bklogo_xyd.png");
+              }
+              //上海
+              &.bklogo-shd {
+                background-image: url("@{imgurl}bklogo_shd.png");
+              }
+              //上海农商银行
+              &.bklogo-shnsd {
+                background-image: url("@{imgurl}bklogo_shnsd.png");
+              }
+              //浦发银行
+              &.bklogo-pfd {
+                background-image: url("@{imgurl}bklogo_pfd.png");
+              }
+              //平安银行
+              &.bklogo-pad {
+                background-image: url("@{imgurl}bklogo_pad.png");
+              }
+              //农业银行
+              &.bklogo-nyd {
+                background-image: url("@{imgurl}bklogo_nyd.png");
+              }
+              //民生
+              &.bklogo-nsd {
+                background-image: url("@{imgurl}bklogo_nsd.png");
+              }
+              //交通
+              &.bklogo-jtd {
+                background-image: url("@{imgurl}bklogo_jtd.png");
+              }
+              //华夏
+              &.bklogo-hxd {
+                background-image: url("@{imgurl}bklogo_hxd.png");
+              }
+              //广发
+              &.bklogo-gfd {
+                background-image: url("@{imgurl}bklogo_gfd.png");
+              }
+              //光大
+              &.bklogo-gdd {
+                background-image: url("@{imgurl}bklogo_gdd.png");
+              }
+              //工商
+              &.bklogo-gsd {
+                background-image: url("@{imgurl}bklogo_gsd.png");
+              }
+              //北京
+              &.bklogo-bjd {
+                background-image: url("@{imgurl}bklogo_bjd.png");
+              }
+              //置灰银行 logo 位置 end
+            }
+          }
+        }
+        //添加银行li
+        &.bank-bundled {
+          position: relative;
+          font-size: @font18px;
+          color: @col-62adff;
+          background-color: @col-fff;
+          border-style: dashed;
+          cursor: pointer;
+          i {
+            position: absolute;
+            left: 50%;
+            margin-left: -39px;
+            top: 50%;
+            margin-top: -48px;
+            display: inline-block;
+            width: 78px;
+            height: 56px;
+            background: url('@{imgurl}bklogo-add.png') no-repeat center;
+          }
+          span {
+            position: absolute;
+            left: 50%;
+            margin-left: -45px;
+            top: 50%;
+            margin-top: 18px;;
+            display: inline-block;
+            width: 90px;
+            height: 24px;
+
+          }
+        }
+      }
+      .changeCardBtn {
+        display: inline-block;
+        background: #fff;
+        color: #2096e6;
+        border: 1px solid #2096e6;
+        height: 38px;
+        line-height: 38px;
+        width: 280px;
+        font-size: 16px;
+        text-align: center;
+        -webkit-border-radius: 5px;
+        -moz-border-radius: 5px;
+        border-radius: 5px;
+        cursor: pointer;
+        outline: none;
+        &:hover {
+          border: 1px solid #0266be;
+          color: #0266be;
+        }
+        &.checking{
+          background:#f4f5f9;
+          color: #999;
+          border:1px solid #cccccc;
+          cursor: default;
+          &:hover {
+            border: 1px solid #cccccc;
+            color: #999;
+          }
+        }
+      }
+
+    }
+    .warmth-warn {
+      margin-top: 35px;
+      p{
+        font-size: @font14px;
+        color: #999999;
+        padding-left: 0;
+      }
+    }
+  }
+}
+
+.openornot {
+  position: relative;
+  width: 560px;
+  padding-bottom: 45px;
+  background: @col-fff;
+  box-shadow: 0 2px 3px 0 rgba(0, 0, 0, 0.16);
+  -webkit-border-radius: 6px;
+  -moz-border-radius: 6px;
+  border-radius: 6px;;
+  .c_close {
+    position: absolute;
+    top: -48px;
+    right: 0px;
+    font-size: 33px;
+    color: @col-fff;
+  }
+  .m-con-hd {
+    height: 52px;
+    line-height: 52px;
+    text-align: center;
+    font-size: @font18px;
+    color: @col-333;
+    border-bottom: 1px solid @col-eee;
+  }
+
+  .filed-user {
+    position: relative;
+    margin: 0 auto;
+    width: 472px;
+    margin-top: 32px;
+    font-size: 16px;
+    color: #666666;
+
+    span {
+      display: inline-block;
+      width: 104px;
+      margin-right: 20px;
+      text-align: right;
+      font-size: 16px;
+      color: #666666;
+    }
+    p {
+      display: inline-block;
+      font-size: 16px;
+      color: #666;
+      width: 100%;
+      a {
+        position: static;
+        display: inline-block;
+        background: #2096e9;
+        width: 200px;
+        height: 40px;
+        line-height: 40px;
+        font-size: 16px;
+        color: #fff;
+        text-align: center;
+        -webkit-border-radius: 5px;
+        -moz-border-radius: 5px;
+        border-radius: 5px;
+        cursor: pointer;
+        margin: 0;
+        top:0;
+        &:hover {
+          background-color: #0266be;
+        }
+        &.btn_left{
+          left: 0;
+        }
+        &.btn_right {
+          background: #fff;
+          color: #2096e6;
+          border: 1px solid #2096e6;
+          height: 38px;
+          line-height: 38px;
+          width: 198px;
+          top: 0;
+          &:hover {
+            border: 1px solid #0266be;
+            color: #0266be;
+          }
+        }
+      }
+      &.cet{
+        text-align: center;
+      }
+    }
+  }
+}
+.left {
+  float: left;
+}

@@ -1,0 +1,170 @@
+<!Doctype html>
+<html lang="zh-cn" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" th:href="@{${global.staticHost}+'/pc/'+${global.xxdVersion}+'/build/css/i/favicon.ico'}">
+    <link rel="Bookmark" th:href="@{${global.staticHost}+'/pc/'+${global.xxdVersion}+'/build/css/i/favicon.ico'}">
+    <title>【新新贷官网】专业透明的P2P网络借贷平台，P2P网贷，网上贷款借款、投融资信息中介平台</title>
+    <meta name="keywords" content="新新贷，P2P网贷，P2P理财，投资理财，网上理财，新元宝，月月派，新手专享，投融资，贷款，企业贷款，无抵押小额贷款，借款"/>
+    <meta name="description"
+          content="新新贷是中国专业的互联网金融P2P网络借贷信息中介平台，为出借人和借款人提供省心的互联网金融信息服务。资金银行存管、严格的风控体系、信息披露透明等多重安全保障措施。"/>
+    <link th:href="@{${global.staticHost}+'/pc/'+${global.xxdVersion}+'/build/mods/detail/sevengold/_.css'}" rel="stylesheet">
+</head>
+<body>
+<div id="J_wrapBody">
+    <div th:replace="/common/header::header"></div>
+    <div class="detail-crumbs">
+        <div class="crumbs">
+            <a href="//www.xinxindai.com/">首页</a> &gt; <b>我要出借</b> &gt; <b>七天大胜</b>
+        </div>
+    </div>
+    <div class='container clearfix'>
+        <div class='product-info clearfix'>
+            <div class='main-product'>
+                <p class='title'>[[${globalData.detailQTDS.data.name}]]<span>（七天期 新手加息）</span></p>
+                <table>
+                    <tr>
+                        <th>历史年化收益</th>
+                        <th>锁定期限</th>
+                        <th>起投金额</th>
+                    </tr>
+                    <tr>
+                        <td class='rate'>[[${globalData.detailQTDS.data.apr}]]%<span th:if="${globalData.detailQTDS.data.floatApr !=0}">+[[${globalData.detailQTDS.data.floatApr}]]%<i th:if="${globalData.detailQTDS.data.floatApr !=0}" class='new-hot'></i></span></td>
+                        <td>[[${globalData.detailQTDS.data.period}]]<span>天</span></td>
+                        <td>[[${globalData.detailQTDS.data.lowestTender}]]<span>元</span></td>
+                    </tr>
+                </table>
+                <p>出借上限：<span>[[${#numbers.formatDecimal(globalData.detailQTDS.data.mostTender,1,'COMMA',2,'POINT')}]]</span>元</p>
+                <p>起息时间：出借当天开始计息 <span class='tip'>注：每个账户限购1次</span></p>
+            </div>
+            <div class='detail-focus'>
+                <p th:if="${!globalData.isLogin}">账户余额：<a class='tologin'>登录</a>后可见</p>
+                <p th:if="${globalData.isLogin}">账户余额：[[${#numbers.formatDecimal(globalData.detailQTDS.data.usable,1,'COMMA',2,'POINT')}]] <a href='/usercenter/recharge.html' id="recharge">充值</a></p>
+                <p>出借金额：（[[${globalData.detailQTDS.data.step}]]的整数倍递增）</p>
+                <div class='money' id="J_money">
+                    <button type='button' value='500' th:class="${globalData.detailQTDS.data.mostTender ge 500}? '' : 'disable'">500元</button>
+                    <button type='button' value='800' th:class="${globalData.detailQTDS.data.mostTender ge 800}? '' : 'disable'">800元</button>
+                    <button type='button' value='1000' th:class="${globalData.detailQTDS.data.mostTender ge 1000}? '' : 'disable'">1000元</button>
+                    <button type='button' value='3000' th:class="${globalData.detailQTDS.data.mostTender ge 3000}? '' : 'disable'">3000元</button>
+                    <button type='button' value='5000' th:class="${globalData.detailQTDS.data.mostTender ge 5000}? '' : 'disable'">5000元</button>
+                    <button type='button' value='8000'  th:class="${globalData.detailQTDS.data.mostTender ge 8000}? '' : 'disable'">8000元</button>
+                    <button type='button' value='10000' th:class="${globalData.detailQTDS.data.mostTender ge 10000}? '' : 'disable'" >10000元</button>
+                </div>
+                <p class='number-box clearfix' id="J_numberBox">
+                    <span xxd-sign="minus" class='add-subtract'>-</span>
+                    <input  th:value="${globalData.detailQTDS.data.lowestTender}" onkeyup="value=value.replace(/[^\d]/g,'')" autocomplete="new-password">
+                    <span xxd-sign="plus" class='add-subtract'>+</span>
+                </p>
+                <p>历史收益：<span id="J_income">0</span>元</p>
+                <p><i></i>资金由存管银行全程监控</p>
+                <p class='risk-protocol hide'><input type="checkbox">我已充分阅读本<a target='_blank' href="/user/regRiskWarning.html">《资金出借风险提示函》</a>，知晓包括债权转让风险在内的相关风险提示，并将根据风险承受能力谨慎出借并承担风险。</p>
+                <p class="error-tip hide">错误提示</p>
+                <div id="J_buyWrap">
+                    <a class='btn tologin' th:if="${!globalData.isLogin}">立即登录</a>
+                </div>
+            </div>
+        </div>
+        <div class='product-tabs'>
+            <ul class='nav' id="J_tabs">
+                <li class='active pro-info'><a href="#">产品描述</a></li>
+                <li class='in-record'><a href="#">加入记录<span>（[[${globalData.QTDSRecord.data.totalCount}]]）</span></a></li>
+                <li class='debenture'><a href="#">债权列表</a></li>
+                <li class='problems'><a href="#">常见问题</a></li>
+                <li class='risk'><a href="#">风险提示</a></li>
+            </ul>
+            <div class='content'>
+                <div class='j_tabContent detail-desc'>
+                    <div class='desc-block clearfix'>
+                        <div>
+                            <p class='title'>产品描述及出借说明</p>
+                            <p>
+                                七天大胜是新新贷推出的<span>[[${globalData.detailQTDS.data.period}]]</span>天期、体验型出借计划，每日24小时开放出借，随时可投。
+                            </p>
+                            <p>
+                                该产品<span>[[${globalData.detailQTDS.data.lowestTender}]]</span>元起投，出借上限<span>[[${#numbers.formatDecimal(globalData.detailQTDS.data.mostTender,1,'COMMA',2,'POINT')}]]</span>元， 每人限投一次。该产品一旦出借成功，不支持提前赎回。 该产品债权对接平台的优质短期借款标的。
+                            </p>
+                        </div>
+                        <img class='f-right' th:src="@{${global.staticHost}+'/pc/'+${global.xxdVersion}+'/build/img/product1.png'}"/>
+                    </div>
+                    <div class='desc-block clearfix'>
+                        <img class='f-left' th:src="@{${global.staticHost}+'/pc/'+${global.xxdVersion}+'/build/img/product2.png'}"/>
+                        <div>
+                            <p class='title'>收益如何计算</p>
+                            <p>
+                                本产品出借成功后当日开始计息，新用户（即尚未在新新贷平台出借过的用户）出借历史年化收益率为[[${globalData.detailQTDS.data.apr + globalData.detailQTDS.data.floatApr}]]%（产品历史年化收益率[[${globalData.detailQTDS.data.apr}]]%+平台额外贴息[[${globalData.detailQTDS.data.floatApr}]]%），老用户出借历史年化收益率为[[${globalData.detailQTDS.data.apr}]]%。
+                            </p>
+                            <p>
+                                收益=<span>出借金额×[[${globalData.detailQTDS.data.apr + globalData.detailQTDS.data.floatApr}]]%(或[[${globalData.detailQTDS.data.apr}]]%)÷360×[[${globalData.detailQTDS.data.period}]]</span>
+                            </p>
+                        </div>
+                    </div>
+                    <div class='desc-block last clearfix'>
+                        <div>
+                            <p class='title'>如何回款?</p>
+                            <p>成功出借本产品之日起<span>[[${globalData.detailQTDS.data.period}]]</span>天（含出借当日及节假日）后，系统自动将本金加利息返回到您的新新贷账户。</p>
+                        </div>
+                        <img class='f-right' th:src="@{${global.staticHost}+'/pc/'+${global.xxdVersion}+'/build/img/product3.png'}"/>
+                    </div>
+                </div>
+                <div class='j_tabContent table-content hide'>
+                    <table id="J_tableRecord">
+                        <tr>
+                            <th>序号</th>
+                            <th>出借人</th>
+                            <th>加入金额</th>
+                            <th>加入时间</th>
+                        </tr>
+                        <tr th:each="item,itemStat : ${globalData.QTDSRecord.data.items}">
+                            <td>[[${itemStat.count}]]</td>
+                            <td>[[${item.userName}]]</td>
+                            <td>[[${item.account}]]</td>
+                            <td><span>[[${#calendars.format(new java.util.Date(item.addTime),'yyyy-MM-dd  HH:mm:ss')}]]</span></td>
+                        </tr>
+                    </table>
+                    <div class='pagination table-page'>
+
+                    </div>
+                </div>
+                <div class='j_tabContent debenture-money hide'>
+                    <p>您的资金将可能出借到以下任意一个或多个项目中，您可在出借后前往我的新新贷-出借管理查询详细的匹配记录。</p>
+                    <table id="J_debenture">
+                        <tr>
+                            <th>项目名称</th>
+                            <th>借款金额</th>
+                            <th>借款利率</th>
+                            <th>借款期限</th>
+                        </tr>
+                    </table>
+                    <div class='pagination debenture-page'>
+
+                    </div>
+                </div>
+                <div class='j_tabContent ask-answer hide'>
+                    <h6>1.我注册你们平台有段时间了，还没有出借过，我可以出借七天大胜吗？</h6>
+                    <p>当然可以，七天大胜是新老用户都可以出借的体验性出借计划，每人限投1次，新用户出借还能再享加息5%。</p>
+                    <h6>2.我之前出借过你们平台的其他产品，但是没有出借过七天大胜，我现在可以出借七天大胜吗？</h6>
+                    <p>可以的，为回馈老用户，七天大胜现在向老用户也开放体验，只要之前没有出借过七天大胜，每人都有一次体验机会，只限1次。</p>
+                    <h6>3.收益什么时候到账？</h6>
+                    <p>成功出借本产品之日起7天（含出借当日及节假日）后，例如您在11月1日出借，11月8日就可以收到本金加收益。</p>
+                    <h6>4.我出借了100元，还可以再投吗？</h6>
+                    <p>不可以了，七天大胜只能出借一次。</p>
+                    <h6>5.我11月1日出借了这个产品，11月4日想提前退出了，怎么退出？</h6>
+                    <p>您的本金加收益将会在11月8日自动退出，该产品一旦出借，不支持提前赎回。</p>
+                </div>
+                <div class='j_tabContent risk-warning hide' th:utext="${globalData.projectRiskText}">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div th:replace="common/footer::footer (${globalData},${global.xxdVersion})"></div>
+</div>
+<!--[if lt IE 9]>
+<iframe id="ifr_cover" frameborder="0" class="hide" scrolling="no"></iframe>
+<div id="alertBoxWrap" class="hide"></div>
+<![endif]-->
+</body>
+<script th:src="@{${global.staticHost}+'/pc/'+${global.xxdVersion}+'/build/js/common/require.min.js'}"></script>
+<script th:src="@{${global.staticHost}+'/pc/'+${global.xxdVersion}+'/build/mods/detail/sevengold/_.js'}"></script>
+</html>

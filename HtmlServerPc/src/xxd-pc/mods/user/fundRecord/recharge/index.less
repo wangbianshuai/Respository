@@ -1,0 +1,604 @@
+@import "../../side";
+
+@dottedPath: "../../../../";
+@import "@{dottedPath}css/reset";
+@path: "@{dottedPath}tmp/merge/";
+@import "@{path}tip.index.css";
+@import "@{path}dialog.index.css";
+@import "@{path}backTop.index-1.css";
+@import "@{path}dialog-float.index.css";
+@import "@{path}rotate.index.css";
+@import "../../../header";
+@import "../../../footer";
+@btn-bg: #2096e9;
+.g-right {
+  .m-con-wrap {
+    .m-con-hd {
+      a {
+        display: inline-block;
+        font-size: 18px;
+        color: #333333;
+        letter-spacing: -0.44px;
+        text-align: center;
+        margin-right: 50px;
+        &.active {
+          cursor: pointer;
+          border-bottom: 2px solid #57a8ff;
+        }
+        &:hover {
+          cursor: pointer;
+          border-bottom: 2px solid #57a8ff;
+        }
+        &.rechargeRecord{
+          margin-right: 0;
+          float:right;
+          font-size:16px;
+          color:#57a8ff;
+          &.active {
+            border-bottom: none;
+          }
+          &:hover {
+            cursor: pointer;
+            border-bottom: none;
+          }
+        }
+      }
+    }
+    .m-con-bd {
+      border-bottom: 0 !important;
+      .filed-user {
+        font-size: 16px;
+        color: #666666;
+        margin-top: 25px;
+        position: relative;
+        span {
+          display: inline-block;
+          width: 104px;
+          text-align: left;
+          font-size: 16px;
+          color: #666666;
+          &.threetxt {
+            letter-spacing: 1px;
+          }
+          &.fourtxt {
+            letter-spacing: -1.2px;
+          }
+          &.fivetxt {
+            letter-spacing: 0px;
+          }
+          &.sixtxt {
+            letter-spacing: 14px;
+          }
+        }
+        input {
+          font-size: 16px;
+          width: 268px;
+          height: 38px;
+          line-height: 38px;
+          padding-left: 10px;
+        }
+        a {
+          color: @btn-bg;
+          cursor: pointer;
+          margin-left: 5px;
+        }
+        //充值-选择已绑定的银行卡
+        .promptbox {
+          position: absolute;
+          display: none;
+          width: 280px;
+          height: auto;
+          left: 108px;
+          text-align: center;
+          padding-top: 20px;
+          margin-top: 15px;
+          background: #f1f1f1;
+          border: 1px solid #cccccc;
+          border-radius: 5px;
+          z-index: 99;
+          //带边框的小三角
+          .triangle—down {
+            position: absolute;
+            left: 243px;
+            top: -12px;
+            width: 0;
+            height: 0;
+            border-width: 0 10px 12px;
+            border-color: transparent transparent #ccc transparent;
+            border-style: solid;
+            i {
+              position: absolute;
+              top: 1px;
+              left: -9px;
+              display: inline-block;
+              width: 0;
+              height: 0;
+              border-width: 0 9px 11px;
+              border-color: transparent transparent #eee transparent;
+              border-style: solid;
+            }
+          }
+          li {
+            display: inline-block;
+            width: 238px;
+            height: 38px;
+            font-size: @font18px;
+            color: #333;
+            line-height: 38px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            margin-bottom: 20px;
+            background-color: #fff;
+            cursor: pointer;
+            &:hover {
+              border-color: #1F96E8;
+            }
+            img {
+              display: inline-block;
+              margin-bottom: -7px;
+              padding-right: 5px;
+            }
+            &.addbank {
+              border: 1px dashed #ccc;
+              p {
+                background: url(../../../img/add-blue.png) no-repeat 0px 7px;
+                padding-left: 25px !important;
+                font-size: @font14px;
+                color: #1e97e9;
+              }
+              &:hover {
+                border-color: #1F96E8;
+              }
+            }
+            //左上角默认银行卡标示
+            &.defaullogo {
+
+            }
+          }
+        }
+        p {
+          padding-left: 0 !important;
+          display: inline-block;
+          a {
+            display: inline-block;
+            background: @btn-bg;
+            width: 280px;
+            height: 40px;
+            line-height: 40px;
+            font-size: 16px;
+            color: #fff;
+            text-align: center;
+            -webkit-border-radius: 5px;
+            -moz-border-radius: 5px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 0;
+            &:hover {
+              background-color: #0266be;
+            }
+          }
+        }
+        p.openbank {
+          display: inline-block;
+          width: 278px;
+          height: 38px;
+          line-height: 38px;
+          border: 1px solid #ccc;
+          -webkit-border-radius: 4px;
+          -moz-border-radius: 4px;
+          border-radius: 4px;
+          background: #f4f5f9;
+          span {
+            width: 188px;
+            text-align: left;
+            padding-left: 10px;
+            color: #333;
+            margin-right: 0;
+            img {
+              width: 127px;
+              height: 28px;
+              padding-right: 5px;
+              margin-bottom: 2px;
+              vertical-align: middle;
+            }
+          }
+          i {
+            display: inline-block;
+            border-left: 1px solid #ccc;
+            width: 79px;
+            font-style: normal;
+            font-size: 16px;
+            color: @btn-bg;
+            background-color: #f5f5f5;
+            text-align: center;
+            cursor: pointer;
+            -webkit-border-radius: 0 4px 4px 0;
+            -moz-border-radius: 0 4px 4px 0;
+            border-radius: 0 4px 4px 0;
+          }
+        }
+        p.selectcard {
+          background: #ffffff;
+          border: 1px solid #ccc;
+          -webkit-border-radius: 4px;
+          -moz-border-radius: 4px;
+          border-radius: 4px;
+          width: 278px;
+          height: 38px;
+          span {
+            display: inline-block;
+            margin-left: 10px;
+            height: 38px;
+            line-height: 38px;
+            width: 176px;
+            vertical-align: middle;
+            img {
+              vertical-align: middle;
+              width: 126px;
+              height: 28px;
+            }
+          }
+          i {
+            float: right;
+            border-left: 1px solid #ccc;
+            width: 79px;
+            height: 38px;
+            line-height: 38px;
+            font-style: normal;
+            font-size: 16px;
+            color: @btn-bg;
+            background-color: #f5f5f5;
+            text-align: center;
+            cursor: pointer;
+            -webkit-border-radius: 0 4px 4px 0;
+            -moz-border-radius: 0 4px 4px 0;
+            border-radius: 0 4px 4px 0;
+          }
+        }
+        .tel-number {
+          display: inline-block;
+          border: 1px solid #ccc;
+          border-radius: 4px;
+          width: 278px;
+          overflow: hidden;
+          vertical-align: middle;
+          input {
+            width: 164px;
+            border: 0;
+          }
+          i {
+            display: inline-block;
+            border-left: 1px solid #ccc;
+            width: 103px;
+            height: 38px;
+            line-height: 38px;
+            font-style: normal;
+            font-size: 16px;
+            color: @btn-bg;
+            background-color: #f5f5f5;
+            text-align: center;
+            cursor: pointer;
+          }
+        }
+        .validate {
+          width: 278px;
+          height: 38px;
+          line-height: 38px;
+          display: inline-block;
+          border: 1px solid #ccc;
+          -webkit-border-radius: 4px;
+          -moz-border-radius: 4px;
+          border-radius: 4px;
+          #tel-validate {
+            border: 0;
+            width: 166px;
+            height: 38px;
+          }
+          .btn-validate {
+            border: 0;
+            width: 102px;
+            height: 38px;
+            line-height: 38px;
+            background: @btn-bg;
+            padding-left: 0;
+            text-align: center;
+            color: #fff;
+            -webkit-border-radius: 0 4px 4px 0;
+            -moz-border-radius: 0 4px 4px 0;
+            border-radius: 0 4px 4px 0;
+            cursor: pointer;
+          }
+        }
+      }
+      .wrong_tip {
+        font-size: 13px;
+        min-width: 266px;
+        height: 28px;
+        line-height: 28px;
+        background-color: #FDD;
+        border: 1px solid #FBB;
+        -webkit-border-radius: 2.5px;
+        -moz-border-radius: 2.5px;
+        border-radius: 2.5px;
+        color: #F00;
+        padding: 0 6px;
+        display: inline-block;
+      }
+      .wt_pos {
+        //display: none;
+        margin-top: 5px;
+        margin-left: 109px;
+      }
+      .next {
+        display: block;
+        border: none;
+        margin-top: 30px;
+        margin-left: 109px;
+        background: @btn-bg;
+        border-radius: 5px;
+        width: 280px;
+        text-align: center;
+        height: 40px;
+        line-height: 40px;
+        color: #fff;
+        font-size: 16px;
+        cursor: pointer;
+        &:hover {
+          background-color: #0266be;
+        }
+      }
+    }
+    .recharge-next {
+      display: none;
+    }
+    .warmth-warn {
+      width: 704px;
+      letter-spacing: -0.34px;
+      text-align: left;
+      margin-top: 50px;
+      margin-left: 23px;
+      p {
+        font-size: 14px;
+        color: @col-999;
+        line-height: 24px;
+      }
+    }
+    .banking-info{
+      display: none;
+    }
+    .offline-info{
+      display: none;
+    }
+    .offline-recharge {
+      display: none;
+      .filed-user {
+        img {
+          width: 157px;
+          height: 52px;
+          vertical-align: middle;
+        }
+      }
+      .deposit {
+        span {
+          display: block;
+          margin-left: 109px;
+          width: 120px;
+        }
+        select {
+          margin-top: 25px;
+          width: 280px;
+          height: 40px;
+          margin-left: 109px;
+          cursor: pointer;
+          border-radius: 4px;
+          border: 1px solid #ccc;
+          padding: 8px 0;
+          background: #ffffff;
+          option {
+            cursor: pointer;
+          }
+        }
+      }
+    }
+    .banking-recharge {
+      display: none;
+    }
+  }
+}
+
+.recharge-list{
+  .tableList{
+    margin-top:10px;
+    width:810px;
+    border:1px solid #dddddd;
+    border-right:none;
+    border-bottom:none;
+    li{
+      width:810px;
+      height:45px;
+      line-height:45px;
+      strong{
+        background:#f9f9f9;
+        width:269px;
+        height:45px;
+        display:inline;
+        font-weight:normal;
+        text-align:center;
+        line-height:45px;
+        font-size:14px;
+        border:1px solid #dddddd;
+        border-left:none;
+        border-top:none;
+        float:left;
+      }
+      span{
+        width:269px;
+        height:45px;
+        display:inline;
+        text-align:center;
+        line-height:45px;
+        font-size:14px;
+        border:1px solid #dddddd;
+        border-left:none;
+        border-top:none;
+        float:left;
+      }
+    }
+  }
+}
+
+.supernatant {
+  display: none;
+  background: #ffffff;
+  -webkit-border-radius: 6px;
+  -moz-border-radius: 6px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  width: 401px;
+  height: 210px;
+  position: absolute;
+  top: 20%;
+  left: 50%;
+  text-align: center;
+  p {
+    height: 60px;
+    line-height: 60px;
+    width: 100%;
+    font-size: 18px;
+    color: #333333;
+    letter-spacing: 0;
+    border-bottom: 1px solid #ccc;
+  }
+  span {
+    display: block;
+    font-size: 16px;
+    color: #333333;
+    letter-spacing: -0.39px;
+    line-height: 20px;
+    margin: 25px 0;
+  }
+  input {
+    background: @btn-bg;
+    border-radius: 5px;
+    width: 281px;
+    height: 40px;
+    color: #fff;
+    &:hover {
+      background-color: #0266be;
+    }
+  }
+}
+
+.bluetipexc {
+  position: absolute;
+  top: 6px;
+  left: 393px;
+  i {
+    display: inline-block;
+    width: 21px;
+    height: 21px;
+    vertical-align: middle;
+    margin-left: 5px;
+    background: url("@{imgurl}bluetip-exc.png") no-repeat center;
+  }
+  strong {
+    position: absolute;
+    display: inline-block;
+    width: 206px;
+    height: 90px;
+    top: -74px;
+    right: -93px;
+    letter-spacing: 1px;
+    font-size: 12px;
+    text-align: left;
+    color: #fff;
+    background: url("@{imgurl}bluetip_hoverexc.png") no-repeat center;
+    label {
+      display: inline-block;
+      width: 185px;
+      text-align: left;
+      padding: 10px 0px 2px 14px;
+    }
+  }
+}
+
+.openornot {
+  position: relative;
+  width: 560px;
+  padding-bottom: 45px;
+  background: @col-fff;
+  box-shadow: 0 2px 3px 0 rgba(0, 0, 0, 0.16);
+  -webkit-border-radius: 6px;
+  -moz-border-radius: 6px;
+  border-radius: 6px;;
+  .c_close {
+    position: absolute;
+    top: -48px;
+    right: 0px;
+    font-size: 33px;
+    color: @col-fff;
+  }
+  .m-con-hd {
+    height: 52px;
+    line-height: 52px;
+    text-align: center;
+    font-size: @font18px;
+    color: @col-333;
+    border-bottom: 1px solid @col-eee;
+  }
+
+  .filed-user {
+    position: relative;
+    margin: 0 auto;
+    width: 472px;
+    margin-top: 32px;
+    font-size: 16px;
+    color: #666666;
+
+    span {
+      display: inline-block;
+      width: 104px;
+      margin-right: 20px;
+      text-align: right;
+      font-size: 16px;
+      color: #666666;
+    }
+    p {
+      display: inline-block;
+      font-size: 16px;
+      color: #666;
+      width: 100%;
+      a {
+        display: inline-block;
+        background: #2096e9;
+        width: 200px;
+        height: 40px;
+        line-height: 40px;
+        font-size: 16px;
+        color: #fff;
+        text-align: center;
+        -webkit-border-radius: 5px;
+        -moz-border-radius: 5px;
+        border-radius: 5px;
+        cursor: pointer;
+        margin: 0;
+        &:hover {
+          background-color: #0266be;
+        }
+        &.btn_right {
+          background: #fff;
+          color: #2096e6;
+          border: 1px solid #2096e6;
+          height: 38px;
+          line-height: 38px;
+          width: 198px;
+          top:0;
+          &:hover {
+            border: 1px solid #0266be;
+            color: #0266be;
+          }
+        }
+      }
+    }
+  }
+}

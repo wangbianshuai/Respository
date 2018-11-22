@@ -1,0 +1,207 @@
+@import "../../side";
+@dottedPath: "../../../../";
+@import "@{dottedPath}css/reset";
+@import "@{dottedPath}css/variable";
+@path: "@{dottedPath}tmp/merge/";
+@import "@{path}tip.index.css";
+@import "@{path}dialog.index.css";
+@import "@{path}backTop.index-1.css";
+@import "@{path}dialog-float.index.css";
+@import "@{path}rotate.index.css";
+@import "../../../header";
+@import "../../../footer";
+.conversion {
+  padding: 10px 0 0 25px;
+  position: relative;
+  p {
+    font: normal 16px/36px "microsoft yahei";
+    color: #666;
+    span {
+      color: #ff0000;
+    }
+    input {
+      border: 1px solid #ccc;
+      border-radius: 2px;
+      width: 150px;
+      height: 38px;
+      margin: 7px 10px 7px 16px;
+      padding-left: 10px;
+      font-size: 14px;
+    }
+    .message {
+      margin: 0;
+      vertical-align: middle;
+      border-radius: 2px 0 0 2px;
+      border-right: 0;
+      width: 150px;
+      margin: 7px 0 7px 0;
+    }
+    .get-message {
+      display: inline-block;
+      background: #2096e9;
+      color: #fff;
+      width: 90px;
+      font: normal 14px/40px "microsoft yahei";
+      text-align: center;
+      border-radius: 0 2px 2px 0;
+      vertical-align: middle;
+      &:hover {
+        background: @hoverColor;
+      }
+    }
+  }
+  .btn {
+    display: block;
+    margin: 20px 0 0 96px;
+  }
+  .conversion-tip {
+    position: absolute;
+    top: 40px;
+    left: 610px;
+    padding: 15px;
+    background: #d9edf7;
+    border-radius: 5px;
+    width: 270px;
+    height: 90px;
+    h5 {
+      font-size: 16px;
+      color: #2096e9;
+      margin-bottom: 10px;
+    }
+    p {
+      font: normal 14px/20px "microsoft yahei";
+      color: #2096e9;
+    }
+  }
+}
+
+.minus {
+  color: #ff0000 !important;
+}
+
+.plus {
+  color: #57a8ff !important;
+}
+
+.verification-tip, .verification-box {
+  display: inline-block;
+  .verification-code{
+    margin: 7px 10px 7px 12px;
+  }
+}
+.verification-box {
+  height: 38px;
+  line-height: 38px;
+  border: 1px solid #D7D7D7;
+  vertical-align: middle;
+  margin: 0 0 5px 0;
+  img {
+    height: 100%;
+    display: inline-block;
+    float: left;
+    cursor: pointer;
+  }
+  a {
+    display: inline-block;
+    width: 40px;
+    height: 100%;
+    background: #2096E9;
+    float: left;
+    margin: 0;
+    i {
+      display: inline-block;
+      width: 18px;
+      height: 20px;
+      margin: 9px 0 0 12px;
+      background: url("../../i/refresh.png") 0 0 no-repeat;
+    }
+  }
+}
+.message-tip{
+  font: 400 14px/36px "microsoft yahei" !important;
+  margin: 0 95px;
+  span{
+    font: 400 14px/36px "microsoft yahei"  !important;
+  }
+}
+
+.openornot {
+  position: relative;
+  width: 560px;
+  padding-bottom: 45px;
+  background: @col-fff;
+  box-shadow: 0 2px 3px 0 rgba(0, 0, 0, 0.16);
+  -webkit-border-radius: 6px;
+  -moz-border-radius: 6px;
+  border-radius: 6px;;
+  .c_close {
+    position: absolute;
+    top: -48px;
+    right: 0px;
+    font-size: 33px;
+    color: @col-fff;
+  }
+  .m-con-hd {
+    height: 52px;
+    line-height: 52px;
+    text-align: center;
+    font-size: @font18px;
+    color: @col-333;
+    border-bottom: 1px solid @col-eee;
+  }
+
+  .filed-user {
+    position: relative;
+    margin: 0 auto;
+    width: 472px;
+    margin-top: 32px;
+    font-size: 16px;
+    color: #666666;
+
+    span {
+      display: inline-block;
+      width: 104px;
+      margin-right: 20px;
+      text-align: right;
+      font-size: 16px;
+      color: #666666;
+    }
+    p {
+      display: inline-block;
+      font-size: 16px;
+      color: #666;
+      width: 100%;
+      a {
+        display: inline-block;
+        background: #2096e9;
+        width: 200px;
+        height: 40px;
+        line-height: 40px;
+        font-size: 16px;
+        color: #fff;
+        text-align: center;
+        -webkit-border-radius: 5px;
+        -moz-border-radius: 5px;
+        border-radius: 5px;
+        cursor: pointer;
+        margin: 0;
+        &:hover {
+          background-color: #0266be;
+        }
+        &.btn_right {
+          background: #fff;
+          color: #2096e6;
+          border: 1px solid #2096e6;
+          height: 38px;
+          line-height: 38px;
+          width: 198px;
+          top:0;
+          &:hover {
+            border: 1px solid #0266be;
+            color: #0266be;
+          }
+        }
+      }
+    }
+  }
+}

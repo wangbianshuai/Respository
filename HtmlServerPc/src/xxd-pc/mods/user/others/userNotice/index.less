@@ -1,0 +1,101 @@
+@import "../../side";
+
+@dottedPath: "../../../../";
+@import "@{dottedPath}css/reset";
+@path: "@{dottedPath}tmp/merge/";
+@import "@{path}/tip.index.css";
+@import "@{path}/dialog.index.css";
+@import "@{path}/backTop.index-1.css";
+@import "@{path}/dialog-float.index.css";
+@import "@{path}/rotate.index.css";
+@import "../../../header";
+@import "../../../footer";
+@btn-bg: #2096e9;
+.g-right {
+  .m-con-wrap {
+    margin-bottom: 20px;
+    .notice{
+      margin-left:26px;
+      border:none;
+      .notice-time{
+        padding:11px 0 15px 0;
+        span{
+          font-family:MicrosoftYaHei;
+          font-size:16px;
+          color:#666666;
+          letter-spacing:-0.39px;
+        }
+        select{
+          width: 120px;
+          height: 40px;
+          cursor: pointer;
+          border-radius: 0;
+          border:1px solid #ccc;
+          padding:8px 0;
+          background: #ffffff;
+          font-size:16px;
+          color: #333;
+        }
+      }
+      .notice-info{
+        background:#f4f5f9;
+        width:922px;
+        height:50px;
+        line-height: 50px;
+        font-size:16px;
+        padding-left: 20px;
+        color: #999;
+      }
+      .notice-container{
+        .notice-list{
+          background:#ffffff;
+          width:910px;
+          margin-right:32px;
+          border-bottom: 1px dashed #eee;
+          height:60px;
+          line-height:60px;
+          p{
+            display: inline-block;
+            margin-left:29px;
+            width: 22%;
+            font-family:MicrosoftYaHei;
+            font-size:16px;
+            color:#333333;
+            letter-spacing:-0.39px;
+          }
+          span{
+            font-family:MicrosoftYaHei;
+            font-size:14px;
+            color:#999999;
+            letter-spacing:-0.34px;
+          }
+          input{
+            margin-top: 24px;
+            width: 16px;
+            height: 16px;
+            box-shadow: none;
+          }
+        }
+      }
+      a{
+        display: block;
+        background:#2096e9;
+        border-radius:5px;
+        width:280px;
+        height:40px;
+        line-height:40px;
+        border:0;
+        font-family:PingFangSC-Regular;
+        font-size:16px;
+        color:#ffffff;
+        letter-spacing:0;
+        text-align: center;
+        margin:0 auto;
+        margin-top: 21px;
+        &:hover {
+          background-color: #0266be;
+        }
+      }
+    }
+  }
+}
