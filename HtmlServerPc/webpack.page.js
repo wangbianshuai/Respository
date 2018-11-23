@@ -28,7 +28,9 @@ const CommonJsConfigs = [
             "./src/public/css/header.less",
             "./src/public/css/footer.less",
             "./src/public/css/rotate.less",
-            "./src/public/css/tip.less"
+            "./src/public/css/tip.less",
+            "./src/public/css/dialog.less",
+            "./src/public/css/dialog-float.less"
         ]
     }
 ];

@@ -5,7 +5,7 @@ const r = (entryPath, routePath, chunks, template) => { return { entryPath, rout
 //entryPath:打包入口路径（controller js）、koa视图路径、react组件路径（components js）三者相对路径一致。
 //chunks：打包通用js集合
 
-const chunks1 = ["css/public", "js/react-dva", "js/util-common", "js/dva-common", "js/react-common"];
+const chunks1 = ["css/public", "js/jquery", "js/react-dva", "js/util-common", "js/dva-common", "js/react-common"];
 const chunks2 = ["js/jquery"];
 
 const RouterConfigs = [

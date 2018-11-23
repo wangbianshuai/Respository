@@ -223,6 +223,7 @@ class Index extends BaseIndex {
     }
 
     render() {
+        const { TipList } = this.state;
         const PcBuildUrl = this.GetPcBuildUrl();
         const { Link, ZQZR, SBZT, Announcement, News, Media, Partner, More } = this.props;
 
@@ -238,7 +239,7 @@ class Index extends BaseIndex {
 
         return (
             <div id="J_wrapBody">
-                <Header PcBuildUrl={PcBuildUrl} IsLogin={IsLogin} NickName={UserInfo.nickname} />
+                <Header PcBuildUrl={PcBuildUrl} Page={this} IsLogin={IsLogin} NickName={UserInfo.nickname} IsPurchased={IsPurchased} />
                 <div className="rotate-focus">
                     <Rotate DataList={this.GetAdDataList()} />
                     <div className="focus">
@@ -529,7 +530,9 @@ class Index extends BaseIndex {
                         </ul>
                     </div>
                 </div>
-                <Footer PcBuildUrl={PcBuildUrl} Link={Link} />
+                <Footer PcBuildUrl={PcBuildUrl} Link={Link} Page={this} />
+                {TipList}
+                {DialogList}
             </div>
         )
     }

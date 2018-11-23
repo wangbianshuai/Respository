@@ -81,6 +81,10 @@ export function IsArray(obj) {
     return typeof (obj) === "object" && obj.length >= 0
 }
 
+export function IsFunction(obj) {
+    return typeof obj === "function" && typeof obj.nodeType !== "number";
+}
+
 export function IsEmptyArray(obj) {
     if (!IsArray(obj) || obj.length === 0) return true;
     return false;

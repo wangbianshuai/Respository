@@ -1,13 +1,49 @@
 import React, { Component } from "react";
 import { Common } from "UtilsCommon";
+import { Tip } from "ReactCommon";
 
 export default class Footer extends Component {
     constructor(props) {
-        super(props)
+        super(props);
+        this.state = {
+            IsLinkClose: true
+        }
+    }
+
+    componentDidMount() {
+        this.props.Page.AddTipList([
+            this.RenderTip("TipPhone", "css/i/qr-code-phone.png"),
+            this.RenderTip("TipPhone2", "css/i/qr-code-phone.png"),
+            this.RenderTip("TipWeixin", "css/i/qr-code-wechat.png"),
+            this.RenderTip("TipWeibo", "css/i/qr-weibo.png")
+        ]);
+    }
+
+    OnMouseOver(key) {
+        return (e) => this[key].EffectsMouseOver(e, this.refs[key]);
+    }
+
+    SetRef(key) {
+        return (c) => this[key] = c;
+    }
+
+    RenderTip(name, url) {
+        const { PcBuildUrl } = this.props;
+
+        return (
+            <Tip ref={this.SetRef(name)} Position="fluctuate" key={Common.CreateGuid()}>
+                <div className='qr-code-img'><img src={PcBuildUrl + url} height='100' width='100' /></div>
+            </Tip>
+        )
+    }
+
+    LinkClick() {
+        return () => this.setState({ IsLinkClose: !this.state.IsLinkClose });
     }
 
     render() {
-        const { PcBuildUrl, Link } = this.props;
+        const { Link } = this.props;
+        const { IsLinkClose } = this.state;
 
         return (
             <div id="J_footer" className="footer">
@@ -17,11 +53,11 @@ export default class Footer extends Component {
                             <i className="call-us"></i>
                             <div className="qr-code-list">
                                 <span>关注我们</span>
-                                <i className="weibo-icon j_weiboTip" position="fluctuate" tipcontent={PcBuildUrl + 'css/i/qr-weibo.png'}></i>
-                                <i className="wechat-icon j_qrCodeTip" position="fluctuate" tipcontent={PcBuildUrl + 'css/i/qr-code-wechat.png'}></i>
+                                <i className="weibo-icon" onMouseOver={this.OnMouseOver("TipWeibo")} ref="TipWeibo"></i>
+                                <i className="wechat-icon" onMouseOver={this.OnMouseOver("TipWeixin")} ref="TipWeixin"></i>
                                 <span>下载手机客户端</span>
-                                <i className="ios-icon j_qrCodeTip" position="fluctuate" tipcontent={PcBuildUrl + 'css/i/qr-code-phone.png'}></i>
-                                <i className="android-icon j_qrCodeTip" position="fluctuate" tipcontent={PcBuildUrl + 'css/i/qr-code-phone.png'}></i>
+                                <i className="ios-icon" onMouseOver={this.OnMouseOver("TipPhone")} ref="TipPhone"></i>
+                                <i className="android-icon" onMouseOver={this.OnMouseOver("TipPhone2")} ref="TipPhone2"></i>
                             </div>
                             <p className="about-us-warn">投资有风险，选择需谨慎</p>
                         </div>
@@ -59,12 +95,12 @@ export default class Footer extends Component {
                             </ul>
                         </div>
                     </div>
-                    <div className="footer-link close-down clearfix" id="J_footerLink">
+                    <div className={"footer-link clearfix" + (IsLinkClose ? " close-down" : "")} >
                         <span className="footer-link-title">友情链接：</span>
                         <ul className="footer-link-list clearfix">
                             {Link && Link.map && Link.map(item => <li key={Common.CreateGuid()}><a href={item.textHref} target="view_window">{item.text}</a></li>)}
                         </ul>
-                        <span className="switch-icon" id="J_moreLink"></span>
+                        <span className="switch-icon" onClick={this.LinkClick()}></span>
                     </div>
                     <div className="footer-bottom">
                         <div className="text"><a href="#">Copyright @新新贷（上海）金融信息服务有限公司 沪ICP备12026657号-1 版权所有，未经许可不得复制、转载或摘编，违者必究</a><span>V6.6.1</span><br />增值电信业务经营许可证B2-20151008<i className="chapter"></i><a href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=31010902001060">沪公网安备 31010902001060号</a></div>

@@ -1,11 +1,14 @@
 import { Component } from "react"
 import { Common, Cache, EnvConfig } from "UtilsCommon";
+import DialogFloat from "./dialog-float/Index";
 
 export default class Index extends Component {
     constructor(props) {
         super(props)
 
-        this.state = {};
+        this.state = { TipList: [], DialogList };
+        this.TipList = [];
+        this.DialogList = [];
 
         this.Id = Common.CreateGuid();
 
@@ -219,5 +222,17 @@ export default class Index extends Component {
 
     JudgeLogin() {
         return this.props.UserInfo && this.props.UserInfo.userid;
+    }
+
+    AddTipList(tiplist) {
+        this.TipList = this.TipList.concat(tiplist);
+        this.setState({ TipList: this.TipList });
+    }
+
+    Alert(msg, title) {
+        title = title || "提示";
+        this.DialogList = this.DialogList.map(m => m);
+        this.DialogList.push(<DialogFloat Title={title} Content={msg} />);
+        this.setState({ DialogList: this.DialogList });
     }
 }

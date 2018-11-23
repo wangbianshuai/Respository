@@ -92,7 +92,7 @@ export default class Index extends BaseIndex2 {
 			const opacity = 1 - preOpacity;
 
 			this.setState({ PreSelectOpacity: preOpacity, SelectOpacity: opacity });
-			
+
 			if (preOpacity === 0 && opacity === 1) {
 				clearInterval(this.AnimateIntervalId);
 				this.ClickFlag = 0
@@ -150,7 +150,7 @@ export default class Index extends BaseIndex2 {
 	render() {
 		const { MinWidth, DataList, Arrow } = this.props;
 		return (
-			<div id="J_rotate" ref="Rotate" className="mui-slider sliderType1" style={{ minWidth: MinWidth + "px" }}
+			<div className="mui-slider sliderType1" style={{ minWidth: MinWidth + "px" }}
 				onMouseOver={this.OnMouseOver.bind(this)} onMouseOut={this.OnMouseOut.bind(this)}>
 				<ul>{DataList.map((m, i) => this.RenderUlItem(m, i))}</ul>
 				<ol>{DataList.map((m, i) => this.RenderOlItem(m, i))}</ol>
