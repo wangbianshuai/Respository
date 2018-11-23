@@ -22,13 +22,14 @@ export default class Index extends BaseIndex2 {
 
     render() {
         const { Title, Content } = this.props;
+        const { IsVisible } = this.state;
         if (!IsVisible) return null;
 
         const style = {};
         style.zIndex = Index.ZIndex;
 
         return (
-            <Dialog IsVisible={IsVisible} key={Common.CreateGuid()}>
+            <Dialog IsVisible={IsVisible}>
                 <div class="mui-dialog-float">
                     <span class="mui-float-title">{Title}</span>
                     <div class="mui-float-content">{Content}</div>

@@ -4,7 +4,7 @@ export default class Index extends Component {
     constructor(props) {
         super(props);
 
-        this.List = this.InitList();
+        this.List = [];
         this.state = { List: this.List }
 
     }
@@ -16,8 +16,9 @@ export default class Index extends Component {
     }
 
     componentDidMount() {
-        debugger
         this.props.Page.InitComponentList(this.props.Name, this.Add(), this.AddList());
+        this.List = this.InitList();
+        this.setState({ List: this.List });
     }
 
     AddList() {

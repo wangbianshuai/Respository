@@ -1,4 +1,4 @@
-import { Component } from "react"
+import React, { Component } from "react"
 import { Common, Cache, EnvConfig } from "UtilsCommon";
 import DialogFloat from "./dialog-float/Index";
 
@@ -248,6 +248,6 @@ export default class Index extends Component {
 
     Alert(msg, title) {
         title = title || "提示";
-        this.AddComponent("Dialogs", <DialogFloat Title={title} Content={msg} />);
+        this.AddComponent("Dialogs", <DialogFloat key={Common.CreateGuid()} Title={title} Content={msg} />);
     }
 }

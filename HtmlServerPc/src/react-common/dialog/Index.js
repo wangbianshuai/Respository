@@ -4,6 +4,9 @@ import BaseIndex2 from "../BaseIndex2";
 export default class Index extends BaseIndex2 {
     constructor(props) {
         super(props);
+
+        Index.ZIndex += 1;
+        this.ZIndex = Index.ZIndex;
     }
 
     static get defaultProps() {
@@ -12,16 +15,12 @@ export default class Index extends BaseIndex2 {
         }
     }
 
-    componentDidMount() {
-        Index.ZIndex += 1;
-    }
-
     render() {
         const { IsVisible } = this.props;
         if (!IsVisible) return null;
 
         const style = {};
-        style.zIndex = Index.ZIndex;
+        style.zIndex = this.ZIndex;
 
         return (
             <div className="mui-dialog" style={style}>
