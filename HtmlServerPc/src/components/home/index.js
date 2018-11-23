@@ -1,7 +1,7 @@
 import React from "react"
 import { connect } from "dva"
 import { Common } from "UtilsCommon";
-import { BaseIndex, Header, Footer, Rotate } from "ReactCommon";
+import { BaseIndex, Header, Footer, Rotate, ComponentList } from "ReactCommon";
 
 class Index extends BaseIndex {
     constructor(props) {
@@ -223,7 +223,6 @@ class Index extends BaseIndex {
     }
 
     render() {
-        const { TipList } = this.state;
         const PcBuildUrl = this.GetPcBuildUrl();
         const { Link, ZQZR, SBZT, Announcement, News, Media, Partner, More } = this.props;
 
@@ -531,8 +530,8 @@ class Index extends BaseIndex {
                     </div>
                 </div>
                 <Footer PcBuildUrl={PcBuildUrl} Link={Link} Page={this} />
-                {TipList}
-                {DialogList}
+                <ComponentList Name="Tips" Page={this}/>
+                <ComponentList Name="Dialogs" Page={this}/>
             </div>
         )
     }

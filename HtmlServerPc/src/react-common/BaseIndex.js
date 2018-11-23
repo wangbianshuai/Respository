@@ -6,10 +6,6 @@ export default class Index extends Component {
     constructor(props) {
         super(props)
 
-        this.state = { TipList: [], DialogList };
-        this.TipList = [];
-        this.DialogList = [];
-
         this.Id = Common.CreateGuid();
 
         if (props.Page) props.Page.Model = this.GetModel();
@@ -224,15 +220,34 @@ export default class Index extends Component {
         return this.props.UserInfo && this.props.UserInfo.userid;
     }
 
+    InitComponentList(name, add, addList) {
+        this[name] = this[name] || { List: [] };
+        this[name].Add = add;
+        this[name].AddList = addList;
+    }
+
+    AddComponentList(name, list) {
+        if (this[name] && this[name].AddList) this[name].AddList(tiplist);
+        else {
+            this[name] = this[name] || { List: [] };
+            this[name].List = this[name].List.concat(list);
+        }
+    }
+
+    AddComponent(name, item) {
+        if (this[name] && this[name].Add) this[name].Add(item);
+        else {
+            this[name] = this[name] || { List: [] };
+            this[name].List.push(item);
+        }
+    }
+
     AddTipList(tiplist) {
-        this.TipList = this.TipList.concat(tiplist);
-        this.setState({ TipList: this.TipList });
+        this.AddComponentList("Tips", tiplist);
     }
 
     Alert(msg, title) {
         title = title || "提示";
-        this.DialogList = this.DialogList.map(m => m);
-        this.DialogList.push(<DialogFloat Title={title} Content={msg} />);
-        this.setState({ DialogList: this.DialogList });
+        this.AddComponent("Dialogs", <DialogFloat Title={title} Content={msg} />);
     }
 }
