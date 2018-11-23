@@ -1,7 +1,7 @@
 import React from "react"
 import { connect } from "dva"
 import { Common } from "UtilsCommon";
-import { BaseIndex, Header, Footer, Rotate, ComponentList } from "ReactCommon";
+import { BaseIndex, Header, Footer, Rotate, ComponentList, BackTop } from "ReactCommon";
 
 class Index extends BaseIndex {
     constructor(props) {
@@ -530,8 +530,9 @@ class Index extends BaseIndex {
                     </div>
                 </div>
                 <Footer PcBuildUrl={PcBuildUrl} Link={Link} Page={this} />
-                <ComponentList Name="Tips" Page={this}/>
-                <ComponentList Name="Dialogs" Page={this}/>
+                <ComponentList Name="Tips" Page={this} />
+                <ComponentList Name="Dialogs" Page={this} />
+                <BackTop Page={this} />
             </div>
         )
     }
@@ -541,6 +542,7 @@ function mapStateToProps(state, ownProps) {
     const props = {
         Loading: state.BizService.Loading || state.TradeCenterService.Loading || state.UserCenterService.Loading || state.InvestmentService.Loading,
         Link: state.BizService.Link,
+        Opinion: state.BizService2.Opinion,
         Ad: state.BizService.Ad,
         Achievement: state.BizService.Achievement,
         Announcement: state.BizService.Announcement,

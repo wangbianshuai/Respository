@@ -1,6 +1,7 @@
 const ServiceConfig = {
     ApiService: GetApiSericeUrl,
     BizApiService: GetBizApiServiceUrl,
+    BizApiService2: GetBizApiServiceUrl2,
     TradeCenterApiService: GetTradeCenterApiServiceUrl,
     UserCenterApiService: GetUserCenterApiServiceUrl,
     InvestmentApiService: GetInvestmentApiServiceUrl
@@ -30,7 +31,7 @@ function GetClientBuildUrl() {
 }
 
 function GetProxyServiceUrl(blGet, url, serviceName) {
-    return GetApiSericeUrl() + (blGet ? "Proxy/GetRequest" : "Post/GetRequest") + "?RequestUrl=" + escape(url) + "&ServiceName=" + escape(serviceName);
+    return GetApiSericeUrl() + (blGet ? "Proxy/GetRequest" : "Proxy/PostRequest") + "?RequestUrl=" + escape(url) + "&ServiceName=" + escape(serviceName);
 }
 
 //ctx koa对象，ctx不为空表示是服务器
@@ -84,13 +85,31 @@ function GetBizApiServiceUrl() {
         else if (Env === "dev") url = "http://api.xxd.com/biz/";
         else if (Env === "stage") url = "http://stage-api.xxd.com/biz/";
         else if (Env === "test") url = "http://test-api.xxd.com/biz/";
-        else if (Env === "test") url = "http://test2-api.xxd.com/biz/";
+        else if (Env === "test2") url = "http://test2-api.xxd.com/biz/";
         else if (Env === "uat") url = "http://uat-api.xxd.com/biz/";
 
         url = "http://api.xinxindai.com/biz/";
         BizApiServiceUrl = url;
     }
     return BizApiServiceUrl;
+}
+
+var BizApiServiceUrl2 = null;
+function GetBizApiServiceUrl2() {
+    if (BizApiServiceUrl2 === null) {
+        let url = "http://www.xinxindai.com/biz/";
+        const { Env } = EnvConfig;
+        if (Env === "local") url = "http://test.xxd.com/biz/";
+        else if (Env === "dev") url = "http://dev.xxd.com/biz/";
+        else if (Env === "stage") url = "http://stage.xxd.com/biz/";
+        else if (Env === "test") url = "http://test.xxd.com/biz/";
+        else if (Env === "test2") url = "http://test2.xxd.com/biz/";
+        else if (Env === "uat") url = "http://uat.xxd.com/biz/";
+
+        url = "http://www.xinxindai.com/biz/";
+        BizApiServiceUrl2 = url;
+    }
+    return BizApiServiceUrl2;
 }
 
 var TradeCenterApiServiceUrl = null;
@@ -102,7 +121,7 @@ function GetTradeCenterApiServiceUrl() {
         else if (Env === "dev") url = "http://dev.xxd.com/tradeCenter/";
         else if (Env === "stage") url = "http://stage.xxd.com/tradeCenter/";
         else if (Env === "test") url = "http://test.xxd.com/tradeCenter/";
-        else if (Env === "test") url = "http://test2.xxd.com/tradeCenter/";
+        else if (Env === "test2") url = "http://test2.xxd.com/tradeCenter/";
         else if (Env === "uat") url = "http://uat.xxd.com/tradeCenter/";
 
         url = "http://www.xinxindai.com/tradeCenter/";
@@ -120,7 +139,7 @@ function GetUserCenterApiServiceUrl() {
         else if (Env === "dev") url = "http://dev.xxd.com/userCenter/";
         else if (Env === "stage") url = "http://stage.xxd.com/userCenter/";
         else if (Env === "test") url = "http://test.xxd.com/userCenter/"
-        else if (Env === "test") url = "http://test2.xxd.com/userCenter/"
+        else if (Env === "test2") url = "http://test2.xxd.com/userCenter/"
         else if (Env === "uat") url = "http://uat.xxd.com/userCenter/"
 
         url = "http://www.xinxindai.com/userCenter/";
@@ -138,7 +157,7 @@ function GetInvestmentApiServiceUrl() {
         else if (Env === "dev") url = "http://dev.xxd.com/investmentAPI/";
         else if (Env === "stage") url = "http://stage.xxd.com/investmentAPI/";
         else if (Env === "test") url = "http://test.xxd.com/investmentAPI/";
-        else if (Env === "test") url = "http://test2.xxd.com/investmentAPI/";
+        else if (Env === "test2") url = "http://test2.xxd.com/investmentAPI/";
         else if (Env === "uat") url = "http://uat.xxd.com/investmentAPI/";
 
         url = "http://www.xinxindai.com/investmentAPI/";

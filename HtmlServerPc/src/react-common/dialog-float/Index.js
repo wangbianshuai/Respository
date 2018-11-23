@@ -1,7 +1,6 @@
 import React from "react";
 import BaseIndex2 from "../BaseIndex2";
 import Dialog from "../dialog/Index";
-import { Common } from "UtilsCommon";
 
 export default class Index extends BaseIndex2 {
     constructor(props) {
@@ -12,28 +11,34 @@ export default class Index extends BaseIndex2 {
 
     static get defaultProps() {
         return {
-            Title: "提示"
+            Title: "提示",
+            CloseMills: 0,
+            IsOk: true
         }
     }
 
-    Ok() {
-        return () => this.setState({ IsVisible: false });
+    componentDidMount() {
+        if (this.props.CloseMills > 0) setTimeout(() => {
+            this.Close();
+            if (this.props.Callback) this.props.Callback();
+        }, this.props.CloseMills);
+    }
+
+    Close() {
+        this.setState({ IsVisible: false });
     }
 
     render() {
-        const { Title, Content } = this.props;
+        const { Title, Content, IsOk } = this.props;
         const { IsVisible } = this.state;
         if (!IsVisible) return null;
 
-        const style = {};
-        style.zIndex = Index.ZIndex;
-
         return (
             <Dialog IsVisible={IsVisible}>
-                <div class="mui-dialog-float">
-                    <span class="mui-float-title">{Title}</span>
-                    <div class="mui-float-content">{Content}</div>
-                    <a class="mui-float-confirm c_confirm" onClick={this.Ok()}>确定</a>
+                <div className="mui-dialog-float">
+                    <span className="mui-float-title">{Title}</span>
+                    <div className="mui-float-content">{Content}</div>
+                    {IsOk && <a className="mui-float-confirm c_confirm" onClick={this.Close.bind(this)}>确定</a>}
                 </div>
             </Dialog>
         )

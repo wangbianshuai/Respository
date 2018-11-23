@@ -26,7 +26,7 @@ export default class Index extends BaseIndex2 {
             <div className="mui-dialog" style={style}>
                 <div className="mui-dialog-inner clearfix">
                     {this.props.children}
-                </div><span class="after"></span>
+                </div><span className="after"></span>
             </div>
         )
     }

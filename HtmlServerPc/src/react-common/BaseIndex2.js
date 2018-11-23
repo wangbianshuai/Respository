@@ -37,7 +37,11 @@ export default class Index extends Component {
         return blChangedProps;
     }
 
-    JudgeChanged(nextProps, name) {
-        return nextProps[name] !== undefined && !Common.IsEquals(nextProps[name], this.props[name])
+    JudgeChanged(props, nextProps, name) {
+        return nextProps[name] !== undefined && !Common.IsEquals(nextProps[name], props[name])
+    }
+
+    InputChange(key) {
+        return (e) => this.setState({ [key]: e.target.value });
     }
 }

@@ -9,6 +9,8 @@ export default class Index extends Component {
         this.Id = Common.CreateGuid();
 
         if (props.Page) props.Page.Model = this.GetModel();
+
+        this.PropsChangedList = [];
     }
 
     GetModel() {
@@ -87,7 +89,12 @@ export default class Index extends Component {
         this.PropsChanged(nextProps)
     }
 
+    InitPropsChanged(propsChanged) {
+        this.PropsChangedList.push(propsChanged);
+    }
+
     PropsChanged(nextProps) {
+        this.PropsChangedList.forEach(p => p(this.props, nextProps));
     }
 
     GetPropsValue(key, idName, defaultValue) {
@@ -118,7 +125,7 @@ export default class Index extends Component {
     }
 
     ShowMessage(msg) {
-        //Toast.fail(msg, 3)
+        this.Alert(msg, "提示信息", 3000, true);
     }
 
     ShowSuccess(msg) {
@@ -246,8 +253,10 @@ export default class Index extends Component {
         this.AddComponentList("Tips", tiplist);
     }
 
-    Alert(msg, title) {
+    Alert(msg, title, closeMills, isOk, callback) {
         title = title || "提示";
-        this.AddComponent("Dialogs", <DialogFloat key={Common.CreateGuid()} Title={title} Content={msg} />);
+        closeMills = closeMills || 0;
+        isOk = isOk === undefined ? true : isOk;
+        this.AddComponent("Dialogs", <DialogFloat key={Common.CreateGuid()} Title={title} Content={msg} CloseMills={closeMills} IsOk={isOk} Callback={callback} />);
     }
 }

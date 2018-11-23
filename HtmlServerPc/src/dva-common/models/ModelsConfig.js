@@ -22,6 +22,13 @@ export default [
         ]
     },
     {
+        Name: "BizService2",
+        ServiceName: "BizApiService2",
+        ActionList: [
+            post("SubmitOpinion", "interaction/opinion", "Opinion", null, false, true)
+        ]
+    },
+    {
         Name: "TradeCenterService",
         ServiceName: "TradeCenterApiService",
         ActionList: [
@@ -100,6 +107,6 @@ function get(actionName, url, stateName, dataKey, isToken) {
     return { ActionName: actionName, Url: url, Method: "GET", IsProxy: true, StateName: stateName, DataKey: dataKey, IsToken: isToken }
 }
 
-function post(actionName, url, stateName, dataKey, isToken) {
-    return { ActionName: actionName, Url: url, IsProxy: true, StateName: stateName, DataKey: dataKey, IsToken: isToken }
+function post(actionName, url, stateName, dataKey, isToken, isOperation) {
+    return { ActionName: actionName, Url: url, IsProxy: true, StateName: stateName, DataKey: dataKey, IsToken: isToken, IsOperation: isOperation }
 }

@@ -34,7 +34,8 @@ function SetParamsHeader(data, headers) {
 function SetServiceHeader(data, serviceName) {
     if (!serviceName) return data;
 
-    if (serviceName === "BizApiService" || serviceName === "TradeCenterApiService" || serviceName === "UserCenterApiService") return SetApiServiceHeader(data);
+    if (serviceName === "BizApiService" || serviceName === "BizApiService2"
+        || serviceName === "TradeCenterApiService" || serviceName === "UserCenterApiService") return SetApiServiceHeader(data);
     else if (serviceName === "InvestmentApiService") return SetInvestmentApiServiceHeader(data);
 
 
