@@ -6,8 +6,7 @@ export default class Feedback extends BaseIndex2 {
     constructor(props) {
         super(props);
 
-        this.state = { IsVisible: true, Content: "", Contact: "" }
-
+        this.state = { IsVisible: true, Content: "", Contact: "", OkDisabled: false }
     }
 
     componentDidMount() {
@@ -21,7 +20,8 @@ export default class Feedback extends BaseIndex2 {
     }
 
     ReceiveOpinion(opinion) {
-        if (opinion.IsSuccess !== false) this.props.Page.Alert("问题反馈已提交", "成功信息", 2000, true, () => this.Close())
+        if (opinion.IsSuccess !== false) this.props.Page.Alert("问题反馈已提交", "成功信息", 2000, true, () => this.Close());
+        else this.setState({ OkDisabled: false });
     }
 
     Close() {
@@ -29,19 +29,18 @@ export default class Feedback extends BaseIndex2 {
     }
 
     Ok() {
-        if (this.props.Page.props.Loading) return;
-
         const { Content, Contact } = this.state;
 
         if (!Content || Content.length < 3) { this.props.Page.Alert("意见反馈不小于三个字"); return; }
 
         const data = { content: Content, contact: Contact };
 
-        this.props.Page.Dispatch("BizService2", "SubmitOpinion", data)
+        this.setState({ OkDisabled: true });
+        this.props.Page.Dispatch("BizService2", "SubmitOpinion", data);
     }
 
     render() {
-        const { IsVisible, Content, Contact } = this.state;
+        const { IsVisible, Content, Contact, OkDisabled } = this.state;
         if (!IsVisible) return null;
         let num = 200;
         num = num - Content.length;
@@ -58,7 +57,8 @@ export default class Feedback extends BaseIndex2 {
                         <textarea maxLength="200" value={Content} onChange={this.InputChange("Content")} placeholder="请填写您的意见，不少于3字且不超过200字"></textarea>
                         <div className="field-input-tip">联系方式(选填)</div>
                         <div className="input-number"><input type="text" className="placeholder" value={Contact} onChange={this.InputChange("Contact")} placeholder="您的邮箱/QQ号/手机号" /></div>
-                        <a className="mui-sub-btn c_confirm" onClick={this.Ok.bind(this)}>确认提交</a>
+                        {OkDisabled ? <span className="mui-sub-btn c_confirm">确认提交</span>
+                            : <a className="mui-sub-btn c_confirm" onClick={this.Ok.bind(this)}>确认提交</a>}
                     </div>
                 </div>
             </Dialog>
