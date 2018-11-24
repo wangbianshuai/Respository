@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Tip } from "ReactCommon";
 import { Common } from "UtilsCommon";
+import DialogBorrow from "./DialogBorrow";
 
 export default class Header extends Component {
     constructor(props) {
@@ -11,6 +12,7 @@ export default class Header extends Component {
 
     componentDidMount() {
         this.props.Page.AddTipList([this.RenderTipPhone(), this.RenderTipWeixin(), this.RenderTipUser(), this.RenderTipInvest()]);
+        this.props.Page.AddComponent("Dialogs", <DialogBorrow ref={(e) => this.DialogBorrowElement = e} />)
     }
 
     OnMouseOver(key) {
@@ -56,6 +58,13 @@ export default class Header extends Component {
 
     TipInvestCall() {
         return (v) => this.setState({ InvestClassName: v ? " dropdown-hover" : "" })
+    }
+
+    BorrowMoney() {
+        const { UserType, IsLogin } = this.props;
+
+        if (IsLogin && parseInt(UserType) === 2) this.DialogBorrowElement.Show();
+        else window.location.href = "/borrowApply/toBorrowPage.html";
     }
 
     RenderTipInvest() {
@@ -124,7 +133,7 @@ export default class Header extends Component {
                         <ul className="menu">
                             <li><a href="/">首页</a></li>
                             <li onMouseOver={this.OnMouseOver("TipInvest")} ref="TipInvest"><a href="#" className={'new-hot' + InvestClassName}>我要出借<i></i><span></span></a></li>
-                            <li><a href="javascript:void(0)" id="J_borrowMoney">我要借款</a></li>
+                            <li><a onClick={this.BorrowMoney.bind(this)}>我要借款</a></li>
                             <li><a href="/html/help/organization.html">信息披露</a></li>
                             <li><a href="/html/introduce/guide.html">新手福利</a></li>
                             <li><a href="/xinsheng/list.html">新新学院</a></li>

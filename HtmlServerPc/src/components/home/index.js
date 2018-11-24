@@ -317,7 +317,7 @@ class Index extends BaseIndex {
 
         return (
             <div id="J_wrapBody">
-                <Header PcBuildUrl={PcBuildUrl} Page={this} IsLogin={IsLogin} NickName={UserInfo.nickname} IsPurchased={IsPurchased} />
+                <Header PcBuildUrl={PcBuildUrl} Page={this} IsLogin={IsLogin} NickName={UserInfo.nickname} UserType={UserInfo.userType} IsPurchased={IsPurchased} />
                 <div className="rotate-focus">
                     <Rotate DataList={this.GetAdDataList()} />
                     <div className="focus">

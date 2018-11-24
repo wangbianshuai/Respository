@@ -374,3 +374,7 @@ export function SetCookie(name, value, days) {
     exp.setTime(exp.getTime() + days * 24 * 60 * 60 * 1000);
     document.cookie = name + "=" + escape(value) + ";expires=" + exp.toGMTString();
 }
+
+export function RemoveCooke(name) {
+    SetCookie(name, "", -1);
+}
