@@ -6,6 +6,14 @@ import { BaseIndex, Header, Footer, Rotate, ComponentList, BackTop } from "React
 class Index extends BaseIndex {
     constructor(props) {
         super(props);
+
+        this.state = {
+            DownloadQrCodeDisplay: "none",
+            SelectSATabIndex: 0,
+            SelectNewsMediaTabIndex: 0,
+            PartnerList: [],
+            PartnerMarginLeft: 0
+        }
     }
 
     //服务器渲染加载数据
@@ -111,7 +119,7 @@ class Index extends BaseIndex {
                     {item.label === "ic-pxb" && <i className="icon"></i>}
                 </li>
                 <li className="name"><a href={'borrow/detail/' + item.id + '.html'} target="_blank"
-                    title={item.title}>{item.title}</a></li>
+                    title={item.name}>{item.name}</a></li>
                 <li className="rate"><span>{item.plannedAnnualRate}</span>%</li>
                 <li className="time"><span>{item.leastPeriod + item.leastPeriodUnit}</span></li>
                 <li className="money">{'剩余：' + Common.ToCurrency(item.leftAmount) + '元'}
@@ -222,19 +230,90 @@ class Index extends BaseIndex {
         });
     }
 
+    OnMouseOver(key) {
+        return (e) => {
+            if (key === "Dimension") this.SetDisplay("DownloadQrCodeDisplay", true);
+        }
+    }
+
+    OnMouseOut(key) {
+        return (e) => {
+            if (key === "Dimension") this.SetDisplay("DownloadQrCodeDisplay", false);
+        }
+    }
+
+    OnClick(key) {
+        return (e) => {
+            if (key === "Scattered") this.SetSelectSATabIndex(0);
+            else if (key === "Assignment") this.SetSelectSATabIndex(1);
+            if (key === "News") this.SetSelectNewsMediaTabIndex(0);
+            else if (key === "Media") this.SetSelectNewsMediaTabIndex(1);
+            else if (key === "ParterLeft") this.SetParterLeftRight(true);
+            else if (key === "ParterRight") this.SetParterLeftRight(false);
+        }
+    }
+
+    SetParterLeftRight(blLeft) {
+        if (this.ParterTimeoutId > 0) return;
+        let parterList = this.state.PartnerList;
+        const { Partner } = this.props;
+        if (parterList.length === 0 && Partner && Partner.length > 0) parterList = Partner;
+        if (parterList.length > 7) {
+            let list = [], marginLeft = 0;
+            const len = parterList.length;
+            if (blLeft) { list = parterList.filter((m, i) => i > 0); list.push(parterList[0]); marginLeft = 0; }
+            else { list = [parterList[len - 1]].concat(parterList.filter((m, i) => i < len - 1)); marginLeft = -150; }
+            this.setState({ PartnerList: list, PartnerMarginLeft: marginLeft });
+
+            this.SetPartnerMarginLeft(blLeft)
+        }
+    }
+
+    SetPartnerMarginLeft(blLeft) {
+        let start = blLeft ? 0 : -150;
+        const end = blLeft ? -150 : 0;
+        const _fn = () => {
+            if (start === end) { clearTimeout(this.ParterTimeoutId); this.ParterTimeoutId = 0; return; }
+
+            if (start > end) start -= 25;
+            else start += 25;
+            this.setState({ PartnerMarginLeft: start });
+
+            this.ParterTimeoutId = setTimeout(_fn, 100);
+        };
+
+        _fn();
+    }
+
+    GetPartnerList() {
+        let parterList = this.state.PartnerList;
+        if (parterList.length === 0) parterList = this.props.Partner;
+        return parterList;
+    }
+
+    SetSelectSATabIndex(index) {
+        if (index != this.state.SelectSATabIndex) this.setState({ SelectSATabIndex: index });
+    }
+
+    SetSelectNewsMediaTabIndex(index) {
+        if (index != this.state.SelectNewsMediaTabIndex) this.setState({ SelectNewsMediaTabIndex: index });
+    }
+
     render() {
         const PcBuildUrl = this.GetPcBuildUrl();
-        const { Link, ZQZR, SBZT, Announcement, News, Media, Partner, More } = this.props;
+        const { Link, ZQZR, SBZT, Announcement, News, Media, More } = this.props;
+        const { DownloadQrCodeDisplay, SelectSATabIndex, SelectNewsMediaTabIndex, PartnerMarginLeft } = this.state;
 
         const ThirtyTender = this.GetPropsValue("ThirtyTender", "id", { status: {} });
         const InvestmentRank = this.GetPropsValue("InvestmentRank", "currentMonth", { items: [] });
         const Achievement = this.GetAchievement();
         const XYB = this.GetPropsValue("XYB", "name", { items: [] });
         const YJDJ = this.GetPropsValue("YJDJ", "id", { status: {} });
-        const YYP = this.GetPropsValue("YYP", "id", { status: {} });
+        const YYP = this.GetPropsValue("YYP", "name", { status: {} });
         const IsLogin = this.JudgeLogin();
         const UserInfo = this.GetPropsValue("UserInfo", "userid", {});;
         const IsPurchased = this.props.InvestStatus === true;
+        const Partner = this.GetPartnerList();
 
         return (
             <div id="J_wrapBody">
@@ -356,10 +435,10 @@ class Index extends BaseIndex {
                                     <dl className="dimension-name dimension-name-gold clearfix">
                                         <dt>月进斗金</dt>
                                         <dd>每日限量|先到先得</dd>
-                                        <div className="tip tip-gold j_countdown" data-activite-time={YJDJ.lefTime}>
+                                        {YJDJ.lefTime && <div className="tip tip-gold j_countdown">
                                             <p>距离结束还剩：</p>
-                                            <span></span>
-                                        </div>
+                                            <span>{YJDJ.lefTime}</span>
+                                        </div>}
                                     </dl>
                                     <ul className="dimension-buy clearfix">
                                         <li className="rate"><span><i>{Common.GetIntValue(YJDJ.plannedAnnualRate)}</i>%</span><br />历史年化收益</li>
@@ -416,12 +495,12 @@ class Index extends BaseIndex {
                                         </div>
                                         <div className="limit"><span></span><span>{YYP.frozenPeriod}<br />后可免费申请转让</span></div>
                                         <div className="money">起投金额：{YYP.leastTenderAmountLabel}</div>
-                                        <a target="_blank" className="dimension-mobile-btn">
+                                        <a target="_blank" className="dimension-mobile-btn" onMouseOver={this.OnMouseOver("Dimension")} onMouseOut={this.OnMouseOut("Dimension")}>
                                             <span>APP专享</span><br />
                                             累计加入:<i>{YYP.accumulatedInvestors}</i>
                                         </a>
                                     </div>
-                                    <div className="download-QRcode" id="download-qr-code">
+                                    <div className="download-QRcode" id="download-qr-code" onMouseOver={this.OnMouseOver("Dimension")} onMouseOut={this.OnMouseOut("Dimension")} style={{ display: DownloadQrCodeDisplay }}>
                                         <img width="128" alt="新新贷app下载二维码" src={PcBuildUrl + "img/qr-code-phone@2x.png"} /><p>手机APP下载</p>
                                     </div>
                                 </div>
@@ -429,15 +508,15 @@ class Index extends BaseIndex {
                             <div className="scattered-and-assignment">
                                 <div className="tab">
                                     <ul id="J_scatteredAndAssignment">
-                                        <li className="active" tag="J_scattered">散标直投</li>
-                                        <li tag="J_assignment">债权转让<i></i></li>
+                                        <li className={SelectSATabIndex === 0 ? "active" : ""} onClick={this.OnClick("Scattered")}>散标直投</li>
+                                        <li className={SelectSATabIndex === 1 ? "active" : ""} onClick={this.OnClick("Assignment")} >债权转让<i></i></li>
                                     </ul>
                                     <a className="more" href="/borrow/search/list.html" target="_blank">查看更多</a>
                                 </div>
-                                <div className="scattered" id="J_scattered">
+                                <div className={"scattered" + (SelectSATabIndex === 0 ? "" : " hide")}>
                                     {SBZT && SBZT.map && SBZT.map(m => this.RenderSBZTProductItems(m))}
                                 </div>
-                                <div className="assignment hide" id="J_assignment">
+                                <div className={"assignment" + (SelectSATabIndex === 1 ? "" : " hide")}>
                                     {ZQZR && ZQZR.map && ZQZR.map(m => this.RenderZQZRProductItems(m))}
                                 </div>
                             </div>
@@ -476,14 +555,14 @@ class Index extends BaseIndex {
 
                             <div className="news">
                                 <div className="title" id="J_titleNews">
-                                    <span className="menu active" tag="J_newsList">新闻动态</span>
-                                    <span className="menu" tag="J_mediaList">媒体报道</span>
+                                    <span className={"menu" + (SelectNewsMediaTabIndex === 0 ? " active" : "")} onClick={this.OnClick("News")}>新闻动态</span>
+                                    <span className={"menu" + (SelectNewsMediaTabIndex === 1 ? " active" : "")} onClick={this.OnClick("Media")}>媒体报道</span>
                                     <a href="/html/help/newsreport.html" className="more">更多</a>
                                 </div>
-                                <ul className="news-list" id="J_newsList">
+                                <ul className={"news-list" + (SelectNewsMediaTabIndex === 0 ? "" : " hide")}>
                                     {News && News.map && News.map(m => <li key={Common.CreateGuid()}><a href={m.textHref}>{m.text}</a></li>)}
                                 </ul>
-                                <ul className="media-list hide" id="J_mediaList">
+                                <ul className={"media-list" + (SelectNewsMediaTabIndex === 1 ? "" : " hide")}>
                                     {Media && Media.map && Media.map(m => <li key={Common.CreateGuid()}><a href={m.textHref}>{m.text}</a></li>)}
                                 </ul>
                             </div>
@@ -514,10 +593,10 @@ class Index extends BaseIndex {
                     </div>
                     <div className="partner" id="J_partner">
                         <div className="title">合作伙伴</div>
-                        <i className="left"></i>
-                        <i className="right"></i>
+                        <i className="left" onClick={this.OnClick("ParterLeft")}></i>
+                        <i className="right" onClick={this.OnClick("ParterRight")}></i>
                         <div className="wrap-partner">
-                            <ul>
+                            <ul style={{ marginLeft: PartnerMarginLeft + "px" }}>
                                 {Partner && Partner.map && Partner.map(m => <li key={Common.CreateGuid()}><div><a href={m.textHref} target="_blank"><img src={m.extendUrl} /></a></div><a href={m.textHref}>{m.text}</a></li>)}
                             </ul>
                         </div>

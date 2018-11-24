@@ -259,4 +259,13 @@ export default class Index extends Component {
         isOk = isOk === undefined ? true : isOk;
         this.AddComponent("Dialogs", <DialogFloat key={Common.CreateGuid()} Title={title} Content={msg} CloseMills={closeMills} IsOk={isOk} Callback={callback} />);
     }
+
+    SetDisplay(name, isVisible, show) {
+        show = show || "block";
+        const hide = "none", _display = this.state[name];
+        let display = _display;
+        if (isVisible && display === hide) display = show;
+        else if (!isVisible && display === show) display = hide;
+        if (display !== _display) this.setState({ [name]: display });
+    }
 }
