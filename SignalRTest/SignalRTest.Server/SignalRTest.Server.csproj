@@ -116,7 +116,9 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Common.cs" />
     <Compile Include="HubService.cs" />
+    <Compile Include="LoggerProxy.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ServiceConnection.cs" />
     <Compile Include="Startup.cs" />

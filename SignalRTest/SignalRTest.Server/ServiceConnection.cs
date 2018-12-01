@@ -9,14 +9,20 @@ namespace SignalRTest.Server
 {
     public class ServiceConnection : PersistentConnection
     {
-        protected override Task OnConnected(IRequest request, string connectionId)
-        {
-            return base.OnConnected(request, connectionId);
-        }
-
         protected override Task OnReceived(IRequest request, string connectionId, string data)
         {
-            return Connection.Send(connectionId, data);
+            try
+            {
+                return Connection.Broadcast(data, connectionId);
+            }
+            catch(Exception ex)
+            {
+                Dictionary<string, string> dict = new Dictionary<string, string>();
+                dict.Add("Data", data);
+                LoggerProxy.Exception("ServiceConnection", "OnReceived", ex, dict);
+
+                return base.OnReceived(request, connectionId, data);
+            }
         }
     }
 }

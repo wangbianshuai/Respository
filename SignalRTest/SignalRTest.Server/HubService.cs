@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNet.SignalR;
 using Microsoft.AspNet.SignalR.Hubs;
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -12,24 +13,19 @@ namespace SignalRTest.Server
     [HubName("HubService")]
     public class HubService : Hub
     {
-        public void Send(string message)
+        public void Send(string content, List<string> receiverIdList)
         {
-            Clients.All.Recive(message);
-        }
-
-        public override Task OnConnected()
-        {
-            return base.OnConnected();
-        }
-
-        public override Task OnDisconnected(bool stopCalled)
-        {
-            return base.OnDisconnected(stopCalled);
-        }
-
-        public override Task OnReconnected()
-        {
-            return base.OnReconnected();
+            try
+            {
+                if (receiverIdList == null || receiverIdList.Count == 0) Clients.All.Receive(content, this.Context.ConnectionId);
+                else Clients.Clients(receiverIdList).Receive(content, this.Context.ConnectionId);
+            }
+            catch (Exception ex)
+            {
+                Dictionary<string, string> dict = new Dictionary<string, string>();
+                dict.Add("Content", content);
+                LoggerProxy.Exception("HubService", "Send", ex, dict);
+            }
         }
     }
 }
