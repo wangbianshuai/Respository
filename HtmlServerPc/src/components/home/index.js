@@ -8,6 +8,7 @@ class Index extends BaseIndex {
         super(props);
 
         this.state = {
+            ReceiveNextProps: this.ReceiveNextProps.bind(this),
             DownloadQrCodeDisplay: "none",
             SelectSATabIndex: 0,
             SelectNewsMediaTabIndex: 0,

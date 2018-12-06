@@ -150,24 +150,32 @@ export default class Index extends Component {
         return null;
     }
 
+    ReceiveNextProps(nextProps) {
+        if (this.IsNextProps(nextProps)) this.componentWillReceiveProps2(nextProps);
+    }
+
+    IsNextProps(nextProps) {
+        for (let key in nextProps) if (this.props[key] !== nextProps[key]) return true;
+        return false;
+    }
+
+    static getDerivedStateFromProps(nextProps, prevState) {
+        if (prevState.ReceiveNextProps) prevState.ReceiveNextProps(nextProps);
+        return null;
+    }
 
     shouldComponentUpdate(nextProps, nextState) {
-        let blChangedProps = false, blNextProps = false;
+        let blChangedProps = false;
 
         for (let key in nextProps) {
-            if (nextProps[key] !== undefined) {
-                if (this.props[key] !== nextProps[key]) {
-                    blChangedProps = true;
-                    blNextProps = true;
+            if (nextProps[key] !== undefined && this.props[key] !== nextProps[key]) {
+                blChangedProps = true;
 
-                    if (this.SetResponseMessage(nextProps[key], key)) blChangedProps = false;
+                if (this.SetResponseMessage(nextProps[key], key)) blChangedProps = false;
 
-                    if (blChangedProps) break;
-                }
+                if (blChangedProps) break;
             }
         }
-
-        if (blNextProps) this.componentWillReceiveProps2(nextProps);
 
         if (!blChangedProps) {
             for (let key in nextState) {
