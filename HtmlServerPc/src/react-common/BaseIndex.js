@@ -7,6 +7,7 @@ export default class Index extends Component {
         super(props)
 
         this.Id = Common.CreateGuid();
+        this.state = { ReceiveNextProps: this.ReceiveNextProps.bind(this) }
 
         if (props.Page) props.Page.Model = this.GetModel();
 

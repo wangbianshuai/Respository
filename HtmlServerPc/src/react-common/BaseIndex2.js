@@ -5,6 +5,7 @@ export default class Index extends Component {
     constructor(props) {
         super(props)
         this.Id = Common.CreateGuid();
+        this.state = { ReceiveNextProps: this.ReceiveNextProps.bind(this) }
     }
 
 
@@ -13,7 +14,7 @@ export default class Index extends Component {
         return false
     }
 
-    componentWillReceiveProps2(nextProps){
+    componentWillReceiveProps2(nextProps) {
     }
 
     ReceiveNextProps(nextProps) {
