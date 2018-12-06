@@ -84,7 +84,7 @@ export default class Index extends Component {
         this.props.Dispatch(name + "/Set_" + actionName, payload)
     }
 
-    componentWillReceiveProps(nextProps) {
+    componentWillReceiveProps2(nextProps) {
         this.SetLoading(nextProps)
         this.PropsChanged(nextProps)
     }
@@ -150,13 +150,15 @@ export default class Index extends Component {
         return null;
     }
 
+
     shouldComponentUpdate(nextProps, nextState) {
-        let blChangedProps = false;
+        let blChangedProps = false, blNextProps = false;
 
         for (let key in nextProps) {
             if (nextProps[key] !== undefined) {
                 if (this.props[key] !== nextProps[key]) {
                     blChangedProps = true;
+                    blNextProps = true;
 
                     if (this.SetResponseMessage(nextProps[key], key)) blChangedProps = false;
 
@@ -164,6 +166,8 @@ export default class Index extends Component {
                 }
             }
         }
+
+        if (blNextProps) this.componentWillReceiveProps2(nextProps);
 
         if (!blChangedProps) {
             for (let key in nextState) {
