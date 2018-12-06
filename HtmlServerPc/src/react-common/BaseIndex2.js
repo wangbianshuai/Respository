@@ -5,7 +5,7 @@ export default class Index extends Component {
     constructor(props) {
         super(props)
         this.Id = Common.CreateGuid();
-        this.state = { ReceiveNextProps: this.ReceiveNextProps.bind(this) }
+        this.state = { ReceiveProps: this.ReceiveProps.bind(this) }
     }
 
 
@@ -17,7 +17,7 @@ export default class Index extends Component {
     componentWillReceiveProps2(nextProps) {
     }
 
-    ReceiveNextProps(nextProps) {
+    ReceiveProps(nextProps) {
         if (this.IsNextProps(nextProps)) this.componentWillReceiveProps2(nextProps);
     }
 
@@ -27,7 +27,7 @@ export default class Index extends Component {
     }
 
     static getDerivedStateFromProps(nextProps, prevState) {
-        if (prevState.ReceiveNextProps) prevState.ReceiveNextProps(nextProps);
+        if (prevState.ReceiveProps) prevState.ReceiveProps(nextProps);
         return null;
     }
 
