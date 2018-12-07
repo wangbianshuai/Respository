@@ -1,20 +1,19 @@
 import React from "react"
 import { connect } from "dva"
 import { Common } from "UtilsCommon";
-import { BaseIndex, Header, Footer, Rotate, ComponentList, BackTop } from "ReactCommon";
+import { BaseIndex, Header, Footer, Rotate, ComponentList, BackTop, StaticIndex, RootPage } from "ReactCommon";
+import Partner from "./Partner";
+import NewsMedia from "./NewsMedia";
+import ScatteredAssignment from "./ScatteredAssignment";
+import YJDJProduct from "./YJDJProduct";
+import XYBProduct from "./XYBProduct";
+import ThirtyTenderProduct from "./ThirtyTenderProduct";
+import YYPProduct from "./YYPProduct";
+import InvestmentRankList from "./InvestmentRankList";
 
 class Index extends BaseIndex {
     constructor(props) {
         super(props);
-
-        this.state = {
-            ReceiveProps: this.ReceiveProps.bind(this),
-            DownloadQrCodeDisplay: "none",
-            SelectSATabIndex: 0,
-            SelectNewsMediaTabIndex: 0,
-            PartnerList: [],
-            PartnerMarginLeft: 0
-        }
     }
 
     //服务器渲染加载数据
@@ -22,7 +21,7 @@ class Index extends BaseIndex {
         const token = ctx.cookies.get("Token");
         const ua = ctx.headers["user-agent"];
 
-        return Promise.all(BaseIndex.InitInvokeActionList(app, Index.Actions, Index.GetPayload(token, ua)));
+        return Promise.all(StaticIndex.InitInvokeActionList(app, Index.Actions, Index.GetPayload(token, ua)));
     }
 
     static GetPayload(token, ua) {
@@ -34,152 +33,9 @@ class Index extends BaseIndex {
     }
 
     componentDidMount() {
-        this.Token = Common.GetCookie("token");
+        this.Token = Common.GetCookie("Token");
 
         this.InitInvokeActionList(Index.Actions, Index.GetPayload(this.Token));
-    }
-
-    GetThirtyTenderProduct(data) {
-        return {
-            id: data.id,
-            name: "七天大胜",
-            category: `七天大胜/${data.plannedAnnualRate}%/${data.leastPeriod}${data.leastPeriodUnit}`
-        }
-    }
-
-    GetYJDJProduct(data) {
-        return {
-            id: data.id,
-            name: "月进斗金",
-            category: `月进斗金/${data.plannedAnnualRate}%/${data.leastPeriod}${data.leastPeriodUnit}`
-        }
-    }
-
-    GetXYBProduct(item) {
-        return {
-            id: item.id,
-            name: "新元宝",
-            category: `新元宝/${item.plannedAnnualRateTo}%/${item.frozenPeriod}个月`
-        }
-    }
-
-    GetSBZTProduct(item) {
-        return {
-            id: item.id,
-            name: "散标直投",
-            category: `散标直投/${item.plannedAnnualRate}%/${item.leastPeriod}${item.leastPeriodUnit}`
-        }
-    }
-
-    GetZQZRProduct(item) {
-        return {
-            id: item.id,
-            name: "债权转让",
-            category: `债权转让/${item.plannedAnnualRate}%/${item.leastPeriod}${item.leastPeriodUnit}`
-        }
-    }
-
-    RenderXYBProductItems(item) {
-        return (
-            <div className="dimension-q clearfix" key={Common.CreateGuid()}>
-                <div className="rate">历史年化收益：
-                <span className='w85'>{item.plannedAnnualRateTo + '%'}</span>
-                    {!Common.IsNullOrEmpty(item.remark) && <div className="tag-hot"><p><span>{item.remark}</span></p></div>}
-                    {item.floatingRate > 0 && <span className="plus"> + {item.floatingRate}%</span>}
-                </div>
-                <div className="limit"><i></i><i><span>{item.frozenPeriod}</span>个月<br />后可免费申请转让</i></div>
-                <div className="money">起投金额：<span>{item.leastTenderAmountLabel}</span></div>
-                <div>
-                    {item.status.code === "WAIT_TO_SELL" && <a href={'/xplan/detail/' + item.id + '.html'} target="_blank"
-                        className="btn-active disable">{item.status.message}</a>}
-
-                    {item.status.code === "SELLING" && <a href={'/xplan/detail/' + item.id + '.html'} target="_blank"
-                        className="btn-active ga-click xa-click">立即加入</a>}
-
-                    {item.status.code === "SOLD_OUT" && <a href={'/xplan/detail/' + item.id + '.html'} target="_blank"
-                        className="btn-active disable">{item.status.message}</a>}
-
-                    {item.status.code === "EARNING" && <a href={'/xplan/detail/' + item.id + '.html'} target="_blank"
-                        className="btn-active disable">{item.status.message}</a>}
-                </div>
-            </div>
-        )
-    }
-
-    RenderSBZTProductItems(item) {
-        return (
-            <ul className="clearfix" key={Common.CreateGuid()}>
-                <li className='grade'>
-                    <i className={"grade" + item.riskGrade}></i>
-                </li>
-                <li>
-                    {item.label === "ic-xfd" && <i className="icon house-icon"></i>}
-                    {item.label === "ic-xcd" && <i className="icon car-icon"></i>}
-                    {item.label === "ic-xsd" && <i className="icon business-icon"></i>}
-                    {item.label === "ic-xstd" && <i className="icon new-icon"></i>}
-                    {item.label === "ic-pxb" && <i className="icon"></i>}
-                </li>
-                <li className="name"><a href={'borrow/detail/' + item.id + '.html'} target="_blank"
-                    title={item.name}>{item.name}</a></li>
-                <li className="rate"><span>{item.plannedAnnualRate}</span>%</li>
-                <li className="time"><span>{item.leastPeriod + item.leastPeriodUnit}</span></li>
-                <li className="money">{'剩余：' + Common.ToCurrency(item.leftAmount) + '元'}
-                    <div className="j-process" position="bottom" tipcontent={Common.GetIntValue(((item.bidAmount - item.leftAmount) * 1.00 / item.bidAmount * 100))}>
-                        <span></span></div>
-                </li>
-                <li className="buy">
-                    {item.status.code === "SBZT_WAIT_TO_SELL" && <a href={'borrow/detail/' + item.id + '.html'} target="_blank"
-                        className="snapped disable">{item.status.message}</a>}
-
-                    {item.status.code === "SBZT_SELLING" && <a href={'borrow/detail/' + item.id + '.html'} target="_blank"
-                        className="snapped ga-click xa-click">立即加入</a>}
-
-                    {item.status.code === "SBZT_SOLD_OUT" && <a href={'borrow/detail/' + item.id + '.html'} target="_blank"
-                        className="snapped disable">{item.status.message}</a>}
-                </li>
-            </ul>
-        )
-    }
-
-    RenderZQZRProductItems(item) {
-        return (
-            <ul key={Common.CreateGuid()}>
-                <li className='grade'>  <i className={"grade" + item.riskGrade}></i></li>
-                <li>
-                    {item.label === "ic-xfd" && <i className="icon house-icon"></i>}
-                    {item.label === "ic-xcd" && <i className="icon car-icon"></i>}
-                    {item.label === "ic-xsd" && <i className="icon business-icon"></i>}
-                    {item.label === "ic-xstd" && <i className="icon new-icon"></i>}
-                    {item.label === "ic-pxb" && <i className="icon"></i>}
-                </li>
-                <li className="name"><a href={'/traderequest/requestDetail/' + item.id + '.html'} target="_blank" title={item.name}>{item.name}</a></li>
-                <li className="rate"><span>{item.plannedAnnualRate}</span>%</li>
-                <li className="time">剩余：<span>{item.leastPeriod + item.leastPeriodUnit}</span></li>
-                <li className="money">{'转让价：' + Common.ToCurrency(item.transferPrice) + '元'}
-                </li>
-                <li className="buy">
-
-                    {item.status.code === "ZQZR_WAIT_TO_SELL" && <a href={'/traderequest/requestDetail/' + item.id + '.html'} target="_blank"
-                        className="snapped disable">{item.status.message}</a>}
-
-                    {item.status.code === "ZQZR_SELLING" && <a href={'/traderequest/requestDetail/' + item.id + '.html'} target="_blank"
-                        className="snapped ga-click xa-click" > 立即加入</a>}
-
-                    {item.status.code === "ZQZR_SOLD_OUT" && <a href={'/traderequest/requestDetail/' + item.id + '.html'} target="_blank"
-                        className="snapped disable">{item.status.message}</a>}
-                </li>
-            </ul>
-        )
-    }
-
-    RenderInvestmentRankRow(item, index) {
-        return (
-            <tr key={Common.CreateGuid()}>
-                <td className="sort"><span>{index + 1}</span></td>
-                <td>{item.nickName}</td>
-                <td className="money">{'￥' + Common.ToCurrency(item.investmentAmount) + '元'}</td>
-            </tr>
-        )
     }
 
     GetAchievement() {
@@ -187,6 +43,8 @@ class Index extends BaseIndex {
         const { Achievement } = this.props;
 
         if (!Achievement || Achievement.IsSuccess === false || !Achievement.items) return acht;
+
+        if (this.Achievement) return this.Achievement;
 
         Achievement.items.forEach(a => {
             if (a.code === "TOTAL_REGISTER_USER") acht.totalRegister = Common.ToCurrency(a.nvalue, false);
@@ -214,13 +72,17 @@ class Index extends BaseIndex {
             }
         });
 
+        this.Achievement = acht;
+
         return acht;
     }
 
     GetAdDataList() {
-        const Ad = this.GetPropsValue("Ad", "map", []);
+        if (this.AdDataList && this.AdDataList.length > 0) return this.AdDataList;
 
-        return Ad.map(m => {
+        const Ad = this.GetPropsValue("Ad", []);
+
+        this.AdDataList = Ad.map(m => {
             return {
                 imgurl: m.extendUrl,
                 linkurl: m.textHref,
@@ -229,96 +91,21 @@ class Index extends BaseIndex {
                 content: ""
             }
         });
-    }
 
-    OnMouseOver(key) {
-        return (e) => {
-            if (key === "Dimension") this.SetDisplay("DownloadQrCodeDisplay", true);
-        }
-    }
-
-    OnMouseOut(key) {
-        return (e) => {
-            if (key === "Dimension") this.SetDisplay("DownloadQrCodeDisplay", false);
-        }
-    }
-
-    OnClick(key) {
-        return (e) => {
-            if (key === "Scattered") this.SetSelectSATabIndex(0);
-            else if (key === "Assignment") this.SetSelectSATabIndex(1);
-            if (key === "News") this.SetSelectNewsMediaTabIndex(0);
-            else if (key === "Media") this.SetSelectNewsMediaTabIndex(1);
-            else if (key === "ParterLeft") this.SetParterLeftRight(true);
-            else if (key === "ParterRight") this.SetParterLeftRight(false);
-        }
-    }
-
-    SetParterLeftRight(blLeft) {
-        if (this.ParterTimeoutId > 0) return;
-        let parterList = this.state.PartnerList;
-        const { Partner } = this.props;
-        if (parterList.length === 0 && Partner && Partner.length > 0) parterList = Partner;
-        if (parterList.length > 7) {
-            let list = [], marginLeft = 0;
-            const len = parterList.length;
-            if (blLeft) { list = parterList.filter((m, i) => i > 0); list.push(parterList[0]); marginLeft = 0; }
-            else { list = [parterList[len - 1]].concat(parterList.filter((m, i) => i < len - 1)); marginLeft = -150; }
-            this.setState({ PartnerList: list, PartnerMarginLeft: marginLeft });
-
-            this.SetPartnerMarginLeft(blLeft)
-        }
-    }
-
-    SetPartnerMarginLeft(blLeft) {
-        let start = blLeft ? 0 : -150;
-        const end = blLeft ? -150 : 0;
-        const _fn = () => {
-            if (start === end) { clearTimeout(this.ParterTimeoutId); this.ParterTimeoutId = 0; return; }
-
-            if (start > end) start -= 25;
-            else start += 25;
-            this.setState({ PartnerMarginLeft: start });
-
-            this.ParterTimeoutId = setTimeout(_fn, 100);
-        };
-
-        _fn();
-    }
-
-    GetPartnerList() {
-        let parterList = this.state.PartnerList;
-        if (parterList.length === 0) parterList = this.props.Partner;
-        return parterList;
-    }
-
-    SetSelectSATabIndex(index) {
-        if (index != this.state.SelectSATabIndex) this.setState({ SelectSATabIndex: index });
-    }
-
-    SetSelectNewsMediaTabIndex(index) {
-        if (index != this.state.SelectNewsMediaTabIndex) this.setState({ SelectNewsMediaTabIndex: index });
+        return this.AdDataList;
     }
 
     render() {
-        const PcBuildUrl = this.GetPcBuildUrl();
-        const { Link, ZQZR, SBZT, Announcement, News, Media, More } = this.props;
-        const { DownloadQrCodeDisplay, SelectSATabIndex, SelectNewsMediaTabIndex, PartnerMarginLeft } = this.state;
-
-        const ThirtyTender = this.GetPropsValue("ThirtyTender", "id", { status: {} });
-        const InvestmentRank = this.GetPropsValue("InvestmentRank", "currentMonth", { items: [] });
+        const { ZQZR, SBZT, Announcement, News, Media, More, PcBuildUrl, IsLogin, IsPurchased } = this.props;
         const Achievement = this.GetAchievement();
-        const XYB = this.GetPropsValue("XYB", "name", { items: [] });
-        const YJDJ = this.GetPropsValue("YJDJ", "id", { status: {} });
-        const YYP = this.GetPropsValue("YYP", "name", { status: {} });
-        const IsLogin = this.JudgeLogin();
-        const UserInfo = this.GetPropsValue("UserInfo", "userid", {});;
-        const IsPurchased = this.props.InvestStatus === true;
-        const Partner = this.GetPartnerList();
+        const InvestmentRank = this.GetPropsValue("InvestmentRank", { items: [] });
+        const ThirtyTender = this.GetPropsValue("ThirtyTender", { status: {} });
+        const XYB = this.GetPropsValue("XYB", { items: [] });
+        const YJDJ = this.GetPropsValue("YJDJ", { status: {} });
+        const YYP = this.GetPropsValue("YYP", { status: {} });
 
         return (
-            <div id="J_wrapBody">
-                <Header PcBuildUrl={PcBuildUrl} Page={this} IsLogin={IsLogin} NickName={UserInfo.nickname} UserType={UserInfo.userType} IsPurchased={IsPurchased} />
+            <React.Fragment>
                 <div className="rotate-focus">
                     <Rotate DataList={this.GetAdDataList()} />
                     <div className="focus">
@@ -385,142 +172,17 @@ class Index extends BaseIndex {
                     </div>
                     <div className="product clearfix">
                         <div className="product-invest">
-                            {!IsPurchased && <div className="dimension clearfix dimension-thirtytender" id="J_qtds">
-                                <div className="dimension-title dimension-title-thirty">
-                                    <h6>新手专区</h6>
-                                    <p>新手用户&nbsp;专享福利</p>
-                                    <a href="/detail/thirtytender.html">查看详情</a>
-                                </div>
-                                <div className='dimension-con'>
-                                    <dl className="dimension-name clearfix">
-                                        <dt>新元宝（新手专享）</dt>
-                                        <dd>限参与一次</dd>
-                                        <span>已累计加入：{ThirtyTender.accumulatedInvestors}</span>
-                                    </dl>
-                                    <ul className="dimension-buy clearfix">
-                                        <li className="rate">
-                                            <div className="wrap">
-                                                <i>{ThirtyTender.plannedAnnualRate}</i>%
-                                          {ThirtyTender.floatingRate > 0 && <div className="plus">+{ThirtyTender.floatingRate}%
-                                                <p className='xszx-tip'>
-                                                        新手专享加息
-                                                    <i></i>
-                                                    </p>
-                                                </div>}
-                                            </div>
-                                            <br />历史年化收益
-                                        </li>
-                                        <li>
-                                            <span>{ThirtyTender.leastPeriod}{ThirtyTender.leastPeriodUnit}</span><br />
-                                            后可申请转让
-                                        </li>
-                                        <li><span>{ThirtyTender.leastTenderAmountLabel}</span><br />起投金额</li>
-                                        <li className="dimension-btn">
-                                            {ThirtyTender.status.code === "WAIT_TO_SELL" && <a target="_blank" className="btn-active ga-click xa-click disable" >{ThirtyTender.status.message}</a>}
-
-                                            {ThirtyTender.status.code === "SELLING" && <a href="/detail/thirtytender.html" target="_blank" className="btn-active ga-click xa-click">立即加入</a>}
-
-                                            {ThirtyTender.status.code === "SOLD_OUT" && <a target="_blank" className="btn-active ga-click xa-click disable">{ThirtyTender.status.message}</a>}
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>}
-                            <div className="dimension dimension-gold clearfix">
-                                <div className="dimension-title dimension-title-gold">
-                                    <h6>人气专区</h6>
-                                    <div className="time">每天10:00、20:00发售</div>
-                                    <a href="/detail/monthgold.html">查看详情</a>
-
-                                </div>
-                                <div className='dimension-con'>
-                                    <dl className="dimension-name dimension-name-gold clearfix">
-                                        <dt>月进斗金</dt>
-                                        <dd>每日限量|先到先得</dd>
-                                        {YJDJ.lefTime && <div className="tip tip-gold j_countdown">
-                                            <p>距离结束还剩：</p>
-                                            <span>{YJDJ.lefTime}</span>
-                                        </div>}
-                                    </dl>
-                                    <ul className="dimension-buy clearfix">
-                                        <li className="rate"><span><i>{Common.GetIntValue(YJDJ.plannedAnnualRate)}</i>%</span><br />历史年化收益</li>
-                                        <li>
-                                            <span>{YJDJ.leastPeriod}{YJDJ.leastPeriodUnit}</span><br />
-                                            后可申请转让
-                                            </li>
-                                        <li>
-                                            <span>{Common.ToCurrency(Common.GetIntValue(YJDJ.plannedAmount), false)}元</span><br />计划金额
-                                            </li>
-                                        <li className="dimension-btn">
-
-                                            {YJDJ.status.code === "WAIT_TO_SELL" && <a target="_blank" className="btn-active disable">{YJDJ.status.message}</a>}
-
-                                            {YJDJ.status.code === "SELLING" && <a href="/detail/monthgold.html" target="_blank" className="btn-active ga-click xa-click">立即加入</a>}
-
-                                            {YJDJ.status.code === "SOLD_OUT" && <a target="_blank" className="btn-active disable">本场已结束</a>}
-
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
+                            {!IsPurchased && <ThirtyTenderProduct ThirtyTender={ThirtyTender} />}
+                            <YJDJProduct YJDJ={YJDJ} />
                             <div className="dimension dimension-group">
                                 <div className="dimension-title dimension-title-group">
                                     <div className="time">自动投标工具，持有30天后可转让</div>
                                     <i className="group"></i>
                                 </div>
-                                <div className="dimension-block">
-                                    <div className="dimension-info clearfix">
-                                        <h2>新元宝</h2>
-                                        <ul>
-                                            <li>募集成功后次日起息</li>
-                                        </ul>
-                                        <div className="count">累计加入：{XYB.accumulatedInvestors}</div>
-                                    </div>
-                                    {XYB.items.map(m => this.RenderXYBProductItems(m))}
-                                </div>
-                                <div className="dimension-block overauto">
-                                    <div className="dimension-info clearfix">
-                                        <h2>月月派<i className="logo"></i>
-                                        </h2>
-                                        {!Common.IsNullOrEmpty(YYP.remark) && <div className="tag-hot">
-                                            <p><span>{YYP.remark}</span></p>
-                                        </div>}
-                                        <ul>
-                                            <li>每月派息</li>
-                                            <li>募集成功后次日起息，持有30天后可转让</li>
-                                        </ul>
-                                    </div>
-                                    <div className="dimension-q clearfix">
-                                        <div className="rate">历史年化收益：
-                                        <i><span>{YYP.plannedAnnualRateTo}%</span></i>
-                                            {!Common.IsNullOrEmpty(YYP.floatingRate) && <div className="plus">+{YYP.floatingRate}%</div>}
-                                        </div>
-                                        <div className="limit"><span></span><span>{YYP.frozenPeriod}<br />后可免费申请转让</span></div>
-                                        <div className="money">起投金额：{YYP.leastTenderAmountLabel}</div>
-                                        <a target="_blank" className="dimension-mobile-btn" onMouseOver={this.OnMouseOver("Dimension")} onMouseOut={this.OnMouseOut("Dimension")}>
-                                            <span>APP专享</span><br />
-                                            累计加入:<i>{YYP.accumulatedInvestors}</i>
-                                        </a>
-                                    </div>
-                                    <div className="download-QRcode" id="download-qr-code" onMouseOver={this.OnMouseOver("Dimension")} onMouseOut={this.OnMouseOut("Dimension")} style={{ display: DownloadQrCodeDisplay }}>
-                                        <img width="128" alt="新新贷app下载二维码" src={PcBuildUrl + "img/qr-code-phone@2x.png"} /><p>手机APP下载</p>
-                                    </div>
-                                </div>
+                                <XYBProduct XYB={XYB} />
+                                <YYPProduct YYP={YYP} PcBuildUrl={PcBuildUrl} />
                             </div>
-                            <div className="scattered-and-assignment">
-                                <div className="tab">
-                                    <ul id="J_scatteredAndAssignment">
-                                        <li className={SelectSATabIndex === 0 ? "active" : ""} onClick={this.OnClick("Scattered")}>散标直投</li>
-                                        <li className={SelectSATabIndex === 1 ? "active" : ""} onClick={this.OnClick("Assignment")} >债权转让<i></i></li>
-                                    </ul>
-                                    <a className="more" href="/borrow/search/list.html" target="_blank">查看更多</a>
-                                </div>
-                                <div className={"scattered" + (SelectSATabIndex === 0 ? "" : " hide")}>
-                                    {SBZT && SBZT.map && SBZT.map(m => this.RenderSBZTProductItems(m))}
-                                </div>
-                                <div className={"assignment" + (SelectSATabIndex === 1 ? "" : " hide")}>
-                                    {ZQZR && ZQZR.map && ZQZR.map(m => this.RenderZQZRProductItems(m))}
-                                </div>
-                            </div>
+                            <ScatteredAssignment SBZT={SBZT} ZQZR={ZQZR} />
                         </div>
                         <div className="product-info">
                             <div className="volume-of-transaction">
@@ -539,34 +201,8 @@ class Index extends BaseIndex {
                                     {Announcement && Announcement.map && Announcement.map(m => <li key={Common.CreateGuid()}><a href={m.textHref}>{m.text}</a></li>)}
                                 </ul>
                             </div>
-                            <div className="billboard">
-                                <div className="title"><span>{InvestmentRank.currentMonth}</span>月用户风云榜<b>统计不含散标直投</b>
-                                </div>
-                                <table><thead>
-                                    <tr>
-                                        <th width="30%">排名</th>
-                                        <th width="30%">用户名</th>
-                                        <th width="40%">出借金额</th>
-                                    </tr></thead>
-                                    <tbody>
-                                        {InvestmentRank.items && InvestmentRank.items.map((m, i) => this.RenderInvestmentRankRow(m, i))}
-                                    </tbody>
-                                </table>
-                            </div>
-
-                            <div className="news">
-                                <div className="title" id="J_titleNews">
-                                    <span className={"menu" + (SelectNewsMediaTabIndex === 0 ? " active" : "")} onClick={this.OnClick("News")}>新闻动态</span>
-                                    <span className={"menu" + (SelectNewsMediaTabIndex === 1 ? " active" : "")} onClick={this.OnClick("Media")}>媒体报道</span>
-                                    <a href="/html/help/newsreport.html" className="more">更多</a>
-                                </div>
-                                <ul className={"news-list" + (SelectNewsMediaTabIndex === 0 ? "" : " hide")}>
-                                    {News && News.map && News.map(m => <li key={Common.CreateGuid()}><a href={m.textHref}>{m.text}</a></li>)}
-                                </ul>
-                                <ul className={"media-list" + (SelectNewsMediaTabIndex === 1 ? "" : " hide")}>
-                                    {Media && Media.map && Media.map(m => <li key={Common.CreateGuid()}><a href={m.textHref}>{m.text}</a></li>)}
-                                </ul>
-                            </div>
+                            <InvestmentRankList InvestmentRank={InvestmentRank} />
+                            <NewsMedia News={News} Media={Media} />
                             <div className="ad">
                                 <a href="/html/introduce/guide.html" className="ga-click">
                                     <img width="330" src={PcBuildUrl + "img/330-176-index.png"} /></a>
@@ -592,16 +228,7 @@ class Index extends BaseIndex {
                             </div>
                         </div>
                     </div>
-                    <div className="partner" id="J_partner">
-                        <div className="title">合作伙伴</div>
-                        <i className="left" onClick={this.OnClick("ParterLeft")}></i>
-                        <i className="right" onClick={this.OnClick("ParterRight")}></i>
-                        <div className="wrap-partner">
-                            <ul style={{ marginLeft: PartnerMarginLeft + "px" }}>
-                                {Partner && Partner.map && Partner.map(m => <li key={Common.CreateGuid()}><div><a href={m.textHref} target="_blank"><img src={m.extendUrl} /></a></div><a href={m.textHref}>{m.text}</a></li>)}
-                            </ul>
-                        </div>
-                    </div>
+                    <Partner DataList={this.props.Partner} />
                     <div className="partner">
                         <div className="title">了解更多</div>
                         <ul className="ml-75">
@@ -609,20 +236,13 @@ class Index extends BaseIndex {
                         </ul>
                     </div>
                 </div>
-                <Footer PcBuildUrl={PcBuildUrl} Link={Link} Page={this} />
-                <ComponentList Name="Tips" Page={this} />
-                <ComponentList Name="Dialogs" Page={this} />
-                <BackTop Page={this} />
-            </div>
+            </React.Fragment>
         )
     }
 }
 
 function mapStateToProps(state, ownProps) {
-    const props = {
-        Loading: state.BizService.Loading || state.TradeCenterService.Loading || state.UserCenterService.Loading || state.InvestmentService.Loading,
-        Link: state.BizService.Link,
-        Opinion: state.BizService2.Opinion,
+    const props = StaticIndex.MapStateToProps(state, ownProps, {
         Ad: state.BizService.Ad,
         Achievement: state.BizService.Achievement,
         Announcement: state.BizService.Announcement,
@@ -636,20 +256,16 @@ function mapStateToProps(state, ownProps) {
         ThirtyTender: state.TradeCenterService.ThirtyTender,
         YJDJ: state.TradeCenterService.YJDJ,
         XYB: state.TradeCenterService.XYB,
-        YYP: state.TradeCenterService.YYP,
-        UserInfo: state.UserCenterService.UserInfo,
-        InvestStatus: state.InvestmentService.InvestStatus
-    };
+        YYP: state.TradeCenterService.YYP
+    });
 
-    console.log(props);
+    !Common.IsDist && console.log(props);
     return props;
 }
 
-Index.Actions = {
-    BizService: ["GetLink", "GetAd", "GetAchievement", "GetAnnouncement", "GetNews", "GetMedia", "GetInvestmentRank", "GetPartner", "GetMore"],
-    TradeCenterService: ["GetZQZR", "GetSBZT", "GetThirtyTender", "GetYJDJ", "GetXYB", "GetYYP"],
-    UserCenterService: ["GetUserInfo"],
-    InvestmentService: ["InvestStatus"]
-};
+Index.Actions = StaticIndex.MapActions({
+    BizService: ["GetAd", "GetAchievement", "GetAnnouncement", "GetNews", "GetMedia", "GetInvestmentRank", "GetPartner", "GetMore"],
+    TradeCenterService: ["GetZQZR", "GetSBZT", "GetThirtyTender", "GetYJDJ", "GetXYB", "GetYYP"]
+});
 
-export default connect(mapStateToProps, BaseIndex.MapDispatchToProps)(Index);
+export default connect(mapStateToProps, StaticIndex.MapDispatchToProps)(RootPage(Index));

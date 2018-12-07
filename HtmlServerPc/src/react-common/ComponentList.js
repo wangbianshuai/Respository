@@ -4,27 +4,29 @@ export default class Index extends Component {
     constructor(props) {
         super(props);
 
-        this.List = [];
-        this.state = { List: this.List }
-
+        this.Init();
+        this.state = { List: this.List };
     }
 
-    InitList() {
-        const { Page, Name } = this.props;
-        if (Page[Name] && Page[Name].List) return Page[Name].List;
-        return [];
+    Init() {
+        const { Name, List, InitComponentList } = this.props;
+        this.List = List;
+        InitComponentList(Name, this.Add(), this.AddList())
     }
 
-    componentDidMount() {
-        this.props.Page.InitComponentList(this.props.Name, this.Add(), this.AddList());
-        this.List = this.InitList();
-        this.setState({ List: this.List });
+    static get defaultProps() {
+        return {
+            Name: "",
+            List: [],
+            InitComponentList: Function()
+        }
     }
 
     AddList() {
         return (list) => {
             this.List = this.List.concat(list);
             this.setState({ List: this.List });
+            return this.List;
         }
     }
 
@@ -33,6 +35,7 @@ export default class Index extends Component {
             this.List = this.List.map(m => m);
             this.List.push(item);
             this.setState({ List: this.List });
+            return this.List;
         }
     }
 

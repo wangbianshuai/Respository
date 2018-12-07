@@ -1,8 +1,7 @@
-import React from "react";
-import BaseIndex2 from "../BaseIndex2";
+import React, { Component } from "react";
 import { Common } from "UtilsCommon";
 
-export default class Index extends BaseIndex2 {
+export default class Index extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -12,7 +11,10 @@ export default class Index extends BaseIndex2 {
 			PreSelectIndex: 0,
 			IsMouseOver: false
 		};
-		this.IsInit = false;
+	}
+
+	componentDidMount() {
+		this.SliderInit();
 	}
 
 	static get defaultProps() {
@@ -47,14 +49,7 @@ export default class Index extends BaseIndex2 {
 	}
 
 	componentDidUpdate(prevProps, prevState) {
-		if (!this.IsInit && prevProps.DataList.length > 0) {
-			this.SliderInit();
-			this.IsInit = true;
-		}
-	}
-
-	componentWillReceiveProps2(nextProp) {
-		if (this.JudgeChanged(nextProp, "DataList")) this.IsInit = false;
+		if (prevProps.DataList !== this.props.DataList && prevProps.DataList.length > 0) this.SliderInit();
 	}
 
 	RenderOlItem(item, index) {
@@ -120,13 +115,20 @@ export default class Index extends BaseIndex2 {
 		this.SliderTimer(index);
 	}
 
-	OnMouseOver() {
+	OnMouseOver(e) {
+		if (this.IsMouseOver) return;
+
 		this.Stop();
+		this.IsMouseOver = true;
 		this.setState({ IsMouseOver: true });
 	}
 
-	OnMouseOut() {
+	OnMouseOut(e) {
+		console.log(e);
+		if (!this.IsMouseOver) return;
+
 		this.SliderInit();
+		this.IsMouseOver = false;
 		this.setState({ IsMouseOver: false });
 	}
 
@@ -150,7 +152,7 @@ export default class Index extends BaseIndex2 {
 	render() {
 		const { MinWidth, DataList, Arrow } = this.props;
 		return (
-			<div className="mui-slider sliderType1" style={{ minWidth: MinWidth + "px" }}
+			<div className="mui-slider sliderType1" ref={"SliderDiv"} style={{ minWidth: MinWidth + "px" }}
 				onMouseOver={this.OnMouseOver.bind(this)} onMouseOut={this.OnMouseOut.bind(this)}>
 				<ul>{DataList.map((m, i) => this.RenderUlItem(m, i))}</ul>
 				<ol>{DataList.map((m, i) => this.RenderOlItem(m, i))}</ol>

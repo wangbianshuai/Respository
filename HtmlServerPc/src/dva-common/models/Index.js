@@ -29,7 +29,7 @@ export default class Index {
     }
 
     InvokeService(fn, type) {
-        return function* ({ payload, isloading, callback }, { call, put }) {
+        return function* ({ payload, isloading }, { call, put }) {
             if (isloading !== false) yield put({ type: "ChangeLoading", payload: true })
 
             const response = yield call(fn, payload)
@@ -38,7 +38,7 @@ export default class Index {
 
             yield put({ type: `Set_${type}`, payload: response });
 
-            if (EnvConfig.IsServer && callback) callback(response)
+            return response;
         }
     }
 

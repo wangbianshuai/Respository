@@ -1,13 +1,19 @@
-import React from "react";
-import BaseIndex2 from "../BaseIndex2";
+import React, { Component } from "react";
 import $ from "jquery";
 import { Common } from "UtilsCommon";
 import Feedback from "./Feedback";
 
-export default class Index extends BaseIndex2 {
+export default class Index extends Component {
     constructor(props) {
         super(props);
         this.state = { IsToTop: false }
+        this.Init();
+    }
+
+    Init() {
+        this.Page = this.props.Page;
+        this.Alert = this.Page.InvokeRootPage("Alert");
+        this.AddComponent = this.Page.InvokeRootPage("AddComponent");
     }
 
     componentDidMount() {
@@ -32,9 +38,9 @@ export default class Index extends BaseIndex2 {
         }
     }
 
-    ToLinkService(){
-        return (e)=>{
-            const token = Common.GetCookie("Token") ||"";
+    ToLinkService() {
+        return (e) => {
+            const token = Common.GetCookie("Token") || "";
             const imParam = "?token=" + token + "&type=1";
             let imsrc = "//csm.xinxindai.com/csm/customer-im" + imParam;
             if (location.host.indexOf("xinxindai.com") < 0) imsrc = "//test-csm.xxd.com/csm/customer-im" + imParam;
@@ -44,9 +50,9 @@ export default class Index extends BaseIndex2 {
         }
     }
 
-    OpenFeedback(){
-        return ()=>{
-            this.props.Page.Dialogs.Add(<Feedback Page={this.props.Page} key={Common.CreateGuid()}/>)
+    OpenFeedback() {
+        return () => {
+            this.AddComponent("Dialogs", <Feedback Page={this.Page} Dispatch={this.props.Dispatch} key={Common.CreateGuid()} />)
         }
     }
 

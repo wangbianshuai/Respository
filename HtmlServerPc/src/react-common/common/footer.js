@@ -5,13 +5,17 @@ import { Tip } from "ReactCommon";
 export default class Footer extends Component {
     constructor(props) {
         super(props);
-        this.state = {
-            IsLinkClose: true
-        }
+
+        this.state = { IsLinkClose: true };
+
+        this.Init();
     }
 
-    componentDidMount() {
-        this.props.Page.AddTipList([
+    Init() {
+        this.Page = this.props.Page;
+        this.AddTipList = this.Page.InvokeRootPage("AddTipList");
+
+        this.AddTipList([
             this.RenderTip("TipPhone", "css/i/qr-code-phone.png"),
             this.RenderTip("TipPhone2", "css/i/qr-code-phone.png"),
             this.RenderTip("TipWeixin", "css/i/qr-code-wechat.png"),

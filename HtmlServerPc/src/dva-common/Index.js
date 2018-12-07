@@ -36,7 +36,7 @@ export default class Index {
     }
 
     static Init(component) {
-        const dva = new Index(component, window.InitialState);
+        const dva = new Index(component, window.InitialState, { Page: {} });
         dva.Init("root");
     }
 

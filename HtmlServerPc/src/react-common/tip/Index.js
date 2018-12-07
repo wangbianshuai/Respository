@@ -1,8 +1,7 @@
-import React from "react";
-import BaseIndex2 from "../BaseIndex2";
+import React, { Component } from "react";
 import $ from "jquery";
 
-export default class Index extends BaseIndex2 {
+export default class Index extends Component {
     constructor(props) {
         super(props);
         this.state = {

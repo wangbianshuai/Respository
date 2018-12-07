@@ -1,9 +1,7 @@
 import React from "react"
 import { connect } from "dva"
-import BaseIndex from "../../Index";
-import Header from "../../common/header";
-import Footer from "../../common/footer";
-import Menu from "../common/menu"
+import { Common } from "UtilsCommon";
+import { BaseIndex, Header, Footer, ComponentList, BackTop, Menu } from "ReactCommon";
 
 class Coupon extends BaseIndex {
     constructor(props) {
@@ -14,29 +12,46 @@ class Coupon extends BaseIndex {
         return "我的优惠券-互动管理-我的新新贷";
     }
 
-    GetCssList() {
-        return ["/build/mods/user/activity/coupon/_.css"];
-    }
-
-    GetJsList() {
-        return ["/build/mods/user/activity/coupon/_.js"];
-    }
-
     //服务器渲染加载数据
     static LoadData(ctx, app) {
-        return BaseIndex.Dispatch(app._store.dispatch, "PageView", "GetCoupon");
+        const token = ctx.cookies.get("Token");
+        const ua = ctx.headers["user-agent"];
+
+        return Promise.all(BaseIndex.InitInvokeActionList(app, Coupon.Actions, Coupon.GetPayload(token, ua)));
+    }
+
+    static GetPayload(token, ua) {
+        return {
+            Token: token,
+            UserAgent: ua,
+            InvestmentService: { InvestStatus: { data: {} } }
+        };
+    }
+
+    componentDidMount() {
+        Common.SetCookie("Token", "2wmuuBSbUzkXjSqfaNpuUCcAk66RSJuO7wzv5Zi6ZZxqx8xuOdXQvQr8CytF5C4LIDyNjY47RL2Ms-xqPuXVeyMO_9JtcDKg-WZMX_84n8U")
+        this.Token = Common.GetCookie("Token");
+
+        this.InitInvokeActionList(Coupon.Actions, Coupon.GetPayload(this.Token));
+        
+        this.SetMenuMinHeight();
+    }
+
+    componentDidUpdate() {
+        this.SetMenuMinHeight();
     }
 
     render() {
-        if (!this.props.PageData || !this.props.PageData.global) return null;
-
         const PcBuildUrl = this.GetPcBuildUrl();
-        const { globalData, isInvestQTDS, isInvestRRY, isInvestBBGS, isInvestXSB } = this.props.PageData;
-        const MenuStatus = { isInvestQTDS, isInvestRRY, isInvestBBGS, isInvestXSB }
+        const { Link } = this.props;
+        const IsLogin = this.JudgeLogin();
+        const UserInfo = this.GetPropsValue("UserInfo", {});
+        const IsPurchased = this.props.InvestStatus === true;
+        const MenuStatus = this.GetMenuStatus()
 
         return (
             <div id="J_wrapBody">
-                <Header PcBuildUrl={PcBuildUrl} globalData={globalData} />
+                <Header PcBuildUrl={PcBuildUrl} Page={this} IsLogin={IsLogin} NickName={UserInfo.nickname} UserType={UserInfo.userType} IsPurchased={IsPurchased} />
 
                 <div className="g-top">
                     <div className="g-top-con">
@@ -47,10 +62,8 @@ class Coupon extends BaseIndex {
                     </div>
                 </div>
                 <div className="info-contaner clearfix">
-
-                    <Menu MenuName1="activity" MenuName2="coupon" MenuStatus={MenuStatus} />
-
-                    <div className="g-right">
+                    <Menu MenuName1="activity" MenuName2="coupon" ref={(e) => this.MenuElement = e} MenuStatus={MenuStatus} />
+                    <div className="g-right" ref="RightContent">
                         <div className="m-con-wrap">
                             <div className="m-con-hd clearfix">我的奖励</div>
                             <div className="m-con-bd">
@@ -169,16 +182,22 @@ class Coupon extends BaseIndex {
                     </div>
                 </div>
 
-                <Footer PcBuildUrl={PcBuildUrl} globalData={globalData}  />
+                <Footer PcBuildUrl={PcBuildUrl} Link={Link} Page={this} />
+                <ComponentList Name="Tips" Page={this} />
+                <ComponentList Name="Dialogs" Page={this} />
+                <BackTop Page={this} />
             </div>
         )
     }
 }
 
 function mapStateToProps(state, ownProps) {
-    return {
-        PageData: state.PageView.Coupon
-    };
+    const props = BaseIndex.MapStateToPropsForMenu(state, ownProps, {});
+
+    !Common.IsDist && console.log(props);
+    return props;
 }
+
+Coupon.Actions = BaseIndex.MapActionsForMenu({});
 
 export default connect(mapStateToProps, BaseIndex.MapDispatchToProps)(Coupon);

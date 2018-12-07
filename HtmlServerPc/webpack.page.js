@@ -31,7 +31,8 @@ const CommonJsConfigs = [
             "./src/public/css/tip.less",
             "./src/public/css/dialog.less",
             "./src/public/css/dialog-float.less",
-            "./src/public/css/backTop.less"
+            "./src/public/css/backTop.less",
+            "./src/public/css/paging.less"
         ]
     }
 ];

@@ -36,8 +36,7 @@ function SetServiceHeader(data, serviceName) {
 
     if (serviceName === "BizApiService" || serviceName === "BizApiService2"
         || serviceName === "TradeCenterApiService" || serviceName === "UserCenterApiService") return SetApiServiceHeader(data);
-    else if (serviceName === "InvestmentApiService") return SetInvestmentApiServiceHeader(data);
-
+    else if (serviceName === "InvestmentApiService" || serviceName === "IntegrationApiService") return SetInvestmentApiServiceHeader(data);
 
     return data;
 }
@@ -85,7 +84,7 @@ function GetResponse(d, resKey, url, data, serviceName) {
             else if (d.data) obj = d.data;
             else obj = d;
         }
-        else obj = { IsSuccess: false, Message: d.code + ":" + d.message }
+        else obj = { IsSuccess: false, Message: d.code + ":" + d.message, Code: d.Code }
     }
     else if (d && d.Ack) {
         if (d.Ack.IsSuccess) obj = resKey ? d[resKey] : d

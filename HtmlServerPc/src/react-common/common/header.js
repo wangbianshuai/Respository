@@ -1,18 +1,25 @@
-import React, { Component } from "react";
+import React from "react";
 import { Tip } from "ReactCommon";
 import { Common } from "UtilsCommon";
 import DialogBorrow from "./DialogBorrow";
+import BaseIndex from "../BaseIndex";
 
-export default class Header extends Component {
+export default class Header extends BaseIndex {
     constructor(props) {
         super(props);
 
         this.state = { InvestClassName: "" }
+
+        this.Init();
     }
 
-    componentDidMount() {
-        this.props.Page.AddTipList([this.RenderTipPhone(), this.RenderTipWeixin(), this.RenderTipUser(), this.RenderTipInvest()]);
-        this.props.Page.AddComponent("Dialogs", <DialogBorrow ref={(e) => this.DialogBorrowElement = e} />)
+    Init() {
+        this.Page = this.props.Page;
+        this.AddTipList = this.Page.InvokeRootPage("AddTipList");
+        this.AddComponent = this.Page.InvokeRootPage("AddComponent");
+
+        this.AddTipList([this.RenderTipPhone(), this.RenderTipWeixin(), this.RenderTipUser(), this.RenderTipInvest()]);
+        this.AddComponent("Dialogs", <DialogBorrow key={Common.CreateGuid()} Show={(s) => this.DialogBorrowShow = s} Logout={this.Logout.bind(this, '/usercenter/company/register.html')} />);
     }
 
     OnMouseOver(key) {
@@ -61,10 +68,21 @@ export default class Header extends Component {
     }
 
     BorrowMoney() {
-        const { UserType, IsLogin } = this.props;
+        const { UserInfo, IsLogin } = this.props;
 
-        if (IsLogin && parseInt(UserType) === 2) this.DialogBorrowElement.Show();
+        if (IsLogin && parseInt(UserInfo.userType) === 2) this.DialogBorrowShow();
         else window.location.href = "/borrowApply/toBorrowPage.html";
+    }
+
+    ReceiveLogout(logout, url) {
+        if (parseInt(logout.Code) === 0) {
+            Common.RemoveCooke("Token");
+            window.location.href = url;
+        }
+    }
+
+    Logout(url) {
+        this.DispatchAction("XxdService", "Logout").then(res => this.ReceiveLogout(res, url));
     }
 
     RenderTipInvest() {
@@ -85,7 +103,7 @@ export default class Header extends Component {
     }
 
     render() {
-        const { IsCompany, IsCompanyActive, IsLogin, NickName } = this.props;
+        const { IsCompany, IsCompanyActive, IsLogin, UserInfo } = this.props;
         const { InvestClassName } = this.state;
 
         return (
@@ -105,13 +123,13 @@ export default class Header extends Component {
                         </div>
 
                         {IsCompany ? <div className="nav-right">
-                            <p className="nav-user cursor-default" onMouseOver={this.OnMouseOver("TipUser")} ref="TipUser">欢迎<span id="J_companyName">{NickName}</span></p>
-                            <a href="javascript:void(0);" id="J_safeLogout">安全退出</a>
+                            <p className="nav-user cursor-default" onMouseOver={this.OnMouseOver("TipUser")} ref="TipUser">欢迎<span id="J_companyName">{UserInfo.nickname}</span></p>
+                            <a onClick={this.Logout.bind(this, '/usercenter/company/login.html')}>安全退出</a>
                         </div> : <div className="nav-right">
                                 {!IsLogin && <a href="/user/ilogin.html">登录</a>}
                                 {!IsLogin && <a href="/user/iregister.html" className="red ga-click" ga-category="注册" ga-action="第一步" ga-label="banner">注册</a>}
                                 {!IsLogin && <a href="/usercenter/company/register.html">企业账户</a>}
-                                {IsLogin && <span className="nav-user" onMouseOver={this.OnMouseOver("TipUser")} ref="TipUser">欢迎:{NickName}<i></i></span>}
+                                {IsLogin && <span className="nav-user" onMouseOver={this.OnMouseOver("TipUser")} ref="TipUser">欢迎:{UserInfo.nickname}<i></i></span>}
                                 <a href="http://bbs.xinxindai.com">社区</a>
                             </div>}
 
