@@ -1,0 +1,14 @@
+.blankdiv{
+    width: 100%;
+    height: 0.8rem;
+}
+
+.bottomdiv{
+    width: 100%;
+    height: 3rem;
+font-size:0.5rem;
+font-family:SourceHanSansCN-Normal;
+color:#767676;
+line-height:1.25rem;
+text-align: center;
+}

@@ -1,0 +1,79 @@
+.CreditRuleBody
+{
+     margin-left: 0.78125rem;
+     margin-top: 2.09375rem;
+     margin-bottom: 1.5rem;
+}
+
+.CreditRuleTitleIcon
+{
+    margin-top: 0.15rem;
+    margin-right: 0.2rem;
+    background-size: 1.125rem 1.15625rem;
+    float: left;
+}
+
+.circle { 
+    width: 1rem; 
+    height: 1rem; 
+    background: #B58561; 
+    -moz-border-radius: 0.5rem; 
+    -webkit-border-radius: 0.5rem; 
+    border-radius: 0.5rem; 
+    text-align: center;
+    color: white;
+    line-height: 1rem;
+    float: left;
+    margin-top: 0.08rem;
+} 
+
+.CreditRuleTitle
+{
+   
+    font-size: 1.0625rem;
+    font-family:SourceHanSansCN-Normal;
+    line-height:1.25rem;
+    margin-bottom: 0.7rem;
+}
+
+.CreditRuleTitleIcon .BackImage{
+    width: 1.125rem;
+    height: 1.09375rem;
+}
+.CreditRuleTitle0
+{
+    float: left;
+    color: #B58561;
+}
+.CreditRuleTitle1
+{
+    float: left;
+    color:#10122C
+}
+
+.Row
+{
+    margin-top: 0.5rem;
+    padding-bottom: 0.7rem;
+    font-size: 0.75rem;
+    font-family:SourceHanSansCN-Normal;
+    line-height:1.25rem;
+    border-bottom: 1px solid #EDEDED;; /*让边框变为1px宽度，直线，#CCC颜色*/
+}
+
+.RowTitle
+{
+    font-size:0.875rem !important;
+    color: #767676;
+}
+
+.RowValue
+{
+    color:#10122C;
+    margin-left: 1.5rem;
+}
+
+.RowValue1
+{
+    color:#10122C;
+}

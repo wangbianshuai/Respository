@@ -1,0 +1,94 @@
+.rootFlex{
+    /* 100%填充全屏显示 */
+    height: 100%;
+}
+
+.bodyContentDiv{
+    display: flex;
+    flex-Direction: column;
+    flex: 1 ;
+}
+
+.bodyScorllContentDiv{
+    height: 100%;
+    overflow: auto;
+    /* 内容启用滚动条 */
+}
+
+.topFlex{
+    flex-direction:row;
+    justify-content: space-between;
+    align-items: center;
+    height: 17rem;
+    width: 100%;
+}
+
+.textFlex{
+    width: 100%;
+    height: 3.5rem;
+}
+
+.textFlex .divNameText{
+    /* width:100%;
+    height:50%; */
+    height: 1rem;
+    font-size:1rem;
+    font-family:SourceHanSansCN-Normal;
+    color:rgba(0,0,0,1);
+    /* line-height:2.88rem; */
+}
+
+.textFlex .textSubFlex{
+    width: 100%;
+    /* height: 50%; */
+}
+
+.textFlex .textSubFlex .divNameText{
+
+    height: 1rem;
+    font-size:1rem;
+    font-family:SourceHanSansCN-Normal;
+    color:rgba(0,0,0,1);
+}
+
+.textFlex .textSubFlex .divCategoryText{
+    height: 1rem;
+    font-size:0.5rem;
+    font-family:SourceHanSansCN-Normal;
+    color:rgba(0,0,0,1);
+    line-height:1.2rem;
+}
+
+.contentFlex{
+    width: 100%;
+    height: 100%;
+    line-height:1.2rem;
+}
+
+.submitButtonDiv{
+    /* position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 10000; */
+    /* 无需固定只需要中间出滚动条 */
+    width: 100%;
+}
+
+.submitButtonDiv .submitButton{
+    width: 100%;
+    height: 3.095rem;
+    background-color: #CFA07C;
+    color: #FFFFFF;
+}
+
+.submitButtonDiv .submitButtonDisabled{
+    width: 100%;
+    height: 3.095rem;
+    background-color: #B6B6B6;
+    color: #FFFFFF;
+    text-align: center;
+    line-height: 3.095rem;
+    font-size: 1.125rem;
+    border-radius: 0.3125rem;
+}

@@ -1,0 +1,48 @@
+.recommendflex1 {
+  /* width: 12.5rem; */
+  /*width: 50%;*/
+  height: 10rem;
+  text-align: center;
+  background-color: #fff;
+}
+
+  .recommendflex1 .flexitem {
+    width: 48%;
+    height: 100%;
+  }
+
+    .recommendflex1 .flexitem .divbox {
+      align-Items: center;
+      height: 8rem;
+    }
+
+      .recommendflex1 .flexitem .divbox .divboxtext {
+        font-size: 1rem;
+        font-family: SourceHanSansCN-Normal;
+        color: rgba(0,0,0,1);
+        line-height: 2.335rem;
+      }
+
+.verticalblankdiv {
+  width: 0.4rem;
+  height: 100%;
+}
+
+.blankdiv {
+  width: 100%;
+  height: 0.4rem;
+}
+
+.recommendflex2 {
+  width: 12.5rem;
+  height: 4.6rem;
+  text-align: center;
+  background-color: #fff;
+}
+
+  .recommendflex2 .divboxtext {
+    font-size: 1rem;
+    font-family: SourceHanSansCN-Normal;
+    color: rgba(0,0,0,1);
+    line-height: 2.335rem;
+  }

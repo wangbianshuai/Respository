@@ -1,0 +1,117 @@
+.ProductName
+{
+    font-size:1.0625rem;
+    font-family:SourceHanSansCN-Normal;
+    color:#10122C;
+    line-height:1.34375rem;
+    margin-left:0.78125rem;
+    margin-top: 0.5rem;
+}
+
+.OrderDetail
+{
+    width: 92%;
+    margin-left:0.8125rem;
+    margin-top:1.5rem;
+    border-bottom:1px solid #D6D6D6;
+    font-size:0.875rem;
+    font-family:SourceHanSansCN-Normal;
+    line-height:1.54375rem;
+    padding-bottom: 0.5rem;
+}
+
+.OrderDetailName
+{
+  color:#767676;
+  float: left;
+}
+.orderDetailValue
+{
+    color: #10122C;
+}
+
+.TotalCredit
+{
+    font-family:SourceHanSansCN-Normal;
+    line-height:1.5rem;
+    margin-top: 1.5rem;
+    text-align: right;
+    float: right;
+    margin-right: 1rem;
+}
+
+.TotalCreditName
+{
+    font-size:0.875rem;
+    color:rgba(118,118,118,1);
+    float: left;
+}
+
+.TotalCreditValue
+{
+    font-size:1.375rem;
+    color:#10122C;
+    float: left;
+}
+
+
+.OrderStatus
+{
+    margin-left: 0.78125rem;
+    margin-top: 5rem;
+}
+
+.OrderStatusImage
+{
+    float: left;
+    margin-left: 0.2rem;
+    width: 1.125rem;
+    height: 1.15625rem;
+    background: url(../images/OrderStatus.png) no-repeat  ;
+    background-size: 1.125rem 1.15625rem;
+    margin-top: 0.3rem;
+    margin-right: 0.5rem;
+    line-height:1.5rem;
+}
+
+.OrderStatusName
+{
+    font-size:0.875rem;
+    font-family:SourceHanSansCN-Normal;
+    color:rgba(118,118,118,1);
+    line-height:1.5rem;
+    float: left;
+}
+
+.OrderStatusValue
+{
+    font-size:0.875rem;
+    font-family:SourceHanSansCN-Normal;
+    color:#10122C;
+    line-height:1.5rem;
+    float: left;
+}
+
+.submitButton
+{
+    float: right;
+    margin-right: 1rem;
+    font-size:0.9375rem;
+    font-family:SourceHanSansCN-Normal;
+    color:rgba(181,133,97,1);
+    line-height:1.8rem;
+    border:1px solid #B58561 !important;
+    border-radius:5px;
+}
+
+.Notes
+{
+    margin-top: 8rem;
+    background-color: #ECECEE;
+    padding: 0.5rem;
+
+     font-size:0.625rem;
+    font-family:SourceHanSansCN-Normal;
+    color:#767676;
+    line-height: 1.2rem;
+}

@@ -1,0 +1,53 @@
+.topFlex{
+    width: 12.72rem;
+    height: 16.5rem;
+}
+
+.topFlex .imgFlex{
+    width: 12.72rem;
+    height: 12.5rem;
+}
+
+.topFlex .imgFlex .img{
+    width: 7.1875rem;
+    height: 7.1875rem;
+}
+
+.topFlex .textFlex{
+    width: 12.72rem;
+    height: 4rem;
+}
+
+.topFlex .textFlex .divNameText{
+    /* width:100%;
+    height:50%; */
+    font-size:1rem;
+    font-family:SourceHanSansCN-Normal;
+    color:rgba(0,0,0,1);
+    /* line-height:2.88rem; */
+    margin-left: 1.44rem
+}
+
+.topFlex .textFlex .textSubFlex{
+    width: 12.72rem;
+    height: 50%;
+}
+
+.topFlex .textFlex .textSubFlex .divNameText{
+
+    height: 100%;
+    font-size:1rem;
+    font-family:SourceHanSansCN-Normal;
+    color:rgba(0,0,0,1);
+    margin-left: 1.44rem
+}
+
+.topFlex .textFlex .textSubFlex .divCategoryText{
+    /* width:100%;
+    height:50%; */
+    height: 100%;
+    font-size:1rem;
+    font-family:SourceHanSansCN-Normal;
+    color:rgba(0,0,0,1);
+    /* line-height:2.88rem; */
+}

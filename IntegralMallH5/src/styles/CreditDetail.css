@@ -1,0 +1,47 @@
+
+
+.CreditDetail
+{
+    width:100%;
+     border-top:1px solid #D6D6D6;
+ border-bottom:1px solid #D6D6D6;
+ overflow: hidden;
+}
+
+.CreditDetail .CreditDetailLeft
+{
+    float: left;
+    width:67%;  /*10.5rem;*/
+    border-right:1px solid #D6D6D6;
+    height:2.39375rem;
+    margin-top: 1.5625rem;
+    margin-bottom: 1.5625rem;
+    margin-left: 0.78125rem;
+    font-size:0.875rem;
+    font-family:SourceHanSansCN-Normal;
+    color:rgba(16,18,44,1);
+    line-height:1.34375rem;
+}
+
+.CreditDetail .CreditDetailRight
+{
+    /*float: left;*/
+    /*margin-left: 2rem;*/
+   /*margin-top: 1.5625rem;*/
+
+    /*width:5.8125rem;*/
+    width: 33%;
+    height:2.39375rem;
+    text-align: -webkit-center;
+}
+.CreditDetail .CreditDetailRight .CreditText
+{
+    margin-left: 0.5rem;
+}
+.CreditDetail .CreditDetailRight .CreditValue
+{
+    font-size:1.25rem;
+    font-family:CenturyGothic;
+    color:rgba(181,133,97,1);
+    line-height:1.75rem;
+}

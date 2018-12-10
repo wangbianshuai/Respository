@@ -1,0 +1,22 @@
+.HeaderFlex{
+    flex-direction:row;
+    justify-content: space-between;
+    align-items: center;
+    height: 2.5rem;
+    /* background-color: #10122C; */
+    width: 100%;
+}
+
+.HeaderFlex .TagFlex{
+    width: 85%;
+    font-size:0.875rem;
+    font-family:SourceHanSansCN-Normal;
+    color:rgba(16,18,44,1);
+}
+
+.HeaderFlex .SortFlex{
+    width: 15%;
+    font-size:0.875rem;
+    font-family:SourceHanSansCN-Normal;
+    color:rgba(16,18,44,1);
+}
