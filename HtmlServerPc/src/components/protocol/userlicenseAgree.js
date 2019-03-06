@@ -1,36 +1,61 @@
 import React from "react"
 import { connect } from "dva"
-import BaseIndex from "../Index";
-import Header from "../common/header";
-import Footer from "../common/footer";
+import { Common } from "UtilsCommon";
+import { BaseIndex, Header, Footer, ComponentList, BackTop } from "ReactCommon";
 
 class UserlicenseAgree extends BaseIndex {
     constructor(props) {
         super(props);
     }
 
-    GetCssList() {
-        return ["/build/mods/protocol/userlicenseAgree/_.css"];
-    }
-
-    GetJsList() {
-        return ["/build/mods/protocol/userlicenseAgree/_.js"];
-    }
-
     //服务器渲染加载数据
     static LoadData(ctx, app) {
-        return BaseIndex.Dispatch(app._store.dispatch, "PageView", "GetUserlicenseAgree");
+        const token = ctx.cookies.get("Token");
+        const ua = ctx.headers["user-agent"];
+
+        return Promise.all(BaseIndex.InitInvokeActionList(app, UserlicenseAgree.Actions, UserlicenseAgree.GetPayload(token, ua)));
+    }
+
+    static GetPayload(token, ua) {
+        return {
+            Token: token,
+            UserAgent: ua,
+            InvestmentService: { InvestStatus: { data: {} } }
+        };
+    }
+
+    componentDidMount() {
+        this.Token = Common.GetCookie("Token");
+
+        this.InitInvokeActionList(UserlicenseAgree.Actions, UserlicenseAgree.GetPayload(this.Token));
+    }
+
+    CloseWindow() {
+        window.open('', '_self', '');
+        window.close();
+    }
+
+    Printdiv(printpage) {
+        var newstr = document.all.item(printpage).innerHTML;
+        var iframe = document.createElement('iframe');
+        iframe.style.display = 'none';
+        document.body.appendChild(iframe);
+        iframe.contentDocument.body.innerHTML = newstr;
+        iframe.contentWindow.print();
+        document.body.removeChild(iframe);
+        return false;
     }
 
     render() {
-        if (!this.props.PageData || !this.props.PageData.global) return null;
-
         const PcBuildUrl = this.GetPcBuildUrl();
-        const { globalData } = this.props.PageData;
+        const { Link } = this.props;
+        const IsLogin = this.JudgeLogin();
+        const UserInfo = this.GetPropsValue("UserInfo", {});
+        const IsPurchased = this.props.InvestStatus === true;
 
         return (
             <div id="J_wrapBody">
-                <Header PcBuildUrl={PcBuildUrl} globalData={globalData} />
+                <Header PcBuildUrl={PcBuildUrl} Page={this} IsLogin={IsLogin} NickName={UserInfo.nickname} UserType={UserInfo.userType} IsPurchased={IsPurchased} />
 
                 <div className="g-top">
                     <div className="g-top-container">
@@ -68,21 +93,27 @@ class UserlicenseAgree extends BaseIndex {
                 </div>
                 <div className="container-1200">
                     <div className="operate-method">
-                        <a href="javascript:window.open('', '_self', '');window.close();" id="close-div">【关闭此窗口】</a>
-                        <a href="javascript:void(0);" value=" Print " id="J-print" onclick="printdiv('wrap-container')">【打印此文件】</a>
+                        <a onClick={this.CloseWindow.bind(this)}>【关闭此窗口】</a>
+                        <a onClick={this.Printdiv.bind(this, "wrap-container")}>【打印此文件】</a>
                     </div>
                 </div>
 
-                <Footer PcBuildUrl={PcBuildUrl} globalData={globalData} />
+                <Footer PcBuildUrl={PcBuildUrl} Link={Link} Page={this} />
+                <ComponentList Name="Tips" Page={this} />
+                <ComponentList Name="Dialogs" Page={this} />
+                <BackTop Page={this} />
             </div>
         )
     }
 }
 
 function mapStateToProps(state, ownProps) {
-    return {
-        PageData: state.PageView.UserlicenseAgree
-    };
+    const props = BaseIndex.MapStateToProps(state, ownProps, {});
+
+    !Common.IsDist && console.log(props);
+    return props;
 }
+
+UserlicenseAgree.Actions = BaseIndex.MapActions({});
 
 export default connect(mapStateToProps, BaseIndex.MapDispatchToProps)(UserlicenseAgree);

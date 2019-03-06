@@ -1,0 +1,228 @@
+@import "./detail.less";
+
+@clickColor: #5ea8f8;
+.plan {
+	background: #fff;
+	width: 1198px;
+	border: 1px solid @borderColor;
+	margin-bottom: 20px;
+	text-align: center;
+	.title {
+		padding-left: 24px;
+		text-align: left;
+		color: #333333;
+		font:400 18px/40px @xxd-font;
+	}
+	img {
+		margin: 20px auto;
+		width:70%;
+	}
+}
+
+.product-info {
+	width: 1198px;
+	margin: 20px 0;
+	border: 1px solid @borderColor;
+	background: #fff;
+}
+
+.main-product {
+	float:left;
+	width: 747px;
+	.title {
+		height: 50px;
+		line-height: 50px;
+		border-bottom: 1px solid @borderColor;
+		padding-left: 25px;
+		font-size: 18px;
+		color: #333333;
+		font-weight: 400;
+		margin: 0;
+		span {
+			font-size: 18px;
+			color: @fontColor;
+			margin-left: 10px;
+		}
+	}
+	table {
+		padding:20px 4px;
+		width: 100%;
+		border-bottom: 1px dashed @borderColor;
+		margin-bottom: 40px;
+		th, td {
+			display: inline-block;
+			width: 32%;
+			text-align: center;
+			border-right: 1px dashed @borderColor;
+		}
+		th {
+			font-size: 14px;
+			color: @fontColor;
+		}
+		td {
+			font-size: 30px;
+			color: #333333;
+			padding-top: 10px;
+		}
+		.last {
+			border: 0;
+		}
+		.rate {
+			color:#e73735
+		}
+	}
+	p {
+		margin-left: 50px;
+		height: 30px;
+		line-height: 30px;
+		font-size: 14px;
+		color: @fontColor;
+		letter-spacing: -0.34px;
+		.buyTip {
+			margin-left: 75px;
+		}
+		a {
+			color: @clickColor;
+		}
+		&.new-tip {
+			color:#e73735;
+		}
+	}
+}
+
+
+.new-tender-focus{
+	float: left;
+	padding: 20px 40px 0;
+	border-left: 1px solid @borderColor;
+	p {
+		font-size: 14px;
+		color: #666666;
+		line-height: 30px;
+		.number, .income {
+			color: @clickColor;
+		}
+		&.risk-protocol{
+			width: 348px;
+			margin-top: 10px;
+			font: 400 12px/20px "microsoft yahei";
+			input{
+				margin-right: 10px;
+			}
+			a{
+				color: #5ea8f8;
+				&:hover{
+					color: @hoverColor;
+				}
+			}
+		}
+	}
+	.new-tender-color {
+		color:#999;
+	}
+	.in-copies{
+		display: inline-block;
+		margin: 20px 0;
+	}
+	.copies {
+		display: inline-block;
+		text-align: center;
+		width: 180px;
+		height: 36px;
+		line-height: 36px;
+		outline: none;
+		&:focus,&:active{
+			outline: none;
+			box-shadow:none;
+		}
+	}
+	.more {
+		display: inline-block;
+		margin-left: 10px;
+		font:normal 14px/30px @xxd-font;
+		color: #666;
+	}
+	.btn {
+		display: inline-block;
+		width: 320px;
+		border-radius: 3px;
+		font:normal 20px/42px @xxd-font;
+		background: #3f9bff;
+		text-align: center;
+		border: 0;
+		color: #ffffff !important;
+		margin:10px 0 30px;
+		&:hover {
+			background: #0266be;
+		}
+	}
+	.marginbot{
+		margin:10px 0 70px;
+	}
+	.error-tip{
+		border: 1px solid #FFBBBB;
+		width: 293px;
+		border-radius: 3px;
+		padding-left: 25px;
+		background: #FFDDDD;
+		color: #FF0000;
+		margin-top:5px;
+	}
+	#recharge,.tologin{
+		color: #3f9bff;
+	}
+	#J_buy{
+		cursor: pointer;
+	}
+	.new-hand-tip{
+		color: #AB4340;
+		width:340px;
+	}
+}
+
+
+.detail-desc-tender {
+	table {
+		margin: 20px 30px;
+		border-spacing: 0 5px;
+		tr {
+			display: block;
+		}
+		th, td {
+			line-height: 36px;
+			font-size: 14px;
+			color: @fontColor;
+		}
+		th {
+			width: 200px;
+			background: #f1faff;
+			border: 1px solid #f0f1f2;
+			text-align: center;
+		}
+		.infor {
+			height: 110px;
+			line-height: 110px;
+		}
+		td {
+			border: 1px solid #f0f1f2;
+			border-left: 0;
+			width: 980px;
+			padding-left: 20px;
+			span {
+				display: block;
+				i {
+					font-style: normal;
+					color: #e73735;
+				}
+			}
+			a {
+				color: @clickColor;
+			}
+		}
+		.infor-con,.quit-con {
+			line-height: 25px;
+			padding: 10px 20px 10px 20px;
+			width: 960px;
+		}
+	}
+}

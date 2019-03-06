@@ -1,10 +1,10 @@
 export default [
     {
-        Name: "PageView",
+        Name: "ApiService",
         ServiceName: "ApiService",
         ActionList: [
-            post("GetConsumptionDetail", "PageView/GetConsumptionDetail", "ConsumptionDetail")
-        ].concat(GetPageViewActionList().map(m => get(`Get${m}`, `PageView/Get${m}`, m)))
+            get2("GetNow", "System/GetNow", "Now", "Now")
+        ]
     },
     {
         Name: "BizService",
@@ -37,76 +37,67 @@ export default [
             get("GetThirtyTender", "XSCP30T/brief", "ThirtyTender"),
             get("GetYJDJ", "YJDJ/brief", "YJDJ"),
             get("GetXYB", "XYB/brief", "XYB"),
-            get("GetYYP", "YYP/brief", "YYP")
+            get("GetYYP", "YYP/brief", "YYP"),
+            get("CheckAuthorizedQuota", null, "AuthorizedQuota", null, true),
+            post("InvestOrder", "InvestOrder", "InvestOrder", null, true),
+            get("GetInvestProduct", null, "InvestProduct", "data", false, true),
+            get("GetInvestmentRecord", null, "InvestmentRecord", "data"),
+            get("QueryFinanceBorrowList", null, "FinanceBorrowList", "data"),
+            post("RedenvelopeRecord", "redenvelope/redenvelopeRecord", "RedenvelopeRecord", null, true),
+            get("GetRecommend", null, "Recommend"),
+            get("IsInvestBBGS", "investBiz/isInvestProduct?productCode=BBGS", "IsInvestBBGS", "data", true),
+            get("IsInvestQTDS", "investBiz/isInvestProduct?productCode=QTDS", "IsInvestQTDS", "data", true),
+            get("IsInvestRRY", "investBiz/isInvestProduct?productCode=RRY", "IsInvestRRY", "data", true),
+            get("IsInvestXSB", "investBiz/isInvestProduct?productCode=XSB", "IsInvestXSB", "data", true),
         ]
     },
     {
         Name: "UserCenterService",
         ServiceName: "UserCenterApiService",
         ActionList: [
-            get("GetUserInfo", "user/userInfoByToken", "UserInfo", "data", true)
+            get("GetUserInfo", "user/userInfoByToken", "UserInfo", "data", true),
+            get("GetQuestionUser", "questionUser/getQuestionUserByToken", "QuestionUser", "data", true),
+            post("ValidatePayPwdByTokenWithValidate", "user/validatePayPwdByTokenWithValidate", "PayPwdByTokenWithValidate", null, true)
         ]
     },
     {
         Name: "InvestmentService",
         ServiceName: "InvestmentApiService",
         ActionList: [
-            post("InvestStatus", "home/investStatus", "InvestStatus", null, true)
+            post("InvestStatus", "home/investStatus", "InvestStatus", null, true),
+            get("Overview", "asset/overview", "Overview", "data", true)
+        ]
+    },
+    {
+        Name: "XxdService",
+        ServiceName: "XxdApiService",
+        ActionList: [
+            get("Logout", "user/logoutJson.html", "Logout"),
+            post("HasComplete", "question/hasComplete.html", "HasComplete")
+        ]
+    },
+    {
+        Name: "IntegrationService",
+        ServiceName: "IntegrationApiService",
+        ActionList: [
+            get("GetBidsDetail", null, "BidsDetail", "data"),
+            get("GetBidsBorrower", null, "BidsBorrower", "data"),
+            get("GetBidsInfoDisclosures", null, "BidsInfoDisclosures", "data"),
+            get("GetBidsRepayments", null, "BidsRepayments", "data"),
+            get("GetBidsInvestments", null, "BidsInvestments"),
+            get("GetBidsList", null, "BidsList")
         ]
     }
 ];
 
-function GetPageViewActionList() {
-    return [
-        "Home",
-        "ConsumptionList",
-        "AuthorizStatus",
-        "InvestFail",
-        "Monthgold",
-        "NewTender",
-        "PurchaseSuccess",
-        "ThirtyTender",
-        "Coupon",
-        "InviteFriendsDetail",
-        "BondsGoldIngot",
-        "BondsMonthGold",
-        "BondsSonthSend",
-        "BondsNewTender",
-        "BondsSevenGold",
-        "BondsStepDetail",
-        "BondsThirtyTender",
-        "UserCenterError",
-        "OpenaccountError",
-        "OpenaccountSuccess",
-        "UserCenterSuccess",
-        "CompanyAccountInfo",
-        "CompanyAccount",
-        "CompanyAuthentication",
-        "CompanyBundled",
-        "CompanyDealDetail",
-        "CompanyLogin",
-        "CompanyRecharge",
-        "CompanyRegister",
-        "CompanySecuritySettings",
-        "CompanyUserLicense",
-        "UserlicenseAgree",
-        "CompanyWithdraw",
-        "FundRecordCoinLog",
-        "FundRecordDealDetail",
-        "FundRecordOpenAccount",
-        "FundRecordRecharge",
-        "FundRecordWithdraw",
-        "UserCenterBorrow",
-        "UserCenterIdentity",
-        "UserCenterMessage",
-        "UserCenterAccount"
-    ]
-}
-
-function get(actionName, url, stateName, dataKey, isToken) {
-    return { ActionName: actionName, Url: url, Method: "GET", IsProxy: true, StateName: stateName, DataKey: dataKey, IsToken: isToken }
+function get(actionName, url, stateName, dataKey, isToken, hasToken) {
+    return { ActionName: actionName, Url: url, Method: "GET", IsProxy: true, StateName: stateName, DataKey: dataKey, IsToken: isToken, HasToken: hasToken }
 }
 
 function post(actionName, url, stateName, dataKey, isToken, isOperation) {
     return { ActionName: actionName, Url: url, IsProxy: true, StateName: stateName, DataKey: dataKey, IsToken: isToken, IsOperation: isOperation }
+}
+
+function get2(actionName, url, stateName, dataKey) {
+    return { ActionName: actionName, Url: url, Method: "GET", StateName: stateName, DataKey: dataKey }
 }

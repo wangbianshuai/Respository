@@ -1,0 +1,115 @@
+.topFlex{
+    width: 11.5rem;
+    height: 10rem;
+}
+
+.topFlex_s{
+    width: 11.5rem;
+    height: 5rem;
+}
+
+.topFlex .imgFlex{
+    width: 9rem;
+    height: 6rem;
+}
+
+.topFlex_s .imgFlex_s{
+    width: 5rem;
+    height: 5rem;
+}
+
+.topFlex .imgFlex .img{
+    /* width: 9rem;
+    height: 6rem; */
+     width: 8.75rem;
+    height: 6.71875rem;
+}
+
+.topFlex_s .imgFlex_s .img_s{
+    width: 3.75rem;
+    height: 3.75rem;
+    /* width: 4.5rem;
+    height: 4.5rem; */
+}
+
+.topFlex .textFlex{
+    width: 9rem;
+    height: 2.5rem;
+}
+
+.topFlex_s .textFlex_s{
+    width: 6.5rem;
+    height: 5rem;
+}
+
+.topFlex .textFlex .divCategoryText{
+    height: 1.25rem;
+    font-size:0.5rem;
+    font-family:SourceHanSansCN-Normal;
+    color:rgba(0,0,0,1);
+    text-align: right;
+    line-height:1.5rem;
+}
+
+.topFlex_s .textFlex_s .divCategoryText_s{
+    height: 100%;
+    font-size:0.5rem;
+    font-family:SourceHanSansCN-Normal;
+    color:rgba(0,0,0,1);
+    text-align: right;
+    line-height:2.88rem;
+}
+
+.topFlex .textFlex .textSubFlex{
+    width: 9rem;
+    height: 100%;
+    line-height: 1.2rem;
+}
+
+.topFlex_s .textFlex_s .textSubFlex_s{
+    width: 6.5rem;
+    height: 100%;
+    line-height: 1.2rem;
+}
+
+.topFlex .textFlex .textSubFlex .divNameText{
+
+    height: 100%;
+    font-size:0.9rem;
+    font-family:SourceHanSansCN-Normal;
+    color:rgba(0,0,0,1);
+    line-height: 1.5rem;
+}
+
+.topFlex_s .textFlex_s .textSubFlex_s .divNameText_s{
+
+    height: 100%;
+    font-size:0.9rem;
+    font-family:SourceHanSansCN-Normal;
+    color:rgba(0,0,0,1);
+    margin-top: 0.3rem;
+    line-height: 1.5rem;
+}
+
+.topFlex .textFlex .textSubFlex .divLabelText{
+    /* width:100%;
+    height:50%; */
+    height: 100%;
+    font-size:0.5rem;
+    font-family:SourceHanSansCN-Normal;
+    color:rgba(0,0,0,1);
+    text-align: right;
+    line-height: 1rem;
+    /* line-height:2.88rem; */
+}
+
+.topFlex_s .textFlex_s .textSubFlex_s .divLabelText_s{
+    /* width:100%;
+    height:50%; */
+    height: 100%;
+    font-size:0.5rem;
+    font-family:SourceHanSansCN-Normal;
+    color:rgba(0,0,0,1);
+    /* text-align: right; */
+    line-height:1rem;
+}

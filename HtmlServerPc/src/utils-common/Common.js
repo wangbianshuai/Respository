@@ -284,7 +284,14 @@ export function ToCurrency(value, blFixed2) {
     }
 }
 
+export function ToFixed(value, num) {
+    if (!value) return value;
+    return GetNumber(value).toFixed(num);
+}
+
 export function GetDateString(myDate, isDate) {
+    if (typeof (myDate) === "number") myDate = new Date(myDate);
+
     var year = myDate.getFullYear().toString();
     var month = (myDate.getMonth() + 1);
     month = month < 10 ? "0" + month.toString() : month.toString();
@@ -322,7 +329,7 @@ export function ArrayMax(list, name) {
 }
 
 export function GetFloatValue(value) {
-    if (!isNaN(value)) return value;
+    if (typeof (value) === "number") return value;
     const f = parseFloat(value)
     return isNaN(f) ? 0 : f;
 }
@@ -333,10 +340,12 @@ export function GetIntValue(value) {
 }
 
 export function DateFormat(date, format) {
+    if (!date) return date;
+    if (typeof (date) === "number") date = GetDateString(new Date(date));
     if (format === "yyyy/MM/dd" || format === "yyyy-MM-dd") {
         const s = date.toString().substr(0, 10);
         const st = format === "yyyy/MM/dd" ? "/" : "-";
-        return s.substr(0, 4) + st + s.substr(6, 2) + st + s.substr(8, 2);
+        return s.substr(0, 4) + st + s.substr(5, 2) + st + s.substr(8, 2);
     }
     return date;
 }
@@ -377,4 +386,31 @@ export function SetCookie(name, value, days) {
 
 export function RemoveCooke(name) {
     SetCookie(name, "", -1);
+}
+
+export function NumberToTime(surplus) {
+    if (!surplus) return surplus;
+
+    var surplusHour = parseInt((surplus / 1000) / 60 / 60);//剩余小时
+    var surplusMinute = parseInt((surplus % (1000 * 60 * 60)) / (1000 * 60), 10);//剩余分
+    var surplusSecond = parseInt((surplus % (1000 * 60)) / 1000, 10);//剩余秒
+    if (surplusHour < 10) surplusHour = "0" + surplusHour;
+    if (surplusMinute < 10) surplusMinute = "0" + surplusMinute;
+    if (surplusSecond < 10) surplusSecond = "0" + surplusSecond;
+    return surplusHour + ":" + surplusMinute + ":" + surplusSecond;
+}
+
+export const IsDist = false;
+
+//判断输入文本框是否是输入两位小数的浮点数
+export function IsDecimal2(value) {
+    var reg = new RegExp("^-?\\d+$|^(-?\\d+)(\\.\\d{1})?$|^(-?\\d+)(\\.\\d{2})?$");
+    return reg.test(value);
+}
+
+export function ToQueryString(obj) {
+    const list = [];
+    let v = null;
+    for (let key in obj) { v = escape(obj[key]); list.push(`${key}=${v}`); }
+    return list.join("&")
 }

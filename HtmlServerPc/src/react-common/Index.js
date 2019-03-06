@@ -8,6 +8,10 @@ import Dialog from "./dialog/Index";
 import DialogFloat from "./dialog-float/Index";
 import ComponentList from "./ComponentList";
 import BackTop from "./backTop/Index";
+import Paging from "./paging/Index";
+import Menu from "./common/menu";
+import RootPage from "./hoc/RootPage";
+import StaticIndex from "./static/Index";
 
 export {
     Header,
@@ -19,5 +23,9 @@ export {
     Dialog,
     DialogFloat,
     ComponentList,
-    BackTop
+    BackTop,
+    Paging,
+    Menu,
+    StaticIndex,
+    RootPage
 };

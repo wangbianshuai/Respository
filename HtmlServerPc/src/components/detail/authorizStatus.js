@@ -1,62 +1,79 @@
 import React from "react"
 import { connect } from "dva"
-import BaseIndex from "../Index";
-import Header from "../common/header";
-import Footer from "../common/footer";
+import { Common } from "UtilsCommon";
+import { BaseIndex, Header, Footer, ComponentList, BackTop } from "ReactCommon";
 
 class AuthorizStatus extends BaseIndex {
     constructor(props) {
         super(props);
     }
 
-    GetCssList() {
-        return ["/build/mods/detail/authorizStatus/_.css"];
-    }
-
-    GetJsList() {
-        return ["/build/mods/detail/authorizStatus/_.js"];
-    }
 
     //服务器渲染加载数据
     static LoadData(ctx, app) {
-        return BaseIndex.Dispatch(app._store.dispatch, "PageView", "GetAuthorizStatus");
+        const token = ctx.cookies.get("Token");
+        const ua = ctx.headers["user-agent"];
+
+        return Promise.all(BaseIndex.InitInvokeActionList(app, AuthorizStatus.Actions, AuthorizStatus.GetPayload(token, ua)));
+    }
+
+    static GetPayload(token, ua) {
+        return {
+            Token: token,
+            UserAgent: ua,
+            InvestmentService: { InvestStatus: { data: {} } }
+        };
+    }
+
+    componentDidMount() {
+        this.Token = Common.GetCookie("Token");
+
+        this.InitInvokeActionList(AuthorizStatus.Actions, AuthorizStatus.GetPayload(this.Token));
     }
 
     render() {
-        if (!this.props.PageData || !this.props.PageData.global) return null;
-
         const PcBuildUrl = this.GetPcBuildUrl();
-        const { globalData } = this.props.PageData;
+        const { Link } = this.props;
+        const IsLogin = this.JudgeLogin();
+        const UserInfo = this.GetPropsValue("UserInfo", {});
+        const IsPurchased = this.props.InvestStatus === true;
+        const code = "", message = "";
 
         return (
             <div id="J_wrapBody">
-                <Header PcBuildUrl={PcBuildUrl} globalData={globalData} />
+                <Header PcBuildUrl={PcBuildUrl} Page={this} IsLogin={IsLogin} NickName={UserInfo.nickname} UserType={UserInfo.userType} IsPurchased={IsPurchased} />
+
                 <div className="detail-crumbs">
                     <div className="crumbs">
                         <a href="//www.xinxindai.com/">首页</a> &gt; <b>操作成功</b>
                     </div>
                 </div>
-
                 <div className="info-contaner clearfix">
                     <div className="warning" id="J_showSucess">
-                        <div className="disnone" id="J_showCode">{"{code}"}</div>
-                        <i className="fail-icon sucess-icon" id="J_showIcon"></i><p className="showInfo" >{"{message}"}</p>
+                        <div className="disnone" id="J_showCode">{code}</div>
+                        <i className={code ? "fail-icon" : "sucess-icon"}></i><p className="showInfo" >{message}</p>
                     </div>
                     <div className='button'>
-                        <input type="button" value='返回首页' onclick='window.location.href = "/"' />
+                        <input type="button" value='返回首页' onClick={() => window.location.href = "/"} />
                     </div>
                 </div>
 
-                <Footer PcBuildUrl={PcBuildUrl} globalData={globalData} />
+                <Footer PcBuildUrl={PcBuildUrl} Link={Link} Page={this} />
+                <ComponentList Name="Tips" Page={this} />
+                <ComponentList Name="Dialogs" Page={this} />
+                <BackTop Page={this} />
             </div>
         )
     }
 }
 
 function mapStateToProps(state, ownProps) {
-    return {
-        PageData: state.PageView.AuthorizStatus
-    };
+    const props = BaseIndex.MapStateToProps(state, ownProps, {});
+
+    !Common.IsDist && console.log(props);
+    return props;
 }
+
+AuthorizStatus.Actions = BaseIndex.MapActions({});
 
 export default connect(mapStateToProps, BaseIndex.MapDispatchToProps)(AuthorizStatus);

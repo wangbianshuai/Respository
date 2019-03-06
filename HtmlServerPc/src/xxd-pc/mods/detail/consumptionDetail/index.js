@@ -19,7 +19,7 @@ require(['base', "trackBase", 'store', 'detail', 'juicer'
         leastPeriodValue = bidDetail.leastPeriodValue,
         leftTenderAmount = bidDetail.leftTenderAmount, //剩余可投
         bidAmount = bidDetail.bidAmount;
-//风险测评新增内容start
+    //风险测评新增内容start
     var typeName = bidDetail.typeName,
         lastCount = bidDetail.count,
         investmentAmount = bidDetail.investmentAmount,
@@ -37,19 +37,7 @@ require(['base', "trackBase", 'store', 'detail', 'juicer'
         quota = 0;
     }
     if (isLogin) {
-        if (typeName == '保守型') {
-            if (lastCount == 0) {
-                $('#J_buyWrap').html('<p class="noAssessment">根据您的风险测评结果，您无法在平台进行出借！</p>' +
-                    '<p>您今年测试测评已达5次上线，' + $.fnDateToString(nextTestTime, "yyyy-MM-dd") + '后可重新开始测评。</p>');
-            } else {
-                $('#J_buyWrap').html('<p class="noAssessment">根据您的风险测评结果，您无法在平台进行出借！<a class="J_getNewTest">重新测评</a></p>');
-            }
-        } else if ((typeName == '')  || (typeName == '进取型') ) {
-
-        } else {
-            $('#toBid').before('<p class="red">您的平台剩余可投额度:' + detail.numberFormat(surplusAmount) + '元</p>' +
-                '<p class="test-tip">您在平台已加入' + detail.numberFormat(investmentAmount) + '元，风险测评给予您的总限额为' + detail.numberFormat(quota) + '元，可投剩余额度为' + detail.numberFormat(surplusAmount) + '元</p>');
-        }
+       
     }
     $('body').on('click', '.J_getNewTest', function () {
         if (lastCount == 0) {
@@ -66,14 +54,14 @@ require(['base', "trackBase", 'store', 'detail', 'juicer'
         $('.mui-dialog').remove();
         dialog({
             content: "<div class='dimension operate-tip'>"
-            + "<i class='c_close close_x'>×</i>"
-            + "<h5>确认投标金额</h5>"
-            + "<div class='tip-content'>"
-            + "<p class='red'>您输入的投标金额大于平台剩余可投额度：" + detail.numberFormat(surplusAmount) + "元，请重新调整。</p>"
-            + "<p>您今年测评测试已达5次上限，" + $.fnDateToString(nextTestTime, 'yyyy-MM-dd') + "日后可重新开始测评。详情可拨打客服电话4000-69-521进行咨询。</p>"
-            + "<a href='#' class='btn close-x'>好的</a>"
-            + "</div>"
-            + "</div>",
+                + "<i class='c_close close_x'>×</i>"
+                + "<h5>确认投标金额</h5>"
+                + "<div class='tip-content'>"
+                + "<p class='red'>您输入的投标金额大于平台剩余可投额度：" + detail.numberFormat(surplusAmount) + "元，请重新调整。</p>"
+                + "<p>您今年测评测试已达5次上限，" + $.fnDateToString(nextTestTime, 'yyyy-MM-dd') + "日后可重新开始测评。详情可拨打客服电话4000-69-521进行咨询。</p>"
+                + "<a href='#' class='btn close-x'>好的</a>"
+                + "</div>"
+                + "</div>",
             id: "",
             confirm: function (art) {
 
@@ -89,15 +77,15 @@ require(['base', "trackBase", 'store', 'detail', 'juicer'
         $('.mui-dialog').remove();
         dialog({
             content: "<div class='dimension operate-tip'>"
-            + "<i class='c_close close_x'>×</i>"
-            + "<h5>确认投标金额</h5>"
-            + "<div class='tip-content'>"
-            + "<p class='red'>您输入的投标金额大于平台剩余可投额度：" + detail.numberFormat(surplusAmount) + "元，请重新调整。</p>"
-            + "<p>详情可拨打客服电话4000-69-521进行咨询</p>"
-            + "<a href='#' class='btn small-btn close-x'>好的</a>"
-            + "<a href='#' class='btn  small-btn J_getNewTest next'>重新测评</a>"
-            + "</div>"
-            + "</div>",
+                + "<i class='c_close close_x'>×</i>"
+                + "<h5>确认投标金额</h5>"
+                + "<div class='tip-content'>"
+                + "<p class='red'>您输入的投标金额大于平台剩余可投额度：" + detail.numberFormat(surplusAmount) + "元，请重新调整。</p>"
+                + "<p>详情可拨打客服电话4000-69-521进行咨询</p>"
+                + "<a href='#' class='btn small-btn close-x'>好的</a>"
+                + "<a href='#' class='btn  small-btn J_getNewTest next'>重新测评</a>"
+                + "</div>"
+                + "</div>",
             id: "",
             confirm: function (art) {
 
@@ -257,7 +245,7 @@ require(['base', "trackBase", 'store', 'detail', 'juicer'
         }
     }
     //点击去授权
-    $(document).on('click','#J_goAuthorized',function(){
+    $(document).on('click', '#J_goAuthorized', function () {
         $('#J_submitAuthoriz').submit();
     });
 
@@ -275,7 +263,7 @@ require(['base', "trackBase", 'store', 'detail', 'juicer'
 
         //风险测评新增判断start     剩余可投 surplusAmount   账户余额 availableBalance    需要加入的金额 val
         //进取型就不用这些弹窗了
-        if((typeName != '进取型' ) && (lastCount != '')){
+        if ((typeName != '进取型') && (lastCount != '')) {
             surplusAmount = parseInt(surplusAmount);
             availableBalance = parseInt(availableBalance);
             val = parseInt(val);
@@ -283,7 +271,7 @@ require(['base', "trackBase", 'store', 'detail', 'juicer'
                 if (val > surplusAmount && surplusAmount > availableBalance) {
                     if (lastCount == 0) {
                         ratherTest();
-                    }else{
+                    } else {
                         newNextTest();
                     }
                     return;
@@ -292,7 +280,7 @@ require(['base', "trackBase", 'store', 'detail', 'juicer'
                 if (surplusAmount < val && val < availableBalance) {
                     if (lastCount == 0) {
                         ratherTest();
-                    }else{
+                    } else {
                         newNextTest();
                     }
                     return;
@@ -329,15 +317,15 @@ require(['base', "trackBase", 'store', 'detail', 'juicer'
                 $error.html(errorTip).removeClass("hide");
             } else {
                 $error.html('').addClass("hide");
-                detail.showInvestmentXYD(val,investmentObj);
+                detail.showInvestmentXYD(val, investmentObj);
             }
         }, function () {
             // investment(investmentObj);
-            detail.showInvestmentXYD(val,investmentObj);
+            detail.showInvestmentXYD(val, investmentObj);
         })
     });
     var flagPurchase = true;
-//确认出借按钮
+    //确认出借按钮
     $('body').on('click', '.J_purchase', function () {
         var investObj = {
             productCategory: 1,
@@ -424,27 +412,27 @@ require(['base', "trackBase", 'store', 'detail', 'juicer'
     function investment(obj) {
         dialog({
             content: "<div class='dimension'> " +
-            "<i class='c_close'>×</i>" +
-            "<h5>确认投标</h5> " +
-            "<div class='investment-focus'> " +
-            "<span class='headline'>借款标题：" + obj.bidName + "</span><span >借款编号：<em class='serial-number'>" + obj.bidCode + "</em></span> " +
-            "<span>投标金额：<i>" + obj.investMoney + "</i>元</span><span class='expect-income'>年化收益：<em>" + obj.plannedAnnualRate + "%</em></span> " +
-            "<span>投标奖励：<em>无</em></span><span>还款期限：<em>" + obj.leastPeriod + "个月</em></span> " +
-            "<span class='act-pay'>实际支付：<i class='actualPayment'>" + obj.actualPayment + "</i>元</span><span>预计到期本息：<i>" + obj.allIncome + "</i>元</span>" +
-            // "<br><div class='discount'>" + obj + "</div>" +
-            "<p class='password-box'>支付密码：" +
-            "<input type='password' placeholder='请输入支付密码' class='password'><a href='/user/iforgetpaypassword.html' target='_blank'>忘记密码？</a></p> " +
-            "<p class='verification-tip'>图片验证码：" +
-            "<input type='text' placeholder='请输入图片验证码' class='verification-code'></p><div class='verification-box clearfix'>" +
-            "<img src='/userCenter/kaptcha.jpg" +
-            "' alt='' class='verifyUrl'><a href='#' class='refresh'><i></i></a>" +
-            "</div> " +
-            // "<div class='authorization'><input type='checkbox'>我已同意 <a href='/introduce/risknotice-agreement.jsp' target='_blank'>《新新贷资金出借风险提示函》</a></div> " +
-            "<div class='authorization'><input type='checkbox'>我已同意 <a href='/user/regRiskWarning.html' target='_blank'>《资金出借风险提示函》</a></div> " +
-            "<p class='pop-error hide'></p>" +
-            "<a href='#' class='btn J_purchase'>确认投标</a> " +
-            "</div> " +
-            "</div>",
+                "<i class='c_close'>×</i>" +
+                "<h5>确认投标</h5> " +
+                "<div class='investment-focus'> " +
+                "<span class='headline'>借款标题：" + obj.bidName + "</span><span >借款编号：<em class='serial-number'>" + obj.bidCode + "</em></span> " +
+                "<span>投标金额：<i>" + obj.investMoney + "</i>元</span><span class='expect-income'>年化收益：<em>" + obj.plannedAnnualRate + "%</em></span> " +
+                "<span>投标奖励：<em>无</em></span><span>还款期限：<em>" + obj.leastPeriod + "个月</em></span> " +
+                "<span class='act-pay'>实际支付：<i class='actualPayment'>" + obj.actualPayment + "</i>元</span><span>预计到期本息：<i>" + obj.allIncome + "</i>元</span>" +
+                // "<br><div class='discount'>" + obj + "</div>" +
+                "<p class='password-box'>支付密码：" +
+                "<input type='password' placeholder='请输入支付密码' class='password'><a href='/user/iforgetpaypassword.html' target='_blank'>忘记密码？</a></p> " +
+                "<p class='verification-tip'>图片验证码：" +
+                "<input type='text' placeholder='请输入图片验证码' class='verification-code'></p><div class='verification-box clearfix'>" +
+                "<img src='/userCenter/kaptcha.jpg" +
+                "' alt='' class='verifyUrl'><a href='#' class='refresh'><i></i></a>" +
+                "</div> " +
+                // "<div class='authorization'><input type='checkbox'>我已同意 <a href='/introduce/risknotice-agreement.jsp' target='_blank'>《新新贷资金出借风险提示函》</a></div> " +
+                "<div class='authorization'><input type='checkbox'>我已同意 <a href='/user/regRiskWarning.html' target='_blank'>《资金出借风险提示函》</a></div> " +
+                "<p class='pop-error hide'></p>" +
+                "<a href='#' class='btn J_purchase'>确认投标</a> " +
+                "</div> " +
+                "</div>",
             id: "",
             confirm: function (art) {
 

@@ -1,0 +1,127 @@
+bodyFlex{
+    height: 50rem;
+    width: 100%;
+}
+
+.exchangeItemFlex{
+    height: 7.97rem;
+    width: 100%;
+}
+
+.exchangeItemFlex .imgFlex{
+    flex-direction:row;
+    justify-content: space-between;
+    align-items: center;
+    /* height: 6rem;
+    width: 5.5rem; */
+    width:32%;
+}
+
+.exchangeItemFlex .imgFlex .img{
+    height: 6rem;
+    width: 5.5rem;
+}
+
+.exchangeItemFlex .textFlex{
+    width: 68%;
+    height: 7.97rem;
+}
+
+.exchangeItemFlex .textFlex .firstFlex{
+    width: 15.35rem;
+    height: 2.5rem;
+    line-height:1.5rem;
+}
+
+.exchangeItemFlex .textFlex .firstFlex .divNameText{
+    width:5.745rem;
+    height:100%;
+    font-size:0.8rem;
+    font-family:SourceHanSansCN-Normal;
+    color:rgba(0,0,0,1);
+    /* line-height:1.5rem; */
+    overflow-wrap: break-word;
+}
+
+.exchangeItemFlex .textFlex .firstFlex .divCategoryText{
+    width:3.605rem;
+    height:100%;
+    font-size:0.5rem;
+    font-family:SourceHanSansCN-Normal;
+    color:rgba(0,0,0,1);
+    /* line-height:1.5rem; */
+    margin-left: 1rem;
+    text-align: right;
+}
+
+.exchangeItemFlex .textFlex .middleFlex{
+    width: 15.35rem;
+    height: 1.5rem;
+    line-height:1.5rem;
+}
+
+.exchangeItemFlex .textFlex .middleFlex .integralText{
+    color: #000000;
+    font-size: 1.5rem;
+}
+
+.exchangeItemFlex .textFlex .endFlex{
+    width: 15.35rem;
+    height: 2.5rem;
+    line-height:3.5rem;
+}
+
+.exchangeItemFlex .textFlex .endFlex .inputFlex{
+    border: 1rem #000000;
+    text-align: center;
+}
+
+.exchangeItemFlex .textFlex .endFlex .inputFlex .inputItem{
+    width: 4rem;
+    /* border: 1rem #000000; */
+    text-align:center;
+    margin-top: 0.3rem;
+}
+
+.bottomDiv{
+    width: 100%;
+    height: 3.095rem;
+
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 10000;
+}
+
+.bottomDiv .bottomFlex{
+    width: 100%;
+    height: 3.095rem;
+}
+
+.bottomDiv .bottomFlex .totalIntegralFlex{
+    /* width: 14.095rem; */
+    width: 60%;
+    height: 3.095rem;
+}
+
+.bottomDiv .bottomFlex .totalIntegralFlex .integralText{
+    color: #000000;
+    font-size: 1.5rem;
+}
+
+.bottomDiv .bottomFlex .submitButton{
+    width: 40%;
+    /* width: 9.345rem; */
+    height: 3.095rem;
+    background-color: #CFA07C;
+    color: #FFFFFF;
+}
+
+.bottomDiv .bottomFlex .submitButtonDisabled{
+    width: 40%;
+    /* width: 9.345rem; */
+    height: 3.095rem;
+    background-color: #B6B6B6;
+    color: #FFFFFF;
+}

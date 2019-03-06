@@ -1,22 +1,39 @@
-import React from "react";
-import BaseIndex2 from "../BaseIndex2";
+import React, { Component } from "react";
 
-export default class Index extends BaseIndex2 {
+var DialogZIndex = 100000;
+
+export default WrapComponent => class Index extends Component {
     constructor(props) {
         super(props);
 
-        Index.ZIndex += 1;
-        this.ZIndex = Index.ZIndex;
+        this.state = { IsVisible: false }
     }
 
-    static get defaultProps() {
-        return {
-            IsVisible: false
-        }
+    Init() {
+        DialogZIndex += 1;
+        this.ZIndex = DialogZIndex;
+
+        if (this.props.CloseMills > 0) setTimeout(() => {
+            this.Close();
+            if (this.props.Callback) this.props.Callback();
+        }, this.props.CloseMills);
+    }
+
+    Close() {
+        this.setState({ IsVisible: false });
+    }
+
+    Show() {
+        this.setState({ IsVisible: true });
+    }
+
+    GetProps() {
+        const { Show, Close } = this
+        return { Show, Close };
     }
 
     render() {
-        const { IsVisible } = this.props;
+        const { IsVisible } = this.state;
         if (!IsVisible) return null;
 
         const style = {};
@@ -25,11 +42,9 @@ export default class Index extends BaseIndex2 {
         return (
             <div className="mui-dialog" style={style}>
                 <div className="mui-dialog-inner clearfix">
-                    {this.props.children}
+                    <WrapComponent {...this.props} {...this.GetProps()} />
                 </div><span className="after"></span>
             </div>
         )
     }
 }
-
-Index.ZIndex = 100000;

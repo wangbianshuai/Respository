@@ -16,9 +16,11 @@ export default class Index {
             if (s.IsUrlParams) url = payload.Url
             else if (Common.IsNullOrEmpty(url) && !Common.IsNullOrEmpty(payload.Url)) url = payload.Url;
 
+            //IsToken:请求必须有Token，HasToken:请求有Token才加上。
             let headers = {};
             if (s.IsToken && !payload.Token) return Promise.resolve(undefined);
-            if (s.IsToken && payload.Token) headers = { token: payload.Token };
+            if ((s.IsToken || s.HasToken) && payload.Token) headers = { token: payload.Token };
+
             if (payload.UserAgent) { headers = headers || {}; headers["User-Agent"] = payload.UserAgent; }
 
             let data = {};

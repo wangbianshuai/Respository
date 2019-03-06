@@ -21,7 +21,7 @@ function GetHtmlWebpackPlugin(pageConfig) {
         },
         chunks: pageConfig.chunks,
         hash: false,
-        chunksSortMode: 'dependency'
+        chunksSortMode: 'none'
     });
 }
 

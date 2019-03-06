@@ -1,9 +1,7 @@
 import React from "react"
 import { connect } from "dva"
-import BaseIndex from "../Index";
-import Header from "../common/header";
-import Footer from "../common/footer";
 import { Common } from "UtilsCommon";
+import { BaseIndex, Header, Footer, ComponentList, BackTop, Paging } from "ReactCommon";
 
 class ConsumptionList extends BaseIndex {
     constructor(props) {
@@ -14,17 +12,31 @@ class ConsumptionList extends BaseIndex {
         return "散标直投_新宜贷";
     }
 
-    GetCssList() {
-        return ["/build/mods/detail/consumptionList/_.css"];
-    }
-
-    GetJsList() {
-        return ["/build/js/common/require.min.js", "/build/mods/detail/consumptionList/_.js"];
-    }
-
     //服务器渲染加载数据
     static LoadData(ctx, app) {
-        return BaseIndex.Dispatch(app._store.dispatch, "PageView", "GetConsumptionList");
+        const token = ctx.cookies.get("Token");
+        const ua = ctx.headers["user-agent"];
+
+        return Promise.all(BaseIndex.InitInvokeActionList(app, ConsumptionList.Actions, ConsumptionList.GetPayload(token, ua)));
+    }
+
+    static GetPayload(token, ua) {
+        const query = ConsumptionList.GetQueryCondition(1, 10);
+
+        return {
+            Token: token,
+            UserAgent: ua,
+            InvestmentService: { InvestStatus: { data: {} } },
+            IntegrationService: {
+                GetBidsList: { Url: `bids?${query}` }
+            }
+        };
+    }
+
+    componentDidMount() {
+        this.Token = Common.GetCookie("Token");
+
+        this.InitInvokeActionList(ConsumptionList.Actions, ConsumptionList.GetPayload(this.Token));
     }
 
     RenderConsumptionItem(item) {
@@ -59,15 +71,34 @@ class ConsumptionList extends BaseIndex {
         )
     }
 
-    render() {
-        if (!this.props.PageData || !this.props.PageData.global) return null;
+    static GetQueryCondition(currentPage, pageSize) {
+        return Common.ToQueryString({
+            keyType: 3,
+            status: "[\"BIDDING\", \"SATISFIED_BID\", \"REPAYING\", \"REPAY_OVER\"]",
+            productCategory: "P001",
+            currentPage: currentPage,
+            pageSize: pageSize
+        });
+    }
 
+    PageChange(pageInfo) {
+        const { PageIndex, PageSize } = pageInfo;
+        const query = ConsumptionList.GetQueryCondition(PageIndex, PageSize);
+
+        this.Dispatch("IntegrationService", "GetBidsList", { Url: `bids?${query}` });
+    }
+
+    render() {
         const PcBuildUrl = this.GetPcBuildUrl();
-        const { globalData } = this.props.PageData;
+        const { Link } = this.props;
+        const IsLogin = this.JudgeLogin();
+        const UserInfo = this.GetPropsValue("UserInfo", {});
+        const IsPurchased = this.props.InvestStatus === true;
+        const Data = this.GetPropsValue("BidsList", { totalCount: 0, items: [], currentPage: 1, pageSize: 10 });
 
         return (
             <div id="J_wrapBody">
-                <Header PcBuildUrl={PcBuildUrl} globalData={globalData} />
+                <Header PcBuildUrl={PcBuildUrl} Page={this} IsLogin={IsLogin} NickName={UserInfo.nickname} UserType={UserInfo.userType} IsPurchased={IsPurchased} />
 
                 <div className="detail-crumbs">
                     <div className="crumbs">
@@ -82,13 +113,14 @@ class ConsumptionList extends BaseIndex {
                             <p className="borrow-item">近期借款项目</p>
                             <div className='catalogue clearfix'>
                                 <div className='pagination page-catalogue'>
-
+                                    <Paging PageRecord={Data.totalCount} PageIndex={Data.currentPage} PageSize={Data.pageSize} Change={this.PageChange.bind(this)} />
                                 </div>
                             </div>
                         </div>
                         <div className='consumption'>
-                            {globalData.bids.data.items.map(m => this.RenderConsumptionItem(m))}
+                            {Data.items.map(m => this.RenderConsumptionItem(m))}
                             <div className='pagination consumption-page'>
+                                <Paging PageRecord={Data.totalCount} PageIndex={Data.currentPage} PageSize={Data.pageSize} Change={this.PageChange.bind(this)} />
                             </div>
                         </div>
                     </div>
@@ -109,16 +141,26 @@ class ConsumptionList extends BaseIndex {
                     </div>
                 </div>
 
-                <Footer PcBuildUrl={PcBuildUrl} globalData={globalData} />
+                <Footer PcBuildUrl={PcBuildUrl} Link={Link} Page={this} />
+                <ComponentList Name="Tips" Page={this} />
+                <ComponentList Name="Dialogs" Page={this} />
+                <BackTop Page={this} />
             </div>
         )
     }
 }
 
 function mapStateToProps(state, ownProps) {
-    return {
-        PageData: state.PageView.ConsumptionList
-    };
+    const props = BaseIndex.MapStateToProps(state, ownProps, {
+        BidsList: state.IntegrationService.BidsList
+    });
+
+    !Common.IsDist && console.log(props);
+    return props;
 }
+
+ConsumptionList.Actions = BaseIndex.MapActions({
+    IntegrationService: ["GetBidsList"]
+});
 
 export default connect(mapStateToProps, BaseIndex.MapDispatchToProps)(ConsumptionList);

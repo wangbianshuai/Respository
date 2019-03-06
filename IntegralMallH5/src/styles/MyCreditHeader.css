@@ -1,0 +1,143 @@
+.banner{
+width:100%;
+background: url(../images/Banner.png) no-repeat  ;
+padding-top: 0.3rem
+} 
+.bannerTop
+{
+    height: 1.5625rem;
+}
+.bannerTop .leftBack
+{
+    float: left;
+    margin-top: 1.2rem;
+    margin-left: 0.8rem;
+    width:0.46875rem;
+    height:0.875rem;
+    color:rgba(255,255,255,1);
+
+    
+}
+.bannerTop .leftBack .BackImage{
+    width: 0.6rem;
+    height: 1.2rem;
+}
+.bannerTop .creditDetail
+{
+    float: right;
+    margin-right: 0.8rem;
+    width: 1.225rem;
+    height: 1.25625rem;
+    background: url(../images/CreditDetail.png) no-repeat  ;
+    background-size: 1.125rem 1.15625rem;
+    margin-top: 1.3rem;
+}
+
+.bannerTop .creditName
+{
+    float: left;
+    margin-left: 37%;
+    margin-top:0.5rem;
+    width: 4.65625rem;/*4.15625rem*/
+    height: 1rem;
+    font-size:1.1325rem;
+    font-family:SourceHanSansCN-Normal;
+    color:rgba(255,255,255,1);
+    line-height:43px;    
+}
+
+.bannerBody
+{
+    width: 100%;
+    height: 6.21875rem;
+    margin-top: 0.8rem;
+}
+
+.bannerBody .myIconBack
+{
+ float: left;
+    width: 4.125rem;
+    height: 4.1875rem;
+    background: url(../images/myIconBack.png) no-repeat  ;
+    background-size: 4.125rem 4.1875rem;
+    position: relative;
+    margin-top: 0.8rem;
+    margin-left: 1rem;
+}
+
+.bannerBody .myIcon
+{
+   float: left;
+    width: 3.3125rem;
+    height: 3.34375rem;
+    background: url(../images/myIcon.png) no-repeat  ;
+    background-size: 3.3125rem 3.34375rem;
+    position: absolute;
+    bottom: 0;
+    margin-bottom: 0.15rem;
+    margin-left: 0.15rem
+}
+
+.myNameInfo
+{
+    float: left;
+    margin-top: 2.5rem;
+    margin-left: 0.5rem;
+}
+
+.myNameInfo .myLevel{
+    width: 3.1875rem;
+    height: 1.125rem;
+    border-radius: 4px; /*这句就是重点，让边框变为圆角*/
+    border: 1px solid rgba(255,209,174,1);; /*让边框变为1px宽度，直线，#CCC颜色*/
+    font-size:0.625rem;
+    font-family:SourceHanSansCN-Normal;
+    color:rgba(255,209,174,1);
+    line-height:1.15625rem;
+    text-align: center;
+}
+
+.myName{
+    height: 1.1875rem;
+    width: 6.3125rem;
+    font-size:1.25rem;
+    font-family:SourceHanSansCN-Normal;
+    color:rgba(255,255,255,1);
+    line-height:0.9375rem;
+}
+
+.myCredit
+{
+    /*width:8.65625rem;*/
+    height:2.6875rem;
+    float: right;
+    margin-right: -1.3rem;
+    margin-top: 2rem;
+    font-size:0.75rem;
+    font-family:SourceHanSansCN-Normal;
+    color:rgba(255,255,255,1);
+    line-height:1.59375rem;
+    text-align: right; 
+}
+
+.myCredit .creditScore
+{
+    font-size:1.75rem;
+    font-family:CenturyGothic-Normal;
+    color:rgba(255,255,255,1);
+    line-height:1.59375rem;
+    text-align: right; 
+    font-weight: bold;
+}
+
+.innerTitle
+{
+    background-color: #E7E7EA;
+    height:2.9375rem;
+    /*width: 23.4375rem;*/
+    padding-left: 1rem;
+    font-size:0.875rem;
+    font-family:SourceHanSansCN-Normal;
+    color:rgba(16,18,44,1);
+    line-height:3rem;
+}

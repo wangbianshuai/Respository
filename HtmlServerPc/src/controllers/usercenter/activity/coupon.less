@@ -1,0 +1,257 @@
+@import "../side";
+
+.g-right {
+  .m-con-wrap {
+    padding-bottom: 20px;
+    .goupons {
+      border-bottom: 1px solid #eee;
+      border-top: 1px solid #eee;
+    }
+    .goupons-bd {
+      margin: 25px 0 0 30px;
+        ul {
+          li.clearfix {
+            margin-right: 70px;
+            margin-bottom: 40px;
+            display: inline-block;
+            padding: 25px 30px 26px;
+            background: #f6f6f6;
+            border: 1px solid #f7c6c6;
+            -webkit-border-radius: 12px;
+            -moz-border-radius: 12px;
+            border-radius: 12px;
+            height: 235px;
+            vertical-align: middle;
+            -webkit-box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            box-sizing: border-box;
+            .raiseName{
+              text-align: center;
+              font-weight: 600;
+              padding-bottom: 10px;
+              white-space: nowrap;
+              overflow: hidden;
+              text-overflow: ellipsis;
+            }
+            .goupon-pic {
+              float: left;
+              position: relative;
+              width: 148px;
+              height: 148px;
+              background: #ffffff url(/img/gift.png) no-repeat center 24px;
+              border: 1px solid #ef5f64;
+              -webkit-border-radius: 10px;
+              -moz-border-radius: 10px;
+              border-radius: 10px;
+              div{
+                position: absolute;
+                width: 100%;
+                top: 30px;
+                font-size: 40px;
+                color: #ef5f64;
+                text-align: center;
+              }
+              p {
+                position: absolute;
+                width: 90%;
+                left:5%;
+                //bottom: 10px;
+                top: 103px;
+                font-size: 13px;
+                color: #ef5f64;
+                text-align: center;
+                display: -webkit-box;
+                display: -moz-box;
+                -webkit-box-orient: vertical;
+                -moz-box-orient: vertical;
+                -webkit-line-clamp: 2;
+                -moz-line-clamp: 2;
+                overflow: hidden;
+              }
+              span {
+                position: absolute;
+                bottom: -29px;
+                width: 100%;
+                display: block;
+                height: 20px;
+                font-size: 14px;
+                color: #ef5f64;
+                text-align: center;
+                border: 1px solid #ef5f64;
+                -webkit-border-radius: 5px;
+                -moz-border-radius: 5px;
+                border-radius: 5px;
+                background: #ffffff;
+              }
+            }
+            .goupon-pic.bg-fff{
+              background: #ffffff;
+            }
+            .goupon-info {
+              float: left;
+              display: inline-block;
+              width: 173px;
+              margin-left: 10px;
+              p {
+                float: left;
+                padding-bottom: 7px;
+                font-size: @font14px;
+                color: @col-333;
+                &.last {
+                  padding-bottom: 0;
+                }
+                span {
+                  color: @col-999;
+                }
+              }
+              p.nowrap{
+                white-space: nowrap;
+              }
+            }
+          }
+          li.raiseItem{
+            padding: 17px 30px 30px;
+            height: 240px;
+            width: 395px;
+            -webkit-box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            box-sizing: border-box;
+          }
+          li.title{
+            display: table;
+            width:100%;
+            height: 40px;
+            line-height: 40px;
+            margin-top: 20px;
+            position: relative;
+            span{
+              display: table-cell;
+              background: #F4F5F9;
+              text-align: left;
+              font-size: 14px;
+              color: #999;
+              padding-left: 10px;
+            }
+          }
+          .tr.center{
+            text-align: center;
+          }
+          li.tr{
+            display: table;
+            width:100%;
+            height: 70px;
+            border-bottom: 1px dashed #dedede;
+            .center{
+              text-align: center;
+            }
+            .td{
+              height: 70px;;
+              line-height: 70px;
+              font-size: 14px;
+              color: #666;
+              padding-left: 10px;
+              position: relative;
+            }
+          }
+        }
+
+    }
+    .m-con-bd {
+      border-bottom: none;
+      .filed-user {
+        font-size: 16px;
+        color: #666666;
+        margin: 25px 0;
+        span {
+          display: inline-block;
+          padding-right: 20px;
+          text-align: left;
+          font-size: 16px;
+          color: #666666;
+          &.red {
+            color: #FF0000;
+            font-size: @font18px;
+          }
+        }
+        input {
+          box-sizing: border-box;
+          width: 280px;
+          height: 40px;
+          line-height: 40px;
+          padding-left: 10px;
+          font-size: 16px;
+        }
+        .get-coupon {
+          display: inline-block;
+          background: #2096e9;
+          width: 180px;
+          height: 40px;
+          line-height: 40px;
+          font-size: 16px;
+          color: #fff;
+          text-align: center;
+          -webkit-border-radius: 5px;
+          -moz-border-radius: 5px;
+          border-radius: 5px;
+          cursor: pointer;
+          margin-left: 30px;
+          border: 0;
+          &:hover {
+            background-color: #0266be;
+          }
+        }
+        .disable {
+          background: #999;
+          color: #fff;
+          cursor: default;
+        }
+      }
+    }
+    .status-title {
+      border: 0;
+      padding: 0;
+      li {
+        display: inline-block;
+        a {
+          display: inline-block;
+          border-radius: 5px;
+          height: 26px;
+          text-align: center;
+          font: 400 14px/26px "microsoft yahei";
+          padding: 0 10px;
+          margin: 0 10px;
+          border: 1px solid #eee;
+          color: #57a8ff;
+          &:hover, &.active {
+            background: #57a8ff;
+            color: #fff;
+            border: 1px solid #57a8ff;
+          }
+        }
+      }
+      li.active {
+        a {
+          background: #57a8ff;
+          color: #fff;
+          border: 1px solid #57a8ff;
+        }
+      }
+    }
+    .view-txt{
+      text-align:right;
+      margin: 35px 0 -12px;
+    }
+  }
+}
+
+.table-box {
+  padding-left: 0;
+  table {
+    tr.center {
+      text-align: center;
+      td {
+        text-align: center;
+      }
+    }
+  }
+}

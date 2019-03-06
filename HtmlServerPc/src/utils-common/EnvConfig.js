@@ -4,7 +4,9 @@ const ServiceConfig = {
     BizApiService2: GetBizApiServiceUrl2,
     TradeCenterApiService: GetTradeCenterApiServiceUrl,
     UserCenterApiService: GetUserCenterApiServiceUrl,
-    InvestmentApiService: GetInvestmentApiServiceUrl
+    InvestmentApiService: GetInvestmentApiServiceUrl,
+    XxdApiService: GetXxdApiServiceUrl,
+    IntegrationApiService: GetIntegrationApiServiceUrl,
 };
 
 const EnvConfig = {
@@ -148,6 +150,24 @@ function GetUserCenterApiServiceUrl() {
     return UserCenterApiServiceUrl;
 }
 
+var XxdApiServiceUrl = null;
+function GetXxdApiServiceUrl() {
+    if (XxdApiServiceUrl === null) {
+        let url = "http://www.xinxindai.com/";
+        const { Env } = EnvConfig;
+        if (Env === "local") url = "http://test.xxd.com/";
+        else if (Env === "dev") url = "http://dev.xxd.com/";
+        else if (Env === "stage") url = "http://stage.xxd.com/";
+        else if (Env === "test") url = "http://test.xxd.com/"
+        else if (Env === "test2") url = "http://test2.xxd.com/"
+        else if (Env === "uat") url = "http://uat.xxd.com/"
+
+        url = "http://www.xinxindai.com/";
+        XxdApiServiceUrl = url;
+    }
+    return XxdApiServiceUrl;
+}
+
 var InvestmentApiServiceUrl = null;
 function GetInvestmentApiServiceUrl() {
     if (InvestmentApiServiceUrl === null) {
@@ -165,6 +185,25 @@ function GetInvestmentApiServiceUrl() {
         InvestmentApiServiceUrl = url;
     }
     return InvestmentApiServiceUrl;
+}
+
+var IntegrationApiServiceUrl = null;
+function GetIntegrationApiServiceUrl() {
+    if (IntegrationApiServiceUrl === null) {
+        const { Env } = EnvConfig;
+        let url = "http://www.xinxindai.com/integrationPlatform/";
+        if (Env === "local") url = "http://test.xxd.com/integrationPlatform/";
+        else if (Env === "dev") url = "http://dev.xxd.com/integrationPlatform/";
+        else if (Env === "stage") url = "http://stage.xxd.com/integrationPlatform/";
+        else if (Env === "test") url = "http://test.xxd.com/integrationPlatform/";
+        else if (Env === "test2") url = "http://test2.xxd.com/integrationPlatform/";
+        else if (Env === "uat") url = "http://uat.xxd.com/integrationPlatform/";
+
+        url = "http://www.xinxindai.com/integrationPlatform/";
+
+        IntegrationApiServiceUrl = url;
+    }
+    return IntegrationApiServiceUrl;
 }
 
 function GetServiceUrl(serverName) {

@@ -8,7 +8,7 @@ class Index extends BaseIndex {
 
     }
 
-    componentDidMount() {
+    componentWillMount() {
 
     }
 
