@@ -1,0 +1,24 @@
+
+html, body, #root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+}
+
+.RowSelected {
+  background-color: #e6f7ff;
+}
+
+input:read-only,textarea:read-only{
+  color: #1890ff;
+}
+
+.ant-calendar-range-picker-input,.ant-calendar-picker-input{
+  color: rgba(0, 0, 0, 0.65) !important;
+}
+
+.ant-col-2 label{
+  padding-right: 2px;
+}
