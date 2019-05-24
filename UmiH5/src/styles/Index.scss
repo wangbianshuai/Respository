@@ -1,0 +1,27 @@
+@function ToRem750($px){
+    @return $px/32*1rem;
+}
+
+@function ToRem($px){
+    @return ($px*750)/(32*640)*1rem;
+}
+
+@function Compute($px){
+    @return $px
+}
+
+html,body{width:100%;height:100%;}
+
+ul li{
+    list-style:none;
+}
+
+*{
+    margin: 0;
+    padding: 0;
+}
+
+body{
+    margin: 0;
+    font-family: "MicrosoftYaHei,微软雅黑";
+}

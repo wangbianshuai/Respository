@@ -1,0 +1,16 @@
+
+html, body, #root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+}
+
+.am-list-line{
+  border: 0 !important;
+}
+
+.am-list-line:after{
+  height: 0 !important;
+}
