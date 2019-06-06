@@ -1,8 +1,6 @@
 const ServiceConfig = {
-    ApiH5Service: GetApiH5ServiceUrl,
-    UserCenterApiService: GetUserCenterApiServiceUrl,
-    FileCenterApiService: GetFileCenterApiServiceUrl,
-    EloanApiService: GetEloanApiServiceUrl
+    ApiService: GetApiSericeUrl,
+    UserCenterApiService: GetUserCenterApiServiceUrl
 };
 
 const EnvConfig = {
@@ -12,6 +10,7 @@ const EnvConfig = {
     IsProd: false
 }
 
+//ctx koa对象，ctx不为空表示是服务器
 function SetEnv() {
     EnvConfig.Env = GetWebEnv();
     EnvConfig.IsProd = EnvConfig.Env === "prd";
@@ -32,20 +31,12 @@ function GetEnv(h) {
     else return "prd";
 }
 
-function GetApiH5ServiceUrl() {
-    return "/apih5/api/";
+function GetApiSericeUrl() {
+    return "/RiskControlApproval/";
 }
 
 function GetUserCenterApiServiceUrl() {
     return "/userCenter/";
-}
-
-function GetFileCenterApiServiceUrl() {
-    return "/fileCenter/";
-}
-
-function GetEloanApiServiceUrl() {
-    return "/eloan/";
 }
 
 function GetServiceUrl(serverName) {

@@ -3,7 +3,7 @@ import { Common, Page } from "UtilsCommon";
 import $ from "jquery";
 import EventActions from "EventActions"
 import PageConfig from "Configs";
-import { Toast, Modal } from "antd-mobile";
+import { Modal, message } from "antd";
 import router from 'umi/router';
 
 export default class BaseIndex extends Component {
@@ -16,13 +16,7 @@ export default class BaseIndex extends Component {
     }
 
     InitSet() {
-        this.QueryString = Common.GetQueryString();
-
-        if (this.QueryString.token) {
-            this.Token = this.QueryString.token;
-            Common.SetCookie("Token", this.Token);
-        }
-        else this.Token = Common.GetCookie("Token");
+        this.Token = Common.GetStorage("Token");
     }
 
     Invoke() {
@@ -122,7 +116,7 @@ export default class BaseIndex extends Component {
         let isSuccess = obj && obj.IsSuccess !== false;
         if (isSuccess && obj.code !== undefined) isSuccess = Common.GetIntValue(obj.code) === 0;
         if (!isSuccess && obj.message) {
-            if (this.props.OperateTip) this.props.OperateTip(obj.message);
+            if (this.Alert) this.Alert(obj.message);
             else alert(obj.message);
         }
         return isSuccess;
@@ -153,8 +147,8 @@ export default class BaseIndex extends Component {
                 }
             }
         }
-
-        return blChanged
+        blChanged = !!blChanged;
+        return blChanged;
     }
 
     ReceiveActionData(nextProps) {
@@ -171,7 +165,6 @@ export default class BaseIndex extends Component {
 
             }
         }
-        blChanged = !!blChanged;
         return blChanged;
     }
 
@@ -179,28 +172,13 @@ export default class BaseIndex extends Component {
         if (!this.Token) this.ToLogin();
     }
 
-    ToLogin() {
-
+    ToLogin(blRefresh) {
+        if (blRefresh) window.location.href = "/risk/login.html";
+        else this.ToPage("/Login");
     }
 
     ShowMessage(msg) {
-        Toast.fail(msg, 3)
-    }
-
-    ShowInfo(msg, s) {
-        Toast.info(msg, s || 2)
-    }
-
-    ShowSuccess(msg) {
-        Toast.success(msg)
-    }
-
-    ToastSuccess(msg, second, onClose) {
-        Toast.success(msg, second || 2, onClose);
-    }
-
-    ToastFail(msg, second, onClose) {
-        Toast.fail(msg, second || 2, onClose);
+        message.warning(msg, 3)
     }
 
     InitEventAction() {
@@ -208,27 +186,42 @@ export default class BaseIndex extends Component {
         this.PageConfig = Common.Clone(PageConfig(this.Name));
         this.PageData = Common.GetQueryString();
 
+        if (this.MenuKey && this.props.PageData && this.props.PageData.GetUserMenuRight) {
+            this.RightConfig = Common.ArrayFirst(this.props.PageData.GetUserMenuRight, (f) => f.Key === this.MenuKey);
+            if (this.RightConfig) this.RightConfig = Common.Clone(this.RightConfig);
+        }
+
         this.EventActions = {
-            Page: Page.Current, GetActionTypes: this.props.GetActionTypes,
+            Page: Page.Current, GetActionTypes: this.props.GetActionTypes, GetRight: this.GetRight.bind(this),
             SetModalDialog: Page.Current.Invoke("RootPage", "SetModalDialog"),
-            Controls: [], InvokeAction: this.InvokeEventAction.bind(this),
-            GetAction: this.GetEventAciton.bind(this), Components: [], GetViewProperty: this.GetViewProperty.bind(this),
+            Controls: [], InvokeAction: this.InvokeEventAction.bind(this), GetFunction: this.GetFunction.bind(this),
+            GetAction: this.GetEventAction.bind(this), Components: [], GetViewProperty: this.GetViewProperty.bind(this),
             GetView: this.GetView.bind(this), OpenPage: this.OpenPage.bind(this),
             Alert: this.Alert.bind(this), Confirm: this.Confirm.bind(this), AlertSuccess: this.AlertSuccess.bind(this),
-            Receives: {}, ToPage: this.ToPage.bind(this), PageData: this.PageData, GetClassName: this.GetClassName.bind(this),
+            Receives: {}, ToPage: this.ToPage.bind(this), PageData: this.PageData,
             GetControl: this.GetControl.bind(this), GetComponent: this.GetComponent.bind(this),
             Invoke: this.props.Invoke, PageConfig: this.PageConfig, ActionTypes: this.ActionTypes
         };
         for (let key in EventActions) this.EventActions[key] = new EventActions[key]();
     }
 
-    GetClassName(name) {
-        if (!this.Styles) return name;
-        const names = name.split(" ");
-        if (names.length > 1) {
-            return names.map(m => this.Styles[m] || m).join(" ");
+    GetRight(name) {
+        if (!this.MenuKey) return true;
+        if (this.MenuKey && !this.RightConfig) return false;
+
+        const { PropertyNames, RightPropertyNames } = this.RightConfig;
+
+        if (PropertyNames && PropertyNames.indexOf(name) >= 0) {
+            if (!RightPropertyNames) return false;
+            else return RightPropertyNames.indexOf(name) >= 0
         }
-        return this.Styles[name] || name;
+
+        return true;
+    }
+
+    GetFunction(name) {
+        if (!name || !this[name]) return null;
+        return (params) => this[name](params);
     }
 
     GetView(name) {
@@ -265,24 +258,24 @@ export default class BaseIndex extends Component {
         window.open(url);
     }
 
-    ToRem(px) {
-        return parseFloat((px * 1.0000) / 32).toFixed(4) + "rem";
-    }
-
     Alert(msg) {
-        Toast.info(msg, 2);
+        Modal.info({
+            title: "提示",
+            content: msg
+        });
     }
 
     AlertSuccess(msg) {
-        Toast.success(msg, 2);
+        Modal.success({
+            title: msg
+        });
     }
 
     Confirm(msg, onOk) {
-        const alert2 = Modal.alert("确认信息",
-            msg,
-            [{ text: '取消', onPress: () => alert2.close(), style: 'default' },
-            { text: '确认', onPress: onOk }]
-        );
+        Modal.confirm({
+            title: msg,
+            onOk: onOk
+        });
     }
 
     GetControl(name) {
@@ -298,7 +291,7 @@ export default class BaseIndex extends Component {
         if (e != null) e.Invoke(props, e);
     }
 
-    GetEventAciton(name) {
+    GetEventAction(name) {
         if (this[name]) return { Invoke: (a, b) => this[name](a, b) };
 
         const { EventActions } = this.PageConfig;

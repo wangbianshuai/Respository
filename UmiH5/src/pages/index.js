@@ -1,8 +1,8 @@
-import Register from "./User/Register"
+import OrderList from './Orders/OrderList';
 import React from "react";
 
 export default (props) => {
   return (
-    <Register {...props} />
+    <OrderList {...props} />
   )
 }

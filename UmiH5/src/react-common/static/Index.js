@@ -13,7 +13,7 @@ export default class Index {
             if (state[key].Loading) { loading = true; break; }
         }
         props.Loading = loading
-
+        
         return props;
     }
 

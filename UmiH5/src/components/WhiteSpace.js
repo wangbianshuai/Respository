@@ -22,8 +22,6 @@ export default class WhiteSpace extends Component {
         let className = Property.ClassName;
         if (className && styles[className]) className = styles[className];
 
-        if (typeof className === "string") className = this.EventActions.GetClassName(className);
-
         return (
             <div className={className} style={Property.Style}></div>
         )

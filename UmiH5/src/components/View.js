@@ -1,7 +1,7 @@
 import React, { Component } from "react"
 import { Common } from "UtilsCommon";
 import PropertyItem from "./PropertyItem";
-import { Card, Flex } from "antd-mobile";
+import { Card } from "antd";
 import styles from "../styles/View.css";
 
 export default class View extends Component {
@@ -9,12 +9,20 @@ export default class View extends Component {
         super(props)
 
         this.Id = Common.CreateGuid()
-        this.state = { IsVisible: true }
+        this.state = { IsVisible: props.Property.IsVisible !== false }
         props.Property.SetVisible = this.SetVisible.bind(this);
     }
 
     SetVisible(v) {
         this.setState({ IsVisible: v })
+    }
+
+    componentDidMount() {
+        const { Property, EventActions } = this.props;
+
+        if (Property.EventActionName) {
+            EventActions.InvokeAction(Property.EventActionName, this.props);
+        }
     }
 
     GetReactComponent(p) {
@@ -44,9 +52,7 @@ export default class View extends Component {
 
         let className = Property.ClassName;
         if (className && styles[className]) className = styles[className];
-        if (typeof className === "string") className = this.EventActions.GetClassName(className);
 
-        if (Property.IsFlex) return <Flex className={className} style={Property.Style}>{this.RenderProperties()}</Flex>
         if (Property.IsDiv) return <div className={className} style={Property.Style}>{this.RenderProperties()}</div>
         return this.RenderProperties();
     }

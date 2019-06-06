@@ -9,6 +9,11 @@ export default class ASpanText extends Controls.BaseIndex {
         this.Name = "ASpanText";
     }
 
+    ClickAction() {
+        if (!this.Property.EventActionName) return;
+        this.EventActions.InvokeAction(this.Property.EventActionName, this.props);
+    }
+
     render() {
         if (!this.state.IsVisible) return null;
 
@@ -22,6 +27,8 @@ export default class ASpanText extends Controls.BaseIndex {
 
         if (ALabel) label = <label>{ALabel}</label>
 
-        return (<span className={className} style={Style}><a href={Href} target={Target}>{text}</a>{label}</span>)
+        let rel = Target === "_blank" ? "noopener noreferrer" : undefined;
+
+        return (<span className={className} style={Style}><a href={Href} target={Target} onClick={this.ClickAction.bind(this)} rel={rel}>{text}</a>{label}</span>)
     }
 }

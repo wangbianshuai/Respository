@@ -1,8 +1,8 @@
-import { Common } from "UtilsCommon";
+import { Common, Validate } from "UtilsCommon";
 
 export default class BaseIndex {
 
-    IsSuccessNextsProps(obj, Alert) {
+    IsSuccessNextsProps(obj, Alert, AlertMessage) {
         let isSuccess = obj && obj.IsSuccess !== false;
         let msg = "";
         if (!isSuccess) msg = obj.Message;
@@ -11,7 +11,8 @@ export default class BaseIndex {
             if (!isSuccess) msg = obj.message;
         }
         if (!isSuccess && msg) {
-            if (Alert) Alert(msg);
+            if (AlertMessage) AlertMessage.SetValue(msg);
+            else if (Alert) Alert(msg);
             else alert(msg);
         }
         return isSuccess;
@@ -34,7 +35,20 @@ export default class BaseIndex {
         for (let i = 0; i < properties.length; i++) {
             p = properties[i];
             name = p.PropertyName || p.Name;
-            if (p.GetValue) {
+
+            if (p.GetDisabled && p.GetDisabled()) {
+                if (p.GetValueToData) p.GetValueToData(data)
+                else data[name] = null;
+                continue;
+            }
+
+            if (p.GetValueToData) {
+                if (p.GetValueToData(data) === false) {
+                    msg = p.TipMessage;
+                    break;
+                }
+            }
+            else if (p.GetValue) {
                 v = p.GetValue();
                 if (!p.IsNullable && p.DataType === "Array" && (Common.IsNullOrEmpty(v) || v.length === 0)) {
                     msg = p.NullTipMessage || "请选择" + p.Label + "！"
@@ -48,6 +62,19 @@ export default class BaseIndex {
                     msg = p.NullTipMessage || p.Label + "不能为空！"
                     break;
                 }
+                else if (!p.IsNullable && p.JudgeNullable) {
+                    msg = p.JudgeNullable(v);
+                    if (!Common.IsNullOrEmpty(msg)) break;
+                }
+                else if (!Common.IsNullOrEmpty(v) && p.ValidateNames) {
+                    for (let i = 0; i < p.ValidateNames.length; i++) {
+                        msg = this.ValidateValue(p.ValidateNames[i], v, p);
+                        if (Common.IsNullOrEmpty(msg)) break;
+                    };
+
+                    if (!Common.IsNullOrEmpty(msg)) break;
+                }
+
                 data[name] = v;
             }
         }
@@ -57,16 +84,38 @@ export default class BaseIndex {
         return data;
     }
 
+    ValidateValue(validateName, v, p) {
+        if (!Validate[validateName]) return "";
+
+        var msg = Validate[validateName](v);
+        if (msg === true) msg = ""
+        else if (p.ValidateTipMessage) msg = p.ValidateTipMessage;
+
+        return msg;
+    }
+
+    SetViewPropertiesDisabled(properties) {
+        properties.forEach(p => {
+            if (p.IsEdit || p.IsDisabled) {
+                if (p.SetDisabled) p.SetDisabled(true);
+                else p.Disabled = true;
+            }
+        });
+    }
+
     SetPropertiesValue(properties, data) {
         data = data || {};
 
         let name = "", v = null;
         properties.forEach(p => {
-            name = p.PropertyName || p.Name;
-            v = data[name];
-            if ((v === null || v === undefined) && p.DefaultValue) v = p.DefaultValue;
-            if (p.SetValue) p.SetValue(v);
-            else p.Value = v;
+            if (p.SetValueByData) p.SetValueByData(data)
+            else {
+                name = p.PropertyName || p.Name;
+                v = data[name];
+                if ((v === null || v === undefined) && p.DefaultValue) v = p.DefaultValue;
+                if (p.SetValue) p.SetValue(v);
+                else p.Value = v;
+            }
         })
     }
 

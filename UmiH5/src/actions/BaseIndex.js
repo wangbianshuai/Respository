@@ -10,10 +10,20 @@ export default class Index {
 
     Init() {
         this.ActionTypes = this.GetActionTypes(this.Name);
+        this.ActionTypeKeys = this.GetActionTypeKeys();
         if (this.DvaActions.SetStateActionTypes) this.DvaActions.SetStateActionTypes(this.GetStateActionTypes());
     }
 
+    GetActionTypeKeys() {
+        const actionTypeKeys = {};
+        for (let key in this.ActionTypes) actionTypeKeys[this.ActionTypes[key]] = key;
+        return actionTypeKeys;
+    }
+
     Invoke(id, actionType, data) {
+        const key = this.ActionTypeKeys[actionType];
+        if (this[key]) this[key](id, actionType, data);
+        else this.Dispatch(id, actionType, data);
     }
 
     Dispatch(id, actionType, data) {
@@ -21,6 +31,16 @@ export default class Index {
         if (data === false) return;
         if (id && this.Receives[id]) this.Receives[id](actionType, data);
         else for (let key in this.Receives) this.Receives[key](actionType, data);
+    }
+
+    SetSearchQueryResponse(data) {
+        data = this.SetApiResponse(data);
+        if (data.IsSuccess !== false) {
+            const PageRecord = 100;
+            const DataList = data;
+            return { PageRecord, DataList }
+        }
+        return data;
     }
 
     SetApiResponse(data) {
@@ -35,7 +55,9 @@ export default class Index {
     }
 
     SetResponseData(id, actionType, data) {
-        return data;
+        const key = "Set" + this.ActionTypeKeys[actionType];
+        if (this[key]) return this[key](id, actionType, data);
+        else return this.SetApiResponse(data);
     }
 
     Receive(id, fn) {
@@ -48,7 +70,10 @@ export default class Index {
     }
 
     GetStateActionTypes() {
-        return {}
+        const stateActionTypes = {};
+        for (let key in this.ActionTypes) stateActionTypes[key] = [this.ActionTypes[key]];
+
+        return stateActionTypes;
     }
 
     GetAction(id, actionType) {

@@ -2,7 +2,7 @@ import React from "react"
 import { Common } from "UtilsCommon";
 import PropertyItem from "./PropertyItem";
 import BaseIndex from "./BaseIndex";
-import { List } from "antd-mobile";
+import { List } from "antd";
 
 export default class DataListView extends BaseIndex {
     constructor(props) {
@@ -15,6 +15,33 @@ export default class DataListView extends BaseIndex {
         const dataList = this.Property.Value || this.Property.DefaultValue || [];
         this.state = Object.assign({ DataList: dataList }, this.state);
         this.EventActions.Components.push(this.Property);
+        this.Property.SetDisabled = this.SetDisabled.bind(this);
+        this.Property.JudgeNullable = this.JudgeNullable.bind(this);
+        this.ControlProperties = {}
+    }
+
+    JudgeNullable(value) {
+        const { NullTipMessage } = this.Property;
+        if (value.length === 0) return NullTipMessage;
+
+        const list = this.ItemSetDisabledProperties.filter(f => f.IsEdit);
+
+        let msg = "", v = null, p = null;
+
+        for (let i = 0; i < list.length; i++) {
+            p = list[i];
+            v = p.GetValue();
+            if (!p.IsNullable && p.Type === "Select" && Common.IsNullOrEmpty(v)) {
+                msg = p.NullTipMessage || "请选择" + p.Label + "！"
+                break;
+            }
+            else if (!p.IsNullable && Common.IsNullOrEmpty(v)) {
+                msg = p.NullTipMessage || p.Label + "不能为空！"
+                break;
+            }
+        }
+
+        return msg;
     }
 
     Add(data) {
@@ -46,6 +73,10 @@ export default class DataListView extends BaseIndex {
         this.setState({ DataList: dataList });
     }
 
+    SetDisabled(disabled) {
+        this.ItemSetDisabledProperties.forEach(p => p.SetDisabled && p.SetDisabled(disabled));
+    }
+
     RenderListItem(data, index) {
         const { PrimaryKey, Properties, ItemProps } = this.Property;
         const id = data[PrimaryKey];
@@ -69,11 +100,19 @@ export default class DataListView extends BaseIndex {
     }
 
     AssignProperty(p, id, data, index) {
-        p = Object.assign({ Value: data[p.Name] }, p);
+        const id2 = p.Id + id;
+
+        if (!this.ControlProperties[id]) this.ControlProperties[id] = {};
+        const itemProperties = this.ControlProperties[id];
+
+        if (itemProperties[id2]) p = itemProperties[id2];
+        else { p = Object.assign({ Value: data[p.Name] }, p); itemProperties[id2] = p; }
         p.Id = p.Id + id;
         p.DataId = id;
         p.Data = data;
         p.IsBind = true;
+
+        if (p.IsEdit || p.IsDisabled) this.ItemSetDisabledProperties.push(p);
 
         const visibleName = `${p.Name}Visible`
         if (data[visibleName] === false) p.IsVisible = false;
@@ -96,6 +135,8 @@ export default class DataListView extends BaseIndex {
         if (!this.state.IsVisible) return null;
 
         if (this.state.DataList.length === 0) return null;
+
+        this.ItemSetDisabledProperties = [];
 
         if (this.Property.IsComplexEdit) return this.state.DataList.map((m, i) => this.RenderListItem(m, i))
 

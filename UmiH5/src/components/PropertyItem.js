@@ -2,7 +2,8 @@ import React, { Component } from "react"
 import Controls from "Controls";
 import Components from "Components"
 import PageControls from "PageControls";
-import { Flex } from "antd-mobile";
+import { Common } from "UtilsCommon";
+import { Form } from "antd";
 
 export default class PropertyItem extends Component {
     constructor(props) {
@@ -10,11 +11,48 @@ export default class PropertyItem extends Component {
 
         this.Id = props.Property.Id;
 
-        this.state = { IsVisible: props.Property.IsVisible !== false }
+        this.state = { IsVisible: this.GetIsVisible() }
 
-        if (props.Property.IsFlexItem) props.Property.SetFlexItemVisible = (v) => this.setState({ IsVisible: v })
+        if (props.Property.IsFormItem) props.Property.SetFormItemVisible = (v) => this.setState({ IsVisible: v });
+
+        this.SetIsReadOnly();
 
         props.EventActions.GetReactComponent = this.GetReactComponent.bind(this);
+    }
+
+    //设置只读权限
+    SetIsReadOnly() {
+        const { Property, EventActions } = this.props;
+        let readOnly = !!Property.IsReadOnly;
+        //判断是否有显示权限
+        if (!readOnly && Property.ReadRightName) readOnly = !EventActions.GetRight(Property.ReadRightName);
+
+        if (readOnly && !Property.IsNullable) Property.IsNullable = true;
+        if (readOnly && Property.PlaceHolder) Property.PlaceHolder = "";
+
+        Property.IsReadOnly = readOnly;
+    }
+
+    //设置显示权限
+    GetIsVisible() {
+        const { Property, EventActions } = this.props;
+        let isVisible = Property.IsVisible !== false;
+
+        //判断是否有显示权限
+        if (isVisible) isVisible = EventActions.GetRight(Property.Name);
+        //判断多个权限名组合有否显示
+        if (isVisible && Property.RightNames) {
+            let visible = false;
+            for (let i = 0; i < Property.RightNames.length; i++) {
+                visible = EventActions.GetRight(Property.RightNames[i]);
+                if (!visible) break;
+            }
+            isVisible = visible;
+        }
+
+        Property.IsVisible = isVisible;
+
+        return isVisible;
     }
 
     CreateComponent(type, props) {
@@ -44,14 +82,34 @@ export default class PropertyItem extends Component {
         return this.CreateComponent(property.Type, props);
     }
 
+    RenderLabel() {
+        const { Property } = this.props;
+
+        if (Property.IsAddOptional) {
+            const exLabel = Property.ExLabel || "";
+            return <React.Fragment>{Property.Label}<span style={{ color: "#999999" }}>（选填）</span>{exLabel}</React.Fragment>
+        }
+
+        return Property.Label;
+    }
+
     render() {
         const { Property, View } = this.props;
+        const labelCol = Property.LabelCol || 6;
+        const wrapperCol = Property.WrapperCol || 18;
 
-        if (Property.IsFlexItem) {
-            const style = Property.FlexStyle || {};
+        if (Property.IsFormItem) {
+            const style = Property.Style || {};
             if (!this.state.IsVisible) style.display = "none";
 
-            return (<Flex.Item style={style}>{this.GetReactComponent(Property, View)}</Flex.Item>)
+            if (Common.IsNullOrEmpty(Property.Label)) {
+                return (<Form.Item style={style} className={Property.FormItemClassName}>{this.GetReactComponent(Property, View)}</Form.Item>)
+            }
+            else {
+                return (<Form.Item label={this.RenderLabel()} style={style} colon={Property.IsColon !== false}
+                    labelCol={{ span: labelCol }} required={Property.IsEdit && !Property.IsNullable} className={Property.FormItemClassName}
+                    wrapperCol={{ span: wrapperCol }} >{this.GetReactComponent(Property, View)}</Form.Item>)
+            }
         }
         return this.GetReactComponent(Property, View);
     }
