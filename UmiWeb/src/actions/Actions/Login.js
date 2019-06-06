@@ -11,38 +11,15 @@ export default class Login extends BaseIndex {
         this.Init();
     }
 
-    GetStateActionTypes() {
-        const { GetEntityData } = this.ActionTypes;
+    //登录
+    Login(id, actionType, data) {
+        const { LoginName, LoginPassword } = data.EntityData;
 
-        return {
-            EntityData: [GetEntityData]
-        }
+        const payload = { Action: this.GetAction(id, actionType) };
+
+        payload.LoginName = LoginName;
+        payload.LoginPassword = LoginPassword;
+
+        this.DvaActions.Dispatch("EmployeeService", "Login", payload);
     }
-
-    Invoke(id, actionType, data) {
-        const { GetEntityData } = this.ActionTypes;
-
-        switch (actionType) {
-            case GetEntityData: this.GetEntityData(id, actionType, data); break;
-            default: this.Dispatch(id, actionType, data); break;
-        }
-    }
-
-    SetResponseData(id, actionType, data) {
-        const { GetEntityData } = this.ActionTypes;
-
-        switch (actionType) {
-            case GetEntityData: return this.SetGetEntityData(id, actionType, data);
-            default: return this.SetApiResponse(data);
-        }
-    }
-
-    GetEntityData(id, actionType, data) {
-
-    }
-
-    SetGetEntityData(id, actionType, data) {
-
-    }
-
 }

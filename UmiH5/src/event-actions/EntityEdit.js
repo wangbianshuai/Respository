@@ -23,7 +23,9 @@ export default class EntityEdit extends BaseIndex {
         this.SetPropertiesValue(DialogView.Properties, entityData)
 
         //设置接收数据行数返回数据
-        EventActions.Receives[UdpateEntityOkActionType] = (d) => this.ReceiveDialogOkActionType(d, props, action)
+        if (!EventActions.Receives[UdpateEntityOkActionType]) {
+            EventActions.Receives[UdpateEntityOkActionType] = (d) => this.ReceiveDialogOkActionType(d, props, action)
+        }
 
         const onOk = (e, p) => this.SetSelectRowUpdate(e, p, props, action, entityData);
         this.ShowDialog(action, EventActions, DialogView, onOk);
@@ -67,27 +69,23 @@ export default class EntityEdit extends BaseIndex {
         if (!action.Parameters) this.InitSaveEntityData(props, action);
 
         const { EditView } = action.Parameters;
-        const { EventActions, Property } = props;
-
-        let entityData = this.GetViewEntityData(props, EditView);
-        if (entityData === false) return;
-
-        if (Property.ConfirmTip) EventActions.Confirm(Property.ConfirmTip, () => this.SaveEditEntityData(props, action, EditView, entityData));
-        else this.SaveEditEntityData(props, action, EditView, entityData);
-    }
-
-    SaveEditEntityData(props, action, EditView, entityData) {
         const { EventActions, Property, EditData } = props;
+
+        let entityData = this.GetViewPropertiesValue(EditView.Properties, EventActions);
+
+        if (EditView.ExpandSetEntityData) entityData = EditView.ExpandSetEntityData(entityData);
+
+        if (entityData === false) return;
 
         //设置传入的编辑数据
         if (EditData) for (let key in EditData) entityData[key] = EditData[key];
 
         EditView.EditData = entityData;
 
-        const actionType = EditView.SaveEntityDataActionType || Property.SaveEntityDataActionType;
-
         //设置接收数据行数返回数据
-        EventActions.Receives[actionType] = (d) => this.ReceiveSaveEntityDataActionType(d, props, action);
+        if (!EventActions.Receives[EditView.SaveEntityDataActionType]) {
+            EventActions.Receives[EditView.SaveEntityDataActionType] = (d) => this.ReceiveSaveEntityDataActionType(d, props, action)
+        }
 
         //获取编辑值
         const data = { OldEntityData: EditView.EntityData, EntityData: entityData }
@@ -96,74 +94,21 @@ export default class EntityEdit extends BaseIndex {
         Property.SetLoading(true);
 
         //数据行为跟页面调用数据行为走
-        EventActions.Invoke(actionType, data);
-    }
-
-    SaveEntityDataViews(props, action) {
-        if (!action.Parameters) this.InitSaveEntityDataViews(props, action);
-
-        const { EditPropertiyViewList } = action.Parameters;
-        const { EventActions, Property } = props;
-
-        let entityData = {}, viewEntityData = null;
-
-        for (let i = 0; i < EditPropertiyViewList.length; i++) {
-            viewEntityData = this.GetViewEntityData(props, EditPropertiyViewList[i]);
-            if (viewEntityData === false) { entityData = false; break; }
-            else for (let key in viewEntityData) entityData[key] = viewEntityData[key];
-        }
-
-        if (entityData === false) return;
-
-        const EditView = EditPropertiyViewList[0];
-
-        if (Property.ConfirmTip) EventActions.Confirm(Property.ConfirmTip, () => this.SaveEditEntityData(props, action, EditView, entityData));
-        else this.SaveEditEntityData(props, action, EditView, entityData);
-    }
-
-    GetViewEntityData(props, view) {
-        const { EventActions } = props;
-        const { DefaultEditData } = view;
-
-        let entityData = this.GetViewPropertiesValue(view.Properties, EventActions);
-
-        if (view.ExpandSetEntityData) entityData = view.ExpandSetEntityData(entityData);
-
-        if (entityData === false) return false;
-
-        //设置默认编辑数据
-        if (DefaultEditData) for (let key in DefaultEditData) entityData[key] = DefaultEditData[key];
-
-        return entityData;
+        EventActions.Invoke(EditView.SaveEntityDataActionType, data);
     }
 
     ReceiveSaveEntityDataActionType(data, props, action) {
-        const { EditPropertiyViewList, SetDisabledViewList, SuccessCallback } = action.Parameters;
-        let EditView = action.Parameters.EditView
-        if (EditPropertiyViewList) EditView = EditPropertiyViewList[0];
+        const { EditView } = action.Parameters;
 
         const { EventActions, Property } = props;
         Property.SetLoading(false);
         if (this.IsSuccessNextsProps(data, EventActions.Alert, null)) {
-            if (EditView.EntityData) EditView.EntityData = { ...EditView.EntityData, ...EditView.EditData }; //更新
-            else if (EditPropertiyViewList) {
-                //新增，清空属性值
-                EditPropertiyViewList.forEach(v => {
-                    if (v.IsClear) this.SetViewPropertiesValue(v.Properties, null);
-                });
-            }
-            else if (EditView.IsClear) this.SetViewPropertiesValue(EditView.Properties, null); //新增，清空属性值
+            EditView.EntityData = { ...EditView.EditData, ...data };
 
-            //保存之后禁用控件
-            if (SetDisabledViewList) {
-                //新增，清空属性值
-                SetDisabledViewList.forEach(v => {
-                    this.SetViewPropertiesDisabled(v.Properties);
-                });
-            }
-
-            if (SuccessCallback) SuccessCallback({ data, props, action });
+            if (Property.IsDialog) Property.SetVisible(false);
             else EventActions.AlertSuccess(EditView.SuccessTip || "保存成功");
+
+            EditView.ExpandSetSave && EditView.ExpandSetSave(data, props, action);
         }
 
         return false;
@@ -171,56 +116,31 @@ export default class EntityEdit extends BaseIndex {
 
     InitSaveEntityData(props, action) {
         const { EventActions } = props;
-        const EditView = EventActions.GetView(action.EditView);
-        const SuccessCallback = EventActions.GetFunction(action.SuccessCallback);
+        let EditView = props.EditView;
+        if (!EditView) EditView = EventActions.GetView(action.EditView);
 
-        let EditPropertiyViewList = null;
-        if (action.EditPropertiyViewList) {
-            EditPropertiyViewList = action.EditPropertiyViewList.map(m => EventActions.GetView(m));
-        }
-
-        let SetDisabledViewList = null;
-        if (action.SetDisabledViewList) SetDisabledViewList = action.SetDisabledViewList.map(m => EventActions.GetView(m));
-
-        action.Parameters = { EditView, EditPropertiyViewList, SetDisabledViewList, SuccessCallback };
-    }
-
-    InitSaveEntityDataViews(props, action) {
-        const { EventActions } = props;
-        const SuccessCallback = EventActions.GetFunction(action.SuccessCallback);
-
-        const EditPropertiyViewList = action.EditPropertiyViewList.map(m => EventActions.GetView(m));
-
-        let SetDisabledViewList = null;
-        if (action.SetDisabledViewList) SetDisabledViewList = action.SetDisabledViewList.map(m => EventActions.GetView(m));
-
-        action.Parameters = { EditPropertiyViewList, SetDisabledViewList, SuccessCallback };
+        action.Parameters = { EditView };
     }
 
     GetEntityData(props, action) {
         if (!action.Parameters) this.InitGetEntityData(props, action);
 
-        const { EditView, SetRequestEntityData } = action.Parameters;
+        const { EditView } = action.Parameters;
         const { EventActions } = props;
+        const PrimaryKey = EditView.Entity.PrimaryKey;
+
+        const id = EventActions.PageData[PrimaryKey];
+        if (!id) return;
 
         let entityData = {}
-
-        if (EditView.Entity) {
-            const PrimaryKey = EditView.Entity.PrimaryKey;
-
-            const id = EventActions.PageData[PrimaryKey];
-            if (!id) return;
-
-            entityData[PrimaryKey] = id;
-        }
+        entityData[PrimaryKey] = id;
 
         if (EditView.ExpandGetEntityDataParameter) entityData = EditView.ExpandGetEntityDataParameter(entityData);
 
-        //设置请求实体数据
-        if (SetRequestEntityData) entityData = SetRequestEntityData({ entityData, props, action });
-
         //设置接收数据行数返回数据
-        EventActions.Receives[EditView.GetEntityDataActionType] = (d) => this.ReceiveGetEntityDataActionType(d, props, action)
+        if (!EventActions.Receives[EditView.GetEntityDataActionType]) {
+            EventActions.Receives[EditView.GetEntityDataActionType] = (d) => this.ReceiveGetEntityDataActionType(d, props, action)
+        }
 
         //获取编辑值
         const data = { EntityData: entityData }
@@ -230,28 +150,12 @@ export default class EntityEdit extends BaseIndex {
     }
 
     ReceiveGetEntityDataActionType(data, props, action) {
-        const { EditView, EditPropertiyViewList, SetGetEntityDataLoad } = action.Parameters;
+        const { EditView } = action.Parameters;
 
         const { EventActions } = props;
         if (this.IsSuccessNextsProps(data, EventActions.Alert, null)) {
-            EditView.EntityData = data || {};
-            //多个编辑视图
-            if (EditPropertiyViewList) {
-                EditPropertiyViewList.forEach(v => {
-                    const name = v.PropertyName || v.Name;
-                    v.EntityData = data[name] || data;
-                    this.SetViewPropertiesValue(v.Properties, v.EntityData);
-
-                    //扩展实体数据加载
-                    v.ExpandEntityDataLoad && v.ExpandEntityDataLoad();
-                });
-            }
-            else this.SetViewPropertiesValue(EditView.Properties, data);
-
-            //扩展实体数据加载
-            EditView.ExpandEntityDataLoad && EditView.ExpandEntityDataLoad();
-
-            if (SetGetEntityDataLoad) SetGetEntityDataLoad({ data, props, action })
+            EditView.EntityData = data;
+            this.SetViewPropertiesValue(EditView.Properties, data);
         }
 
         return false;
@@ -259,33 +163,8 @@ export default class EntityEdit extends BaseIndex {
 
     InitGetEntityData(props, action) {
         const { EventActions } = props;
-        const EditView = EventActions.GetView(action.EditView);
-        const SetGetEntityDataLoad = EventActions.GetFunction(action.SetGetEntityDataLoad);
-        const SetRequestEntityData = EventActions.GetFunction(action.SetRequestEntityData);
-
-        let EditPropertiyViewList = null;
-        if (action.EditPropertiyViewList) {
-            EditPropertiyViewList = action.EditPropertiyViewList.map(m => EventActions.GetView(m));
-        }
-
-        action.Parameters = { EditView, EditPropertiyViewList, SetRequestEntityData, SetGetEntityDataLoad };
-    }
-
-    ClearPropertyValue(props, action) {
-        if (!action.Parameters) this.InitClearPropertyValue(props, action);
-
-        const { EventActions, Property } = props;
-        const { EditView } = action.Parameters;
-
-        const properties = EditView.filter(f => f.IsClear);
-
-        if (Property.ConfirmTip) EventActions.Confirm(Property.ConfirmTip, () => this.SetPropertiesValue(properties));
-        else this.SetPropertiesValue(properties)
-    }
-
-    InitClearPropertyValue(props, action) {
-        const { EventActions } = props;
-        const EditView = EventActions.GetView(action.EditView);
+        let EditView = props.EditView;
+        if (!EditView) EditView = EventActions.GetView(action.EditView);
 
         action.Parameters = { EditView };
     }

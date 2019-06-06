@@ -36,7 +36,7 @@ export default class Validate {
     }
 
     static ValidateMobile(arg) {
-        var patter = /^0?(13|15|14|17|18|19)[0-9]{9}$/;
+        var patter = /^0?(13|15|16|14|17|18|19)[0-9]{9}$/;
         if (!patter.test(arg)) return '手机号不正确!';
 
         return true;

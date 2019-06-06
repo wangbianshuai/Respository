@@ -12,6 +12,7 @@ const DataActionTypes = {
 
 export default {
     Name: "WaitingOrderList",
+    Type: "View",
     EventActions: GetEventActions(),
     DialogViews: GetDialogViews(),
     Properties: AssignProporties(Order, [GetSearchOperationView(), GetAlert(), GetDataGridView()])
@@ -24,9 +25,10 @@ function GetSearchOperationView() {
         Entity: Order,
         Type: "RowsColsView",
         ClassName: "DivLeftRightView",
-        Properties: AssignProporties(Order, [{ EventActionName: "HandlerOrder", ...GetButton("HandlerOrder", "处理", "primary", 1, 1) },
+        Properties: AssignProporties(Order, [{ EventActionName: "HandlerOrderToPage", ...GetButton("HandlerOrder", "处理", "primary", 1, 1) },
         {
             EventActionName: "HandUpOrder", DataActionType: DataActionTypes.HandUpOrder,
+            ColStyle: { paddingLeft: 0 },
             SuccessTip: "挂起完成，请前往我的工单-已挂起查看！",
             ConfirmTip: "请确认当前工单是否挂起？",
             ...GetButton("HandUpOrder", "挂起", "default", 1, 2)
@@ -42,11 +44,13 @@ function GetKeyword() {
     p.ColStyle = { paddingRight: 8, paddingLeft: 2 };
     p.IsCondition = true;
     p.EventActionName = "SearchQuery";
+    p.PressEnterEventActionName = "SearchQuery";
+    p.ColStyle = { width: 240 }
     return p;
 }
 
 function GetQueryName() {
-    const p = GetSelect("QueryName", "", GetQueryNameDataSource(), 2, 2, "OrderCode");
+    const p = GetSelect("QueryName", "", Order.QueryNameDataSource, 2, 2, "loanApplyId");
     p.ColStyle = { paddingRight: 0, paddingLeft: 8 };
     p.Width = 100;
     p.IsCondition = true;
@@ -71,12 +75,16 @@ function GetDataGridView() {
         Title: "工单列表",
         IsRowSelection: true,
         IsSingleSelection: true,
-        Properties: AssignProporties(Order, ["OrderCode", "Borrowers", "BorrowerUser", "ProductType", "LoanUser", "BorrowerDate", "UpdateDate", "OrderStatus"])
+        Properties: AssignProporties(Order, [GetOrderCode(), "Borrowers", "BorrowerUser", "ProductType", "LoanUser", "BorrowerDate", "UpdateDate", "OrderStatus"])
     }
 }
 
-function GetQueryNameDataSource() {
-    return [{ Value: "OrderCode", Text: "工单编号" }, { Value: "Borrowers", Text: "借款主体" }, { Value: "MainLoanUser", Text: "主借人" }]
+function GetOrderCode() {
+    return {
+        Name: "OrderCode",
+        IsOpenPage: true,
+        PageUrl: "/risk/CreditManage/OrderDetail.html?OrderCode=#{loanApplyId}"
+    }
 }
 
 function GetEventActions() {
@@ -95,6 +103,13 @@ function GetEventActions() {
         DataProperties: ["ApproveUserList", "HandlerType"],
         DataGridView: "DataGridView1",
         AlertMessage: "AlertMessage"
+    },
+    {
+        Name: "HandlerOrderToPage",
+        Type: "DataGridView/SelectRowToPage",
+        DataGridView: "DataGridView1",
+        AlertMessage: "AlertMessage",
+        SetPageUrl:"HandlerOrderSetPageUrl"
     },
     {
         Name: "AddUser",
@@ -122,7 +137,7 @@ function GetDialogViews() {
         Name: "SelectDataToListView",
         Entity: Order,
         Type: "RowsColsView",
-        Title: "配置",
+        DialogTitle: "配置",
         DialogWidth: 600,
         SuccessTip: "处理成功！",
         ClassName: "DivView2",

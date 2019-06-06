@@ -1,11 +1,18 @@
-import Order from "../../entities/Order";
+import House from "../../entities/House";
+import Car from "../../entities/Car";
 
 import { AssignProporties, GetTextBox, GetDatePicker, GetSelect, GetButton, CreateGuid } from "../../pages/Common";
 
-export default {
-    Name: "PersonPropertyInfo",
-    Type: "View",
-    Properties: AssignProporties({}, [GetInfoView(), GetRightButtonView()])
+var DataActionTypes = {}
+
+export default (actionTypes) => {
+    DataActionTypes = actionTypes;
+
+    return {
+        Name: "PersonPropertyInfo",
+        Type: "View",
+        Properties: AssignProporties({}, [GetInfoView(), GetRightButtonView()])
+    }
 }
 
 function GetInfoView() {
@@ -14,7 +21,10 @@ function GetInfoView() {
         Type: "View",
         Title: "个人资产信息",
         Style: { marginTop: 8 },
-        Properties: AssignProporties(Order, [GetHouseProperties(), GetCarProperties()])
+        PropertyName: "PersonPropertyInfo",
+        DefaultEditData: { ViewName: "PersonPropertyInfo" },
+        SaveEntityDataActionType: DataActionTypes.SaveOrderDetailEntityData,
+        Properties: AssignProporties({}, [GetHouseProperties(), GetCarProperties()])
     }
 }
 
@@ -27,6 +37,7 @@ function GetCarProperties() {
         IsFirstDelete: false,
         DeletePropertyName: "DeleteCar",
         PrimaryKey: "Id",
+        IsEdit: true,
         Title: "车产信息",
         Properties: AssignProporties({}, [{
             Name: "CarItemView",
@@ -34,7 +45,7 @@ function GetCarProperties() {
             IsForm: true,
             LabelAlign: "left",
             IsDiv: false,
-            Properties: AssignProporties({}, GetCarItemProperties())
+            Properties: AssignProporties(Car, GetCarItemProperties())
         }])
     }
 }
@@ -46,6 +57,7 @@ function GetHouseProperties() {
         DefaultValue: [{ Id: CreateGuid(), Title: "房产信息一" }],
         IsComplexEdit: true,
         IsFirstDelete: false,
+        IsEdit: true,
         DeletePropertyName: "DeleteHouse",
         PrimaryKey: "Id",
         Title: "房产信息",
@@ -55,46 +67,46 @@ function GetHouseProperties() {
             IsForm: true,
             LabelAlign: "left",
             IsDiv: false,
-            Properties: AssignProporties({}, GetHouseItemProperties())
+            Properties: AssignProporties(House, GetHouseItemProperties())
         }])
     }
 }
 
 function GetRightButtonView() {
     return {
-        Name: "RightButtonView",
+        Name: "PersonPropertyInfoRightButtonView",
         Type: "View",
         ClassName: "DivRightButton",
         IsDiv: true,
-        Properties: AssignProporties(Order, GetRightButtonProperties())
+        Properties: AssignProporties({}, GetRightButtonProperties())
     }
 }
 
 function GetRightButtonProperties() {
-    return [{ ...GetButton("AddHouse", "新增房产", ""), EventActionName: "AddHouse", Style: { marginRight: 10 }, Icon: "plus" },
-    { ...GetButton("AddCar", "新增车产", ""), EventActionName: "AddCar", Style: { marginRight: 10 }, Icon: "plus" },
-    { ...GetButton("SavePersonPropertyInfo", "保存", "primary"), EventActionName: "SavePersonPropertyInfo", Style: { marginRight: 36, width: 84 } }]
+    return [{ ...GetButton("AddHouse", "新增房产", ""), IsDisabled: true, EventActionName: "AddHouse", Style: { marginRight: 10 }, Icon: "plus" },
+    { ...GetButton("AddCar", "新增车产", ""), IsDisabled: true, EventActionName: "AddCar", Style: { marginRight: 10 }, Icon: "plus" },
+    { ...GetButton("SavePersonPropertyInfo", "保存", "primary"), IsDisabled: true, EventActionName: "SavePersonPropertyInfoEntityData", Style: { marginRight: 36, width: 84 } }]
 }
 
 function GetHouseItemProperties() {
     return [
         { Name: "Title", Type: "SpanText", X: 1, Y: 1, ClassName: "SpanTitle" },
-        { ...GetButton("DeleteHouse", "删除", "", 1, 2), EventActionName: "DeleteHouse", Style: { marginLeft: 20, marginBottom: 10 }, Icon: "delete" },
+        { ...GetButton("DeleteHouse", "删除", "", 1, 2), IsDisabled: true, RightNames: ["PersonPropertyInfoRightButtonView"], EventActionName: "DeleteHouse", Style: { marginLeft: 20, marginBottom: 10 }, Icon: "delete" },
         GetTextBox2("HouseUserName", "房产所有人", 2, 1, "", "", 50, true),
         GetTextBox2("HouserAddress", "房产地址", 2, 2, "", "", 100, true),
-        GetTextBox3("HoustSpace", "面积", 2, 3, "decimal", "", 10, true, "平米")
+        GetTextBox3("HoustSpace", "面积", 2, 3, "float", "", 10, true, "平米")
     ]
 }
 
 function GetCarItemProperties() {
     return [
         { Name: "Title", Type: "SpanText", X: 1, Y: 1, ClassName: "SpanTitle" },
-        { ...GetButton("DeleteCar", "删除", "", 1, 2), EventActionName: "DeleteCar", Style: { marginLeft: 20, marginBottom: 10 }, Icon: "delete" },
+        { ...GetButton("DeleteCar", "删除", "", 1, 2), IsDisabled: true, EventActionName: "DeleteCar", Style: { marginLeft: 20, marginBottom: 10 }, Icon: "delete" },
         GetTextBox2("CarNo", "车牌号码", 2, 1, "", "", 10, true),
-        GetEditSelect("CarType", "车辆类型", GetCarTypeDataSource(), 2, 2, true, "请选择车辆类型"),
-        GetEditSelect("CarUser", "车辆所有人", GetCarUserDataSource(), 2, 3, true, "请选择车辆类型"),
+        GetEditSelect("CarType", "车辆类型", Car.CarTypeDataSource, 2, 2, true, "请选择车辆类型"),
+        GetEditSelect("CarUser", "车辆所有人", Car.CarUserDataSource, 2, 3, true, "请选择车辆类型"),
         GetTextBox2("CarUserAddress", "车辆所有人住址", 3, 1, "", "", 100, true),
-        GetEditSelect("CarUseNature", "使用性质", GetCarUseNatureDataSource(), 3, 2, true, "请选择使用性质"),
+        GetEditSelect("CarUseNature", "使用性质", Car.CarUseNatureDataSource, 3, 2, true, "请选择使用性质"),
         GetTextBox3("BrandModel", "品牌型号", 3, 3, "", "", 50, true),
         GetTextBox3("CarCode", "车辆识别代号", 4, 1, "", "", 50, true),
         GetTextBox3("CarAutoCode", "发动机号码", 4, 2, "", "", 50, true),
@@ -116,11 +128,12 @@ function GetEditSelect(Name, Label, DataSource, X, Y, IsNullable, PlaceHolder, D
         IsColon: false,
         IsFormItem: true, ColSpan: 8,
         LabelCol: 10,
-        WrapperCol: 20,
+        WrapperCol: 21,
         IsNullable: IsNullable,
         IsAddOptional: !!IsNullable,
         PlaceHolder: PlaceHolder,
         IsEdit: true,
+        ReadRightName: "PersonPropertyInfoRightButtonView",
         Style: {
             display: "flex",
             flexDirection: "column",
@@ -135,11 +148,12 @@ function GetDatePicker2(Name, Label, X, Y, ControlType, IsNullable, PlaceHolder,
         IsColon: false,
         IsFormItem: true, ColSpan: 8,
         LabelCol: 10,
-        WrapperCol: 20,
+        WrapperCol: 21,
         IsNullable: IsNullable,
         PlaceHolder: PlaceHolder,
         ControlType: ControlType,
         IsEdit: true,
+        ReadRightName: "PersonPropertyInfoRightButtonView",
         Style: {
             display: "flex",
             flexDirection: "column",
@@ -154,27 +168,16 @@ function GetTextBox2(Name, Label, X, Y, ContorlType, PlaceHolder, MaxLength, IsN
         IsColon: false,
         IsFormItem: true, ColSpan: 8,
         LabelCol: 10,
-        WrapperCol: 20,
+        WrapperCol: 21,
         AddonAfter: addonAfter,
         IsNullable: IsNullable,
         IsAddOptional: !!IsNullable,
         IsEdit: true,
+        ReadRightName: "PersonPropertyInfoRightButtonView",
         Style: {
             display: "flex",
             flexDirection: "column",
             marginBottom: 10
         }
     }
-}
-
-function GetCarTypeDataSource() {
-    return [{ Value: 1, Text: "小型桥车" }, { Value: 0, Text: "客车" }]
-}
-
-function GetCarUserDataSource() {
-    return [{ Value: 1, Text: "本人" }, { Value: 0, Text: "朋友" }]
-}
-
-function GetCarUseNatureDataSource(){
-    return [{ Value: 1, Text: "家用代步" }, { Value: 0, Text: "营运" }]
 }

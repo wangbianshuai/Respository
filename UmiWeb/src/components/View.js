@@ -9,12 +9,20 @@ export default class View extends Component {
         super(props)
 
         this.Id = Common.CreateGuid()
-        this.state = { IsVisible: true }
+        this.state = { IsVisible: props.Property.IsVisible !== false }
         props.Property.SetVisible = this.SetVisible.bind(this);
     }
 
     SetVisible(v) {
         this.setState({ IsVisible: v })
+    }
+
+    componentDidMount() {
+        const { Property, EventActions } = this.props;
+
+        if (Property.EventActionName) {
+            EventActions.InvokeAction(Property.EventActionName, this.props);
+        }
     }
 
     GetReactComponent(p) {

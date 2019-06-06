@@ -1,32 +1,57 @@
-import React from "react";
+import React from "react"
 import { Common } from "UtilsCommon";
-import BaseIndex from "./BaseIndex";
-import { Checkbox } from "antd";
+import BaseIndex from "./BaseIndex"
+import { Checkbox, InputItem } from "antd-mobile";
+const AgreeItem = Checkbox.AgreeItem;
+const CheckboxItem = Checkbox.CheckboxItem
 
-export default class CheckBox2 extends BaseIndex {
+export default class CheckBox extends BaseIndex {
     constructor(props) {
         super(props)
 
-        this.Name = "CheckBox2";
+        this.SetDefaultValue();
     }
 
-    CheckBoxChange(e) {
-        this.setState({ Value: e.target.checked ? 1 : 0 });
+    SetDefaultValue() {
+        const obj = { SelectedText: "是", UnSelectedText: "否", SelectedValue: true, UnSelectedValue: false };
+        for (let key in obj) Common.SetDefaultValue(this.Property, key, obj[key])
+    }
+
+    OnChange(e) {
+        const v = e.target.checked ? this.Property.SelectedValue : this.Property.UnSelectedValue;
+        this.setState({ Value: v })
+    }
+
+    GetSelectText(value) {
+        const { SelectedValue, SelectedText, UnSelectedText } = this.Property;
+        return Common.IsEquals(SelectedValue, value, true) ? SelectedText : UnSelectedText;
     }
 
     render() {
-        if (!this.state.IsVisible) return null;
-        
         const { Property } = this.props
+        const { IsVisible } = this.state;
 
-        let checked = Common.IsNullOrEmpty(this.state.Value) ? false : this.state.Value.toString().toLowerCase() === "true" || parseInt(this.state.Value, 10) === 1;
+        const style = Property.Style = {};
+        if (IsVisible === false) style.display = "none";
 
-        if (this.state.IsReadOnly) {
-            return <Checkbox checked={checked}>{Property.Text}</Checkbox>
+        const value = Common.IsNullOrEmpty(this.state.Value) ? undefined : this.state.Value.toString()
+        const checked = Common.IsEquals(value, Property.SelectedValue);
+
+        if (this.state.IsReadonly) {
+            const text = this.GetSelectText(value);
+
+            return <InputItem editable={!this.state.IsReadonly}
+                type="text"
+                style={style}
+                value={text}>{Property.Label}</InputItem>
         }
-        else {
-            return <Checkbox checked={checked} disabled={this.state.Disabled}
-                onChange={this.CheckBoxChange.bind(this)}>{Property.Text}</Checkbox>
+
+        if (Property.IsAgree) {
+            return <AgreeItem checked={checked} style={style} className={Property.ClassName} onChange={this.OnChange.bind(this)}>{Property.Label}</AgreeItem>
         }
+
+        return (
+            <CheckboxItem checked={checked} style={style} className={Property.ClassName} onChange={this.OnChange.bind(this)}>{Property.Label}</CheckboxItem>
+        )
     }
 }

@@ -11,6 +11,47 @@ export default class DatePicker2 extends BaseIndex {
         super(props)
 
         this.Name = "DatePicker2";
+
+        if (this.Property.ControlType === "RangePicker") {
+            this.Property.SetValueByData = this.SetValueByData.bind(this);
+            this.Property.GetValueToData = this.GetValueToData.bind(this);
+        }
+    }
+
+    SetValueByData(data) {
+        const { StartDateName, EndDateName } = this.Property;
+        this.setState({ Value: [data[StartDateName], data[EndDateName]] });
+    }
+
+    GetValueToData(data) {
+        const { StartDateName, EndDateName, IsNullable, NullTipMessage, Label } = this.Property;
+
+        const { Value, Disabled } = this.state;
+
+        if (Disabled) {
+            data[StartDateName] = null;
+            data[EndDateName] = null;
+            return;
+        }
+
+        let startDate = null, endDate = null;
+        if (Value && Value.length === 2) {
+            startDate = Value[0];
+            endDate = Value[1];
+        }
+
+        if (IsNullable === false && (Common.IsNullOrEmpty(startDate) || Common.IsNullOrEmpty(endDate))) {
+            this.Property.TipMessage = NullTipMessage || "请选择" + Label + "！";
+            return false;
+        }
+
+        if (startDate > endDate) {
+            this.Property.TipMessage = "开始日期不能大于结束日期!"
+            return false;
+        }
+
+        data[StartDateName] = Value[0];
+        data[EndDateName] = Value[1];
     }
 
     ValueChange(value) {
@@ -52,10 +93,12 @@ export default class DatePicker2 extends BaseIndex {
 
         let value = Common.IsNullOrEmpty(this.state.Value) ? "" : this.state.Value
 
-        if (this.state.IsReadonly) {
-            if (!Property.IsShowTime && !Common.IsNullOrEmpty(value)) value = value.substr(0, 10);
+        if (this.state.IsReadOnly) {
+            if (!Property.IsShowTime && !Common.IsNullOrEmpty(value) && typeof value === "string") value = value.substr(0, 10);
 
-            return <Input readOnly={this.state.IsReadonly}
+            if (Common.IsArray(value)) value = value.join(" - ");
+
+            return <Input readOnly={this.state.IsReadOnly}
                 type="text"
                 style={{ width: width }}
                 value={value} />
@@ -66,7 +109,7 @@ export default class DatePicker2 extends BaseIndex {
         if (Property.ControlType === "RangePicker") {
             return (<RangePicker style={{ width: width }}
                 onChange={this.OnChange.bind(this)}
-                readOnly={this.state.IsReadonly}
+                readOnly={this.state.IsReadOnly}
                 disabled={this.state.Disabled}
                 showTime={Property.IsShowTime}
                 defaultValue={this.GetDefaultValue()}

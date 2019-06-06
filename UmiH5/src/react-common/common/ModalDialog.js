@@ -1,31 +1,27 @@
 import React, { Component } from "react"
-import { Modal, Button } from "antd"
+import { Modal } from "antd-mobile"
 
 export default class ModalDialog extends Component {
     constructor(props) {
         super(props)
 
-        this.state = { Visible: props.Property.Visible }
-        this.OkProperty = {};
-
-        this.Init();
+        this.state = { Visible: props.Property.Visible };
+        props.Property.SetVisible = (v) => this.setState({ Visible: v });
+        props.Property.SetLoading = this.SetLoading.bind(this);
+        props.Property.IsDialog = true;
     }
 
-    Init() {
-        this.props.Property.SetVisible = (v) => this.setState({ Visible: v });
+    Ok() {
+        if (this.Loading) return;
+        if (this.props.Property.OnOk) this.props.Property.OnOk(this.props.Property);
+        else this.Cancel();
     }
 
-    Ok(e) {
-        if (this.OkProperty.SetDisabled === undefined) {
-            this.OkProperty.Element = e.target;
-            this.OkProperty.SetDisabled = (disabled) => { this.OkProperty.Element.disabled = disabled }
-        }
-
-        if (this.props.Property.OnOk) this.props.Property.OnOk(e, this.OkProperty);
+    SetLoading(loading) {
+        this.Loading = loading;
     }
 
     Cancel() {
-        if (this.OkProperty && this.OkProperty.SetDisabled) this.OkProperty.SetDisabled(false);
         this.setState({ Visible: false });
         if (this.props.Property.OnCancel) this.props.Property.OnCancel();
     }
@@ -33,40 +29,27 @@ export default class ModalDialog extends Component {
     render() {
         if (!this.props.Property) return null;
 
-        const { IsOk, Title, Width, OkText, BodyStyle } = this.props.Property;
-        
-        if (IsOk === false) {
-            return (
-                <Modal title={Title} visible={this.state.Visible} bodyStyle={BodyStyle}
-                    width={Width} onCancel={this.Cancel.bind(this)}
-                    footer={this.RenderLookFooter()}>
-                    {this.RenderComponent()}
-                </Modal>
-            )
-        }
-        else {
-            return (
-                <Modal title={Title} visible={this.state.Visible} bodyStyle={BodyStyle}
-                    okText={OkText || "确定"} cancelText="取消" width={Width}
-                    onOk={this.Ok.bind(this)} onCancel={this.Cancel.bind(this)} >
-                    {this.RenderComponent()}
-                </Modal>
-            )
-        }
-    }
+        const { Title, GetComponent, Component, Style, MaskClosable, ClassName } = this.props.Property;
 
-    RenderComponent() {
-        const { Component, Style } = this.props.Property;
+        const maskClosable = MaskClosable === undefined ? false : MaskClosable;
 
-        if (Style) return <div style={Style}>{Component}</div>
-        else return Component;
-    }
-
-    RenderLookFooter() {
         return (
-            <div>
-                <Button onClick={this.Cancel.bind(this)}>取消</Button>
-            </div>
+            <Modal title={Title} visible={this.state.Visible} className={ClassName}
+                transparent={true} style={Style}
+                maskClosable={maskClosable}
+                onClose={this.Cancel.bind(this)}
+                footer={this.RenderFooter()} >
+                {Component || GetComponent()}
+            </Modal>
         )
+
+    }
+
+    RenderFooter() {
+        const { OkText } = this.props.Property;
+
+        const okText = OkText ? OkText : "确定"
+
+        return [{ text: '取消', onPress: this.Cancel.bind(this) }, { text: okText, onPress: this.Ok.bind(this) }];
     }
 }

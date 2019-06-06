@@ -44,7 +44,7 @@ export default class DataGridView extends BaseIndex {
         //设置提示信息
         let msg = ""
         if (data.IsSuccess === false) msg = data.Message;
-        else if (action.IsSearch) msg = "符合当前查询条件的结果总计3条！";
+        else if (action.IsSearch) msg = `符合当前查询条件的结果总计${data.PageRecord}条！`;
 
         if (msg) AlertMessage.SetValue(msg);
 
@@ -72,7 +72,7 @@ export default class DataGridView extends BaseIndex {
     SelectRowToPage(props, action) {
         if (!action.Parameters) this.SelectRowToPageAction(props, action);
 
-        const { DataGridView, AlertMessage } = action.Parameters;
+        const { DataGridView, AlertMessage, SetPageUrl } = action.Parameters;
         const { EventActions } = props;
 
         const selectDataList = DataGridView.GetSelectDataList();
@@ -81,7 +81,13 @@ export default class DataGridView extends BaseIndex {
             return;
         }
 
-        const url = Common.ReplaceDataContent(selectDataList[0], action.PageUrl);
+        const data = selectDataList[0];
+        let url = ""
+        if (SetPageUrl) {
+            url = SetPageUrl({ data, props, action });
+            if (url === false) return false;
+        }
+        else url = Common.ReplaceDataContent(data, action.PageUrl);
         if (action.IsOpenUrl) EventActions.OpenPage(url)
         else EventActions.ToPage(url)
     }
@@ -90,7 +96,8 @@ export default class DataGridView extends BaseIndex {
         const { EventActions } = props;
         const DataGridView = EventActions.GetComponent(action.DataGridView);
         const AlertMessage = EventActions.GetControl(action.AlertMessage);
+        const SetPageUrl = EventActions.GetFunction(action.SetPageUrl);
 
-        action.Parameters = { DataGridView, AlertMessage }
+        action.Parameters = { DataGridView, AlertMessage, SetPageUrl }
     }
 }

@@ -78,7 +78,7 @@ function SetServiceHeader(data, serviceName) {
 }
 
 var _ClientConfig = {
-    AccountCenterApiService: "XXD_INTEGRATION_PLATFORM",
+    UserCenterApiService: "XXD_FRONT_END",
     ActivityCenterApiService: "XXD_ACTIVITY_H5_PAGE"
 };
 
@@ -115,7 +115,7 @@ MISMATCHED_DATA_TOKEN("200305","token 不一致（重复登录）"),
 
 function GetResponseData(d, resKey, url, data) {
     const blSuccess = d && d.IsSuccess === false ? false : true;
-    
+
     if (!blSuccess) return d;
 
     let obj = null
@@ -131,6 +131,16 @@ function GetResponseData(d, resKey, url, data) {
             obj = { IsSuccess: false, IsReLogin: true, Message: d.code + ":" + d.message, Code: d.code }
         }
         else obj = { IsSuccess: false, Message: d.code + ":" + d.message, Code: d.code }
+    }
+    else if (d && d.respCode) {
+        if (d.respCode === 0 && resKey === false) obj = d;
+        else if (d.respCode === 0) {
+            if (d && resKey && d[resKey]) obj = d[resKey];
+            else if (d && resKey && d.data && d.data[resKey]) obj = d.data[resKey];
+            else if (d.data) obj = d.data;
+            else obj = d;
+        }
+        else obj = { IsSuccess: false, Message: d.respCode + ":" + d.respMsg, Code: d.respCode }
     }
     else if (resKey) {
         if (d && d[resKey]) obj = d[resKey];

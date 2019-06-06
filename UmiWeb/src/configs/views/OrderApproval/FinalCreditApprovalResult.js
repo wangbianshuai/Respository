@@ -1,9 +1,16 @@
+import ApprovalOpinion from "../../entities/ApprovalOpinion";
 import { AssignProporties, GetTextBox, GetSelect, GetButton } from "../../pages/Common";
 
-export default {
-    Name: "FinalCreditApprovalResult",
-    Type: "View",
-    Properties: AssignProporties({}, [GetInfoView(), GetRightButtonView()])
+var DataActionTypes = {}
+
+export default (actionTypes) => {
+    DataActionTypes = actionTypes;
+
+    return {
+        Name: "FinalCreditApprovalResult",
+        Type: "View",
+        Properties: AssignProporties({}, [GetInfoView(), GetRightButtonView()])
+    }
 }
 
 function GetInfoView() {
@@ -14,13 +21,17 @@ function GetInfoView() {
         LabelAlign: "left",
         Title: "终审授信结论",
         Style: { marginTop: 8 },
+        Entity: ApprovalOpinion,
+        EventActionName: "GetApprovalOpinion",
+        GetEntityDataActionType: DataActionTypes.GetApprovalOpinion,
+        SaveEntityDataActionType: DataActionTypes.SaveApprovalOpinion,
         Properties: AssignProporties({}, GetProperties())
     }
 }
 
 function GetRightButtonView() {
     return {
-        Name: "RightButtonView",
+        Name: "ApprovalLeftRightButtonView",
         Type: "View",
         ClassName: "DivRightButton",
         IsDiv: true,
@@ -36,9 +47,9 @@ function GetRightButtonProperties() {
 function GetProperties() {
     return [
         GetSpanText("Contact1Info", "授信信息", "SpanTitle", 1, 1),
-        GetTextBox3("kinsfolkContactRelation", "批复借款金额", 2, 1, "decimal", "请输入批复借款金额", 20, false, "元"),
+        GetTextBox3("kinsfolkContactRelation", "批复借款金额", 2, 1, "float", "请输入批复借款金额", 20, false, "元"),
         GetEditSelect("mortgage", "批复借款期限", GetApproveLoanPeriodDataSource(), 2, 2, false, "请选择批复借款期限"),
-        GetTextBox3("kinsfolkContactRelation", "批复借款年化利率", 2, 3, "decimal", "请输入批复借款年化利率", 6, false, "元"),
+        GetTextBox3("kinsfolkContactRelation", "批复借款年化利率", 2, 3, "float", "请输入批复借款年化利率", 6, false, "元"),
         GetSpanText("Contact2Info", "还款方式", "SpanTitle", 3, 1),
         GetEditSelect("mortgage", "还款方式", GetBackMethodDataSource(), 4, 1, false, "请选择还款方式"),
         GetTextBox2("BorrowerUser", "分期方式", 4, 2, "", "请输入分期方式", false),

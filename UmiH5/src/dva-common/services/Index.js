@@ -21,10 +21,10 @@ export default class Index {
 
                 //IsToken:请求必须有Token，HasToken:请求有Token才加上。
                 let headers = {};
-                if (s.IsToken && !payload.Token) return Promise.resolve(undefined);
+                if (s.IsToken && !payload.Token) return Promise.resolve({ IsSuccess: false, Message: "未登录，请先登录或注册" });
                 if ((s.IsToken || s.HasToken) && payload.Token) headers = { token: payload.Token };
 
-                if (payload.UserAgent) { headers = headers || {}; headers["User-Agent"] = payload.UserAgent; }
+                if (s.ClientId) headers.clientId = s.ClientId;
 
                 let callback = null;
                 if (payload.Callback) callback = payload.Callback;
@@ -38,6 +38,7 @@ export default class Index {
                 if (s.Method === "GET") return Request.Get(url, s.DataKey, serviceName, headers, callback);
                 else if (s.Method === "PUT") return Request.Put(url, data, s.DataKey, serviceName, headers, callback);
                 else if (s.IsFormData) return Request.PostFormData(url, data.FormData, s.DataKey, serviceName, headers, callback);
+                else if (s.IsUrlFormData) return Request.PostUrlFormData(url, data.FormData, s.DataKey, serviceName, headers);
                 else return Request.Post(url, data, s.DataKey, serviceName, headers, callback);
             }
             catch (error) {

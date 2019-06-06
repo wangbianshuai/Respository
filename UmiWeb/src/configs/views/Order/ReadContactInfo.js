@@ -1,38 +1,47 @@
-import Order from "../../entities/Order";
+import ContactInfo from "../../entities/ContactInfo";
 
 import { AssignProporties, GetTextBox, GetButton } from "../../pages/Common";
 
-export default {
-    Name: "ContactInfo",
-    Type: "View",
-    Properties: AssignProporties({}, [GetInfoView(), GetRightButtonView()])
+var DataActionTypes = {}
+
+export default (actionTypes) => {
+    DataActionTypes = actionTypes;
+
+    return {
+        Name: "ContactInfo",
+        Type: "View",
+        Properties: AssignProporties({}, [GetInfoView(), GetRightButtonView()])
+    }
 }
 
 function GetInfoView() {
     return {
         Name: "ContactInfo2",
         Type: "RowsColsView",
-        Entity: Order,
+        Entity: ContactInfo,
         IsForm: true,
         LabelAlign: "left",
         Title: "联系人信息",
         Style: { marginTop: 8 },
-        Properties: AssignProporties(Order, GetProperties())
+        PropertyName: "ContactInfo",
+        DefaultEditData: { ViewName: "ContactInfo" },
+        SaveEntityDataActionType: DataActionTypes.SaveApprovalOrderDetail,
+        Properties: AssignProporties(ContactInfo, GetProperties())
     }
 }
 
 function GetRightButtonView() {
     return {
-        Name: "RightButtonView",
+        Name: "ContactInfoButtonView",
         Type: "View",
         ClassName: "DivRightButton",
         IsDiv: true,
-        Properties: AssignProporties(Order, GetRightButtonProperties())
+        Properties: AssignProporties({}, GetRightButtonProperties())
     }
 }
 
 function GetRightButtonProperties() {
-    return [{ ...GetButton("SaveContactInfo", "保存", "primary"), EventActionName: "SaveContactInfo", Style: { marginRight: 36, width: 84 } }]
+    return [{ ...GetButton("SaveContactInfo", "保存", "primary"), EventActionName: "SaveContactInfoEntityData", Style: { marginRight: 36, width: 84 } }]
 }
 
 function GetProperties() {
@@ -53,7 +62,7 @@ function GetProperties() {
         GetReadOnlyTextBox("companyContactRelation", "关系", 8, 3),
         GetReadOnlyTextBox("companyContactAddr", "现居住地址", 9, 1),
         { Name: "WhiteSpace1", Type: "WhiteSpace", ClassName: "WhiteSpace1", Style: { marginBottom: 20 }, X: 10, Y: 1, ColSpan: 24 },
-        GetTextArea("BorrowerAmount", "备注", 11, 1, "请输入备注")
+        GetTextArea("ApprovalRemark", "备注", 11, 1, "请输入备注")
     ]
 }
 
@@ -63,16 +72,20 @@ function GetSpanText(name, text, className, x, y) {
 
 function GetTextArea(Name, Label, X, Y, PlaceHolder) {
     return {
-        ...GetTextBox(Name, Label, "TextArea", X, Y),
+        ...GetTextBox(Name, Label, "TextArea", X, Y, PlaceHolder),
         IsFormItem: true,
         IsNullable: true,
+        IsColon: false,
         IsAddOptional: true,
+        IsEdit: true,
+        ReadRightName: "ContactInfoButtonView",
         ColSpan: 24,
         Rows: 4,
-        LabelCol: 2,
-        WrapperCol: 22,
-        PlaceHolder,
+        LabelCol: 10,
+        WrapperCol: 23,
         Style: {
+            display: "flex",
+            flexDirection: "column",
             marginBottom: 10
         }
     }
@@ -84,10 +97,9 @@ function GetReadOnlyTextBox(Name, Label, X, Y, addonAfter) {
         IsColon: false,
         IsFormItem: true, ColSpan: 8,
         LabelCol: 10,
-        WrapperCol: 20,
+        WrapperCol: 21,
         IsReadOnly: true,
         AddonAfter: addonAfter,
-        Value: "测试数据1" + Label,
         Style: {
             display: "flex",
             flexDirection: "column",

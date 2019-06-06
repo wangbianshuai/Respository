@@ -11,6 +11,7 @@ const DataActionTypes = {
 
 export default {
     Name: "ProductRateEdit",
+    Type: "View",
     GetEntityData: DataActionTypes.GetEntityData,
     EventActions: GetEventActions(),
     Properties: AssignProporties({}, [GeEditView()])
@@ -71,6 +72,8 @@ function GetButtonView() {
         IsDiv: true,
         IsFormItem: true,
         ColSpan: 24,
+        X: 6,
+        Y: 1,
         Properties: AssignProporties({}, GetButtonProperties())
     }
 }

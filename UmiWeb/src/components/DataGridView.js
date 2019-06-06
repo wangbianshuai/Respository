@@ -23,8 +23,11 @@ class DataGridView extends BaseIndex {
         this.Property.ActionTypes = this.ActionTypes;
         this.EventActions.Components.push(this.Property);
 
+        const { PrimaryKey, PropertyPrimaryKey } = this.Property.Entity;
+        this.PrimaryKey = PropertyPrimaryKey || PrimaryKey;
+
         this.DataList = []
-        this.InitPageInfo = { PageSize: this.Property.PageSize, PageIndex: 1, PageCount: 0, PageRecord: 0 };
+        this.InitPageInfo = { PageSize: this.Property.PageSize || 10, PageIndex: 1, PageCount: 0, PageRecord: 0 };
         this.PageInfo = this.InitPageInfo;
 
         this.Property.SetDataLoading = (isLoading) => this.setState({ IsDataLoading: isLoading });
@@ -68,6 +71,18 @@ class DataGridView extends BaseIndex {
                 return text;
             };
         }
+        else if (p.IsOpenPage && p.Render === undefined) {
+            p.Render = (text, record, index) => {
+                if (p.IsRender && !p.IsRender(text, record, index)) return this.EmptyRender();
+                if (!Common.IsNullOrEmpty(text)) {
+                    let url = p.PageUrl;
+                    url = Common.ReplaceDataContent(record, url)
+                    if (Common.IsNullOrEmpty(url)) return text;
+                    else return <a href={url} target="_blank" rel="noopener noreferrer">{text}</a>
+                }
+                return text;
+            };
+        }
         return p;
     }
 
@@ -83,31 +98,38 @@ class DataGridView extends BaseIndex {
 
     SetDataList() {
         const { SearchQuery } = this.ActionTypes;
-        let dataList = this.props[SearchQuery];
+        let data = this.props[SearchQuery];
 
-        if (dataList === undefined) return;
+        if (data === undefined) return;
 
-        if (Common.IsArray(dataList)) this.DataList = dataList;
-        else if (Common.IsArray(dataList.DataList)) {
-            this.DataList = dataList.DataList;
-            this.GroupByInfo = dataList.GroupByInfo;
+        if (Common.IsArray(data.DataList)) {
+            this.DataList = data.DataList;
+            this.GroupByInfo = data.GroupByInfo;
+            this.PageInfo = this.GetPageInfo(data.PageRecord);
         }
-        else this.GroupByInfo = null;
 
-        this.DataList.forEach((d, i) => d.key = d[this.Property.Entity.PrimaryKey]);
+        this.DataList.forEach((d, i) => d.key = d[this.PrimaryKey]);
     }
 
-    SetPageInfo() {
-        let pageInfo = this.props.PageInfo
+    GetPageInfo(PageRecord) {
+        let PageIndex = this.PageInfo.PageIndex;
+        let PageSize = this.PageInfo.PageSize;
+        let PageCount = 0;
+        if (PageRecord === 0) { PageIndex = 1; PageCount = 0; }
+        else if (PageRecord <= PageSize) { PageCount = 1; PageIndex = 1; }
+        else {
+            if (PageRecord % PageSize === 0) PageCount = PageRecord / PageSize;
+            else PageCount = PageRecord / PageSize + 1;
+        }
 
-        if (pageInfo === undefined) return;
+        if (PageIndex > PageCount) PageIndex = PageCount;
 
-        if (pageInfo.PageRecord === undefined) pageInfo = this.InitPageInfo;
-
-        this.PageInfo = pageInfo;
+        return { PageIndex, PageSize, PageCount, PageRecord };
     }
 
     PageIndexChange(pageIndex, pageSize) {
+        this.PageInfo.PageIndex = pageIndex;
+        this.PageInfo.PageSize = pageSize;
         this.EventActions.InvokeAction(this.Property.EventActionName, { ...this.props, PageIndex: pageIndex, PageSize: pageSize });
     }
 
@@ -117,13 +139,12 @@ class DataGridView extends BaseIndex {
 
     RenderDataView() {
         this.SetDataList();
-        this.SetPageInfo();
 
         let dataList = this.DataList;
 
         const isPartPaging = !!this.Property.IsPartPaging
 
-        return (<DataGrid EventActions={this.EventActions} PrimaryKey={this.Property.Entity.PrimaryKey} DataList={dataList} IsPartPaging={isPartPaging} PageInfo={this.PageInfo} IsPaging={this.Property.IsPaging}
+        return (<DataGrid EventActions={this.EventActions} PrimaryKey={this.PrimaryKey} DataList={dataList} IsPartPaging={isPartPaging} PageInfo={this.PageInfo} IsPaging={this.Property.IsPaging}
             IsRowSelection={this.Property.IsRowSelection} IsSingleSelection={this.Property.IsSingleSelection} Property={this.Property}
             PageIndexChange={this.PageIndexChange.bind(this)} GroupByInfo={this.GroupByInfo} GroupByInfoHtml={this.Property.GroupByInfoHtml}
             IsLoading={this.state.IsDataLoading} DataProperties={this.DataProperties2} />)

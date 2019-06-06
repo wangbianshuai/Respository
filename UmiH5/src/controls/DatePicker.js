@@ -1,65 +1,33 @@
-import React from "react"
+import React from "react";
 import { Common } from "UtilsCommon";
-import BaseIndex from "./BaseIndex"
-import { DatePicker, Input } from "antd"
-import moment from "moment";
+import Index from "./BaseIndex";
+import { DatePicker, InputItem, List } from "antd-mobile"
 
-const { RangePicker } = DatePicker;
-
-export default class DatePicker2 extends BaseIndex {
+export default class DatePicker2 extends Index {
     constructor(props) {
         super(props)
 
         this.Name = "DatePicker2";
 
-        if (this.Property.ControlType === "RangePicker") {
-            this.Property.SetValueByData = this.SetValueByData.bind(this);
-            this.Property.GetValueToData = this.GetValueToData.bind(this);
-        }
+        this.Property.GetValue = this.GetValue.bind(this);
     }
 
-    SetValueByData(data) {
-        const { StartDateName, EndDateName } = this.Property;
-        this.setState({ Value: [data[StartDateName], data[EndDateName]] });
-    }
+    GetValue() {
+        let date = this.state.Value;
+        if (typeof (date) === "string" || !date) return date;
 
-    GetValueToData(data) {
-        const { StartDateName, EndDateName, IsNullable, NullTipMessage, Label } = this.Property;
+        if (typeof (date) === "number") date = new Date(date)
 
-        const { Value, Disabled } = this.state;
-
-        if (Disabled) {
-            data[StartDateName] = null;
-            data[EndDateName] = null;
-            return;
-        }
-
-        let startDate = null, endDate = null;
-        if (Value && Value.length === 2) {
-            startDate = Value[0];
-            endDate = Value[1];
-        }
-
-        if (IsNullable === false && (Common.IsNullOrEmpty(startDate) || Common.IsNullOrEmpty(endDate))) {
-            this.Property.TipMessage = NullTipMessage || "请选择" + Label + "！";
-            return false;
-        }
-
-        if (startDate > endDate) {
-            this.Property.TipMessage = "开始日期不能大于结束日期!"
-            return false;
-        }
-
-        data[StartDateName] = Value[0];
-        data[EndDateName] = Value[1];
+        return Common.GetDateString(date, !this.Property.IsShowTime)
     }
 
     ValueChange(value) {
         if (this.Property.ValueChange) this.Property.ValueChange(value);
     }
 
-    OnChange(value, valueString) {
-        this.setState({ Value: valueString }, () => this.BindDataValue())
+    OnChange(value) {
+        const { Property } = this.props
+        this.setState({ Value: Common.GetDateString(value, !Property.IsShowTime) })
     }
 
     GetDefaultValue() {
@@ -71,61 +39,54 @@ export default class DatePicker2 extends BaseIndex {
 
     GetMomentValue(value) {
         if (!Common.IsNullOrEmpty(value)) {
-            if (Common.IsArray(value)) value = value.map(m => this.GetDataTime(m))
-            else value = this.GetDataTime(value)
+            if (this.Property.IsShowTime) value = Common.ConvertToDate(value, "yyyy-MM-dd HH:mm:ss")
+            else value = Common.ConvertToDate(value, "yyyy-MM-dd")
         }
 
         return Common.IsNullOrEmpty(value) ? null : value;
     }
 
-    GetDataTime(value) {
-        if (Common.IsNullOrEmpty(value)) return value;
-        if (this.Property.IsShowTime) value = moment(value, "YYYY-MM-DD HH:mm:ss")
-        else value = moment(value, "YYYY-MM-DD")
-
-        return value;
-    }
-
     render() {
         const { Property } = this.props
+        const { IsVisible } = this.state;
+
+        const style = Property.Style = {};
+        if (IsVisible === false) style.display = "none";
 
         const width = Property.Width || "100%"
 
         let value = Common.IsNullOrEmpty(this.state.Value) ? "" : this.state.Value
 
-        if (this.state.IsReadOnly) {
-            if (!Property.IsShowTime && !Common.IsNullOrEmpty(value) && typeof value === "string") value = value.substr(0, 10);
+        if (this.state.IsReadonly) {
+            if (!Property.IsShowTime && !Common.IsNullOrEmpty(value)) value = value.substr(0, 10);
 
-            if (Common.IsArray(value)) value = value.join(" - ");
-
-            return <Input readOnly={this.state.IsReadOnly}
+            return <InputItem editable={!this.state.IsReadonly}
                 type="text"
-                style={{ width: width }}
-                value={value} />
+                style={style}
+                value={value}>{Property.Label}</InputItem>
         }
 
         const mv = this.GetMomentValue(value);
 
-        if (Property.ControlType === "RangePicker") {
-            return (<RangePicker style={{ width: width }}
-                onChange={this.OnChange.bind(this)}
-                readOnly={this.state.IsReadOnly}
-                disabled={this.state.Disabled}
-                showTime={Property.IsShowTime}
-                defaultValue={this.GetDefaultValue()}
-                format={Property.IsShowTime ? "YYYY-MM-DD HH:mm:ss" : "YYYY-MM-DD"}
-                value={mv} />)
-        }
-
-        return (<DatePicker placeholder={Property.PlaceHolder}
-            style={{ width: width }}
-            onChange={this.OnChange.bind(this)}
-            maxLength={Property.MaxLength}
-            readOnly={this.state.IsReadonly}
-            disabled={this.state.Disabled}
-            showTime={Property.IsShowTime}
-            defaultValue={this.GetDefaultValue()}
-            format={Property.IsShowTime ? "YYYY-MM-DD HH:mm:ss" : "YYYY-MM-DD"}
-            value={mv} />)
+        const extra = "请选择" + (Property.IsNullable === false ? "" : "(可选)");
+        
+        return (
+            <div className={Property.ClassName} style={style}>
+                <DatePicker placeholder={Property.PlaceHolder}
+                    style={{ width: width }}
+                    onChange={this.OnChange.bind(this)}
+                    onOk={this.OnChange.bind(this)}
+                    maxLength={Property.MaxLength}
+                    disabled={this.state.Disabled}
+                    mode={Property.IsShowTime ? "datetime" : "date"}
+                    defaultValue={this.GetDefaultValue()}
+                    format={Property.IsShowTime ? "YYYY-MM-DD HH:mm:ss" : "YYYY-MM-DD"}
+                    title={Property.Label}
+                    extra={extra}
+                    value={mv}>
+                    <List.Item arrow="horizontal">{Property.Label}</List.Item>
+                </DatePicker>
+            </div>
+        )
     }
 }

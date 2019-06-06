@@ -1,38 +1,47 @@
-import Order from "../../entities/Order";
+import PersonCardInfo from "../../entities/PersonCardInfo";
 
 import { AssignProporties, GetTextBox, GetButton } from "../../pages/Common";
 
-export default {
-    Name: "PersonCardInfo",
-    Type: "View",
-    Properties: AssignProporties({}, [GetInfoView(), GetRightButtonView()])
+var DataActionTypes = {}
+
+export default (actionTypes) => {
+    DataActionTypes = actionTypes;
+
+    return {
+        Name: "PersonCardInfo",
+        Type: "View",
+        Properties: AssignProporties({}, [GetInfoView(), GetRightButtonView()])
+    }
 }
 
 function GetInfoView() {
     return {
         Name: "PersonCardInfo2",
         Type: "RowsColsView",
-        Entity: Order,
+        Entity: PersonCardInfo,
         IsForm: true,
         LabelAlign: "left",
         Title: "个人证件信息",
         Style: { marginTop: 8 },
-        Properties: AssignProporties(Order, GetProperties())
+        PropertyName: "PersonCardInfo",
+        DefaultEditData: { ViewName: "PersonCardInfo" },
+        SaveEntityDataActionType: DataActionTypes.SaveApprovalOrderDetail,
+        Properties: AssignProporties(PersonCardInfo, GetProperties())
     }
 }
 
 function GetRightButtonView() {
     return {
-        Name: "RightButtonView",
+        Name: "PersonCardInfoButtonView",
         Type: "View",
         ClassName: "DivRightButton",
         IsDiv: true,
-        Properties: AssignProporties(Order, GetRightButtonProperties())
+        Properties: AssignProporties({}, GetRightButtonProperties())
     }
 }
 
 function GetRightButtonProperties() {
-    return [{ ...GetButton("SavePersonCardInfo", "保存", "primary"), EventActionName: "SavePersonCardInfo", Style: { marginRight: 36, width: 84 } }]
+    return [{ ...GetButton("SavePersonCardInfo", "保存", "primary"), EventActionName: "SavePersonCardInfoEntityData", Style: { marginRight: 36, width: 84 } }]
 }
 
 function GetProperties() {
@@ -46,22 +55,26 @@ function GetProperties() {
         GetReadOnlyTextBox("SignUnit", "签发机关", 3, 1),
         GetReadOnlyTextBox("Period", "证件有效期", 3, 2),
         { Name: "WhiteSpace1", Type: "WhiteSpace", ClassName: "WhiteSpace1", Style: { marginBottom: 20 }, X: 4, Y: 1, ColSpan: 24 },
-        GetTextArea("BorrowerAmount", "备注", 5, 1, "请输入备注")
+        GetTextArea("ApprovalRemark", "备注", 5, 1, "请输入备注")
     ]
 }
 
 function GetTextArea(Name, Label, X, Y, PlaceHolder) {
     return {
-        ...GetTextBox(Name, Label, "TextArea", X, Y),
+        ...GetTextBox(Name, Label, "TextArea", X, Y, PlaceHolder),
         IsFormItem: true,
         IsNullable: true,
+        IsColon: false,
         IsAddOptional: true,
+        IsEdit: true,
+        ReadRightName: "PersonCardInfoButtonView",
         ColSpan: 24,
         Rows: 4,
-        LabelCol: 2,
-        WrapperCol: 22,
-        PlaceHolder,
+        LabelCol: 10,
+        WrapperCol: 23,
         Style: {
+            display: "flex",
+            flexDirection: "column",
             marginBottom: 10
         }
     }
@@ -73,10 +86,9 @@ function GetReadOnlyTextBox(Name, Label, X, Y, addonAfter) {
         IsColon: false,
         IsFormItem: true, ColSpan: 8,
         LabelCol: 10,
-        WrapperCol: 20,
+        WrapperCol: 21,
         IsReadOnly: true,
         AddonAfter: addonAfter,
-        Value: "测试数据1" + Label,
         Style: {
             display: "flex",
             flexDirection: "column",

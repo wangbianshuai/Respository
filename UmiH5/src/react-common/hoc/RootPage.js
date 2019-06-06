@@ -2,9 +2,10 @@ import React from "react";
 import { Common, Page } from "UtilsCommon";
 import { BaseIndex } from "ReactCommon";
 import Actions from "Actions";
+import { Toast } from "antd-mobile";
 import ModalDialog from "../common/ModalDialog";
+import JsBridge from "JsBridge";
 import ComponentList from "../ComponentList";
-import { message } from "antd"
 
 export default (WrapComponent) => class RootPage extends BaseIndex {
     constructor(props) {
@@ -44,11 +45,14 @@ export default (WrapComponent) => class RootPage extends BaseIndex {
 
     componentDidMount() {
         this.InitProps();
+
+        this.Bridge = JsBridge();
     }
 
+
     SetLoading(nextProps) {
-        if (nextProps.Loading) message.loading("加载中……", 0)
-        else if (nextProps.Loading === false) message.destroy()
+        if (nextProps.Loading) Toast.loading("加载中……", 0)
+        else if (nextProps.Loading === false) Toast.hide()
     }
 
     shouldComponentUpdate(nextProps, nextState) {
@@ -74,7 +78,7 @@ export default (WrapComponent) => class RootPage extends BaseIndex {
 
     SetResponseMessage(d, stateName) {
         if (d && d.IsReLogin && d.IsSuccess === false) {
-            this.ToLogin(true);
+            this.ToastFail("登录信息失效，请重新登录！", 2, () => this.ReLogin());
             return true;
         }
 
@@ -84,6 +88,10 @@ export default (WrapComponent) => class RootPage extends BaseIndex {
         }
 
         return false
+    }
+
+    ReLogin() {
+        this.Bridge.Js2Native.LoanReLogin();
     }
 
     componentWillReceiveProps2(nextProps) {
@@ -116,7 +124,7 @@ export default (WrapComponent) => class RootPage extends BaseIndex {
     render() {
         return (
             <React.Fragment>
-                <WrapComponent Dispatch={this.props.Dispatch} PageData={this.props.location.PageData} />
+                <WrapComponent Dispatch={this.props.Dispatch} Bridge={this.Bridge} />
                 <ComponentList Page={this.Page} Name="Dialogs" />
             </React.Fragment>
         )

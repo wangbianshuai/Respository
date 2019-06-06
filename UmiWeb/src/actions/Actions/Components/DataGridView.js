@@ -11,20 +11,10 @@ export default class DataGridView extends BaseIndex {
         this.Init();
     }
 
-    Invoke(id, actionType, data) {
-        const { SearchQuery } = this.ActionTypes
-
-        switch (actionType) {
-            case SearchQuery: this.SearchQuery(id, actionType, data); break;
-            default: this.Dispatch(id, actionType, data); break;
-        }
-    }
-
     SearchQuery(id, actionType, data) {
         if (data.EntitySearchQuery) {
             data.DataGridViewSearchQuery = actionType;
             this.InvokeAction(id, data.EntitySearchQuery, data);
         }
     }
-
 }

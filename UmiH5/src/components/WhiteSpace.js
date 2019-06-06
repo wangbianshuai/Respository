@@ -1,5 +1,5 @@
 import React, { Component } from "react"
-import styles from "../styles/View.css";
+import styles from "../styles/View.scss";
 
 export default class WhiteSpace extends Component {
     constructor(props) {
@@ -21,6 +21,8 @@ export default class WhiteSpace extends Component {
 
         let className = Property.ClassName;
         if (className && styles[className]) className = styles[className];
+
+        if (typeof className === "string") className = this.EventActions.GetClassName(className);
 
         return (
             <div className={className} style={Property.Style}></div>

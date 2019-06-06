@@ -2,10 +2,16 @@ import Order from "../../entities/Order";
 
 import { AssignProporties, GetTextBox, GetSelect, GetButton } from "../../pages/Common";
 
-export default {
-    Name: "OrderBaseInfo",
-    Type: "View",
-    Properties: AssignProporties({}, [GetInfoView(), GetRightButtonView()])
+var DataActionTypes = {}
+
+export default (actionTypes) => {
+    DataActionTypes = actionTypes;
+
+    return {
+        Name: "OrderBaseInfo",
+        Type: "View",
+        Properties: AssignProporties({}, [GetInfoView(), GetRightButtonView()])
+    }
 }
 
 function GetInfoView() {
@@ -17,37 +23,61 @@ function GetInfoView() {
         LabelAlign: "left",
         Title: "工单编号-#{OrderCode}",
         Style: { marginTop: 8 },
+        PropertyName: "OrderInfo",
+        DefaultEditData: { ViewName: "OrderInfo" },
+        SaveEntityDataActionType: DataActionTypes.SaveOrderDetailEntityData,
         Properties: AssignProporties(Order, GetProperties())
     }
 }
 
 function GetRightButtonView() {
     return {
-        Name: "RightButtonView",
+        Name: "OrderInfoRightButtonView",
         Type: "View",
         ClassName: "DivRightButton",
         IsDiv: true,
-        Properties: AssignProporties(Order, GetRightButtonProperties())
+        Properties: AssignProporties({}, GetRightButtonProperties())
     }
 }
 
 function GetRightButtonProperties() {
-    return [{ ...GetButton("SaveOrderBaseInfo", "保存", "primary"), EventActionName: "SaveOrderBaseInfo", Style: { marginRight: 36, width: 84 } }]
+    return [{ ...GetButton("SaveOrderBaseInfo", "保存", "primary"), IsDisabled: true, EventActionName: "SaveOrderInfoEntityData", Style: { marginRight: 36, width: 84 } }]
 }
 
 function GetProperties() {
     return [
-        GetReadOnlyTextBox("Borrowers", "借款主体", 1, 1),
-        GetReadOnlyTextBox("BorrowerUser", "主借人", 1, 2),
-        GetReadOnlyTextBox("BorrowerDate", "借款申请时间", 1, 3),
-        GetReadOnlyTextBox("BorrowerAmount", "借款申请金额", 2, 1, "元"),
-        GetReadOnlyTextBox("BorrowerPeriod", "借款申请期限", 2, 2, "个月"),
-        GetReadOnlyTextBox("BackMethod", "还款方式", 2, 3),
-        GetTextBox2("BorrowerUse", "借款用途", 3, 1, "", "请输入借款用途", 100, false),
-        GetEditSelect("ProductType", "产品类型", GetProductTypeDataSource(), 3, 2, false, "请选择产品类型"),
+        GetReadOnlyTextBox("BorrowerUser", "借款人", 1, 1),
+        GetReadOnlyTextBox("Borrowers", "企业名称", 1, 2),
+        GetReadOnlyTextBox("UserType", "用户类型", 1, 3),
+        GetTextBox3("BorrowerAmount", "借款申请金额", 2, 1, "float", "请输入借款申请金额", 20, false, "元"),
+        GetEditSelect("BorrowerPeriod", "借款申请期限", Order.BorrowerPeriodDataSource, 2, 2, false, "请输入借款申请期限"),
+        GetEditSelect("BackMethod", "还款方式", Order.BackMethodDataSource, 2, 3, false, "请选择还款方式"),
+        GetEditSelect("BorrowerUse", "借款用途", Order.BorrowerUseDataSource, 3, 1, false, "请输入借款用途"),
+        GetReadOnlyTextBox("ProductType", "产品", 3, 2),
         GetReadOnlyTextBox("LoanUser", "信贷员", 3, 3),
-        GetReadOnlyTextBox("BorrowChannel", "借款申请渠道", 4, 1)
+        GetReadOnlyTextBox("BorrowChannel", "借款申请渠道", 4, 1),
+        GetReadOnlyTextBox("BorrowerDate", "借款申请时间", 4, 2),
+        GetCascader("OrderArea", "借款人所在地", 4, 3, false, "请选择借款人所在地", Order.OrderAreaDataSource, "0"),
     ]
+}
+
+function GetCascader(Name, Label, X, Y, IsNullable, PlaceHolder, ServiceDataSource, RootValue) {
+    return {
+        Name, Label, X, Y, IsNullable, PlaceHolder, ServiceDataSource, RootValue,
+        IsColon: false,
+        Type: "Cascader",
+        IsFormItem: true, ColSpan: 8,
+        LabelCol: 10,
+        WrapperCol: 21,
+        IsEdit: true,
+        AllowClear: true,
+        ReadRightName: "OrderInfoRightButtonView",
+        Style: {
+            display: "flex",
+            flexDirection: "column",
+            marginBottom: 10
+        }
+    }
 }
 
 function GetEditSelect(Name, Label, DataSource, X, Y, IsNullable, PlaceHolder, DefaultValue) {
@@ -56,15 +86,24 @@ function GetEditSelect(Name, Label, DataSource, X, Y, IsNullable, PlaceHolder, D
         IsColon: false,
         IsFormItem: true, ColSpan: 8,
         LabelCol: 10,
-        WrapperCol: 20,
+        WrapperCol: 21,
         IsNullable: IsNullable,
         PlaceHolder: PlaceHolder,
         IsEdit: true,
+        ReadRightName: "OrderInfoRightButtonView",
         Style: {
             display: "flex",
             flexDirection: "column",
             marginBottom: 10
         }
+    }
+}
+
+function GetTextBox3(Name, Label, X, Y, DataType, PlaceHolder, MaxLength, IsNullable, addonAfter) {
+    return {
+        ...GetTextBox2(Name, Label, X, Y, "", PlaceHolder, MaxLength, IsNullable, addonAfter),
+        DataType,
+        Scale: 2
     }
 }
 
@@ -74,10 +113,11 @@ function GetTextBox2(Name, Label, X, Y, ContorlType, PlaceHolder, MaxLength, IsN
         IsColon: false,
         IsFormItem: true, ColSpan: 8,
         LabelCol: 10,
-        WrapperCol: 20,
+        WrapperCol: 21,
         AddonAfter: addonAfter,
         IsNullable: IsNullable,
         IsEdit: true,
+        ReadRightName: "OrderInfoRightButtonView",
         Style: {
             display: "flex",
             flexDirection: "column",
@@ -92,10 +132,9 @@ function GetReadOnlyTextBox(Name, Label, X, Y, addonAfter) {
         IsColon: false,
         IsFormItem: true, ColSpan: 8,
         LabelCol: 10,
-        WrapperCol: 20,
+        WrapperCol: 21,
         IsReadOnly: true,
         AddonAfter: addonAfter,
-        Value: "测试数据1" + Label,
         Style: {
             display: "flex",
             flexDirection: "column",
@@ -104,6 +143,3 @@ function GetReadOnlyTextBox(Name, Label, X, Y, addonAfter) {
     }
 }
 
-function GetProductTypeDataSource() {
-    return [{ Value: 1, Text: "新商贷 / ME" }, { Value: 2, Text: "新商贷2 / ME2" }]
-}

@@ -10,6 +10,8 @@ import SpanText from "./SpanText";
 import DatePicker from "./DatePicker";
 import BaseIndex from "./BaseIndex";
 import Upload from "./Upload";
+import Tree from "./Tree";
+import Cascader from "./Cascader"
 
 export default {
     Button,
@@ -23,5 +25,7 @@ export default {
     SpanText,
     DatePicker,
     BaseIndex,
-    Upload
+    Upload,
+    Tree,
+    Cascader
 }

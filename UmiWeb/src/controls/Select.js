@@ -11,9 +11,11 @@ class Select2 extends BaseIndex {
 
         this.state = Object.assign({ Options: [] }, this.state)
 
-        this.Property.GetValue = () => this.GetSelectValue(true);
+        if (!this.Property.IsMultiple) {
+            this.Property.GetValue = () => this.GetSelectValue(true);
 
-        this.Property.GetText = () => this.GetSelectText();
+            this.Property.GetText = () => this.GetSelectText();
+        }
     }
 
     componentDidMount() {
@@ -55,24 +57,30 @@ class Select2 extends BaseIndex {
 
     OnChange(value) {
         this.IsLoadValue = true;
-        this.setState({ Value: value }, () => this.BindDataValue());
+        this.IsChange = true;
+        this.setState({ Value: value }, () => { this.IsChange = false; this.BindDataValue(); });
     }
 
     ValueChange(value) {
         const { Property } = this.props
         if (Property.ValueChange) Property.ValueChange(value, this.GetSelectData(value));
 
+        if (Property.ValueVisibleProperties) this.SetValueVisibleProperties(value);
+        if (Property.ValueDisabledProperties) this.SetValueDisabledProperties(value);
+
+        //值改变调用事件行为
+        if (Property.ValueChangeEventActionName) this.EventActions.InvokeAction(Property.ValueChangeEventActionName, this.props);
+
         this.ChildPropertiesChanged(value);
     }
 
     GetSelectValue(blGet) {
+        if (this.IsChange) return this.state.Value;
+
         let value = Common.IsNullOrEmpty(this.state.Value) ? undefined : this.state.Value.toString()
         if (!Common.IsNullOrEmpty(value) && Common.IsArray(this.ValueList)) value = Common.ArrayFirst(this.ValueList, (f) => Common.IsEquals(f, value, true));
         if (blGet) return value === undefined ? null : value;
         if (Common.IsNullOrEmpty(value)) {
-            if (!Common.IsNullOrEmpty(this.state.Value)) {
-                window.setTimeout(() => this.ValueChange(null), 10);
-            }
             const { EmptyOption } = this.Property;
             if (EmptyOption) return EmptyOption.Value;
             else return ""
@@ -106,6 +114,26 @@ class Select2 extends BaseIndex {
         this.setState({ Options: this.GetOptions(this.ParentValue, this.SearchValue) });
     }
 
+    RenderMultipleSelect() {
+        const { Property } = this.props
+        const width = Property.Width || "100%"
+
+        let valueList = Common.IsNullOrEmpty(this.state.Value) ? [] : this.state.Value;
+        if (!Common.IsArray(valueList)) valueList = valueList.split(",")
+
+        return (
+            <Select disabled={this.state.Disabled}
+                style={{ width: width }}
+                value={valueList}
+                onChange={this.OnChange.bind(this)}
+                allowClear={!!Property.AllowClear}
+                mode={"multiple"}
+                maxTagCount={Property.MaxTagCount}
+                placeholder={Property.PlaceHolder}
+                defaultValue={Property.DefaultValue} >{this.state.Options}</Select>
+        )
+    }
+
     render() {
         if (!this.state.IsVisible) return null;
 
@@ -123,6 +151,8 @@ class Select2 extends BaseIndex {
                 style={{ width: width }}
                 value={text} />
         }
+
+        if (Property.IsMultiple) return this.RenderMultipleSelect();
 
         const value = this.GetSelectValue()
 

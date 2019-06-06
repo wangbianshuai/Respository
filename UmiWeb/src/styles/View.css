@@ -159,3 +159,27 @@
     justify-content: flex-start;
     align-items: center;
 }
+
+.LoginHeader{
+    height: 60px;
+    text-align: center;
+    line-height: 48px;
+    font-size: 24px;
+    color:#1890ff;
+    display: block;
+    margin-bottom: 24px;
+    font-family: 'Myriad Pro', 'Helvetica Neue', Arial, Helvetica, sans-serif;
+    font-weight: 500;
+    border-bottom: 2px solid #1890ff;
+}
+
+.SpecialOrderRemark{
+    color:red;
+    font-size: 14px;
+    margin-right: 8px;
+}
+
+.DivRightButton3{
+    display: flex;
+    align-items: center;
+}

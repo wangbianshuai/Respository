@@ -1,5 +1,6 @@
 const ServiceConfig = {
-    ApiService: GetApiSericeUrl
+    ApiService: GetApiSericeUrl,
+    UserCenterApiService: GetUserCenterApiServiceUrl
 };
 
 const EnvConfig = {
@@ -31,7 +32,11 @@ function GetEnv(h) {
 }
 
 function GetApiSericeUrl() {
-    return "/api/";
+    return "/RiskControlApproval/";
+}
+
+function GetUserCenterApiServiceUrl() {
+    return "/userCenter/";
 }
 
 function GetServiceUrl(serverName) {

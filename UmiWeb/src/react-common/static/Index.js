@@ -8,9 +8,12 @@ export default class Index {
     }
 
     static MapStateToProps(state, ownProps, props) {
-        props.Loading = state.ApiService.Loading || state.BlacklistService.Loading || state.ProductService.Loading
-            || state.ProductRateService.Loading
-
+        let loading = false;
+        for (let key in state) {
+            if (state[key].Loading) { loading = true; break; }
+        }
+        props.Loading = loading
+        
         return props;
     }
 

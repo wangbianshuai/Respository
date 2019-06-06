@@ -1,19 +1,26 @@
 import { AssignProporties } from "../Common";
 import ReadBaseInfo from "../../views/Order/ReadBaseInfo";
+import DataActions from "Actions";
 
 //审核管理/反欺诈审核 1200-1299
-const DataActionTypes = {
-    //获取实体数据
-    GetEntityData: 1200
-};
+const DataActionTypes = DataActions.GetActionTypes("Auditing_AntiFraudAuditing");
 
 export default {
     Name: "AntiFraudAuditing",
-    GetEntityData: DataActionTypes.GetEntityData,
+    Type: "View",
     EventActions: GetEventActions(),
-    Properties: AssignProporties({}, [ReadBaseInfo])
+    Properties: AssignProporties({}, [ReadBaseInfo(DataActionTypes)])
 }
 
 function GetEventActions() {
-    return []
+    return [{
+        Name: "GetOrderInfoEntityData",
+        Type: "EntityEdit/GetEntityData",
+        EditView: "OrderInfo"
+    },
+    {
+        Name: "ToOrderDetail",
+        Type: "Page/ToPage",
+        PageUrl: "/CreditManage/OrderDetail?OrderCode=#{OrderCode}"
+    }]
 }

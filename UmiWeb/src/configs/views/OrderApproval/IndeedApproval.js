@@ -1,25 +1,37 @@
+import ApprovalOpinion from "../../entities/ApprovalOpinion";
 import { AssignProporties, GetTextBox, GetButton } from "../../pages/Common";
 
-export default {
-    Name: "IndeedApproval",
-    Type: "View",
-    Properties: AssignProporties({}, [GetInfoView(), GetRightButtonView()])
+var DataActionTypes = {}
+
+export default (actionTypes) => {
+    DataActionTypes = actionTypes;
+
+    return {
+        Name: "IndeedApprovalOpinion",
+        Type: "View",
+        Entity: ApprovalOpinion,
+        EventActionName: "GetApprovalOpinion",
+        GetEntityDataActionType: DataActionTypes.GetApprovalOpinion,
+        Properties: AssignProporties({}, [GetInfoView(), GetRightButtonView()])
+    }
 }
 
 function GetInfoView() {
     return {
-        Name: "IndeedApprova2",
+        Name: "IndeedApprovalOpinion2",
         Type: "RowsColsView",
         IsForm: true,
+        LabelAlign: "left",
         Title: "实地审核",
         Style: { marginTop: 8 },
-        Properties: AssignProporties({}, GetProperties())
+        SaveEntityDataActionType: DataActionTypes.SaveApprovalOpinion,
+        Properties: AssignProporties(ApprovalOpinion, GetProperties())
     }
 }
 
 function GetRightButtonView() {
     return {
-        Name: "RightButtonView",
+        Name: "ApprovalLeftRightButtonView",
         Type: "View",
         ClassName: "DivRightButton",
         IsDiv: true,
@@ -28,7 +40,7 @@ function GetRightButtonView() {
 }
 
 function GetRightButtonProperties() {
-    return [{ ...GetButton("SaveIndeedApproval", "提交", "primary"), EventActionName: "SaveIndeedApproval", Style: { marginRight: 36, width: 84 } }]
+    return [{ ...GetButton("SaveApprovalOpinion", "提交", "primary"), EventActionName: "SaveApprovalOpinion", Style: { marginRight: 36, width: 84 } }]
 }
 
 function GetProperties() {
@@ -42,7 +54,7 @@ function GetProperties() {
             Style: { paddingBottom: 16, paddingTop: 8 },
             Properties: AssignProporties({}, GetAttementProperties())
         },
-        GetTextArea("BorrowerAmount", "备注", 5, 1),
+        GetTextArea("OpinionRemark", "备注", 5, 1),
     ]
 }
 
@@ -59,12 +71,17 @@ function GetTextArea(Name, Label, X, Y) {
         ...GetTextBox(Name, Label, "TextArea", X, Y),
         IsFormItem: true,
         IsNullable: true,
+        IsColon: false,
         IsAddOptional: true,
+        IsEdit: true,
+        ReadRightName: "SaveApprovalOpinion", 
         ColSpan: 24,
         Rows: 4,
-        LabelCol: 2,
-        WrapperCol: 22,
+        LabelCol: 10,
+        WrapperCol: 23,
         Style: {
+            display: "flex",
+            flexDirection: "column",
             marginBottom: 10
         }
     }

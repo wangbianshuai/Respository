@@ -12,6 +12,7 @@ const DataActionTypes = {
 
 export default {
     Name: "QueryOrderList",
+    Type: "View",
     EventActions: GetEventActions(),
     DialogViews: GetDialogViews(),
     Properties: AssignProporties(Order, [GetSearchOperationView(), GetAlert(), GetDataGridView()])
@@ -25,16 +26,17 @@ function GetSearchOperationView() {
         Type: "RowsColsView",
         ClassName: "DivLeftRightView",
         Properties: AssignProporties(Order, [{ EventActionName: "LookStatusRecord", ...GetButton("LookStatusRecord", "查看流转日志", "primary", 1, 1) },
-        { EventActionName: "EditOrder", ...GetButton("EditOrder", "修改", "default", 1, 2) },
-        { EventActionName: "ChangeUser", ...GetButton("ChangeUser", "转单", "default", 1, 3) },
+        { EventActionName: "EditOrder", ColStyle: { paddingLeft: 0 }, ...GetButton("EditOrder", "修改", "default", 1, 2) },
+        { EventActionName: "ChangeUser", ColStyle: { paddingLeft: 0 }, ...GetButton("ChangeUser", "转单", "default", 1, 3) },
         {
             EventActionName: "CancelOrder",
             DataActionType: DataActionTypes.CancelOrder,
             SuccessTip: "作废成功！",
+            ColStyle: { paddingLeft: 0 },
             ConfirmTip: "请确认当前工单是否要被作废？",
             ...GetButton("CancelOrder", "作废", "default", 1, 4)
         },
-        { EventActionName: "LookApproveInfo", ...GetButton("LookApproveInfo", "查看审核信息", "default", 1, 5) },
+        { EventActionName: "LookApproveInfo", ColStyle: { paddingLeft: 0 }, ...GetButton("LookApproveInfo", "查看审核信息", "default", 1, 5) },
         GetQueryName(),
         GetKeyword()
         ])
@@ -46,11 +48,13 @@ function GetKeyword() {
     p.ColStyle = { paddingRight: 8, paddingLeft: 2 };
     p.IsCondition = true;
     p.EventActionName = "SearchQuery";
+    p.PressEnterEventActionName = "SearchQuery";
+    p.ColStyle = { width: 240 }
     return p;
 }
 
 function GetQueryName() {
-    const p = GetSelect("QueryName", "", GetQueryNameDataSource(), 2, 2, "OrderCode");
+    const p = GetSelect("QueryName", "", Order.QueryNameDataSource, 2, 2, "loanApplyId");
     p.ColStyle = { paddingRight: 0, paddingLeft: 8 };
     p.Width = 100;
     p.IsCondition = true;
@@ -75,12 +79,16 @@ function GetDataGridView() {
         Title: "工单列表",
         IsRowSelection: true,
         IsSingleSelection: true,
-        Properties: AssignProporties(Order, ["OrderCode", "Borrowers", "BorrowerUser", "ProductType", "LoanUser", "BorrowerDate", "UpdateDate", "OrderStatus"])
+        Properties: AssignProporties(Order, [GetOrderCode(), "Borrowers", "BorrowerUser", "ProductType", "LoanUser", "BorrowerDate", "UpdateDate", "OrderStatus"])
     }
 }
 
-function GetQueryNameDataSource() {
-    return [{ Value: "OrderCode", Text: "工单编号" }, { Value: "Borrowers", Text: "借款主体" }, { Value: "MainLoanUser", Text: "主借人" }]
+function GetOrderCode() {
+    return {
+        Name: "OrderCode",
+        IsOpenPage: true,
+        PageUrl: "/risk/CreditManage/OrderDetail.html?OrderCode=#{loanApplyId}"
+    }
 }
 
 function GetEventActions() {
@@ -97,7 +105,7 @@ function GetEventActions() {
         Type: "DataGridView/SelectRowToPage",
         DataGridView: "DataGridView1",
         AlertMessage: "AlertMessage",
-        PageUrl: "/Orders/StatusNodeLogs?OrderCode=#{OrderCode}"
+        PageUrl: "/Orders/StatusNodeLogs?OrderCode=#{loanApplyId}"
     },
     {
         Name: "ChangeUser",
@@ -111,7 +119,8 @@ function GetEventActions() {
         Type: "DataGridView/SelectRowToPage",
         DataGridView: "DataGridView1",
         AlertMessage: "AlertMessage",
-        PageUrl: "/CreditManage/OrderDetail?OrderCode=#{OrderCode}"
+        SetPageUrl: "SetEditOrderPageUrl",
+        PageUrl: "/CreditManage/OrderDetail?OrderCode=#{loanApplyId}"
     },
     {
         Name: "CancelOrder",
@@ -125,7 +134,7 @@ function GetEventActions() {
         DataGridView: "DataGridView1",
         AlertMessage: "AlertMessage",
         IsOpenUrl: true,
-        PageUrl: "/Auditing/AntiFraudAuditing?OrderCode=#{OrderCode}"
+        PageUrl: "/Auditing/AntiFraudAuditing?OrderCode=#{loanApplyId}"
     }]
 }
 
@@ -136,7 +145,7 @@ function GetDialogViews() {
         Name: "UpdateEntityEdit1",
         Entity: Order,
         Type: "RowsColsView",
-        Title: "转单",
+        DialogTitle: "转单",
         SuccessTip: "转单成功！",
         UdpateEntityOkActionType: DataActionTypes.ChangeUser,
         Properties: AssignProporties(Order, [

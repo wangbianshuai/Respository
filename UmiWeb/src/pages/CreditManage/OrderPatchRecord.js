@@ -14,13 +14,14 @@ class OrderPatchRecord extends BaseIndex {
     }
 
     render() {
-        return <Components.View Property={this.PageConfig} EventActions={this.EventActions} />
+        return <Components.PropertyItem Property={this.PageConfig} EventActions={this.EventActions} />
     }
 }
 
 function mapStateToProps(state, ownProps) {
     const props = StaticIndex.MapStateToProps(state, ownProps, {
-        OrderDetail: state.ApiService.OrderDetail
+        GetOrderInfoEntityData: state.OrderService.GetOrderDetailEntityData,
+        GetPatchRecordEntityData: state.OrderService.PatchRecordList
     });
 
     !EnvConfig.IsProd && console.log(props);

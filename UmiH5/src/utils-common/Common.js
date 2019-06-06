@@ -27,7 +27,7 @@ export function IsNullOrEmptyReturnDefault(value, defaultValue) {
 }
 
 //获取查询字符串
-export function GetQueryString(query) {
+export function GetQueryString(query, type) {
     let args = {}
     const location = window.location
     query = query || location.search.substring(1)
@@ -41,7 +41,7 @@ export function GetQueryString(query) {
         if (pos === -1) continue
         let argname = pairs[i].substring(0, pos)
         let value = pairs[i].substring(pos + 1)
-        args[argname] = unescape(value)
+        args[argname] = type === "escape" ? unescape(value) : type === "decodeuri" ? decodeURI(value) : decodeURIComponent(value)
     }
     return args
 }
@@ -51,18 +51,33 @@ export function AddUrlRandom(url) {
 
     const rc = GetRandomChars()
     const rd = Math.random()
-    url += url.indexOf("?") >= 0 ? "&" : "?"
+    url += url.indexOf("?") > 0 ? "&" : "?"
     url += `_r${rc}=${rd}`
     return url
 }
 
-export function AddUrlParams(url, name, value, blUrl) {
+export function AddUrlParams(url, name, value) {
     if (IsNullOrEmpty(url)) return ""
     if (value === undefined || value === null) return url;
-    url += url.indexOf("?") >= 0 ? "&" : "?"
-    value = blUrl ? encodeURIComponent(value) : escape(value);
-    url += `${name}=${value}`
+    value = escape(value);
+    if (url.indexOf("?") > 0 && url.indexOf(`${name}=`) > 0) url = ReplaceParams(url, name, value);
+    else {
+        url += url.indexOf("?") > 0 ? "&" : "?"
+        url += `${name}=${value}`;
+    }
     return url
+}
+
+export function ReplaceParams(url, name, value) {
+    let startIndex = url.indexOf(`${name}=`);
+    if (startIndex < 0) return url;
+
+    let endIndex = url.indexOf("&", startIndex);
+    let afterString = ""
+    if (endIndex > 0) afterString = url.substring(endIndex, url.length);
+    let beforeString = url.substring(0, startIndex) + `${name}=${value}`;
+
+    return beforeString + afterString;
 }
 
 export function GetRandomChars(len) {
@@ -150,8 +165,8 @@ export function Copy(a, b, c) {
     if (IsArray(c)) {
         let n = ""
         for (let i = 0; i < c.length; i++) {
-            n = c[i];
-            if (b[n] !== undefined) a[n] = b[n];
+            n = c[i]
+            if (b[n] !== undefined) a[n] = b[n]
             else for (let k in b) if (k === n) { a[n] = b[n]; break; }
         }
     }
@@ -213,7 +228,6 @@ export function IsObjectEquals(a, b) {
 }
 
 export function ArrayFirst(list, fn) {
-    if (!IsArray(list)) return null;
     const list2 = list.filter(fn)
     return list2.length > 0 ? list2[0] : null;
 }
@@ -341,12 +355,14 @@ export function ArrayMax(list, name) {
 }
 
 export function GetFloatValue(value) {
+    if (!value) return 0;
     if (typeof (value) === "number") return value;
     const f = parseFloat(value)
     return isNaN(f) ? 0 : f;
 }
 
 export function GetIntValue(value) {
+    if (!value) return 0;
     const i = parseInt(value, 10)
     return isNaN(i) ? 0 : i;
 }
@@ -397,7 +413,7 @@ export function SetCookie(name, value, days) {
     document.cookie = name + "=" + escape(value) + ";expires=" + exp.toGMTString();
 }
 
-export function RemoveCookie(name) {
+export function RemoveCooke(name) {
     SetCookie(name, "", -1);
 }
 
@@ -458,6 +474,7 @@ export function ListForEach(list, fn) {
         }
     }
 }
+
 
 //不四舍五入直接截断
 export function ToCurrencyNo45(num) {
@@ -544,4 +561,111 @@ export function Clone(a, objList) {
     }
 
     return c
+}
+
+export function SumbitForm(url, args) {
+    let formDom = document.createElement('form')
+    formDom.method = 'post'
+    formDom.action = url
+
+    for (var key in args) {
+        let inputDom = document.createElement('input')
+        inputDom.type = 'hidden'
+
+        inputDom.setAttribute('name', key)
+        inputDom.setAttribute('value', args[key])
+
+        formDom.appendChild(inputDom)
+    }
+
+    document.body.appendChild(formDom)
+    formDom.submit()
+    document.body.removeChild(formDom)
+}
+
+export function ConvertToDate(dateString, format) {
+    if (typeof (dateString) === "number") return new Date(dateString);
+    if (typeof dateString !== "string") return dateString;
+
+    if (!format) return new Date(dateString);
+
+    var year, month, day, hh, mm, ss, timeFormat, time;
+    if (format.substring(0, 10) === "yyyy-MM-dd" || format.substring(0, 10) === "yyyy/MM/dd") {
+        year = dateString.substring(0, 4);
+        month = dateString.substring(5, 7);
+        day = dateString.substring(8, 10);
+        if (format.length > 10) timeFormat = Trim(format.substring(10, format.length));
+        if (format.length > 10) time = Trim(dateString.substring(10, dateString.length));
+    }
+    if (format.substring(0, 10) === "MM-dd-yyyy" || format.substring(0, 10) === "MM/dd/yyyy") {
+        year = dateString.substring(6, 10);
+        month = dateString.substring(0, 2);
+        day = dateString.substring(3, 5);
+        if (format.length > 10) timeFormat = Trim(format.substring(10, format.length));
+        if (format.length > 10) time = Trim(dateString.substring(10, dateString.length));
+    }
+    if (format.substring(0, 8) === "yyyyMMdd") {
+        year = dateString.substring(0, 4);
+        month = dateString.substring(4, 6);
+        day = dateString.substring(6, 8);
+        if (format.length > 8) timeFormat = Trim(format.substring(8, format.length));
+        if (format.length > 8) time = Trim(dateString.substring(8, dateString.length));
+    }
+    if (format.substring(0, 8) === "MMddyyyy") {
+        year = dateString.substring(4, 8);
+        month = dateString.substring(0, 2);
+        day = dateString.substring(2, 4);
+        if (format.length > 8) timeFormat = Trim(format.substring(8, format.length));
+        if (format.length > 8) time = Trim(dateString.substring(8, dateString.length));
+    }
+    if (!IsNullOrEmpty(time) && !IsNullOrEmpty(timeFormat)) {
+        if (!IsNullOrEmpty(timeFormat) && timeFormat === "HH:mm:ss") {
+            hh = time.substring(0, 2);
+            mm = time.substring(3, 5);
+            ss = time.substring(6, 8);
+        }
+        else if (!IsNullOrEmpty(timeFormat) && timeFormat === "HHmmss") {
+            hh = time.substring(0, 2);
+            mm = time.substring(2, 4);
+            ss = time.substring(4, 6);
+        }
+    }
+
+    year = GetIntValue(year);
+    month = GetIntValue(month) - 1;
+    day = GetIntValue(day);
+
+    if (!IsNullOrEmpty(time) && !IsNullOrEmpty(timeFormat)) {
+        hh = GetIntValue(hh);
+        mm = GetIntValue(mm);
+        ss = GetIntValue(ss);
+
+        return new Date(year, month, day, hh, mm, ss);
+    }
+    else return new Date(year, month, day);
+}
+
+export function IsFirefox() {
+    const reg = new RegExp("firefox");
+    return reg.test(navigator.userAgent.toLowerCase());
+}
+
+export function IsIOS() {
+    if (typeof window === 'undefined') return false;
+    return window.navigator.userAgent.match(/iPhone|iPad|iPod|iOS/i) ? true : false;
+}
+
+export function IsAndroid() {
+    if (typeof window === 'undefined') return false;
+    return window.navigator.userAgent.match(/Android/i) ? true : false;
+}
+
+export function IsWeixin(){
+    if (typeof window === 'undefined') return false;
+    return window.navigator.userAgent.match(/MicroMessenger/i) ? true : false;
+}
+
+export function IsWeibo(){
+    if (typeof window === 'undefined') return false;
+    return window.navigator.userAgent.match(/WeiBo/i) ? true : false;
 }

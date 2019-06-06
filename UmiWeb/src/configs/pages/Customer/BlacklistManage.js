@@ -10,6 +10,7 @@ const DataActionTypes = {
 
 export default {
     Name: "BlacklistManage",
+    Type: "View",
     EventActions: GetEventActions(),
     Properties: AssignProporties(Blacklist, [GetSearchOperationView(), GetAlert(), GetDataGridView()])
 }

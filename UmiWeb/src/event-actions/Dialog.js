@@ -19,9 +19,10 @@ export default class Dialog extends BaseIndex {
         }
 
         //设置接收数据行数返回数据
-        if (!EventActions.Receives[SetSelectValuesOkActionType]) {
-            EventActions.Receives[SetSelectValuesOkActionType] = (d) => this.ReceiveDialogOkActionType(d, props, action)
-        }
+        EventActions.Receives[SetSelectValuesOkActionType] = (d) => this.ReceiveDialogOkActionType(d, props, action)
+
+        //扩展数据加载
+        if (DialogView.ExpandDataLoad) DialogView.ExpandDataLoad(props, action);
 
         const onOk = (e, p) => this.SetSelectViewDataToList(e, p, props, action, selectRowKeys);
         this.ShowDialog(action, EventActions, DialogView, onOk, action.SetValue);
@@ -47,7 +48,7 @@ export default class Dialog extends BaseIndex {
 
         if (selectData === false) return;
 
-        const data = { SelectRowKeys: selectRowKeys, SelectValues: selectValues, SelectData: selectData, EventActionType: action.Type }
+        const data = { SelectRowKeys: selectRowKeys, SelectValues: selectValues, SelectData: selectData }
 
         //禁用确定按钮
         p.SetDisabled(true);
@@ -76,5 +77,42 @@ export default class Dialog extends BaseIndex {
         const AlertMessage = EventActions.GetControl(action.AlertMessage);
 
         action.Parameters = { DataGridView, DialogView, DataComponent, DataProperties, AlertMessage }
+    }
+
+    //弹出层搜索查询选择行数据
+    SearchQueryDataSelectRowData(props, action) {
+        if (!action.Parameters) this.InitSearchQueryDataSelectRowDataAction(props, action);
+        const { EventActions } = props;
+        const { DialogView } = action.Parameters;
+
+        const onOk = (e, p) => this.SetSelectValueDialogOk(e, p, props, action);
+        this.ShowDialog(action, EventActions, DialogView, onOk);
+    }
+
+    SetSelectValueDialogOk(e, p, props, action) {
+        const { DataGridView, ToSetView } = action.Parameters;
+        const { EventActions } = props;
+
+        const selectDataList = DataGridView.GetSelectDataList();
+        if (selectDataList.length === 0) {
+            EventActions.Alert("请先选择数据行！");
+            return;
+        }
+
+        ToSetView.SelectData = selectDataList[0];
+
+        this.SetViewPropertiesValue(ToSetView.Properties, ToSetView.SelectData);
+
+        action.ModalDialog.SetVisible(false);
+    }
+
+    InitSearchQueryDataSelectRowDataAction(props, action) {
+        const { EventActions } = props;
+        //设置数据视图
+        const ToSetView = EventActions.GetView(action.ToSetView);
+        const DialogView = Common.ArrayFirst(EventActions.PageConfig.DialogViews, (f) => f.Name === action.DialogView);
+        const DataGridView = EventActions.GetViewProperty(DialogView, action.DataGridView)
+
+        action.Parameters = { DataGridView, DialogView, ToSetView }
     }
 }

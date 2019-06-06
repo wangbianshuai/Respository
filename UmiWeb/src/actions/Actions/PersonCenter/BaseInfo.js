@@ -11,38 +11,7 @@ export default class BaseInfo extends BaseIndex {
         this.Init();
     }
 
-    GetStateActionTypes() {
-        const { GetEntityData } = this.ActionTypes;
-
-        return {
-            EntityData: [GetEntityData]
-        }
-    }
-
-    Invoke(id, actionType, data) {
-        const { GetEntityData } = this.ActionTypes;
-
-        switch (actionType) {
-            case GetEntityData: this.GetEntityData(id, actionType, data); break;
-            default: this.Dispatch(id, actionType, data); break;
-        }
-    }
-
-    SetResponseData(id, actionType, data) {
-        const { GetEntityData } = this.ActionTypes;
-
-        switch (actionType) {
-            case GetEntityData: return this.SetGetEntityData(id, actionType, data);
-            default: return this.SetApiResponse(data);
-        }
-    }
-
     GetEntityData(id, actionType, data) {
-
+        this.Dispatch(id, actionType, data.EntityData);
     }
-
-    SetGetEntityData(id, actionType, data) {
-
-    }
-
 }

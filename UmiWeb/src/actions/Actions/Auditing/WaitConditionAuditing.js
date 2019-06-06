@@ -1,4 +1,5 @@
 import BaseIndex from "../../BaseIndex";
+import Common2 from "../Common2";
 
 export default class WaitConditionAuditing extends BaseIndex {
     constructor(props) {
@@ -11,38 +12,23 @@ export default class WaitConditionAuditing extends BaseIndex {
         this.Init();
     }
 
-    GetStateActionTypes() {
-        const { GetEntityData } = this.ActionTypes;
-
-        return {
-            EntityData: [GetEntityData]
-        }
+    //获取实体数据
+    GetOrderInfoEntityData(id, actionType, data) {
+        Common2.GetOrderInfoEntityData.call(this, id, actionType, data);
     }
 
-    Invoke(id, actionType, data) {
-        const { GetEntityData } = this.ActionTypes;
-
-        switch (actionType) {
-            case GetEntityData: this.GetEntityData(id, actionType, data); break;
-            default: this.Dispatch(id, actionType, data); break;
-        }
+    //获取补件信息
+    GetPatchRecordInfo(id, actionType, data) {
+        this.DvaActions.Dispatch("PatchService", "GetPatchRecordInfo", { ...data.EntityData, Action: this.GetAction(id, actionType) });
     }
 
-    SetResponseData(id, actionType, data) {
-        const { GetEntityData } = this.ActionTypes;
-
-        switch (actionType) {
-            case GetEntityData: return this.SetGetEntityData(id, actionType, data);
-            default: return this.SetApiResponse(data);
-        }
+    //获取审核意见
+    GetApprovalOpinion(id, actionType, data) {
+        this.DvaActions.Dispatch("ApprovalService", "GetIndeedApprovalOpinion", { ...data.EntityData, Action: this.GetAction(id, actionType) });
     }
 
-    GetEntityData(id, actionType, data) {
-
+    //获取补件退单信息
+    SaveApprovalOpinion(id, actionType, data) {
+        this.DvaActions.Dispatch("ApprovalService", "SaveIndeedApprovalOpinion", { ...data.EntityData, Action: this.GetAction(id, actionType) });
     }
-
-    SetGetEntityData(id, actionType, data) {
-
-    }
-
 }

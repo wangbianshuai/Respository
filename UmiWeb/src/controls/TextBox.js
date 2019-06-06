@@ -71,13 +71,17 @@ export default class TextBox2 extends BaseIndex {
         this.EventActions.InvokeAction(this.Property.EventActionName, this.props);
     }
 
+    OnPressEnter() {
+        const { PressEnterEventActionName } = this.Property;
+        if (PressEnterEventActionName) this.EventActions.InvokeAction(PressEnterEventActionName, this.props);
+    }
+
     componentDidMount() {
         if (this.refs.Input && this.refs.Input.input) {
             this.Input = this.refs.Input.input;
             if (this.OnKeyPress !== null && this.Input) this.Input.onkeypress = this.OnKeyPress;
         }
     }
-
 
     render() {
         if (!this.state.IsVisible) return null;
@@ -134,6 +138,9 @@ export default class TextBox2 extends BaseIndex {
                 addonAfter={Property.AddonAfter}
                 type={type}
                 ref="Input"
+                prefix={this.RenderPrefix()}
+                size={Property.Size}
+                onPressEnter={this.OnPressEnter.bind(this)}
                 value={value} />
         );
     }

@@ -1,11 +1,19 @@
 import { AssignProporties, GetTextBox, CreateGuid, GetButton } from "../../pages/Common";
 
-export default {
-    Name: "LoanReviewOpinionRecord",
-    Type: "View",
-    Title: "审核明细",
-    Style: { marginTop: 8 },
-    Properties: AssignProporties({}, [GetInfoView()])
+var DataActionTypes = {}
+
+export default (actionTypes) => {
+    DataActionTypes = actionTypes;
+
+    return {
+        Name: "LoanReviewOpinionRecord",
+        Type: "View",
+        Title: "审核明细",
+        Style: { marginTop: 8 },
+        EventActionName: "GetLoanReviewOpinionRecord",
+        GetEntityDataActionType: DataActionTypes.GetLoanReviewOpinionRecord,
+        Properties: AssignProporties({}, [GetInfoView()])
+    }
 }
 
 function GetInfoView() {
@@ -28,14 +36,14 @@ function GetInfoView() {
 function GetItemProperties() {
     return [
         { Name: "Title", Type: "SpanText", X: 1, Y: 1, ClassName: "SpanTitle", Style: { marginBottom: 16 } },
-        GetReadOnlyTextBox("Borrowers", "姓名", 2, 1),
-        GetReadOnlyTextBox("BorrowerUser", "部门", 2, 2),
-        GetReadOnlyTextBox("BorrowerDate", "职位", 2, 3),
-        GetReadOnlyTextArea("BorrowerAmount", "基本情况", 3, 1),
-        GetReadOnlyTextArea("BorrowerAmount", "核心问题", 4, 1),
-        GetReadOnlyTextArea("BorrowerAmount", "建议措施", 5, 1),
+        GetReadOnlyTextBox("Name", "姓名", 2, 1),
+        GetReadOnlyTextBox("DeptName", "部门", 2, 2),
+        GetReadOnlyTextBox("JobName", "职位", 2, 3),
+        GetReadOnlyTextArea("BaseInfo", "基本情况", 3, 1),
+        GetReadOnlyTextArea("CoreProblem", "核心问题", 4, 1),
+        GetReadOnlyTextArea("Recommended", "建议措施", 5, 1),
         {
-            Name: "RightButtonView",
+            Name: "DivInfoView3",
             Type: "View",
             ClassName: "DivInfoView3",
             IsDiv: true,
@@ -68,12 +76,14 @@ function GetReadOnlyTextArea(Name, Label, X, Y) {
         ...GetTextBox(Name, Label, "TextArea", X, Y),
         IsFormItem: true,
         IsReadOnly: true,
+        IsColon: false,
         ColSpan: 24,
         Rows: 4,
-        LabelCol: 2,
-        WrapperCol: 22,
-        Value: "测试数据1" + Label,
+        LabelCol: 10,
+        WrapperCol: 23,
         Style: {
+            display: "flex",
+            flexDirection: "column",
             marginBottom: 10
         }
     }
@@ -82,10 +92,17 @@ function GetReadOnlyTextArea(Name, Label, X, Y) {
 function GetReadOnlyTextBox(Name, Label, X, Y, addonAfter) {
     return {
         ...GetTextBox(Name, Label, "", X, Y, "", 200),
+        IsColon: false,
         IsFormItem: true, ColSpan: 8,
+        LabelCol: 10,
+        WrapperCol: 21,
         IsReadOnly: true,
         AddonAfter: addonAfter,
-        Value: "测试数据1" + Label
+        Style: {
+            display: "flex",
+            flexDirection: "column",
+            marginBottom: 10
+        }
     }
 }
 

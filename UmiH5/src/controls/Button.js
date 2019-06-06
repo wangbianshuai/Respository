@@ -1,6 +1,6 @@
 import React from "react"
 import BaseIndex from "./BaseIndex"
-import { Button } from "antd"
+import { Button } from "antd-mobile"
 
 export default class Button2 extends BaseIndex {
     constructor(props) {
@@ -27,6 +27,7 @@ export default class Button2 extends BaseIndex {
         const text = Property.Text
 
         return (<Button onClick={this.ClickAction.bind(this)}
+            className={Property.ClassName}
             icon={Property.Icon}
             disabled={this.state.Disabled}
             style={Property.Style}

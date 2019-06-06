@@ -52,11 +52,17 @@ class Radio2 extends BaseIndex {
         const value = Common.IsNullOrEmpty(this.state.Value) ? undefined : this.state.Value;
 
         if (this.state.IsReadOnly) {
-            const text = this.GetSelectText(value);
+            if (Property.Label) {
+                const text = this.GetSelectText(value);
 
-            return <Input readOnly={this.state.IsReadOnly}
-                type="text"
-                value={text} />
+                return <Input readOnly={this.state.IsReadOnly}
+                    type="text"
+                    value={text} />
+            }
+            else {
+                return (<RadioGroup disabled={this.state.Disabled}
+                    value={value} style={Property.Style}>{this.state.Options}</RadioGroup>)
+            }
         }
 
         return (<RadioGroup disabled={this.state.Disabled}

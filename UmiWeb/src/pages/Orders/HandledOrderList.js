@@ -9,18 +9,19 @@ class HandledOrderList extends BaseIndex {
         super(props);
 
         this.Name = "Orders_HandledOrderList";
+        this.MenuKey = "HandledOrderList";
 
         this.InitEventAction();
     }
 
     render() {
-        return <Components.View Property={this.PageConfig} EventActions={this.EventActions} />
+        return <Components.PropertyItem Property={this.PageConfig} EventActions={this.EventActions} />
     }
 }
 
 function mapStateToProps(state, ownProps) {
     const props = StaticIndex.MapStateToProps(state, ownProps, {
-        DataList: state.ApiService.OrderList
+        SearchQuery: state.OrderService.QueryHandledOrderList,
     });
 
     !EnvConfig.IsProd && console.log(props);

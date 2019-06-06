@@ -1,19 +1,21 @@
-import View from "./View";
-import PropertyItem from "./PropertyItem";
-import RowsColsView from "./RowsColsView";
-import DataGridView from "./DataGridView";
-import Card from "./Card";
+import PasswordByEye from "./PasswordByEye";
+import PressButton from "./PressButton";
+import ImageVerifyCode from "./ImageVerifyCode";
+import SmsVerifyCode from "./SmsVerifyCode";
+import ErrorMessage from "./ErrorMessage";
 import DataListView from "./DataListView";
+import PropertyItem from "./PropertyItem";
+import View from "./View";
 import WhiteSpace from "./WhiteSpace";
-import Tabs from "./Tabs";
 
 export default {
-    View,
-    RowsColsView,
-    PropertyItem,
-    DataGridView,
-    Card,
+    PasswordByEye,
+    PressButton,
+    ImageVerifyCode,
+    SmsVerifyCode,
+    ErrorMessage,
     DataListView,
-    WhiteSpace,
-    Tabs
+    PropertyItem,
+    View,
+    WhiteSpace
 }

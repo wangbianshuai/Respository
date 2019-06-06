@@ -11,38 +11,17 @@ export default class RoleEdit extends BaseIndex {
         this.Init();
     }
 
-    GetStateActionTypes() {
-        const { GetEntityData } = this.ActionTypes;
-
-        return {
-            EntityData: [GetEntityData]
-        }
-    }
-
-    Invoke(id, actionType, data) {
-        const { GetEntityData } = this.ActionTypes;
-
-        switch (actionType) {
-            case GetEntityData: this.GetEntityData(id, actionType, data); break;
-            default: this.Dispatch(id, actionType, data); break;
-        }
-    }
-
-    SetResponseData(id, actionType, data) {
-        const { GetEntityData } = this.ActionTypes;
-
-        switch (actionType) {
-            case GetEntityData: return this.SetGetEntityData(id, actionType, data);
-            default: return this.SetApiResponse(data);
-        }
-    }
-
     GetEntityData(id, actionType, data) {
-
+        this.DvaActions.Dispatch("RoleService", "GetData", { ...data.EntityData, Action: this.GetAction(id, actionType) });
     }
 
-    SetGetEntityData(id, actionType, data) {
+    SaveEntityData(id, actionType, data) {
+        const primaryKey = data.OldEntityData && data.OldEntityData.RoleId ? data.OldEntityData.RoleId : null;
 
+        const serviceName = primaryKey ? "Update" : "Insert";
+
+        if (primaryKey) data.EntityData.RoleId = primaryKey;
+
+        this.DvaActions.Dispatch("RoleService", serviceName, { ...data.EntityData, Action: this.GetAction(id, actionType) });
     }
-
 }

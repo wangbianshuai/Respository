@@ -1,4 +1,5 @@
 import BaseIndex from "../../BaseIndex";
+import DataGriViewActionType from "../../ActionTypes/Components/DataGridView";
 
 export default class PlatformRateConfig extends BaseIndex {
     constructor(props) {
@@ -11,38 +12,18 @@ export default class PlatformRateConfig extends BaseIndex {
         this.Init();
     }
 
-    GetStateActionTypes() {
-        const { GetEntityData } = this.ActionTypes;
-
-        return {
-            EntityData: [GetEntityData]
-        }
+    SearchQuery(id, actionType, data) {
+        this.DvaActions.Dispatch("PlatformRateService", "GetDataList", { data: data, Action: this.GetAction(id, actionType) });
     }
 
-    Invoke(id, actionType, data) {
-        const { GetEntityData } = this.ActionTypes;
-
-        switch (actionType) {
-            case GetEntityData: this.GetEntityData(id, actionType, data); break;
-            default: this.Dispatch(id, actionType, data); break;
-        }
+    SetSearchQuery(id, actionType, data) {
+        actionType = DataGriViewActionType.SearchQuery;
+        this.DispatchAction(actionType, data);
+        return false;
     }
 
-    SetResponseData(id, actionType, data) {
-        const { GetEntityData } = this.ActionTypes;
-
-        switch (actionType) {
-            case GetEntityData: return this.SetGetEntityData(id, actionType, data);
-            default: return this.SetApiResponse(data);
-        }
+    DeleteEntityData(id, actionType, data) {
+        const primaryKey = data.SelectRowKeys[0];
+        this.DvaActions.Dispatch("PlatformRateService", "Delete", { PlatformRateId: primaryKey, Action: this.GetAction(id, actionType) });
     }
-
-    GetEntityData(id, actionType, data) {
-
-    }
-
-    SetGetEntityData(id, actionType, data) {
-
-    }
-
 }

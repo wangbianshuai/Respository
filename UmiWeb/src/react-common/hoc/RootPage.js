@@ -4,6 +4,7 @@ import { BaseIndex } from "ReactCommon";
 import Actions from "Actions";
 import ModalDialog from "../common/ModalDialog";
 import ComponentList from "../ComponentList";
+import { message } from "antd"
 
 export default (WrapComponent) => class RootPage extends BaseIndex {
     constructor(props) {
@@ -45,9 +46,9 @@ export default (WrapComponent) => class RootPage extends BaseIndex {
         this.InitProps();
     }
 
- 
     SetLoading(nextProps) {
-
+        if (nextProps.Loading) message.loading("加载中……", 0)
+        else if (nextProps.Loading === false) message.destroy()
     }
 
     shouldComponentUpdate(nextProps, nextState) {
@@ -73,7 +74,7 @@ export default (WrapComponent) => class RootPage extends BaseIndex {
 
     SetResponseMessage(d, stateName) {
         if (d && d.IsReLogin && d.IsSuccess === false) {
-            //this.ToastFail("登录信息失效，请重新登录！", 2, () => this.ReLogin());
+            this.ToLogin(true);
             return true;
         }
 
@@ -115,7 +116,7 @@ export default (WrapComponent) => class RootPage extends BaseIndex {
     render() {
         return (
             <React.Fragment>
-                <WrapComponent />
+                <WrapComponent Dispatch={this.props.Dispatch} PageData={this.props.location.PageData} />
                 <ComponentList Page={this.Page} Name="Dialogs" />
             </React.Fragment>
         )

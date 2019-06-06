@@ -2,7 +2,6 @@ import React, { Component } from "react"
 import Controls from "Controls";
 import Components from "Components"
 import PageControls from "PageControls";
-import PageComponents from "PageComponents";
 import { Common } from "UtilsCommon";
 import { Form } from "antd";
 
@@ -12,19 +11,68 @@ export default class PropertyItem extends Component {
 
         this.Id = props.Property.Id;
 
-        this.state = { IsVisible: props.Property.IsVisible !== false }
+        this.state = { IsVisible: this.GetIsVisible() }
 
-        if (props.Property.IsFormItem) props.Property.SetFormItemVisible = (v) => this.setState({ IsVisible: v })
+        if (props.Property.IsFormItem) props.Property.SetFormItemVisible = (v) => this.setState({ IsVisible: v });
+
+        this.SetIsReadOnly();
 
         props.EventActions.GetReactComponent = this.GetReactComponent.bind(this);
+    }
+
+    //设置只读权限
+    SetIsReadOnly() {
+        const { Property, EventActions } = this.props;
+        let readOnly = !!Property.IsReadOnly;
+        //判断是否有显示权限
+        if (!readOnly && Property.ReadRightName) readOnly = !EventActions.GetRight(Property.ReadRightName);
+
+        if (readOnly && !Property.IsNullable) Property.IsNullable = true;
+        if (readOnly && Property.PlaceHolder) Property.PlaceHolder = "";
+
+        Property.IsReadOnly = readOnly;
+    }
+
+    //设置显示权限
+    GetIsVisible() {
+        const { Property, EventActions } = this.props;
+        let isVisible = Property.IsVisible !== false;
+
+        //判断是否有显示权限
+        if (isVisible) isVisible = EventActions.GetRight(Property.Name);
+        //判断多个权限名组合有否显示
+        if (isVisible && Property.RightNames) {
+            let visible = false;
+            for (let i = 0; i < Property.RightNames.length; i++) {
+                visible = EventActions.GetRight(Property.RightNames[i]);
+                if (!visible) break;
+            }
+            isVisible = visible;
+        }
+
+        Property.IsVisible = isVisible;
+
+        return isVisible;
     }
 
     CreateComponent(type, props) {
         if (Components[type]) return React.createElement(Components[type], props);
         else if (Controls[type]) return React.createElement(Controls[type], props);
-        else if (PageComponents[type]) return React.createElement(PageComponents[type], props);
         else if (PageControls[type]) return React.createElement(PageControls[type], props);
-        else return null;
+        else return this.GetPageComponent(type, props);
+    }
+
+    GetPageComponent(type, props) {
+        if (!type) return null;
+
+        try {
+            const pageComponent = require(`../page-components/${type}`).default;
+            if (pageComponent) return React.createElement(pageComponent, props);
+            return null;
+        }
+        catch (err) {
+            return null
+        }
     }
 
     GetReactComponent(property, view) {
@@ -55,11 +103,11 @@ export default class PropertyItem extends Component {
             if (!this.state.IsVisible) style.display = "none";
 
             if (Common.IsNullOrEmpty(Property.Label)) {
-                return (<Form.Item style={style}>{this.GetReactComponent(Property, View)}</Form.Item>)
+                return (<Form.Item style={style} className={Property.FormItemClassName}>{this.GetReactComponent(Property, View)}</Form.Item>)
             }
             else {
                 return (<Form.Item label={this.RenderLabel()} style={style} colon={Property.IsColon !== false}
-                    labelCol={{ span: labelCol }} required={Property.IsEdit && !Property.IsNullable}
+                    labelCol={{ span: labelCol }} required={Property.IsEdit && !Property.IsNullable} className={Property.FormItemClassName}
                     wrapperCol={{ span: wrapperCol }} >{this.GetReactComponent(Property, View)}</Form.Item>)
             }
         }

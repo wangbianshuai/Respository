@@ -17,9 +17,7 @@ export default class DataGrid extends BaseIndex {
         }
 
         //设置接收数据行数返回数据
-        if (!EventActions.Receives[DataActionType]) {
-            EventActions.Receives[DataActionType] = (d) => this.ReceiveBatchUpdateRowDataList(d, props, action)
-        }
+        EventActions.Receives[DataActionType] = (d) => this.ReceiveBatchUpdateRowDataList(d, props, action)
 
         const onOk = () => {
             Property.SetDisabled(true);

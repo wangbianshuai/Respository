@@ -13,10 +13,22 @@ export default class Index extends Component {
     EnvConfig.SetEnv();
   }
 
+  IsLogin() {
+    const { location: { pathname } } = this.props;
+    let name = pathname.toLowerCase().replace(".html", "");
+    return name === '/login';
+  }
+
+  RenderPage() {
+    if (this.IsLogin()) return this.props.children;
+
+    return <LeftRightLayout {...this.props} />
+  }
+
   render() {
     return (
       <LocaleProvider locale={zh_CN}>
-        <LeftRightLayout {...this.props} />
+        {this.RenderPage()}
       </LocaleProvider>
     )
   }

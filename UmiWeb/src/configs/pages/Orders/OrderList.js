@@ -12,9 +12,10 @@ const DataActionTypes = {
 
 export default {
     Name: "OrderList",
+    Type: "View",
     EventActions: GetEventActions(),
     DialogViews: GetDialogViews(),
-    Properties: AssignProporties(Order, [GetSearchOperationView(), GetAlert(), GetDataGridView()])
+    Properties: AssignProporties({}, [GetSearchOperationView(), GetAlert(), GetDataGridView()])
 }
 
 function GetSearchOperationView() {
@@ -24,10 +25,11 @@ function GetSearchOperationView() {
         Entity: Order,
         Type: "RowsColsView",
         ClassName: "DivLeftRightView",
-        Properties: AssignProporties(Order, [{ EventActionName: "DispatchOrder", ...GetButton("Dispatch", "派单", "primary", 1, 1) },
+        Properties: AssignProporties({}, [{ EventActionName: "DispatchOrder", ...GetButton("Dispatch", "派单", "primary", 1, 1) },
         {
             EventActionName: "GrabOrder", DataActionType: DataActionTypes.GrabOrder,
             IsNoRowsSelected: true,
+            ColStyle: { paddingLeft: 0 },
             SuccessTip: "抢单成功，请前往我的工单-待处理查看！",
             ...GetButton("GrabOrder", "抢单", "default", 1, 2)
         },
@@ -43,11 +45,13 @@ function GetKeyword() {
     p.ColStyle = { paddingRight: 8, paddingLeft: 2 };
     p.IsCondition = true;
     p.EventActionName = "SearchQuery";
+    p.PressEnterEventActionName = "SearchQuery";
+    p.ColStyle = { width: 240 }
     return p;
 }
 
 function GetQueryName() {
-    const p = GetSelect("QueryName", "", GetQueryNameDataSource(), 2, 2, "OrderCode");
+    const p = GetSelect("QueryName", "", Order.QueryNameDataSource, 2, 2, "loanApplyId");
     p.ColStyle = { paddingRight: 0, paddingLeft: 8 };
     p.Width = 100;
     p.IsCondition = true;
@@ -55,8 +59,9 @@ function GetQueryName() {
 }
 
 function GetOrderStatus() {
-    const p = GetRadio("OrderStatus", "", GetStatusDataSource(), 2, 1, "0");
+    const p = GetRadio("OrderStatus", "", Order.StatusDataSource, 2, 1, "0");
     p.Justify = "end";
+    p.ValueChangeEventActionName = "SearchQuery";
     p.IsCondition = true;
     return p;
 }
@@ -79,16 +84,16 @@ function GetDataGridView() {
         Title: "工单列表",
         IsRowSelection: true,
         IsSingleSelection: true,
-        Properties: AssignProporties(Order, ["OrderCode", "Borrowers", "BorrowerUser", "ProductType", "LoanUser", "BorrowerDate", "UpdateDate", "OrderStatus"])
+        Properties: AssignProporties(Order, [GetOrderCode(), "Borrowers", "BorrowerUser", "ProductType", "LoanUser", "BorrowerDate", "UpdateDate", "OrderStatus"])
     }
 }
 
-function GetStatusDataSource() {
-    return [{ Value: "0", Text: "待初审" }, { Value: "1", Text: "待实地" }, { Value: "2", Text: "待终审" }]
-}
-
-function GetQueryNameDataSource() {
-    return [{ Value: "OrderCode", Text: "工单编号" }, { Value: "Borrowers", Text: "借款主体" }, { Value: "MainLoanUser", Text: "主借人" }]
+function GetOrderCode() {
+    return {
+        Name: "OrderCode",
+        IsOpenPage: true,
+        PageUrl: "/risk/CreditManage/OrderDetail.html?OrderCode=#{loanApplyId}"
+    }
 }
 
 function GetEventActions() {
@@ -123,32 +128,19 @@ function GetDialogViews() {
         Name: "SelectDataToListView",
         Entity: Order,
         Type: "Card",
-        Title: "派单操作",
-        Label: "请选择初审用户",
+        DialogTitle: "派单操作",
+        Title: "请选择初审用户",
         Bordered: true,
         Size: "small",
         SuccessTip: "派单成功！",
         SetSelectValuesOkActionType: DataActionTypes.DispatchOrder,//对应具体业务 数据行为类型 101:派单
         DialogStyle: { maxHeight: 500, overflow: "auto" },
-        BodyStyle: { padding: 0, margin: 0, paddingLeft: 16 },
         Properties: [{
             Id: CreateGuid(),
             Name: "UserList",
             Type: "CheckBoxGroup",
-            ServiceDataSource: GetUserListDataSource(),
             IsFlexColumn: true,
             IsSingleSelection: true
         }]
     }]
-}
-
-function GetUserListDataSource() {
-    return {
-        ValueName: "UserId",
-        TextName: "UserName",
-        StateName: "UserList",
-        ServiceName: "ApiService",
-        ActionName: "GetUserList",
-        Payload: {}
-    }
 }

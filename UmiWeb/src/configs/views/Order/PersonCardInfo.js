@@ -1,38 +1,47 @@
-import Order from "../../entities/Order";
+import PersonCardInfo from "../../entities/PersonCardInfo";
 
 import { AssignProporties, GetTextBox, GetDatePicker, GetButton } from "../../pages/Common";
 
-export default {
-    Name: "PersonCardInfo",
-    Type: "View",
-    Properties: AssignProporties({}, [GetInfoView(), GetRightButtonView()])
+var DataActionTypes = {}
+
+export default (actionTypes) => {
+    DataActionTypes = actionTypes;
+
+    return {
+        Name: "PersonCardInfo",
+        Type: "View",
+        Properties: AssignProporties({}, [GetInfoView(), GetRightButtonView()])
+    }
 }
 
 function GetInfoView() {
     return {
         Name: "PersonCardInfo2",
         Type: "RowsColsView",
-        Entity: Order,
+        Entity: PersonCardInfo,
         IsForm: true,
         LabelAlign: "left",
         Title: "个人证件信息",
         Style: { marginTop: 8 },
-        Properties: AssignProporties(Order, GetProperties())
+        PropertyName: "PersonCardInfo",
+        DefaultEditData: { ViewName: "PersonCardInfo" },
+        SaveEntityDataActionType: DataActionTypes.SaveOrderDetailEntityData,
+        Properties: AssignProporties(PersonCardInfo, GetProperties())
     }
 }
 
 function GetRightButtonView() {
     return {
-        Name: "RightButtonView",
+        Name: "PersonCardInfoRightButtonView",
         Type: "View",
         ClassName: "DivRightButton",
         IsDiv: true,
-        Properties: AssignProporties(Order, GetRightButtonProperties())
+        Properties: AssignProporties({}, GetRightButtonProperties())
     }
 }
 
 function GetRightButtonProperties() {
-    return [{ ...GetButton("SavePersonCardInfo", "保存", "primary"), EventActionName: "SavePersonCardInfo", Style: { marginRight: 36, width: 84 } }]
+    return [{ ...GetButton("SavePersonCardInfo", "保存", "primary"), IsDisabled: true, EventActionName: "SavePersonCardInfoEntityData", Style: { marginRight: 36, width: 84 } }]
 }
 
 function GetProperties() {
@@ -44,21 +53,24 @@ function GetProperties() {
         GetReadOnlyTextBox("Birthday", "出生年月", 2, 2),
         GetTextBox2("Address", "身份证地址", 2, 3, "", "请输入身份证地址", 100, false),
         GetTextBox2("SignUnit", "签发机关", 3, 1, "", "请输入签发机关", 100, false),
-        GetBetweenDate("Period", "证件有效期", 3, 2, false)
+        GetBetweenDate("Period", "PeriodStart", "PeriodEnd", "证件有效期", 3, 2, false, "请选择证件有效期")
     ]
 }
 
-function GetBetweenDate(Name, Label, X, Y, IsNullable, PlaceHolder, DefaultValue) {
+function GetBetweenDate(Name, StartDateName, EndDateName, Label, X, Y, IsNullable, PlaceHolder, DefaultValue) {
     return {
         ...GetDatePicker(Name, Label, X, Y, DefaultValue),
         IsColon: false,
         IsFormItem: true, ColSpan: 8,
         LabelCol: 10,
-        WrapperCol: 20,
+        WrapperCol: 21,
+        StartDateName, EndDateName,
         IsNullable: IsNullable,
         PlaceHolder: PlaceHolder,
         ControlType: "RangePicker",
+        NullTipMessage: PlaceHolder,
         IsEdit: true,
+        ReadRightName: "PersonCardInfoRightButtonView",
         Style: {
             display: "flex",
             flexDirection: "column",
@@ -73,10 +85,11 @@ function GetTextBox2(Name, Label, X, Y, ContorlType, PlaceHolder, MaxLength, IsN
         IsColon: false,
         IsFormItem: true, ColSpan: 8,
         LabelCol: 10,
-        WrapperCol: 20,
+        WrapperCol: 21,
         AddonAfter: addonAfter,
         IsNullable: IsNullable,
         IsEdit: true,
+        ReadRightName: "PersonCardInfoRightButtonView",
         Style: {
             display: "flex",
             flexDirection: "column",
@@ -91,10 +104,9 @@ function GetReadOnlyTextBox(Name, Label, X, Y, addonAfter) {
         IsColon: false,
         IsFormItem: true, ColSpan: 8,
         LabelCol: 10,
-        WrapperCol: 20,
+        WrapperCol: 21,
         IsReadOnly: true,
         AddonAfter: addonAfter,
-        Value: "测试数据1" + Label,
         Style: {
             display: "flex",
             flexDirection: "column",

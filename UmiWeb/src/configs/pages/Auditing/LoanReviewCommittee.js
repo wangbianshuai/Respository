@@ -2,19 +2,17 @@ import { AssignProporties } from "../Common";
 import ReadBaseInfo from "../../views/Order/ReadBaseInfo";
 import LoanReviewApprovalOpinion from "../../views/OrderApproval/LoanReviewApprovalOpinion";
 import LoanReviewOpinionRecord from "../../views/OrderApproval/LoanReviewOpinionRecord";
+import DataActions from "Actions";
 
 //审核管理/贷审会 1800-1899
-const DataActionTypes = {
-    //获取实体数据
-    GetEntityData: 1800
-}
+const DataActionTypes = DataActions.GetActionTypes("Auditing_LoanReviewCommittee");
 
 export default {
     Name: "LoanReviewCommittee",
-    GetEntityData: DataActionTypes.GetEntityData,
+    Type: "View",
     EventActions: GetEventActions(),
-    Properties1: AssignProporties({}, [ReadBaseInfo, LoanReviewApprovalOpinion]),
-    Properties2: AssignProporties({}, [ReadBaseInfo, GetApprovalOpinionView(), LoanReviewOpinionRecord])
+    Properties1: AssignProporties({}, [ReadBaseInfo(DataActionTypes), LoanReviewApprovalOpinion(DataActionTypes)]),
+    Properties2: AssignProporties({}, [ReadBaseInfo(DataActionTypes), GetApprovalOpinionView(), LoanReviewOpinionRecord(DataActionTypes)])
 }
 
 function GetApprovalOpinionView() {
@@ -37,7 +35,38 @@ function GetOpinionSpanText() {
     }
 }
 
-
 function GetEventActions() {
-    return []
+    return [
+        //获取订单基本信息实体数据 GetOrderInfoEntityData: 1800,
+        {
+            Name: "GetOrderInfoEntityData",
+            Type: "EntityEdit/GetEntityData",
+            EditView: "OrderInfo"
+        },
+        {
+            Name: "ToOrderDetail",
+            Type: "Page/ToPage",
+            PageUrl: "/CreditManage/OrderDetail?OrderCode=#{OrderCode}"
+        },
+        //获取审核意见明细 GetApprovalOpinionDetails: 1801,
+        {
+            Name: "GetApprovalOpinionDetails",
+            Type: "EntityEdit/GetEntityData",
+            EditView: "LoanReviewOpinionRecord2"
+        },
+        //获取审核意见 GetApprovalOpinion: 1802,
+        {
+            Name: "GetApprovalOpinion",
+            Type: "EntityEdit/GetEntityData",
+            EditView: "FinalReviewApprovalOpinion",
+            EditPropertiyViewList: ["LoanReviewCommitteeApprovalOpinion2", "ApprovalLeftRightButtonView"]
+        },
+        //保存审核意见 SaveApprovalOpinion: 1803
+        {
+            Name: "SaveApprovalOpinion",
+            Type: "EntityEdit/SaveEntityDataViews",
+            EditPropertiyViewList: ["LoanReviewCommitteeApprovalOpinion2", "ApprovalLeftRightButtonView"],
+            SetDisabledViewList: ["LoanReviewCommitteeApprovalOpinion2", "ApprovalLeftRightButtonView"]
+        }
+    ]
 }

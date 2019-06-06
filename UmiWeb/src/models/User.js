@@ -1,18 +1,16 @@
 import DvaIndex from "DvaCommon";
 
 const config = {
-    Name: "ApiService",
+    Name: "UserService",
     ServiceName: "ApiService",
     ActionList: [
-        get2("GetNow", "System/GetNow", "Now", "Now"),
-        post("GetOrderList", "getorderlist", "OrderList", "data"),
-        post("GetUserList", "getuserlist", "UserList", "data"),
-        post("GetOrderStatusLogs", "GetOrderStatusLogs", "OrderStatusLogs", "data"),
+        post("GetDataList", "User/getdatalist", "DataList", "data"),
+        post("Insert", "User/insert", "SaveEntityData", "data"),
+        post("Update", "User/update", "SaveEntityData", "data"),
+        post("Delete", "User/delete", "DeleteEntityData", "data"),
+        post("GetData", "User/getdata", "EntityData", "data"),
+        post("GetUserList", "getuserlist", "UserList", "data")
     ]
-}
-
-function get2(actionName, url, stateName, dataKey) {
-    return { ActionName: actionName, Url: url, Method: "GET", StateName: stateName, DataKey: dataKey }
 }
 
 function post(actionName, url, stateName, dataKey, isToken, isOperation) {

@@ -15,7 +15,7 @@ class LoanReviewCommittee extends BaseIndex {
 
     render() {
         this.PageConfig.Properties = this.PageConfig.Properties2;
-        return <Components.View Property={this.PageConfig} EventActions={this.EventActions} />
+        return <Components.PropertyItem Property={this.PageConfig} EventActions={this.EventActions} />
     }
 }
 

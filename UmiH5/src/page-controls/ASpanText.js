@@ -1,17 +1,12 @@
 import React from "react"
 import Controls from "Controls";
-import styles from "../styles/View.css"
+import styles from "../styles/View.scss"
 
 export default class ASpanText extends Controls.BaseIndex {
     constructor(props) {
         super(props)
 
         this.Name = "ASpanText";
-    }
-
-    ClickAction() {
-        if (!this.Property.EventActionName) return;
-        this.EventActions.InvokeAction(this.Property.EventActionName, this.props);
     }
 
     render() {
@@ -27,8 +22,6 @@ export default class ASpanText extends Controls.BaseIndex {
 
         if (ALabel) label = <label>{ALabel}</label>
 
-        let rel = Target === "_blank" ? "noopener noreferrer" : undefined;
-
-        return (<span className={className} style={Style}><a href={Href} target={Target} onClick={this.ClickAction.bind(this)} rel={rel}>{text}</a>{label}</span>)
+        return (<span className={className} style={Style}><a href={Href} target={Target}>{text}</a>{label}</span>)
     }
 }

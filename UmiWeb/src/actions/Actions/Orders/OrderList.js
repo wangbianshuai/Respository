@@ -12,52 +12,44 @@ export default class OrderList extends BaseIndex {
         this.Init();
     }
 
-    GetStateActionTypes() {
-        const { SearchQuery, DispatchOrder, GrabOrder } = this.ActionTypes;
-
-        return {
-            DataList: [SearchQuery],
-            DispatchOrder: [DispatchOrder],
-            GrabOrder: [GrabOrder]
-        }
-    }
-
-    Invoke(id, actionType, data) {
-        const { SearchQuery, DispatchOrder, GrabOrder } = this.ActionTypes;
-
-        switch (actionType) {
-            case SearchQuery: this.SearchQuery(id, actionType, data); break;
-            case DispatchOrder: this.DispatchOrder(id, actionType, data); break;
-            case GrabOrder: this.GrabOrder(id, actionType, data); break;
-            default: this.Dispatch(id, actionType, data); break;
-        }
-    }
-
-    SetResponseData(id, actionType, data) {
-        const { SearchQuery } = this.ActionTypes;
-
-        switch (actionType) {
-            case SearchQuery: return this.SetSearchQuery(id, actionType, data);
-            default: return this.SetApiResponse(data);
-        }
-    }
-
     SearchQuery(id, actionType, data) {
-        this.DvaActions.Dispatch("ApiService", "GetOrderList", { data: data, Action: this.GetAction(id, actionType) });
+        const { ConditionList: { OrderStatus, QueryName, Keyword } } = data;
+        const payload = {
+            workOrderState: OrderStatus,
+            pageIndex: data.PageIndex,
+            pageSize: data.PageSize,
+            Action: this.GetAction(id, actionType)
+        };
+
+        payload[QueryName] = Keyword;
+
+        this.DvaActions.Dispatch("OrderService", "QueryPoolOrder", payload);
     }
 
     SetSearchQuery(id, actionType, data) {
+        data = this.SetSearchQueryResponse(data);
         actionType = DataGriViewActionType.SearchQuery;
         this.DispatchAction(actionType, data);
         return false;
     }
 
     DispatchOrder(id, actionType, data) {
-        this.Dispatch(id, actionType, data)
+        const { SelectRowKeys, SelectValues } = data;
+        const payload = {
+            loanApplyIdList: SelectRowKeys,
+            userId: SelectValues[0],
+            Action: this.GetAction(id, actionType)
+        }
+        this.DvaActions.Dispatch("OrderService", "DispatchOrder", payload);
     }
 
     GrabOrder(id, actionType, data) {
-        this.Dispatch(id, actionType, data)
+        const { SelectRowKeys } = data;
+        const payload = {
+            loanApplyIdList: SelectRowKeys,
+            Action: this.GetAction(id, actionType)
+        }
+        this.DvaActions.Dispatch("OrderService", "GrabOrder", payload);
     }
 
 }

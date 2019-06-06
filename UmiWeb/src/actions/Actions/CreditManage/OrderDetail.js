@@ -1,4 +1,5 @@
 import BaseIndex from "../../BaseIndex";
+import Common2 from "../Common2";
 
 export default class OrderDetail extends BaseIndex {
     constructor(props) {
@@ -11,38 +12,45 @@ export default class OrderDetail extends BaseIndex {
         this.Init();
     }
 
-    GetStateActionTypes() {
-        const { GetEntityData } = this.ActionTypes;
+    GetAllIndustry(id, actionType, data){
+        Common2.GetAllIndustry.call(this, id, actionType, data);
+    }
 
-        return {
-            EntityData: [GetEntityData]
+    SetGetAllIndustry(id, actionType, data){
+        return Common2.SetGetAllIndustry.call(this, id, actionType, data);
+    }
+
+    GetOrderDetailEntityData(id, actionType, data){
+        Common2.GetOrderDetailEntityData.call(this, id, actionType, data);
+    }
+
+    SetGetOrderDetailEntityData(id, actionType, data){
+        return Common2.SetGetOrderDetailEntityData.call(this, id, actionType, data);
+    }
+
+    SaveOrderDetailEntityData(id, actionType, data) {
+        const { EntityData } = data;
+        const payload = { Action: this.GetAction(id, actionType) };
+
+        if (EntityData.ViewName === "PersonPropertyInfo") {
+            for (let key in EntityData) { if (key !== "ViewName") payload[key] = EntityData[key]; }
         }
-    }
-
-    Invoke(id, actionType, data) {
-        const { GetEntityData } = this.ActionTypes;
-
-        switch (actionType) {
-            case GetEntityData: this.GetEntityData(id, actionType, data); break;
-            default: this.Dispatch(id, actionType, data); break;
+        else {
+            const editData = { ...data.OldEntityData };
+            for (let key in EntityData) { if (key !== "ViewName") editData[key] = EntityData[key]; }
+            payload[EntityData.ViewName] = editData;
         }
+
+        this.DvaActions.Dispatch("OrderService", "SaveOrderDetailEntityData", payload);
     }
 
-    SetResponseData(id, actionType, data) {
-        const { GetEntityData } = this.ActionTypes;
+    SubmitOrderInfo(id, actionType, data) {
+        const payload = { Action: this.GetAction(id, actionType) };
 
-        switch (actionType) {
-            case GetEntityData: return this.SetGetEntityData(id, actionType, data);
-            default: return this.SetApiResponse(data);
-        }
+        this.DvaActions.Dispatch("OrderService", "SubmitOrderInfo", payload);
     }
 
-    GetEntityData(id, actionType, data) {
-
+    GetOrderStatus(id, actionType, data){
+        Common2.GetOrderStatus.call(this, id, actionType, data);
     }
-
-    SetGetEntityData(id, actionType, data) {
-
-    }
-
 }

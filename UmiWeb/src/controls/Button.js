@@ -33,6 +33,7 @@ export default class Button2 extends BaseIndex {
             shape={Property.Shape}
             loading={Loading}
             size={Property.Size}
+            prefix={this.RenderPrefix()}
             type={Property.ButtonType}>{text}</Button>)
     }
 }

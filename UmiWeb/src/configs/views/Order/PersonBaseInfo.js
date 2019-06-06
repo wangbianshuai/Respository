@@ -1,52 +1,67 @@
-import Order from "../../entities/Order";
+import PersonBaseInfo from "../../entities/PersonBaseInfo";
 
 import { AssignProporties, GetTextBox, GetDatePicker, GetSelect, GetButton } from "../../pages/Common";
 
-export default {
-    Name: "PersonBaseInfo",
-    Type: "View",
-    Properties: AssignProporties({}, [GetInfoView(), GetRightButtonView()])
+var DataActionTypes = {}
+
+export default (actionTypes) => {
+    DataActionTypes = actionTypes;
+    return {
+        Name: "PersonBaseInfo",
+        Type: "View",
+        Properties: AssignProporties({}, [GetInfoView(), GetRightButtonView()])
+    }
 }
 
 function GetInfoView() {
     return {
         Name: "PersonBaseInfo2",
         Type: "RowsColsView",
-        Entity: Order,
+        Entity: PersonBaseInfo,
         IsForm: true,
         LabelAlign: "left",
         Title: "个人基本信息",
         Style: { marginTop: 8 },
-        Properties: AssignProporties(Order, GetProperties())
+        PropertyName: "PersonBaseInfo",
+        DefaultEditData: { ViewName: "PersonBaseInfo" },
+        SaveEntityDataActionType: DataActionTypes.SaveOrderDetailEntityData,
+        Properties: AssignProporties(PersonBaseInfo, GetProperties())
     }
 }
 
 function GetRightButtonView() {
     return {
-        Name: "RightButtonView",
+        Name: "PersonBaseInfoRightButtonView",
         Type: "View",
         ClassName: "DivRightButton",
         IsDiv: true,
-        Properties: AssignProporties(Order, GetRightButtonProperties())
+        Properties: AssignProporties({}, GetRightButtonProperties())
     }
 }
 
 function GetRightButtonProperties() {
-    return [{ ...GetButton("SavePersonBaseInfo", "保存", "primary"), EventActionName: "SavePersonBaseInfo", Style: { marginRight: 36, width: 84 } }]
+    return [{ ...GetButton("SavePersonBaseInfo", "保存", "primary"), IsDisabled: true, EventActionName: "SavePersonBaseInfoEntityData", Style: { marginRight: 36, width: 84 } }]
 }
 
 function GetProperties() {
     return [
         GetReadOnlyTextBox("Phone", "常用手机号", 1, 1),
-        GetEditSelect("UserType", "用户类型", GetUserTypeDataSource(), 1, 2, false, "请选择用户类型"),
-        GetTextBox2("Email", "邮箱地址", 1, 3, "", "请输入邮箱地址", 100, false),
-        GetEditSelect("Educational", "教育程度", GetEducationalDataSource(), 2, 1, false, "请选择教育程度"),
-        GetEditSelect("MaritalStatus", "婚姻状况", GetMaritalStatusDataSource(), 2, 2, false, "请选择婚姻状况"),
-        GetTextBox3("MaritalYears", "已婚年限", 2, 3, "int", "请输入已婚年限", 2, false, "年"),
-        GetTextBox2("NowAddress", "现居住地址", 3, 1, "", "请输入现居住地址", 100, false),
-        GetEditSelect("HouseStatus", "居住地是否租赁", GetHouseStatusDataSource(), 3, 2, false, "请选择居住地是否租赁"),
-        GetBetweenDate("HousePeriod", "租赁有效期限", 3, 3, false),
-        GetTextBox2("ElectricityCode", "居住地电费单号", 4, 1, "", "请输入居住地电费单号", 20, false)
+        GetTextBox2("Email", "邮箱地址", 1, 2, "", "请输入邮箱地址", 100, false),
+        GetEditSelect("Educational", "教育程度", PersonBaseInfo.EducationalDataSource, 1, 2, false, "请选择教育程度"),
+        {
+            ...GetEditSelect("MaritalStatus", "婚姻状况", PersonBaseInfo.MaritalStatusDataSource, 2, 1, false, "请选择婚姻状况"),
+            ValueDisabledProperties: { "2": ["MaritalYears"] },
+            IsLoadValue: true
+        },
+        GetTextBox3("MaritalYears", "已婚年限", 2, 2, "int", "请输入已婚年限", 2, false, "年", true),
+        GetTextBox2("NowAddress", "现居住地址", 2, 3, "", "请输入现居住地址", 100, false),
+        {
+            ...GetEditSelect("HouseStatus", "居住地是否租赁", PersonBaseInfo.HouseStatusDataSource, 3, 1, false, "请选择居住地是否租赁"),
+            ValueDisabledProperties: { "0": ["HousePeriod"] },
+            IsLoadValue: true
+        },
+        GetBetweenDate("HousePeriod", "HousePeriodStart", "HousePeriodEnd", "租赁有效期限", 3, 2, false, "请选择租赁有效期限", true),
+        GetTextBox2("ElectricityCode", "居住地电费单号", 3, 3, "", "请输入居住地电费单号", 20, false)
     ]
 }
 
@@ -56,10 +71,11 @@ function GetEditSelect(Name, Label, DataSource, X, Y, IsNullable, PlaceHolder, D
         IsColon: false,
         IsFormItem: true, ColSpan: 8,
         LabelCol: 10,
-        WrapperCol: 20,
+        WrapperCol: 21,
         IsNullable: IsNullable,
         PlaceHolder: PlaceHolder,
         IsEdit: true,
+        ReadRightName: "PersonBaseInfoRightButtonView",
         Style: {
             display: "flex",
             flexDirection: "column",
@@ -68,17 +84,21 @@ function GetEditSelect(Name, Label, DataSource, X, Y, IsNullable, PlaceHolder, D
     }
 }
 
-function GetBetweenDate(Name, Label, X, Y, IsNullable, PlaceHolder, DefaultValue) {
+function GetBetweenDate(Name, StartDateName, EndDateName, Label, X, Y, IsNullable, PlaceHolder, Disabled, DefaultValue) {
     return {
         ...GetDatePicker(Name, Label, X, Y, DefaultValue),
         IsColon: false,
         IsFormItem: true, ColSpan: 8,
         LabelCol: 10,
-        WrapperCol: 20,
+        WrapperCol: 21,
+        Disabled,
+        StartDateName, EndDateName,
         IsNullable: IsNullable,
         PlaceHolder: PlaceHolder,
         ControlType: "RangePicker",
+        NullTipMessage: PlaceHolder,
         IsEdit: true,
+        ReadRightName: "PersonBaseInfoRightButtonView",
         Style: {
             display: "flex",
             flexDirection: "column",
@@ -93,10 +113,11 @@ function GetTextBox2(Name, Label, X, Y, ContorlType, PlaceHolder, MaxLength, IsN
         IsColon: false,
         IsFormItem: true, ColSpan: 8,
         LabelCol: 10,
-        WrapperCol: 20,
+        WrapperCol: 21,
         AddonAfter: addonAfter,
         IsNullable: IsNullable,
         IsEdit: true,
+        ReadRightName: "PersonCardInfoRightButtonView",
         Style: {
             display: "flex",
             flexDirection: "column",
@@ -105,10 +126,10 @@ function GetTextBox2(Name, Label, X, Y, ContorlType, PlaceHolder, MaxLength, IsN
     }
 }
 
-function GetTextBox3(Name, Label, X, Y, DataType, PlaceHolder, MaxLength, IsNullable, addonAfter) {
+function GetTextBox3(Name, Label, X, Y, DataType, PlaceHolder, MaxLength, IsNullable, addonAfter, Disabled) {
     return {
         ...GetTextBox2(Name, Label, X, Y, "", PlaceHolder, MaxLength, IsNullable, addonAfter),
-        DataType
+        DataType, Disabled
     }
 }
 
@@ -118,30 +139,13 @@ function GetReadOnlyTextBox(Name, Label, X, Y, addonAfter) {
         IsColon: false,
         IsFormItem: true, ColSpan: 8,
         LabelCol: 10,
-        WrapperCol: 20,
+        WrapperCol: 21,
         IsReadOnly: true,
         AddonAfter: addonAfter,
-        Value: "测试数据1" + Label,
         Style: {
             display: "flex",
             flexDirection: "column",
             marginBottom: 10
         }
     }
-}
-
-function GetUserTypeDataSource() {
-    return [{ Value: 1, Text: "个体工商户" }, { Value: 2, Text: "公司" }]
-}
-
-function GetEducationalDataSource() {
-    return [{ Value: 1, Text: "本科" }, { Value: 2, Text: "大专" }]
-}
-
-function GetMaritalStatusDataSource() {
-    return [{ Value: 1, Text: "已婚" }, { Value: 2, Text: "未婚" }]
-}
-
-function GetHouseStatusDataSource() {
-    return [{ Value: 1, Text: "是" }, { Value: 0, Text: "否" }]
 }

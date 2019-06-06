@@ -1,0 +1,101 @@
+@function ToRem750($px){
+  @return $px/32*1rem;
+}
+
+@function ToRem($px){
+  @return ($px*750)/(32*640)*1rem;
+}
+
+.DivView{
+  background-color: #ffffff;
+  margin-top: 8px;
+  padding: 16px;
+}
+
+.SpanLabel,.SpanLabel2{
+  color: rgba(0, 0, 0, 0.85);
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 32px;
+  padding-left: 15px;
+}
+
+.SpanLabel label{
+  color: #999999;
+  font-weight: 400;
+  font-size: 14px;
+  margin-left: 10px;
+}
+
+
+.SpanLabel2{
+  width:100%;
+  line-height: 32px;
+  label{
+    color: #333333;
+    font-weight: 600;
+    font-size: ToRem(32);
+  }
+}
+
+.am-list-content .ListviewTitle,.ContactListViewTitle{
+  background:#f2f2f2;
+  height:ToRem750(100);
+  align-items: flex-end;
+
+}
+
+.ContactListViewTitle{
+    .SpanLabel{
+      margin-top:ToRem(32);
+    }
+}
+
+
+.deleteHouseDescBtn{
+  width: 50%;
+  margin:0 auto;
+  height:ToRem750(64) !important;
+  line-height: ToRem750(64) !important;
+  margin-right:ToRem750(20);
+}
+
+.deleteHouseDescBtn:before{
+  border:none !important;
+}
+
+.SelectItem1 {
+  .am-list-item .am-list-line .am-list-content {
+    padding-left: ToRem750(30) ;
+  }
+
+  .am-list-arrow{
+    margin-right: ToRem750(30) ;
+  }
+}
+
+
+.textBoxFirst{
+  padding-top: ToRem750(40);
+  background: #f2f2f2 !important;
+  >.am-list-line{
+    background: #ffffff;
+  }
+  >.am-list-line:before{
+    content: '';
+    position: absolute;
+    background-color: #ddd;
+    display: block;
+    z-index: 1;
+    top: 0;
+    right: auto;
+    bottom: auto;
+    left: 0;
+    width: 100%;
+    height: 1PX;
+    transform-origin: 50% 100%;
+    transform: scaleY(0.5);
+  }
+}
+
+

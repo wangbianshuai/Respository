@@ -54,11 +54,13 @@ function InitDvaActions(dvaActions) {
     return stateActionTypes;
 }
 
-export default {
+const Actions = {
     GetActionTypes,
     InitAction,
     Invoke,
     Receive,
     InitDvaActions,
     Dispatch
-};
+}
+
+export default Actions;

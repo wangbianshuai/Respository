@@ -1,9 +1,15 @@
 import { AssignProporties, GetTextBox, GetButton } from "../../pages/Common";
 
-export default {
-    Name: "CreditCalculate",
-    Type: "View",
-    Properties: AssignProporties({}, [GetInfoView(), GetRightButtonView()])
+var DataActionTypes = {}
+
+export default (actionTypes) => {
+    DataActionTypes = actionTypes;
+
+    return {
+        Name: "CreditCalculate",
+        Type: "View",
+        Properties: AssignProporties({}, [GetInfoView(), GetRightButtonView()])
+    }
 }
 
 function GetInfoView() {
@@ -14,13 +20,15 @@ function GetInfoView() {
         LabelAlign: "left",
         Title: "测算结果",
         Style: { marginTop: 8 },
+        GetEntityDataActionType: DataActionTypes.GetCreditQuota,
+        SaveEntityDataActionType: DataActionTypes.ComputeCreditQuota,
         Properties: AssignProporties({}, GetProperties())
     }
 }
 
 function GetRightButtonView() {
     return {
-        Name: "RightButtonView",
+        Name: "CreditCalculateButtonView",
         Type: "View",
         ClassName: "DivLeftRightButton",
         IsDiv: true,
@@ -30,12 +38,12 @@ function GetRightButtonView() {
 
 function GetRightButtonProperties() {
     return [{ Name: "InfoTip", Type: "SpanText", ClassName: "RedSpanTip", Text: "重要提醒：测算结果仅供初审阶段参考！" },
-    { ...GetButton("ExceCompute", "执行测算", "primary"), EventActionName: "ExceCompute", Style: { marginRight: 36, width: 100 } }]
+    { ...GetButton("ExceCompute", "执行测算", "primary"), IsDisabled: true, EventActionName: "ExceCompute", Style: { marginRight: 36, width: 100 } }]
 }
 
 function GetProperties() {
     return [
-        GetTextBox3("kinsfolkContactName", "测算借款额度", 1, 1, "decimal", "请输入", 20, false, "元"),
+        GetTextBox3("LoanQuota", "测算借款额度", 1, 1, "float", "请输入", 20, false, "元"),
     ]
 }
 
@@ -45,7 +53,7 @@ function GetTextBox2(Name, Label, X, Y, ContorlType, PlaceHolder, MaxLength, IsN
         IsColon: false,
         IsFormItem: true, ColSpan: 8,
         LabelCol: 20,
-        WrapperCol: 20,
+        WrapperCol: 21,
         AddonAfter: addonAfter,
         IsNullable: IsNullable,
         IsEdit: true,

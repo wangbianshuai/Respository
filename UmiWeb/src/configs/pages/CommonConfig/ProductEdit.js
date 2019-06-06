@@ -11,6 +11,7 @@ const DataActionTypes = {
 
 export default {
     Name: "ProductEdit",
+    Type: "View",
     GetEntityData: DataActionTypes.GetEntityData,
     EventActions: GetEventActions(),
     Properties: AssignProporties({}, [GeEditView()])
@@ -98,9 +99,9 @@ function GeLoanAmountView() {
 
 function GetLoanAmountProperties() {
     return [
-        GetTextBox3("MinLoanAmount", "", 1, 1, "decimal", "请输入最小借款额度", 20, false, "元"),
+        GetTextBox3("MinLoanAmount", "", 1, 1, "float", "请输入最小借款额度", 20, false, "元"),
         { Name: "Space1", Type: "SpanText", X: 1, Y: 2, Text: "-", ColSpan: 2, Style: { textAlign: "center", display: "block" } },
-        GetTextBox3("MaxLoanAmount", "", 1, 3, "decimal", "请输入最大借款额度", 20, false, "元"),
+        GetTextBox3("MaxLoanAmount", "", 1, 3, "float", "请输入最大借款额度", 20, false, "元"),
     ]
 }
 
@@ -125,6 +126,8 @@ function GetButtonView() {
         IsDiv: true,
         IsFormItem: true,
         ColSpan: 24,
+        X: 7,
+        Y: 1,
         Properties: AssignProporties({}, GetButtonProperties())
     }
 }

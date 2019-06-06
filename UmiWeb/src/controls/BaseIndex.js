@@ -1,5 +1,6 @@
 import { Component } from "react";
 import { Common } from "UtilsCommon";
+import { Icon } from "antd";
 
 export default class BaseIndex extends Component {
     constructor(props) {
@@ -16,7 +17,7 @@ export default class BaseIndex extends Component {
 
         this.InitState = {
             Disabled: this.Property.Disabled,
-            Value: this.Property.Value || (this.Property.DefaultValue || null),
+            Value: this.GetInitValue(),
             IsReadOnly: this.Property.IsReadOnly,
             ClassName: "",
             Style: null,
@@ -26,6 +27,7 @@ export default class BaseIndex extends Component {
         this.state = this.InitState;
 
         this.Property.SetDisabled = (disabled) => this.setState({ Disabled: disabled });
+        this.Property.GetDisabled = () => this.state.Disabled;
         this.Property.SetVisible = this.SetVisible.bind(this);
         this.Property.GetVisible = () => this.state.IsVisible;
 
@@ -49,6 +51,15 @@ export default class BaseIndex extends Component {
         this.Property.SetFocus = this.SetFocus.bind(this);
 
         this.Property.GetSelectData = this.GetSelectData.bind(this);
+
+        this.Property.GetDataSource = this.GetDataSource.bind(this);
+    }
+
+    GetInitValue() {
+        if (!Common.IsNullOrEmpty(this.Property.Value)) return this.Property.Value;
+        if (!Common.IsNullOrEmpty(this.Property.DefaultValue)) return this.Property.DefaultValue;
+
+        return null;
     }
 
     SetVisible(v) {
@@ -150,16 +161,24 @@ export default class BaseIndex extends Component {
         return obj && obj.IsSuccess !== false;
     }
 
+    RenderPrefix() {
+        const { PrefixIcon } = this.Property
+        if (PrefixIcon) return <Icon type={PrefixIcon.Type} style={PrefixIcon.Style} />
+        return null;
+    }
+
     GetDataSource() {
         const { Property } = this.props
 
         if (Property.ServiceDataSource) {
             this.ValueName = Property.ServiceDataSource.ValueName
             this.TextName = Property.ServiceDataSource.TextName
+            this.ParentValueName = Property.ServiceDataSource.ParentValueName
         }
         else {
             this.ValueName = "Value";
             this.TextName = "Text";
+            this.ParentValueName = "ParentValue"
         }
 
         if (Common.IsArray(Property.DataSource)) {
@@ -170,9 +189,10 @@ export default class BaseIndex extends Component {
 
             Property.SetDataSource = (dataList, parentValue) => {
                 if (this.IsDestory) return;
-                if (dataList.Action && dataList.Data) dataList = dataList.Data;
+                if (dataList && dataList.Action && dataList.Data) dataList = dataList.Data;
                 if (!Common.IsArray(dataList)) dataList = [];
                 this.Property.DataSource = dataList;
+                this.Property.ParentValue = parentValue;
                 this.setState({ Options: this.GetOptions(parentValue) });
             };
 
@@ -208,18 +228,39 @@ export default class BaseIndex extends Component {
         if (Property.ValueChange) Property.ValueChange(value, this.GetSelectData(value));
 
         if (Property.ValueVisibleProperties) this.SetValueVisibleProperties(value);
+        if (Property.ValueDisabledProperties) this.SetValueDisabledProperties(value);
+
+        //值改变调用事件行为
+        if (Property.ValueChangeEventActionName) this.EventActions.InvokeAction(Property.ValueChangeEventActionName, this.props);
 
         window.setTimeout(() => this.ChildPropertiesChanged(value), 100);
     }
 
     SetValueVisibleProperties(value) {
-        if (!value) return;
+        if (Common.IsNullOrEmpty(value)) return;
 
         const { ValueVisibleProperties } = this.Property;
 
         for (let key in ValueVisibleProperties) {
             this.SetPropertiesVisible(ValueVisibleProperties[key], Common.IsEquals(key, value))
         }
+    }
+
+    SetValueDisabledProperties(value) {
+        if (Common.IsNullOrEmpty(value)) return;
+
+        const { ValueDisabledProperties } = this.Property;
+
+        for (let key in ValueDisabledProperties) {
+            this.SetPropertiesDisabled(ValueDisabledProperties[key], Common.IsEquals(key, value))
+        }
+    }
+
+    SetPropertiesDisabled(names, disabled) {
+        names.forEach(n => {
+            const p = this.GetProperty(n);
+            if (p && p.SetDisabled) p.SetDisabled(disabled);
+        });
     }
 
     SetPropertiesVisible(names, isVisible) {
@@ -235,6 +276,7 @@ export default class BaseIndex extends Component {
             this.Property.ChildNames.forEach(n => {
                 p = this.GetProperty(n);
                 if (p != null && p.SetDataSource) {
+                    if (!Common.IsNullOrEmpty(p.ParentValue) && p.ParentValue !== value) p.SetValue(null);
                     p.SetDataSource(p.DataSource, value);
                 }
             })

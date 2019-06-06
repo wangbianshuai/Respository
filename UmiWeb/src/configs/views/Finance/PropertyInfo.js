@@ -1,9 +1,17 @@
+import PropertyInfo from "../../entities/PropertyInfo";
+
 import { AssignProporties, GetTextBox, GetSelect, GetButton } from "../../pages/Common";
 
-export default {
-    Name: "PropertyInfo",
-    Type: "View",
-    Properties: AssignProporties({}, [GetInfoView(), GetRightButtonView()])
+var DataActionTypes = {}
+
+export default (actionTypes) => {
+    DataActionTypes = actionTypes;
+
+    return {
+        Name: "PropertyInfo",
+        Type: "View",
+        Properties: AssignProporties({}, [GetInfoView(), GetRightButtonView()])
+    }
 }
 
 function GetInfoView() {
@@ -14,13 +22,16 @@ function GetInfoView() {
         LabelAlign: "left",
         Title: "资产信息",
         Style: { marginTop: 8 },
-        Properties: AssignProporties({}, GetProperties())
+        PropertyName: "PropertyInfo",
+        DefaultEditData: { ViewName: "PropertyInfo" },
+        SaveEntityDataActionType: DataActionTypes.SaveFinalBaseInfo,
+        Properties: AssignProporties(PropertyInfo, GetProperties())
     }
 }
 
 function GetRightButtonView() {
     return {
-        Name: "RightButtonView",
+        Name: "PropertyInfoButtonView",
         Type: "View",
         ClassName: "DivRightButton",
         IsDiv: true,
@@ -35,10 +46,10 @@ function GetRightButtonProperties() {
 
 function GetProperties() {
     return [
-        GetEditSelect("CarUseNature", "是否本地有房产", GetLocalHouseDataSource(), 1, 1, true, "请选择是否本地有房产"),
-        GetEditSelect("mortgage", "是否有按揭", GetMortgageDataSource(), 1, 2, true, "请选择是否有按揭"),
-        GetTextBox3("kinsfolkContactRelation", "清房房价（如有房产，则必填）", 1, 3, "decimal", "请输入", 20, true, "元"),
-        GetTextBox3("kinsfolkContactRelation", "按揭月供金额", 2, 1, "decimal", "请输入", 20, true, "元")
+        GetEditSelect("IsLocalHouse", "是否本地有房产", PropertyInfo.LocalHouseDataSource, 1, 1, true, "请选择是否本地有房产"),
+        GetEditSelect("IsMortgage", "是否有按揭", PropertyInfo.MortgageDataSource, 1, 2, true, "请选择是否有按揭"),
+        GetTextBox3("HouseAmount", "清房房价（如有房产，则必填）", 1, 3, "float", "请输入", 20, true, "元"),
+        GetTextBox3("MonthMortgage", "按揭月供金额", 2, 1, "float", "请输入", 20, true, "元")
     ]
 }
 
@@ -47,8 +58,8 @@ function GetEditSelect(Name, Label, DataSource, X, Y, IsNullable, PlaceHolder, D
         ...GetSelect(Name, Label, DataSource, X, Y, DefaultValue),
         IsColon: false,
         IsFormItem: true, ColSpan: 8,
-        LabelCol: 10,
-        WrapperCol: 20,
+        LabelCol: 20,
+        WrapperCol: 21,
         IsNullable: IsNullable,
         IsAddOptional: !!IsNullable,
         PlaceHolder: PlaceHolder,
@@ -67,7 +78,7 @@ function GetTextBox2(Name, Label, X, Y, ContorlType, PlaceHolder, MaxLength, IsN
         IsColon: false,
         IsFormItem: true, ColSpan: 8,
         LabelCol: 20,
-        WrapperCol: 20,
+        WrapperCol: 21,
         AddonAfter: addonAfter,
         IsNullable: IsNullable,
         IsEdit: true,
@@ -84,12 +95,4 @@ function GetTextBox3(Name, Label, X, Y, DataType, PlaceHolder, MaxLength, IsNull
         ...GetTextBox2(Name, Label, X, Y, "", PlaceHolder, MaxLength, IsNullable, addonAfter),
         DataType
     }
-}
-
-function GetLocalHouseDataSource() {
-    return [{ Value: 1, Text: "有" }, { Value: 0, Text: "无" }]
-}
-
-function GetMortgageDataSource(){
-    return [{ Value: 1, Text: "有" }, { Value: 0, Text: "无" }]
 }

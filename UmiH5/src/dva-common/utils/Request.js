@@ -43,6 +43,7 @@ function FetchRequest(url, data, resKey, serviceName, headers, callback) {
         return GetErrorResponse(res, url, data)
     }
 }
+
 function SyncAjax(url, data, resKey, callback) {
     return new Promise((resolve, reject) => {
         try {
@@ -58,6 +59,22 @@ function SyncAjax(url, data, resKey, callback) {
             resolve(res)
         }
     });
+}
+
+export function PostUrlFormData(url, data, resKey, serviceName, headers) {
+    return FetchRequest(url, {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: GetFormData(data)
+    }, resKey, serviceName, headers)
+}
+
+function GetFormData(data) {
+    let body = []
+    for (var key in data) {
+        body.push(key + "=" + encodeURIComponent(data[key]))
+    }
+    return body.join("&")
 }
 
 function SetParamsHeader(data, headers) {
@@ -78,8 +95,9 @@ function SetServiceHeader(data, serviceName) {
 }
 
 var _ClientConfig = {
-    UserCenterApiService: "XXD_FRONT_END",
-    ActivityCenterApiService: "XXD_ACTIVITY_H5_PAGE"
+    UserCenterApiService: "XXD_FRONT_END_H5",
+    FileCenterApiService: "XXD_FRONT_END_H5",
+    ApiH5Service: "XXD_FRONT_END_H5"
 };
 
 function SetApiServiceHeader(data, serviceName) {
@@ -113,11 +131,7 @@ NOT_FOUND_TOKEN("200304","token 自动失效（缓存为空）"),
 MISMATCHED_DATA_TOKEN("200305","token 不一致（重复登录）"),
 */
 
-function GetResponseData(d, resKey, url, data) {
-    const blSuccess = d && d.IsSuccess === false ? false : true;
-
-    if (!blSuccess) return d;
-
+function GetResponseData(d, resKey) {
     let obj = null
 
     if (d && d.code) {
@@ -125,22 +139,13 @@ function GetResponseData(d, resKey, url, data) {
         else if (d.code === "200000") {
             if (d && resKey && d.data && d.data[resKey]) obj = d.data[resKey];
             else if (d.data) obj = d.data;
-            else obj = d;
+            else obj = { IsSuccess: false, Message: "请求异常！", ResData: d }
         }
         else if (d.code === "200408" || d.code === "200301" || d.code === "200302" || d.code === "200303" || d.code === "200304" || d.code === "200305") {
             obj = { IsSuccess: false, IsReLogin: true, Message: d.code + ":" + d.message, Code: d.code }
         }
+        else if (d.code === "0") obj = { IsSuccess: false, Message: "请求异常！" }
         else obj = { IsSuccess: false, Message: d.code + ":" + d.message, Code: d.code }
-    }
-    else if (d && d.respCode) {
-        if (d.respCode === 0 && resKey === false) obj = d;
-        else if (d.respCode === 0) {
-            if (d && resKey && d[resKey]) obj = d[resKey];
-            else if (d && resKey && d.data && d.data[resKey]) obj = d.data[resKey];
-            else if (d.data) obj = d.data;
-            else obj = d;
-        }
-        else obj = { IsSuccess: false, Message: d.respCode + ":" + d.respMsg, Code: d.respCode }
     }
     else if (resKey) {
         if (d && d[resKey]) obj = d[resKey];

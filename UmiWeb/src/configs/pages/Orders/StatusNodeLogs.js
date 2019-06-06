@@ -8,6 +8,7 @@ const DataActionTypes = {
 
 export default {
     Name: "StatusNodeLogs",
+    Type: "View",
     EventActions: GetEventActions(),
     Properties: AssignProporties(OrderStatusLog, [GetDataGridView()])
 }

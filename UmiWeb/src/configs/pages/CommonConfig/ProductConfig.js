@@ -9,6 +9,7 @@ const DataActionTypes = {
 
 export default {
     Name: "ProductConfig",
+    Type: "View",
     EventActions: GetEventActions(),
     Properties: AssignProporties(Product, [GetSearchOperationView(), GetAlert(), GetDataGridView()])
 }

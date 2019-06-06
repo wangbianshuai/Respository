@@ -1,69 +1,96 @@
-import Order from "../../entities/Order";
+import PersonBaseInfo from "../../entities/PersonBaseInfo";
 
-import { AssignProporties, GetTextBox, GetButton } from "../../pages/Common";
+import { AssignProporties, GetTextBox, GetButton, GetSelect } from "../../pages/Common";
 
-export default {
-    Name: "PersonBaseInfo",
-    Type: "View",
-    Properties: AssignProporties({}, [GetInfoView(), GetRightButtonView()])
+var DataActionTypes = {}
+
+export default (actionTypes) => {
+    DataActionTypes = actionTypes;
+    return {
+        Name: "PersonBaseInfo",
+        Type: "View",
+        Properties: AssignProporties({}, [GetInfoView(), GetRightButtonView()])
+    }
 }
 
 function GetInfoView() {
     return {
         Name: "PersonBaseInfo2",
         Type: "RowsColsView",
-        Entity: Order,
+        Entity: PersonBaseInfo,
         IsForm: true,
         LabelAlign: "left",
         Title: "个人基本信息",
         Style: { marginTop: 8 },
-        Properties: AssignProporties(Order, GetProperties())
+        PropertyName: "PersonBaseInfo",
+        DefaultEditData: { ViewName: "PersonBaseInfo" },
+        SaveEntityDataActionType: DataActionTypes.SaveApprovalOrderDetail,
+        Properties: AssignProporties(PersonBaseInfo, GetProperties())
     }
 }
 
 function GetRightButtonView() {
     return {
-        Name: "RightButtonView",
+        Name: "PersonBaseInfoButtonView",
         Type: "View",
         ClassName: "DivRightButton",
         IsDiv: true,
-        Properties: AssignProporties(Order, GetRightButtonProperties())
+        Properties: AssignProporties({}, GetRightButtonProperties())
     }
 }
 
 function GetRightButtonProperties() {
-    return [{ ...GetButton("SavePersonBaseInfo", "保存", "primary"), EventActionName: "SavePersonBaseInfo", Style: { marginRight: 36, width: 84 } }]
+    return [{ ...GetButton("SavePersonBaseInfo", "保存", "primary"), EventActionName: "SavePersonBaseInfoEntityData", Style: { marginRight: 36, width: 84 } }]
 }
 
 function GetProperties() {
     return [
-        GetReadOnlyTextBox("Phone", "常用手机号", 1, 1),
-        GetReadOnlyTextBox("UserType", "用户类型", 1, 2),
-        GetReadOnlyTextBox("Email", "邮箱地址", 1, 3),
-        GetReadOnlyTextBox("Educational", "教育程度", 2, 1),
-        GetReadOnlyTextBox("MaritalStatus", "婚姻状况", 2, 2),
-        GetReadOnlyTextBox("MaritalYears", "已婚年限", 2, 3, "年"),
-        GetReadOnlyTextBox("NowAddress", "现居住地址", 3, 1),
-        GetReadOnlyTextBox("HouseStatus", "居住地是否租赁", 3, 2),
-        GetReadOnlyTextBox("HousePeriod", "租赁有效期限", 3, 3),
-        GetReadOnlyTextBox("ElectricityCode", "居住地电费单号", 4, 1),
+        GetReadOnlyTextBox("Phone", "常用手机号（非注册手机号）", 1, 1),
+        GetReadOnlyTextBox("Email", "邮箱地址", 1, 2),
+        GetReadOnlySelect("Educational", "教育程度", PersonBaseInfo.EducationalDataSource, 1, 3),
+        GetReadOnlySelect("MaritalStatus", "婚姻状况", PersonBaseInfo.MaritalStatusDataSource, 2, 1),
+        GetReadOnlyTextBox("MaritalYears", "已婚年限", 2, 2, "年"),
+        GetReadOnlyTextBox("NowAddress", "现居住地址", 2, 3),
+        GetReadOnlySelect("HouseStatus", "居住地是否租赁", PersonBaseInfo.HouseStatusDataSource, 3, 1),
+        GetReadOnlyTextBox("HousePeriod", "租赁有效期限", 3, 2),
+        GetReadOnlyTextBox("ElectricityCode", "居住地电费单号", 3, 3),
         { Name: "WhiteSpace1", Type: "WhiteSpace", ClassName: "WhiteSpace1", Style: { marginBottom: 20 }, X: 5, Y: 1, ColSpan: 24 },
-        GetTextArea("BorrowerAmount", "备注", 6, 1, "请输入备注")
+        GetTextArea("ApprovalRemark", "备注", 6, 1, "请输入备注")
     ]
+}
+
+function GetReadOnlySelect(Name, Label, DataSource, X, Y) {
+    return {
+        ...GetSelect(Name, Label, DataSource, X, Y),
+        IsColon: false,
+        IsFormItem: true, ColSpan: 8,
+        LabelCol: 10,
+        WrapperCol: 21,
+        IsReadOnly: true,
+        Style: {
+            display: "flex",
+            flexDirection: "column",
+            marginBottom: 10
+        }
+    }
 }
 
 function GetTextArea(Name, Label, X, Y, PlaceHolder) {
     return {
-        ...GetTextBox(Name, Label, "TextArea", X, Y),
+        ...GetTextBox(Name, Label, "TextArea", X, Y, PlaceHolder),
         IsFormItem: true,
         IsNullable: true,
+        IsColon: false,
         IsAddOptional: true,
+        IsEdit: true,
+        ReadRightName: "PersonBaseInfoButtonView",
         ColSpan: 24,
         Rows: 4,
-        LabelCol: 2,
-        WrapperCol: 22,
-        PlaceHolder,
+        LabelCol: 10,
+        WrapperCol: 23,
         Style: {
+            display: "flex",
+            flexDirection: "column",
             marginBottom: 10
         }
     }
@@ -74,11 +101,10 @@ function GetReadOnlyTextBox(Name, Label, X, Y, addonAfter) {
         ...GetTextBox(Name, Label, "", X, Y, "", 200),
         IsColon: false,
         IsFormItem: true, ColSpan: 8,
-        LabelCol: 10,
-        WrapperCol: 20,
+        LabelCol: 20,
+        WrapperCol: 21,
         IsReadOnly: true,
         AddonAfter: addonAfter,
-        Value: "测试数据1" + Label,
         Style: {
             display: "flex",
             flexDirection: "column",

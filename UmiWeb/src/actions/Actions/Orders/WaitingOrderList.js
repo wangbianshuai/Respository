@@ -13,46 +13,18 @@ export default class WaitingOrderList extends BaseIndex {
         this.Init();
     }
 
-    GetStateActionTypes() {
-        const { SearchQuery, HandlerOrder, HandUpOrder } = this.ActionTypes;
-
-        return {
-            DataList: [SearchQuery],
-            HandlerOrder: [HandlerOrder],
-            HandUpOrder: [HandUpOrder]
-        }
-    }
-
-    Invoke(id, actionType, data) {
-        const { SearchQuery, HandlerOrder, HandUpOrder } = this.ActionTypes;
-
-        switch (actionType) {
-            case SearchQuery: this.SearchQuery(id, actionType, data); break;
-            case HandlerOrder: this.HandlerOrder(id, actionType, data); break;
-            case HandUpOrder: this.HandUpOrder(id, actionType, data); break;
-            default: this.Dispatch(id, actionType, data); break;
-        }
-    }
-
-    SetResponseData(id, actionType, data) {
-        const { SearchQuery } = this.ActionTypes;
-
-        switch (actionType) {
-            case SearchQuery: return this.SetSearchQuery(id, actionType, data);
-            default: return this.SetApiResponse(data);
-        }
-    }
-
     SearchQuery(id, actionType, data) {
-        this.DvaActions.Dispatch("ApiService", "GetOrderList", { data: data, Action: this.GetAction(id, actionType) });
+        this.DvaActions.Dispatch("OrderService", "QueryWaitingOrderList", { data: data, Action: this.GetAction(id, actionType) });
     }
 
     SetSearchQuery(id, actionType, data) {
+        data = this.SetSearchQueryResponse(data);
         actionType = DataGriViewActionType.SearchQuery;
         this.DispatchAction(actionType, data);
         return false;
     }
 
+    //待审会处理订单
     HandlerOrder(id, actionType, data) {
         const { SelectData } = data;
         if (Common.IsEquals(SelectData.HandlerType, 0)) {
@@ -63,11 +35,12 @@ export default class WaitingOrderList extends BaseIndex {
             }
         }
 
-        this.Dispatch(id, actionType, data)
+        this.DvaActions.Dispatch("OrderService", "CommitteeHandlerOrder", { data: data, Action: this.GetAction(id, actionType) });
     }
 
+    //挂起
     HandUpOrder(id, actionType, data) {
-        this.Dispatch(id, actionType, data)
+        this.DvaActions.Dispatch("OrderService", "HandUpOrder", { data: data, Action: this.GetAction(id, actionType) });
     }
 
 }

@@ -1,15 +1,14 @@
 import React, { Component } from "react"
 import { Common } from "UtilsCommon";
 import PropertyItem from "./PropertyItem";
-import { Card } from "antd";
-import styles from "../styles/View.css";
+import { Card, Flex } from "antd-mobile";
 
 export default class View extends Component {
     constructor(props) {
         super(props)
 
         this.Id = Common.CreateGuid()
-        this.state = { IsVisible: props.Property.IsVisible !== false }
+        this.state = { IsVisible: true }
         props.Property.SetVisible = this.SetVisible.bind(this);
     }
 
@@ -18,10 +17,8 @@ export default class View extends Component {
     }
 
     componentDidMount() {
-        const { Property, EventActions } = this.props;
-
-        if (Property.EventActionName) {
-            EventActions.InvokeAction(Property.EventActionName, this.props);
+        if (this.props.Property.EventActionName) {
+            this.props.EventActions.InvokeAction(this.props.Property.EventActionName, this.props);
         }
     }
 
@@ -30,6 +27,8 @@ export default class View extends Component {
 
         const props = { Property: p, View: Property, EventActions, key: p.Id }
 
+        const itemProps = p.ItemProps || {}
+        if (Property.IsFlex) return <Flex.Item {...itemProps} key={p.Id}><PropertyItem {...props} /></Flex.Item>
         return <PropertyItem {...props} />
     }
 
@@ -50,10 +49,14 @@ export default class View extends Component {
             )
         }
 
-        let className = Property.ClassName;
-        if (className && styles[className]) className = styles[className];
+        // let className = Property.ClassName;
+        // if (className && styles[className]) className = styles[className];
+        // if (typeof className === "string") className = this.props.EventActions.GetClassName(className);
 
-        if (Property.IsDiv) return <div className={className} style={Property.Style}>{this.RenderProperties()}</div>
+        const flexProps = Property.FlexProps || {}
+
+        if (Property.IsFlex) return <Flex className={Property.ClassName} style={Property.Style} {...flexProps}>{this.RenderProperties()}</Flex>
+        if (Property.IsDiv) return <div className={Property.ClassName} style={Property.Style}>{this.RenderProperties()}</div>
         return this.RenderProperties();
     }
 }

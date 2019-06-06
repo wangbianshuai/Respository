@@ -1,9 +1,17 @@
+import ApprovalOpinion from "../../entities/ApprovalOpinion";
+
 import { AssignProporties, GetTextBox, GetButton } from "../../pages/Common";
 
-export default {
-    Name: "LoanReviewApprovalOpinion",
-    Type: "View",
-    Properties: AssignProporties({}, [GetInfoView(), GetRightButtonView()])
+var DataActionTypes = {}
+
+export default (actionTypes) => {
+    DataActionTypes = actionTypes;
+
+    return {
+        Name: "LoanReviewApprovalOpinion",
+        Type: "View",
+        Properties: AssignProporties({}, [GetInfoView(), GetRightButtonView()])
+    }
 }
 
 function GetInfoView() {
@@ -11,15 +19,20 @@ function GetInfoView() {
         Name: "IndeedApprova2",
         Type: "RowsColsView",
         IsForm: true,
+        LabelAlign: "left",
         Title: "审核意见",
         Style: { marginTop: 8 },
+        Entity: ApprovalOpinion,
+        EventActionName: "GetApprovalOpinion",
+        GetEntityDataActionType: DataActionTypes.GetApprovalOpinion,
+        SaveEntityDataActionType: DataActionTypes.SaveApprovalOpinion,
         Properties: AssignProporties({}, GetProperties())
     }
 }
 
 function GetRightButtonView() {
     return {
-        Name: "RightButtonView",
+        Name: "ApprovalLeftRightButtonView",
         Type: "View",
         ClassName: "DivLeftRightButton",
         IsDiv: true,
@@ -33,13 +46,13 @@ function GetRightButtonProperties() {
 }
 
 export function GetRadio(Name, Label, DataSource) {
-    return { Name, Label, Type: "Radio", DataSource, Style: { marginLeft: 16 } }
+    return { Name, Label, Type: "Radio", DataSource, Style: { marginLeft: 16 } , IsEdit: true, NullTipMessage: "请选择审批状态！", IsNullable: false }
 }
 
 function GetProperties() {
     return [
         {
-            Name: "RightButtonView",
+            Name: "DivInfoView3",
             Type: "View",
             ClassName: "DivInfoView3",
             IsDiv: true,
@@ -55,30 +68,34 @@ function GetProperties() {
             },
             Properties: AssignProporties({}, GetAttementProperties())
         },
-        GetTextArea("BorrowerAmount", "基本情况", 2, 1, false),
-        GetTextArea("BorrowerAmount", "核心问题", 3, 1, false),
-        GetTextArea("BorrowerAmount", "建议措施", 4, 1, true)
+        GetTextArea("BaseInfo", "基本情况", 2, 1, false),
+        GetTextArea("CoreProblem", "核心问题", 3, 1, false),
+        GetTextArea("Recommended", "建议措施", 4, 1, true)
     ]
 }
 
 function GetAttementProperties() {
     return [
-         { ...GetButton("ToAttachPage", "附件操作", ""), Icon: "upload", EventActionName: "ToAttachPage", Style: {marginRight: 20 } },
+        { ...GetButton("ToAttachPage", "附件操作", ""), Icon: "upload", EventActionName: "ToAttachPage", Style: { marginRight: 20 } },
         { Name: "LeftRemark2", Type: "SpanText", ClassName: "SpanLabel2", Text: "", Label: "备注：跳转至影像平台进行上传或下载" },
     ]
 }
 
-function GetTextArea(Name, Label, X, Y, IsNullable) {
+function GetTextArea(Name, Label, X, Y) {
     return {
         ...GetTextBox(Name, Label, "TextArea", X, Y),
         IsFormItem: true,
-        IsAddOptional: !!IsNullable,
+        IsNullable: true,
+        IsColon: false,
+        IsAddOptional: true,
+        IsEdit: true,
         ColSpan: 24,
         Rows: 4,
-        LabelCol: 3,
-        WrapperCol: 21,
-        PlaceHolder: "请输入备注",
+        LabelCol: 10,
+        WrapperCol: 23,
         Style: {
+            display: "flex",
+            flexDirection: "column",
             marginBottom: 10
         }
     }

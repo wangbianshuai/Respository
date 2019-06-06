@@ -1,5 +1,3 @@
-import { GetProperty } from "./Common";
-
 export default {
     Name: "House",
     PrimaryKey: "Id",
@@ -8,9 +6,12 @@ export default {
 
 function GetProperties() {
     return [
-        GetProperty("HouseUserName", "HouseUserName", "房产所有人"),
-        GetProperty("HouserAddress", "HouserAddress", "房产地址"),
-        GetProperty("HoustSpace", "HoustSpace", "面积")
+        get("HouseUserName", "HouseUserName", "房产所有人"),
+        get("HouseAddress", "HouseAddress", "房产地址"),
+        get("HouseSpace", "HouseSpace", "面积")
     ]
 }
-
+ 
+function get(Name, PropertyName, Label) {
+    return { Name, PropertyName, Label}
+}

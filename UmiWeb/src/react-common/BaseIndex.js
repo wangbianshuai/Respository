@@ -16,8 +16,7 @@ export default class BaseIndex extends Component {
     }
 
     InitSet() {
-        if (this.props.ctx) this.Token = this.props.ctx.cookies.get("Token");
-        else this.Token = Common.GetCookie("Token");
+        this.Token = Common.GetStorage("Token");
     }
 
     Invoke() {
@@ -117,7 +116,7 @@ export default class BaseIndex extends Component {
         let isSuccess = obj && obj.IsSuccess !== false;
         if (isSuccess && obj.code !== undefined) isSuccess = Common.GetIntValue(obj.code) === 0;
         if (!isSuccess && obj.message) {
-            if (this.props.OperateTip) this.props.OperateTip(obj.message);
+            if (this.Alert) this.Alert(obj.message);
             else alert(obj.message);
         }
         return isSuccess;
@@ -148,8 +147,8 @@ export default class BaseIndex extends Component {
                 }
             }
         }
-
-        return blChanged
+        blChanged = !!blChanged;
+        return blChanged;
     }
 
     ReceiveActionData(nextProps) {
@@ -173,8 +172,9 @@ export default class BaseIndex extends Component {
         if (!this.Token) this.ToLogin();
     }
 
-    ToLogin() {
-
+    ToLogin(blRefresh) {
+        if (blRefresh) window.location.href = "/risk/login.html";
+        else this.ToPage("/Login");
     }
 
     ShowMessage(msg) {
@@ -186,11 +186,16 @@ export default class BaseIndex extends Component {
         this.PageConfig = Common.Clone(PageConfig(this.Name));
         this.PageData = Common.GetQueryString();
 
+        if (this.MenuKey && this.props.PageData && this.props.PageData.GetUserMenuRight) {
+            this.RightConfig = Common.ArrayFirst(this.props.PageData.GetUserMenuRight, (f) => f.Key === this.MenuKey);
+            if (this.RightConfig) this.RightConfig = Common.Clone(this.RightConfig);
+        }
+
         this.EventActions = {
-            Page: Page.Current, GetActionTypes: this.props.GetActionTypes,
+            Page: Page.Current, GetActionTypes: this.props.GetActionTypes, GetRight: this.GetRight.bind(this),
             SetModalDialog: Page.Current.Invoke("RootPage", "SetModalDialog"),
-            Controls: [], InvokeAction: this.InvokeEventAction.bind(this),
-            GetAction: this.GetEventAciton.bind(this), Components: [],
+            Controls: [], InvokeAction: this.InvokeEventAction.bind(this), GetFunction: this.GetFunction.bind(this),
+            GetAction: this.GetEventAction.bind(this), Components: [], GetViewProperty: this.GetViewProperty.bind(this),
             GetView: this.GetView.bind(this), OpenPage: this.OpenPage.bind(this),
             Alert: this.Alert.bind(this), Confirm: this.Confirm.bind(this), AlertSuccess: this.AlertSuccess.bind(this),
             Receives: {}, ToPage: this.ToPage.bind(this), PageData: this.PageData,
@@ -198,6 +203,25 @@ export default class BaseIndex extends Component {
             Invoke: this.props.Invoke, PageConfig: this.PageConfig, ActionTypes: this.ActionTypes
         };
         for (let key in EventActions) this.EventActions[key] = new EventActions[key]();
+    }
+
+    GetRight(name) {
+        if (!this.MenuKey) return true;
+        if (this.MenuKey && !this.RightConfig) return false;
+
+        const { PropertyNames, RightPropertyNames } = this.RightConfig;
+
+        if (PropertyNames && PropertyNames.indexOf(name) >= 0) {
+            if (!RightPropertyNames) return false;
+            else return RightPropertyNames.indexOf(name) >= 0
+        }
+
+        return true;
+    }
+
+    GetFunction(name) {
+        if (!name || !this[name]) return null;
+        return (params) => this[name](params);
     }
 
     GetView(name) {
@@ -249,8 +273,7 @@ export default class BaseIndex extends Component {
 
     Confirm(msg, onOk) {
         Modal.confirm({
-            title: "确认信息",
-            content: msg,
+            title: msg,
             onOk: onOk
         });
     }
@@ -268,7 +291,7 @@ export default class BaseIndex extends Component {
         if (e != null) e.Invoke(props, e);
     }
 
-    GetEventAciton(name) {
+    GetEventAction(name) {
         if (this[name]) return { Invoke: (a, b) => this[name](a, b) };
 
         const { EventActions } = this.PageConfig;

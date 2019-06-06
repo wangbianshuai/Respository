@@ -1,4 +1,5 @@
 import BaseIndex from "../../BaseIndex";
+import Common2 from "../Common2";
 
 export default class AntiFraudAuditing extends BaseIndex {
     constructor(props) {
@@ -11,38 +12,12 @@ export default class AntiFraudAuditing extends BaseIndex {
         this.Init();
     }
 
-    GetStateActionTypes() {
-        const { GetEntityData } = this.ActionTypes;
-
-        return {
-            EntityData: [GetEntityData]
-        }
+    //获取订单基本信息实体数据
+    GetOrderInfoEntityData(id, actionType, data) {
+        Common2.GetOrderInfoEntityData.call(this, id, actionType, data);
     }
 
-    Invoke(id, actionType, data) {
-        const { GetEntityData } = this.ActionTypes;
-
-        switch (actionType) {
-            case GetEntityData: this.GetEntityData(id, actionType, data); break;
-            default: this.Dispatch(id, actionType, data); break;
-        }
+    SetGetOrderInfoEntityData(id, actionType, data) {
+        return Common2.SetGetOrderInfoEntityData.call(this, id, actionType, data);
     }
-
-    SetResponseData(id, actionType, data) {
-        const { GetEntityData } = this.ActionTypes;
-
-        switch (actionType) {
-            case GetEntityData: return this.SetGetEntityData(id, actionType, data);
-            default: return this.SetApiResponse(data);
-        }
-    }
-
-    GetEntityData(id, actionType, data) {
-
-    }
-
-    SetGetEntityData(id, actionType, data) {
-
-    }
-
 }

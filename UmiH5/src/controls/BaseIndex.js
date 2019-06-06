@@ -1,6 +1,6 @@
 import { Component } from "react";
 import { Common } from "UtilsCommon";
-import { Icon } from "antd";
+import { Icon } from "antd-mobile";
 
 export default class BaseIndex extends Component {
     constructor(props) {
@@ -27,7 +27,6 @@ export default class BaseIndex extends Component {
         this.state = this.InitState;
 
         this.Property.SetDisabled = (disabled) => this.setState({ Disabled: disabled });
-        this.Property.GetDisabled = () => this.state.Disabled;
         this.Property.SetVisible = this.SetVisible.bind(this);
         this.Property.GetVisible = () => this.state.IsVisible;
 
@@ -53,6 +52,8 @@ export default class BaseIndex extends Component {
         this.Property.GetSelectData = this.GetSelectData.bind(this);
 
         this.Property.GetDataSource = this.GetDataSource.bind(this);
+
+        if (this.Property.ClassName) this.Property.ClassName = this.EventActions.GetClassName(this.Property.ClassName)
     }
 
     GetInitValue() {
@@ -189,7 +190,7 @@ export default class BaseIndex extends Component {
 
             Property.SetDataSource = (dataList, parentValue) => {
                 if (this.IsDestory) return;
-                if (dataList && dataList.Action && dataList.Data) dataList = dataList.Data;
+                if (dataList.Action && dataList.Data) dataList = dataList.Data;
                 if (!Common.IsArray(dataList)) dataList = [];
                 this.Property.DataSource = dataList;
                 this.Property.ParentValue = parentValue;
@@ -228,7 +229,6 @@ export default class BaseIndex extends Component {
         if (Property.ValueChange) Property.ValueChange(value, this.GetSelectData(value));
 
         if (Property.ValueVisibleProperties) this.SetValueVisibleProperties(value);
-        if (Property.ValueDisabledProperties) this.SetValueDisabledProperties(value);
 
         //值改变调用事件行为
         if (Property.ValueChangeEventActionName) this.EventActions.InvokeAction(Property.ValueChangeEventActionName, this.props);
@@ -237,30 +237,13 @@ export default class BaseIndex extends Component {
     }
 
     SetValueVisibleProperties(value) {
-        if (Common.IsNullOrEmpty(value)) return;
+        if (!value) return;
 
         const { ValueVisibleProperties } = this.Property;
 
         for (let key in ValueVisibleProperties) {
             this.SetPropertiesVisible(ValueVisibleProperties[key], Common.IsEquals(key, value))
         }
-    }
-
-    SetValueDisabledProperties(value) {
-        if (Common.IsNullOrEmpty(value)) return;
-
-        const { ValueDisabledProperties } = this.Property;
-
-        for (let key in ValueDisabledProperties) {
-            this.SetPropertiesDisabled(ValueDisabledProperties[key], Common.IsEquals(key, value))
-        }
-    }
-
-    SetPropertiesDisabled(names, disabled) {
-        names.forEach(n => {
-            const p = this.GetProperty(n);
-            if (p && p.SetDisabled) p.SetDisabled(disabled);
-        });
     }
 
     SetPropertiesVisible(names, isVisible) {

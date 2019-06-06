@@ -32,9 +32,10 @@ export default class DataGrid extends Component {
     }
 
     GetColumn(p) {
-        if (p.IsData === false) return (<Column title={p.Label} key={p.Name} render={p.Render} width={p.ColumnWidth} fixed={p.Fixed} />)
+        const name = p.PropertyName || p.Name;
+        if (p.IsData === false) return (<Column title={p.Label} key={name} render={p.Render} width={p.ColumnWidth} fixed={p.Fixed} />)
 
-        return (<Column title={p.Label} dataIndex={p.Name} sorter={p.Sorter} sortOrder={this.state.Sorter.columnKey === p.Name && this.state.Sorter.order} key={p.Name} render={p.Render} width={p.ColumnWidth} fixed={p.Fixed} />)
+        return (<Column title={p.Label} dataIndex={name} sorter={p.Sorter} sortOrder={this.state.Sorter.columnKey === name && this.state.Sorter.order} key={name} render={p.Render} width={p.ColumnWidth} fixed={p.Fixed} />)
     }
 
     GetPagination() {
@@ -102,7 +103,7 @@ export default class DataGrid extends Component {
 
     GetRowClassName(key) {
         const list = ["ant-table-row", "ant-table-row-level-0"]
-        if (this.state.SelectedRowKey === key) list.push("RowSelected")
+        if (key !== undefined && this.state.SelectedRowKey === key) list.push("RowSelected")
         return list.join(" ")
     }
 

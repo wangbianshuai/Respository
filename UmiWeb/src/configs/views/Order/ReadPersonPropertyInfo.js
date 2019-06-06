@@ -1,11 +1,18 @@
-import Order from "../../entities/Order";
+import House from "../../entities/House";
+import Car from "../../entities/Car";
 
-import { AssignProporties, GetTextBox, GetButton, CreateGuid } from "../../pages/Common";
+import { AssignProporties, GetTextBox, GetButton, CreateGuid, GetSelect } from "../../pages/Common";
 
-export default {
-    Name: "PersonPropertyInfo",
-    Type: "View",
-    Properties: AssignProporties({}, [GetInfoView(), GetRightButtonView()])
+var DataActionTypes = {}
+
+export default (actionTypes) => {
+    DataActionTypes = actionTypes;
+
+    return {
+        Name: "PersonPropertyInfo",
+        Type: "View",
+        Properties: AssignProporties({}, [GetInfoView(), GetRightButtonView()])
+    }
 }
 
 function GetInfoView() {
@@ -14,9 +21,14 @@ function GetInfoView() {
         Type: "View",
         Title: "个人资产信息",
         Style: { marginTop: 8 },
-        Properties: AssignProporties(Order, [GetHouseProperties(), GetCarProperties(),
-        { Name: "WhiteSpace1", Type: "WhiteSpace", ClassName: "WhiteSpace1", Style: { marginBottom: 20 }, X: 4, Y: 1 },
-        GetTextArea("BorrowerAmount", "备注", 5, 1, "请输入备注")])
+        IsForm: true,
+        LabelAlign: "left",
+        PropertyName: "PersonPropertyInfo",
+        DefaultEditData: { ViewName: "PersonPropertyInfo" },
+        SaveEntityDataActionType: DataActionTypes.SaveApprovalOrderDetail,
+        Properties: AssignProporties({}, [GetHouseProperties(), GetCarProperties(),
+        { Name: "WhiteSpace1", Type: "WhiteSpace", ClassName: "WhiteSpace1", Style: { marginBottom: 20 }, X: 3, Y: 1, ColSpan: 24 },
+        GetTextArea("ApprovalRemark", "备注", 6, 1, "请输入备注")])
     }
 }
 
@@ -24,11 +36,9 @@ function GetCarProperties() {
     return {
         Name: "CarList",
         Type: "DataListView",
-        DefaultValue: [{ Id: CreateGuid(), Title: "车产信息一" }],
         IsComplexEdit: true,
-        IsFirstDelete: false,
-        DeletePropertyName: "DeleteCar",
         PrimaryKey: "Id",
+        ColSpan: 24,
         Title: "车产信息",
         Properties: AssignProporties({}, [{
             Name: "CarItemView",
@@ -36,7 +46,7 @@ function GetCarProperties() {
             IsForm: true,
             LabelAlign: "left",
             IsDiv: false,
-            Properties: AssignProporties({}, GetCarItemProperties())
+            Properties: AssignProporties(Car, GetCarItemProperties())
         }])
     }
 }
@@ -47,33 +57,32 @@ function GetHouseProperties() {
         Type: "DataListView",
         DefaultValue: [{ Id: CreateGuid(), Title: "房产信息一" }],
         IsComplexEdit: true,
-        IsFirstDelete: false,
-        DeletePropertyName: "DeleteHouse",
         PrimaryKey: "Id",
         Title: "房产信息",
+        ColSpan: 24,
         Properties: AssignProporties({}, [{
             Name: "HouseItemView",
             Type: "RowsColsView",
             IsForm: true,
             LabelAlign: "left",
             IsDiv: false,
-            Properties: AssignProporties({}, GetHouseItemProperties())
+            Properties: AssignProporties(House, GetHouseItemProperties())
         }])
     }
 }
 
 function GetRightButtonView() {
     return {
-        Name: "RightButtonView",
+        Name: "PersonPropertyInfoButtonView",
         Type: "View",
         ClassName: "DivRightButton",
         IsDiv: true,
-        Properties: AssignProporties(Order, GetRightButtonProperties())
+        Properties: AssignProporties({}, GetRightButtonProperties())
     }
 }
 
 function GetRightButtonProperties() {
-    return [{ ...GetButton("SavePersonPropertyInfo", "保存", "primary"), EventActionName: "SavePersonPropertyInfo", Style: { marginRight: 36, width: 84 } }]
+    return [{ ...GetButton("SavePersonPropertyInfo", "保存", "primary"), EventActionName: "SavePersonPropertyInfoEntityData", Style: { marginRight: 36, width: 84 } }]
 }
 
 function GetHouseItemProperties() {
@@ -89,10 +98,10 @@ function GetCarItemProperties() {
     return [
         { Name: "Title", Type: "SpanText", X: 1, Y: 1, ClassName: "SpanTitle" },
         GetReadOnlyTextBox("CarNo", "车牌号码", 2, 1),
-        GetReadOnlyTextBox("CarType", "车辆类型", 2, 2),
-        GetReadOnlyTextBox("CarUser", "车辆所有人", 2, 3),
+        GetReadOnlySelect("CarType", "办公地是否租赁", Car.CarTypeDataSource, 2, 2),
+        GetReadOnlySelect("CarUser", "车辆所有人", Car.CarUserDataSource, 2, 3),
         GetReadOnlyTextBox("CarUserAddress", "车辆所有人住址", 3, 1),
-        GetReadOnlyTextBox("CarUseNature", "使用性质", 3, 2),
+        GetReadOnlySelect("CarUseNature", "办公地是否租赁", Car.CarUseNatureDataSource, 3, 2),
         GetReadOnlyTextBox("BrandModel", "品牌型号", 3, 3),
         GetReadOnlyTextBox("CarCode", "车辆识别代号", 4, 1),
         GetReadOnlyTextBox("CarAutoCode", "发动机号码", 4, 2),
@@ -101,18 +110,39 @@ function GetCarItemProperties() {
     ]
 }
 
+function GetReadOnlySelect(Name, Label, DataSource, X, Y) {
+    return {
+        ...GetSelect(Name, Label, DataSource, X, Y),
+        IsColon: false,
+        IsFormItem: true, ColSpan: 8,
+        LabelCol: 10,
+        WrapperCol: 21,
+        IsReadOnly: true,
+        Style: {
+            display: "flex",
+            flexDirection: "column",
+            marginBottom: 10
+        }
+    }
+}
+
 function GetTextArea(Name, Label, X, Y, PlaceHolder) {
     return {
-        ...GetTextBox(Name, Label, "TextArea", X, Y),
+        ...GetTextBox(Name, Label, "TextArea", X, Y, PlaceHolder),
         IsFormItem: true,
         IsNullable: true,
+        IsColon: false,
         IsAddOptional: true,
+        IsEdit: true,
+        ReadRightName: "PersonPropertyInfoButtonView",
         ColSpan: 24,
         Rows: 4,
-        LabelCol: 2,
-        WrapperCol: 22,
-        PlaceHolder,
+        FormItemClassName: "LeftFormItem",
+        LabelCol: 10,
+        WrapperCol: 23,
         Style: {
+            display: "flex",
+            flexDirection: "column",
             marginBottom: 10
         }
     }
@@ -124,10 +154,9 @@ function GetReadOnlyTextBox(Name, Label, X, Y, addonAfter) {
         IsColon: false,
         IsFormItem: true, ColSpan: 8,
         LabelCol: 10,
-        WrapperCol: 20,
+        WrapperCol: 21,
         IsReadOnly: true,
         AddonAfter: addonAfter,
-        Value: "测试数据1" + Label,
         Style: {
             display: "flex",
             flexDirection: "column",

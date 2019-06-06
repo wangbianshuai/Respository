@@ -1,9 +1,17 @@
-import { AssignProporties, GetTextBox, GetButton, CreateGuid } from "../../pages/Common";
+import BankRecord from "../../entities/BankRecord";
 
-export default {
-    Name: "PersonBankInfo",
-    Type: "View",
-    Properties: AssignProporties({}, [GetInfoView(), GetRightButtonView()])
+import { AssignProporties, GetTextBox, GetButton } from "../../pages/Common";
+
+var DataActionTypes = {}
+
+export default (actionTypes) => {
+    DataActionTypes = actionTypes;
+
+    return {
+        Name: "PersonBankInfo",
+        Type: "View",
+        Properties: AssignProporties({}, [GetInfoView(), GetRightButtonView()])
+    }
 }
 
 function GetInfoView() {
@@ -12,6 +20,9 @@ function GetInfoView() {
         Type: "View",
         Title: "对私银行流水信息",
         Style: { marginTop: 8 },
+        PropertyName: "PersonBankInfo",
+        DefaultEditData: { ViewName: "PersonBankInfo" },
+        SaveEntityDataActionType: DataActionTypes.SaveCompanyFinanceInfo,
         Properties: AssignProporties({}, [GetBankProperties()])
     }
 }
@@ -20,26 +31,27 @@ function GetBankProperties() {
     return {
         Name: "PersonBankList",
         Type: "DataListView",
-        DefaultValue: [{ Id: CreateGuid(), Title: "银行卡一" }],
         IsComplexEdit: true,
         IsFirstDelete: false,
         DeletePropertyName: "DeletePersonBank",
         PrimaryKey: "Id",
         Title: "银行卡",
+        IsEdit: true,
+        IsNullable: false,
         Properties: AssignProporties({}, [{
             Name: "PersonBankItemView",
             Type: "RowsColsView",
             IsForm: true,
             LabelAlign: "left",
             IsDiv: false,
-            Properties: AssignProporties({}, GetBankItemProperties())
+            Properties: AssignProporties(BankRecord, GetBankItemProperties())
         }])
     }
 }
 
 function GetRightButtonView() {
     return {
-        Name: "RightButtonView",
+        Name: "PersonBankInfoButtonView",
         Type: "View",
         ClassName: "DivRightButton",
         IsDiv: true,
@@ -55,13 +67,12 @@ function GetRightButtonProperties() {
 function GetBankItemProperties() {
     return [
         { Name: "Title", Type: "SpanText", X: 1, Y: 1, ClassName: "SpanTitle" },
-        { ...GetButton("DeletePersonBank", "删除", "", 1, 2), EventActionName: "DeletePersonBank", Style: { marginLeft: 20, marginBottom: 10 }, Icon: "delete" },
-        GetUpload("UploadRecord", "对私贷流水", 2, 1, false),
-        GetTextBox2("HouserAddress", "对私贷月均流水", 2, 2, "decimal", "", 20, false, "元"),
-        GetTextBox3("HoustSpace", "对私结息汇总", 2, 3, "decimal", "", 20, false, "元")
+        { ...GetButton("DeletePersonBank", "删除", "", 1, 2), RightNames: ["PersonBankInfoButtonView"], EventActionName: "DeletePersonBank", Style: { marginLeft: 20, marginBottom: 10 }, Icon: "delete" },
+        GetUpload("PersonRecordFile", "对私贷流水", 2, 1, false),
+        GetTextBox3("PersonMonthAmount", "对私贷月均流水", 2, 2, "float", "请输入对私贷月均流水", 20, false, "元"),
+        GetTextBox3("PersonMonthInterest", "对私结息汇总", 2, 3, "float", "请输入对私结息汇总", 20, false, "元")
     ]
 }
-
 
 function GetTextBox3(Name, Label, X, Y, DataType, PlaceHolder, MaxLength, IsNullable, addonAfter) {
     return {
@@ -75,12 +86,13 @@ function GetTextBox2(Name, Label, X, Y, ContorlType, PlaceHolder, MaxLength, IsN
         ...GetTextBox(Name, Label, ContorlType, X, Y, PlaceHolder, MaxLength),
         IsColon: false,
         IsFormItem: true, ColSpan: 8,
-        LabelCol: 10,
-        WrapperCol: 20,
+        LabelCol: 20,
+        WrapperCol: 21,
         AddonAfter: addonAfter,
         IsNullable: IsNullable,
         IsAddOptional: !!IsNullable,
         IsEdit: true,
+        ReadRightName: "PersonBankInfoButtonView",
         Style: {
             display: "flex",
             flexDirection: "column",
@@ -101,9 +113,10 @@ function GetUpload(Name, Label, X, Y, IsNullable) {
         ExtStyle: { color: "#999999", marginLeft: 10 },
         IsColon: false,
         IsFormItem: true, ColSpan: 8,
-        LabelCol: 10,
-        WrapperCol: 20,
+        LabelCol: 20,
+        WrapperCol: 21,
         IsEdit: true,
+        ReadRightName: "PersonBankInfoButtonView",
         Style: {
             display: "flex",
             flexDirection: "column",

@@ -6,8 +6,8 @@ export function GetProperty(Name, Label, DataType, IsNullable, MaxLength, Scale)
     return { Name, Label, DataType, IsNullable, MaxLength, Scale }
 }
 
-export function GetButton(Name, Text, ButtonType, X, Y) {
-    return { Name, Text, Type: "Button", ButtonType, X, Y, IsDisabled: true }
+export function GetButton(Name, Text, ButtonType) {
+    return { Name, Text, Type: "Button", ButtonType }
 }
 
 export function CreateGuid() {
@@ -34,13 +34,10 @@ export function AssignProporties(entity, list) {
             else p2 = { ...p2, ...p };
         }
         if (p2 !== null) {
-            p2.X = p2.X || i + 1;
-            p2.Y = p2.Y || 1;
             p2.RowId = CreateGuid();
             p2.ColId = CreateGuid();
             p2.Id = CreateGuid();
             p2.IsNullable = p2.IsNullable === undefined ? true : p2.IsNullable
-            if (p2.DataType === "float" && !p2.Scale) p2.Scale = 2;
             pList.push(p2);
         }
     });
@@ -71,29 +68,20 @@ export function GetEntityProperty(entity, name) {
     return null;
 }
 
-export function GetRadio(Name, Label, DataSource, X, Y, DefaultValue, ButtonWidth) {
-    return { Name, Label, Type: "Radio", DataSource, X, Y, IsButton: true, DefaultValue, ButtonWidth }
+export function GetTextBox(Name, Label, ControlType, PlaceHolder, MaxLength) {
+    return { Name, Label, Type: "TextBox", ControlType, PlaceHolder, MaxLength }
 }
 
-export function GetTextBox(Name, Label, ControlType, X, Y, PlaceHolder, MaxLength) {
-    return { Name, Label, Type: "TextBox", ControlType, PlaceHolder, X, Y, MaxLength }
+export function GetSelect(Name, Label, DataSource, DefaultValue) {
+    return { Name, Label, Type: "Select", DataSource, DefaultValue }
 }
 
-export function GetSelect(Name, Label, DataSource, X, Y, DefaultValue) {
-    return { Name, Label, Type: "Select", DataSource, X, Y, DefaultValue }
+export function GetSelect2(Name, Label, ServiceDataSource, DefaultValue) {
+    return { Name, Label, Type: "Select", ServiceDataSource, DefaultValue }
 }
 
-export function GetSelect2(Name, Label, ServiceDataSource, X, Y, DefaultValue) {
-    return { Name, Label, Type: "Select", ServiceDataSource, X, Y, DefaultValue }
-}
-
-export function GetAutoComplete(Name, Label, ServiceDataSource, X, Y, DefaultValue) {
-    return { Name, Label, Type: "AutoComplete", ServiceDataSource, X, Y, DefaultValue }
-}
-
-
-export function GetDatePicker(Name, Label, X, Y, DefaultValue) {
-    return { Name, Label, Type: "DatePicker", X, Y, DefaultValue }
+export function GetDatePicker(Name, Label, DefaultValue) {
+    return { Name, Label, Type: "DatePicker", DefaultValue }
 }
 
 export const RegExpress = {};
@@ -109,3 +97,7 @@ RegExpress.NoNumber = /[^\d]/g;
 
 //只能输入数字，用于键盘输入keypress
 RegExpress.InputNumber = /^[\d]+$/;
+
+export function ToRem(px) {
+    return parseFloat((px * 1.0000) / 32).toFixed(4) + "rem";
+}

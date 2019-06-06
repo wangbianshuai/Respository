@@ -213,6 +213,7 @@ export function IsObjectEquals(a, b) {
 }
 
 export function ArrayFirst(list, fn) {
+    if (!IsArray(list)) return null;
     const list2 = list.filter(fn)
     return list2.length > 0 ? list2[0] : null;
 }

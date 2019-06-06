@@ -1,4 +1,5 @@
 import BaseIndex from "../../BaseIndex";
+import Common2 from "../Common2";
 
 export default class OrderPatchEdit extends BaseIndex {
     constructor(props) {
@@ -11,38 +12,23 @@ export default class OrderPatchEdit extends BaseIndex {
         this.Init();
     }
 
-    GetStateActionTypes() {
-        const { GetEntityData } = this.ActionTypes;
-
-        return {
-            EntityData: [GetEntityData]
-        }
+    GetOrderInfoEntityData(id, actionType, data) {
+        Common2.GetOrderInfoEntityData.call(this, id, actionType, data);
     }
 
-    Invoke(id, actionType, data) {
-        const { GetEntityData } = this.ActionTypes;
-
-        switch (actionType) {
-            case GetEntityData: this.GetEntityData(id, actionType, data); break;
-            default: this.Dispatch(id, actionType, data); break;
-        }
+    SetGetOrderInfoEntityData(id, actionType, data) {
+        return Common2.SetGetOrderInfoEntityData.call(this, id, actionType, data);
     }
 
-    SetResponseData(id, actionType, data) {
-        const { GetEntityData } = this.ActionTypes;
-
-        switch (actionType) {
-            case GetEntityData: return this.SetGetEntityData(id, actionType, data);
-            default: return this.SetApiResponse(data);
-        }
+    SavePatchInfoEntityData(id, actionType, data) {
+        this.DvaActions.Dispatch("OrderService", "SavePatchInfo", { ...data.EntityData, Action: this.GetAction(id, actionType) });
     }
 
-    GetEntityData(id, actionType, data) {
-
+    GetPatchInfoEntityData(id, actionType, data) {
+        this.DvaActions.Dispatch("OrderService", "GetPatchInfo", { ...data.EntityData, Action: this.GetAction(id, actionType) });
     }
 
-    SetGetEntityData(id, actionType, data) {
-
+    GetOrderStatus(id, actionType, data){
+        Common2.GetOrderStatus.call(this, id, actionType, data);
     }
-
 }

@@ -4,16 +4,36 @@ import PatchRecord from "../../views/OrderPatch/PatchRecord";
 
 const DataActionTypes = {
     //获取实体数据
-    GetEntityData: 900
+    GetOrderInfoEntityData: 1000,
+    //获取补件记录
+    GetPatchRecordEntityData: 1001
 };
 
 export default {
     Name: "OrderPatchRecord",
-    GetEntityData: DataActionTypes.GetEntityData,
+    Type: "View",
     EventActions: GetEventActions(),
-    Properties: AssignProporties({}, [ReadBaseInfo, PatchRecord])
+    Properties: AssignProporties({}, [ReadBaseInfo(DataActionTypes), PatchRecord(DataActionTypes, true)])
 }
 
 function GetEventActions() {
-    return []
+    return [{
+        Name: "GetOrderInfoEntityData",
+        Type: "EntityEdit/GetEntityData",
+        EditView: "OrderInfo"
+    },
+    {
+        Name: "GetPatchRecordEntityData",
+        Type: "EntityEdit/GetEntityData",
+        EditView: "PatchRecord"
+    },
+    {
+        Name: "ToAttachPage",
+        Type: "Page/ToAttachPage"
+    },
+    {
+        Name: "ToOrderDetail",
+        Type: "Page/ToPage",
+        PageUrl: "/CreditManage/OrderDetail?OrderCode=#{OrderCode}"
+    }]
 }
