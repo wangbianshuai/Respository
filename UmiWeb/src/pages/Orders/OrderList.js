@@ -42,7 +42,7 @@ class OrderList extends BaseIndex {
     }
 
     render() {
-        return <Components.PropertyItem Property={this.PageConfig} EventActions={this.EventActions} />
+        return <Components.PropertyItem Property={this.PageConfig} EventActions={this.EventActions} key={this.Name}/>
     }
 }
 

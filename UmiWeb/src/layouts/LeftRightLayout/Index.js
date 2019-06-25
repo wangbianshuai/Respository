@@ -277,6 +277,7 @@ class LeftRightLayout extends Component {
         this.PageData.GetUserMenuRight = GetUserMenuRight;
         this.props.location.PageData = this.PageData;
 
+        console.log(this.props.children)
         return (
             <Layout style={{ minWidth: 1200 }}>
                 <Header style={{ background: '#fff', padding: 0, margin: 0 }}>
