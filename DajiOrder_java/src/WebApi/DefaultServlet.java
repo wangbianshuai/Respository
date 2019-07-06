@@ -60,6 +60,8 @@ public class DefaultServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        PrintWriter out = response.getWriter();
+        out.print("Hello Word !");
     }
 
     public  void  GetEntityMethodName(HttpServletRequest request,Request req ) {
