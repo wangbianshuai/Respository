@@ -1,8 +1,5 @@
 package Utility;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -156,7 +153,7 @@ public class JsonParse {
         return output;
     }
 
-    private static String Encode(@NotNull String str) throws IOException {
+    private static String Encode(String str) throws IOException {
         ByteArrayInputStream input = new ByteArrayInputStream(str.getBytes());
         ByteArrayOutputStream output = new ByteArrayOutputStream();
 
@@ -184,7 +181,7 @@ public class JsonParse {
         return output.toString();
     }
 
-    private static String ToJsonByArray(@NotNull ArrayList arrayList) throws IOException, IllegalAccessException {
+    private static String ToJsonByArray(ArrayList arrayList) throws IOException, IllegalAccessException {
         List<String> itemList = new ArrayList<String>();
 
         for (int i = 0; i < arrayList.size(); i++) {
@@ -194,7 +191,7 @@ public class JsonParse {
         return String.format("[%s]", String.join(",", itemList));
     }
 
-    private static String ToJsonByMap(@NotNull Map<String, Object> map) throws IOException, IllegalAccessException {
+    private static String ToJsonByMap(Map<String, Object> map) throws IOException, IllegalAccessException {
         List<String> itemList = new ArrayList<String>();
         String key = null;
         Object value = null;
@@ -212,7 +209,7 @@ public class JsonParse {
         return String.format("{%s}", String.join(",", itemList));
     }
 
-    private static String ToJsonByObject(@NotNull Object obj) throws IOException, IllegalAccessException {
+    private static String ToJsonByObject(Object obj) throws IOException, IllegalAccessException {
         if (obj.getClass().isArray()) {
             Object[] objList = (Object[]) obj;
 
@@ -246,7 +243,6 @@ public class JsonParse {
         }
     }
 
-    @Nullable
     public static <T> List<T> JsonToList(Class<T> cls,  String jsonString) throws IOException, Exception, InstantiationException, IllegalAccessException {
         ArrayList arrayList = JsonToArrayList(jsonString);
         if (arrayList != null && !arrayList.isEmpty()) {
@@ -271,7 +267,7 @@ public class JsonParse {
         return MapTo(cls, map);
     }
 
-    public static ArrayList ArrayListTo(Class<?> cls, @NotNull ArrayList arrayList) throws InstantiationException, IllegalAccessException, Exception {
+    public static ArrayList ArrayListTo(Class<?> cls, ArrayList arrayList) throws InstantiationException, IllegalAccessException, Exception {
         ArrayList list = new ArrayList();
         Object obj = null, item = null;
         for (int i = 0; i < arrayList.size(); i++) {
@@ -288,8 +284,7 @@ public class JsonParse {
         return list;
     }
 
-    @Nullable
-    public static <T> T MapTo(Class<T> cls, @NotNull Map<String, Object> map) throws InstantiationException, IllegalAccessException, Exception {
+    public static <T> T MapTo(Class<T> cls, Map<String, Object> map) throws InstantiationException, IllegalAccessException, Exception {
         if (map != null) {
             T obj = cls.newInstance();
 
@@ -332,7 +327,6 @@ public class JsonParse {
         return null;
     }
 
-    @Nullable
     public static Map<String, Object> JsonToDictionary(String jsonString) throws IOException, Exception {
         ArrayList list = JsonToArrayList(jsonString);
         if (list != null && list.size() == 1 && list.get(0) instanceof Map) {
@@ -345,7 +339,6 @@ public class JsonParse {
         return JsonToArrayList(jsonString);
     }
 
-    @Nullable
     public static ArrayList JsonToArrayList(String jsonString) throws IOException, Exception {
         ArrayList list = null;
 
@@ -416,7 +409,7 @@ public class JsonParse {
         return jsonString;
     }
 
-    private static ArrayList GetArrayList( @Nullable String jsonString, List<String> keyList, Map<String, String> arrayList, Map<String, String> objList, Map<String, String> strList) throws Exception {
+    private static ArrayList GetArrayList(String jsonString, List<String> keyList, Map<String, String> arrayList, Map<String, String> objList, Map<String, String> strList) throws Exception {
         String[] strArray = jsonString.split(",");
 
         if (keyList != null) {
@@ -435,7 +428,7 @@ public class JsonParse {
         return list;
     }
 
-    private static Map<String, Object> GetDictionary(@NotNull String jsonString, Map<String, String> arrayList, Map<String, String> objList, Map<String, String> strList) throws Exception {
+    private static Map<String, Object> GetDictionary(String jsonString, Map<String, String> arrayList, Map<String, String> objList, Map<String, String> strList) throws Exception {
         String[] strArray = jsonString.split(",");
 
         Map<String, Object> map = new HashMap<String, Object>();
@@ -466,7 +459,7 @@ public class JsonParse {
         return map;
     }
 
-    private static Object GetObjectValue(@NotNull String value, Map<String, String> arrayList, Map<String, String> objList, Map<String, String> strList) throws Exception {
+    private static Object GetObjectValue(String value, Map<String, String> arrayList, Map<String, String> objList, Map<String, String> strList) throws Exception {
         Object objValue = null;
         String value2 = null;
 
@@ -502,7 +495,6 @@ public class JsonParse {
         return objValue;
     }
 
-    @Nullable
     private static Object GetJsonValue(String value) {
         if (Common.StringIsNullOrEmpty(value) || value.toLowerCase().equals("null")) {
             return null;
@@ -529,7 +521,7 @@ public class JsonParse {
         return value;
     }
 
-    private static void CheckKeyExists(@NotNull String[] strArray, List<String> keyList) throws Exception {
+    private static void CheckKeyExists(String[] strArray, List<String> keyList) throws Exception {
         for (int i = 0; i < strArray.length; i++) {
             if (!keyList.contains(strArray[i])) {
                 throw new Exception(FormatMessage);
@@ -542,7 +534,7 @@ public class JsonParse {
         return Common.StringTrimEnter(str);
     }
 
-    private static void CheckJsonFormat(@NotNull String jsonString) throws Exception {
+    private static void CheckJsonFormat(String jsonString) throws Exception {
         boolean blSuccess = true;
 
         if (!jsonString.startsWith("{") && !jsonString.startsWith("[") && !jsonString.endsWith("}") && !jsonString.endsWith("]")) {
@@ -560,7 +552,7 @@ public class JsonParse {
         }
     }
 
-    private static String GetStringList(@NotNull String jsonString, Map<String, String> strList) throws IOException {
+    private static String GetStringList(String jsonString, Map<String, String> strList) throws IOException {
         ByteArrayInputStream input = new ByteArrayInputStream(jsonString.getBytes());
         ByteArrayOutputStream output = new ByteArrayOutputStream();
         ByteArrayOutputStream output2 = null;
@@ -609,7 +601,7 @@ public class JsonParse {
         return output.toString();
     }
 
-    private static String GetObjectJsonStringList(@NotNull String jsonString, Map<String, String> objList, boolean blArray) throws IOException {
+    private static String GetObjectJsonStringList(String jsonString, Map<String, String> objList, boolean blArray) throws IOException {
         ByteArrayInputStream input = new ByteArrayInputStream(jsonString.getBytes());
 
         ByteArrayOutputStream output = new ByteArrayOutputStream();
