@@ -1,9 +1,8 @@
 package Oracle;
 
-import org.jetbrains.annotations.Contract;
-
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.sql.Types;
 import java.util.*;
 
@@ -15,7 +14,6 @@ public class DataParameterList implements  IDataParameterList {
     private Map<String, Object> _Parameters = null;
     private List<Object> _PreparedParameters = null;
 
-    @Contract(pure = true)
     public DataParameterList() {
         _Parameters = new HashMap<>();
     }
@@ -115,6 +113,10 @@ public class DataParameterList implements  IDataParameterList {
             preparedStatement.setByte(index, (byte) value);
         } else if (value instanceof Byte) {
             preparedStatement.setByte(index, (byte) value);
+        } else if (value instanceof Timestamp) {
+            preparedStatement.setTimestamp(index, (Timestamp) value);
+        } else if (value instanceof java.sql.Date) {
+            preparedStatement.setDate(index, (java.sql.Date) value);
         } else if (value instanceof Date) {
             preparedStatement.setDate(index, new java.sql.Date(((Date) value).getTime()));
         } else {

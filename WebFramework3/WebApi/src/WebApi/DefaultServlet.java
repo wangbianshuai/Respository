@@ -4,7 +4,6 @@ import Utility.AppSettings;
 import Utility.Common;
 import WebApi.Actions.IAction;
 import WebApi.Actions.Request;
-import org.jetbrains.annotations.NotNull;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
@@ -31,7 +30,7 @@ public class DefaultServlet extends HttpServlet {
     }
 
     @Override
-    protected void doPost(HttpServletRequest request, @NotNull HttpServletResponse response) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("application/json;charset=utf-8");
         response.setHeader("Access-Control-Allow-Origin", "*");
 
@@ -63,11 +62,11 @@ public class DefaultServlet extends HttpServlet {
     }
 
     @Override
-    protected void doGet(HttpServletRequest request, @NotNull HttpServletResponse response) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
          response.getWriter().print("Hello Word !");
     }
 
-    public void GetEntityMethodName(@NotNull HttpServletRequest request, Request req) {
+    public void GetEntityMethodName(HttpServletRequest request, Request req) {
         String path = request.getPathInfo();
         path = path.substring(1);
         String[] strs = path.split("/");

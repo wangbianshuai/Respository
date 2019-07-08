@@ -3,7 +3,6 @@ package WebApi.Actions;
 import Entity.Application.User.LoginRequest;
 import Utility.JsonParse;
 import jdk.nashorn.api.scripting.JSObject;
-import org.jetbrains.annotations.NotNull;
 import sun.rmi.runtime.Log;
 
 import java.io.IOException;
@@ -21,7 +20,7 @@ public class User extends  BaseAction implements IAction{
         _user = new Application.Impl.User();
     }
 
-    public  Object login(@NotNull Request request) throws Exception {
+    public  Object login(Request request) throws Exception {
         LoginRequest entity = JsonParse.JsonTo(LoginRequest.class, request.RequestContent);
         return _user.Login(entity);
     }

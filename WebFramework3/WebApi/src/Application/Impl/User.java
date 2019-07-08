@@ -34,13 +34,29 @@ public class User extends BaseAction implements IUser {
 
         this.JudgeLogin(entity, response);
 
-        //2、执行结束
+        //2、更新登录时间
+        stepNo += 1;
+        this.UpdateLoginDate(stepNo, entity, response);
+
+        //3、执行结束
         this.ExecEnd(response);
 
         //日志记录
         this.SetInfoLog("Servlet服务获取登录", request.RequestContent, response, null);
 
         return response;
+    }
+
+    //更新登录时间
+    private  void  UpdateLoginDate(int stepNo, UserTable entity, LoginResponse response) {
+        if (entity == null) return;
+
+        Supplier<Boolean> execStep = () ->
+        {
+            return _user.UpdateLoginDate(entity.User_Id);
+        };
+
+        this.UpdateEntityData(stepNo, "更新登录时间", "UpdateLoginDate", response, execStep);
     }
 
     private void JudgeLogin(UserTable entity, LoginResponse response) {

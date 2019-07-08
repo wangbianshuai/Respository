@@ -239,6 +239,10 @@ public class Common {
         return sdf.format(date);
     }
 
+    public static String GetNow() {
+        return DateToString(new Date(), "yyyy-MM-dd HH:mm:ss:SSS");
+    }
+
     public static Throwable GetRealException(Throwable ex) {
         Throwable throwable = ex.getCause();
         if (throwable != null) {

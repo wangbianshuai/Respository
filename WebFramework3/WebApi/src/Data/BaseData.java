@@ -111,7 +111,7 @@ public class BaseData {
         List<String> fieldList = nameValues.keySet().stream().map(m -> String.format("%s=@%s", m, m)).collect(Collectors.toList());
         parameterList.AddMap(nameValues);
 
-        String sql = String.format("udpate %s set %s %s", this.TableName, String.join(",", fieldList), whereSql);
+        String sql = String.format("update %s set %s %s", this.TableName, String.join(",", fieldList), whereSql);
 
         return this.ExceNoQuery(sql, parameterList) == 1;
     }

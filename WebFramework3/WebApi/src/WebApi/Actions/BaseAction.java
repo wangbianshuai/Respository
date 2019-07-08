@@ -2,7 +2,6 @@ package WebApi.Actions;
 
 import Utility.Common;
 import Utility.JsonParse;
-import org.jetbrains.annotations.NotNull;
 
 import javax.servlet.ServletInputStream;
 import javax.servlet.http.HttpServletRequest;
@@ -16,7 +15,7 @@ import java.lang.reflect.Method;
 public class BaseAction implements IAction {
 
     // 请求行为实现
-    public String RequestAction(@NotNull Request request) {
+    public String RequestAction(Request request) {
         if (request.MethodName == null || request.MethodName.isEmpty()) {
             return "";
         }

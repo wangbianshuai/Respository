@@ -34,4 +34,11 @@ public class User extends BaseData {
 
         return this.SelectEntity(UserTable.class, selectFieldList, whereNameValues);
     }
+
+    public boolean UpdateLoginDate(String userId) {
+        Map<String, Object> nameValues = new HashMap<>();
+        nameValues.put("Login_Date",  new java.sql.Timestamp(System.currentTimeMillis()));
+        nameValues.put("Row_Id",  new java.sql.Timestamp(System.currentTimeMillis()));
+        return this.Update(nameValues, userId);
+    }
 }

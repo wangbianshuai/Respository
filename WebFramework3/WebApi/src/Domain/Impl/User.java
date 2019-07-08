@@ -23,4 +23,9 @@ public class User extends BaseDomain implements IUser {
     public UserTable GetUserByLogin(String loignName, String loginPassword) {
         return _user.GetLoginUser(loignName, loginPassword);
     }
+
+    //更新登录时间
+    public boolean UpdateLoginDate(String userId) {
+        return _user.UpdateLoginDate(userId);
+    }
 }
