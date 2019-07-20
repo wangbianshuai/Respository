@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
+import java.util.function.Predicate;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -71,6 +72,15 @@ public class Common {
     public static boolean CheckNumber(String value) {
         String regex = "^(-?[1-9]\\d*)$";
         return value.matches(regex);
+    }
+
+    public static <T> T ConvertValue(Class<T> cls, Object value) throws  Exception {
+        if (value != null && value.getClass().equals((cls))) return (T) value;
+        else {
+            value = Common.ChangeType(cls, value);
+            if (value != null) return (T) value;
+            return (T) Common.GetTypeDefaultValue(cls);
+        }
     }
 
     public static Object ChangeType(Class<?> type, Object value) throws Exception {
@@ -229,11 +239,24 @@ public class Common {
         return dateString;
     }
 
-    public static <T> T GetFirstOrDefault(Class<T> cls, List<T> list) {
-        if (list != null && !list.isEmpty()) {
-            return list.get(0);
+    public static <T> T GetFirstOrDefault(List<T> list, Predicate<T> predicate) {
+        if (list == null || list.isEmpty()) return null;
+
+        int count = list.size();
+        for (int i = 0; i < count; i++) {
+            if (predicate.test(list.get(i))) return list.get(i);
         }
         return null;
+    }
+
+    public static <T> boolean Exists(List<T> list, Predicate<T> predicate) {
+        if (list == null || list.isEmpty()) return false;
+
+        int count = list.size();
+        for (int i = 0; i < count; i++) {
+            if (predicate.test(list.get(i))) return true;
+        }
+        return false;
     }
 
     public static String DateToString(Date date, String pattern) {
