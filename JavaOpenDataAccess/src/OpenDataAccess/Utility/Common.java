@@ -1,16 +1,11 @@
 package OpenDataAccess.Utility;
 
-import com.sun.xml.internal.ws.util.StringUtils;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 import java.util.function.Predicate;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -239,14 +234,24 @@ public class Common {
         return dateString;
     }
 
-    public static <T> T GetFirstOrDefault(List<T> list, Predicate<T> predicate) {
-        if (list == null || list.isEmpty()) return null;
+    public static <T> T GetFirstOrDefault(Class<T> cls, List<T> list, Predicate<T> predicate) {
+        if (list == null || list.isEmpty()) return (T) GetTypeDefaultValue(cls);
 
         int count = list.size();
         for (int i = 0; i < count; i++) {
             if (predicate.test(list.get(i))) return list.get(i);
         }
-        return null;
+        return (T) GetTypeDefaultValue(cls);
+    }
+
+    public static <T> T ArrayFirst(Class<T> cls, Object list, Predicate<T> predicate) {
+        if (list == null) return (T) GetTypeDefaultValue(cls);
+        T[] array = (T[]) list;
+
+        for (int i = 0; i < array.length; i++) {
+            if (predicate.test(array[i])) return array[i];
+        }
+        return (T) GetTypeDefaultValue(cls);
     }
 
     public static <T> boolean Exists(List<T> list, Predicate<T> predicate) {

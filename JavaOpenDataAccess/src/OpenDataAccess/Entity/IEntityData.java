@@ -3,7 +3,9 @@ package OpenDataAccess.Entity;
 import java.util.Map;
 
 public interface IEntityData {
-    String EntityName(String value, boolean blGet);
+
+    String GetEntityName();
+    void  SetEntityName(String value);
 
     Object GetValue(String propertyName);
 
@@ -17,7 +19,7 @@ public interface IEntityData {
 
     void Remove(int i);
 
-    <T extends IEntity> IEntity ToEntity(Class<T> cls) throws IllegalAccessException, InstantiationException ;
+    <T extends IEntity> IEntity ToEntity(Class<T> cls) throws  IllegalAccessException,InstantiationException,Exception;
 
     Map<String, Object> ToDictionary();
 

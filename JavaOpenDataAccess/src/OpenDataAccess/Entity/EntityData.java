@@ -1,6 +1,7 @@
 package OpenDataAccess.Entity;
 
 import OpenDataAccess.Utility.Common;
+import OpenDataAccess.Utility.JsonParse;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -11,9 +12,12 @@ public class EntityData implements IEntityData {
     private EntityType _EntityType = null;
     private String _EntityName = "";
 
-    public String EntityName(String value, boolean blGet) {
-        if (!blGet) _EntityName = value;
+    public String GetEntityName() {
         return _EntityName;
+    }
+
+    public void  SetEntityName(String value) {
+        _EntityName = value;
     }
 
     public EntityData(String entityName) {
@@ -46,7 +50,7 @@ public class EntityData implements IEntityData {
         List<String> keyList = dict.keySet().stream().collect(Collectors.toList());
 
         entityType.Properties.forEach(p -> {
-            String key = Common.GetFirstOrDefault(keyList, e -> e.toLowerCase().equals(p.Name.toLowerCase()));
+            String key = Common.GetFirstOrDefault(String.class, keyList, e -> e.toLowerCase().equals(p.Name.toLowerCase()));
             if (!Common.StringIsNullOrEmpty(key)) names.put(p.Name, key);
         });
 
@@ -108,9 +112,8 @@ public class EntityData implements IEntityData {
         }
     }
 
-    public <T extends IEntity> IEntity ToEntity(Class<T> cls) throws IllegalAccessException, InstantiationException {
-        IEntity obj = cls.newInstance();
-        return (IEntity) Parse.DictionaryToObject(_data, obj);
+    public <T extends IEntity> IEntity ToEntity(Class<T> cls) throws  IllegalAccessException,InstantiationException,Exception{
+        return JsonParse.MapTo(cls, ToDictionary());
     }
 
     public Map<String, Object> ToDictionary() {

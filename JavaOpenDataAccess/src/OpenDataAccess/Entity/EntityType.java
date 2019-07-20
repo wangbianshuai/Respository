@@ -33,7 +33,7 @@ public class EntityType {
     public static EntityType GetEntityType(String name, boolean blClone) {
         if (Common.StringIsNullOrEmpty(name)) return null;
 
-        EntityType entityType = Common.GetFirstOrDefault(EntityTypeList, where -> where.Name.toLowerCase().equals(name.toLowerCase()));
+        EntityType entityType = Common.GetFirstOrDefault(EntityType.class, EntityTypeList, where -> where.Name.toLowerCase().equals(name.toLowerCase()));
         if (entityType != null && blClone) {
             EntityType newEntityType = new EntityType();
             newEntityType.DeleteValidateList = entityType.DeleteValidateList;
@@ -96,7 +96,7 @@ public class EntityType {
     }
 
     public Property GetProperty(String name) {
-        return Common.StringIsNullOrEmpty(name) ? null : Common.GetFirstOrDefault(this.Properties, where -> where.Name.trim().toLowerCase().equals(name.trim().toLowerCase()));
+        return Common.StringIsNullOrEmpty(name) ? null : Common.GetFirstOrDefault(Property.class, this.Properties, where -> where.Name.trim().toLowerCase().equals(name.trim().toLowerCase()));
     }
 
     public List<Property> GetPropertyList(List<String> propertyNameList) {
