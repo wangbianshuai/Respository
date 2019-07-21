@@ -7,9 +7,9 @@ import java.util.List;
 public interface IEntity {
     EntityType ToEntityType();
 
-    IEntityData ToEntityData();
+    IEntityData ToEntityData() throws  IllegalAccessException;
 
-    IEntityData ToEntityData(List<String> fieldList);
+    IEntityData ToEntityData(List<String> fieldList)throws  IllegalAccessException;
 
     void InsertValidate(List<IFunction2<IValidate, IEntityData, String>> validateList);
 

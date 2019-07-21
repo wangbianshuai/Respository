@@ -99,10 +99,9 @@ public class Parse
         if (entityList.size() > 0) {
             entityName = entityList.get(0).getClass().getName();
         }
-        entityList.forEach(entity ->
-        {
-            dictList.add(entity.ToEntityData().ToDictionary());
-        });
+        for (int i=0; i< entityList.size();i++) {
+            dictList.add(entityList.get(i).ToEntityData().ToDictionary());
+        }
         if (!Common.StringIsNullOrEmpty(entityName)) {
             Map<String, Object> dict = new HashMap<>();
             dict.put(entityName, dictList);
@@ -120,10 +119,9 @@ public class Parse
         if (entityList.size() > 0) {
             entityName = entityList.get(0).getClass().getName();
         }
-        entityList.forEach(entity ->
-        {
-            dictList.add(entity.ToEntityData().ToDictionary());
-        });
+        for (int i=0; i< entityList.size();i++) {
+            dictList.add(entityList.get(i).ToEntityData().ToDictionary());
+        }
         if (!Common.StringIsNullOrEmpty(entityName)) {
             Map<String, Object> dict = new HashMap<>();
             dict.put(entityName, dictList);

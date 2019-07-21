@@ -15,6 +15,8 @@ public interface IDataParameterList {
     //设置参数
     public void Set(Map<String,Object> map);
 
+    public Map<String,Object> Get();
+
     //添加参数
     public void AddMap(Map<String,Object> map);
 

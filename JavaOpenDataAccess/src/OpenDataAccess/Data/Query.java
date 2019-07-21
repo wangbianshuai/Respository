@@ -3,19 +3,36 @@ package OpenDataAccess.Data;
 import java.util.List;
 
 public class Query implements IQuery {
-    public String EntityName(String value, boolean blGet) {
-        if (!blGet) _EntityName = value;
-        return _EntityName;
-    }
-
-    public String TableName(String value, boolean blGet) {
-        if (!blGet) _TableName = value;
+    public String GetTableName() {
         return _TableName;
     }
 
-    public String WithSql(String value, boolean blGet) {
-        if (!blGet) _WithSql = value;
+    public void SetTableName(String value) {
+        _TableName = value;
+    }
+
+    public String GetWithSql() {
         return _WithSql;
+    }
+
+    public void SetWithSql(String value) {
+        _WithSql = value;
+    }
+
+    public String GetEntityName() {
+        return _EntityName;
+    }
+
+    public void SetEntityName(String value) {
+        _EntityName = value;
+    }
+
+    public IDataParameterList GetParameterList() {
+        return _ParameterList2;
+    }
+
+    public void SetParameterList(IDataParameterList value) {
+        _ParameterList2 = value;
     }
 
     private String _WithSql = "";
@@ -27,13 +44,8 @@ public class Query implements IQuery {
     private String _GroupBySql = "";
     private String _FieldSql = "*";
     private String _Sql = "";
-    private List<IDataParameterList> _ParameterList = null;
-    private List<IDataParameterList> _ParameterList2 = null;
-
-    public List<IDataParameterList> ParameterList(List<IDataParameterList> value, boolean blGet) {
-        if (!blGet) _ParameterList2 = value;
-        return _ParameterList2;
-    }
+    private IDataParameterList _ParameterList = null;
+    private IDataParameterList _ParameterList2 = null;
 
     public Query(String tableName) {
         this._TableName = tableName;
@@ -54,13 +66,13 @@ public class Query implements IQuery {
         return this;
     }
 
-    public IQuery Where(String whereSql, List<IDataParameterList> parameterList) {
+    public IQuery Where(String whereSql, IDataParameterList parameterList) {
         _WhereSql = " ".concat(whereSql).concat(" ");
         _ParameterList = parameterList;
         return this;
     }
 
-    public IQuery Where(List<WhereStatement> whereList, List<IDataParameterList> parameterList) {
+    public IQuery Where(List<WhereStatement> whereList, IDataParameterList parameterList) {
         _WhereSql = Common.GetWhereStatement(whereList);
         _ParameterList = parameterList;
         return this;
@@ -96,7 +108,7 @@ public class Query implements IQuery {
         return this;
     }
 
-    public IQuery SetSql(String sqlText, List<IDataParameterList> parameterList) {
+    public IQuery SetSql(String sqlText, IDataParameterList parameterList) {
         _Sql = sqlText;
         if (parameterList != null) {
             _ParameterList = parameterList;

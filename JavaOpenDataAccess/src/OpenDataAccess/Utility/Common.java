@@ -234,6 +234,13 @@ public class Common {
         return dateString;
     }
 
+    public static <T> T GetFirstOrDefault(Class<T> cls, List<T> list) {
+        if (list != null && !list.isEmpty()) {
+            return list.get(0);
+        }
+        return (T) GetTypeDefaultValue(cls);
+    }
+
     public static <T> T GetFirstOrDefault(Class<T> cls, List<T> list, Predicate<T> predicate) {
         if (list == null || list.isEmpty()) return (T) GetTypeDefaultValue(cls);
 

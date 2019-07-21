@@ -15,23 +15,14 @@ import java.util.Map;
  */
 public class DataBase implements IDataBase {
 
-    private Connection _Connection=null;
-    private  Statement _Statement=null;
-    private  String _ConnectionString=null;
-    private  String _User=null;
-    private  String _Password=null;
-    private  PreparedStatement _PrearedStatement=null;
-    private  ResultSet _ResultSet=null;
-
-    public static String ConnectionString=null;
-    public static String User=null;
-    public static String Password=null;
-
-    public DataBase() {
-        this._ConnectionString = ConnectionString;
-        _User = User;
-        _Password = Password;
-    }
+    private Connection _Connection = null;
+    private Statement _Statement = null;
+    private String _ConnectionString = null;
+    private String _User = null;
+    private String _Password = null;
+    private PreparedStatement _PrearedStatement = null;
+    private ResultSet _ResultSet = null;
+    private ServerClient _ClientType;
 
     //获取链接
     @Override
@@ -41,9 +32,8 @@ public class DataBase implements IDataBase {
 
     //设置链接字符串
     @Override
-    public String SetConnectionString(String connectionString) {
+    public void SetConnectionString(String connectionString) {
         this._ConnectionString = connectionString;
-        return  this._ConnectionString;
     }
 
     //获取链接字符串
@@ -52,10 +42,42 @@ public class DataBase implements IDataBase {
         return this._ConnectionString;
     }
 
-    private void CreateConnection() throws SQLException {
+    public void SetUser(String value) {
+        _User = value;
+    }
+
+    public String GetUser() {
+        return _User;
+    }
+
+    public String GetPassword() {
+        return _Password;
+    }
+
+    public void SetPassword(String value) {
+        _Password = value;
+    }
+
+    public ServerClient GetClientType() {
+        return _ClientType;
+    }
+
+    public void SetClientType(ServerClient value) {
+        _ClientType = value;
+    }
+
+    public void CreateConnection() throws SQLException {
         try {
-            Class.forName("oracle.jdbc.driver.OracleDriver");
-            _Connection = DriverManager.getConnection(this._ConnectionString,_User,_Password);
+            if (_ClientType == ServerClient.OracleClient) {
+                Class.forName("oracle.jdbc.driver.OracleDriver");
+                _Connection = DriverManager.getConnection(this._ConnectionString, _User, _Password);
+            } else if (_ClientType == ServerClient.MySqlClient) {
+                Class.forName("com.mysql.jdbc.Driver");
+                _Connection = DriverManager.getConnection(this._ConnectionString);
+            } else {
+                Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+                _Connection = DriverManager.getConnection(this._ConnectionString, _User, _Password);
+            }
         } catch (ClassNotFoundException ex) {
             throw new SQLException(ex);
         }
@@ -83,7 +105,7 @@ public class DataBase implements IDataBase {
         }
     }
 
-    private void  CloseConnction() throws SQLException {
+    private void CloseConnction() throws SQLException {
         if (this._Statement != null) {
             this._Statement.close();
             this._Statement = null;
@@ -94,7 +116,7 @@ public class DataBase implements IDataBase {
             this._PrearedStatement = null;
         }
 
-        if(this._ResultSet!=null) {
+        if (this._ResultSet != null) {
             this._ResultSet.close();
             this._ResultSet = null;
         }
@@ -118,7 +140,7 @@ public class DataBase implements IDataBase {
         }
     }
 
-    private  void ExcelQueryToResultSet(String sql, IDataParameterList parameterList) throws SQLException {
+    private void ExcelQueryToResultSet(String sql, IDataParameterList parameterList) throws SQLException {
         this.CreateConnection();
 
         if (parameterList == null) {
@@ -134,7 +156,7 @@ public class DataBase implements IDataBase {
 
     //执行查询语句
     @Override
-    public <T> List<T> ExceSelectTo(Class<T> cls, String sql, IDataParameterList parameterList) throws SQLException,Exception, IllegalAccessException,InstantiationException {
+    public <T> List<T> ExceSelectTo(Class<T> cls, String sql, IDataParameterList parameterList) throws SQLException, Exception, IllegalAccessException, InstantiationException {
         try {
             this.ExcelQueryToResultSet(sql, parameterList);
             return this.ResultSetToList2(cls);
@@ -151,7 +173,7 @@ public class DataBase implements IDataBase {
         }
     }
 
-    private List<Map<String,Object>> ResultSetToList() throws SQLException {
+    private List<Map<String, Object>> ResultSetToList() throws SQLException {
         if (this._ResultSet != null) {
             List<Map<String, Object>> list = new ArrayList<>();
 
@@ -176,7 +198,7 @@ public class DataBase implements IDataBase {
         return null;
     }
 
-    private <T> List<T> ResultSetToList2(Class<T> cls) throws SQLException,Exception,IllegalAccessException,InstantiationException {
+    private <T> List<T> ResultSetToList2(Class<T> cls) throws SQLException, Exception, IllegalAccessException, InstantiationException {
         if (this._ResultSet != null) {
             List<T> list = new ArrayList<>();
 
@@ -218,13 +240,13 @@ public class DataBase implements IDataBase {
         return null;
     }
 
-    private  Field GetField(int index,Map<Integer,Field> fieldMap,Field[] fields,String columnName) {
+    private Field GetField(int index, Map<Integer, Field> fieldMap, Field[] fields, String columnName) {
         Field field = fieldMap.get(index);
 
         if (field == null && columnName != null) {
             for (int i = 0; i < fields.length; i++) {
                 if (fields[i].getName().toLowerCase().equals(columnName.toLowerCase())) {
-                    field= fields[i];
+                    field = fields[i];
                     fieldMap.put(index, field);
                     break;
                 }

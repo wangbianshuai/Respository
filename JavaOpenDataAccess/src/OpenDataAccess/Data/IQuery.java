@@ -3,21 +3,25 @@ package OpenDataAccess.Data;
 import java.util.List;
 
 public interface IQuery {
-    String TableName(String value, boolean blGet);
+    String GetTableName();
+    void  SetTableName(String value);
 
-    String WithSql(String value, boolean blGet);
+    String GetWithSql();
+    void  SetWithSql(String value);
 
-    String EntityName(String value, boolean blGet);
+    String GetEntityName();
+    void  SetEntityName(String value);
 
-    List<IDataParameterList> ParameterList(List<IDataParameterList> value, boolean blGet);
+    IDataParameterList GetParameterList();
+    void SetParameterList(IDataParameterList value);
 
     IQuery Join(List<JoinStatement> joinList);
 
     IQuery Join(String jionSql);
 
-    IQuery Where(String whereSql, List<IDataParameterList> parameterList);
+    IQuery Where(String whereSql, IDataParameterList parameterList);
 
-    IQuery Where(List<WhereStatement> whereList, List<IDataParameterList> parameterList);
+    IQuery Where(List<WhereStatement> whereList, IDataParameterList parameterList);
 
     IQuery Select(String fieldSql);
 
@@ -31,7 +35,7 @@ public interface IQuery {
 
     IQuery GroupBy(String groupBySql);
 
-    IQuery SetSql(String sqlText, List<IDataParameterList> parameterList);
+    IQuery SetSql(String sqlText, IDataParameterList parameterList);
 
     String ToSql();
 

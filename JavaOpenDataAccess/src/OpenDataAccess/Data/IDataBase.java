@@ -14,10 +14,22 @@ public interface IDataBase {
     public Connection GetConnection();
 
     //设置链接字符串
-    public String SetConnectionString(String connectionString);
+    void SetConnectionString(String connectionString);
 
     //获取链接字符串
     public String GetConnectionString();
+
+    void SetUser(String value);
+
+    String GetUser();
+
+    String GetPassword();
+
+    void SetPassword(String value);
+
+    ServerClient GetClientType();
+
+    void SetClientType(ServerClient value);
 
     //执行无查询语句
     public int ExceNoQuery(String sql, IDataParameterList parameterList) throws SQLException;

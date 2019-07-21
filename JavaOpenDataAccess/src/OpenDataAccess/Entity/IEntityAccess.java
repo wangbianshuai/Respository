@@ -9,8 +9,10 @@ import java.util.List;
 
 public interface IEntityAccess {
 
-    IDataBase CurrentDataBase(IDataBase value, boolean blGet);
-    EntityType EntityType(EntityType value, boolean blGet);
+    IDataBase GetDataBase();
+    void SetDataBase(IDataBase value);
+    EntityType GetEntityType();
+    void SetEntityType(EntityType value);
     List<IEntityData> SelectEntities(IQuery query);
     List<IEntityData> SelectEntities(String procName, List<IDataParameterList> parameterList);
     List<IEntityData> SelectEntities(String entityName, String procName, List<IDataParameterList> parameterList);

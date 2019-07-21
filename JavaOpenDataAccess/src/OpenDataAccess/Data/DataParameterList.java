@@ -44,6 +44,8 @@ public class DataParameterList implements  IDataParameterList {
         }
     }
 
+    public Map<String,Object> Get(){ return _Parameters;}
+
     //获取参数值
     @Override
     public Object Get(String name) {
