@@ -24,6 +24,8 @@ public interface IEntityRequest extends IEntityAccess,IValidate {
 
     Map<String, Object> GetExceptionDict(String message);
 
+    void ExHandling(Exception ex);
+
     Map<String, Object> GetMessageDict(String message);
 
     Map<String, Object> GetBoolDict(boolean blSucceed);

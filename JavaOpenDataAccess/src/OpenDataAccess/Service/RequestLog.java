@@ -48,14 +48,14 @@ public class RequestLog
                 if (!Common.StringIsNullOrEmpty(request.MethodName)) {
                     if (!request.IsLog) return;
                 } else if (request.RequestType.equals("GET")) {
-                    if (!request.Entity.LogAttribute.IsGet) return;
+                    if (!request.Entity.LogAttribute.IsGet()) return;
                 } else if (request.RequestType.equals("POST")) {
-                    if (request.IsPostQuery && !request.Entity.LogAttribute.IsPostQuery) return;
-                    else if (!request.Entity.LogAttribute.IsPost) return;
+                    if (request.IsPostQuery && !request.Entity.LogAttribute.IsPostQuery()) return;
+                    else if (!request.Entity.LogAttribute.IsPost()) return;
                 } else if (request.RequestType.equals("PUT")) {
-                    if (!request.Entity.LogAttribute.IsPut) return;
+                    if (!request.Entity.LogAttribute.IsPut()) return;
                 } else if (request.RequestType.equals("DELETE")) {
-                    if (!request.Entity.LogAttribute.IsDelete) return;
+                    if (!request.Entity.LogAttribute.IsDelete()) return;
                 }
             }
 

@@ -1,12 +1,12 @@
 package OpenDataAccess.Entity;
 
 public @interface TablePropertyAttribute {
-    public String Name = "";
+    public String Name() default "";
 
-    public String WithSql = "";
+    public String WithSql() default "";
 
-    public String PrimaryKey = "";
+    public String PrimaryKey() default "";
 
     /// 不许查询字段名集合
-    public String NoSelectNames = "";
+    public String NoSelectNames() default "";
 }

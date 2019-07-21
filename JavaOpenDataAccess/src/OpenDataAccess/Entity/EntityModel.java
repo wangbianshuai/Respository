@@ -22,10 +22,10 @@ public class EntityModel implements IEntity {
 
         TablePropertyAttribute tableProperty = this.getClass().getAnnotation(TablePropertyAttribute.class);
         if (tableProperty != null) {
-            entityType.TableName = tableProperty.Name;
-            entityType.WithSql = tableProperty.WithSql;
-            entityType.PrimaryKey = tableProperty.PrimaryKey;
-            entityType.NoSelectNameList = Common.StringIsNullOrEmpty(tableProperty.NoSelectNames) ? new ArrayList<>() : Arrays.asList(tableProperty.NoSelectNames.split(","));
+            entityType.TableName = tableProperty.Name();
+            entityType.WithSql = tableProperty.WithSql();
+            entityType.PrimaryKey = tableProperty.PrimaryKey();
+            entityType.NoSelectNameList = Common.StringIsNullOrEmpty(tableProperty.NoSelectNames()) ? new ArrayList<>() : Arrays.asList(tableProperty.NoSelectNames().split(","));
         }
 
         RequestMethodAttribute requestMethodProperty = this.getClass().getAnnotation(RequestMethodAttribute.class);

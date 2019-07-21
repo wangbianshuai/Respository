@@ -58,7 +58,7 @@ public class EntityRequest extends EntityAccess implements IEntityRequest, IEnti
         this.SetEntityType(_Request.Entity);
     }
 
-    private void ExHandling(Exception ex) {
+    public void ExHandling(Exception ex) {
         if (this.ExceptionHandle != null) {
             this.ExceptionHandle.Handling(ex);
         }
