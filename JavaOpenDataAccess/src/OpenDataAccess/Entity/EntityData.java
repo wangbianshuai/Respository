@@ -16,7 +16,7 @@ public class EntityData implements IEntityData {
         return _EntityName;
     }
 
-    public void  SetEntityName(String value) {
+    public void SetEntityName(String value) {
         _EntityName = value;
     }
 
@@ -105,6 +105,10 @@ public class EntityData implements IEntityData {
         }
     }
 
+    public boolean ContainsKey(String key) {
+        return _data.containsKey(key);
+    }
+
     public void Remove(int i) {
         _PropertyName = GetPropertyName(i);
         if (_data.containsKey(_PropertyName)) {
@@ -112,7 +116,7 @@ public class EntityData implements IEntityData {
         }
     }
 
-    public <T extends IEntity> IEntity ToEntity(Class<T> cls) throws  IllegalAccessException,InstantiationException,Exception{
+    public <T extends IEntity> IEntity ToEntity(Class<T> cls) throws IllegalAccessException, InstantiationException, Exception {
         return JsonParse.MapTo(cls, ToDictionary());
     }
 

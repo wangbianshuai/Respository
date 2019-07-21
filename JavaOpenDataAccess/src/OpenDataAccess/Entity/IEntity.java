@@ -17,7 +17,7 @@ public interface IEntity {
 
     void DeleteValidate(List<IFunction2<IValidate, IEntityData, String>> validateList);
 
-    <T extends  IEntity> IFunction2<IValidate, IEntityData, String> InsertValidateUnique(String propertyName, String message);
-    <T extends  IEntity> IFunction2<IValidate, IEntityData, String> UpdateValidateUnique(String propertyName, String message);
-    <T extends  IEntity> IFunction2<IValidate, IEntityData, String> ValidateExists(String filter, String message, boolean blExists);
+    <T extends  IEntity> IFunction2<IValidate, IEntityData, String> InsertValidateUnique(Class<T> cls,String propertyName, String message);
+    <T extends  IEntity> IFunction2<IValidate, IEntityData, String> UpdateValidateUnique(Class<T> cls,String propertyName, String message);
+    <T extends  IEntity> IFunction2<IValidate, IEntityData, String> ValidateExists(Class<T> cls,String filter, String message, boolean blExists);
 }

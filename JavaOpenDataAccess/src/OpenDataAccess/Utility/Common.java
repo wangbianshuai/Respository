@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.function.Predicate;
@@ -278,6 +279,13 @@ public class Common {
 
     public static String GetNow() {
         return DateToString(new Date(), "yyyy-MM-dd HH:mm:ss:SSS");
+    }
+
+    public static Date AddDays(Date date, long day) throws ParseException {
+        long time = date.getTime(); // 得到指定日期的毫秒数
+        day = day * 24 * 60 * 60 * 1000; // 要加上的天数转换成毫秒数
+        time += day; // 相加得到新的毫秒数
+        return new Date(time); // 将毫秒数转换成日期
     }
 
     public static Throwable GetRealException(Throwable ex) {

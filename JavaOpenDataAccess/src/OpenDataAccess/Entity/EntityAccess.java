@@ -4,7 +4,6 @@ import OpenDataAccess.Data.*;
 import OpenDataAccess.LambdaInterface.IExceptionHandle;
 
 import java.util.*;
-import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
 public abstract class EntityAccess implements IEntityAccess {

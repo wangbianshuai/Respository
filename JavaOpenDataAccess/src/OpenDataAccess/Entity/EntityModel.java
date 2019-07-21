@@ -102,24 +102,24 @@ public class EntityModel implements IEntity {
     public void DeleteValidate(List<IFunction2<IValidate, IEntityData, String>> validateList) {
     }
 
-    public <T extends IEntity> IFunction2<IValidate, IEntityData, String> InsertValidateUnique(String propertyName, String message) {
+    public <T extends IEntity> IFunction2<IValidate, IEntityData, String> InsertValidateUnique(Class<T> cls,String propertyName, String message) {
         return (valiate, entityData) ->
         {
-            return valiate.InsertValidateUnique(entityData, propertyName, message);
+            return valiate.InsertValidateUnique(cls, entityData, propertyName, message);
         };
     }
 
-    public <T extends IEntity> IFunction2<IValidate, IEntityData, String> UpdateValidateUnique(String propertyName, String message) {
+    public <T extends IEntity> IFunction2<IValidate, IEntityData, String> UpdateValidateUnique(Class<T> cls,String propertyName, String message) {
         return (valiate, entityData) ->
         {
-            return valiate.UpdateValidateUnique(entityData, propertyName, message);
+            return valiate.UpdateValidateUnique(cls, entityData, propertyName, message);
         };
     }
 
-    public <T extends IEntity> IFunction2<IValidate, IEntityData, String> ValidateExists(String filter, String message, boolean blExists) {
+    public <T extends IEntity> IFunction2<IValidate, IEntityData, String> ValidateExists(Class<T> cls, String filter, String message, boolean blExists) {
         return (valiate, entityData) ->
         {
-            return valiate.ValidateExists(entityData, filter, message, blExists);
+            return valiate.ValidateExists(cls, entityData, filter, message, blExists);
         };
     }
 }

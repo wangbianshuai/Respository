@@ -19,6 +19,8 @@ public interface IEntityData {
 
     void Remove(int i);
 
+    boolean ContainsKey(String key);
+
     <T extends IEntity> IEntity ToEntity(Class<T> cls) throws  IllegalAccessException,InstantiationException,Exception;
 
     Map<String, Object> ToDictionary();
