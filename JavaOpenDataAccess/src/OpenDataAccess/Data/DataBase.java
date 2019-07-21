@@ -255,4 +255,8 @@ public class DataBase implements IDataBase {
 
         return field;
     }
+
+    public  boolean CommitTransaction(IDataTransaction trans, boolean blSuccess){
+        return  true;
+    }
 }

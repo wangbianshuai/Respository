@@ -42,12 +42,19 @@ public class EntityRequest extends EntityAccess implements IEntityRequest, IEnti
     public IExceptionHandle ExceptionHandle = null;
 
     public EntityRequest() {
+        Init();
     }
 
-    public EntityRequest(Request request, IExceptionHandle exHandle) {
+    private void Init(){
+        this.ExceptionHandle = (ex) -> {
+            throw new RuntimeException(ex);
+        };
+    }
+
+    public EntityRequest(Request request) {
         _Request = request;
-        ExceptionHandle = exHandle;
-        _QueryRequest = new QueryRequest(_Request, this, exHandle);
+        Init();
+        _QueryRequest = new QueryRequest(_Request, this, ExceptionHandle);
         this.SetEntityType(_Request.Entity);
     }
 

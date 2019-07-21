@@ -3,7 +3,7 @@ package OpenDataAccess.Service;
 import OpenDataAccess.Entity.EntityType;
 import OpenDataAccess.Entity.IEntityData;
 import OpenDataAccess.LambdaInterface.IAction2;
-import OpenDataAccess.LambdaInterface.IVoidFunction;
+import OpenDataAccess.LambdaInterface.IFunction;
 import OpenDataAccess.Utility.Common;
 import com.sun.jndi.toolkit.url.UrlUtil;
 
@@ -41,7 +41,7 @@ public class Request {
     public String RawUrl = null;
     public String PathInfo = null;
 
-    public IVoidFunction<Boolean> IsDirectRequest = null;
+    public IFunction<Boolean> IsDirectRequest = null;
 
     public Request() {
         this._RequestId = Common.CreateGuid();

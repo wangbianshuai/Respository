@@ -8,6 +8,16 @@ import java.util.*;
 
 public class Parse
 {
+    public static List<Map<String, Object>> ToDictionaryList(Object obj) {
+        List<Map<String, Object>> list = new ArrayList<>();
+        if (obj != null && obj.getClass().equals(list.getClass())) {
+            return (List<Map<String, Object>>) obj;
+        } else if (obj instanceof Map) {
+            list.add((Map<String, Object>) obj);
+        }
+        return list;
+    }
+
     //将包含IEntityData Map转化Map
     public static Map<String, Object> DictionaryToMap(Map<String, Object> dict) {
         Map<String, Object> map = new HashMap<>();

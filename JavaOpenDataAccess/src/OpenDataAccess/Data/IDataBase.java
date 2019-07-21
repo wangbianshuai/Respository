@@ -31,6 +31,8 @@ public interface IDataBase {
 
     void SetClientType(ServerClient value);
 
+    boolean CommitTransaction(IDataTransaction trans, boolean blSuccess);
+
     //执行无查询语句
     public int ExceNoQuery(String sql, IDataParameterList parameterList) throws SQLException;
 
