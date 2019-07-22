@@ -25,7 +25,7 @@ public class EntityModel implements IEntity {
             entityType.TableName = tableProperty.Name();
             entityType.WithSql = tableProperty.WithSql();
             entityType.PrimaryKey = tableProperty.PrimaryKey();
-            entityType.NoSelectNameList = Common.StringIsNullOrEmpty(tableProperty.NoSelectNames()) ? new ArrayList<>() : Arrays.asList(tableProperty.NoSelectNames().split(","));
+            entityType.NoSelectNameList = Common.IsNullOrEmpty(tableProperty.NoSelectNames()) ? new ArrayList<>() : Arrays.asList(tableProperty.NoSelectNames().split(","));
         }
 
         RequestMethodAttribute requestMethodProperty = this.getClass().getAnnotation(RequestMethodAttribute.class);

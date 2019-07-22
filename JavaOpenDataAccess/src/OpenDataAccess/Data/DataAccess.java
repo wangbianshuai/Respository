@@ -45,26 +45,26 @@ public class DataAccess {
     }
 
     private static String GetServerClient() {
-        if (OpenDataAccess.Utility.Common.StringIsNullOrEmpty(_ServerClient)) {
+        if (OpenDataAccess.Utility.Common.IsNullOrEmpty(_ServerClient)) {
             _ServerClient = AppSettings.ServerClient;
-            _ServerClient = OpenDataAccess.Utility.Common.StringIsNullOrEmpty(_ServerClient) ? "Sql" : _ServerClient;
+            _ServerClient = OpenDataAccess.Utility.Common.IsNullOrEmpty(_ServerClient) ? "Sql" : _ServerClient;
         }
         return _ServerClient;
     }
 
     private static String GetConnectionString() {
-        if (OpenDataAccess.Utility.Common.StringIsNullOrEmpty(_ConnectionString))
+        if (OpenDataAccess.Utility.Common.IsNullOrEmpty(_ConnectionString))
             _ConnectionString = AppSettings.ConnectionString;
         return _ConnectionString;
     }
 
     private static String GetUser() {
-        if (OpenDataAccess.Utility.Common.StringIsNullOrEmpty(_User)) _User = AppSettings.DbUser;
+        if (OpenDataAccess.Utility.Common.IsNullOrEmpty(_User)) _User = AppSettings.DbUser;
         return _User;
     }
 
     private static String GetPassword() {
-        if (OpenDataAccess.Utility.Common.StringIsNullOrEmpty(_Password)) _Password = AppSettings.DbPassword;
+        if (OpenDataAccess.Utility.Common.IsNullOrEmpty(_Password)) _Password = AppSettings.DbPassword;
         return _Password;
     }
 }

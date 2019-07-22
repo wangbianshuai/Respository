@@ -51,7 +51,7 @@ public class EntityData implements IEntityData {
 
         entityType.Properties.forEach(p -> {
             String key = Common.GetFirstOrDefault(String.class, keyList, e -> e.toLowerCase().equals(p.Name.toLowerCase()));
-            if (!Common.StringIsNullOrEmpty(key)) names.put(p.Name, key);
+            if (!Common.IsNullOrEmpty(key)) names.put(p.Name, key);
         });
 
         if (names.size() > 0) {
@@ -91,7 +91,7 @@ public class EntityData implements IEntityData {
 
     public void SetDefaultValue(String propertyName, Object value) {
         String strValue = GetStringValue(propertyName);
-        if (Common.StringIsNullOrEmpty(strValue)) SetValue(propertyName, value);
+        if (Common.IsNullOrEmpty(strValue)) SetValue(propertyName, value);
     }
 
     public void SetValue(int i, Object value) {

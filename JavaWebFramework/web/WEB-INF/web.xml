@@ -7,6 +7,14 @@
     <param-name>ConnectionString</param-name>
     <param-value>jdbc:oracle:thin:@localhost:1521:xe</param-value>
 </context-param>
+    <context-param>
+        <param-name>ServerClient</param-name>
+<param-value>Oracle</param-value>
+</context-param>
+    <context-param>
+        <param-name>IsLog</param-name>
+        <param-value>true</param-value>
+    </context-param>
 <context-param>
     <param-name>DbUser</param-name>
     <param-value>system</param-value>

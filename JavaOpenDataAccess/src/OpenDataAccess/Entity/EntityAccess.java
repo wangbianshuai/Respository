@@ -210,7 +210,7 @@ public abstract class EntityAccess implements IEntityAccess {
         String propertyName = "";
         Property property = null;
         Property primaryKeyProeprty = entityType.GetProperty(entityType.PrimaryKey);
-        if (primaryKeyProeprty != null && primaryKeyProeprty.Type.equals(String.class) && OpenDataAccess.Utility.Common.StringIsNullOrEmpty(entityData.GetStringValue(primaryKeyProeprty.Name))) {
+        if (primaryKeyProeprty != null && primaryKeyProeprty.Type.equals(String.class) && OpenDataAccess.Utility.Common.IsNullOrEmpty(entityData.GetStringValue(primaryKeyProeprty.Name))) {
             entityData.SetValue(primaryKeyProeprty.Name, OpenDataAccess.Utility.Common.CreateGuid());
         }
 

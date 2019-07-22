@@ -31,7 +31,7 @@ public class EntityType {
     public static List<EntityType> EntityTypeList = new ArrayList<>();
 
     public static EntityType GetEntityType(String name, boolean blClone) {
-        if (Common.StringIsNullOrEmpty(name)) return null;
+        if (Common.IsNullOrEmpty(name)) return null;
 
         EntityType entityType = Common.GetFirstOrDefault(EntityType.class, EntityTypeList, where -> where.Name.toLowerCase().equals(name.toLowerCase()));
         if (entityType != null && blClone) {
@@ -75,28 +75,28 @@ public class EntityType {
     }
 
     public static <T extends IEntity> void SetEntityType(Class<T> cls) throws InstantiationException, IllegalAccessException {
-        if (Common.Exists(EntityTypeList, exists -> exists.Name.equals(cls.getName()))) {
+        if (!Common.Exists(EntityTypeList, exists -> exists.Name.equals(cls.getName()))) {
             T entity = cls.newInstance();
             EntityTypeList.add(entity.ToEntityType());
         }
     }
 
     public static void SetEntityTypeByType(Class<?> type) throws InstantiationException, IllegalAccessException {
-        if (Common.Exists(EntityTypeList, exists -> exists.Name.equals(type.getName()))) {
+        if (!Common.Exists(EntityTypeList, exists -> exists.Name.equals(type.getName()))) {
             IEntity entity = (IEntity) type.newInstance();
             if (entity != null) EntityTypeList.add(entity.ToEntityType());
         }
     }
 
     public static void SetEntityTypeByObject(Object obj) {
-        if (Common.Exists(EntityTypeList, exists -> exists.Name.equals(obj.getClass().getName()))) {
+        if (!Common.Exists(EntityTypeList, exists -> exists.Name.equals(obj.getClass().getName()))) {
             IEntity entity = (IEntity) obj;
             if (entity != null) EntityTypeList.add(entity.ToEntityType());
         }
     }
 
     public Property GetProperty(String name) {
-        return Common.StringIsNullOrEmpty(name) ? null : Common.GetFirstOrDefault(Property.class, this.Properties, where -> where.Name.trim().toLowerCase().equals(name.trim().toLowerCase()));
+        return Common.IsNullOrEmpty(name) ? null : Common.GetFirstOrDefault(Property.class, this.Properties, where -> where.Name.trim().toLowerCase().equals(name.trim().toLowerCase()));
     }
 
     public List<Property> GetPropertyList(List<String> propertyNameList) {

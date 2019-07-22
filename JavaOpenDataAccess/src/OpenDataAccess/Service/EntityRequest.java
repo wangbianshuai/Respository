@@ -87,7 +87,7 @@ public class EntityRequest extends EntityAccess implements IEntityRequest, IEnti
     }
 
     public boolean IsNullOrEmpty(String str) {
-        return Common.StringIsNullOrEmpty(str);
+        return Common.IsNullOrEmpty(str);
     }
 
     /// 比较版本

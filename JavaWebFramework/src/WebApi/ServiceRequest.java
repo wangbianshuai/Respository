@@ -30,8 +30,10 @@ public class ServiceRequest {
         Request req = new Request();
         req.RawUrl = request.getRequestURL().toString();
         req.QueryString = GetQueryString(request);
-        req.PathInfo = request.getPathInfo();
+        req.PathInfo = request.getPathInfo().substring(1);
         req.Content = Common.InputStream2String(request.getInputStream());
+        req.RequestType = request.getMethod();
+        req.PathAndQuery = req.PathInfo +"?"+ request.getQueryString();
         return req;
     }
 

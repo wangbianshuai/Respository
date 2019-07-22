@@ -34,7 +34,7 @@ public class RequestHandler {
             } else if (delete == "true") {
                 request.RequestType = "DELETE";
             }
-            if (Common.StringIsNullOrEmpty(entityName)) {
+            if (Common.IsNullOrEmpty(entityName)) {
                 String[] names = request.PathInfo.split("/");
                 request.EntityName = names[0];
                 if (names.length > 1) {
@@ -73,7 +73,7 @@ public class RequestHandler {
         sw.Stop();
         request.ElapsedMilliseconds = sw.ElapsedMilliseconds();
 
-        if (!Common.StringIsNullOrEmpty(request.EntityName)) {
+        if (!Common.IsNullOrEmpty(request.EntityName)) {
             RequestLog.AddRequestLog(request, obj, responseContent);
         }
 
@@ -81,26 +81,27 @@ public class RequestHandler {
     }
 
     boolean JudgeRight(Request request) throws MalformedURLException {
-        if (request.EntityName.toLowerCase().equals("user") && request.MethodName.toLowerCase().equals("login"))
+
+        if (Common.IsEquals(request.EntityName, "User", true) && Common.IsEquals(request.MethodName, "login", true))
             return true;
 
         String userId = request.GetParameterValue("LoginUserId");
         String token = request.GetParameterValue("Token");
-        if (Common.StringIsNullOrEmpty(userId) || Common.StringIsNullOrEmpty(token)) return false;
+        //if (Common.IsNullOrEmpty(userId) || Common.IsNullOrEmpty(token)) return false;
 
         return true;
     }
 
     private void SetEntityAndMethodName(Request request, String entityName, String methodName) {
         int startIndex = 0;
-        if (!Common.StringIsNullOrEmpty(entityName)) {
+        if (!Common.IsNullOrEmpty(entityName)) {
             request.EntityName = entityName;
             startIndex = request.EntityName.indexOf("(");
             if (startIndex > 0) {
                 request.EntityName = request.EntityName.substring(0, startIndex);
             }
         }
-        if (!Common.StringIsNullOrEmpty(methodName)) {
+        if (!Common.IsNullOrEmpty(methodName)) {
             request.MethodName = methodName;
             startIndex = request.MethodName.indexOf("(");
             if (startIndex > 0) {
@@ -112,11 +113,13 @@ public class RequestHandler {
     private Object InvokeMethod(Request request) throws Exception {
         EntityRequest entityRequest = null;
 
-        if (Common.StringIsNullOrEmpty(request.EntityName)) {
+        if (Common.IsNullOrEmpty(request.EntityName)) {
             return null;
         }
 
-        if (Common.StringIsNullOrEmpty(request.Content) && (request.RequestType.equals("POST") || request.RequestType.equals("PUT") || (request.RequestType.equals("DELETE") && request.QueryString.get("$data").equals("true")))) {
+        if (request.RequestType == null) request.RequestType = "";
+
+        if (Common.IsNullOrEmpty(request.Content) && (request.RequestType.equals("POST") || request.RequestType.equals("PUT") || (request.RequestType.equals("DELETE") && request.QueryString.get("$data").equals("true")))) {
             request.IsLog = false;
             Map<String, Object> dict = new HashMap<>();
             dict.put("NoData", true);
@@ -147,7 +150,7 @@ public class RequestHandler {
 
         Object returnObj = null;
 
-        if (!Common.StringIsNullOrEmpty(request.MethodName)) {
+        if (!Common.IsNullOrEmpty(request.MethodName)) {
             Class<?> type = ComponentType.GetComponentType(request.EntityName);
             if (type == null) {
                 throw new Exception("实体不存在！");
@@ -230,7 +233,7 @@ public class RequestHandler {
     }
 
     private Map<String, List<IEntityData>> GetEntities(Request request) throws IOException, Exception {
-        if (!Common.StringIsNullOrEmpty(request.Content)) {
+        if (!Common.IsNullOrEmpty(request.Content)) {
             Map<String, List<IEntityData>> entityDict = new HashMap<>();
             Map<String, Object> dict = JsonParse.JsonToDictionary(request.Content);
             if (dict != null) {

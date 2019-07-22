@@ -79,7 +79,7 @@ public class Query implements IQuery {
     }
 
     public IQuery Select(String fieldSql) {
-        _FieldSql = " ".concat(OpenDataAccess.Utility.Common.StringIsNullOrEmpty(fieldSql) ? "*" : fieldSql).concat(" ");
+        _FieldSql = " ".concat(OpenDataAccess.Utility.Common.IsNullOrEmpty(fieldSql) ? "*" : fieldSql).concat(" ");
         return this;
     }
 
@@ -118,7 +118,7 @@ public class Query implements IQuery {
 
     public String ToSql() {
         String sqlText = "";
-        if (OpenDataAccess.Utility.Common.StringIsNullOrEmpty(_Sql)) {
+        if (OpenDataAccess.Utility.Common.IsNullOrEmpty(_Sql)) {
             sqlText = String.format("%%%%%%%%", "select ", _FieldSql, " from ", _TableName, _JoinSql, _WhereSql, _GroupBySql, _OrderBySql);
         } else {
             sqlText = _Sql;

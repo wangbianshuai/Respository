@@ -112,7 +112,7 @@ public class Parse
         for (int i=0; i< entityList.size();i++) {
             dictList.add(entityList.get(i).ToEntityData().ToDictionary());
         }
-        if (!Common.StringIsNullOrEmpty(entityName)) {
+        if (!Common.IsNullOrEmpty(entityName)) {
             Map<String, Object> dict = new HashMap<>();
             dict.put(entityName, dictList);
             return JsonParse.ToJson(dict);
@@ -132,7 +132,7 @@ public class Parse
         for (int i=0; i< entityList.size();i++) {
             dictList.add(entityList.get(i).ToEntityData().ToDictionary());
         }
-        if (!Common.StringIsNullOrEmpty(entityName)) {
+        if (!Common.IsNullOrEmpty(entityName)) {
             Map<String, Object> dict = new HashMap<>();
             dict.put(entityName, dictList);
             return JsonParse.ToJson(dict);
@@ -141,7 +141,7 @@ public class Parse
 
     public static String IEntityToJson(IEntityData entityData) throws IOException,IllegalAccessException
     {
-        if (!Common.StringIsNullOrEmpty(entityData.GetEntityName()))
+        if (!Common.IsNullOrEmpty(entityData.GetEntityName()))
         {
             Map<String, Object> dict = new HashMap<>();
             dict.put(entityData.GetEntityName(), entityData.ToDictionary());
@@ -169,7 +169,7 @@ public class Parse
         {
             dictList.add(entityData.ToDictionary());
         });
-        if (!Common.StringIsNullOrEmpty(entityName)) {
+        if (!Common.IsNullOrEmpty(entityName)) {
             Map<String, Object> dict = new HashMap<>();
             dict.put(entityName, dictList);
             return JsonParse.ToJson(dict);

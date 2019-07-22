@@ -41,31 +41,31 @@ public class QueryRequest
             parameterList.Set(PrimaryKeyProperty.Name, PrimaryKeyProperty.Value);
             whereList.add(new WhereStatement(PrimaryKeyProperty.Name, "=", PrimaryKeyProperty.ParameterName));
             query.Where(whereList, parameterList);
-        } else if (!OpenDataAccess.Utility.Common.StringIsNullOrEmpty(Filter))
+        } else if (!OpenDataAccess.Utility.Common.IsNullOrEmpty(Filter))
             query.Where(String.format("%%", " where ", Filter), this.FilterParamterList);
 
         query.Select(Select);
-        if (!OpenDataAccess.Utility.Common.StringIsNullOrEmpty(GroupBy)) {
+        if (!OpenDataAccess.Utility.Common.IsNullOrEmpty(GroupBy)) {
             this.GroupBy = this.ValidateGroupBy(this.GroupBy);
             query.GroupBy(String.format("%%", " group by ", GroupBy));
         }
-        if (!OpenDataAccess.Utility.Common.StringIsNullOrEmpty(OrderBy)) {
+        if (!OpenDataAccess.Utility.Common.IsNullOrEmpty(OrderBy)) {
             this.OrderBy = this.ValidateOrderBy(this.OrderBy);
             query.OrderBy(String.format("%%", " order by ", OrderBy));
         }
-        if (OpenDataAccess.Utility.Common.StringIsNullOrEmpty(GroupBy) && OpenDataAccess.Utility.Common.StringIsNullOrEmpty(OrderBy)) {
-            if (OpenDataAccess.Utility.Common.StringIsNullOrEmpty(this._Request.Entity.PrimaryKey)) {
+        if (OpenDataAccess.Utility.Common.IsNullOrEmpty(GroupBy) && OpenDataAccess.Utility.Common.IsNullOrEmpty(OrderBy)) {
+            if (OpenDataAccess.Utility.Common.IsNullOrEmpty(this._Request.Entity.PrimaryKey)) {
                 throw new Exception("对不起，实体没有主键！");
             }
             query.OrderBy(String.format("%%", " order by ", this._Request.Entity.PrimaryKey));
-        } else if (!OpenDataAccess.Utility.Common.StringIsNullOrEmpty(GroupBy) && OpenDataAccess.Utility.Common.StringIsNullOrEmpty(OrderBy)) {
+        } else if (!OpenDataAccess.Utility.Common.IsNullOrEmpty(GroupBy) && OpenDataAccess.Utility.Common.IsNullOrEmpty(OrderBy)) {
             query.OrderBy(String.format("%%", " order by ", this.GroupBy.split(",")[0]));
         }
         return query;
     }
 
     private  boolean IsNullOrEmpty(String str){
-        return OpenDataAccess.Utility.Common.StringIsNullOrEmpty(str);
+        return OpenDataAccess.Utility.Common.IsNullOrEmpty(str);
     }
 
     public void Parse() {
