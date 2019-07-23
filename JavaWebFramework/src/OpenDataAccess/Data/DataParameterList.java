@@ -1,5 +1,7 @@
 package OpenDataAccess.Data;
 
+import OpenDataAccess.Utility.Common;
+
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Timestamp;
@@ -75,10 +77,15 @@ public class DataParameterList implements  IDataParameterList {
     @Override
     public String ToSql(String sql) {
         this._PreparedParameters = new ArrayList<Object>();
+        Map<String, String> replaceParameterNames = new HashMap<>();
 
         for (Map.Entry<String, Object> entry : this._Parameters.entrySet()) {
-            sql = this.GetPreparedParameters(entry.getKey(), entry.getValue(), sql);
+            String replaceId = "${" + Common.CreateGuid().replace("-", "").substring(0, 16) + "}$";
+            sql = sql.replace(AddFrefix(entry.getKey()), replaceId);
+            replaceParameterNames.put(replaceId, entry.getKey());
         }
+
+        sql = this.GetPreparedParameters(sql, replaceParameterNames);
 
         return sql;
     }
@@ -124,20 +131,29 @@ public class DataParameterList implements  IDataParameterList {
         }
     }
 
-    private String GetPreparedParameters(String name, Object value, String sql) {
-        name = this.AddFrefix(name);
-        int index = 0;
-        while (index >= 0) {
-            index = sql.indexOf(name, index);
-            if (index >= 0) {
-                if (index == 0) {
-                    sql = "?" + sql.substring(name.length());
-                } else if (index == sql.length() - name.length()) {
-                    sql = sql.substring(0, index) + "?";
-                } else {
-                    sql = sql.substring(0, index) + "?" + sql.substring(index + name.length());
+    private String GetPreparedParameters(String sql, Map<String,String> replaceParameterNames) {
+        String replaceId ="";
+        String name = "";
+        int startIndex = 0;
+        int endIndex =0;
+        while (startIndex >= 0) {
+            startIndex = sql.indexOf("${", startIndex);
+            if (startIndex >= 0) {
+                endIndex = sql.indexOf("}$", startIndex);
+                if (endIndex > 0) {
+                    replaceId = sql.substring(startIndex, endIndex + 2);
+                    if (replaceParameterNames.containsKey(replaceId)) {
+                        name = replaceParameterNames.get(replaceId);
+
+                        if (startIndex == sql.length() - replaceId.length()) {
+                            sql = sql.substring(0, startIndex) + "?";
+                        } else {
+                            sql = sql.substring(0, startIndex) + "?" + sql.substring(startIndex + replaceId.length());
+                        }
+                        this._PreparedParameters.add(_Parameters.get(name));
+                    }
+                    startIndex = endIndex + 2;
                 }
-                this._PreparedParameters.add(value);
             }
         }
 

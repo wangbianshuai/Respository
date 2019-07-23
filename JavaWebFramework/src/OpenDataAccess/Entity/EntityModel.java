@@ -53,6 +53,7 @@ public class EntityModel implements IEntity {
             f = fileds[i];
             p.Name = f.getName();
             p.Type = f.getType();
+            p.ParameterName = "@" + p.Name;
             p.IsSelect = !entityType.NoSelectNameList.contains(p.Name);
 
             entityType.Properties.add(p);

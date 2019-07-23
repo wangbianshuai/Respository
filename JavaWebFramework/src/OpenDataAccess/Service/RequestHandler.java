@@ -158,7 +158,7 @@ public class RequestHandler {
             Constructor instanceObj = type.getConstructor(new Class[]{Request.class});
             entityRequest = (EntityRequest) instanceObj.newInstance(new Object[]{request});
 
-            Method method = this.getClass().getMethod(request.MethodName);
+            Method method = type.getMethod(request.MethodName);
             if (method != null) {
                 LogAttribute log = method.getAnnotation(LogAttribute.class);
                 request.IsLog = log != null;

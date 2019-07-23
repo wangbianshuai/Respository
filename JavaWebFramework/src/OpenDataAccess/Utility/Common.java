@@ -30,7 +30,7 @@ public class Common {
     }
 
     public static boolean IsEquals(Object v1, Object v2, boolean blIgnoreCase) {
-        if ((v1 == null && v2 != null) || (v1 == null || v2 != null)) return false;
+        if ((v1 == null && v2 != null) || (v1 != null && v2 == null)) return false;
 
         if (v1.getClass().equals(v2.getClass()) && v1.equals(v2)) return true;
 

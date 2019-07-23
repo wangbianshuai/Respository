@@ -10,7 +10,7 @@ public class ComponentType {
 
     public static Class<?> GetComponentType(String name) {
         for (int i = 0; i < TypeList.size(); i++) {
-            if (TypeList.get(i).getName().equals(name)) return TypeList.get(i);
+            if (TypeList.get(i).getSimpleName().equals(name)) return TypeList.get(i);
         }
         return null;
     }
