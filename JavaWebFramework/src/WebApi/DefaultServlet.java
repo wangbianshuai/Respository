@@ -20,11 +20,8 @@ public class DefaultServlet extends HttpServlet {
     @Override
     public void init() {
         ServletContext context = this.getServletContext();
-        AppSettings.ConnectionString = context.getInitParameter("ConnectionString");
-        AppSettings.DbUser = context.getInitParameter("DbUser");
-        AppSettings.DbPassword = context.getInitParameter("DbPassword");
-        AppSettings.IsLog = context.getInitParameter("IsLog");
-        AppSettings.ServerClient = context.getInitParameter("ServerClient");
+
+        AppSettings.InvokeConfig = (name) -> context.getInitParameter(name);
     }
 
     @Override

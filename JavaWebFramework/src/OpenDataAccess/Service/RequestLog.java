@@ -16,7 +16,7 @@ public class RequestLog
     public static Boolean IsLog=false;
 
     static {
-        String isLog = AppSettings.IsLog;
+        String isLog = AppSettings.GetIsLog();
         IsLog = !Common.IsNullOrEmpty(isLog) && Boolean.parseBoolean(isLog);
     }
 
