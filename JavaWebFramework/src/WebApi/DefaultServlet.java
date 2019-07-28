@@ -39,9 +39,20 @@ public class DefaultServlet extends HttpServlet {
         InvokeAction(request, response);
     }
 
-    private  void  InvokeAction(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException{
+    @Override
+    protected void doOptions(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        SetHeaderType(response);
+    }
+
+    void  SetHeaderType(HttpServletResponse response){
         response.setContentType("application/json;charset=utf-8");
         response.setHeader("Access-Control-Allow-Origin", "*");
+        response.setHeader("Access-Control-Allow-Methods", "OPTIONS, GET, POST,PUT,DELETE");
+        response.setHeader("Access-Control-Allow-Headers", "content-type,x-requested-with");
+    }
+
+    private  void  InvokeAction(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException{
+        SetHeaderType(response);
 
         PrintWriter out = response.getWriter();
         try {

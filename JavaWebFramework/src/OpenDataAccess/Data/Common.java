@@ -14,7 +14,7 @@ public class Common {
             List<String> list = new ArrayList<String>();
             orderByList.forEach(orderBy ->
             {
-                list.add(String.format("%ss %ss", orderBy.ColumnName, orderBy.IsASC ? "asc" : "desc"));
+                list.add(String.format("%s %s", orderBy.ColumnName, orderBy.IsASC ? "asc" : "desc"));
             });
             String orderBySql = String.join(",", list);
             if (!orderBySql.isEmpty()) {

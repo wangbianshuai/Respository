@@ -285,9 +285,35 @@ public class QueryRequest
 
     public QueryInfo QueryInfo =null;
 
+    private  String GetLikeSql(WhereField whereField, List<String> fieldList) {
+        List<String> sqlList = new ArrayList<>();
+        for (int i = 0; i < fieldList.size(); i++) {
+            String field = fieldList.get(i);
+            sqlList.add(String.format("%s %s %s", field, whereField.OperateLogic, whereField.ParameterName));
+        }
+
+        whereField.ObjValue = "%s" + whereField.Value + "%s";
+
+        return "(" + String.join(" or ", sqlList) + ")";
+    }
+
+    private  String GetInSql(WhereField whereField)  throws  Exception {
+        List<String> valueList = Arrays.asList(whereField.Value.split(",|，"));
+        List<String> paramNameList = new ArrayList<>();
+
+        for (int n = 0; n < valueList.size(); n++) {
+            String value = valueList.get(n);
+            String paramName = whereField.ParameterName + n;
+            paramNameList.add(paramName);
+            this.QueryInfo.ParameterList.Set(paramName, Common.ChangeType(whereField.Type, value));
+        }
+
+        return String.format("%s %s %s", whereField.Name, whereField.OperateLogic, "(" + String.join(",", paramNameList) + ")");
+    }
+
     private void GetWhereSql() throws  Exception
     {
-        StringBuilder sb = new StringBuilder();
+        List<String> whereSqlList = new ArrayList<>();
         this.QueryInfo.ParameterList = new DataParameterList();
 
         for (int i=0; i< this.QueryInfo.WhereFields.size();i++) {
@@ -304,34 +330,12 @@ public class QueryRequest
                 }
                 if (whereField.OperateLogic.equals("like")) {
                     List<String> fieldList = new ArrayList<>();
-                    fieldList.addAll(Arrays.asList(whereField.Name.split(",")));
-                    fieldList.addAll(Arrays.asList(whereField.Name.split("，")));
-
-                    for (int j = 0; j < fieldList.size(); j++) {
-                        String field = fieldList.get(i);
-                        if (fieldList.size() == 1) {
-                            sb.append(String.format(" and %s %s %s", field, whereField.OperateLogic, whereField.ParameterName));
-                        } else {
-                            if (fieldList.indexOf(field) == 0) {
-                                sb.append(String.format(" and (%s %s %s", field, whereField.OperateLogic, whereField.ParameterName));
-                            } else if (fieldList.indexOf(field) == fieldList.size() - 1) {
-                                sb.append(String.format(" or %s %s %s", field, whereField.OperateLogic, whereField.ParameterName + ")"));
-                            } else {
-                                sb.append(String.format(" or %s %s %s", field, whereField.OperateLogic, whereField.ParameterName));
-                            }
-                        }
-                        whereField.ObjValue = "%s" + whereField.Value + "%s";
-                    }
+                    fieldList.addAll(Arrays.asList(whereField.Name.split(",|，")));
+                    whereSqlList.add(GetLikeSql(whereField,fieldList));
                 } else if (whereField.OperateLogic.equals("in")) {
-                    List<String> valueList = Arrays.asList(whereField.Value.split(",|，"));
-                    List<String> paramNameList = valueList.stream().map(select -> whereField.ParameterName + valueList.indexOf(select)).collect(Collectors.toList());
-                    sb.append(String.format(" and %s %s %s", whereField.Name, whereField.OperateLogic, "(" + String.join(",", paramNameList) + ")"));
-                    for (int n = 0; n < valueList.size(); n++) {
-                        String value = valueList.get(n);
-                        this.QueryInfo.ParameterList.Set(whereField.ParameterName + valueList.indexOf(value), Common.ChangeType(whereField.Type, value));
-                    }
+                    whereSqlList.add(GetInSql(whereField));
                 } else {
-                    sb.append(String.format(" and %s %s %s", whereField.Name, whereField.OperateLogic, whereField.ParameterName));
+                    whereSqlList.add(String.format("%s %s %s", whereField.Name, whereField.OperateLogic, whereField.ParameterName));
                 }
                 if (!whereField.OperateLogic.equals("in")) {
                     if (whereField.OperateLogic == "<" && whereField.DataType == "DateTime" && whereField.ObjValue != null) {
@@ -342,10 +346,10 @@ public class QueryRequest
             }
         }
 
-        this.QueryInfo.WhereSql = sb.toString();
+        this.QueryInfo.WhereSql = String.join(" and ", whereSqlList);
         if (!IsNullOrEmpty(this.QueryInfo.WhereSql))
         {
-            this.QueryInfo.WhereSql = " where " + this.QueryInfo.WhereSql.substring(4);
+            this.QueryInfo.WhereSql = " where " + this.QueryInfo.WhereSql;
 
             if (this.IsGroupByInfo) {
                 this.GroupByInfoWhereSql = this.QueryInfo.WhereSql;
@@ -386,52 +390,35 @@ public class QueryRequest
         }
     }
 
-    private void GetQueryInfo() throws IllegalAccessException, InstantiationException, Exception
-    {
-        if (this._Request.Entities != null && this._Request.Entities.containsKey("QueryInfo"))
-        {
+    private void GetQueryInfo() throws IllegalAccessException, InstantiationException, Exception {
+        if (this._Request.Entities != null && this._Request.Entities.containsKey("QueryInfo")) {
             IEntityData entityData = OpenDataAccess.Utility.Common.GetFirstOrDefault(IEntityData.class, this._Request.Entities.get("QueryInfo"));
-            if (entityData != null)
-            {
-                this.QueryInfo =  (QueryInfo) entityData.ToEntity(QueryInfo.getClass());
-                if (this.QueryInfo != null && IsNullOrEmpty(this.QueryInfo.ProcName))
-                {
-                    if (!IsNullOrEmpty(this.QueryInfo.FieldSql))
-                    {
-                        if (!IsNullOrEmpty(this.QueryInfo.GroupByFieldSql))
-                        {
-                            this.QueryInfo.FieldSql = " " + this.GetEntityPropertySql(this.QueryInfo.FieldSql) + "," + this.QueryInfo.GroupByFieldSql + " ";
-                        }
-                        else
-                        {
+            if (entityData != null) {
+                this.QueryInfo = (QueryInfo) entityData.ToEntity(OpenDataAccess.Service.QueryInfo.class);
+                if (this.QueryInfo != null && IsNullOrEmpty(this.QueryInfo.ProcName)) {
+                    String groupByFieldSql = OpenDataAccess.Utility.Common.TrimEnd(OpenDataAccess.Utility.Common.Trim(this.QueryInfo.GroupByFieldSql), ",");
+
+                    if (!IsNullOrEmpty(this.QueryInfo.FieldSql)) {
+                        if (!IsNullOrEmpty(groupByFieldSql)) {
+                            this.QueryInfo.FieldSql = " " + this.GetEntityPropertySql(this.QueryInfo.FieldSql) + "," + groupByFieldSql + " ";
+                        } else {
                             this.QueryInfo.FieldSql = " " + this.GetEntityPropertySql(this.QueryInfo.FieldSql) + " ";
                         }
-                    }
-                    else
-                    {
-                        if (!IsNullOrEmpty(this.QueryInfo.GroupByFieldSql))
-                        {
-                            this.QueryInfo.FieldSql = " " + this.QueryInfo.GroupByFieldSql + " ";
-                        }
-                        else
-                        {
+                    } else {
+                        if (!IsNullOrEmpty(groupByFieldSql)) {
+                            this.QueryInfo.FieldSql = " " + groupByFieldSql + " ";
+                        } else {
                             this.QueryInfo.FieldSql = " t.* ";
                         }
                     }
-                    if (!IsNullOrEmpty(this.QueryInfo.GroupBySql))
-                    {
+                    if (!IsNullOrEmpty(this.QueryInfo.GroupBySql)) {
                         this.QueryInfo.GroupBySql = " group by " + this.GetEntityPropertySql(this.QueryInfo.GroupBySql) + " ";
-                    }
-                    else
-                    {
+                    } else {
                         this.QueryInfo.GroupBySql = "";
                     }
-                    if (!IsNullOrEmpty(this.QueryInfo.OrderBySql))
-                    {
-                        this.QueryInfo.OrderBySql = " order by " + this.QueryInfo.OrderBySql + " ";
-                    }
-                    else
-                    {
+                    if (!IsNullOrEmpty(this.QueryInfo.OrderBySql)) {
+                        this.QueryInfo.OrderBySql = " order by " + OpenDataAccess.Utility.Common.TrimEnd(OpenDataAccess.Utility.Common.Trim(this.QueryInfo.OrderBySql), ",") + " ";
+                    } else {
                         this.QueryInfo.OrderBySql = "";
                     }
                     this.GetWhereSql();

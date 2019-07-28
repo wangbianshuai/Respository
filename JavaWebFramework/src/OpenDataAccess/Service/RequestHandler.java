@@ -59,7 +59,8 @@ public class RequestHandler {
             Map<String, Object> dict = new HashMap<>();
 
             request.Excption = ex;
-            dict.put("Exception", Common.GetRealException(ex).getMessage());
+            String msg = Common.GetRealException(ex).getMessage();
+            dict.put("Exception", Common.IsNullOrEmpty(msg) ? "请求异常" : msg);
 
             obj = dict;
             try {

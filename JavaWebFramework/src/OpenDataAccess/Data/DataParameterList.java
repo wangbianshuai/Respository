@@ -152,7 +152,7 @@ public class DataParameterList implements  IDataParameterList {
                         }
                         this._PreparedParameters.add(_Parameters.get(name));
                     }
-                    startIndex = endIndex + 2;
+                    startIndex += 1;
                 }
             }
         }
