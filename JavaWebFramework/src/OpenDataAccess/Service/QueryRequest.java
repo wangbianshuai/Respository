@@ -141,7 +141,7 @@ public class QueryRequest
                 } else andOrStr = " and ";
 
                 if (andOrIndex > 0)
-                    propertyValue = filter.substring(logicIndex + loginStr.length(), andOrIndex - logicIndex - loginStr.length());
+                    propertyValue = filter.substring(logicIndex + loginStr.length(), andOrIndex);
                 else propertyValue = filter.substring(logicIndex + loginStr.length());
 
                 if (propertyValue.trim() != "@" + property.Name) {
@@ -254,7 +254,7 @@ public class QueryRequest
         startIndex = pathInfo.indexOf(prefix + "(");
         if (startIndex >= 0) {
             endIndex = pathInfo.indexOf(")", startIndex + prefix.length() + 1);
-            primeryKeyString = pathInfo.substring(startIndex + prefix.length() + 1, endIndex - startIndex - prefix.length() - 1);
+            primeryKeyString = pathInfo.substring(startIndex + prefix.length() + 1, endIndex);
             Property property = _Request.Entity.GetProperty(_Request.Entity.PrimaryKey);
             if (property != null) {
                 property.Value = Common.ChangeType(property.Type, primeryKeyString);
@@ -292,7 +292,7 @@ public class QueryRequest
             sqlList.add(String.format("%s %s %s", field, whereField.OperateLogic, whereField.ParameterName));
         }
 
-        whereField.ObjValue = "%s" + whereField.Value + "%s";
+        whereField.ObjValue = "%" + whereField.Value + "%";
 
         return "(" + String.join(" or ", sqlList) + ")";
     }

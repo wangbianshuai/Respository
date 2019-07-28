@@ -27,11 +27,11 @@ public class RequestHandler {
             String put = request.QueryString.get("$put");
             String get = request.QueryString.get("$get");
             String delete = request.QueryString.get("$delete");
-            if (put == "true") {
+            if (Common.IsEquals(put, "true",true)) {
                 request.RequestType = "PUT";
-            } else if (get == "true") {
+            } else if (Common.IsEquals(get , "true",true)) {
                 request.RequestType = "GET";
-            } else if (delete == "true") {
+            } else if (Common.IsEquals( delete, "true",true)) {
                 request.RequestType = "DELETE";
             }
             if (Common.IsNullOrEmpty(entityName)) {
@@ -119,8 +119,9 @@ public class RequestHandler {
         }
 
         if (request.RequestType == null) request.RequestType = "";
-
-        if (Common.IsNullOrEmpty(request.Content) && (request.RequestType.equals("POST") || request.RequestType.equals("PUT") || (request.RequestType.equals("DELETE") && request.QueryString.get("$data").equals("true")))) {
+        String pdata = request.QueryString.get("$data");
+        if (Common.IsNullOrEmpty(request.Content) && (request.RequestType.equals("POST") || request.RequestType.equals("PUT")
+                || (request.RequestType.equals("DELETE") && Common.IsEquals(pdata, "true", true)))) {
             request.IsLog = false;
             Map<String, Object> dict = new HashMap<>();
             dict.put("NoData", true);
