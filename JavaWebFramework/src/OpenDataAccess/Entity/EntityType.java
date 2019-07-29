@@ -65,13 +65,17 @@ public class EntityType {
         return entityType;
     }
 
-    public static <T extends IEntity> EntityType GetEntityType(Class<T> cls) throws InstantiationException, IllegalAccessException {
-        EntityType entityType = EntityType.GetEntityType(cls.getSimpleName(), false);
-        if (entityType == null) {
-            EntityType.SetEntityType(cls);
-            entityType = EntityType.GetEntityType(cls.getSimpleName(), false);
+    public static <T extends IEntity> EntityType GetEntityType(Class<T> cls) {
+        try {
+            EntityType entityType = EntityType.GetEntityType(cls.getSimpleName(), false);
+            if (entityType == null) {
+                EntityType.SetEntityType(cls);
+                entityType = EntityType.GetEntityType(cls.getSimpleName(), false);
+            }
+            return entityType;
+        } catch (Exception ex) {
+            return null;
         }
-        return entityType;
     }
 
     public static <T extends IEntity> void SetEntityType(Class<T> cls) throws InstantiationException, IllegalAccessException {
