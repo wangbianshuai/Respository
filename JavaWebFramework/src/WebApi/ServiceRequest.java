@@ -20,8 +20,21 @@ public class ServiceRequest {
         try {
             EntityType.SetEntityType(Model.User.class);
             EntityType.SetEntityType(Model.Application.class);
+            EntityType.SetEntityType(Model.Page.class);
+            EntityType.SetEntityType(Model.View.class);
+            EntityType.SetEntityType(Model.Cache.class);
+            EntityType.SetEntityType(Model.Event.class);
+            EntityType.SetEntityType(Model.JsCss.class);
+            EntityType.SetEntityType(Model.PageHead.class);
+            EntityType.SetEntityType(Model.RegExp.class);
+            EntityType.SetEntityType(Model.OperationLog.class);
 
             ComponentType.SetComponentType(Component.User.class);
+            ComponentType.SetComponentType(Component.Event.class);
+            ComponentType.SetComponentType(Component.Page.class);
+            ComponentType.SetComponentType(Component.PageHead.class);
+            ComponentType.SetComponentType(Component.View.class);
+
         } catch (Exception ex) {
         }
     }
