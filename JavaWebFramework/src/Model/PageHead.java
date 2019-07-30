@@ -7,7 +7,7 @@ import OpenDataAccess.LambdaInterface.IFunction2;
 import java.util.Date;
 import java.util.List;
 
-@TablePropertyAttribute(Name = "t_d_PageHead", PrimaryKey = "PageHeadId")
+@ITablePropertyAttribute(Name = "t_d_PageHead", PrimaryKey = "PageHeadId")
 public class PageHead extends EntityModel implements IEntity {
     public String PageHeadId = null;
     public String PageHeadName = null;

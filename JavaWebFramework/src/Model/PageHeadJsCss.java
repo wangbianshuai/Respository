@@ -2,9 +2,9 @@ package Model;
 
 import OpenDataAccess.Entity.EntityModel;
 import OpenDataAccess.Entity.IEntity;
-import OpenDataAccess.Entity.TablePropertyAttribute;
+import OpenDataAccess.Entity.ITablePropertyAttribute;
 
-@TablePropertyAttribute(Name = "t_d_PageHead_JsCss")
+@ITablePropertyAttribute(Name = "t_d_PageHead_JsCss")
 public class PageHeadJsCss  extends EntityModel implements IEntity {
     public String PageHeadId = null;
     public String Id = null;

@@ -7,7 +7,7 @@ import OpenDataAccess.LambdaInterface.IFunction2;
 import java.util.Date;
 import java.util.List;
 
-@TablePropertyAttribute(Name = "t_d_Cache", PrimaryKey = "CacheId")
+@ITablePropertyAttribute(Name = "t_d_Cache", PrimaryKey = "CacheId")
 public class Cache extends EntityModel implements IEntity {
     public String CacheId = null;
     public String CacheName = null;

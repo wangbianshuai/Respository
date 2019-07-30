@@ -6,7 +6,7 @@ import OpenDataAccess.LambdaInterface.IFunction2;
 import java.util.Date;
 import java.util.List;
 
-@TablePropertyAttribute(Name = "t_d_Application", PrimaryKey = "ApplicationId")
+@ITablePropertyAttribute(Name = "t_d_Application", PrimaryKey = "ApplicationId")
 public class Application extends EntityModel implements IEntity {
     public String ApplicationId = null;
     public String ApplicationName = null;

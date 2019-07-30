@@ -1,8 +1,8 @@
 package Model;
 
-import OpenDataAccess.Entity.TablePropertyAttribute;
+import OpenDataAccess.Entity.ITablePropertyAttribute;
 
-@TablePropertyAttribute(Name = "view_Page")
+@ITablePropertyAttribute(Name = "view_Page")
 public class PageView extends Page {
 
     public String ViewName = null;

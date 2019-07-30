@@ -1,9 +1,6 @@
 package OpenDataAccess.Service;
 
-import OpenDataAccess.Entity.EntityType;
-import OpenDataAccess.Entity.IEntityData;
-import OpenDataAccess.Entity.LogAttribute;
-import OpenDataAccess.Entity.Parse;
+import OpenDataAccess.Entity.*;
 import OpenDataAccess.Utility.Common;
 import OpenDataAccess.Utility.JsonParse;
 import OpenDataAccess.Utility.Stopwatch;
@@ -162,8 +159,8 @@ public class RequestHandler {
 
             Method method = type.getMethod(request.MethodName);
             if (method != null) {
-                LogAttribute log = method.getAnnotation(LogAttribute.class);
-                request.IsLog = log != null;
+                INoLogAttribute log = method.getAnnotation(INoLogAttribute.class);
+                request.IsLog = log == null;
                 returnObj = method.invoke(entityRequest);
             } else throw new Exception("方法不存在！");
         } else {

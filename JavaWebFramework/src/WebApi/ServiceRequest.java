@@ -47,8 +47,35 @@ public class ServiceRequest {
         req.Content = Common.InputStream2String(request.getInputStream());
         req.RequestType = request.getMethod();
         req.PathAndQuery = req.PathInfo +"?"+ request.getQueryString();
+        req.RootPath= request.getSession().getServletContext().getRealPath("");
+        req.IPAddress= GetClientIpAddress(request);
         return req;
     }
+
+    private static final String[] HEADERS_TO_TRY = {
+            "X-Forwarded-For",
+            "Proxy-Client-IP",
+            "WL-Proxy-Client-IP",
+            "HTTP_X_FORWARDED_FOR",
+            "HTTP_X_FORWARDED",
+            "HTTP_X_CLUSTER_CLIENT_IP",
+            "HTTP_CLIENT_IP",
+            "HTTP_FORWARDED_FOR",
+            "HTTP_FORWARDED",
+            "HTTP_VIA",
+            "REMOTE_ADDR",
+            "X-Real-IP"};
+
+    public static String GetClientIpAddress(HttpServletRequest request) {
+        for (String header : HEADERS_TO_TRY) {
+            String ip = request.getHeader(header);
+            if (ip != null && ip.length() != 0 && !"unknown".equalsIgnoreCase(ip)) {
+                return ip;
+            }
+        }
+        return request.getRemoteAddr();
+    }
+
 
     public  static Map<String,String> GetQueryString(HttpServletRequest request) {
         Map<String, String> map = new HashMap<>();

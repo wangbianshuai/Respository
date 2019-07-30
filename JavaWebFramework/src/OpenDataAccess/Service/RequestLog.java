@@ -8,20 +8,22 @@ import OpenDataAccess.Utility.Common;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Date;
 import java.util.Map;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ThreadPoolExecutor;
 
-public class RequestLog
-{
-    public static Boolean IsLog=false;
+public class RequestLog {
+    public static Boolean IsLog = false;
 
     static {
         String isLog = AppSettings.GetIsLog();
         IsLog = !Common.IsNullOrEmpty(isLog) && Boolean.parseBoolean(isLog);
     }
 
-    public static void AddRequestLog(Request request, Object obj, String responseContent)
-    {
+    public static void AddRequestLog(Request request, Object obj, String responseContent) {
         if (IsLog) {
             new Thread(new Runnable() {
                 @Override
@@ -44,20 +46,25 @@ public class RequestLog
             if (logType.equals("Success")) {
                 if (!Common.IsNullOrEmpty(request.MethodName)) {
                     if (!request.IsLog) return;
-                } else if (request.RequestType.equals("GET")) {
-                    if (!request.Entity.LogAttribute.IsGet()) return;
-                } else if (request.RequestType.equals("POST")) {
-                    if (request.IsPostQuery && !request.Entity.LogAttribute.IsPostQuery()) return;
-                    else if (!request.Entity.LogAttribute.IsPost()) return;
-                } else if (request.RequestType.equals("PUT")) {
-                    if (!request.Entity.LogAttribute.IsPut()) return;
-                } else if (request.RequestType.equals("DELETE")) {
-                    if (!request.Entity.LogAttribute.IsDelete()) return;
+                }
+
+                if (request.Entity.LogAttribute != null) {
+                    if (request.RequestType.equals("GET")) {
+                        if (!request.Entity.LogAttribute.IsGet) return;
+                    } else if (request.RequestType.equals("POST")) {
+                        if (request.IsPostQuery && !request.Entity.LogAttribute.IsPostQuery) return;
+                        else if (!request.Entity.LogAttribute.IsPost) return;
+                    } else if (request.RequestType.equals("PUT")) {
+                        if (!request.Entity.LogAttribute.IsPut) return;
+                    } else if (request.RequestType.equals("DELETE")) {
+                        if (!request.Entity.LogAttribute.IsDelete) return;
+                    }
                 }
             }
 
             WriteLog(request, logType, responseContent);
         } catch (Exception ex) {
+            System.out.print(ex.getStackTrace());
         }
     }
 
@@ -71,10 +78,11 @@ public class RequestLog
 
         String logPath = path;
 
+        if (Common.IsNullOrEmpty(request.RootPath)) request.RootPath = "";
         path = request.RootPath + path.replace("/", "\\");
 
         File dir = new File(path);
-        if (!dir.exists()) dir.mkdir();
+        if (!dir.exists()) dir.mkdirs();
 
         String fileName = request.EntityName + "_" + request.GetRequestId().substring(0, 8).toUpperCase() + ".txt";
         path += "/" + fileName;
@@ -83,31 +91,30 @@ public class RequestLog
         File file = new File(path);
         if (!file.exists()) file.createNewFile();
 
-
         FileWriter fw = new FileWriter(path, true);
         BufferedWriter writer = new BufferedWriter(fw);
 
         if (request.CustomWriterLog == null) {
             writer.write("Request:");
-            writer.write("                         Url:" + request.RawUrl);
-            writer.write("                        Data:" + request.Content);
-            writer.write("                  EntityName:" + request.EntityName);
-            writer.write("                  MethodName:" + request.MethodName);
-            writer.write("                 RequestType:" + request.RequestType);
-            writer.write("                   IPAddress:" + request.IPAddress);
-            writer.write("               OperationUser:" + request.OperationUser);
-            writer.write("                   StartTime:" + Common.DateToString( request.StartTime,"yyyy-MM-dd HH:mm:ss:SSS"));
-            writer.write("                     EndTime:" + Common.DateToString(request.EndTime,"yyyy-MM-dd HH:mm:ss.fff"));
-            writer.write("         ElapsedMilliseconds:" + request.ElapsedMilliseconds);
-            writer.write("\n");
-            writer.write("\n");
-            writer.write("\n");
-            writer.write("Response:");
-            writer.write(responseContent);
+            WriteLine(writer, "                         Url:" + request.RawUrl);
+            WriteLine(writer, "                        Data:" + request.Content);
+            WriteLine(writer, "                  EntityName:" + request.EntityName);
+            WriteLine(writer, "                  MethodName:" + request.MethodName);
+            WriteLine(writer, "                 RequestType:" + request.RequestType);
+            WriteLine(writer, "                   IPAddress:" + request.IPAddress);
+            WriteLine(writer, "               OperationUser:" + request.OperationUser);
+            WriteLine(writer, "                   StartTime:" + Common.DateToString(request.StartTime, "yyyy-MM-dd HH:mm:ss:SSS"));
+            WriteLine(writer, "                     EndTime:" + Common.DateToString(request.EndTime, "yyyy-MM-dd HH:mm:ss.SSS"));
+            WriteLine(writer, "         ElapsedMilliseconds:" + request.ElapsedMilliseconds);
+            WriteLine(writer, "");
+            WriteLine(writer, "");
+            WriteLine(writer, "");
+            WriteLine(writer, "Response:");
+            WriteLine(writer, responseContent);
             if (request.Excption != null) {
-                writer.write("Excption:");
-                writer.write("           Message:" + request.Excption.getMessage());
-                writer.write("           StackTrace:" + request.Excption.getStackTrace());
+                WriteLine(writer, "Excption:");
+                WriteLine(writer, "           Message:" + request.Excption.getMessage());
+                WriteLine(writer, "           StackTrace:" + request.Excption.getStackTrace());
             }
             writer.flush();
             writer.close();
@@ -115,6 +122,11 @@ public class RequestLog
 
         } else request.CustomWriterLog.Invoke(writer, responseContent);
         if (request.OperationLogEntity != null) InsertOperationLog(request, logType, logPath);
+    }
+
+    static void WriteLine(BufferedWriter writer, String str) throws IOException {
+        writer.newLine();
+        writer.write(str);
     }
 
     private static void InsertOperationLog(Request request, String logType, String logPath) {

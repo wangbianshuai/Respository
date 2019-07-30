@@ -6,7 +6,7 @@ import OpenDataAccess.LambdaInterface.IFunction2;
 import java.util.Date;
 import java.util.List;
 
-@TablePropertyAttribute(Name = "t_d_RegExp", PrimaryKey = "RegExpId")
+@ITablePropertyAttribute(Name = "t_d_RegExp", PrimaryKey = "RegExpId")
 public class RegExp extends EntityModel implements IEntity {
     public String RegExpId = null;
     public String RegExpName = null;

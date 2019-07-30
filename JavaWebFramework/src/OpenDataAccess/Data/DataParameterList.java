@@ -123,9 +123,9 @@ public class DataParameterList implements  IDataParameterList {
         } else if (value instanceof Timestamp) {
             preparedStatement.setTimestamp(index, (Timestamp) value);
         } else if (value instanceof java.sql.Date) {
-            preparedStatement.setDate(index, (java.sql.Date) value);
+            preparedStatement.setTimestamp(index, new Timestamp(((java.sql.Date) value).getTime()));
         } else if (value instanceof Date) {
-            preparedStatement.setDate(index, new java.sql.Date(((Date) value).getTime()));
+            preparedStatement.setTimestamp(index, new Timestamp(((Date) value).getTime()));
         } else {
             preparedStatement.setString(index, value.toString());
         }

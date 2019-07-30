@@ -2,9 +2,9 @@ package Model;
 
 import OpenDataAccess.Entity.EntityModel;
 import OpenDataAccess.Entity.IEntity;
-import OpenDataAccess.Entity.TablePropertyAttribute;
+import OpenDataAccess.Entity.ITablePropertyAttribute;
 
-@TablePropertyAttribute(Name = "t_d_Event_Parameter")
+@ITablePropertyAttribute(Name = "t_d_Event_Parameter")
 public class EventParameter extends EntityModel implements IEntity {
     public String EventId = null;
     public String Name = null;

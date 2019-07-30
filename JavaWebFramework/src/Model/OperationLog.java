@@ -2,11 +2,11 @@ package Model;
 
 import OpenDataAccess.Entity.EntityModel;
 import OpenDataAccess.Entity.IEntity;
-import OpenDataAccess.Entity.TablePropertyAttribute;
+import OpenDataAccess.Entity.ITablePropertyAttribute;
 
 import java.util.Date;
 
-@TablePropertyAttribute(Name = "t_d_OperationLog", PrimaryKey = "LogId")
+@ITablePropertyAttribute(Name = "t_d_OperationLog", PrimaryKey = "LogId")
 public class OperationLog extends EntityModel implements IEntity {
     public String LogId = null;
     public String LogType = null;

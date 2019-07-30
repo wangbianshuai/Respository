@@ -6,7 +6,7 @@ import OpenDataAccess.LambdaInterface.IFunction2;
 import java.util.Date;
 import java.util.List;
 
-@TablePropertyAttribute(Name = "t_d_User", PrimaryKey = "UserId")
+@ITablePropertyAttribute(Name = "t_d_User", PrimaryKey = "UserId")
 public class User extends EntityModel implements IEntity {
         public String UserId = null;
         public String UserName = null;

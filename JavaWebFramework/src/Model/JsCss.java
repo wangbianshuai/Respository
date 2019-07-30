@@ -7,7 +7,7 @@ import OpenDataAccess.LambdaInterface.IFunction2;
 import java.util.Date;
 import java.util.List;
 
-@TablePropertyAttribute(Name = "t_d_JsCss", PrimaryKey = "Id")
+@ITablePropertyAttribute(Name = "t_d_JsCss", PrimaryKey = "Id")
 public class JsCss extends EntityModel implements IEntity {
     public String Id = null;
     public String Name = null;

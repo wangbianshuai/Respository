@@ -7,9 +7,13 @@ import java.lang.annotation.Target;
 
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface RequestMethodAttribute {
-    public boolean IsGet = true;
-    public boolean IsPost = true;
-    public boolean IsPut = true;
-    public boolean IsDelete = true;
+public @interface ITablePropertyAttribute {
+    public String Name() default "";
+
+    public String WithSql() default "";
+
+    public String PrimaryKey() default "";
+
+    /// 不许查询字段名集合
+    public String NoSelectNames() default "";
 }

@@ -121,7 +121,7 @@ public class View extends EntityRequest {
             String path = this.GetRequest().RootPath + "\\Files\\" + viewName;
 
             File dir = new File(path);
-            if (!dir.exists()) dir.mkdir();
+            if (!dir.exists()) dir.mkdirs();
 
             String fielName = viewName + "_" + viewId + "_" + Common.DateToString(new Date(), "yyyyMMddHHmmss") + ".txt";
             path += "\\" + fielName;

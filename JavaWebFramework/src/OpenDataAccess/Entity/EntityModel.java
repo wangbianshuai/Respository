@@ -3,7 +3,6 @@ package OpenDataAccess.Entity;
 import OpenDataAccess.LambdaInterface.IFunction2;
 import OpenDataAccess.Utility.Common;
 
-import java.lang.reflect.AnnotatedType;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -21,7 +20,7 @@ public class EntityModel implements IEntity {
         entityType.Name = name;
         entityType.Properties = new ArrayList<>();
 
-        TablePropertyAttribute tableProperty = this.getClass().getAnnotation(TablePropertyAttribute.class);
+        ITablePropertyAttribute tableProperty = this.getClass().getAnnotation(ITablePropertyAttribute.class);
         if (tableProperty != null) {
             entityType.TableName = tableProperty.Name();
             entityType.WithSql = tableProperty.WithSql();
@@ -29,7 +28,7 @@ public class EntityModel implements IEntity {
             entityType.NoSelectNameList = Common.IsNullOrEmpty(tableProperty.NoSelectNames()) ? new ArrayList<>() : Arrays.asList(tableProperty.NoSelectNames().split(","));
         }
 
-        RequestMethodAttribute requestMethodProperty = this.getClass().getAnnotation(RequestMethodAttribute.class);
+        IRequestMethodAttribute requestMethodProperty = this.getClass().getAnnotation(IRequestMethodAttribute.class);
         if (requestMethodProperty != null) {
             entityType.IsDelete = requestMethodProperty.IsDelete;
             entityType.IsGet = requestMethodProperty.IsGet;
@@ -42,8 +41,16 @@ public class EntityModel implements IEntity {
             entityType.IsPut = true;
         }
 
-        LogAttribute logAttribute = this.getClass().getAnnotation(LogAttribute.class);
-        if (logAttribute != null) entityType.LogAttribute = logAttribute;
+        entityType.LogAttribute= new LogAttribute();
+        ILogAttribute logAttribute = this.getClass().getAnnotation(ILogAttribute.class);
+        if (logAttribute != null) {
+            entityType.LogAttribute.IsDelete= logAttribute.IsDelete();
+            entityType.LogAttribute.IsGet= logAttribute.IsGet();
+            entityType.LogAttribute.IsPost= logAttribute.IsPost();
+            entityType.LogAttribute.IsPostQuery= logAttribute.IsPostQuery();
+            entityType.LogAttribute.IsPut= logAttribute.IsPut();
+        }
+
 
         Field[] fileds = this.getClass().getFields();
         Property p = null;
