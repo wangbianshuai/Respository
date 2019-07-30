@@ -154,6 +154,17 @@ public class DataBase implements IDataBase {
         }
     }
 
+    public ResultSet ExceToResultSet(String sql, IDataParameterList parameterList) throws SQLException {
+        try {
+            this.ExcelQueryToResultSet(sql, parameterList);
+            return _ResultSet;
+        } catch (SQLException ex) {
+            throw ex;
+        } finally {
+            this.CloseConnction();
+        }
+    }
+
     //执行查询语句
     @Override
     public <T> List<T> ExceSelectTo(Class<T> cls, String sql, IDataParameterList parameterList) throws SQLException, Exception, IllegalAccessException, InstantiationException {

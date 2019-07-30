@@ -1,6 +1,7 @@
 package OpenDataAccess.Data;
 
 import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
@@ -38,6 +39,8 @@ public interface IDataBase {
 
     //执行查询语句
     public List<Map<String, Object>> ExceSelect(String sql, IDataParameterList parameterList) throws SQLException;
+
+    public ResultSet ExceToResultSet(String sql, IDataParameterList parameterList) throws SQLException;
 
     //执行查询语句
     public <T> List<T> ExceSelectTo(Class<T> cls, String sql, IDataParameterList parameterList) throws SQLException, Exception, IllegalAccessException, InstantiationException;
