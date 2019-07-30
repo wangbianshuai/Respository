@@ -32,10 +32,10 @@ public interface IDataBase {
 
     void SetClientType(ServerClient value);
 
-    boolean CommitTransaction(IDataTransaction trans, boolean blSuccess);
+    public Connection CreateConnection() throws SQLException;
 
     //执行无查询语句
-    public int ExceNoQuery(String sql, IDataParameterList parameterList) throws SQLException;
+    public int ExceNoQuery(String sql, IDataParameterList parameterList, IDataTransaction trans) throws SQLException;
 
     //执行查询语句
     public List<Map<String, Object>> ExceSelect(String sql, IDataParameterList parameterList) throws SQLException;

@@ -101,12 +101,6 @@ public class EntityRequest extends EntityAccess implements IEntityRequest, IEnti
     }
 
     public boolean JudgeIsEdit(EntityType entityType, IEntityData newEntityData, IEntityData oldEntityData) throws Exception {
-//            var data = (from a in newEntityData.ToDictionary()
-//            from b in oldEntityData.ToDictionary()
-//            from c in entityType.Properties
-//            where a.Key.Trim().toLowerCase() == b.Key.Trim().toLowerCase() && a.Key.Trim().toLowerCase() == c.Name.Trim().toLowerCase()
-//            select new { a, b });
-
         List<String> editNameList = new ArrayList<>();
 
         entityType.Properties.forEach(p -> {
@@ -252,7 +246,7 @@ public class EntityRequest extends EntityAccess implements IEntityRequest, IEnti
                     return GetMessageDict(message);
                 }
 
-                IDataTransaction trans = null;
+                IDataTransaction trans = new DataTransaction(GetDataBase().CreateConnection());
                 for (int i = 0; i < entityDataList.size(); i++) {
                     IEntityData entityData = entityDataList.get(i);
                     primaryKey = this.InsertEntity(entityData, trans);
@@ -261,7 +255,7 @@ public class EntityRequest extends EntityAccess implements IEntityRequest, IEnti
                         break;
                     }
                 }
-                //blSucceed = this.GetDataBase().CommitTransaction(trans, blSucceed);
+                blSucceed = trans.CommitTransaction(blSucceed);
                 if (primaryKey != null) {
                     Map<String, Object> dict = GetBoolDict(blSucceed);
                     dict.put("PrimaryKey", primaryKey);

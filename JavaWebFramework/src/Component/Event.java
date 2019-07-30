@@ -11,6 +11,7 @@ import OpenDataAccess.Service.EntityRequest;
 import OpenDataAccess.Service.Request;
 import OpenDataAccess.Utility.Common;
 
+import java.sql.SQLException;
 import java.util.List;
 
 public class Event extends EntityRequest {
@@ -28,7 +29,7 @@ public class Event extends EntityRequest {
         return EntityByComplexTypeOperation.Insert(this, _EventParameterEntity, "Parameters", null);
     }
 
-    private boolean InsertEvent(IEntityData entityData) {
+    private boolean InsertEvent(IEntityData entityData) throws SQLException {
         return EntityByComplexTypeOperation.Insert(this, entityData, _EventParameterEntity, "Parameters", null);
     }
 

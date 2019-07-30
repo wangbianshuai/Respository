@@ -1,11 +1,10 @@
 package OpenDataAccess.Data;
 
 import java.sql.Connection;
+import java.sql.SQLException;
 
 public interface IDataTransaction {
-    Connection CreateConnection(String connectionString, String userId, String Password);
-
     Connection GetConnection();
 
-    void Commit();
+    boolean CommitTransaction(boolean blSucceed) throws SQLException;
 }

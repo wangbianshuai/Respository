@@ -1,5 +1,6 @@
 package Component;
 
+import OpenDataAccess.Data.DataTransaction;
 import OpenDataAccess.Data.IDataTransaction;
 import OpenDataAccess.Data.IQuery;
 import OpenDataAccess.Data.Query;
@@ -27,7 +28,7 @@ public class PageHead extends EntityRequest {
 
     public Object InsertPageHead() {
         try {
-            IDataTransaction trans = null;
+            IDataTransaction trans = new DataTransaction(GetDataBase().CreateConnection());
             boolean blSucceed = true;
             Object primaryKey = null;
             Object pageHeadId = null;
@@ -62,7 +63,7 @@ public class PageHead extends EntityRequest {
                         }
                     }
                 }
-                blSucceed = this.GetDataBase().CommitTransaction(trans, blSucceed);
+                blSucceed = trans.CommitTransaction(blSucceed);
                 Map<String, Object> booleanDict = GetBoolDict(blSucceed);
                 booleanDict.put("PrimaryKey", pageHeadId);
                 return booleanDict;
@@ -103,7 +104,7 @@ public class PageHead extends EntityRequest {
 
     public Object UpdatePageHead() {
         try {
-            IDataTransaction trans = null;
+            IDataTransaction trans = new DataTransaction(GetDataBase().CreateConnection());
             boolean blSucceed = true;
             Object primaryKey = null;
             if (GetRequest().Entities.containsKey(this.GetEntityType().Name)) {
@@ -140,7 +141,7 @@ public class PageHead extends EntityRequest {
                         }
                     }
                 }
-                blSucceed = this.GetDataBase().CommitTransaction(trans, blSucceed);
+                blSucceed = trans.CommitTransaction(blSucceed);
                 return GetBoolDict(blSucceed);
             } else {
                 return GetBoolDict(false);
@@ -152,7 +153,7 @@ public class PageHead extends EntityRequest {
 
     public Object DeletePageHead() {
         try {
-            IDataTransaction trans = null;
+            IDataTransaction trans = new DataTransaction(GetDataBase().CreateConnection());
             boolean blSucceed = true;
             blSucceed = this.DeleteEntity(this.GetQueryRequest().ToQuery(), trans);
             if (blSucceed) {
@@ -161,7 +162,7 @@ public class PageHead extends EntityRequest {
                 query.Where(String.format(" where PageHeadId='%s'", this.GetQueryRequest().PrimaryKeyProperty.Value), null);
                 this.DeleteEntity(query, trans);
             }
-            blSucceed = this.GetDataBase().CommitTransaction(trans, blSucceed);
+            blSucceed = trans.CommitTransaction(blSucceed);
             return GetBoolDict(blSucceed);
         } catch (Exception ex) {
             return this.GetExceptionDict(Common.GetRealException(ex).getMessage());

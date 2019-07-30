@@ -1,5 +1,6 @@
 package Component;
 
+import OpenDataAccess.Data.DataTransaction;
 import OpenDataAccess.Data.IDataTransaction;
 import OpenDataAccess.Data.IQuery;
 import OpenDataAccess.Data.Query;
@@ -10,6 +11,7 @@ import OpenDataAccess.Service.EntityRequest;
 import OpenDataAccess.Service.Request;
 import OpenDataAccess.Utility.Common;
 
+import javax.xml.crypto.Data;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -56,7 +58,7 @@ public class Page extends EntityRequest {
 
     public Object UpdatePage() {
         try {
-            IDataTransaction trans = null;
+            IDataTransaction trans = new DataTransaction(GetDataBase().CreateConnection());
             boolean blSucceed = true;
             Object primaryKey = null;
             if (GetRequest().Entities.containsKey(this.GetEntityType().Name)) {
@@ -89,7 +91,7 @@ public class Page extends EntityRequest {
                         }
                     }
                 }
-                blSucceed = this.GetDataBase().CommitTransaction(trans, blSucceed);
+                blSucceed = trans.CommitTransaction(blSucceed);
                 return GetBoolDict(blSucceed);
             } else {
                 return GetBoolDict(false);
@@ -101,7 +103,7 @@ public class Page extends EntityRequest {
 
     public Object DeletePage() {
         try {
-            IDataTransaction trans = null;
+            IDataTransaction trans = new DataTransaction(GetDataBase().CreateConnection());
             boolean blSucceed = true;
             blSucceed = this.DeleteEntity(this.GetQueryRequest().ToQuery(), trans);
             if (blSucceed) {
@@ -110,7 +112,7 @@ public class Page extends EntityRequest {
                 query.Where(String.format(" where PageId='%s'", this.GetQueryRequest().PrimaryKeyProperty.Value), null);
                 this.DeleteEntity(query, trans);
             }
-            blSucceed = this.GetDataBase().CommitTransaction(trans, blSucceed);
+            blSucceed = trans.CommitTransaction(blSucceed);
             return GetBoolDict(blSucceed);
         } catch (Exception ex) {
             return this.GetExceptionDict(Common.GetRealException(ex).getMessage());

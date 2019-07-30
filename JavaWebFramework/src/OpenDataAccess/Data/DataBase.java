@@ -66,7 +66,7 @@ public class DataBase implements IDataBase {
         _ClientType = value;
     }
 
-    public void CreateConnection() throws SQLException {
+    public Connection CreateConnection() throws SQLException {
         try {
             if (_ClientType == ServerClient.OracleClient) {
                 Class.forName("oracle.jdbc.driver.OracleDriver");
@@ -78,6 +78,7 @@ public class DataBase implements IDataBase {
                 Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
                 _Connection = DriverManager.getConnection(this._ConnectionString, _User, _Password);
             }
+            return _Connection;
         } catch (ClassNotFoundException ex) {
             throw new SQLException(ex);
         }
@@ -85,9 +86,10 @@ public class DataBase implements IDataBase {
 
     //执行无查询语句
     @Override
-    public int ExceNoQuery(String sql, IDataParameterList parameterList) throws SQLException {
+    public int ExceNoQuery(String sql, IDataParameterList parameterList, IDataTransaction trans) throws SQLException {
         try {
-            this.CreateConnection();
+            if(trans!=null) _Connection= trans.GetConnection();
+            else this.CreateConnection();
 
             if (parameterList == null) {
                 this._Statement = this._Connection.createStatement();
@@ -101,11 +103,11 @@ public class DataBase implements IDataBase {
         } catch (SQLException ex) {
             throw ex;
         } finally {
-            this.CloseConnction();
+            this.CloseConnction(trans!=null);
         }
     }
 
-    private void CloseConnction() throws SQLException {
+    private void CloseConnction(boolean blTrans) throws SQLException {
         if (this._Statement != null) {
             this._Statement.close();
             this._Statement = null;
@@ -121,7 +123,7 @@ public class DataBase implements IDataBase {
             this._ResultSet = null;
         }
 
-        if (this._Connection != null) {
+        if (this._Connection != null && !blTrans) {
             this._Connection.close();
             this._Connection = null;
         }
@@ -136,7 +138,7 @@ public class DataBase implements IDataBase {
         } catch (SQLException ex) {
             throw ex;
         } finally {
-            this.CloseConnction();
+            this.CloseConnction(false);
         }
     }
 
@@ -161,7 +163,7 @@ public class DataBase implements IDataBase {
         } catch (SQLException ex) {
             throw ex;
         } finally {
-            this.CloseConnction();
+            this.CloseConnction(false);
         }
     }
 
@@ -180,7 +182,7 @@ public class DataBase implements IDataBase {
         } catch (Exception ex) {
             throw ex;
         } finally {
-            this.CloseConnction();
+            this.CloseConnction(false);
         }
     }
 
@@ -265,9 +267,5 @@ public class DataBase implements IDataBase {
         }
 
         return field;
-    }
-
-    public  boolean CommitTransaction(IDataTransaction trans, boolean blSuccess){
-        return  true;
     }
 }
