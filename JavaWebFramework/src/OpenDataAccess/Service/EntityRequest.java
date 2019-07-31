@@ -465,7 +465,7 @@ public class EntityRequest extends EntityAccess implements IEntityRequest, IEnti
 
     private IDataParameterList GetFileterParameterList(IEntityData entityData, EntityType entityType, String filter) throws Exception {
         List<Property> propertyList = new ArrayList<>();
-        propertyList.forEach(p -> {
+        entityType.Properties.forEach(p -> {
             if (filter.contains("@" + p.Name)) {
                 Property property = new Property();
                 property.Name = p.Name;

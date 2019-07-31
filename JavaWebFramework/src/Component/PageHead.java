@@ -17,6 +17,7 @@ import java.util.Map;
 
 public class PageHead extends EntityRequest {
     EntityType _PageHeadJsCssEntity;
+    EntityType _ViewPageHeadJsCssEntity;
 
     public PageHead() {
     }
@@ -24,6 +25,7 @@ public class PageHead extends EntityRequest {
     public PageHead(Request request) {
         super(request);
         _PageHeadJsCssEntity = EntityType.GetEntityType(Model.PageHeadJsCss.class);
+        _ViewPageHeadJsCssEntity = EntityType.GetEntityType(Model.ViewPageHeadJsCss.class);
     }
 
     public Object InsertPageHead() {
@@ -71,7 +73,8 @@ public class PageHead extends EntityRequest {
                 return GetBoolDict(false);
             }
         } catch (Exception ex) {
-            return this.GetExceptionDict(Common.GetRealException(ex).getMessage());
+            ExHandling(ex);
+            return null;
         }
     }
 
@@ -80,7 +83,7 @@ public class PageHead extends EntityRequest {
             IEntityData entityData = (IEntityData) this.Select();
             if (entityData != null) {
                 String pageHeadId = entityData.GetStringValue("PageHeadId");
-                IQuery query = new Query("view_PageHead_JsCss");
+                IQuery query = new Query(_ViewPageHeadJsCssEntity.TableName, _ViewPageHeadJsCssEntity.Name);
                 query.Where(String.format(" where PageHeadId='%s'", pageHeadId), null);
                 List<IEntityData> pageHeadJsCssList = this.SelectEntities(query);
 
@@ -147,7 +150,8 @@ public class PageHead extends EntityRequest {
                 return GetBoolDict(false);
             }
         } catch (Exception ex) {
-            return this.GetExceptionDict(Common.GetRealException(ex).getMessage());
+            ExHandling(ex);
+            return null;
         }
     }
 
@@ -165,7 +169,8 @@ public class PageHead extends EntityRequest {
             blSucceed = trans.CommitTransaction(blSucceed);
             return GetBoolDict(blSucceed);
         } catch (Exception ex) {
-            return this.GetExceptionDict(Common.GetRealException(ex).getMessage());
+            ExHandling(ex);
+            return null;
         }
     }
 }

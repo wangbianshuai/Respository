@@ -246,7 +246,7 @@ public abstract class EntityAccess implements IEntityAccess {
         String sql = "insert into ".concat(entityType.TableName).concat(" (").concat(String.join(",", fieldList)).concat(") values (").concat(String.join(",", valueList)).concat(")").concat(identitySql);
 
         if (this.ExceNoQuery(sql, parameterList, trans) == 1) {
-            primaryKey = primaryKeyProeprty.Value;
+            primaryKey = primaryKeyProeprty == null ? 1 : primaryKeyProeprty.Value;
         } else if (blInt) return 0;
 
         return primaryKey;

@@ -5,6 +5,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.lang.reflect.Field;
 import java.lang.reflect.ParameterizedType;
+import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.List;
@@ -129,6 +130,8 @@ public class JsonParse {
             value = obj.toString();
         } else if (obj instanceof Double) {
             value = obj.toString();
+        } else if (obj instanceof BigDecimal) {
+            value = obj.toString();
         } else if (obj instanceof Boolean) {
             value = (boolean) obj ? "true" : "false";
         } else if (obj instanceof Date) {
@@ -181,6 +184,17 @@ public class JsonParse {
         return output.toString();
     }
 
+    private static String Decode(String str) throws IOException {
+        str = str.replace("\\n", "\n");
+        str = str.replace("\\r", "\r");
+        str = str.replace("\\f", "\f");
+        str = str.replace("\\b", "\b");
+        str = str.replace("\\t", "\t");
+        str = str.replace("\\\"", "\"");
+        str = str.replace("\\\\", "\\");
+        return str;
+    }
+
     private static String ToJsonByArray(ArrayList arrayList) throws IOException, IllegalAccessException {
         List<String> itemList = new ArrayList<String>();
 
@@ -200,9 +214,9 @@ public class JsonParse {
             key = entry.getKey();
             value = entry.getValue();
             if (value == null) {
-                itemList.add(String.format("\"%s\":null", Encode(key)));
+                itemList.add(String.format("\"%s\":null", key));
             } else {
-                itemList.add(String.format("\"%s\":%s", Encode(key), GetOutpuStream(value)));
+                itemList.add(String.format("\"%s\":%s", key, GetOutpuStream(value)));
             }
         }
 
@@ -220,7 +234,11 @@ public class JsonParse {
             }
 
             return String.format("[%s]", String.join(",", itemList));
-        } else {
+        }
+        else if(obj.getClass().isPrimitive()) {
+            return obj.toString();
+        }
+        else {
             Field[] fieldList = obj.getClass().getFields();
             String key = null;
             Object value = null;
@@ -233,9 +251,9 @@ public class JsonParse {
                 value = field.get(obj);
 
                 if (value == null) {
-                    itemList.add(String.format("\"%s\":null", key));
+                    itemList.add(String.format("\"%s\":null", Encode(key)));
                 } else {
-                    itemList.add(String.format("\"%s\":%s", key, GetOutpuStream(value)));
+                    itemList.add(String.format("\"%s\":%s", Encode(key), GetOutpuStream(value)));
                 }
             }
 

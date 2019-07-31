@@ -5,6 +5,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.lang.reflect.Field;
 import java.lang.reflect.ParameterizedType;
+import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.List;
@@ -129,6 +130,8 @@ public class JsonParse {
             value = obj.toString();
         } else if (obj instanceof Double) {
             value = obj.toString();
+        } else if (obj instanceof BigDecimal) {
+            value = obj.toString();
         } else if (obj instanceof Boolean) {
             value = (boolean) obj ? "true" : "false";
         } else if (obj instanceof Date) {
@@ -220,7 +223,11 @@ public class JsonParse {
             }
 
             return String.format("[%s]", String.join(",", itemList));
-        } else {
+        }
+        else if(obj.getClass().isPrimitive()) {
+            return obj.toString();
+        }
+        else {
             Field[] fieldList = obj.getClass().getFields();
             String key = null;
             Object value = null;
