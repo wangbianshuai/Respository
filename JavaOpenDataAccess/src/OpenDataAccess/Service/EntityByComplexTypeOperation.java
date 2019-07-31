@@ -8,14 +8,15 @@ import OpenDataAccess.Entity.Property;
 import OpenDataAccess.LambdaInterface.IFunction3;
 import OpenDataAccess.Utility.Common;
 
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 
 public class EntityByComplexTypeOperation {
-    public static <T extends IEntityRequest> boolean Insert(T entityRequest, IEntityData entityData, EntityType complexTypeEntity, String complexTypePropertyName, IFunction3<IDataTransaction, IEntityData, Property, Boolean> insertChildComplexType) {
-        IDataTransaction trans = null;
+    public static <T extends IEntityRequest> boolean Insert(T entityRequest, IEntityData entityData, EntityType complexTypeEntity, String complexTypePropertyName, IFunction3<IDataTransaction, IEntityData, Property, Boolean> insertChildComplexType) throws SQLException {
+        IDataTransaction trans = new DataTransaction(entityRequest.GetDataBase().CreateConnection());
         boolean blSucceed = Insert(entityRequest, trans, entityData, complexTypeEntity, complexTypePropertyName, insertChildComplexType);
-        return entityRequest.GetDataBase().CommitTransaction(trans, blSucceed);
+        return trans.CommitTransaction(blSucceed);
     }
 
     public static <T extends IEntityRequest> boolean Insert(T entityRequest, IDataTransaction trans, IEntityData entityData, EntityType complexTypeEntity, String complexTypePropertyName, IFunction3<IDataTransaction, IEntityData, Property, Boolean> insertChildComplexType) {
@@ -36,7 +37,7 @@ public class EntityByComplexTypeOperation {
 
     public static <T extends IEntityRequest> Object Insert(T entityRequest, EntityType complexTypeEntity, String complexTypePropertyName, IFunction3<IDataTransaction, IEntityData, Property, Boolean> insertChildComplexType) {
         try {
-            IDataTransaction trans = null;
+            IDataTransaction trans = new DataTransaction(entityRequest.GetDataBase().CreateConnection());
             boolean blSucceed = true;
             Object primaryKey = null;
             if (entityRequest.GetRequest().Entities.containsKey(entityRequest.GetEntityType().Name)) {
@@ -50,7 +51,7 @@ public class EntityByComplexTypeOperation {
                 Property primaryKeyProperty = entityRequest.GetEntityType().GetProperty(entityRequest.GetEntityType().PrimaryKey);
                 primaryKeyProperty.Value = primaryKey;
                 blSucceed = InsertComplexType(entityRequest, trans, entityData, primaryKeyProperty, complexTypeEntity, complexTypePropertyName, insertChildComplexType);
-                blSucceed = entityRequest.GetDataBase().CommitTransaction(trans, blSucceed);
+                blSucceed = trans.CommitTransaction(blSucceed);
                 Map<String, Object> booleanDict = entityRequest.GetBoolDict(blSucceed);
                 booleanDict.put("PrimaryKey", primaryKey);
                 return booleanDict;
@@ -89,7 +90,7 @@ public class EntityByComplexTypeOperation {
 
     public static <T extends IEntityRequest> boolean Update(T entityRequest, IEntityData entityData, Object primaryKey, EntityType complexTypeEntity, String complexTypePropertyName) {
         try {
-            IDataTransaction trans = null;
+            IDataTransaction trans = new DataTransaction(entityRequest.GetDataBase().CreateConnection());
             boolean blSucceed = true;
             if (entityRequest.GetRequest().Entities.containsKey(entityRequest.GetEntityType().Name)) {
                 blSucceed = entityRequest.UpdateEntityByPrimaryKey(primaryKey, entityData, trans);
@@ -97,7 +98,7 @@ public class EntityByComplexTypeOperation {
                     DeleteComplexType(entityRequest, trans, entityRequest.GetQueryRequest().PrimaryKeyProperty, complexTypeEntity);
                     blSucceed = InsertComplexType(entityRequest, trans, entityData, entityRequest.GetQueryRequest().PrimaryKeyProperty, complexTypeEntity, complexTypePropertyName, null);
                 }
-                return entityRequest.GetDataBase().CommitTransaction(trans, blSucceed);
+                return trans.CommitTransaction(blSucceed);
             } else {
                 return false;
             }
@@ -108,7 +109,7 @@ public class EntityByComplexTypeOperation {
 
     public static <T extends IEntityRequest> Object Update(T entityRequest, EntityType complexTypeEntity, String complexTypePropertyName, IFunction3<IDataTransaction, IEntityData, Property, Boolean> insertChildComplexType) {
         try {
-            IDataTransaction trans = null;
+            IDataTransaction trans = new DataTransaction(entityRequest.GetDataBase().CreateConnection());
             boolean blSucceed = true;
             if (entityRequest.GetRequest().Entities.containsKey(entityRequest.GetEntityType().Name)) {
                 IEntityData entityData = entityRequest.GetRequest().Entities.get(entityRequest.GetEntityType().Name).get(0);
@@ -131,7 +132,7 @@ public class EntityByComplexTypeOperation {
                     DeleteComplexType(entityRequest, trans, entityRequest.GetQueryRequest().PrimaryKeyProperty, complexTypeEntity);
                     blSucceed = InsertComplexType(entityRequest, trans, entityData, entityRequest.GetQueryRequest().PrimaryKeyProperty, complexTypeEntity, complexTypePropertyName, insertChildComplexType);
                 }
-                blSucceed = entityRequest.GetDataBase().CommitTransaction(trans, blSucceed);
+                blSucceed = trans.CommitTransaction(blSucceed);
                 return entityRequest.GetBoolDict(blSucceed);
             } else {
                 return entityRequest.GetBoolDict(false);
@@ -151,7 +152,7 @@ public class EntityByComplexTypeOperation {
 
     public static <T extends IEntityRequest> Object Delete(T entityRequest, EntityType complexTypeEntity) {
         try {
-            IDataTransaction trans = null;
+            IDataTransaction trans = new DataTransaction(entityRequest.GetDataBase().CreateConnection());
             boolean blSucceed = true;
             String rowVersion = entityRequest.GetRequest().GetParameterValue("RowVersion");
             if (!Common.IsNullOrEmpty(rowVersion)) {
@@ -170,7 +171,7 @@ public class EntityByComplexTypeOperation {
             if (blSucceed) {
                 DeleteComplexType(entityRequest, trans, entityRequest.GetQueryRequest().PrimaryKeyProperty, complexTypeEntity);
             }
-            blSucceed = entityRequest.GetDataBase().CommitTransaction(trans, blSucceed);
+            blSucceed = trans.CommitTransaction(blSucceed);
             return entityRequest.GetBoolDict(blSucceed);
         } catch (Exception ex) {
             return entityRequest.GetExceptionDict(ex.getMessage());

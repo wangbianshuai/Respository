@@ -38,14 +38,6 @@ public class EntityData implements IEntityData {
         _EntityType = entityType;
         _EntityName = _EntityType.Name;
 
-//    var abList = (from a in dict.Keys
-//    from b in entityType.Properties
-//    where a.ToLower().Equals(b.Name.ToLower())
-//            && b.IsSelect
-//    select new {
-//        a, b.Name
-//    });
-
         Map<String, String> names = new HashMap<>();
         List<String> keyList = dict.keySet().stream().collect(Collectors.toList());
 
@@ -138,12 +130,17 @@ public class EntityData implements IEntityData {
             value = kvp.getValue();
             if (value instanceof IEntityData) {
                 newDict.put(key, ((IEntityData) value).ToDictionary());
-            } else if (value != null && value.getClass().equals(list.getClass())) {
-                List<Map<String, Object>> dictList = new ArrayList<>();
-                ((List<IEntityData>) value).forEach(entityData -> {
-                    dictList.add(entityData.ToDictionary());
-                });
-                newDict.put(key, dictList);
+            } else if (value != null && value instanceof List<?>) {
+                if (!((List) value).isEmpty()) {
+                    Object ele = ((List) value).get(0);
+                    if (ele instanceof IEntityData) {
+                        List<Map<String, Object>> dictList = new ArrayList<>();
+                        ((List<IEntityData>) value).forEach(entityData -> {
+                            dictList.add(entityData.ToDictionary());
+                        });
+                        newDict.put(key, dictList);
+                    } else newDict.put(key, value);
+                } else newDict.put(key, value);
             } else {
                 newDict.put(key, value);
             }

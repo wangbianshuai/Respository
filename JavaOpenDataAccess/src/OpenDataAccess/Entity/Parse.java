@@ -4,14 +4,21 @@ import OpenDataAccess.Utility.Common;
 import OpenDataAccess.Utility.JsonParse;
 
 import java.io.IOException;
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
 import java.util.*;
 
 public class Parse
 {
     public static List<Map<String, Object>> ToDictionaryList(Object obj) {
         List<Map<String, Object>> list = new ArrayList<>();
-        if (obj != null && obj.getClass().equals(list.getClass())) {
-            return (List<Map<String, Object>>) obj;
+        if (obj != null && obj instanceof List<?>) {
+            List<?> list2 = (List<?>) obj;
+            if (list2.isEmpty()) return list;
+            Object ele = list2.get(0);
+            if (ele instanceof Map) return (List<Map<String, Object>>) obj;
+
+            return list;
         } else if (obj instanceof Map) {
             list.add((Map<String, Object>) obj);
         }
@@ -21,8 +28,6 @@ public class Parse
     //将包含IEntityData Map转化Map
     public static Map<String, Object> DictionaryToMap(Map<String, Object> dict) {
         Map<String, Object> map = new HashMap<>();
-        List<Map<String, Object>> dictList = new ArrayList<>();
-        List<IEntityData> entityDataList = new ArrayList<>();
 
         for (Map.Entry<String, Object> kvp : dict.entrySet()) {
             String key = kvp.getKey();
@@ -30,12 +35,21 @@ public class Parse
             if (value != null) {
                 if (value instanceof Map) {
                     map.put(key, DictionaryToMap((Map<String, Object>) value));
-                } else if (value.getClass().equals(dictList.getClass())) {
-                    map.put(key, DictionaryListToMapList((List<Map<String, Object>>) value));
+                } else if (value instanceof List<?>) {
+                    List<?> list = (List<?>) value;
+                    if (list.isEmpty()) {
+                        List<Map<String, Object>> dictList = new ArrayList<>();
+                        map.put(key, dictList);
+                    } else {
+                        Object ele = list.get(0);
+                        if (ele instanceof Map)
+                            map.put(key, DictionaryListToMapList((List<Map<String, Object>>) value));
+                        else if (ele instanceof IEntityData)
+                            map.put(key, IEntityDataToListMapList((List<IEntityData>) value));
+                        else map.put(key, value);
+                    }
                 } else if (value instanceof IEntityData) {
                     map.put(key, ((IEntityData) value).ToDictionary());
-                } else if (value.getClass().equals(entityDataList.getClass())) {
-                    map.put(key, IEntityDataToListMapList((List<IEntityData>) value));
                 } else map.put(key, value);
             } else map.put(key, value);
         }
@@ -66,24 +80,25 @@ public class Parse
     public static String ToJson(Object obj) throws IOException,IllegalAccessException {
         if (obj == null) return "";
 
-        List<Map<String, Object>> dictList = new ArrayList<>();
-        List<IEntity> entityList = new ArrayList<>();
-        List<IEntityData> entityDataList = new ArrayList<>();
-
         if (obj instanceof Map) {
             Map<String, Object> map = DictionaryToMap((Map<String, Object>) obj);
             return JsonParse.ToJson(map);
-        } else if (obj.getClass().equals(dictList.getClass())) {
-            dictList = DictionaryListToMapList((List<Map<String, Object>>) obj);
-            return JsonParse.ToJson((dictList));
+        } else if (obj instanceof List<?>) {
+            List<?> list = (List<?>) obj;
+            if (list.isEmpty()) return "[]";
+
+            Object ele = list.get(0);
+            if (ele instanceof Map) {
+                return JsonParse.ToJson((DictionaryListToMapList((List<Map<String, Object>>) obj)));
+            } else if (ele instanceof IEntity) {
+                return IEntityListToJsonByIEntity((List<IEntity>) obj);
+            } else if (ele instanceof IEntityData) {
+                return IEntityDataListToJson((List<IEntityData>) obj);
+            } else return JsonParse.ToJson(obj);
         } else if (obj instanceof IEntity) {
             return IEntityToJson((IEntity) obj);
-        } else if (obj.getClass().equals(entityList.getClass())) {
-            return IEntityListToJsonByIEntity((List<IEntity>) obj);
         } else if (obj instanceof IEntityData) {
             return IEntityToJson((IEntityData) obj);
-        } else if (obj.getClass().equals(entityDataList.getClass())) {
-            return IEntityDataListToJson((List<IEntityData>) obj);
         } else return JsonParse.ToJson(obj);
     }
 

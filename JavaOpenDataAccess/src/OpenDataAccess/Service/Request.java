@@ -50,8 +50,8 @@ public class Request {
         String key = Common.GetFirstOrDefault(String.class, QueryString.keySet(), p -> Common.IsEquals(name, p, true));
         if (!Common.IsNullOrEmpty(key)) {
             String value = QueryString.get(key);
-            if (value.equals("undefined")) return "";
-            else return UrlUtil.decode(key);
+            if (Common.IsEquals(value, "undefined", true)) return "";
+            else return UrlUtil.decode(value);
         } else return "";
     }
 }

@@ -119,7 +119,7 @@ public class Query implements IQuery {
     public String ToSql() {
         String sqlText = "";
         if (OpenDataAccess.Utility.Common.IsNullOrEmpty(_Sql)) {
-            sqlText = String.format("%%%%%%%%", "select ", _FieldSql, " from ", _TableName, _JoinSql, _WhereSql, _GroupBySql, _OrderBySql);
+            sqlText = String.format("%s%s%s%s%s%s%s%s", "select ", _FieldSql, " from ", _TableName, _JoinSql, _WhereSql, _GroupBySql, _OrderBySql);
         } else {
             sqlText = _Sql;
         }

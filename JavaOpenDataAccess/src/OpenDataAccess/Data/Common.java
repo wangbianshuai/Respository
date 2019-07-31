@@ -14,7 +14,7 @@ public class Common {
             List<String> list = new ArrayList<String>();
             orderByList.forEach(orderBy ->
             {
-                list.add(String.format("% %", orderBy.ColumnName, orderBy.IsASC ? "asc" : "desc"));
+                list.add(String.format("%s %s", orderBy.ColumnName, orderBy.IsASC ? "asc" : "desc"));
             });
             String orderBySql = String.join(",", list);
             if (!orderBySql.isEmpty()) {
@@ -30,7 +30,7 @@ public class Common {
             List<String> list = new ArrayList<String>();
             whereList.forEach(where ->
             {
-                list.add(String.format(" % % %", where.ColumnName, where.LogicalOperator, where.ColumnValue));
+                list.add(String.format(" %s %s %s", where.ColumnName, where.LogicalOperator, where.ColumnValue));
             });
             String whereSql = String.join("", list);
             if (!whereSql.isEmpty()) {
@@ -46,7 +46,7 @@ public class Common {
             List<String> list = new ArrayList<>();
             joinlist.forEach(join ->
             {
-                list.add(String.format(" % join % on %", join.JoinType, join.JoinTable, join.RelationOn));
+                list.add(String.format(" %s join %s on %s", join.JoinType, join.JoinTable, join.RelationOn));
             });
             return String.join("").concat(" ");
         }
@@ -128,7 +128,7 @@ public class Common {
                 }
             }
 
-            dateString = String.format("%s-%s-%s %s:%s:%s.%s", yyyy, MM, dd, HH, mm, ss, SSS);
+            dateString = String.format("%ss-%ss-%ss %ss:%ss:%ss.%ss", yyyy, MM, dd, HH, mm, ss, SSS);
         }
         return dateString;
     }

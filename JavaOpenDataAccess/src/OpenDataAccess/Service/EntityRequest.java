@@ -39,8 +39,6 @@ public class EntityRequest extends EntityAccess implements IEntityRequest, IEnti
         _ExpandSelectQuery = value;
     }
 
-    public IExceptionHandle ExceptionHandle = null;
-
     public EntityRequest() {
         Init();
     }
@@ -103,12 +101,6 @@ public class EntityRequest extends EntityAccess implements IEntityRequest, IEnti
     }
 
     public boolean JudgeIsEdit(EntityType entityType, IEntityData newEntityData, IEntityData oldEntityData) throws Exception {
-//            var data = (from a in newEntityData.ToDictionary()
-//            from b in oldEntityData.ToDictionary()
-//            from c in entityType.Properties
-//            where a.Key.Trim().toLowerCase() == b.Key.Trim().toLowerCase() && a.Key.Trim().toLowerCase() == c.Name.Trim().toLowerCase()
-//            select new { a, b });
-
         List<String> editNameList = new ArrayList<>();
 
         entityType.Properties.forEach(p -> {
@@ -169,17 +161,17 @@ public class EntityRequest extends EntityAccess implements IEntityRequest, IEnti
                 if (this.GetDataBase().GetClientType() == ServerClient.MySqlClient) {
                     sb.append("select ");
                     sb.append(IsNullOrEmpty(query.ToSelectSql().trim()) ? "t.*" : query.ToSelectSql());
-                    sb.append(String.format(" from % % % %) a",
+                    sb.append(String.format(" from %s %s %s %s) a",
                             _Request.Entity.TableName + " t",
                             query.ToWhereSql(),
                             query.ToGroupSql(),
-                            IsNullOrEmpty(query.ToOrderBySql().trim()) ? "order by " + _Request.Entity.PrimaryKey : query.ToOrderBySql()));
-                    sb.append(" limit %,%", (pageIndex - 1) * pageSize, pageSize);
+                            IsNullOrEmpty(query.ToOrderBySql()) ? "order by " + _Request.Entity.PrimaryKey : query.ToOrderBySql()));
+                    sb.append(" limit %s,%s", (pageIndex - 1) * pageSize, pageSize);
                 } else {
-                    sb.append(String.format("select row_number() over(%) as rn,", IsNullOrEmpty(query.ToOrderBySql().trim()) ? "order by " + _Request.Entity.PrimaryKey : query.ToOrderBySql()));
+                    sb.append(String.format("select row_number() over(%s) as rn,", IsNullOrEmpty(query.ToOrderBySql().trim()) ? "order by " + _Request.Entity.PrimaryKey : query.ToOrderBySql()));
                     sb.append(IsNullOrEmpty(query.ToSelectSql().trim()) ? "t.*" : query.ToSelectSql());
-                    sb.append(String.format(" from % % %) a", _Request.Entity.TableName + " t", query.ToWhereSql(), query.ToGroupSql()));
-                    sb.append(String.format(" where a.rn > % and a.rn <= %", (pageIndex - 1) * pageSize, pageIndex * pageSize));
+                    sb.append(String.format(" from %s %s %s) a", _Request.Entity.TableName + " t", query.ToWhereSql(), query.ToGroupSql()));
+                    sb.append(String.format(" where a.rn > %s and a.rn <= %s", (pageIndex - 1) * pageSize, pageIndex * pageSize));
                 }
 
                 query.SetWithSql(this.GetEntityType().WithSql);
@@ -204,7 +196,7 @@ public class EntityRequest extends EntityAccess implements IEntityRequest, IEnti
             query.GroupBy("").Join("").OrderBy("");
         } else {
             query.Select("count(*) PageRecord");
-            query.SetTableName(String.format("(select % from % % %) a", query.ToSelectSql(), _Request.Entity.TableName + " t", query.ToWhereSql(), query.ToGroupSql()));
+            query.SetTableName(String.format("(select %s from %s %s %s) a", query.ToSelectSql(), _Request.Entity.TableName + " t", query.ToWhereSql(), query.ToGroupSql()));
             query.GroupBy("").Join("").OrderBy("").Where("", query.GetParameterList());
         }
 
@@ -254,7 +246,7 @@ public class EntityRequest extends EntityAccess implements IEntityRequest, IEnti
                     return GetMessageDict(message);
                 }
 
-                IDataTransaction trans = null;
+                IDataTransaction trans = new DataTransaction(GetDataBase().CreateConnection());
                 for (int i = 0; i < entityDataList.size(); i++) {
                     IEntityData entityData = entityDataList.get(i);
                     primaryKey = this.InsertEntity(entityData, trans);
@@ -263,7 +255,7 @@ public class EntityRequest extends EntityAccess implements IEntityRequest, IEnti
                         break;
                     }
                 }
-                //blSucceed = this.GetDataBase().CommitTransaction(trans, blSucceed);
+                blSucceed = trans.CommitTransaction(blSucceed);
                 if (primaryKey != null) {
                     Map<String, Object> dict = GetBoolDict(blSucceed);
                     dict.put("PrimaryKey", primaryKey);
@@ -325,14 +317,14 @@ public class EntityRequest extends EntityAccess implements IEntityRequest, IEnti
                     if (entityType != null) {
                         IQuery query = new Query(entityType.TableName, entityType.Name);
                         query.Select("top 1 1");
-                        query.Where(String.format(" where %", filter), null);
+                        query.Where(String.format(" where %s", filter), null);
                         if (this.SelectEntity(query) != null) {
                             break;
                         } else {
                             message = "";
                         }
                     } else {
-                        message = String.format("对不起,实体%不存在！", entityName);
+                        message = String.format("对不起,实体%s不存在！", entityName);
                         break;
                     }
                 }
@@ -408,7 +400,7 @@ public class EntityRequest extends EntityAccess implements IEntityRequest, IEnti
                             });
                         }
                     } else {
-                        message = String.format("对不起，该%不存在！", configName);
+                        message = String.format("对不起，该%s不存在！", configName);
                     }
                 }
                 if (IsNullOrEmpty(message) && uniquePropertyList != null) {
@@ -435,7 +427,7 @@ public class EntityRequest extends EntityAccess implements IEntityRequest, IEnti
                                 query.Where(whereList, parameterList);
                                 IEntityData editEntityData = this.SelectEntity(query);
                                 if (editEntityData != null) {
-                                    message = String.format("对不起，该%已存在！", propertyLabel);
+                                    message = String.format("对不起，该%s已存在！", propertyLabel);
                                     break;
                                 }
                             }
@@ -453,7 +445,7 @@ public class EntityRequest extends EntityAccess implements IEntityRequest, IEnti
             if (entityType != null) {
                 IQuery query = new Query(entityType.TableName, entityType.Name);
                 query.Select(entityType.PrimaryKey);
-                query.Where(String.format(" where %", filter), this.GetFileterParameterList(entityData, entityType, filter));
+                query.Where(String.format(" where %s", filter), this.GetFileterParameterList(entityData, entityType, filter));
                 if (this.SelectEntity(query) != null) {
                     if (!blExists) {
                         message = "";
@@ -508,7 +500,7 @@ public class EntityRequest extends EntityAccess implements IEntityRequest, IEnti
                     property.Value = propertyValue;
                     IDataParameterList parameterList = new DataParameterList();
                     parameterList.Set(property.Name, property.Value);
-                    query.Where(String.format(" where %=@%", propertyName, propertyName), parameterList);
+                    query.Where(String.format(" where %s=@%s", propertyName, propertyName), parameterList);
                     if (this.SelectEntity(query) == null) {
                         message = "";
                     }
@@ -536,13 +528,13 @@ public class EntityRequest extends EntityAccess implements IEntityRequest, IEnti
                     IDataParameterList parameterList = new DataParameterList();
                     parameterList.Set(property.Name, property.Value);
                     parameterList.Set(primaryKeyProperty.Name, primaryKeyProperty.Value);
-                    query.Where(String.format(" where %=@% and %=@%", entityType.PrimaryKey, entityType.PrimaryKey, propertyName, propertyName), parameterList);
+                    query.Where(String.format(" where %s=@%s and %s=@%s", entityType.PrimaryKey, entityType.PrimaryKey, propertyName, propertyName), parameterList);
                     if (this.SelectEntity(query) != null) {
                         message = "";
                     } else {
                         parameterList = new DataParameterList();
                         parameterList.Set(property.Name, property.Value);
-                        query.Where(String.format(" where %=@%", propertyName, propertyName), parameterList);
+                        query.Where(String.format(" where %s=@%s", propertyName, propertyName), parameterList);
                         if (this.SelectEntity(query) == null) {
                             message = "";
                         }

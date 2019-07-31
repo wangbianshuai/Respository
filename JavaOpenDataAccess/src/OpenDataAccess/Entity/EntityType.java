@@ -15,7 +15,7 @@ public class EntityType {
     public boolean IsPost;
     public boolean IsPut;
     public boolean IsDelete;
-    public List<String> NoSelectNameList;
+    public List<String> NoSelectNameList = new ArrayList<>();
     public LogAttribute LogAttribute;
     public List<Property> Properties;
     public List<IFunction2<IValidate, IEntityData, String>> InsertValidateList;
@@ -65,31 +65,35 @@ public class EntityType {
         return entityType;
     }
 
-    public static <T extends IEntity> EntityType GetEntityType(Class<T> cls) throws InstantiationException, IllegalAccessException {
-        EntityType entityType = EntityType.GetEntityType(cls.getName(), false);
-        if (entityType == null) {
-            EntityType.SetEntityType(cls);
-            entityType = EntityType.GetEntityType(cls.getName(), false);
+    public static <T extends IEntity> EntityType GetEntityType(Class<T> cls) {
+        try {
+            EntityType entityType = EntityType.GetEntityType(cls.getSimpleName(), false);
+            if (entityType == null) {
+                EntityType.SetEntityType(cls);
+                entityType = EntityType.GetEntityType(cls.getSimpleName(), false);
+            }
+            return entityType;
+        } catch (Exception ex) {
+            return null;
         }
-        return entityType;
     }
 
     public static <T extends IEntity> void SetEntityType(Class<T> cls) throws InstantiationException, IllegalAccessException {
-        if (!Common.Exists(EntityTypeList, exists -> exists.Name.equals(cls.getName()))) {
+        if (!Common.Exists(EntityTypeList, exists -> exists.Name.equals(cls.getSimpleName()))) {
             T entity = cls.newInstance();
             EntityTypeList.add(entity.ToEntityType());
         }
     }
 
     public static void SetEntityTypeByType(Class<?> type) throws InstantiationException, IllegalAccessException {
-        if (!Common.Exists(EntityTypeList, exists -> exists.Name.equals(type.getName()))) {
+        if (!Common.Exists(EntityTypeList, exists -> exists.Name.equals(type.getSimpleName()))) {
             IEntity entity = (IEntity) type.newInstance();
             if (entity != null) EntityTypeList.add(entity.ToEntityType());
         }
     }
 
     public static void SetEntityTypeByObject(Object obj) {
-        if (!Common.Exists(EntityTypeList, exists -> exists.Name.equals(obj.getClass().getName()))) {
+        if (!Common.Exists(EntityTypeList, exists -> exists.Name.equals(obj.getClass().getSimpleName()))) {
             IEntity entity = (IEntity) obj;
             if (entity != null) EntityTypeList.add(entity.ToEntityType());
         }

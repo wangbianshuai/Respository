@@ -5,7 +5,8 @@ import java.sql.SQLException;
 
 public class MySqlDataBase extends DataBase implements IMySqlDataBase {
 
-    MySqlDataBase() {
+    MySqlDataBase(String connectionString) {
         this.SetClientType(ServerClient.MySqlClient);
+        this.SetConnectionString(connectionString);
     }
 }

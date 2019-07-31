@@ -11,7 +11,7 @@ import java.util.List;
 public class EntityModel implements IEntity {
     public EntityType ToEntityType() {
         EntityType entityType = null;
-        String name = this.getClass().getName();
+        String name = this.getClass().getSimpleName();
         entityType = EntityType.GetEntityType(name, false);
         if (entityType != null) {
             return entityType;
@@ -20,7 +20,7 @@ public class EntityModel implements IEntity {
         entityType.Name = name;
         entityType.Properties = new ArrayList<>();
 
-        TablePropertyAttribute tableProperty = this.getClass().getAnnotation(TablePropertyAttribute.class);
+        ITablePropertyAttribute tableProperty = this.getClass().getAnnotation(ITablePropertyAttribute.class);
         if (tableProperty != null) {
             entityType.TableName = tableProperty.Name();
             entityType.WithSql = tableProperty.WithSql();
@@ -28,7 +28,7 @@ public class EntityModel implements IEntity {
             entityType.NoSelectNameList = Common.IsNullOrEmpty(tableProperty.NoSelectNames()) ? new ArrayList<>() : Arrays.asList(tableProperty.NoSelectNames().split(","));
         }
 
-        RequestMethodAttribute requestMethodProperty = this.getClass().getAnnotation(RequestMethodAttribute.class);
+        IRequestMethodAttribute requestMethodProperty = this.getClass().getAnnotation(IRequestMethodAttribute.class);
         if (requestMethodProperty != null) {
             entityType.IsDelete = requestMethodProperty.IsDelete;
             entityType.IsGet = requestMethodProperty.IsGet;
@@ -41,8 +41,16 @@ public class EntityModel implements IEntity {
             entityType.IsPut = true;
         }
 
-        LogAttribute logAttribute = this.getClass().getAnnotation(LogAttribute.class);
-        if (logAttribute != null) entityType.LogAttribute = logAttribute;
+        entityType.LogAttribute= new LogAttribute();
+        ILogAttribute logAttribute = this.getClass().getAnnotation(ILogAttribute.class);
+        if (logAttribute != null) {
+            entityType.LogAttribute.IsDelete= logAttribute.IsDelete();
+            entityType.LogAttribute.IsGet= logAttribute.IsGet();
+            entityType.LogAttribute.IsPost= logAttribute.IsPost();
+            entityType.LogAttribute.IsPostQuery= logAttribute.IsPostQuery();
+            entityType.LogAttribute.IsPut= logAttribute.IsPut();
+        }
+
 
         Field[] fileds = this.getClass().getFields();
         Property p = null;
@@ -52,6 +60,7 @@ public class EntityModel implements IEntity {
             f = fileds[i];
             p.Name = f.getName();
             p.Type = f.getType();
+            p.ParameterName = "@" + p.Name;
             p.IsSelect = !entityType.NoSelectNameList.contains(p.Name);
 
             entityType.Properties.add(p);

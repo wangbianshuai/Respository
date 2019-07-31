@@ -83,7 +83,7 @@ public abstract class EntityAccess implements IEntityAccess {
         return OpenDataAccess.Utility.Common.GetFirstOrDefault(cls, this.SelectEntities(cls, selectFieldList, whereNameValues));
     }
 
-    public boolean Insert(Map<String, Object> nameValues) {
+    public boolean Insert(Map<String, Object> nameValues, IDataTransaction trans) {
         Set<String> nameList = nameValues.keySet();
 
         String sql = String.format("insert %s (%s) values (%s)", this._EntityType.TableName, String.join(",", nameList),
@@ -92,19 +92,19 @@ public abstract class EntityAccess implements IEntityAccess {
         IDataParameterList parameterList = new DataParameterList();
         parameterList.Set(nameValues);
 
-        return this.ExceNoQuery(sql, parameterList) == 1;
+        return this.ExceNoQuery(sql, parameterList,trans) == 1;
     }
 
-    public int ExceNoQuery(String sql, IDataParameterList parameterList) {
+    public int ExceNoQuery(String sql, IDataParameterList parameterList, IDataTransaction trans) {
         try {
-            return this._DataBase.ExceNoQuery(sql, parameterList);
+            return this._DataBase.ExceNoQuery(sql, parameterList,trans);
         } catch (Exception ex) {
             this.ExHandling(ex);
             return -1;
         }
     }
 
-    public boolean Update(Map<String, Object> nameValues, String whereSql, IDataParameterList parameterList) {
+    public boolean Update(Map<String, Object> nameValues, String whereSql, IDataParameterList parameterList, IDataTransaction trans) {
         if (parameterList == null) {
             parameterList = new DataParameterList();
         }
@@ -114,10 +114,10 @@ public abstract class EntityAccess implements IEntityAccess {
 
         String sql = String.format("udpate %s set %s %s", this._EntityType.TableName, String.join(",", fieldList), whereSql);
 
-        return this.ExceNoQuery(sql, parameterList) == 1;
+        return this.ExceNoQuery(sql, parameterList,trans) == 1;
     }
 
-    public boolean Update(Map<String, Object> nameValues, Map<String, Object> whereNameValues) {
+    public boolean Update(Map<String, Object> nameValues, Map<String, Object> whereNameValues, IDataTransaction trans) {
         IDataParameterList parameterList = new DataParameterList();
         parameterList.Set(whereNameValues);
 
@@ -125,7 +125,7 @@ public abstract class EntityAccess implements IEntityAccess {
 
         String whereSql = String.format("where %s", String.join(" and ", fieldList));
 
-        return this.Update(nameValues, whereSql, parameterList);
+        return this.Update(nameValues, whereSql, parameterList, trans);
     }
 
     public boolean Update(Map<String, Object> nameValues, Object primaryKeyValue) {
@@ -134,7 +134,7 @@ public abstract class EntityAccess implements IEntityAccess {
         return this.Update(nameValues, whereNameValues);
     }
 
-    public boolean Delete(Map<String, Object> whereNameValues) {
+    public boolean Delete(Map<String, Object> whereNameValues, IDataTransaction trans) {
         IDataParameterList parameterList = new DataParameterList();
         parameterList.Set(whereNameValues);
 
@@ -142,7 +142,7 @@ public abstract class EntityAccess implements IEntityAccess {
 
         String sql = String.format("delete from %s where %s", this._EntityType.TableName, String.join(" and ", fieldList));
 
-        return this.ExceNoQuery(sql, parameterList) > 0;
+        return this.ExceNoQuery(sql, parameterList, trans) > 0;
     }
 
     public boolean Delete(Object primaryKeyValue) {
@@ -161,11 +161,12 @@ public abstract class EntityAccess implements IEntityAccess {
     }
 
     public List<IEntityData> SelectEntities(IQuery query) {
+        List<IEntityData> list = new ArrayList<>();
+
         List<Map<String, Object>> dictList = SelectEntities(query.ToSql(), query.GetParameterList());
+        if (dictList == null) return list;
 
         EntityType entityType = EntityType.GetEntityType(query.GetEntityName(), false);
-
-        List<IEntityData> list = new ArrayList<>();
 
         dictList.forEach(dict -> {
             if (entityType == null) list.add(new EntityData(dict, query.GetEntityName()));
@@ -244,7 +245,7 @@ public abstract class EntityAccess implements IEntityAccess {
 
         String sql = "insert into ".concat(entityType.TableName).concat(" (").concat(String.join(",", fieldList)).concat(") values (").concat(String.join(",", valueList)).concat(")").concat(identitySql);
 
-        if (this.ExceNoQuery(sql, parameterList) == 1) {
+        if (this.ExceNoQuery(sql, parameterList, trans) == 1) {
             primaryKey = primaryKeyProeprty.Value;
         } else if (blInt) return 0;
 
@@ -305,7 +306,7 @@ public abstract class EntityAccess implements IEntityAccess {
             if (property != null && property.Name != entityType.PrimaryKey) {
                 property.Value = ChangeType(property.Type, entityData.GetValue(propertyName));
                 parameterList.Set(property.Name, property.Value);
-                fieldValueList.add(String.format("%=%", property.Name, property.ParameterName));
+                fieldValueList.add(String.format("%s=%s", property.Name, property.ParameterName));
             }
         }
         String sql = "update ".concat(entityType.TableName).concat(" set ").concat(String.join(",", fieldValueList)).concat(query.ToWhereSql());
@@ -315,7 +316,7 @@ public abstract class EntityAccess implements IEntityAccess {
                 parameterList.Set(kvp.getKey(), kvp.getValue());
             }
         }
-        return this.ExceNoQuery(sql, parameterList) == 1;
+        return this.ExceNoQuery(sql, parameterList, trans) == 1;
     }
 
     public boolean UpdateEntity(IQuery query, IEntityData entityData, IDataTransaction trans) {
@@ -340,6 +341,6 @@ public abstract class EntityAccess implements IEntityAccess {
 
     public boolean DeleteEntity(EntityType entityType, IQuery query, IDataTransaction trans) {
         String sql = "delete from ".concat(entityType.TableName).concat(query.ToWhereSql());
-        return this.ExceNoQuery(sql, query.GetParameterList()) == 1;
+        return this.ExceNoQuery(sql, query.GetParameterList(), trans) == 1;
     }
 }

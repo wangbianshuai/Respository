@@ -1,9 +1,6 @@
 package OpenDataAccess.Service;
 
-import OpenDataAccess.Entity.EntityType;
-import OpenDataAccess.Entity.IEntityData;
-import OpenDataAccess.Entity.LogAttribute;
-import OpenDataAccess.Entity.Parse;
+import OpenDataAccess.Entity.*;
 import OpenDataAccess.Utility.Common;
 import OpenDataAccess.Utility.JsonParse;
 import OpenDataAccess.Utility.Stopwatch;
@@ -27,11 +24,11 @@ public class RequestHandler {
             String put = request.QueryString.get("$put");
             String get = request.QueryString.get("$get");
             String delete = request.QueryString.get("$delete");
-            if (put == "true") {
+            if (Common.IsEquals(put, "true",true)) {
                 request.RequestType = "PUT";
-            } else if (get == "true") {
+            } else if (Common.IsEquals(get , "true",true)) {
                 request.RequestType = "GET";
-            } else if (delete == "true") {
+            } else if (Common.IsEquals( delete, "true",true)) {
                 request.RequestType = "DELETE";
             }
             if (Common.IsNullOrEmpty(entityName)) {
@@ -48,7 +45,7 @@ public class RequestHandler {
 
             if (JudgeRight(request) || (request.IsDirectRequest != null && request.IsDirectRequest.Invoke())) {
                 obj = this.InvokeMethod(request);
-                responseContent = JsonParse.ToJson(obj);
+                responseContent = Parse.ToJson(obj);
             } else {
                 Map<String, Object> map = new HashMap<>();
                 map.put("Message", "登录信息过期，请重新登录！");
@@ -59,7 +56,8 @@ public class RequestHandler {
             Map<String, Object> dict = new HashMap<>();
 
             request.Excption = ex;
-            dict.put("Exception", Common.GetRealException(ex).getMessage());
+            String msg = Common.GetRealException(ex).getMessage();
+            dict.put("Exception", Common.IsNullOrEmpty(msg) ? "请求异常" : msg);
 
             obj = dict;
             try {
@@ -118,8 +116,9 @@ public class RequestHandler {
         }
 
         if (request.RequestType == null) request.RequestType = "";
-
-        if (Common.IsNullOrEmpty(request.Content) && (request.RequestType.equals("POST") || request.RequestType.equals("PUT") || (request.RequestType.equals("DELETE") && request.QueryString.get("$data").equals("true")))) {
+        String pdata = request.QueryString.get("$data");
+        if (Common.IsNullOrEmpty(request.Content) && (request.RequestType.equals("POST") || request.RequestType.equals("PUT")
+                || (request.RequestType.equals("DELETE") && Common.IsEquals(pdata, "true", true)))) {
             request.IsLog = false;
             Map<String, Object> dict = new HashMap<>();
             dict.put("NoData", true);
@@ -158,10 +157,10 @@ public class RequestHandler {
             Constructor instanceObj = type.getConstructor(new Class[]{Request.class});
             entityRequest = (EntityRequest) instanceObj.newInstance(new Object[]{request});
 
-            Method method = this.getClass().getMethod(request.MethodName);
+            Method method = type.getMethod(request.MethodName);
             if (method != null) {
-                LogAttribute log = method.getAnnotation(LogAttribute.class);
-                request.IsLog = log != null;
+                INoLogAttribute log = method.getAnnotation(INoLogAttribute.class);
+                request.IsLog = log == null;
                 returnObj = method.invoke(entityRequest);
             } else throw new Exception("方法不存在！");
         } else {
@@ -223,7 +222,7 @@ public class RequestHandler {
             {
                 Map<String, Object> propertyDict = new HashMap<>();
                 propertyDict.put("Name", property.Name);
-                propertyDict.put("Type", property.Type.getName());
+                propertyDict.put("Type", property.Type.getSimpleName());
                 propertyList.add(propertyDict);
             });
             entityDict.put("Properties", propertyList);

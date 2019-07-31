@@ -20,7 +20,7 @@ import java.util.stream.Stream;
 public class Common {
 
     public static String InputStream2String(InputStream inputStream) throws IOException {
-        BufferedReader br = new BufferedReader(new InputStreamReader(inputStream));
+        BufferedReader br = new BufferedReader(new InputStreamReader(inputStream,"utf-8"));
         StringBuffer sb = new StringBuffer();
         String line = "";
         while ((line = br.readLine()) != null) {
@@ -30,7 +30,7 @@ public class Common {
     }
 
     public static boolean IsEquals(Object v1, Object v2, boolean blIgnoreCase) {
-        if ((v1 == null && v2 != null) || (v1 == null || v2 != null)) return false;
+        if ((v1 == null && v2 != null) || (v1 != null && v2 == null)) return false;
 
         if (v1.getClass().equals(v2.getClass()) && v1.equals(v2)) return true;
 
@@ -93,7 +93,7 @@ public class Common {
         return value.matches(regex);
     }
 
-    public static <T> T ConvertValue(Class<T> cls, Object value) throws  Exception {
+    public static <T> T ConvertValue(Class<T> cls, Object value) throws Exception {
         if (value != null && value.getClass().equals((cls))) return (T) value;
         else {
             value = Common.ChangeType(cls, value);
@@ -317,5 +317,33 @@ public class Common {
             return GetRealException(throwable);
         }
         return ex;
+    }
+
+    public static String TrimEnd(String str, String endStr) {
+        if (IsNullOrEmpty(str) || IsNullOrEmpty(endStr)) return str;
+
+        if (str.length() < endStr.length()) return str;
+
+        int len = str.length() - endStr.length();
+        String str2 = str.substring(0, len);
+        String str3 = str.substring(len);
+
+        if (str3.equals(endStr)) return str2;
+
+        return str;
+    }
+
+    public static String TrimStart(String str, String startStr) {
+        if (IsNullOrEmpty(str) || IsNullOrEmpty(startStr)) return str;
+
+        if (str.length() < startStr.length()) return str;
+
+        int len = startStr.length();
+        String str2 = str.substring(len);
+        String str3 = str.substring(0, len);
+
+        if (str3.equals(startStr)) return str2;
+
+        return str;
     }
 }

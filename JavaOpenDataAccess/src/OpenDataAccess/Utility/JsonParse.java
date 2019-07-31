@@ -418,8 +418,10 @@ public class JsonParse {
 
         ArrayList list = new ArrayList();
 
+        Object ele=null;
         for (int i = 0; i < strArray.length; i++) {
-            list.add(GetObjectValue(TrimWhiteEnter(strArray[i]), arrayList, objList, strList));
+            ele = GetObjectValue(TrimWhiteEnter(strArray[i]), arrayList, objList, strList);
+            if (ele != null) list.add(ele);
         }
 
         if (keyList != null && list.size() == 1 && list.get(0) instanceof ArrayList) {

@@ -11,14 +11,11 @@ public class DataAccess {
     public static <T extends IDataBase> T GetDataBase(Class<T> cls) {
         IDataBase dataBase = null;
         if (cls.getClass().equals(ISqlDataBase.class)) {
-            dataBase = new SqlDataBase();
-            dataBase.SetConnectionString(GetConnectionString());
+            dataBase = new SqlDataBase(GetConnectionString(), GetUser(),GetPassword());
         } else if (cls.getClass().equals(IOracleDataBase.class)) {
-            dataBase = new OracleDataBase();
-            dataBase.SetConnectionString(GetConnectionString());
+            dataBase = new SqlDataBase(GetConnectionString(), GetUser(),GetPassword());
         } else if (cls.getClass().equals(IMySqlDataBase.class)) {
-            dataBase = new MySqlDataBase();
-            dataBase.SetConnectionString(GetConnectionString());
+            dataBase = new MySqlDataBase(GetConnectionString());
         } else {
             throw new IllegalArgumentException();
         }
@@ -29,14 +26,11 @@ public class DataAccess {
         IDataBase dataBase = null;
         String client = GetServerClient();
         if (client.equals("Sql")) {
-            dataBase = new SqlDataBase();
-            dataBase.SetConnectionString(GetConnectionString());
+            dataBase = new SqlDataBase(GetConnectionString(), GetUser(),GetPassword());
         } else if (client.equals("Oracle")) {
-            dataBase = new OracleDataBase();
-            dataBase.SetConnectionString(GetConnectionString());
+            dataBase = new OracleDataBase(GetConnectionString(), GetUser(),GetPassword());
         } else if (client.equals("MySql")) {
-            dataBase = new MySqlDataBase();
-            dataBase.SetConnectionString(GetConnectionString());
+            dataBase = new MySqlDataBase(GetConnectionString());
         } else {
             throw new IllegalArgumentException();
         }
@@ -46,7 +40,7 @@ public class DataAccess {
 
     private static String GetServerClient() {
         if (OpenDataAccess.Utility.Common.IsNullOrEmpty(_ServerClient)) {
-            _ServerClient = AppSettings.ServerClient;
+            _ServerClient = AppSettings.GetServerClient();
             _ServerClient = OpenDataAccess.Utility.Common.IsNullOrEmpty(_ServerClient) ? "Sql" : _ServerClient;
         }
         return _ServerClient;
@@ -54,17 +48,17 @@ public class DataAccess {
 
     private static String GetConnectionString() {
         if (OpenDataAccess.Utility.Common.IsNullOrEmpty(_ConnectionString))
-            _ConnectionString = AppSettings.ConnectionString;
+            _ConnectionString = AppSettings.GetConnectionString();
         return _ConnectionString;
     }
 
     private static String GetUser() {
-        if (OpenDataAccess.Utility.Common.IsNullOrEmpty(_User)) _User = AppSettings.DbUser;
+        if (OpenDataAccess.Utility.Common.IsNullOrEmpty(_User)) _User = AppSettings.GetDbUser();
         return _User;
     }
 
     private static String GetPassword() {
-        if (OpenDataAccess.Utility.Common.IsNullOrEmpty(_Password)) _Password = AppSettings.DbPassword;
+        if (OpenDataAccess.Utility.Common.IsNullOrEmpty(_Password)) _Password = AppSettings.GetDbPassword();
         return _Password;
     }
 }
