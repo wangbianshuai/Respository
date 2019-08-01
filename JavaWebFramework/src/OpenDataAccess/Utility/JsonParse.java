@@ -184,14 +184,10 @@ public class JsonParse {
         return output.toString();
     }
 
-    private static String Decode(String str) throws IOException {
-        str = str.replace("\\n", "\n");
-        str = str.replace("\\r", "\r");
-        str = str.replace("\\f", "\f");
-        str = str.replace("\\b", "\b");
-        str = str.replace("\\t", "\t");
-        str = str.replace("\\\"", "\"");
-        str = str.replace("\\\\", "\\");
+    private static String Decode(String str, Map<String,String> spMap) throws IOException {
+        str = str.replace(spMap.get("\\\\"), "\\");
+        str = str.replace(spMap.get("\\\""), "\"");
+
         return str;
     }
 
@@ -573,14 +569,22 @@ public class JsonParse {
     }
 
     private static String GetStringList(String jsonString, Map<String, String> strList) throws IOException {
+        Map<String, String> spMap= new HashMap<>();
+        spMap.put("\\\\",Common.CreateGuid());
+        spMap.put("\\\"",Common.CreateGuid());
+
+        for (Map.Entry<String,String> kvp : spMap.entrySet()) {
+            jsonString = jsonString.replace(kvp.getKey(), kvp.getValue());
+        }
+
         ByteArrayInputStream input = new ByteArrayInputStream(jsonString.getBytes());
         ByteArrayOutputStream output = new ByteArrayOutputStream();
         ByteArrayOutputStream output2 = null;
 
         char c = '\0';
         char preChar = '\0';
+        char prePreChar = '\0';
         int iRead = 0;
-        int index = 0;
         boolean blStart = false;
         boolean blStart2 = false;
         String keyValue = "", value = "";
@@ -589,7 +593,7 @@ public class JsonParse {
             c = (char) iRead;
 
             if (!blStart) {
-                blStart = preChar != '\\' && c == '"';
+                blStart = ((prePreChar == '\\' && preChar == '\\') || preChar != '\\') && c == '"';
                 if (blStart) {
                     blStart2 = true;
                 }
@@ -607,14 +611,15 @@ public class JsonParse {
                 output2.write(c);
             }
 
-            if (blStart && !blStart2 && preChar != '\\' && c == '"') {
+            if (blStart && !blStart2 && ((prePreChar == '\\' && preChar == '\\') || preChar != '\\') && c == '"') {
                 blStart = false;
                 keyValue = String.format("str%s", Common.CreateGuid().replace("-", ""));
                 output.write(keyValue.getBytes());
                 value = output2.toString();
-                strList.put(keyValue, value.substring(1, value.length() - 1));
+                strList.put(keyValue, Decode(value.substring(1, value.length() - 1),spMap));
                 output2 = null;
             }
+            prePreChar = preChar;
             preChar = c;
             blStart2 = false;
         }
