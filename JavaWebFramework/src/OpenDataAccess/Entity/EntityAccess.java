@@ -28,6 +28,10 @@ public abstract class EntityAccess implements IEntityAccess {
 
     public IExceptionHandle ExceptionHandle = null;
 
+    public IExceptionHandle GetExceptionHandle(){
+        return  ExceptionHandle;
+    }
+
     public EntityAccess() {
         this.Init();
     }

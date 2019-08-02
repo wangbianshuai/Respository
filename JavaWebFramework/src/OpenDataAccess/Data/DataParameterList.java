@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.sql.Types;
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * Created by BianzhaiWang on 2017/1/11.
@@ -79,10 +80,10 @@ public class DataParameterList implements  IDataParameterList {
         this._PreparedParameters = new ArrayList<Object>();
         Map<String, String> replaceParameterNames = new HashMap<>();
 
-        for (Map.Entry<String, Object> entry : this._Parameters.entrySet()) {
+        for (String key : this._Parameters.keySet().stream().sorted(Comparator.comparing(String::length).reversed()).collect(Collectors.toList())) {
             String replaceId = "${" + Common.CreateGuid().replace("-", "").substring(0, 16) + "}$";
-            sql = sql.replace(AddFrefix(entry.getKey()), replaceId);
-            replaceParameterNames.put(replaceId, entry.getKey());
+            sql = sql.replace(AddFrefix(key), replaceId);
+            replaceParameterNames.put(replaceId, key);
         }
 
         sql = this.GetPreparedParameters(sql, replaceParameterNames);

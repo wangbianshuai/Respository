@@ -1,5 +1,7 @@
 package OpenDataAccess.Data;
 
+import OpenDataAccess.Utility.Common;
+
 import java.lang.reflect.Field;
 import java.sql.*;
 import java.sql.Connection;
@@ -131,7 +133,7 @@ public class DataBase implements IDataBase {
 
     //执行查询语句
     @Override
-    public List<Map<String, Object>> ExceSelect(String sql, IDataParameterList parameterList) throws SQLException {
+    public List<Map<String, Object>> ExceSelect(String sql, IDataParameterList parameterList) throws SQLException,Exception {
         try {
             this.ExcelQueryToResultSet(sql, parameterList);
             return this.ResultSetToList();
@@ -186,7 +188,7 @@ public class DataBase implements IDataBase {
         }
     }
 
-    private List<Map<String, Object>> ResultSetToList() throws SQLException {
+    private List<Map<String, Object>> ResultSetToList() throws SQLException, Exception {
         if (this._ResultSet != null) {
             List<Map<String, Object>> list = new ArrayList<>();
 
@@ -195,12 +197,15 @@ public class DataBase implements IDataBase {
             ResultSetMetaData metaData = this._ResultSet.getMetaData();
             int iColNum = metaData.getColumnCount();
             String columnName = "";
+            Object value=null;
             while (this._ResultSet.next()) {
                 map = new HashMap<>();
 
                 for (int i = 1; i <= iColNum; i++) {
                     columnName = metaData.getColumnName(i);
-                    map.put(columnName, this._ResultSet.getObject(i));
+                    value = _ResultSet.getObject(i);
+                    if(value instanceof  NClob) value= Common.Clob2String((NClob)value);
+                    map.put(columnName, value);
                 }
 
                 list.add(map);

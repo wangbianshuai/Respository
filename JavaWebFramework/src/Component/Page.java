@@ -57,8 +57,9 @@ public class Page extends EntityRequest {
     }
 
     public Object UpdatePage() {
+        IDataTransaction trans=null;
         try {
-            IDataTransaction trans = new DataTransaction(GetDataBase().CreateConnection());
+            trans = new DataTransaction(GetDataBase().CreateConnection());
             boolean blSucceed = true;
             Object primaryKey = null;
             if (GetRequest().Entities.containsKey(this.GetEntityType().Name)) {
@@ -97,13 +98,15 @@ public class Page extends EntityRequest {
                 return GetBoolDict(false);
             }
         } catch (Exception ex) {
+            if(trans!=null) trans.CommitTransaction(false, ExceptionHandle);
             return this.GetExceptionDict(Common.GetRealException(ex).getMessage());
         }
     }
 
     public Object DeletePage() {
+        IDataTransaction trans = null;
         try {
-            IDataTransaction trans = new DataTransaction(GetDataBase().CreateConnection());
+            trans = new DataTransaction(GetDataBase().CreateConnection());
             boolean blSucceed = true;
             blSucceed = this.DeleteEntity(this.GetQueryRequest().ToQuery(), trans);
             if (blSucceed) {
@@ -115,6 +118,7 @@ public class Page extends EntityRequest {
             blSucceed = trans.CommitTransaction(blSucceed);
             return GetBoolDict(blSucceed);
         } catch (Exception ex) {
+            if (trans != null) trans.CommitTransaction(false, ExceptionHandle);
             return this.GetExceptionDict(Common.GetRealException(ex).getMessage());
         }
     }

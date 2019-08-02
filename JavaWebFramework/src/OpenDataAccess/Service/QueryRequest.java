@@ -5,6 +5,7 @@ import OpenDataAccess.Entity.IEntityAccess;
 import OpenDataAccess.Entity.IEntityData;
 import OpenDataAccess.Entity.Property;
 import OpenDataAccess.LambdaInterface.IExceptionHandle;
+import OpenDataAccess.Utility.Common;
 
 import java.net.MalformedURLException;
 import java.util.*;
@@ -136,42 +137,39 @@ public class QueryRequest
             andOrIndex = filter.indexOf(" and ", logicIndex);
             if (andOrIndex < 0) {
                 andOrIndex = filter.indexOf(" or ", logicIndex);
-                if (andOrIndex > 0) {
-                    andOrStr = " or ";
-                } else andOrStr = " and ";
+                if (andOrIndex > 0) andOrStr = " or ";
+            } else andOrStr = " and ";
+            if (andOrIndex > 0)
+                propertyValue = filter.substring(logicIndex + loginStr.length(), andOrIndex);
+            else propertyValue = filter.substring(logicIndex + loginStr.length());
 
-                if (andOrIndex > 0)
-                    propertyValue = filter.substring(logicIndex + loginStr.length(), andOrIndex);
-                else propertyValue = filter.substring(logicIndex + loginStr.length());
-
-                if (propertyValue.trim() != "@" + property.Name) {
-                    if (property.Type.getClass().equals(String.class) || property.Type.getClass().equals(Date.class)) {
-                        if (propertyValue.indexOf("'") == 0 && propertyValue.indexOf("'", propertyValue.length() - 1) == propertyValue.length() - 1) {
-                            propertyValue = propertyValue.substring(1, propertyValue.length() - 2);
-                        } else throw new Exception("字符串格式不正确！");
-                    }
-                    property.Value = Common.ChangeType(property.Type, propertyValue);
-                    if (this.FilterParamterList == null) this.FilterParamterList = new DataParameterList();
-
-                    this.FilterParamterList.Set(property.Name, property.Value);
-                    blParam = true;
-                } else property.ParameterName = propertyValue;
-
-                if (andOrIndex > 0) {
-                    if (blParam)
-                        condition = filter.substring(0, logicIndex + loginStr.length()) + property.ParameterName + andOrStr;
-                    else condition = filter.substring(0, andOrIndex + andOrStr.length());
-                    conditionList.add(condition);
-                    this.ParseFilter(filter.substring(andOrIndex + loginStr.length()), conditionList);
-                } else {
-                    if (blParam)
-                        condition = filter.substring(0, logicIndex + loginStr.length()) + property.ParameterName;
-                    else condition = filter;
-
-                    conditionList.add(condition);
+            if (!Common.Trim(propertyValue).equals("@" + property.Name)) {
+                if (property.Type.equals(String.class) || property.Type.equals(Date.class)) {
+                    if (propertyValue.indexOf("'") == 0 && propertyValue.indexOf("'", propertyValue.length() - 1) == propertyValue.length() - 1) {
+                        propertyValue = propertyValue.substring(1, propertyValue.length() - 1);
+                    } else throw new Exception("字符串格式不正确！");
                 }
-            } else throw new Exception("字符串格式不正确！");
-        }
+                property.Value = OpenDataAccess.Utility.Common.ChangeType(property.Type, propertyValue);
+                if (this.FilterParamterList == null) this.FilterParamterList = new DataParameterList();
+
+                this.FilterParamterList.Set(property.ParameterName, property.Value);
+                blParam = true;
+            } else property.ParameterName = propertyValue;
+
+            if (andOrIndex > 0) {
+                if (blParam)
+                    condition = filter.substring(0, logicIndex + loginStr.length()) + property.ParameterName + andOrStr;
+                else condition = filter.substring(0, andOrIndex + andOrStr.length());
+                conditionList.add(condition);
+                this.ParseFilter(filter.substring(andOrIndex + loginStr.length()), conditionList);
+            } else {
+                if (blParam)
+                    condition = filter.substring(0, logicIndex + loginStr.length()) + property.ParameterName;
+                else condition = filter;
+
+                conditionList.add(condition);
+            }
+        } else throw new Exception("字符串格式不正确！");
     }
 
     private String ValidateGroupBy(String groupby) throws  Exception
@@ -257,7 +255,7 @@ public class QueryRequest
             primeryKeyString = pathInfo.substring(startIndex + prefix.length() + 1, endIndex);
             Property property = _Request.Entity.GetProperty(_Request.Entity.PrimaryKey);
             if (property != null) {
-                property.Value = Common.ChangeType(property.Type, primeryKeyString);
+                property.Value = OpenDataAccess.Utility.Common.ChangeType(property.Type, primeryKeyString);
                 return property;
             }
         }
@@ -275,7 +273,7 @@ public class QueryRequest
             List<Property> propertyList = _Request.Entity.GetPropertyList(propertyNameList);
             for (int i = 0; i < propertyList.size(); i++) {
                 Property property = propertyList.get(i);
-                property.Value = Common.ChangeType(property.Type, this._Request.GetParameterValue("@" + property.Name));
+                property.Value = OpenDataAccess.Utility.Common.ChangeType(property.Type, this._Request.GetParameterValue("@" + property.Name));
                 parameterList.Set(property.Name, property.Value);
             };
             return parameterList;
@@ -305,7 +303,7 @@ public class QueryRequest
             String value = valueList.get(n);
             String paramName = whereField.ParameterName + n;
             paramNameList.add(paramName);
-            this.QueryInfo.ParameterList.Set(paramName, Common.ChangeType(whereField.Type, value));
+            this.QueryInfo.ParameterList.Set(paramName, OpenDataAccess.Utility.Common.ChangeType(whereField.Type, value));
         }
 
         return String.format("%s %s %s", whereField.Name, whereField.OperateLogic, "(" + String.join(",", paramNameList) + ")");

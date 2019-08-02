@@ -26,7 +26,7 @@ public class View extends EntityRequest {
         return GetDataBase().ExceToResultSet(sqlText, null);
     }
 
-    private List<Map<String, Object>> GetSqlColumnType(String connectionString, String tableName) throws SQLException {
+    private List<Map<String, Object>> GetSqlColumnType(String connectionString, String tableName) throws SQLException, Exception {
         this.GetDataBase().SetConnectionString(connectionString);
         String sqlText = String.format("SELECT o.name as TableName, c.name AS ColumnName, TYPE_NAME(c.user_type_id) AS TypeName, max_length as TypeLength, is_Nullable as IsNullable, isnull(ep.value, '') AS ColumnComments, ISNULL(d.is_primary_key, 0) as IsPrimaryKey FROM sys.objects AS o JOIN sys.columns AS c ON o.object_id = c.object_id LEFT JOIN sys.extended_properties ep ON c.object_id = ep.major_id and c.column_id = ep.minor_id left join (select a.object_id, b.column_id, a.is_primary_key from sys.indexes a, sys.index_columns b, sys.key_constraints c where a.index_id = b.index_id and a.object_id = b.object_id and a.object_id = c.parent_object_id and a.is_primary_key = 1) d on c.object_id = d.object_id and c.column_id = d.column_id WHERE o.name = '%s' ORDER BY c.column_id", tableName);
 
