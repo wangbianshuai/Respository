@@ -14,9 +14,16 @@ import java.util.Map;
 
 public class EntityByComplexTypeOperation {
     public static <T extends IEntityRequest> boolean Insert(T entityRequest, IEntityData entityData, EntityType complexTypeEntity, String complexTypePropertyName, IFunction3<IDataTransaction, IEntityData, Property, Boolean> insertChildComplexType) throws SQLException {
-        IDataTransaction trans = new DataTransaction(entityRequest.GetDataBase().CreateConnection());
-        boolean blSucceed = Insert(entityRequest, trans, entityData, complexTypeEntity, complexTypePropertyName, insertChildComplexType);
-        return trans.CommitTransaction(blSucceed);
+        IDataTransaction trans = null;
+        try {
+            trans = new DataTransaction(entityRequest.GetDataBase().CreateConnection());
+            boolean blSucceed = Insert(entityRequest, trans, entityData, complexTypeEntity, complexTypePropertyName, insertChildComplexType);
+            return trans.CommitTransaction(blSucceed);
+        }
+        catch (Exception ex){
+            if (trans != null) trans.CommitTransaction(false, entityRequest.GetExceptionHandle());
+            return false;
+        }
     }
 
     public static <T extends IEntityRequest> boolean Insert(T entityRequest, IDataTransaction trans, IEntityData entityData, EntityType complexTypeEntity, String complexTypePropertyName, IFunction3<IDataTransaction, IEntityData, Property, Boolean> insertChildComplexType) {
@@ -36,8 +43,9 @@ public class EntityByComplexTypeOperation {
     }
 
     public static <T extends IEntityRequest> Object Insert(T entityRequest, EntityType complexTypeEntity, String complexTypePropertyName, IFunction3<IDataTransaction, IEntityData, Property, Boolean> insertChildComplexType) {
+        IDataTransaction trans = null;
         try {
-            IDataTransaction trans = new DataTransaction(entityRequest.GetDataBase().CreateConnection());
+            trans= new DataTransaction(entityRequest.GetDataBase().CreateConnection());
             boolean blSucceed = true;
             Object primaryKey = null;
             if (entityRequest.GetRequest().Entities.containsKey(entityRequest.GetEntityType().Name)) {
@@ -59,6 +67,7 @@ public class EntityByComplexTypeOperation {
                 return entityRequest.GetBoolDict(false);
             }
         } catch (Exception ex) {
+            if (trans != null) trans.CommitTransaction(false, entityRequest.GetExceptionHandle());
             return entityRequest.GetExceptionDict(ex.getMessage());
         }
     }
@@ -89,8 +98,9 @@ public class EntityByComplexTypeOperation {
     }
 
     public static <T extends IEntityRequest> boolean Update(T entityRequest, IEntityData entityData, Object primaryKey, EntityType complexTypeEntity, String complexTypePropertyName) {
+        IDataTransaction trans =null;
         try {
-            IDataTransaction trans = new DataTransaction(entityRequest.GetDataBase().CreateConnection());
+             trans = new DataTransaction(entityRequest.GetDataBase().CreateConnection());
             boolean blSucceed = true;
             if (entityRequest.GetRequest().Entities.containsKey(entityRequest.GetEntityType().Name)) {
                 blSucceed = entityRequest.UpdateEntityByPrimaryKey(primaryKey, entityData, trans);
@@ -103,13 +113,15 @@ public class EntityByComplexTypeOperation {
                 return false;
             }
         } catch (Exception ex) {
+            if (trans != null) trans.CommitTransaction(false, entityRequest.GetExceptionHandle());
             return false;
         }
     }
 
     public static <T extends IEntityRequest> Object Update(T entityRequest, EntityType complexTypeEntity, String complexTypePropertyName, IFunction3<IDataTransaction, IEntityData, Property, Boolean> insertChildComplexType) {
+        IDataTransaction trans =null;
         try {
-            IDataTransaction trans = new DataTransaction(entityRequest.GetDataBase().CreateConnection());
+            trans = new DataTransaction(entityRequest.GetDataBase().CreateConnection());
             boolean blSucceed = true;
             if (entityRequest.GetRequest().Entities.containsKey(entityRequest.GetEntityType().Name)) {
                 IEntityData entityData = entityRequest.GetRequest().Entities.get(entityRequest.GetEntityType().Name).get(0);
@@ -138,6 +150,7 @@ public class EntityByComplexTypeOperation {
                 return entityRequest.GetBoolDict(false);
             }
         } catch (Exception ex) {
+            if (trans != null) trans.CommitTransaction(false, entityRequest.GetExceptionHandle());
             return entityRequest.GetExceptionDict(ex.getMessage());
         }
     }
@@ -146,13 +159,14 @@ public class EntityByComplexTypeOperation {
         IQuery query = new Query(complexTypeEntity.TableName, complexTypeEntity.Name);
         IDataParameterList parameterList = new DataParameterList();
         parameterList.Set(primaryKeyProperty.Name, primaryKeyProperty.Value);
-        query.Where(String.format(" where %=@%", primaryKeyProperty.Name, primaryKeyProperty.Name), parameterList);
+        query.Where(String.format(" where %s=@%s", primaryKeyProperty.Name, primaryKeyProperty.Name), parameterList);
         return entityRequest.DeleteEntity(complexTypeEntity, query, trans);
     }
 
     public static <T extends IEntityRequest> Object Delete(T entityRequest, EntityType complexTypeEntity) {
+        IDataTransaction trans =null;
         try {
-            IDataTransaction trans = new DataTransaction(entityRequest.GetDataBase().CreateConnection());
+            trans = new DataTransaction(entityRequest.GetDataBase().CreateConnection());
             boolean blSucceed = true;
             String rowVersion = entityRequest.GetRequest().GetParameterValue("RowVersion");
             if (!Common.IsNullOrEmpty(rowVersion)) {
@@ -174,6 +188,7 @@ public class EntityByComplexTypeOperation {
             blSucceed = trans.CommitTransaction(blSucceed);
             return entityRequest.GetBoolDict(blSucceed);
         } catch (Exception ex) {
+            if (trans != null) trans.CommitTransaction(false, entityRequest.GetExceptionHandle());
             return entityRequest.GetExceptionDict(ex.getMessage());
         }
     }
@@ -185,7 +200,7 @@ public class EntityByComplexTypeOperation {
             IDataParameterList parameterList = new DataParameterList();
             Property property = entityRequest.GetQueryRequest().PrimaryKeyProperty;
             parameterList.Set(property.Name, property.Value);
-            query.Where(String.format(" where %=@%", entityRequest.GetEntityType().PrimaryKey, entityRequest.GetEntityType().PrimaryKey), parameterList);
+            query.Where(String.format(" where %s=@%s", entityRequest.GetEntityType().PrimaryKey, entityRequest.GetEntityType().PrimaryKey), parameterList);
             List<IEntityData> complexDataList = entityRequest.SelectEntities(query);
             entityData.SetValue(complexTypePropertyName, complexDataList);
         }

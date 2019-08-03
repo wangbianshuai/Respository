@@ -2,10 +2,8 @@ package OpenDataAccess.Utility;
 
 import jdk.nashorn.internal.runtime.options.Option;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import java.io.*;
+import java.sql.NClob;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -105,7 +103,11 @@ public class Common {
     public static Object ChangeType(Class<?> type, Object value) throws Exception {
         if (value == null) return null;
         if (type.equals(byte.class)) {
-            return value instanceof Byte ? value : Byte.parseByte(value.toString());
+            if (value instanceof Byte) return value;
+            String s = value.toString().toLowerCase();
+            if (s.equals("true")) return (byte) 1;
+            else if (s.equals(("false"))) return (byte) 0;
+            return Byte.parseByte(value.toString());
         } else if (type.equals(char.class)) {
             if (value instanceof Character) {
                 return value;
@@ -130,7 +132,11 @@ public class Common {
         } else if (type.equals(double.class)) {
             return value instanceof Double ? value : Double.parseDouble(value.toString());
         } else if (type.equals(boolean.class)) {
-            return value instanceof Boolean ? value : Boolean.parseBoolean(value.toString());
+            if (value instanceof Boolean) return value;
+            String s = value.toString();
+            if (s.equals("1")) return true;
+            else if (s.equals("0")) return false;
+            return Boolean.parseBoolean(s);
         } else if (type.equals(Date.class)) {
             if (value instanceof Date) {
                 return value;
@@ -139,9 +145,29 @@ public class Common {
                 return sdf.parse(GetDateString(value.toString()));
             }
         } else if (type.equals(String.class)) {
+            if(value instanceof  NClob) return  Clob2String((NClob)value);
             return value instanceof String ? value : value.toString();
         }
+        else if (type.equals(NClob.class)) {
+            return Clob2String((NClob) value);
+        }
         return value;
+    }
+
+    public static String Clob2String(NClob nclob) throws Exception {
+        String content = "";
+
+        Reader is = nclob.getCharacterStream();
+        BufferedReader buff = new BufferedReader(is);// 得到流
+        String line = buff.readLine();
+        StringBuffer sb = new StringBuffer();
+        while (line != null) {// 执行循环将字符串全部取出付值给StringBuffer由StringBuffer转成STRING
+            sb.append(line);
+            line = buff.readLine();
+        }
+        content = sb.toString();
+
+        return content;
     }
 
     public static <T> Object GetTypeDefaultValue(Class<T> type) {

@@ -38,7 +38,7 @@ public interface IDataBase {
     public int ExceNoQuery(String sql, IDataParameterList parameterList, IDataTransaction trans) throws SQLException;
 
     //执行查询语句
-    public List<Map<String, Object>> ExceSelect(String sql, IDataParameterList parameterList) throws SQLException;
+    public List<Map<String, Object>> ExceSelect(String sql, IDataParameterList parameterList) throws SQLException, Exception;
 
     public ResultSet ExceToResultSet(String sql, IDataParameterList parameterList) throws SQLException;
 

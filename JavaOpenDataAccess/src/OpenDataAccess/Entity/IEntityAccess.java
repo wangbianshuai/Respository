@@ -3,6 +3,7 @@ package OpenDataAccess.Entity;
 import OpenDataAccess.Data.IDataBase;
 import OpenDataAccess.Data.IDataTransaction;
 import OpenDataAccess.Data.IQuery;
+import OpenDataAccess.LambdaInterface.IExceptionHandle;
 
 import java.util.List;
 
@@ -11,6 +12,7 @@ public interface IEntityAccess {
     void SetDataBase(IDataBase value);
     EntityType GetEntityType();
     void SetEntityType(EntityType value);
+    IExceptionHandle GetExceptionHandle();
     List<IEntityData> SelectEntities(IQuery query);
     IEntityData SelectEntity(IQuery query);
     IEntityData SelectEntityByPrimaryKey(Object primaryKey);

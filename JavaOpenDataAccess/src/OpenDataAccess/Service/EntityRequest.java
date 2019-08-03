@@ -229,6 +229,7 @@ public class EntityRequest extends EntityAccess implements IEntityRequest, IEnti
     }
 
     public Object Insert() {
+        IDataTransaction trans =null;
         try {
             boolean blSucceed = true;
             Object primaryKey = null;
@@ -246,7 +247,7 @@ public class EntityRequest extends EntityAccess implements IEntityRequest, IEnti
                     return GetMessageDict(message);
                 }
 
-                IDataTransaction trans = new DataTransaction(GetDataBase().CreateConnection());
+                trans = new DataTransaction(GetDataBase().CreateConnection());
                 for (int i = 0; i < entityDataList.size(); i++) {
                     IEntityData entityData = entityDataList.get(i);
                     primaryKey = this.InsertEntity(entityData, trans);
@@ -267,6 +268,7 @@ public class EntityRequest extends EntityAccess implements IEntityRequest, IEnti
                 return GetBoolDict(false);
             }
         } catch (Exception ex) {
+            if (trans != null) trans.CommitTransaction(false, ExceptionHandle);
             ExHandling(ex);
             return null;
         }
@@ -465,7 +467,7 @@ public class EntityRequest extends EntityAccess implements IEntityRequest, IEnti
 
     private IDataParameterList GetFileterParameterList(IEntityData entityData, EntityType entityType, String filter) throws Exception {
         List<Property> propertyList = new ArrayList<>();
-        propertyList.forEach(p -> {
+        entityType.Properties.forEach(p -> {
             if (filter.contains("@" + p.Name)) {
                 Property property = new Property();
                 property.Name = p.Name;
