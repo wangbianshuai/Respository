@@ -40,11 +40,8 @@ var copyList = [
     { src: "./dist/**/*", dest: path.resolve(__dirname, "").replace("Web", "Api/src/resources/public/html/") }
 ];
 
-gulp.task("copy", () => {
-    copyList.forEach(c => gulp.src(c.src).pipe(gulp.dest(c.dest)));
+gulp.task("copy", ["buildConfigs"], () => {
+    setTimeout(() => copyList.forEach(c => gulp.src(c.src).pipe(gulp.dest(c.dest))), 1000);
 });
 
-gulp.task('default', () => {
-    gulp.start('buildConfigs');
-    gulp.start("copy");
-});
+gulp.task('default', () => gulp.start('copy'));
