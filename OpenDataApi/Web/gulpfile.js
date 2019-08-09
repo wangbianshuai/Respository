@@ -1,6 +1,7 @@
 var gulp = require('gulp');
 var through = require('through2');
 var fs = require("fs");
+var path = require("path");
 
 gulp.task("buildConfigs", () => {
     return gulp.src("./configs/pages/**/*.js")
@@ -36,7 +37,7 @@ function SaveContent(fileUrl, content) {
 }
 
 var copyList = [
-    { src: "./dist/**/*", dest: path.resolve(__dirname, "").replace("Web", "Api/src/main/resources/public/html/") }
+    { src: "./dist/**/*", dest: path.resolve(__dirname, "").replace("Web", "Api/src/resources/public/html/") }
 ];
 
 gulp.task("copy", () => {
