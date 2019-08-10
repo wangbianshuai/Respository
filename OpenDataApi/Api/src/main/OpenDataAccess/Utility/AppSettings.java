@@ -11,19 +11,19 @@ import java.util.function.Supplier;
  */
 public class AppSettings {
     public static String GetConnectionString(){
-        return GetConfig("ConnectionString");
+        return GetConfig("OpenDataAccess.Data.ConnectionString");
     }
     public static String GetDbUser(){
-        return GetConfig("DbUser");
+        return GetConfig("OpenDataAccess.Data.DbUser");
     }
     public static String GetDbPassword(){
-        return GetConfig("DbPassword");
+        return GetConfig("OpenDataAccess.Data.DbPassword");
     }
     public static String GetServerClient(){
-        return GetConfig("ServerClient");
+        return GetConfig("OpenDataAccess.Data.ServerClient");
     }
     public static String GetIsLog(){
-        return GetConfig("IsLog");
+        return GetConfig("OpenDataAccess.IsLog");
     }
 
     public static final String DateFormat = "yyyy-MM-dd HH:mm:ss.SSS";

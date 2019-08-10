@@ -29,6 +29,12 @@ export default {
   exportStatic: {
     htmlSuffix: true,
   },
+  proxy: {
+    '/api/': {
+      target: 'http://localhost:8181',
+      changeOrigin: true
+    }
+  },
   alias: {
     UtilsCommon: path.resolve(__dirname, './src/utils-common/Index.js'),
     DvaCommon: path.resolve(__dirname, './src/dva-common/Index.js'),

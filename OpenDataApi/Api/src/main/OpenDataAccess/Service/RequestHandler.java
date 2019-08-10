@@ -80,7 +80,7 @@ public class RequestHandler {
 
     boolean JudgeRight(Request request) throws MalformedURLException {
 
-        if (Common.IsEquals(request.EntityName, "User", true) && Common.IsEquals(request.MethodName, "login", true))
+        if (Common.IsEquals(request.EntityName, "TestUser", true) && Common.IsEquals(request.MethodName, "login", true))
             return true;
 
         String userId = request.GetParameterValue("LoginUserId");

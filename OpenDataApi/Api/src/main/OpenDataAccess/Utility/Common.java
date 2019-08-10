@@ -1,7 +1,5 @@
 package OpenDataAccess.Utility;
 
-import jdk.nashorn.internal.runtime.options.Option;
-
 import java.io.*;
 import java.sql.NClob;
 import java.text.ParseException;
@@ -10,15 +8,13 @@ import java.util.*;
 import java.util.function.Predicate;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.util.stream.Stream;
-
 /**
  * Created by Bianshuai on 2017/1/9.
  */
 public class Common {
 
     public static String InputStream2String(InputStream inputStream) throws IOException {
-        BufferedReader br = new BufferedReader(new InputStreamReader(inputStream,"utf-8"));
+        BufferedReader br = new BufferedReader(new InputStreamReader(inputStream, "utf-8"));
         StringBuffer sb = new StringBuffer();
         String line = "";
         while ((line = br.readLine()) != null) {
@@ -145,10 +141,9 @@ public class Common {
                 return sdf.parse(GetDateString(value.toString()));
             }
         } else if (type.equals(String.class)) {
-            if(value instanceof  NClob) return  Clob2String((NClob)value);
+            if (value instanceof NClob) return Clob2String((NClob) value);
             return value instanceof String ? value : value.toString();
-        }
-        else if (type.equals(NClob.class)) {
+        } else if (type.equals(NClob.class)) {
             return Clob2String((NClob) value);
         }
         return value;
@@ -338,6 +333,7 @@ public class Common {
     }
 
     public static Throwable GetRealException(Throwable ex) {
+        if (ex == null) return new Exception("空值异常！");
         Throwable throwable = ex.getCause();
         if (throwable != null) {
             return GetRealException(throwable);
@@ -372,4 +368,5 @@ public class Common {
 
         return str;
     }
+
 }

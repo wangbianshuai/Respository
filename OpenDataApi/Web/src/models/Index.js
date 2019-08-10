@@ -4,12 +4,12 @@ const config = {
     Name: "ApiService",
     ServiceName: "ApiService",
     ActionList: [
-        get2("GetNow", "System/GetNow", "Now", "Now")
+        post("Login", "User/Login", "Login", "Login")
     ]
 }
 
-function get2(actionName, url, stateName, dataKey) {
-    return { ActionName: actionName, Url: url, Method: "GET", StateName: stateName, DataKey: dataKey }
+function post(actionName, url, stateName, dataKey) {
+    return { ActionName: actionName, Url: url, Method: "POST", StateName: stateName, DataKey: dataKey }
 }
 
 export default DvaIndex(config);

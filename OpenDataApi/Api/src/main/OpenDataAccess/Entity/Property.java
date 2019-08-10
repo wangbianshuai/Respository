@@ -1,7 +1,5 @@
 package OpenDataAccess.Entity;
 
-import java.lang.reflect.Type;
-
 public class Property {
     public String Name = "";
     public Class<?> Type = null;

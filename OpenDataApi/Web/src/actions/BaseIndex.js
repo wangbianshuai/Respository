@@ -54,10 +54,6 @@ export default class Index {
                 if (Common.IsEquals(data.code, 0)) return { IsSuccess: true, Data: data }
                 else return { IsSuccess: false, Message: data.message }
             }
-            if (data.respCode !== undefined) {
-                if (Common.IsEquals(data.respCode, 0)) return { IsSuccess: true, Data: data }
-                else return { IsSuccess: false, Message: data.respMsg }
-            }
         }
         return data;
     }

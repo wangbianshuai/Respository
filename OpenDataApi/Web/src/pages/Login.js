@@ -14,16 +14,13 @@ class Login extends BaseIndex {
         this.InitEventAction();
 
         Common.RemoveCookie("Token");
-        this.SetActionState("EmployeeService", "Login");
-        this.SetActionState("UserService", "GetData");
-        this.SetActionState("EmployeeService", "GetData");
+        this.SetActionState("ApiService", "Login");
     }
 
     LoginSuccess({ data, props, action }) {
-        window.GetEmployeeInfo = data;
         Common.SetStorage("LoginUserInfo", JSON.stringify(data))
         Common.SetStorage("LoginUserId", data.userId)
-        this.ToPage("/PersonCenter/BaseInfo");
+        this.ToPage("/ConfigManage/Application");
     }
 
     render() {
@@ -39,6 +36,7 @@ class Login extends BaseIndex {
 
 function mapStateToProps(state, ownProps) {
     const props = StaticIndex.MapStateToProps(state, ownProps, {
+        Login: state.ApiService.Login
     });
 
     !EnvConfig.IsProd && console.log(props);
