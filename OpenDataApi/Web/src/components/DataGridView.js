@@ -123,14 +123,14 @@ class DataGridView extends BaseIndex {
     }
 
     GetPageInfo(PageRecord) {
-        let PageIndex = this.PageInfo.PageIndex;
+        let PageIndex = this.PageInfo.PageIndex || 1;
         let PageSize = this.PageInfo.PageSize;
         let PageCount = 0;
         if (PageRecord === 0) { PageIndex = 1; PageCount = 0; }
         else if (PageRecord <= PageSize) { PageCount = 1; PageIndex = 1; }
         else {
             if (PageRecord % PageSize === 0) PageCount = PageRecord / PageSize;
-            else PageCount = PageRecord / PageSize + 1;
+            else PageCount = Common.GetIntValue(PageRecord / PageSize) + 1;
         }
 
         if (PageIndex > PageCount) PageIndex = PageCount;

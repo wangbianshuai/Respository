@@ -35,15 +35,27 @@ export default class Index {
 
                 if (url.indexOf("http") !== 0 && getServiceUrl) url = getServiceUrl() + url;
 
-                if (s.Method === "GET") return Request.Get(url, s.DataKey, serviceName, headers, callback);
-                else if (s.Method === "PUT") return Request.Put(url, data, s.DataKey, serviceName, headers, callback);
-                else if (s.IsFormData) return Request.PostFormData(url, data.FormData, s.DataKey, serviceName, headers, callback);
-                else return Request.Post(url, data, s.DataKey, serviceName, headers, callback);
+                //多个请求合并成一个
+                if (payload.RequestList) {
+                    return Promise.all(payload.RequestList.map(m => {
+                        var url2 = m.Url;
+                        if (url2.indexOf("http") !== 0 && getServiceUrl) url2 = getServiceUrl() + url2;
+                        return this.RequestData(m.Action || s, url2, m.Data, m.DataKey || s.DataKey, m.ServiceName || serviceName, m.Header || headers);
+                    }));
+                }
+                else return this.RequestData(s, url, data, s.DataKey, serviceName, headers, callback);
             }
             catch (error) {
                 const res = { IsSuccess: false, Message: error.message || error };
                 return Promise.resolve(res);
             }
         }
+    }
+
+    RequestData(s, url, data, dataKey, serviceName, headers, callback) {
+        if (s.Method === "GET") return Request.Get(url, dataKey, serviceName, headers, callback);
+        else if (s.Method === "PUT") return Request.Put(url, data, dataKey, serviceName, headers, callback);
+        else if (s.IsFormData) return Request.PostFormData(url, data.FormData, dataKey, serviceName, headers, callback);
+        else return Request.Post(url, data, dataKey, serviceName, headers, callback);
     }
 }

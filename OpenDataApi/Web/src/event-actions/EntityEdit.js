@@ -170,6 +170,8 @@ export default class EntityEdit extends BaseIndex {
 
             if (SuccessCallback) SuccessCallback({ data, props, action });
             else EventActions.AlertSuccess(EditView.SuccessTip || "保存成功", onOk);
+
+            if (Property.SetTextType && Property.Text2) Property.SetTextType(Property.Text2, "default");
         }
 
         return false;

@@ -86,8 +86,12 @@ export default class DataGrid extends Component {
 
     OnRowClick(record, index, e) {
         if (this.props.IsRowSelection && e.target && e.target.nodeName === "TD" && !record.IsCheckedDisabled) {
-            const selectedRowKeys = this.state.SelectedRowKeys.filter(f => f !== record.key)
-            if (selectedRowKeys.length === this.state.SelectedRowKeys.length) selectedRowKeys.push(record.key)
+            let selectedRowKeys = [];
+            if (this.props.IsSingleSelection) selectedRowKeys.push(record.key)
+            else {
+                selectedRowKeys = this.state.SelectedRowKeys.filter(f => f !== record.key)
+                if (selectedRowKeys.length === this.state.SelectedRowKeys.length) selectedRowKeys.push(record.key);
+            }
             this.SelectChanged(selectedRowKeys)
             return
         }

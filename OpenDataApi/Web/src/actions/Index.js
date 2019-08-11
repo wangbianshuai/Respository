@@ -9,7 +9,7 @@ function InitAction(name) {
 
     name = name.replace("_", "/");
     const Action = require(`./Actions/${name}`).default;
-    _ActionList.push(new Action({ GetActionTypes, InvokeAction: Invoke, DispatchAction: Dispatch, DvaActions: _DvaActions }));
+    _ActionList.push(new Action({ GetActionTypes, InvokeAction: Invoke, DispatchAction: DispatchAction, DvaActions: _DvaActions }));
 }
 
 function Invoke(id, actionType, data) {
@@ -25,12 +25,16 @@ function GetActionByName(name) {
     return Common.ArrayFirst(_ActionList, (f) => Common.IsEquals(f.Name, name, true));
 }
 
-function Dispatch(actionType, data) {
+function DispatchAction(id, actionType, data) {
     const action = GetAction(actionType);
     if (action) {
-        const id = data.Action && data.Action.Id ? data.Action.Id : "";
+        id = data.Action && data.Action.Id ? data.Action.Id : id;
         action.Dispatch(id, actionType, data);
     }
+}
+
+function Dispatch(actionType, data) {
+    DispatchAction("", actionType, data);
 }
 
 function Receive(name, id, fn) {
@@ -38,7 +42,7 @@ function Receive(name, id, fn) {
     if (action) action.Receive(id, fn);
 }
 
-function RemoveReceive(name, id){
+function RemoveReceive(name, id) {
     const action = GetActionByName(name)
     if (action) action.RemoveReceive(id);
 }

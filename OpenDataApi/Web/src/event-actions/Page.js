@@ -15,17 +15,6 @@ export default class Page extends BaseIndex {
         EventActions.OpenPage(url);
     }
 
-    ToAttachPage(props, action) {
-        const { OrderCode, Token } = props.EventActions.PageData;
-        const { DirType } = action;
-        const params = ["productCode=html"];
-        params.push(`token=${Token}`);
-        params.push(`applyCode=${OrderCode}`);
-        if (DirType) params.push(`type=${DirType}`);
-
-        const url = "/digital/digital.html?" + params.join("&");
-        window.open(url)
-    }
 
     SetPropertiesVisible(props, action) {
         if (!action.Parameters) this.InitSetPropertiesVisible(props, action);

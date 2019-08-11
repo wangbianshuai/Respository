@@ -52,6 +52,12 @@ export default class BaseIndex extends Component {
         this.Property.GetDataSource = this.GetDataSource.bind(this);
     }
 
+    InitRegExp() {
+        const { Property } = this;
+        if (typeof Property.KeyPressRegExp === "string") Property.KeyPressRegExp = new RegExp(Property.KeyPressRegExp)
+        if (typeof Property.RegExp === "string") Property.RegExp = new RegExp(Property.RegExp, "g")
+    }
+
     GetInitValue() {
         if (!Common.IsNullOrEmpty(this.Property.Value)) return this.Property.Value;
         if (!Common.IsNullOrEmpty(this.Property.DefaultValue)) return this.Property.DefaultValue;
@@ -83,7 +89,7 @@ export default class BaseIndex extends Component {
 
     GetValue() {
         if (this.state.Value === undefined) return null
-        if (typeof (this.state.Value) == "string") return Common.Trim(this.state.Value);
+        if (typeof this.state.Value === "string") return Common.Trim(this.state.Value);
         return this.state.Value;
     }
 

@@ -119,8 +119,10 @@ class Select2 extends BaseIndex {
         const width = Property.Width || "100%"
 
         let valueList = Common.IsNullOrEmpty(this.state.Value) ? [] : this.state.Value;
-        if (!Common.IsArray(valueList)) valueList = valueList.split(",")
- 
+        if (!Common.IsArray(valueList)) valueList = valueList.split(",");
+
+        if (this.state.Options.length === 0) valueList = [];
+
         return (
             <Select disabled={this.state.Disabled}
                 style={{ width: width }}

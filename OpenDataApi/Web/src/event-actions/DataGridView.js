@@ -17,7 +17,8 @@ export default class DataGridView extends BaseIndex {
         const SearchButton = Property.Type === "DataGridView" ? EventActions.GetControl(action.SearchButton) : Property;
         const SearchView = EventActions.GetComponent(action.SearchView);
         const AlertMessage = EventActions.GetControl(action.AlertMessage);
-        action.Parameters = { DataGridView, SearchButton, SearchView, AlertMessage }
+        const ExpandSearchQueryLoad = EventActions.GetFunction(action.ExpandSearchQueryLoad)
+        action.Parameters = { DataGridView, SearchButton, SearchView, AlertMessage, ExpandSearchQueryLoad }
     }
 
     SearchData(props, parameters, pageIndex, pageSize) {
@@ -41,7 +42,7 @@ export default class DataGridView extends BaseIndex {
         const { EventActions, Property } = props;
         const action = EventActions.GetAction(Property.EventActionName);
         if (!action.Parameters) this.InitSearchQueryAction(props, action);
-        const { SearchButton, AlertMessage } = action.Parameters;
+        const { SearchButton, AlertMessage, ExpandSearchQueryLoad } = action.Parameters;
 
         //设置提示信息
         let msg = ""
@@ -54,6 +55,8 @@ export default class DataGridView extends BaseIndex {
 
         //设置搜索按钮
         SearchButton && SearchButton.SetDisabled(false);
+
+        if (ExpandSearchQueryLoad) ExpandSearchQueryLoad({ data, props })
     }
 
     GetConditionList(parameters) {

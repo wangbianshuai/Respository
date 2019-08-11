@@ -52,6 +52,18 @@ export default class DatePicker2 extends BaseIndex {
 
         data[StartDateName] = Value[0];
         data[EndDateName] = Value[1];
+
+        if (data[StartDateName] && data[StartDateName].length === 10) data[StartDateName] += " 00:00:00";
+        if (data[EndDateName] && data[EndDateName].length === 10) data[EndDateName] += " 00:00:00";
+    }
+
+    GetValue() {
+        if (this.state.Value === undefined) return null
+        var value = ""
+        if (typeof this.state.Value === "string") value = Common.Trim(this.state.Value);
+        else value = Common.GetDateString(this.state.Value);
+        if (value && value.length === 10) value += " 00:00:00";
+        return value;
     }
 
     ValueChange(value) {
@@ -85,7 +97,6 @@ export default class DatePicker2 extends BaseIndex {
 
         return value;
     }
-
 
     GetDateText(value) {
         value = value.filter(f => typeof f === "string")

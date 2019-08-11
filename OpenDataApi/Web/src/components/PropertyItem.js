@@ -3,7 +3,7 @@ import Controls from "Controls";
 import Components from "Components"
 import PageControls from "PageControls";
 import { Common } from "UtilsCommon";
-import { Form } from "antd";
+import { Form, Col } from "antd";
 
 export default class PropertyItem extends Component {
     constructor(props) {
@@ -94,13 +94,23 @@ export default class PropertyItem extends Component {
     }
 
     render() {
+        const { Property } = this.props;
+        if (!Property.IsColVisible) return this.RenderItem();
+
+        var style = Property.ColStyle || {};
+        if (!this.state.IsVisible) { style = { ...style }; style.display = "none"; }
+
+        return <Col key={Property.ColId} span={Property.ColSpan} style={style}>{this.RenderItem()}</Col>
+    }
+
+    RenderItem() {
         const { Property, View } = this.props;
         const labelCol = Property.LabelCol || 6;
         const wrapperCol = Property.WrapperCol || 18;
 
-        if (Property.IsFormItem) {
-            const style = Property.Style || {};
-            if (!this.state.IsVisible) style.display = "none";
+        if (Property.IsFormItem && !Property.IsFormView) {
+            var style = Property.Style || {};
+            if (!this.state.IsVisible && !Property.IsColVisible) { style = { ...style }; style.display = "none"; }
 
             if (Common.IsNullOrEmpty(Property.Label)) {
                 return (<Form.Item style={style} className={Property.FormItemClassName}>{this.GetReactComponent(Property, View)}</Form.Item>)

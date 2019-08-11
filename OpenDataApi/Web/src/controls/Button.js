@@ -10,9 +10,12 @@ export default class Button2 extends BaseIndex {
             Disabled: this.Property.Disabled === undefined ? false : this.Property.Disabled,
             IsVisible: this.Property.IsVisible !== false && this.Property.IsDataRight !== false,
             Loading: false,
+            Text: this.Property.Text,
+            BututonType: this.Property.ButtonType
         };
 
         this.Property.SetLoading = (loading) => this.setState({ Loading: loading });
+        this.Property.SetTextType = (text, type) => this.setState({ Text: text, BututonType: type || this.Property.ButtonType });
     }
 
     ClickAction() {
@@ -22,9 +25,8 @@ export default class Button2 extends BaseIndex {
     render() {
         if (!this.state.IsVisible) return null;
 
-        const { Loading } = this.state;
+        const { Loading, Text, BututonType } = this.state;
         const { Property } = this.props
-        const text = Property.Text
 
         return (<Button onClick={this.ClickAction.bind(this)}
             icon={Property.Icon}
@@ -34,6 +36,6 @@ export default class Button2 extends BaseIndex {
             loading={Loading}
             size={Property.Size}
             prefix={this.RenderPrefix()}
-            type={Property.ButtonType}>{text}</Button>)
+            type={BututonType}>{Text}</Button>)
     }
 }

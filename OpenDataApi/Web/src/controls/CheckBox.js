@@ -20,7 +20,10 @@ export default class CheckBox2 extends BaseIndex {
     }
 
     CheckBoxChange(e) {
-        this.setState({ Value: e.target.checked ? this.CheckedValue : this.UnCheckedValue });
+        const value = e.target.checked ? this.CheckedValue : this.UnCheckedValue
+        this.setState({ Value: value });
+
+        if (this.Property.ValueChange) this.Property.ValueChange(value)
     }
 
     render() {

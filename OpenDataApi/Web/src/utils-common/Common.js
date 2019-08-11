@@ -302,6 +302,7 @@ export function ToFixed(value, num) {
 }
 
 export function GetDateString(myDate, isDate) {
+    if (IsNullOrEmpty(myDate)) return "";
     if (typeof (myDate) === "number") myDate = new Date(myDate);
 
     var year = myDate.getFullYear().toString();

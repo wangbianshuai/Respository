@@ -21,7 +21,7 @@ export default class Upload2 extends BaseIndex {
     }
 
     OnChange(data) {
-        const { Property } = this.props;
+        const { Property, View } = this.props;
         let fileList = data.fileList;
 
         if (data.file.status === "error") {
@@ -30,7 +30,7 @@ export default class Upload2 extends BaseIndex {
         else if (data.file.status === "done") {
             const response = data.file.response;
             if (response) {
-                if (Property.SetResponse) Property.SetResponse(response, Property);
+                if (Property.SetResponse) Property.SetResponse(response, Property, View);
                 else {
                     if (response.IsSuccess) {
                         Property.SetUploadResponse && Property.SetUploadResponse(response)

@@ -25,7 +25,7 @@ export default class DataListView extends BaseIndex {
         const { NullTipMessage } = this.Property;
         if (value.length === 0) return NullTipMessage;
 
-        const list = this.ItemSetDisabledProperties.filter(f => f.IsEdit);
+        const list = this.ItemSetDisabledProperties.filter(f => f.IsEdit && f.IsVisible !== false);
 
         let msg = "", v = null, p = null;
 
@@ -142,7 +142,7 @@ export default class DataListView extends BaseIndex {
         if (p.IsEdit || p.IsDisabled) this.ItemSetDisabledProperties.push(p);
 
         const visibleName = `${p.Name}Visible`
-        if (data[visibleName] === false) p.IsVisible = false;
+        if (data[visibleName] !== undefined) p.IsVisible = data[visibleName];
 
         const { DeletePropertyName, IsFirstDelete } = this.Property;
         if (IsFirstDelete === false && p.Name === DeletePropertyName && index === 0) p.IsVisible = false;

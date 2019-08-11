@@ -15,9 +15,9 @@ export default class BaseIndex {
         return isSuccess;
     }
 
-    Alert(msg, alert, alertMessage) {
+    Alert(msg, alert2, alertMessage) {
         if (alertMessage) alertMessage.SetValue(msg);
-        else if (alert) alert(msg);
+        else if (alert2) alert2(msg);
         else alert(msg);
     }
 
@@ -53,19 +53,20 @@ export default class BaseIndex {
             }
             else if (p.GetValue) {
                 v = p.GetValue();
-                if (!p.IsNullable && p.DataType === "Array" && (Common.IsNullOrEmpty(v) || v.length === 0)) {
+                let isNullable = p.IsJudgeNullable === false || p.IsNullable;
+                if (!isNullable && p.DataType === "Array" && (Common.IsNullOrEmpty(v) || v.length === 0)) {
                     msg = p.NullTipMessage || "请选择" + p.Label + "！"
                     break;
                 }
-                else if (!p.IsNullable && p.Type === "Select" && Common.IsNullOrEmpty(v)) {
+                else if (!isNullable && p.Type === "Select" && Common.IsNullOrEmpty(v)) {
                     msg = p.NullTipMessage || "请选择" + p.Label + "！"
                     break;
                 }
-                else if (!p.IsNullable && Common.IsNullOrEmpty(v)) {
+                else if (!isNullable && Common.IsNullOrEmpty(v)) {
                     msg = p.NullTipMessage || p.Label + "不能为空！"
                     break;
                 }
-                else if (!p.IsNullable && p.JudgeNullable) {
+                else if (!isNullable && p.JudgeNullable) {
                     msg = p.JudgeNullable(v);
                     if (!Common.IsNullOrEmpty(msg)) break;
                 }
@@ -128,13 +129,15 @@ export default class BaseIndex {
     SetPropertiesValue(properties, data, isUpdateReadOnly) {
         data = data || {};
 
+        const isDefault = Common.IsEmptyObject(data);
+
         let name = "", v = null;
         properties.forEach(p => {
             if (p.SetValueByData) p.SetValueByData(data)
             else {
                 name = p.PropertyName || p.Name;
                 v = data[name];
-                if ((v === null || v === undefined) && p.DefaultValue) v = p.DefaultValue;
+                if ((v === null || v === undefined) && p.DefaultValue && (isDefault || p.IsDefault)) v = p.DefaultValue;
                 if (p.SetValue) p.SetValue(v);
                 else p.Value = v;
 

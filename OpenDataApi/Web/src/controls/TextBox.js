@@ -21,6 +21,8 @@ export default class TextBox2 extends BaseIndex {
             this.Property.SetValue2 = (v) => this.setState({ Value2: v });
             this.Property.SetReadOnly = (isReadOnly, isReadOnly2) => this.setState({ IsReadOnly: isReadOnly, IsReadOnly2: isReadOnly === undefined ? isReadOnly : isReadOnly2 });
         }
+
+        this.InitRegExp();
     }
 
     SetAddonAfterOptions() {
@@ -55,10 +57,12 @@ export default class TextBox2 extends BaseIndex {
         const { MinValue, MaxValue, DataType } = this.Property;
         if (DataType !== "int" && DataType !== "float") return value;
 
+        if (Common.IsNullOrEmpty(MinValue) && Common.IsNullOrEmpty(MaxValue)) return value;
+
         const v = Common.GetFloatValue(value);
 
-        if (v < MinValue) value = MinValue;
-        else if (v > MaxValue) value = MaxValue;
+        if (!Common.IsNullOrEmpty(MinValue) && v < MinValue) value = MinValue;
+        else if (!Common.IsNullOrEmpty(MaxValue) && v > MaxValue) value = MaxValue;
 
         return value;
     }
@@ -104,7 +108,8 @@ export default class TextBox2 extends BaseIndex {
     }
 
     OnSearch(value) {
-        this.EventActions.InvokeAction(this.Property.EventActionName, this.props);
+        const props = { ...this.props, SearchValue: value }
+        this.EventActions.InvokeAction(this.Property.EventActionName, props);
     }
 
     OnPressEnter() {
@@ -151,6 +156,11 @@ export default class TextBox2 extends BaseIndex {
         return this.state.Value;
     }
 
+    RenderAddonAfterOpenUrl(text) {
+        if (!this.state.Value) return text;
+        return <a href={this.state.Value} target="_blank" rel="noopener noreferrer">{text}</a>
+    }
+
     render() {
         if (!this.state.IsVisible) return null;
 
@@ -165,10 +175,11 @@ export default class TextBox2 extends BaseIndex {
         if (this.state.IsReadOnly && Property.DataSource) value = this.GetValueText();
 
         if (Property.ControlType === "TextArea") {
+            const maxLength = this.state.IsReadOnly ? undefined : Property.MaxLength || 500;
             return (<TextArea rows={rows}
                 placeholder={Property.PlaceHolder}
                 onChange={this.OnChange.bind(this)}
-                maxLength={Property.MaxLength}
+                maxLength={maxLength}
                 readOnly={this.state.IsReadOnly}
                 disabled={this.state.Disabled}
                 value={value} />)
@@ -179,6 +190,8 @@ export default class TextBox2 extends BaseIndex {
                 onChange={this.OnChange.bind(this)}
                 maxLength={Property.MaxLength}
                 onSearch={this.OnSearch.bind(this)}
+                readOnly={this.state.IsReadOnly}
+                enterButton={Property.IsEnterButton}
                 disabled={this.state.Disabled}
                 value={value} />)
         }
@@ -203,6 +216,7 @@ export default class TextBox2 extends BaseIndex {
 
         let addonAfter = Property.AddonAfter;
         if (Property.AddonAfterDataSource) addonAfter = this.RenderAddonAfter();
+        else if (Property.IsAddonAfterOpenUrl) addonAfter = this.RenderAddonAfterOpenUrl(addonAfter);
 
         return (
             <Input placeholder={Property.PlaceHolder}

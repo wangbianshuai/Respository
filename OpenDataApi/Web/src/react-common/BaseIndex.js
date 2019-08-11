@@ -235,7 +235,7 @@ export default class BaseIndex extends Component {
     }
 
     GetRight(name) {
-
+        
         return true;
     }
 
@@ -279,9 +279,14 @@ export default class BaseIndex extends Component {
     }
 
     Alert(msg, title) {
+        if (window.IsModalInfo) return;
+        window.IsModalInfo = true;
         Modal.info({
             title: title || "提示",
-            content: msg
+            content: msg,
+            onOk: () => {
+                window.IsModalInfo = false;
+            }
         });
     }
 

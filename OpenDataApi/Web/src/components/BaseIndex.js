@@ -121,10 +121,11 @@ export default class BaseIndex extends Component {
     }
 
     RenderColumn(col) {
-        return (<Col key={col.ColId} span={col.ColSpan} style={col.ColStyle}>{this.GetPropertyItem(col)}</Col>);
+        if (col.IsColVisible) return this.GetPropertyItem(col);
+        else return (<Col key={col.ColId} span={col.ColSpan} style={col.ColStyle}>{this.GetPropertyItem(col)}</Col>);
     }
 
     GetPropertyItem(p) {
-        return (<PropertyItem Property={p} EventActions={this.EventActions} View={this.Property} />)
+        return (<PropertyItem Property={p} EventActions={this.EventActions} View={this.Property} key={"pt_" + p.Id} />)
     }
 }
