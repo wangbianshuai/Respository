@@ -75,7 +75,7 @@ public class EnDecrypt {
 
             String transformation = "DES/CBC/PKCS5Padding";
             Cipher cipher = Cipher.getInstance(transformation);
-            cipher.init(Cipher.DECRYPT_MODE, key, new IvParameterSpec(keyBytes));
+            cipher.init(Cipher.DECRYPT_MODE, key, new IvParameterSpec(keySpec.getKey()));
             byte[] result = cipher.doFinal(content);
 
             return result;

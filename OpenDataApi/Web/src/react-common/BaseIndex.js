@@ -204,11 +204,6 @@ export default class BaseIndex extends Component {
         this.AsyncRequest = {};
         this.AsyncRequestFunction = {};
 
-        if (this.MenuKey && this.props.PageData && this.props.PageData.GetUserMenuRight) {
-            this.RightConfig = Common.ArrayFirst(this.props.PageData.GetUserMenuRight, (f) => f.Key === this.MenuKey);
-            if (this.RightConfig) this.RightConfig = Common.Clone(this.RightConfig);
-        }
-
         this.EventActions = {
             Page: Page.Current, GetActionTypes: this.props.GetActionTypes, GetRight: this.GetRight.bind(this),
             SetModalDialog: Page.Current.Invoke("RootPage", "SetModalDialog"), GetProperty: this.GetProperty.bind(this),
@@ -240,15 +235,6 @@ export default class BaseIndex extends Component {
     }
 
     GetRight(name) {
-        if (!this.MenuKey) return true;
-        if (this.MenuKey && !this.RightConfig) return false;
-
-        const { PropertyNames, RightPropertyNames } = this.RightConfig;
-
-        if (PropertyNames && PropertyNames.indexOf(name) >= 0) {
-            if (!RightPropertyNames) return false;
-            else return RightPropertyNames.indexOf(name) >= 0
-        }
 
         return true;
     }

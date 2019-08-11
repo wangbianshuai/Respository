@@ -1,5 +1,4 @@
 import BaseIndex from "../../BaseIndex";
-import Common2 from "../Common2";
 
 export default class ApplicationEdit extends BaseIndex {
     constructor(props) {

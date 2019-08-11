@@ -29,7 +29,7 @@ public class ApiController {
         return InvokeAction(entityName, methodName, token);
     }
 
-    @PostMapping("/{entityName/")
+    @PostMapping("/{entityName}")
     public String Post(@PathVariable String entityName, @RequestHeader(name = "token", required = false) String token) {
         return InvokeAction(entityName, "", token);
     }
@@ -39,7 +39,7 @@ public class ApiController {
         return InvokeAction(entityName, methodName, token);
     }
 
-    @PutMapping("/{entityName/")
+    @PutMapping("/{entityName}")
     public String Put(@PathVariable String entityName, @RequestHeader(name = "token", required = false) String token) {
         return InvokeAction(entityName, "", token);
     }
@@ -49,7 +49,7 @@ public class ApiController {
         return InvokeAction(entityName, methodName, token);
     }
 
-    @DeleteMapping("/{entityName/")
+    @DeleteMapping("/{entityName}")
     public String Delete(@PathVariable String entityName, @RequestHeader(name = "token", required = false) String token) {
         return InvokeAction(entityName, "", token);
     }

@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Common, EnvConfig, AjaxRequest, HttpResponse } from "UtilsCommon";
+import { Common } from "UtilsCommon";
 import { Layout, Menu, Icon, Dropdown, Avatar, Breadcrumb, Spin, Modal } from 'antd';
 import styles from "../../styles/LeftRightLayout.css"
 import MenuConfig from "./Menu";
@@ -15,13 +15,13 @@ export default class LeftRightLayout extends Component {
             collapsed: false,
             MenuList: [],
             OpenKeys: null,
-            Loading: true
+            Loading: false
         };
 
         this.NavSelectedKeys = [];
         this.OpenKeys = [];
         this.MenuList = [];
-        this.DefaultPageName = "/PersonCenter/BaseInfo";
+        this.DefaultPageName = "/ConfigManage/Application";
         this.Token = Common.GetCookie("Token");
         this.JudgeLogin();
         this.PageData = {};
@@ -39,22 +39,6 @@ export default class LeftRightLayout extends Component {
         this.Menus2 = {};
         this.RightConfig2 = {};
         for (var key in this.Menus) this.Menus2[this.Menus[key].MenuName] = key;
-
-        Promise.all([this.GetEmployeeInfo(), this.GetUserMenuRight()]).then(res => {
-            this.EmployeeInfo = res[0];
-            const res1 = res[1];
-            if (res1 && res1.IsSuccess === false) {
-                if (res1.IsReLogin) router.push("/login");
-                else this.Alert(res1.Message);
-                return;
-            }
-
-            !EnvConfig.IsProd && console.log(res1);
-            this.UserMenuRight = this.SetMenuRightMap(res1);
-            this.MapMenu(this.UserMenuRight);
-            !EnvConfig.IsProd && console.log(this.UserMenuRight)
-            this.setState({ Loading: false });
-        });
     }
 
     Alert(msg, title) {
@@ -62,48 +46,6 @@ export default class LeftRightLayout extends Component {
             title: title || "提示",
             content: msg
         });
-    }
-
-    SetMenuRightMap(res) {
-        const list = [];
-        if (res.chlidPermission) res.chlidPermission.forEach(d => this.GetMenuRightMap(d, list))
-        return list;
-    }
-
-    GetMenuRightMap(node, list) {
-        const { aliasName, ownState, chlidPermission } = node;
-        var isRight = ownState === "01";
-        if (isRight && aliasName === "权限配置" && chlidPermission && chlidPermission[0].aliasName === "配置权限") {
-            this.RightConfig2.ToConfigPage = true;
-            return;
-        }
-        const menu = { RightPropertyNames: [] };
-        if (isRight && this.Menus2[aliasName]) {
-            menu.Key = this.Menus2[aliasName];
-            if (node.chlidPermission && node.chlidPermission.length > 0) {
-                if (!node.chlidPermission[0].chlidPermission) {
-                    menu.RightPropertyNames = [];
-                    node.chlidPermission.forEach(d => {
-                        isRight = d.ownState === "01";
-                        if (isRight && d.aliasName === "配置角色") this.RightConfig2.ToRoleConfig = true;
-                        else isRight && menu.RightPropertyNames.push(d.aliasName);
-
-                        if (isRight && aliasName === "进件详情" && d.aliasName === "保存") this.RightConfig2.EditOrder = true;
-
-                        if (isRight && aliasName === "进件详情" && d.aliasName === "提交进件") this.RightConfig2.LookOrderDetail = true;
-                    });
-                }
-                else {
-                    node.chlidPermission.forEach(d => {
-                        this.GetMenuRightMap(d, list);
-                    })
-                }
-            }
-
-            if (aliasName === "反欺诈审核") this.RightConfig2.LookApproveInfo = true;
-
-            list.push(menu);
-        }
     }
 
     shouldComponentUpdate(nextProps, nextState) {
@@ -168,13 +110,6 @@ export default class LeftRightLayout extends Component {
 
         this.QueryString = Common.GetQueryString();
         this.PageData = Common.GetPageData();
-
-        if (!this.QueryString.OrderCode) { this.OrderStatus = ""; this.TaskId = ""; this.IsNotOwnerTask = false };
-
-        if (window.location.href !== this.PageUrl) {
-            this.PageUrl = window.location.href;
-            if (this.QueryString.OrderCode) this.GetOrderStatus();
-        }
 
         this.GetNavMenuList();
 
@@ -256,6 +191,14 @@ export default class LeftRightLayout extends Component {
         return keys;
     }
 
+    GetNavMenuList() {
+        if (this.IsSetRight) return;
+
+        for (var key in this.Menus) this.Menus[key].IsRight = true;
+
+        this.IsSetRight = true;
+    }
+
     GetParentMenuRight(menuName) {
         let menu = null;
         for (let j = 0; j < this.MenuList.length; j++) {
@@ -269,15 +212,6 @@ export default class LeftRightLayout extends Component {
         }
 
         return true;
-    }
-
-    GetNavMenuList() {
-        if (this.IsSetRight) return;
-        const { UserMenuRight } = this;
-
-        UserMenuRight.forEach(m => { if (this.Menus[m.Key]) this.Menus[m.Key].IsRight = true; });
-
-        this.IsSetRight = true;
     }
 
     AddBreadcrumb(name, pageName, queryString, isGetMenuName) {
@@ -305,9 +239,7 @@ export default class LeftRightLayout extends Component {
 
     SelectMenuClick(item) {
         if (item.key === "PersonCenter") router.push("/PersonCenter/BaseInfo");
-        else if (item.key === "Logout") {
-            this.Logout().then(res => router.push("/login"));
-        }
+        else if (item.key === "Logout") router.push("/login")
     }
 
     RenderUserRightMenuList() {
@@ -324,23 +256,10 @@ export default class LeftRightLayout extends Component {
     }
 
     JudgeVisible(m) {
-        if (m.Key === "OrderWorkManage" || m.Key === "ApprovalManage") {
-            const { OrderCode } = this.QueryString
-            if (Common.IsNullOrEmpty(OrderCode)) return false
-
-            if (this.OrderStatus === "01" && m.Key === "ApprovalManage") return false;
-        }
         return true;
     }
 
     IsMenuVisible(m) {
-        if ((this.QueryString.LookCode || this.QueryString.SubmitId) && m.MenuName === "补件") return false;
-
-        if (!this.OrderStatus) return true;
-        const menuNames = RightConfig.OrderStatusNoMenus[this.OrderStatus];
-        if (menuNames && menuNames.length > 0) {
-            return menuNames.indexOf(m.MenuName) < 0;
-        }
         return true;
     }
 
@@ -391,83 +310,23 @@ export default class LeftRightLayout extends Component {
     }
 
     Logout() {
-        return this.PostData("auth/logout", {}, "EmployeeApiService");
+
     }
 
-    GetEmployeeInfo() {
-        const loginUserInfo = Common.GetStorage("LoginUserInfo");
-        if (loginUserInfo) return Promise.resolve(JSON.parse(loginUserInfo));
-
-        return this.PostData("services/uaa/api/account", {}, "EmployeeApiService", "data");
-    }
-
-    GetUserMenuRight() {
-        return this.PostData("useraccess/permission/queryPermissionTreeByUser", {}, "ApiService", "data");
-    }
-
-    GetOrderStatus() {
-        var url = "workOrder/workOrderQuery/queryWorkOrderState";
-
-        this.SyncPostData(url, { loanApplyId: this.QueryString.OrderCode }, "ApiService", (res) => {
-            if (res.code === 0 && res.data.workOrderState) {
-                this.OrderStatus = res.data.workOrderState;
-                if (res.data.taskList && res.data.taskList.length > 0) {
-                    const task = Common.ArrayFirst(res.data.taskList, f => Common.IsEquals(f.taskAssigneeId, this.UserId));
-                    if (task !== null) this.TaskId = task.taskId;
-                    else this.IsNotOwnerTask = true; //非自己任务
-                }
-            }
-            else {
-                const msg = res.Message || res.message || "请求异常";
-                alert("获取工单状态异常：" + msg + ",请刷新再试！");
-            };
-        })
-    }
-
-    SyncPostData(url, data, serviceName, callback) {
-        const headers = { clientId: "XXD_FRONT_END", clientTime: new Date().getTime(), token: this.Token }
-        url = EnvConfig.GetServiceUrl(serviceName)() + url;
-        url = Common.AddUrlRandom(url)
-        AjaxRequest.PostRequest(url, headers, data, callback, false)
-    }
-
-    PostData(url, data, serviceName, resKey) {
-        const headers = { clientId: "XXD_FRONT_END", clientTime: new Date().getTime(), token: this.Token }
-        url = EnvConfig.GetServiceUrl(serviceName)() + url;
-        url = Common.AddUrlRandom(url)
-        return AjaxRequest.PromisePost(url, headers, data).then(d => HttpResponse.GetResponse(d, resKey), res => HttpResponse.GetErrorResponse(res));;
-    }
-
-    ToUserBasePage() {
-        window.setTimeout(() => router.push("/PersonCenter/BaseInfo"), 100);
-        return null;
-    }
 
     render() {
         if (!this.Token) return null;
 
         if (this.state.Loading) return <div className="SpinDiv"><Spin tip="加载中……" /></div>
 
-        const EmployeeInfo = this.GetPropsValue("EmployeeInfo", {});
-
-        const UserMenuRight = this.GetPropsValue("UserMenuRight", null);
-
-        if (!EmployeeInfo.realname || !UserMenuRight) return this.ToUserBasePage();
-
         const { Header, Sider, Content } = Layout;
 
         const selectedKeys = this.GetCurrentMenuSelectedKeys();
 
-        if (!this.IsRight) return this.ToUserBasePage();
-
         const pageName = selectedKeys.length > 0 ? selectedKeys[0] : "";
 
-        const loginName = EmployeeInfo.realname;
+        const loginName = "admin";
 
-        this.PageData.GetEmployeeInfo = EmployeeInfo;
-        this.PageData.GetUserMenuRight = UserMenuRight;
-        this.PageData.OrderStatus = this.IsNotOwnerTask ? "" : this.OrderStatus;
-        this.PageData.TaskId = this.TaskId;
         this.props.location.PageData = this.PageData;
 
         return (
@@ -475,7 +334,7 @@ export default class LeftRightLayout extends Component {
                 <Header style={{ background: '#fff', padding: 0, margin: 0 }}>
                     <div className={styles.logo} >
                         <img src={this.GetImageUrl("logo-3_01.png")} width={30} alt="" />
-                        <span>风控审批系统</span>
+                        <span>Open Data Web</span>
                     </div>
                     {loginName ? (
                         <Dropdown overlay={this.RenderUserRightMenuList()} >

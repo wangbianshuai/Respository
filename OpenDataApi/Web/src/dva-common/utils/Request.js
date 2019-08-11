@@ -78,20 +78,18 @@ function SetServiceHeader(data, serviceName) {
 }
 
 var _ClientConfig = {
-    UserCenterApiService: "XXD_FRONT_END",
-    ActivityCenterApiService: "XXD_ACTIVITY_H5_PAGE"
 };
 
 function SetApiServiceHeader(data, serviceName) {
     data = data || { headers: {}, method: "GET" };
 
-    let clientId = "XXD_FRONT_END";
+    let clientId = "OpenDataApi";
 
     if (_ClientConfig[serviceName]) clientId = _ClientConfig[serviceName];
 
     data.headers.clientId = clientId;
     data.headers.clientTime = new Date().getTime();
-    data.headers.s = Common.CreateGuid().replace(/-/g, "").toLowerCase();
+    data.headers.requestId = Common.CreateGuid().replace(/-/g, "").toLowerCase();
 
     return data;
 }

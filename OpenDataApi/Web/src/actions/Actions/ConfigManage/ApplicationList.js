@@ -17,6 +17,7 @@ export default class ApplicationList extends BaseIndex {
         const payload = {
             Action: this.GetAction(id, actionType)
         };
+        payload.Keyword= Keyword;
 
         this.DvaActions.Dispatch("ApplicationService", "SearchQuery", payload);
     }
