@@ -209,11 +209,6 @@ export default class BaseIndex extends Component {
             if (this.RightConfig) this.RightConfig = Common.Clone(this.RightConfig);
         }
 
-        if (this.props.PageData) {
-            this.OrderStatus = this.props.PageData.OrderStatus;
-            this.PageData.TaskId = this.props.PageData.TaskId;
-        }
-
         this.EventActions = {
             Page: Page.Current, GetActionTypes: this.props.GetActionTypes, GetRight: this.GetRight.bind(this),
             SetModalDialog: Page.Current.Invoke("RootPage", "SetModalDialog"), GetProperty: this.GetProperty.bind(this),
