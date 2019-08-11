@@ -19,6 +19,7 @@ public class ServiceRequest {
     static {
         try {
             EntityType.SetEntityType(OpenDataApi.models.User.class);
+            EntityType.SetEntityType(OpenDataApi.models.Application.class);
 
             ComponentType.SetComponentType(OpenDataApi.domain.User.class);
 

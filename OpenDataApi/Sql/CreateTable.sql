@@ -52,7 +52,7 @@ create table t_d_User2
 
 drop table t_d_Application2;
 
-create table t_d_Applicaton2
+create table t_d_Application2
 (
 Application_Id varchar2(36) not null primary key,
 Name nvarchar2(50) not null,

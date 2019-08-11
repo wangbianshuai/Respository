@@ -79,7 +79,7 @@ public class EntityRequest extends EntityAccess implements IEntityRequest, IEnti
         if (blSucceed) {
             dict.put("Succeed", "操作成功！");
         } else {
-            dict.put("Message", "操作失败！");
+            dict.put("Message", "            操作失败！");
         }
         return dict;
     }

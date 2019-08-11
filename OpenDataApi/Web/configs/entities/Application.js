@@ -1,12 +1,12 @@
 module.exports= {
     Name: "Application",
-    PrimaryKey: "Applcation_Id",
+    PrimaryKey: "Application_Id",
     Properties: GetProperties()
 }
 
 function GetProperties() {
     return [
-        GetProperty("Applcation_Id", "Applcation_Id"),
+        GetProperty("Application_Id", "Application_Id"),
         GetProperty("Name", "应用名"),
         GetProperty("Connection_String", "链接字符串"),
         GetProperty("Db_User", "用户名"),

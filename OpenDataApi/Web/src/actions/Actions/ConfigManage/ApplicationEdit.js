@@ -5,8 +5,8 @@ export default class ApplicationEdit extends BaseIndex {
         super(props);
 
         this.Name = "ConfigManage_ApplicationEdit";
-        this.MinActionType = 3500;
-        this.MaxActionType = 3599;
+        this.MinActionType = 200;
+        this.MaxActionType = 299;
 
         this.Init();
     }
@@ -22,6 +22,6 @@ export default class ApplicationEdit extends BaseIndex {
 
         if (primaryKey) data.EntityData.Application_Id = primaryKey;
 
-        this.DvaActions.Dispatch("ApplicationService", serviceName, { data: data.EntityData, Action: this.GetAction(id, actionType) });
+        this.DvaActions.Dispatch("ApplicationService", serviceName, { Application: data.EntityData, Action: this.GetAction(id, actionType) });
     }
 }
