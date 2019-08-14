@@ -135,7 +135,7 @@ public class JsonParse {
         } else if (obj instanceof Boolean) {
             value = (boolean) obj ? "true" : "false";
         } else if (obj instanceof Date) {
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             value = String.format("\"%s\"", sdf.format((Date) obj));
         } else if (obj instanceof String) {
             value = String.format("\"%s\"", Encode(obj.toString()));

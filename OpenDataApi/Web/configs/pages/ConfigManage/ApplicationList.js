@@ -66,7 +66,7 @@ function GetDataGridView() {
         Title: "应用信息",
         IsRowSelection: true,
         IsSingleSelection: true,
-        Properties: AssignProporties(Application, ["Name", "Connection_String", "Db_User", "Db_Password", "Remark", "CreateDate"])
+        Properties: AssignProporties(Application, ["Name", "Connection_String", "Db_User", "Db_Password", "Remark", { Name: "Create_Date", OrderByType: "desc" }])
     }
 }
 
