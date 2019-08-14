@@ -44,7 +44,7 @@ function GetButtonProperties() {
 function GetProperties() {
     return [
         GetTextBox2("Name", "应用名", 1, 1, "", "请输入应用名", 50, false),
-        GetTextBox2("Connction_String", "链接字符串", 2, 1, "", "请输入链接字符串", 1000, true),
+        GetTextBox2("Connection_String", "链接字符串", 2, 1, "", "请输入链接字符串", 1000, true),
         GetTextBox2("Db_User", "用户名", 3, 1, "", "请输入链接数据库用户名", 50, true),
         GetTextBox2("Db_Password", "密码", 4, 1, "", "请输入链接数据库密码", 50, true),
         GetTextArea("Remark", "备注", 5, 1),

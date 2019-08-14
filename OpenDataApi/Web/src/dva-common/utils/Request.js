@@ -13,6 +13,10 @@ export function Put(url, data, resKey, serviceName, headers, callback) {
     return FetchByMethod(url, data, resKey, serviceName, headers, "PUT", callback);
 }
 
+export function Delete(url, data, resKey, serviceName, headers, callback) {
+    return FetchByMethod(url, data, resKey, serviceName, headers, "DELETE", callback);
+}
+
 export function PostFormData(url, data, resKey, serviceName, headers, callback) {
     return FetchRequest(url, {
         method: "POST",

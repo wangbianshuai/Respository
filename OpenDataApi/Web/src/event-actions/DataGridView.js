@@ -42,15 +42,18 @@ export default class DataGridView extends BaseIndex {
     }
 
     ReceiveSearchQuery(data, props) {
-        const { EventActions, Property } = props;
+        const { EventActions, Property, IsData } = props;
         const action = EventActions.GetAction(Property.EventActionName);
         if (!action.Parameters) this.InitSearchQueryAction(props, action);
         const { SearchButton, AlertMessage, ExpandSearchQueryLoad } = action.Parameters;
 
+        let pageRecord = data.PageRecord || 0;
+        if (data.PageInfo) pageRecord = data.PageInfo.PageRecord;
+
         //设置提示信息
         let msg = ""
         if (data.IsSuccess === false) msg = data.Message;
-        else if (action.IsSearch || !action.IsQuery) msg = `符合当前查询条件的结果总计${data.PageRecord}条！`;
+        else if ((action.IsSearch || !action.IsQuery) && !IsData) msg = `符合当前查询条件的结果总计${pageRecord}条！`;
 
         action.IsQuery = true;
 
@@ -69,32 +72,36 @@ export default class DataGridView extends BaseIndex {
         const conditionList = [];
         SearchView.Properties.forEach(p => {
             const name = p.PropertyName || p.Name;
-            if (p.IsCondition && p.GetValue) conditionList.push({ Name: name, Label: p.Label, OperateLogic: p.OperateLogic, DataType: p.DataType, Value: p.GetValue() });
+            if (p.IsCondition && p.GetValue) conditionList.push({ Name: name, Label: p.Label, OperateLogic: p.OperateLogic || "=", DataType: p.DataType || "string", Value: p.GetValue() });
         });
 
         return conditionList;
     }
 
     GetQueryInfo(dataGridView) {
-        var property = null, isGroupBy = false;
-        const queryInfo = {}, orderByList = [], groupByFieldList = [], groupByList = [], selectFieldList;
+        const primaryKey = dataGridView.Entity.PropertyPrimaryKey || dataGridView.Entity.PrimaryKey;
+        var property = null, isGroupBy = false, hasPrimaryKey = false, name = "";
+        var queryInfo = {}, orderByList = [], groupByFieldList = [], groupByList = [], selectFieldList = [];
         for (var i = 0; i < dataGridView.Properties.length; i++) {
             property = dataGridView.Properties[i];
+            name = property.PropertyName || property.Name;
+            if (name === primaryKey) hasPrimaryKey = true;
             if (Common.IsNullOrEmpty(property.GroupByExpression)) {
-                selectFieldList.push(property.Name);
+                selectFieldList.push(name);
                 if (!Common.IsNullOrEmpty(property.OrderByType)) {
-                    orderByList.push(property.Name + " " + property.OrderByType);
+                    orderByList.push(name + " " + property.OrderByType);
                 }
-                groupByList.push(property.Name);
+                groupByList.push(name);
             }
             else {
                 isGroupBy = true;
-                groupByFieldList.push(property.GroupByExpression + " as " + property.Name);
+                groupByFieldList.push(property.GroupByExpression + " as " + name);
                 if (!Common.IsNullOrEmpty(property.OrderByType)) {
-                    orderByList.push(property.Name + " " + property.OrderByType);
+                    orderByList.push(name + " " + property.OrderByType);
                 }
             }
         }
+        if (!hasPrimaryKey) selectFieldList.splice(0, 0, primaryKey);
 
         if (!isGroupBy) groupByList = [];
 

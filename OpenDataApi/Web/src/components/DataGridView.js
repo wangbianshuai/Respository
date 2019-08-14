@@ -116,7 +116,8 @@ class DataGridView extends BaseIndex {
         else if (Common.IsArray(data.DataList)) {
             this.DataList = data.DataList;
             this.GroupByInfo = data.GroupByInfo;
-            this.PageInfo = this.GetPageInfo(data.PageRecord);
+            if (data.PageRecord !== undefined) this.PageInfo = this.GetPageInfo(data.PageRecord);
+            else if (data.PageInfo) this.PageInfo = data.PageInfo;
         }
 
         this.DataList.forEach((d, i) => d.key = d[this.PrimaryKey]);
@@ -138,15 +139,16 @@ class DataGridView extends BaseIndex {
         return { PageIndex, PageSize, PageCount, PageRecord };
     }
 
-    PageIndexChange(pageIndex, pageSize) {
+    PageIndexChange(pageIndex, pageSize, isData) {
+        isData = isData === undefined ? true : isData;
         this.PageInfo.PageIndex = pageIndex;
         this.PageInfo.PageSize = pageSize;
         if (this.Property.IsLocalPage) this.setState({ RefreshId: Common.CreateGuid() });
-        else this.EventActions.InvokeAction(this.Property.EventActionName, { ...this.props, PageIndex: pageIndex, PageSize: pageSize, IsData: true });
+        else this.EventActions.InvokeAction(this.Property.EventActionName, { ...this.props, PageIndex: pageIndex, PageSize: pageSize, IsData: isData });
     }
 
     Refresh() {
-        this.PageIndexChange(this.PageInfo.PageIndex, this.PageInfo.PageSize);
+        this.PageIndexChange(this.PageInfo.PageIndex, this.PageInfo.PageSize, false);
     }
 
     RenderDataView() {

@@ -41,6 +41,8 @@ function GetKeyword() {
     const p = GetTextBox("Keyword", "", "Search", 2, 3, "请输入关键字")
     p.ColStyle = { paddingRight: 8, paddingLeft: 2 };
     p.IsCondition = true;
+    p.PropertyName = "Name,Db_User,Remark";
+    p.OperateLogic = "like";
     p.EventActionName = "SearchQuery";
     p.PressEnterEventActionName = "SearchQuery";
     p.ColStyle = { width: 240 }
@@ -88,7 +90,7 @@ function GetEventActions() {
         Type: "DataGridView/SelectRowToPage",
         DataGridView: "DataGridView1",
         AlertMessage: "AlertMessage",
-        PageUrl: "/ConfigManage/ApplicationEdit?ApplicationId=#{applicationId}&MenuName=" + escape("修改")
+        PageUrl: "/ConfigManage/ApplicationEdit?Application_Id=#{Application_Id}&MenuName=" + escape("修改")
     },
     {
         Name: "DeleteApplication",

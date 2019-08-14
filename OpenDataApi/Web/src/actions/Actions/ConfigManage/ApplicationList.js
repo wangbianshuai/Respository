@@ -24,14 +24,14 @@ export default class ApplicationList extends BaseIndex {
     SetSearchQuery(id, actionType, data) {
         data = this.SetSearchQueryResponse(data, "Application");
         actionType = DataGriViewActionType.SearchQuery;
-        data = { DataList: data, PageRecord: 0 }
         this.DispatchAction(id, actionType, data);
         return false;
     }
 
     DeleteEntityData(id, actionType, data) {
         const primaryKey = data.SelectRowKeys[0];
-        this.DvaActions.Dispatch("ApplicationService", "Delete", { data: { primaryKey }, Action: this.GetAction(id, actionType) });
+        const pathQuery = `(${primaryKey})`;
+        this.DvaActions.Dispatch("ApplicationService", "Delete", { PathQuery: pathQuery, Action: this.GetAction(id, actionType) });
     }
 
 }

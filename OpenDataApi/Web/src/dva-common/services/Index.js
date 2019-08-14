@@ -30,7 +30,7 @@ export default class Index {
                 if (payload.Callback) callback = payload.Callback;
 
                 let data = {};
-                if (payload.Url !== undefined || payload.Token !== undefined || payload.Callback !== undefined || payload.Action !== undefined) { for (let key in payload) if (key !== "Url" && key !== "Token" && key !== "Callback" && key !== "Action") data[key] = payload[key]; }
+                if (payload.Url !== undefined || payload.Token !== undefined || payload.Callback !== undefined || payload.Action !== undefined) { for (let key in payload) if (key !== "Url" && key !== "PathQuery" && key !== "Token" && key !== "Callback" && key !== "Action") data[key] = payload[key]; }
                 else data = payload;
 
                 if (url.indexOf("http") !== 0 && getServiceUrl) url = getServiceUrl() + url;
@@ -55,6 +55,7 @@ export default class Index {
     RequestData(s, url, data, dataKey, serviceName, headers, callback) {
         if (s.Method === "GET") return Request.Get(url, dataKey, serviceName, headers, callback);
         else if (s.Method === "PUT") return Request.Put(url, data, dataKey, serviceName, headers, callback);
+        else if (s.Method === "DELETE") return Request.Delete(url, data, dataKey, serviceName, headers, callback);
         else if (s.IsFormData) return Request.PostFormData(url, data.FormData, dataKey, serviceName, headers, callback);
         else return Request.Post(url, data, dataKey, serviceName, headers, callback);
     }

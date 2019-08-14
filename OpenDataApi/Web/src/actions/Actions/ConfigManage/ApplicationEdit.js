@@ -12,7 +12,9 @@ export default class ApplicationEdit extends BaseIndex {
     }
 
     GetEntityData(id, actionType, data) {
-         
+        const primaryKey = data.EntityData.Application_Id;
+        const pathQuery = `(${primaryKey})`;
+        this.DvaActions.Dispatch("ApplicationService", "GetEntityData", { PathQuery: pathQuery, Action: this.GetAction(id, actionType) });
     }
 
     SaveEntityData(id, actionType, data) {
@@ -20,8 +22,12 @@ export default class ApplicationEdit extends BaseIndex {
 
         const serviceName = primaryKey ? "Update" : "Insert";
 
-        if (primaryKey) data.EntityData.Application_Id = primaryKey;
+        var pathQuery = "";
+        if (primaryKey) {
+            data.EntityData.Application_Id = primaryKey;
+            pathQuery = `(${primaryKey})`;
+        }
 
-        this.DvaActions.Dispatch("ApplicationService", serviceName, { Application: data.EntityData, Action: this.GetAction(id, actionType) });
+        this.DvaActions.Dispatch("ApplicationService", serviceName, { PathQuery: pathQuery, Application: data.EntityData, Action: this.GetAction(id, actionType) });
     }
 }
