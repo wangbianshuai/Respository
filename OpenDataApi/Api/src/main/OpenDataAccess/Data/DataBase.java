@@ -75,7 +75,7 @@ public class DataBase implements IDataBase {
                 _Connection = DriverManager.getConnection(this._ConnectionString, _User, _Password);
             } else if (_ClientType == ServerClient.MySqlClient) {
                 Class.forName("com.mysql.jdbc.Driver");
-                _Connection = DriverManager.getConnection(this._ConnectionString);
+                _Connection = DriverManager.getConnection(this._ConnectionString, _User, _Password);
             } else {
                 Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
                 _Connection = DriverManager.getConnection(this._ConnectionString, _User, _Password);

@@ -15,7 +15,7 @@ public class DataAccess {
         } else if (cls.getClass().equals(IOracleDataBase.class)) {
             dataBase = new SqlDataBase(GetConnectionString(), GetUser(),GetPassword());
         } else if (cls.getClass().equals(IMySqlDataBase.class)) {
-            dataBase = new MySqlDataBase(GetConnectionString());
+            dataBase = new MySqlDataBase(GetConnectionString(), GetUser(),GetPassword());
         } else {
             throw new IllegalArgumentException();
         }
@@ -26,11 +26,11 @@ public class DataAccess {
         IDataBase dataBase = null;
         String client = GetServerClient();
         if (client.equals("Sql")) {
-            dataBase = new SqlDataBase(GetConnectionString(), GetUser(),GetPassword());
+            dataBase = new SqlDataBase(GetConnectionString(), GetUser(), GetPassword());
         } else if (client.equals("Oracle")) {
-            dataBase = new OracleDataBase(GetConnectionString(), GetUser(),GetPassword());
+            dataBase = new OracleDataBase(GetConnectionString(), GetUser(), GetPassword());
         } else if (client.equals("MySql")) {
-            dataBase = new MySqlDataBase(GetConnectionString());
+            dataBase = new MySqlDataBase(GetConnectionString(), GetUser(), GetPassword());
         } else {
             throw new IllegalArgumentException();
         }
