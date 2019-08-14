@@ -39,9 +39,15 @@ export default class Index {
 
     SetSearchQueryResponse(data, dataName) {
         data = this.SetApiResponse(data);
-        if (data[dataName] !== undefined) {
+        if (data.length > 0) {
+            const DataList = data[0][dataName] || [];
+            const PageInfo = null;
+            if (data.length === 2) PageInfo = data[1].PageInfo;
+            return { DataList, PageInfo };
+        }
+        else if (data[dataName] !== undefined) {
             const DataList = data[dataName] || [];
-            const PageRecord = data.pageResponse ? data.pageResponse.total : DataList.length;
+            const PageRecord = DataList.length;
             return { PageRecord, DataList }
         }
         return data;

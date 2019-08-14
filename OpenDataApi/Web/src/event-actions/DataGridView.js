@@ -25,15 +25,18 @@ export default class DataGridView extends BaseIndex {
         const { DataGridView, SearchButton } = parameters;
         const { ActionTypes, Invoke, EntitySearchQuery } = DataGridView;
         const { SearchQuery } = ActionTypes;
-        const { EventActions } = props;
+        const { EventActions, IsData } = props;
 
         const ConditionList = this.GetConditionList(parameters);
         if (ConditionList === false) return;
 
+        const queryInfo = this.GetQueryInfo(DataGridView);
+        queryInfo.WhereFields = ConditionList;
+
         DataGridView.SetDataLoading(true);
         SearchButton && SearchButton.SetDisabled(true);
 
-        const data = { EntitySearchQuery, PageIndex: pageIndex, PageSize: pageSize, ConditionList, PageData: EventActions.PageData }
+        const data = { EntitySearchQuery, Entity: DataGridView.Entity, IsData, PageIndex: pageIndex, PageSize: pageSize, QueryInfo: queryInfo, PageData: EventActions.PageData }
 
         Invoke(SearchQuery, data);
     }
@@ -60,6 +63,52 @@ export default class DataGridView extends BaseIndex {
     }
 
     GetConditionList(parameters) {
+        const { SearchView } = parameters;
+        if (!SearchView) return {};
+
+        const conditionList = [];
+        SearchView.Properties.forEach(p => {
+            const name = p.PropertyName || p.Name;
+            if (p.IsCondition && p.GetValue) conditionList.push({ Name: name, Label: p.Label, OperateLogic: p.OperateLogic, DataType: p.DataType, Value: p.GetValue() });
+        });
+
+        return conditionList;
+    }
+
+    GetQueryInfo(dataGridView) {
+        var property = null, isGroupBy = false;
+        const queryInfo = {}, orderByList = [], groupByFieldList = [], groupByList = [], selectFieldList;
+        for (var i = 0; i < dataGridView.Properties.length; i++) {
+            property = dataGridView.Properties[i];
+            if (Common.IsNullOrEmpty(property.GroupByExpression)) {
+                selectFieldList.push(property.Name);
+                if (!Common.IsNullOrEmpty(property.OrderByType)) {
+                    orderByList.push(property.Name + " " + property.OrderByType);
+                }
+                groupByList.push(property.Name);
+            }
+            else {
+                isGroupBy = true;
+                groupByFieldList.push(property.GroupByExpression + " as " + property.Name);
+                if (!Common.IsNullOrEmpty(property.OrderByType)) {
+                    orderByList.push(property.Name + " " + property.OrderByType);
+                }
+            }
+        }
+
+        if (!isGroupBy) groupByList = [];
+
+        queryInfo.HasLabel = selectFieldList.length === 0;
+        queryInfo.FieldSql = selectFieldList.join(",");
+        queryInfo.OrderBySql = orderByList.join(",");
+        queryInfo.GroupBySql = groupByList.join(",");
+        queryInfo.GroupByFieldSql = groupByFieldList.join(",");
+        queryInfo.WhereFields = selectFieldList.join("");
+
+        return queryInfo;
+    }
+
+    GetConditions(parameters) {
         const { SearchView } = parameters;
         if (!SearchView) return {};
 

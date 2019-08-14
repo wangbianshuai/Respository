@@ -142,7 +142,7 @@ class DataGridView extends BaseIndex {
         this.PageInfo.PageIndex = pageIndex;
         this.PageInfo.PageSize = pageSize;
         if (this.Property.IsLocalPage) this.setState({ RefreshId: Common.CreateGuid() });
-        else this.EventActions.InvokeAction(this.Property.EventActionName, { ...this.props, PageIndex: pageIndex, PageSize: pageSize });
+        else this.EventActions.InvokeAction(this.Property.EventActionName, { ...this.props, PageIndex: pageIndex, PageSize: pageSize, IsData: true });
     }
 
     Refresh() {

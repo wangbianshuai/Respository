@@ -13,22 +13,8 @@ export default class ApplicationList extends BaseIndex {
     }
 
     SearchQuery(id, actionType, data) {
-        const { ConditionList: { Keyword } } = data;
-        const payload = {
-            Action: this.GetAction(id, actionType)
-        };
-        payload.Keyword = Keyword;
-        payload.PathQuery = "?$query=true&$data=true"
-        payload.QueryInfo = {
-            FieldSql: "Application_Id,Name",
-            WhereFields: [],
-            OrderBySql: "Create_Date desc"
-        }
-
-        const RequestList = [];
-
-        RequestList.push({ Url: "", Data: {} });
-        RequestList.push({ Url: "", Data: {} });
+        const { RequestList } = data;
+        const payload = { Action: this.GetAction(id, actionType) };
 
         payload.RequestList = RequestList;
 
