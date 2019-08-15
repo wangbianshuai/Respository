@@ -40,7 +40,9 @@ export default class Index {
     SetSearchQueryResponse(data, dataName) {
         data = this.SetApiResponse(data);
         if (data.length > 0) {
-            const DataList = data[0][dataName] || (data[0] || []);
+            const res1 = data[0];
+            if (res1.IsSuccess === false) return res1;
+            const DataList = res1[dataName] || (res1 || []);
             var PageInfo = null;
             if (data.length === 2) PageInfo = data[1].PageInfo;
             return { DataList, PageInfo };

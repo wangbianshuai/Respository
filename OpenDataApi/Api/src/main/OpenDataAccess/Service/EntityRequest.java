@@ -166,7 +166,7 @@ public class EntityRequest extends EntityAccess implements IEntityRequest, IEnti
                             query.ToWhereSql(),
                             query.ToGroupSql(),
                             IsNullOrEmpty(query.ToOrderBySql()) ? "order by " + _Request.Entity.PrimaryKey : query.ToOrderBySql()));
-                    sb.append(" limit %s,%s", (pageIndex - 1) * pageSize, pageSize);
+                    sb.append(String.format(" limit %s,%s", (pageIndex - 1) * pageSize, pageSize));
                 } else {
                     sb.append(String.format("select row_number() over(%s) as rn,", IsNullOrEmpty(query.ToOrderBySql().trim()) ? "order by " + _Request.Entity.PrimaryKey : query.ToOrderBySql()));
                     sb.append(IsNullOrEmpty(query.ToSelectSql().trim()) ? "t.*" : query.ToSelectSql());
