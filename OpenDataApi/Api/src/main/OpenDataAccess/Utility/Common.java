@@ -369,4 +369,33 @@ public class Common {
         return str;
     }
 
+    public static Class<?> GetType(String typeName) {
+        switch (typeName.trim().toUpperCase()) {
+            case "string":
+                return String.class;
+            case "long":
+                return long.class;
+            case "int":
+                return int.class;
+            case "short":
+                return short.class;
+            case "byte":
+                return byte.class;
+            case "boolean":
+                return boolean.class;
+            case "decimal":
+            case "double":
+                return double.class;
+            case "float":
+                return float.class;
+            case "guid":
+                return String.class;
+            case "datetime":
+                return Date.class;
+            case "time":
+                return Date.class;
+            default:
+                return String.class;
+        }
+    }
 }

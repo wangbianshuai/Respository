@@ -18,8 +18,8 @@ public class Application extends EntityModel implements IEntity {
 
     @Override
     public void InsertValidate(List<IFunction2<IValidate, IEntityData, String>> validateList) {
-        validateList.add(this.InsertValidateUnique(Application.class, "Name", "对不起，该应用名已存在！"));
-    }
+    validateList.add(this.InsertValidateUnique(Application.class, "Name", "对不起，该应用名已存在！"));
+}
 
     @Override
     public void UpdateValidate(List<IFunction2<IValidate, IEntityData, String>> validateList) {

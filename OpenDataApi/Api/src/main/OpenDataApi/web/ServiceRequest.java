@@ -2,9 +2,13 @@ package OpenDataApi.web;
 
 import OpenDataAccess.Entity.EntityType;
 import OpenDataAccess.Service.ComponentType;
+import OpenDataAccess.Service.EntityRequest;
+import OpenDataAccess.Service.IEntityRequest;
 import OpenDataAccess.Service.Request;
 import OpenDataAccess.Utility.Common;
 import OpenDataAccess.Utility.JsonParse;
+import OpenDataApi.constants.AppSettings;
+import OpenDataApi.domain.Entity;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
@@ -23,7 +27,20 @@ public class ServiceRequest {
 
             ComponentType.SetComponentType(OpenDataApi.domain.User.class);
 
+            LoadDataEntity();
+
         } catch (Exception ex) {
+        }
+    }
+
+    public static void LoadDataEntity() {
+        try {
+            Entity entity = new Entity();
+            entity.SetEntityList(AppSettings.GetConfig("OpenDataAccess.ApplicationId"));
+
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
         }
     }
 

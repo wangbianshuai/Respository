@@ -3,11 +3,13 @@ drop table t_d_Entity;
 create table t_d_Entity
 (
 Id varchar(36) not  null primary key,
+Entity_Name varchar(36) not null,
+Application_Id varchar(36) not null, 
 Name varchar(50) not null,
-TableName varchar(30),
-WithSql text,
+Table_Name varchar(30),
+With_Sql text,
 Primary_Key varchar(50),
-NoSelectNames varchar(1000),
+No_Select_Names varchar(1000),
 Is_Get integer default 1,
 Is_Post integer default 1,
 Is_Put integer default 1,
@@ -64,4 +66,14 @@ Create_Date datetime default (now()) not null,
 Row_Version varchar(36)
 );
 
+drop table t_d_Regexp2;
 
+create table t_d_Regexp2
+(
+Id varchar(36) not null primary key,
+Name varchar(50) not null,
+Expression varchar(1000),
+Remark varchar(200),
+Create_Date datetime default (now()) not null,
+Row_Version varchar(36)
+);

@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>OpenDataApi</groupId>
-    <artifactId>myproject</artifactId>
+    <artifactId>OpenDataApi</artifactId>
     <version>0.0.1-SNAPSHOT</version>
 
     <parent>
