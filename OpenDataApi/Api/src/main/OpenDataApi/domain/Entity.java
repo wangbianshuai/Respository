@@ -11,7 +11,6 @@ import OpenDataAccess.Service.Request;
 import OpenDataAccess.Utility.Common;
 import OpenDataApi.models.EntityProperty;
 
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
