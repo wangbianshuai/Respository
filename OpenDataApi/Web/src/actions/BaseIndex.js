@@ -2,10 +2,10 @@ import { Common } from "UtilsCommon";
 
 export default class Index {
     constructor(props) {
-        for (let key in props) this[key] = props[key];
         this.Receives = {};
         this.MinActionType = 0;
         this.MaxActionType = 0;
+        for (let key in props) this[key] = props[key];
     }
 
     Init() {

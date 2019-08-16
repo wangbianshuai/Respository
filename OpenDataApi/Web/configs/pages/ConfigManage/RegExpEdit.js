@@ -14,9 +14,10 @@ const Entity = { Name: RegExp.Name, PrimaryKey: RegExp.PropertyPrimaryKey || Reg
 module.exports = {
     Name: "RegExpEdit",
     Type: "View",
-    ModelsConfig: RegExp.GetModelsConfig,
-    ActonOptions: GetActionOptions(),
+    ModelsConfig: RegExp.ModelsConfig,
+    ActionOptions: GetActionOptions(),
     EventActions: GetEventActions(),
+    ActionNames: ["GetEntityData", "Insert", "Update"],
     Properties: AssignProporties({ Name: "RegExpEdit" }, [GeEditView()])
 }
 
@@ -51,7 +52,7 @@ function GetButtonProperties() {
 function GetProperties() {
     return [
         GetTextBox2("Name", "名称", 1, 1, "", "请输入名称", 50, false),
-        GetTextBox2("Connection_String", "表达式", 2, 1, "", "请输入表达式", 1000, true),
+        GetTextBox2("Expression", "表达式", 2, 1, "", "请输入表达式", 1000, true),
         GetTextArea("Remark", "备注", 3, 1),
         GetButtonView()
     ]

@@ -202,7 +202,7 @@ public class DataBase implements IDataBase {
                 map = new HashMap<>();
 
                 for (int i = 1; i <= iColNum; i++) {
-                    columnName = metaData.getColumnName(i);
+                    columnName = metaData.getColumnLabel(i);
                     value = _ResultSet.getObject(i);
                     if(value instanceof  NClob) value= Common.Clob2String((NClob)value);
                     map.put(columnName, value);
@@ -229,27 +229,21 @@ public class DataBase implements IDataBase {
             String columnName = "";
             Field[] fields = null;
             Field field = null;
-            boolean blFirst = true;
+            Object value = null;
 
             while (this._ResultSet.next()) {
                 obj = cls.newInstance();
-                if (fields == null) {
-                    fields = cls.getFields();
-                }
+                if (fields == null) fields = cls.getFields();
 
                 for (int i = 1; i <= iColNum; i++) {
-                    if (blFirst) {
-                        columnName = metaData.getColumnName(i);
-                    }
+                    columnName = metaData.getColumnLabel(i);
+                    value = _ResultSet.getObject(i);
+                    if (value instanceof NClob) value = Common.Clob2String((NClob) value);
 
                     field = this.GetField(i, fieldMap, fields, columnName);
-                    if (field != null) {
-                        field.set(obj, Common.ChangeType(field.getType(), this._ResultSet.getObject(i)));
-                    }
+                    if (field != null) field.set(obj, Common.ChangeType(field.getType(), value));
                 }
 
-                blFirst = false;
-                columnName = null;
                 list.add(obj);
             }
             return list;

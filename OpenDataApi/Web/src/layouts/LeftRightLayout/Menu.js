@@ -15,6 +15,8 @@ function GetConfigManageNavNenu() {
     var menuList = [];
     menuList.push(AddMenu("ApplicationList", "应用", false, "table", "/ConfigManage/ApplicationList"));
     menuList.push(AddMenu("ApplicationEdit", "新增", true, "form", "/ConfigManage/ApplicationEdit", "", null, false, "应用", "/ConfigManage/ApplicationList", null, true));
+    menuList.push(AddMenu("RegExpList", "正则表达式", false, "table", "/ConfigManage/RegExpList"));
+    menuList.push(AddMenu("RegExpEdit", "新增", true, "form", "/ConfigManage/RegExpEdit", "", null, false, "正则表达式", "/ConfigManage/RegExpList", null, true));
 
     return AddNavMenu("ConfigManage", "配置管理", false, menuList, true, ["ApplicationList"]);
 }

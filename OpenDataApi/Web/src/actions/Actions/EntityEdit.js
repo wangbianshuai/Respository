@@ -1,6 +1,6 @@
-import BaseIndex from "../../BaseIndex";
+import BaseIndex from "../BaseIndex";
 
-export default class EnittyEdit extends BaseIndex {
+export default class EntityEdit extends BaseIndex {
     constructor(props) {
         super(props);
 
@@ -15,7 +15,7 @@ export default class EnittyEdit extends BaseIndex {
     }
 
     SaveEntityData(id, actionType, data) {
-        const { EntityName, PrimaryKey } = data.Entity;
+        const { Name, PrimaryKey } = data.Entity;
         const primaryKey = data.OldEntityData && data.OldEntityData[PrimaryKey] ? data.OldEntityData[PrimaryKey] : null;
 
         const serviceName = primaryKey ? "Update" : "Insert";
@@ -27,9 +27,9 @@ export default class EnittyEdit extends BaseIndex {
         }
 
         const payload = { Action: this.GetAction(id, actionType) };
-        payload[EntityName] = data.EntityData;
+        payload[Name] = data.EntityData;
         payload.PathQuery = pathQuery
 
-        this.DvaActions.Dispatch("ApplicationService", serviceName, payload);
+        this.DvaActions.Dispatch(this.ServiceName, serviceName, payload);
     }
 }

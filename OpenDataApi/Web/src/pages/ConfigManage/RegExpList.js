@@ -1,3 +1,3 @@
-import { Entitylist } from "PageTemplates";
+import { EntityList } from "PageTemplates";
 
-return Entitylist("ConfigManage_RegExpList");
+export default EntityList("ConfigManage_RegExpList");

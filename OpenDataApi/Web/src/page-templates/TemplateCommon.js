@@ -1,4 +1,5 @@
 import { AjaxRequest, EnvConfig } from "UtilsCommon";
+import { StaticIndex } from "ReactCommon";
 import DvaIndex from "DvaCommon";
 
 export default class TemplateCommon {
@@ -14,22 +15,24 @@ export default class TemplateCommon {
         if (!window.PageConfigs[pageName]) {
             const name = pageName.replace("_", "/");
             var url = `/html/configs/${name}.json`
-            if (EnvConfig.Env === "local") url = "/html/configs/getconfig?name=" + pageName;
+            if (window.location.href.indexOf("localhost") > 0) url = "/html/configs/getconfig?name=" + pageName;
 
             AjaxRequest.GetRequest(url, {}, (res) => {
                 if (res.IsSuccess === false) alert(res.Message)
                 else window.PageConfigs[pageName] = res;
             }, false);
         }
-        return window.PageConfigs[name];
+        return window.PageConfigs[pageName];
     }
 
-    static MapStateToProps(config) {
+    static MapStateToProps(config, actionNames) {
         const getServiceName = (serviceName) => serviceName || config.Name;
 
         return (state, ownProps) => {
             const states = {};
-            config.ActionList.forEach(a => states[a.ActionName] = state[getServiceName(a.ServiceName)][a.StateName])
+            config.ActionList.forEach(a => {
+                if (actionNames && actionNames.indexOf(a.ActionName) >= 0) states[a.ActionName] = state[getServiceName(a.ServiceName)][a.StateName]
+            });
 
             const props = StaticIndex.MapStateToProps(state, ownProps, states);
 

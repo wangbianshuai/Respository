@@ -8,7 +8,7 @@ export default (name, WrapComponent, options) => class ConnectAction extends Com
 
         this.state = { ActionData: {} };
         this.ActionData = {};
-
+        
         this.Name = name;
         this.Id = Common.CreateGuid();
         Actions.InitAction(name, options);

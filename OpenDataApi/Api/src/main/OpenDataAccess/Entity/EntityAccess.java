@@ -207,7 +207,6 @@ public abstract class EntityAccess implements IEntityAccess {
     }
 
     public Object InsertEntity(EntityType entityType, IEntityData entityData, IDataTransaction trans) {
-
         Object primaryKey = null;
         List<String> fieldList = new ArrayList<>();
         List<String> valueList = new ArrayList<>();

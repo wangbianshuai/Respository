@@ -13,9 +13,10 @@ const Entity = { Name: RegExp.Name, PrimaryKey: RegExp.PropertyPrimaryKey || Reg
 module.exports = {
     Name: "RegExpList",
     Type: "View",
-    ModelsConfig: RegExp.GetModelsConfig,
-    ActonOptions: GetActionOptions(),
+    ModelsConfig: RegExp.ModelsConfig,
+    ActionOptions: GetActionOptions(),
     EventActions: GetEventActions(),
+    ActionNames: ["SearchQuery", "Delete"],
     Properties: AssignProporties({ Name: "RegExpList" }, [GetSearchOperationView(), GetAlert(), GetDataGridView()])
 }
 
@@ -48,7 +49,7 @@ function GetKeyword() {
     const p = GetTextBox("Keyword", "", "Search", 2, 3, "请输入关键字")
     p.ColStyle = { paddingRight: 8, paddingLeft: 2 };
     p.IsCondition = true;
-    p.PropertyName = "Name,Db_User,Remark";
+    p.PropertyName = "Name,Remark";
     p.OperateLogic = "like";
     p.EventActionName = "SearchQuery";
     p.PressEnterEventActionName = "SearchQuery";

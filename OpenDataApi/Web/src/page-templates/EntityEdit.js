@@ -13,7 +13,7 @@ export default (pageName) => {
         constructor(props) {
             super(props);
 
-            this.Name = pageConfig.PageName;
+            this.Name = pageName;
 
             this.InitEventAction();
         }
@@ -25,5 +25,5 @@ export default (pageName) => {
 
     TemplateCommon.InitModels(pageConfig.ModelsConfig);
 
-    return connect(TemplateCommon.MapStateToProps(pageConfig.ModelsConfig), StaticIndex.MapDispatchToProps)(RootPage(ConnectAction("EntityEdit", EntityEdit, pageConfig.ActionOptions)));
+    return connect(TemplateCommon.MapStateToProps(pageConfig.ModelsConfig, pageConfig.ActionNames), StaticIndex.MapDispatchToProps)(RootPage(ConnectAction("EntityEdit", EntityEdit, pageConfig.ActionOptions)));
 }

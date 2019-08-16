@@ -196,9 +196,10 @@ export default class BaseIndex extends Component {
     }
 
     InitEventAction() {
-        this.ActionTypes = this.props.GetActionTypes(this.Name);
         this.PageConfig = {};
         this.GetConfig();
+        if (!this.PageConfig.ActionOptions) this.ActionTypes = this.props.GetActionTypes(this.Name);
+        else this.ActionTypes = this.PageConfig.ActionOptions.ActionTypes;
         this.PageData = Common.GetQueryString();
         this.PageData.Token = this.Token;
         this.AsyncRequest = {};
@@ -235,7 +236,7 @@ export default class BaseIndex extends Component {
     }
 
     GetRight(name) {
-        
+
         return true;
     }
 

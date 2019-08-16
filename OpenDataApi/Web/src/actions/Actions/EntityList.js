@@ -18,7 +18,7 @@ export default class EntityList extends BaseIndex {
     }
 
     SetSearchQuery(id, actionType, data) {
-        data = this.SetSearchQueryResponse(data, data.Entity.Name);
+        data = this.SetSearchQueryResponse(data);
         actionType = DataGriViewActionType.SearchQuery;
         this.DispatchAction(id, actionType, data);
         return false;

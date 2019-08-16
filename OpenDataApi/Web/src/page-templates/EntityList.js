@@ -12,8 +12,8 @@ export default (pageName) => {
         constructor(props) {
             super(props);
 
-            this.Name = pageConfig.PageName;
-            this.MenuKey = pageConfig.MenuKey;
+            this.Name = pageName;
+            this.MenuKey = pageConfig.Name;
 
             this.InitEventAction();
         }
@@ -25,5 +25,5 @@ export default (pageName) => {
 
     TemplateCommon.InitModels(pageConfig.ModelsConfig);
 
-    return connect(TemplateCommon.MapStateToProps(pageConfig.ModelsConfig), StaticIndex.MapDispatchToProps)(RootPage(ConnectAction("EntityList", EntityList, pageConfig.ActionOptions)));
+    return connect(TemplateCommon.MapStateToProps(pageConfig.ModelsConfig, pageConfig.ActionNames), StaticIndex.MapDispatchToProps)(RootPage(ConnectAction("EntityList", EntityList, pageConfig.ActionOptions)));
 }
