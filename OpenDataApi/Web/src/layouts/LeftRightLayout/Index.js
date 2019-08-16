@@ -313,7 +313,6 @@ export default class LeftRightLayout extends Component {
 
     }
 
-
     render() {
         if (!this.Token) return null;
 

@@ -24,8 +24,10 @@ public class ServiceRequest {
         try {
             EntityType.SetEntityType(OpenDataApi.models.User.class);
             EntityType.SetEntityType(OpenDataApi.models.Application.class);
+            EntityType.SetEntityType(OpenDataApi.models.Entity.class);
 
             ComponentType.SetComponentType(OpenDataApi.domain.User.class);
+            ComponentType.SetComponentType(OpenDataApi.domain.Entity.class);
 
             LoadDataEntity();
 
@@ -37,8 +39,6 @@ public class ServiceRequest {
         try {
             Entity entity = new Entity();
             entity.SetEntityList(AppSettings.GetConfig("OpenDataAccess.ApplicationId"));
-
-
         } catch (Exception ex) {
             ex.printStackTrace();
         }
