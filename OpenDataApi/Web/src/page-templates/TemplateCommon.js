@@ -10,6 +10,19 @@ export default class TemplateCommon {
         if (app && app._models.filter(f => f.namespace === config.Name).length === 0) app.model(DvaIndex(config))
     }
 
+    static GetPageConfig(config) {
+        var pageConfig = null;
+        if (typeof config === "string") {
+            pageConfig = TemplateCommon.GetConfig(config);
+            if (!pageConfig) return null;
+
+            pageConfig.PageName = config;
+        }
+        else pageConfig = config;
+
+        return pageConfig;
+    }
+
     static GetConfig(pageName) {
         window.PageConfigs = window.PageConfigs || {};
         if (!window.PageConfigs[pageName]) {

@@ -4,16 +4,15 @@ import { BaseIndex, RootPage, ConnectAction, StaticIndex } from "ReactCommon";
 import Components from "Components";
 import TemplateCommon from "./TemplateCommon";
 
-export default (pageName) => {
-    const pageConfig = TemplateCommon.GetConfig(pageName);
+export default (config) => {
+    const pageConfig = TemplateCommon.GetPageConfig(config);
     if (!pageConfig) return null;
 
     class EntityList extends BaseIndex {
         constructor(props) {
             super(props);
 
-            this.Name = pageName;
-            this.MenuKey = pageConfig.Name;
+            this.Name = pageConfig.PageName;
 
             this.InitEventAction();
         }

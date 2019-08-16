@@ -1,3 +1,3 @@
-import { EntityEdit } from "PageTemplates";
+import { EntityPageEdit } from "PageTemplates";
 
-export default EntityEdit("ConfigManage_RegExpEdit");
+export default EntityPageEdit("ConfigManage_RegExpEdit", "RegExp", 500);
