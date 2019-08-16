@@ -9,7 +9,7 @@ export default class Index {
     }
 
     Init() {
-        this.ActionTypes = this.GetActionTypes(this.Name);
+        if (!this.ActionTypes) this.ActionTypes = this.GetActionTypes(this.Name);
         this.ActionTypeKeys = this.GetActionTypeKeys();
         if (this.DvaActions.SetStateActionTypes) this.DvaActions.SetStateActionTypes(this.GetStateActionTypes());
     }

@@ -238,7 +238,7 @@ export default class LeftRightLayout extends Component {
     }
 
     SelectMenuClick(item) {
-        if (item.key === "PersonCenter") router.push("/PersonCenter/BaseInfo");
+        if (item.key === "PersonCenter") router.push("/EntityList.html?Name=1234");
         else if (item.key === "Logout") router.push("/login")
     }
 

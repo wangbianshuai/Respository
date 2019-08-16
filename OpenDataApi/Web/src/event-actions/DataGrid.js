@@ -29,7 +29,7 @@ export default class DataGrid extends BaseIndex {
         const onOk = () => {
             Property.SetDisabled(true);
 
-            EventActions.Invoke(DataActionType, { SelectRowKeys: selectRowKeys, EntityData: entityData })
+            EventActions.Invoke(DataActionType, { SelectRowKeys: selectRowKeys, Entity: DataGridView.Entity, EntityData: entityData })
         };
 
         if (Property.ConfirmTip) EventActions.Confirm(Property.ConfirmTip, onOk);

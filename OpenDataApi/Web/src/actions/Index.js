@@ -3,13 +3,18 @@ import { Common } from "UtilsCommon";
 
 const _ActionList = [];
 
-function InitAction(name) {
-    const action = GetActionByName(name)
+/*
+options:{Name:行为名称,ServiceName:服务名称,MaxActionType:最大行为类型值,MinActionType:最小行为类型值,ActionTypes:行为类型值集合对象}
+*/
+function InitAction(name, options) {
+    const actionName = options ? options.Name : name;
+    const action = GetActionByName(actionName)
     if (action) return;
 
     name = name.replace("_", "/");
     const Action = require(`./Actions/${name}`).default;
-    _ActionList.push(new Action({ GetActionTypes, InvokeAction: Invoke, DispatchAction: DispatchAction, DvaActions: _DvaActions }));
+    options = options || {};
+    _ActionList.push(new Action({ GetActionTypes, InvokeAction: Invoke, DispatchAction: DispatchAction, DvaActions: _DvaActions, ...options }));
 }
 
 function Invoke(id, actionType, data) {

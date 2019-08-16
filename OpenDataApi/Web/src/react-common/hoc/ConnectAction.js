@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import Actions from "Actions";
 import { Common } from "UtilsCommon";
 
-export default (name, WrapComponent) => class ConnectAction extends Component {
+export default (name, WrapComponent, options) => class ConnectAction extends Component {
     constructor(props) {
         super(props);
 
@@ -11,8 +11,9 @@ export default (name, WrapComponent) => class ConnectAction extends Component {
 
         this.Name = name;
         this.Id = Common.CreateGuid();
-        Actions.InitAction(name);
-        Actions.Receive(name, this.Id, this.Receive.bind(this));
+        Actions.InitAction(name, options);
+        this.ActionName = options ? options.Name : name;
+        Actions.Receive(this.ActionName, this.Id, this.Receive.bind(this));
     }
 
     Invoke(actionType, data) {
@@ -35,7 +36,7 @@ export default (name, WrapComponent) => class ConnectAction extends Component {
 
     componentWillUnmount() {
         this.IsDestory = true;
-        Actions.RemoveReceive(name, this.Id);
+        Actions.RemoveReceive(this.ActionName, this.Id);
     }
 
     render() {

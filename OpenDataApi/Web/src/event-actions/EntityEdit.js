@@ -92,7 +92,7 @@ export default class EntityEdit extends BaseIndex {
         EventActions.Receives[actionType] = (d) => this.ReceiveSaveEntityDataActionType(d, props, action);
 
         //获取编辑值
-        const data = { OldEntityData: EditView.EntityData, EntityData: entityData, PageData: EventActions.PageData }
+        const data = { OldEntityData: EditView.EntityData, Entity: EditView.Entity, EntityData: entityData, PageData: EventActions.PageData }
 
         //禁用确定按钮
         Property.SetLoading && Property.SetLoading(true);
@@ -232,7 +232,7 @@ export default class EntityEdit extends BaseIndex {
         EventActions.Receives[EditView.GetEntityDataActionType] = (d) => this.ReceiveGetEntityDataActionType(d, props, action)
 
         //获取编辑值
-        const data = { EntityData: entityData }
+        const data = { EntityData: entityData, Entity: EditView.Entity }
 
         if (action.AsyncRequest) data.AsyncRequest = action.AsyncRequest;
 
