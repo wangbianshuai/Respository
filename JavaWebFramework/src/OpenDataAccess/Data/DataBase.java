@@ -230,19 +230,24 @@ public class DataBase implements IDataBase {
             Field[] fields = null;
             Field field = null;
             Object value = null;
+            boolean blFirst = true;
 
             while (this._ResultSet.next()) {
                 obj = cls.newInstance();
                 if (fields == null) fields = cls.getFields();
 
                 for (int i = 1; i <= iColNum; i++) {
-                    columnName = metaData.getColumnLabel(i);
+                    if (blFirst) columnName = metaData.getColumnLabel(i);
+
                     value = _ResultSet.getObject(i);
                     if (value instanceof NClob) value = Common.Clob2String((NClob) value);
 
                     field = this.GetField(i, fieldMap, fields, columnName);
                     if (field != null) field.set(obj, Common.ChangeType(field.getType(), value));
                 }
+
+                blFirst = false;
+                columnName = null;
 
                 list.add(obj);
             }
