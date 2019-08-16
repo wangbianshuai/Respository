@@ -68,10 +68,10 @@ export default class EntityEdit extends BaseIndex {
     SaveEntityData(props, action) {
         if (!action.Parameters) this.InitSaveEntityData(props, action);
 
-        const { EditView } = action.Parameters;
+        const { EditView, ExpandSetEntityData } = action.Parameters;
         const { EventActions, Property } = props;
 
-        let entityData = this.GetViewEntityData(props, EditView);
+        let entityData = this.GetViewEntityData(props, EditView, ExpandSetEntityData);
         if (entityData === false) return;
 
         if (Property.ConfirmTip) EventActions.Confirm(Property.ConfirmTip, () => this.SaveEditEntityData(props, action, EditView, entityData));
@@ -104,13 +104,13 @@ export default class EntityEdit extends BaseIndex {
     SaveEntityDataViews(props, action) {
         if (!action.Parameters) this.InitSaveEntityDataViews(props, action);
 
-        const { EditPropertiyViewList } = action.Parameters;
+        const { EditPropertiyViewList, ExpandSetEntityData } = action.Parameters;
         const { EventActions, Property } = props;
 
         let entityData = {}, viewEntityData = null;
 
         for (let i = 0; i < EditPropertiyViewList.length; i++) {
-            viewEntityData = this.GetViewEntityData(props, EditPropertiyViewList[i]);
+            viewEntityData = this.GetViewEntityData(props, EditPropertiyViewList[i], ExpandSetEntityData);
             if (viewEntityData === false) { entityData = false; break; }
             else for (let key in viewEntityData) entityData[key] = viewEntityData[key];
         }
@@ -123,13 +123,17 @@ export default class EntityEdit extends BaseIndex {
         else this.SaveEditEntityData(props, action, EditView, entityData);
     }
 
-    GetViewEntityData(props, view) {
+    GetViewEntityData(props, view, ExpandSetEntityData) {
         const { EventActions } = props;
         const { DefaultEditData } = view;
 
         let entityData = this.GetViewPropertiesValue(view.Properties, EventActions);
 
         if (view.ExpandSetEntityData) entityData = view.ExpandSetEntityData(entityData);
+
+        if (entityData === false) return false;
+        
+        if (ExpandSetEntityData) entityData = ExpandSetEntityData({ entityData, props, view });
 
         if (entityData === false) return false;
 
@@ -181,6 +185,7 @@ export default class EntityEdit extends BaseIndex {
         const { EventActions } = props;
         const EditView = EventActions.GetView(action.EditView);
         const SuccessCallback = EventActions.GetFunction(action.SuccessCallback);
+        const ExpandSetEntityData = EventActions.GetFunction(action.ExpandSetEntityData);
 
         let EditPropertiyViewList = null;
         if (action.EditPropertiyViewList) {
@@ -190,7 +195,7 @@ export default class EntityEdit extends BaseIndex {
         let SetDisabledViewList = null;
         if (action.SetDisabledViewList) SetDisabledViewList = action.SetDisabledViewList.map(m => EventActions.GetView(m));
 
-        action.Parameters = { EditView, EditPropertiyViewList, SetDisabledViewList, SuccessCallback };
+        action.Parameters = { EditView, EditPropertiyViewList, SetDisabledViewList, SuccessCallback, ExpandSetEntityData };
     }
 
     InitSaveEntityDataViews(props, action) {

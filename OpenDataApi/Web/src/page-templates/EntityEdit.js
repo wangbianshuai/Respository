@@ -1,6 +1,7 @@
 import React from "react";
 import { connect } from "dva";
 import { BaseIndex, RootPage, ConnectAction, StaticIndex } from "ReactCommon";
+import { Common } from "UtilsCommon";
 import Components from "Components";
 
 import TemplateCommon from "./TemplateCommon";
@@ -14,6 +15,8 @@ export default (config) => {
             super(props);
 
             this.Name = pageConfig.PageName;
+            if (pageConfig.ActionOptions) this.ActionTypes = pageConfig.ActionOptions.ActionTypes;
+            if (pageConfig.PageExpand) Common.Inherit(this, pageConfig.PageExpand);
 
             this.InitEventAction();
         }

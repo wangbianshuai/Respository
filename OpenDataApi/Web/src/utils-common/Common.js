@@ -528,3 +528,10 @@ export function Clone(a, objList) {
 
     return c
 }
+
+
+export function Inherit(obj1, obj2) {
+    if (!IsObject(obj1) || !IsObject(obj2)) return
+
+    for (var key in obj2) if (obj1[key] === undefined) obj1[key] = obj2[key];
+}

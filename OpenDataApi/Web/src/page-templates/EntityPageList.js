@@ -1,12 +1,13 @@
 import EntityList from "./EntityList";
 import EntityModelsConfig from "./EntityModelsConfig";
 
-export default (name, enityName, minActionType) => {
+export default (name, enityName, minActionType, pageExpand) => {
     const config = {
         PageName: name,
         ActionNames: ["SearchQuery", "Delete"],
         ActionOptions: GetActionOptions(name, enityName, minActionType),
-        ModelsConfig: EntityModelsConfig(enityName)
+        ModelsConfig: EntityModelsConfig(enityName),
+        PageExpand: pageExpand
     };
 
     return EntityList(config);

@@ -198,8 +198,10 @@ export default class BaseIndex extends Component {
     InitEventAction() {
         this.PageConfig = {};
         this.GetConfig();
-        if (!this.PageConfig.ActionOptions) this.ActionTypes = this.props.GetActionTypes(this.Name);
-        else this.ActionTypes = this.PageConfig.ActionOptions.ActionTypes;
+        if (!this.ActionTypes) {
+            if (!this.PageConfig.ActionOptions) this.ActionTypes = this.props.GetActionTypes(this.Name);
+            else this.ActionTypes = this.PageConfig.ActionOptions.ActionTypes;
+        }
         this.PageData = Common.GetQueryString();
         this.PageData.Token = this.Token;
         this.AsyncRequest = {};
