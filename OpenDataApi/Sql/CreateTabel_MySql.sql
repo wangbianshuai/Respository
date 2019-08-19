@@ -47,7 +47,7 @@ create table t_d_User2
   Login_Name     varchar(50) not null,
   Login_Password varchar(50) not null,
   Last_Login_Date datetime,
-  Create_Date    datetime default (now()) not null,
+  Create_Date    datetime default now() not null,
   Row_Version varchar(36)
 );
 
@@ -62,7 +62,7 @@ Connection_String varchar(1000),
 Db_User varchar(50),
 Db_Password varchar(50),
 Remark varchar(200),
-Create_Date datetime default (now()) not null,
+Create_Date datetime default now() not null,
 Row_Version varchar(36)
 );
 
@@ -74,6 +74,73 @@ Id varchar(36) not null primary key,
 Name varchar(50) not null,
 Expression varchar(1000),
 Remark varchar(200),
-Create_Date datetime default (now()) not null,
+Create_Date datetime default now() not null,
 Row_Version varchar(36)
 );
+
+drop table t_d_Data_Source;
+
+create table t_d_Data_Source
+(
+Id varchar(36) not null primary key,
+Name varchar(50) not null,
+Entity_Name varchar(50) not null,
+Value_Name varchar(50) not null,
+Text_Name varchar(50) not null,
+Parent_Name varchar(50),
+Action_Id  varchar(36),
+Remark varchar(200),
+Create_Date datetime default now() not null,
+Row_Version varchar(36)
+);
+
+drop table t_d_Item_Option;
+
+create table t_d_Item_Option
+(
+Id varchar(36) not null primary key,
+Data_Source_Id varchar(36) not null,
+Value varchar(50) not null,
+Text varchar(50) not null,
+ParentValue varchar(50)
+);
+
+drop table t_d_Dva_Model;
+
+create table t_d_Dva_Model
+(
+Id varchar(36) not null primary key,
+Name varchar(50) not null,
+Service_Name varchar(50) not null,
+Remark varchar(200),
+Create_Date datetime default now() not null,
+Row_Version varchar(36)
+);
+
+drop table t_d_Action;
+
+create table t_d_Action
+(
+Id varchar(36) not null primary key,
+Dva_Model_Id varchar(36) not null,
+Action_Name varchar(50) not null,
+Url varchar(50),
+State_Name varchar(50) not null,
+Method varchar(10),
+Data_Key varchar(50),
+Is_Token integer default 0,
+Is_Operation integer default 0,
+Has_Token integer default 0
+);
+
+drop table t_d_Key_Value;
+
+create table t_d_Key_Value
+(
+Id varchar(36) not null primary key,
+Data_Id varchar(36) not null,
+Value varchar(500) not null,
+Name varchar(50) not null
+);
+
+

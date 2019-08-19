@@ -18,6 +18,7 @@ public class EntityModel implements IEntity {
         }
         entityType = new EntityType();
         entityType.Name = name;
+        entityType.IsClass = true;
         entityType.Properties = new ArrayList<>();
 
         ITablePropertyAttribute tableProperty = this.getClass().getAnnotation(ITablePropertyAttribute.class);
@@ -41,14 +42,14 @@ public class EntityModel implements IEntity {
             entityType.IsPut = true;
         }
 
-        entityType.LogAttribute= new LogAttribute();
+        entityType.LogAttribute = new LogAttribute();
         ILogAttribute logAttribute = this.getClass().getAnnotation(ILogAttribute.class);
         if (logAttribute != null) {
-            entityType.LogAttribute.IsDelete= logAttribute.IsDelete();
-            entityType.LogAttribute.IsGet= logAttribute.IsGet();
-            entityType.LogAttribute.IsPost= logAttribute.IsPost();
-            entityType.LogAttribute.IsPostQuery= logAttribute.IsPostQuery();
-            entityType.LogAttribute.IsPut= logAttribute.IsPut();
+            entityType.LogAttribute.IsDelete = logAttribute.IsDelete();
+            entityType.LogAttribute.IsGet = logAttribute.IsGet();
+            entityType.LogAttribute.IsPost = logAttribute.IsPost();
+            entityType.LogAttribute.IsPostQuery = logAttribute.IsPostQuery();
+            entityType.LogAttribute.IsPut = logAttribute.IsPut();
         }
 
 

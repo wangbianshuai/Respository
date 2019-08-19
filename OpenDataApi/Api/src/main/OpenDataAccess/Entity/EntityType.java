@@ -15,6 +15,7 @@ public class EntityType {
     public boolean IsPost;
     public boolean IsPut;
     public boolean IsDelete;
+    public boolean IsClass;
     public List<String> NoSelectNameList = new ArrayList<>();
     public LogAttribute LogAttribute;
     public List<Property> Properties;

@@ -67,6 +67,7 @@ public class Entity extends EntityRequest {
                 entityType = new EntityType();
                 EntityType.EntityTypeList.add(entityType);
             }
+            else if(entityType.IsClass) return;
 
             entityType.Name = entity.Entity_Name;
             entityType.Properties = new ArrayList<>();
