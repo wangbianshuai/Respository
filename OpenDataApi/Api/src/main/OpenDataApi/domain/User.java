@@ -25,7 +25,7 @@ public class User extends EntityRequest {
 
         UpdateLastLoginDate(user.User_Id);
 
-        user.Token= UserToken.CreateToken(user.User_Id);
+        user.Token = UserToken.CreateToken(user.User_Id);
 
         return user;
     }

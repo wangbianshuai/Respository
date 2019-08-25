@@ -25,6 +25,9 @@ public class ServiceRequest {
             EntityType.SetEntityType(OpenDataApi.models.User.class);
             EntityType.SetEntityType(OpenDataApi.models.Application.class);
             EntityType.SetEntityType(OpenDataApi.models.Entity.class);
+            EntityType.SetEntityType(OpenDataApi.models.DataSource.class);
+            EntityType.SetEntityType(OpenDataApi.models.RegExp.class);
+            EntityType.SetEntityType(OpenDataApi.models.DvaModel.class);
 
             ComponentType.SetComponentType(OpenDataApi.domain.User.class);
             ComponentType.SetComponentType(OpenDataApi.domain.Entity.class);
