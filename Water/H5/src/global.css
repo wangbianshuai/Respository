@@ -1,0 +1,81 @@
+
+html, body, #root {
+  /*height: 100%;*/
+  /*margin-bottom:25px;*/
+  font-size: 14px !important;
+}
+
+#root{
+  /*height: 100%;*/
+    padding-bottom: 25px;
+}
+
+body {
+  margin: 0;
+    background-color: #f2f2f2;
+    font-family: "MicrosoftYaHei,微软雅黑";
+
+}
+
+.am-list-body{
+  background: transparent!important;
+}
+
+.am-list-body:before{
+    background-color: transparent!important;
+}
+
+.am-list-item{
+  padding-left:0;
+  background-color: #fff;
+}
+
+.am-list-item.am-input-item{
+  padding-left:0;
+}
+
+.am-list-item .am-input-label{
+  padding-left: 15px;
+  font-size: 16px;
+}
+
+.am-list-line{
+  /*border: 0 !important;*/
+  padding-right:0;
+}
+
+.am-list-line:after{
+  /*height: 0 !important;*/
+}
+
+.am-list-item .am-list-line{
+  padding-right:0;
+
+}
+
+.am-list-item .am-list-line .am-list-content {
+  padding-top:0;
+  padding-bottom:0;
+}
+
+.am-input-control{
+  padding-right: 15px;
+}
+
+.am-list-item .am-input-extra{
+  padding-right: 15px;
+}
+
+.am-input-clear{
+  margin-right: 15px;
+}
+
+.am-list-item .am-input-label.am-input-label-5{
+  width:auto;
+  min-width: 85px;
+}
+
+.am-textarea-label.am-textarea-label-5{
+    width:auto;
+    min-width: 85px;
+}

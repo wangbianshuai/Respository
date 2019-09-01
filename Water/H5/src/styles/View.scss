@@ -1,0 +1,1482 @@
+@function ToRem750($px) {
+  @return $px/32*1rem;
+}
+
+@function ToRem($px) {
+  @return ($px*750)/(32*640)*1rem;
+}
+
+@import "Index.scss";
+
+.Container {
+  width: 100%;
+  height: 100%;
+  margin-bottom: 15px;
+  background-image: url("../assets/bg@2x.png");
+  background-repeat: no-repeat;
+  background-size: 100% ToRem750(1020);
+}
+
+.Container2 {
+  width: 100%;
+  height: auto;
+  overflow: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.Container3 {
+  width: ToRem(530);
+  display: flex;
+  flex-direction: column;
+}
+
+.Container4 {
+  width: ToRem(620);
+  display: flex;
+  flex-direction: column;
+}
+
+.SpanTitle1, .SpanTitle2 {
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.SpanTitle1 span {
+  color: #4A4A4A;
+  font-weight: 700;
+  font-size: ToRem750(48);
+}
+
+.SpanTitle2 span {
+  color: #4A4A4A;
+  font-weight: 700;
+  font-size: ToRem750(36);
+}
+
+.WhiteSpace1 {
+  width: 100%;
+  height: ToRem(50);
+}
+
+.LogoImage {
+  width: 100%;
+  height: ToRem(82);
+}
+
+.LogoImage img {
+  width: ToRem(304);
+  height: ToRem(82);
+}
+
+.WhiteSpace2 {
+  width: 100%;
+  height: ToRem(38);
+}
+
+.WhiteSpace3 {
+  width: 100%;
+  height: ToRem(30);
+}
+
+.LabelName {
+  width: 100%;
+  display: flex;
+  height: ToRem(38);
+  align-items: center;
+}
+
+.LabelName span {
+  font-size: ToRem(28);
+  color: #4A4A4A;
+}
+
+.DivTextBox {
+  width: 100%;
+  height: ToRem(80);
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid #4A4A4A;
+}
+
+.DivTextBox .TextBox {
+  padding: 0;
+  margin: 0;
+  height: ToRem(60);
+  width: 100%;
+  background-color: transparent;
+}
+
+.DivTextBox .TextBox input {
+  font-size: ToRem(36);
+}
+
+.DivTextBox .TextBox input:disabled {
+  background: transparent;
+  color: #000000;
+  opacity: 1;
+  -webkit-text-fill-color: #000000;
+}
+
+.DivTextBox2 {
+  width: 100%;
+  height: ToRem(80);
+  border-bottom: 1px solid #4A4A4A;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.DivTextBox2 .TextBox {
+  padding: 0;
+  margin: 0;
+  height: ToRem(60);
+  width: ToRem(350);
+  display: flex;
+  background-color: transparent;
+}
+
+.DivTextBox2 .TextBox2 {
+  padding: 0;
+  margin: 0;
+  height: ToRem(60);
+  width: ToRem(470);
+  display: flex;
+  background-color: transparent;
+}
+
+.DivTextBox2 .TextBox input, .DivTextBox2 .TextBox2 input {
+  font-size: ToRem(36);
+}
+
+.DivTextBox2 .VerifyButton {
+  width: ToRem(180);
+  height: ToRem(60);
+  border-radius: ToRem(8);
+  border: 1px solid #4A4A4A;
+  display: flex;
+  cursor: pointer;
+  justify-content: center;
+  align-items: center;
+}
+
+.DivTextBox2 .VerifyButton span {
+  color: #4A4A4A;
+  font-size: ToRem(30);
+}
+
+.VerifyButtonDisabled {
+  border: 1px solid #ccc !important;
+}
+
+.VerifyButtonDisabled span {
+  color: #ccc !important;
+  font-size: ToRem(24) !important;
+}
+
+.DivVoice {
+  width: 100%;
+  height: ToRem(68);
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.DivVoice a {
+  color: #4A4A4A;
+  font-size: ToRem(28);
+  margin-right: ToRem(20);
+  cursor: pointer;
+}
+
+.DivTextBox2 .EyeButton {
+  width: ToRem(60);
+  height: ToRem(60);
+  display: flex;
+  cursor: pointer;
+  justify-content: center;
+  align-items: center;
+}
+
+.DivTextBox2 .EyeButton .img1 {
+  width: ToRem(40);
+  height: ToRem(18);
+}
+
+.DivTextBox2 .EyeButton .img2 {
+  width: ToRem(44);
+  height: ToRem(36);
+}
+
+.WhiteSpace4 {
+  width: 100%;
+  height: ToRem(20);
+}
+
+.Agreement {
+  width: 100%;
+  height: ToRem(40);
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.Agreement .CheckBox {
+  height: ToRem(40);
+  margin-left: 0;
+  padding-top: ToRem(9);
+  padding-bottom: 0;
+}
+
+.Agreement .CheckBox label {
+  font-size: ToRem(24);
+  color: #BFBFBF;
+  cursor: pointer;
+}
+
+.Agreement .CheckBox label span span {
+  top: ToRem(8);
+}
+
+.Agreement a {
+  color: #2FA7E0;
+  padding-top: ToRem(9);
+  font-size: ToRem(24);
+}
+
+.Agreement .a1 {
+  margin-left: ToRem(50);
+}
+
+.WhiteSpace5 {
+  width: 100%;
+  height: ToRem(50);
+}
+
+.RegButton {
+  width: ToRem(586);
+  height: ToRem(154);
+  display: flex;
+  justify-content: center;
+}
+
+.RegNor {
+  background-image: url("../assets/btn_nor@2x.png");
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+}
+
+.RegPre {
+  background-image: url("../assets/btn_pre@2x.png");
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+}
+
+.RegButton .Button {
+  width: ToRem(510);
+  height: ToRem(80);
+  margin-top: ToRem(10);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.RegButton .Button span {
+  color: #00498A;
+  font-size: ToRem(40);
+}
+
+.phoneCode {
+  width: 100%;
+  height: ToRem(80);
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.phoneCode img {
+  width: ToRem(176);
+  height: ToRem(60);
+}
+
+.phoneCode .VerifyCode {
+  height: ToRem(60);
+  width: ToRem(300);
+  padding: 0;
+  margin: 0;
+  border-bottom: 1px solid #4A4A4A;
+}
+
+.phoneCode .VerifyCode input {
+  padding-left: ToRem(10)
+}
+
+.UserTypeSegmented {
+  margin-top: ToRem(30);
+  height: ToRem(60);
+}
+
+.UserTypeSegmented div {
+  font-size: ToRem(28) !important;
+}
+
+.userTypeBox {
+  background: #ffffff;
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  align-items: center;
+  padding: ToRem(40) 0 ToRem(80);
+
+  .Title {
+    color: #4A4A4A;
+    font-weight: 700;
+    font-size: ToRem(36);
+    text-align: center;
+    margin-bottom: ToRem(60);
+  }
+}
+
+.OpenAccountBoxWrap {
+  width: 100%;
+  height: 100%;
+  background: #ffffff;
+}
+
+.OpenAccountBox {
+  background: #ffffff;
+  padding-bottom: ToRem(60);
+
+  .OpenAccountCheckBox, .userAgreement {
+    display: inline-block;
+    vertical-align: middle;
+  }
+
+  .userAgreement {
+    font-size: ToRem(26);
+    color: #3682ed;
+  }
+
+  .OpenAccountCheckBoxView {
+    padding-bottom: ToRem(30);
+
+    label {
+      color: #5f5f5f;
+    }
+  }
+
+  .am-button {
+    width: 98%;
+    margin: 0 auto;
+  }
+
+  .open-account-prompt {
+    border-top: ToRem(10) solid #f9f9f9;
+    background: #ffffff;
+    padding: ToRem(36) ToRem(20);
+
+    .prompt {
+      padding-top: ToRem(24);
+      font-size: 12px;
+      color: #2b2b2b;
+      .prompt-tit {
+        margin-bottom: ToRem(38);
+        text-align: center;
+        font-weight: 600;
+        color: #808080;
+        .line {
+          display: inline-block;
+          vertical-align: middle;
+          width: ToRem(102);
+          height: 2px;;
+          margin: 0 ToRem(20);
+          background: -webkit-linear-gradient(to right, #ffffff 20%, #b4b4b4);
+          background: -moz-linear-gradient(to right, #ffffff 20%, #b4b4b4);
+          background: -ms-linear-gradient(to right, #ffffff 20%, #b4b4b4);
+          background: -o-linear-gradient(to right, #ffffff 20%, #b4b4b4);
+          background: linear-gradient(to right, #ffffff 20%, #b4b4b4);
+        }
+        .toright-line {
+          background: -webkit-linear-gradient(to left, #ffffff 20%, #b4b4b4);
+          background: -moz-linear-gradient(to left, #ffffff 20%, #b4b4b4);
+          background: -ms-linear-gradient(to left, #ffffff 20%, #b4b4b4);
+          background: -o-linear-gradient(to left, #ffffff 20%, #b4b4b4);
+          background: linear-gradient(to left, #ffffff 20%, #b4b4b4);
+        }
+      }
+    }
+  }
+
+  .ErrorInfo {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+.aLookBankCode {
+  color: #3F9BFF;
+  font-size: ToRem(28);
+}
+
+.DivTextBox2 .SearchButton {
+  width: ToRem750(180);
+  height: ToRem750(80);
+  border-radius: ToRem750(10);
+  background-color: #A9E3F9;
+  display: flex;
+  cursor: pointer;
+  justify-content: center;
+  align-items: center;
+}
+
+.DivTextBox2 .SearchButton span {
+  color: #00498A;
+  font-size: ToRem750(40);
+}
+
+.DivBankInfo {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.DivBankInfo p {
+  width: 100%;
+  color: #9B9B9B;
+  font-size: ToRem(28);
+  line-height: ToRem(40);
+}
+
+//list相关样式重构
+.DivView {
+  background-color: #ffffff;
+  margin-top: 8px;
+  padding: 16px;
+}
+
+.SpanLabel, .SpanLabel2 {
+  color: rgba(0, 0, 0, 0.85);
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 32px;
+  padding-left: 15px;
+}
+
+.SpanLabel label {
+  color: #999999;
+  font-weight: 400;
+  font-size: 14px;
+  margin-left: 10px;
+}
+
+.SpanLabel2 {
+  width: 100%;
+  line-height: 32px;
+  label {
+    color: #333333;
+    font-weight: 600;
+    font-size: ToRem(32);
+  }
+}
+
+.am-list-content .ListviewTitle, .ContactListViewTitle {
+  background: #f2f2f2;
+  height: ToRem750(100);
+}
+
+.ContactListViewTitle {
+  align-items: flex-end;
+  .SpanLabel {
+    margin-top: ToRem(32);
+  }
+}
+
+.deleteHouseDescBtn {
+  width: ToRem750(64) !important;
+  margin: 0 auto;
+  height: ToRem750(64) !important;
+  line-height: ToRem750(64) !important;
+  margin-right: ToRem750(20);
+  border-radius: 50%;
+  background: #f67a7b;
+  color: #ffffff;
+  font-weight: 600;
+  background: url("../assets/delete_icon.png") no-repeat;
+  background-size: 100% 100%;
+}
+
+.deleteHouseDescBtn:before {
+  border: none !important;
+}
+
+.SelectItem1 {
+  .am-list-item .am-list-line .am-list-content {
+    padding-left: ToRem750(30);
+  }
+
+  .am-list-arrow {
+    margin-right: ToRem750(30);
+  }
+
+  .am-list-line:after {
+    content: '';
+    position: absolute;
+    background-color: #ddd;
+    display: block;
+    z-index: 1;
+    top: auto;
+    right: auto;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 1PX;
+    transform-origin: 50% 100%;
+    transform: scaleY(0.5);
+  }
+}
+
+.TextItem2 {
+  padding-left: 15px !important;
+  padding-right: 15px;
+}
+
+.TextItem2:before {
+  content: '';
+  position: absolute;
+  background-color: #ddd;
+  display: block;
+  z-index: 1;
+  top: auto;
+  right: auto;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 1PX;
+  transform-origin: 50% 100%;
+  transform: scaleY(0.5);
+}
+
+.textBoxFirst {
+  margin-top: ToRem750(40);
+  background: #f2f2f2 !important;
+  > .am-list-line {
+    background: #ffffff;
+  }
+  > .am-list-line:before {
+    content: '';
+    position: absolute;
+    background-color: #ddd;
+    display: block;
+    z-index: 1;
+    top: 0;
+    right: auto;
+    bottom: auto;
+    left: 0;
+    width: 100%;
+    height: 1PX;
+    transform-origin: 50% 100%;
+    transform: scaleY(0.5);
+  }
+  > .am-list-line:after {
+    content: '';
+    position: absolute;
+    background-color: #ddd;
+    display: block;
+    z-index: 1;
+    top: auto;
+    right: auto;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 1PX;
+    transform-origin: 50% 100%;
+    transform: scaleY(0.5);
+  }
+}
+
+//认证模块相关样式
+.step2-upload {
+  width: ToRem(486);
+  //height: ToRem(316);
+  border: 1px dashed #ccc;
+  background-color: #F6F6F6;
+  border-radius: ToRem(10);
+  margin: ToRem(50) auto 0;
+  position: relative;
+  .upload-default {
+    width: ToRem(486);
+    height: ToRem(316);
+    overflow: hidden;
+    i {
+      display: block;
+      width: ToRem(80);
+      height: ToRem(80);
+      background: url("../assets/add.png") no-repeat;
+      background-size: 100% 100%;
+      margin: ToRem(76) auto 0;
+    }
+    span {
+      display: block;
+      text-align: center;
+      font-size: ToRem(36);
+      margin-top: ToRem(40);
+      color: #999;
+    }
+    input {
+      position: absolute;
+      right: 0;
+      top: 0;
+      opacity: 0;
+      border: none;
+      width: 100%;
+      height: 100%;
+      cursor: pointer;
+      z-index: 10;
+    }
+  }
+  .upload-behind {
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 10;
+  }
+  .upload-img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    img {
+      width: 100%;
+      height: 100%;
+    }
+  }
+}
+
+.UploadRemark {
+  //width: ToRem(486);
+  height: ToRem(60);
+  margin: ToRem(20) auto 0;
+  text-align: center;
+}
+
+.UploadRemark span {
+  line-height: ToRem(60);
+  font-size: ToRem(20);
+  color: #999;
+}
+
+.show-artificial, .show-result {
+  width: 100%;
+  height: auto;
+  overflow: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.artificial-cur, .result-cur {
+  width: ToRem(530);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.WhiteSpaceArt1 {
+  width: 100%;
+  height: ToRem(100);
+}
+
+.artificial-cur img {
+  width: ToRem750(272);
+  height: ToRem750(240);
+}
+
+.result-cur img {
+  width: ToRem(308);
+  height: ToRem(308);
+}
+
+.artificial-cur span {
+  line-height: ToRem(60);
+  font-size: ToRem750(28);
+  color: #4A4A4A;
+}
+
+.artificial-cur .DivArtStatus, .result-cur .DivArtStatus {
+  margin-top: ToRem(30);
+  height: ToRem(60);
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.artificial-cur .DivArtStatus span, .result-cur .DivArtStatus span {
+  line-height: ToRem(60);
+  font-size: ToRem750(36);
+  color: #3F9BFF;
+  display: block;
+}
+
+.resultStatus {
+  width: 100%;
+  text-align: center;
+  span {
+    line-height: ToRem(60);
+    font-size: ToRem750(32);
+    color: #3F9BFF;
+    display: block;
+  }
+  span.fs20 {
+    font-size: ToRem750(40);
+  }
+  span.fs16 {
+    font-size: ToRem750(32);
+  }
+}
+
+.artificial-cur a {
+  margin-left: ToRem(20);
+}
+
+.artificial-cur a img {
+  width: ToRem750(150);
+  height: ToRem750(60);
+}
+
+.ArtificialButton {
+  //width:ToRem(200);
+  background: none;
+  border: none;
+  color: #0b2bf4;
+  margin: 0 auto;
+  margin-right: 0;
+  font-size: ToRem(30);
+}
+
+.ArtificialButton:before {
+  border: none !important;
+}
+
+.ErrorInfo {
+  width: 100%;
+  display: flex;
+  //height: ToRem(80);
+  align-items: center;
+}
+
+.ErrorInfo span {
+  font-size: ToRem(28);
+  color: #D0021B;
+}
+
+.JulpToIndexButton {
+  width: 100%;
+}
+
+.DivRemark1 {
+  //width: 100%;
+  //height: ToRem750(160);
+  display: flex;
+  align-items: center;
+  //justify-content: center;
+}
+
+.DivRemark1 span {
+  color: #D0021B;
+  font-size: ToRem750(28);
+  //line-height: ToRem750(100);
+}
+
+.DivRemark2 {
+  width: 100%;
+  height: ToRem750(136);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  //background: #A9E3F9;
+  background: #cacaca;
+  border-radius: ToRem750(10);
+  margin: ToRem750(20) 0;
+}
+
+.DivRemark2 span {
+  color: #00498A;
+  font-size: ToRem750(28);
+  line-height: ToRem750(56);
+}
+
+.c-openaccount-main {
+  width: 100%;
+  padding: ToRem750(0) ToRem750(56);
+  background: #ffffff;
+
+  .SpanTitle2 {
+    line-height: ToRem(56);
+    //padding-left:ToRem750(56);
+    padding-bottom: ToRem(20);
+  }
+
+  .DivReadInfo {
+    width: 100%;
+    padding: 0 ToRem750(56);
+  }
+
+  .DivReadInfo span {
+    color: #4A4A4A;
+    font-size: ToRem(28);
+    line-height: ToRem(56);
+  }
+
+  .ant-descriptions {
+    //padding-left:ToRem750(56);
+  }
+  .ant-descriptions-row > td {
+    padding-bottom: ToRem(20);
+  }
+
+  .am-list-line:after {
+    height: 0 !important;
+  }
+
+}
+
+.ButtonWrap {
+  width: 100%;
+  padding: ToRem750(0) ToRem750(56);
+}
+
+.AuthIndex-main {
+  width: 100%;
+
+  .am-list-content {
+    margin-left: ToRem(30);
+  }
+
+  .am-list-arrow {
+    margin-right: ToRem(30);
+  }
+}
+
+//input diabeld status style
+.TextBoxDisabled, .textBoxFirst {
+  .am-list-line {
+    .am-input-label {
+      color: #000000;
+    }
+  }
+
+  .am-input-control {
+    input:disabled {
+      color: #000000;
+      opacity: 1;
+      -webkit-text-fill-color: #000000;
+    }
+  }
+
+}
+
+.UploadOpenAccountFile {
+  width: 100%;
+
+  .SpanTitle2 {
+    padding-left: ToRem(30);
+  }
+  .uploadFileWrap {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: ToRem(20);
+    justify-content: space-around;
+
+    .uploadFileBox {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-top: ToRem(50);
+      text-align: center;
+
+      .uploadLabel {
+        color: #000000;
+        font-weight: 600;
+      }
+      .upload-default {
+        span {
+          display: none;
+        }
+      }
+    }
+  }
+
+  .UploadRemark {
+    font-size: ToRem(24);
+  }
+
+  .step2-upload {
+    width: ToRem(200);
+    height: ToRem(200);
+    margin-top: 0;
+
+    .upload-default {
+      width: ToRem(200);
+      height: ToRem(200);
+
+      i {
+        margin: ToRem(60) auto 0;
+      }
+    }
+  }
+
+  .am-button {
+    width: 90%;
+    margin: 0 auto;
+  }
+}
+
+//个人开户
+.openAccountProgress{
+  .am-list-item{
+    .am-input-control input:disabled{
+      color: #5f5f5f;
+      opacity: 1;
+      -webkit-text-fill-color: #5f5f5f;
+    }
+  }
+
+  .am-list-item.am-input-disabled .am-input-label{
+    color: #5f5f5f;
+  }
+
+}
+
+//个人开户结果
+.openaccount-result-top {
+  position: relative;
+  padding: 0 0 ToRem(144);
+  .manage-organization {
+    text-align: left;
+    color: #ffffff;
+    font-size: 12px;
+    line-height: ToRem(40);
+    padding: ToRem(40) ToRem(20);
+  }
+  .circle-box {
+    position: relative;
+    width: ToRem(210);
+    height: ToRem(210);
+    margin: ToRem(53) auto 0;
+    text-align: center;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    -ms-border-radius: 50%;
+    border-radius: 50%;
+    background: url("../assets/openaccount_circle.png") no-repeat center bottom;
+    background-size: 100%;
+    span {
+      position: absolute;
+      left: 0;
+      bottom: ToRem(31);
+      width: 100%;
+      font-size: 13px;
+      color: #ffffff;
+    }
+  }
+  .circle-box.success-box {
+    background: url("../assets/openaccount_circle.png") no-repeat center bottom;
+    background-size: 100%;
+  }
+  .circle-box.fail-box {
+    background: url("../assets/openaccount_circle.png") no-repeat center bottom;
+    background-size: 100%;
+  }
+  .wave-bg {
+    position: absolute;
+    bottom: ToRem(-65);
+    width: 100%;
+    height: ToRem(250);
+    background: url("../assets/wave.png") no-repeat center bottom;
+    background-size: 100%;
+  }
+}
+
+.openaccount-result-top.success-bg {
+  background: -webkit-linear-gradient(to right, #57bdff 20%, #367dff);
+  background: -moz-linear-gradient(to right, #57bdff 20%, #367dff);
+  background: -ms-linear-gradient(to right, #57bdff 20%, #367dff);
+  background: -o-linear-gradient(to right, #57bdff 20%, #367dff);
+  background: linear-gradient(to right, #57bdff 20%, #367dff);
+}
+
+.openaccount-result-top.fail-bg {
+  background: -webkit-linear-gradient(to right, #ff8457 20%, #ff3739);
+  background: -moz-linear-gradient(to right, #ff8457 20%, #ff3739);
+  background: -ms-linear-gradient(to right, #ff8457 20%, #ff3739);
+  background: -o-linear-gradient(to right, #ff8457 20%, #ff3739);
+  background: linear-gradient(to right, #ff8457 20%, #ff3739);
+}
+
+.openaccount-result-txt {
+  margin-top: ToRem(50);
+  text-align: center;
+  font-size: 15px;
+  font-weight: 600;
+  background: -webkit-linear-gradient(to right, #57beff 30%, #367dff);
+  background: -moz-linear-gradient(to right, #57beff 30%, #367dff);
+  background: -ms-linear-gradient(to right, #57beff 30%, #367dff);
+  background: -o-linear-gradient(to right, #57beff 30%, #367dff);
+  background: linear-gradient(to right, #57beff 30%, #367dff);
+  -webkit-background-clip: text;
+  -ms-background-clip: text;
+  -o-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  -ms-text-fill-color: transparent;
+  -o-text-fill-color: transparent;
+  position: relative;
+  z-index: 2;
+}
+
+.openaccount-result-txt.fail-txt {
+  background: -webkit-linear-gradient(to right, #ff8457 20%, #ff3739);
+  background: -moz-linear-gradient(to right, #ff8457 20%, #ff3739);
+  background: -ms-linear-gradient(to right, #ff8457 20%, #ff3739);
+  background: -o-linear-gradient(to right, #ff8457 20%, #ff3739);
+  background: linear-gradient(to right, #ff8457 20%, #ff3739);
+  -webkit-background-clip: text;
+  -ms-background-clip: text;
+  -o-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  -ms-text-fill-color: transparent;
+  -o-text-fill-color: transparent;
+}
+
+.fail-tips {
+  margin-top: ToRem(39);
+  padding: 0 ToRem(110);
+  text-align: center;
+  color: #8f8f8f;
+  display: none;
+}
+
+.fail-tips.block {
+  display: block;
+}
+
+.div-btn {
+  margin-top: ToRem(148);
+  padding: 0 ToRem(40);
+  text-align: center;
+  display: none;
+  button {
+    padding: ToRem(24) ToRem(101);
+    border: 1px solid #4389f5;
+    line-height: 15px;
+    font-size: 15px;
+    font-weight: 200;
+  }
+}
+
+.fail-btn {
+  margin-top: ToRem(48);
+  button.onrecharge {
+    float: left;
+    background: #4389f5;
+    color: #ffffff;
+  }
+}
+
+.div-btn.block {
+  display: block;
+}
+
+.CreditAuthBox {
+  text-align: left;
+  position: relative;
+  padding-bottom: ToRem(80);
+
+  .main {
+    padding: 0 ToRem(30) ToRem(30);
+  }
+  .CreditAuthContentTitle {
+    color: #4A4A4A;
+    font-weight: 700;
+    font-size: 1.125rem;
+    text-align: center;
+    margin-bottom: ToRem(10);
+  }
+
+  p {
+    text-indent: ToRem(48);
+    color: #4A4A4A;
+    font-size: ToRem(26);
+    line-height: ToRem(40);
+  }
+
+  .button-wrap {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+  }
+}
+
+.ReviewReasonBox {
+
+  .ant-descriptions-item-label {
+    font-size: ToRem(30);
+    color: #666666;
+  }
+
+  .ant-descriptions-item-content {
+    font-size: ToRem(30);
+    color: #000;
+  }
+}
+
+.ReviewReasonWrap {
+  padding: 0;
+
+  textarea {
+    font-size: ToRem(30);
+  }
+}
+
+.OpenAccountDetailBox {
+  .JulpToIndexButton {
+    width: 90%;
+    margin: 0 auto;
+  }
+  .ErrorMsg{
+    width: 90%;
+    margin: 0 auto;
+  }
+}
+
+.LoanLoginWrap {
+  .DivLogin {
+    height: ToRem750(460);
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    opacity: 0.8;
+    background: #E5E5E5;
+    border-radius: ToRem(10);
+  }
+
+  .LogoImage {
+    width: 100%;
+    height: ToRem750(120);
+  }
+
+  .LogoImage img {
+    width: ToRem750(442);
+    height: ToRem750(120);
+    margin-left: ToRem750(30);
+  }
+
+  .WhiteSpace2 {
+    width: 100%;
+    height: ToRem750(24);
+  }
+
+  .DivTitle {
+    height: ToRem750(100);
+    width: 100%;
+    display: flex;
+    align-items: center;
+  }
+
+  .DivTitle span {
+    color: #00498A;
+    font-size: ToRem750(48);
+    margin-left: ToRem750(30);
+  }
+  .DivLogin2 {
+    width: ToRem750(530);
+    display: flex;
+    flex-direction: column;
+  }
+
+  .WhiteSpace3 {
+    width: 100%;
+    height: ToRem750(30);
+  }
+
+  .LabelName {
+    width: 100%;
+    display: flex;
+    height: ToRem750(36);
+    align-items: center;
+    margin-top: ToRem750(24);
+  }
+
+  .LabelName span {
+    font-size: ToRem750(28);
+    color: #00498A;
+  }
+
+  .DivTextBox {
+    width: 100%;
+    height: ToRem750(80);
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid #BFBFBF;
+  }
+
+  .DivTextBox .TextBox {
+    padding: 0;
+    margin: 0;
+    height: ToRem750(60);
+    width: 100%;
+    background-color: transparent;
+  }
+
+  .DivTextBox .TextBox input {
+    font-size: ToRem750(36);
+  }
+
+  .DivTextBox2 {
+    width: 100%;
+    height: ToRem750(80);
+    border-bottom: 1px solid #BFBFBF;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+
+  .DivTextBox2 .TextBox {
+    padding: 0;
+    margin: 0;
+    height: ToRem750(60);
+    width: ToRem750(350);
+    display: flex;
+    background-color: transparent;
+  }
+
+  .DivTextBox2 .TextBox2 {
+    padding: 0;
+    margin: 0;
+    height: ToRem750(60);
+    width: ToRem750(470);
+    display: flex;
+    background-color: transparent;
+  }
+
+  .DivTextBox2 .TextBox input, .DivTextBox2 .TextBox2 input {
+    font-size: ToRem750(36);
+  }
+
+  .DivTextBox2 img {
+    height: ToRem750(60);
+    width: ToRem750(210);
+  }
+
+  .DivTextBox2 .EyeButton {
+    width: ToRem750(60);
+    height: ToRem750(60);
+    display: flex;
+    cursor: pointer;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .DivTextBox2 .EyeButton .img1 {
+    width: ToRem750(40);
+    height: ToRem750(18);
+  }
+
+  .DivTextBox2 .EyeButton .img2 {
+    width: ToRem750(44);
+    height: ToRem750(36);
+  }
+
+  .WhiteSpace4 {
+    width: 100%;
+    height: ToRem750(20);
+  }
+
+  .RegButton {
+    width: ToRem750(586);
+    height: ToRem750(154);
+    display: flex;
+    justify-content: center;
+    position: relative;
+    top: ToRem750(-50);
+  }
+
+  .RegNor {
+    //background-image: url("../images/btn_nor@2x.png");
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+  }
+
+  .RegPre {
+    //background-image: url("../images/btn_pre@2x.png");
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+  }
+
+  .RegButton .Button {
+    width: ToRem750(510);
+    height: ToRem750(80);
+    margin-top: ToRem750(10);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .RegButton .Button span {
+    color: #00498A;
+    font-size: ToRem750(40);
+  }
+
+  .am-list-line {
+    border: 0 !important;
+  }
+
+  .am-list-line:after {
+    height: 0 !important;
+  }
+
+  .ErrorInfo {
+    width: 100%;
+    display: flex;
+    height: ToRem750(80);
+    align-items: center;
+  }
+
+  .ErrorInfo span {
+    font-size: ToRem750(28);
+    color: #D0021B;
+  }
+
+  .DivRemark {
+    height: ToRem750(40);
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .DivRemark span {
+    color: #A9E3F9;
+    font-size: ToRem750(20);
+  }
+
+  .WhiteSpace5 {
+    width: 100%;
+    height: ToRem750(40);
+  }
+}
+
+.ErrorMsg {
+  span {
+    font-size: ToRem(30);
+  }
+  .ColorRed {
+    color: red;
+  }
+}
+
+.applyAuditStatusBox {
+  .ant-descriptions-item-content {
+    color: red;
+  }
+}
+
+.applyAuditStatusBox.passedColor {
+  .ant-descriptions-item-content {
+    color: green;
+  }
+}
+
+.CreditAuthCodeBox {
+  .am-list-line:after {
+    background-color: transparent;
+    height: 0 !important;;
+  }
+  .VerifyButton {
+    width: ToRem(210);
+  }
+}
+
+.UploadImage {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  background: #ffffff;
+  position: relative;
+
+  label {
+    font-size: ToRem(32) !important;
+    color: #000;
+    padding-left: 15px;
+    //margin-left: ToRem(20) !important;
+    line-height: ToRem750(88);
+    min-height: 44px;
+  }
+
+  //文件上传
+  .file-upload {
+    display: inline-block;
+    width: 100%;
+    height: ToRem750(100);
+    line-height: ToRem750(80);
+    position: relative;
+    p {
+      display: inline-block;
+      width: ToRem750(550);
+      text-indent: ToRem750(20);
+      font-size: ToRem(28);
+      color: #3F9BFF;
+      overflow: hidden;
+      vertical-align: middle;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
+    i {
+      display: inline-block;
+      border-radius: ToRem750(10);
+      background-color: #108ee9;
+      width: ToRem750(180);
+      height: ToRem750(80);
+      color: #fff;
+      font-size: ToRem750(40);
+      font-style: normal;
+      text-align: center;
+      line-height: ToRem750(80);
+    }
+    input {
+      position: absolute;
+      right: 0;
+      top: 0;
+      opacity: 0;
+      border: none;
+      width: 100%;
+      height: ToRem750(80);
+      cursor: pointer;
+    }
+  }
+}
+
+.UploadImage:after{
+  content: '';
+  position: absolute;
+  background-color: #ddd;
+  display: block;
+  z-index: 1;
+  top: auto;
+  right: auto;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 1PX;
+  transform-origin: 50% 100%;
+  transform: scaleY(0.5);
+}

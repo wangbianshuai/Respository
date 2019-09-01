@@ -1,0 +1,405 @@
+//内容移到view.css
+//@import "../index.scss";
+//
+//.Container {
+//  width: 100%;
+//  height: 100%;
+//  margin-bottom: 30px;
+//  background-image: url("../../assets/bg@2x.png");
+//  background-repeat: no-repeat;
+//  background-size: 100% ToRem750(1020);
+//}
+//
+//.Container2 {
+//  width: 100%;
+//  height: auto;
+//  overflow: auto;
+//  display: flex;
+//  flex-direction: column;
+//  align-items: center;
+//}
+//
+//.Container3 {
+//  width: ToRem(530);
+//  display: flex;
+//  flex-direction: column;
+//}
+//
+//.Container4 {
+//  width: ToRem(620);
+//  display: flex;
+//  flex-direction: column;
+//}
+//
+//.SpanTitle1{
+//  width: 100%;
+//  display: flex;
+//  justify-content: flex-start;
+//  align-items: center;
+//}
+//
+//.SpanTitle1 span{
+//  color: #4A4A4A;
+//  font-weight:700;
+//  font-size: ToRem750(48);
+//}
+//
+//.WhiteSpace1 {
+//  width: 100%;
+//  height: ToRem(50);
+//}
+//
+//.LogoImage {
+//  width: 100%;
+//  height: ToRem(82);
+//}
+//
+//.LogoImage img {
+//  width: ToRem(304);
+//  height: ToRem(82);
+//}
+//
+//.WhiteSpace2 {
+//  width: 100%;
+//  height: ToRem(38);
+//}
+//
+//.WhiteSpace3 {
+//  width: 100%;
+//  height: ToRem(30);
+//}
+//
+//.LabelName {
+//  width: 100%;
+//  display: flex;
+//  height: ToRem(38);
+//  align-items: center;
+//}
+//
+//.LabelName span {
+//  font-size: ToRem(28);
+//  color: #4A4A4A;
+//}
+//
+//.DivTextBox {
+//  width: 100%;
+//  height: ToRem(80);
+//  display: flex;
+//  align-items: center;
+//  border-bottom: 1px solid #4A4A4A;
+//}
+//
+//.DivTextBox .TextBox {
+//  padding: 0;
+//  margin: 0;
+//  height: ToRem(60);
+//  width: 100%;
+//  background-color: transparent;
+//}
+//
+//.DivTextBox .TextBox input {
+//  font-size: ToRem(36);
+//}
+//
+//.DivTextBox2 {
+//  width: 100%;
+//  height: ToRem(80);
+//  border-bottom: 1px solid #4A4A4A;
+//  display: flex;
+//  flex-direction: row;
+//  align-items: center;
+//}
+//
+//.DivTextBox2 .TextBox {
+//  padding: 0;
+//  margin: 0;
+//  height: ToRem(60);
+//  width: ToRem(350);
+//  display: flex;
+//  background-color: transparent;
+//}
+//
+//.DivTextBox2 .TextBox2 {
+//  padding: 0;
+//  margin: 0;
+//  height: ToRem(60);
+//  width: ToRem(470);
+//  display: flex;
+//  background-color: transparent;
+//}
+//
+//.DivTextBox2 .TextBox input, .DivTextBox2 .TextBox2 input {
+//  font-size: ToRem(36);
+//}
+//
+//.DivTextBox2 .VerifyButton {
+//  width: ToRem(180);
+//  height: ToRem(60);
+//  border-radius: ToRem(8);
+//  border: 1px solid #4A4A4A;
+//  display: flex;
+//  cursor: pointer;
+//  justify-content: center;
+//  align-items: center;
+//}
+//
+//.DivTextBox2 .VerifyButton span {
+//  color: #4A4A4A;
+//  font-size: ToRem(30);
+//}
+//
+//.VerifyButtonDisabled {
+//  border: 1px solid #ccc !important;
+//}
+//
+//.VerifyButtonDisabled span {
+//  color: #ccc !important;
+//  font-size: ToRem(24) !important;
+//}
+//
+//.DivVoice {
+//  width: 100%;
+//  height: ToRem(68);
+//  display: flex;
+//  justify-content: flex-end;
+//  align-items: center;
+//}
+//
+//.DivVoice a {
+//  color: #4A4A4A;
+//  font-size: ToRem(28);
+//  margin-right: ToRem(20);
+//  cursor: pointer;
+//}
+//
+//.DivTextBox2 .EyeButton {
+//  width: ToRem(60);
+//  height: ToRem(60);
+//  display: flex;
+//  cursor: pointer;
+//  justify-content: center;
+//  align-items: center;
+//}
+//
+//.DivTextBox2 .EyeButton .img1 {
+//  width: ToRem(40);
+//  height: ToRem(18);
+//}
+//
+//.DivTextBox2 .EyeButton .img2 {
+//  width: ToRem(44);
+//  height: ToRem(36);
+//}
+//
+//.WhiteSpace4 {
+//  width: 100%;
+//  height: ToRem(20);
+//}
+//
+//.Agreement {
+//  width: 100%;
+//  height: ToRem(40);
+//  display: flex;
+//  flex-direction: row;
+//  align-items: center;
+//}
+//
+//.Agreement .CheckBox {
+//  height: ToRem(40);
+//  margin-left: 0;
+//  padding-top: ToRem(9);
+//  padding-bottom: 0;
+//}
+//
+//.Agreement .CheckBox label {
+//  font-size: ToRem(24);
+//  color: #BFBFBF;
+//  cursor: pointer;
+//}
+//
+//.Agreement .CheckBox label span span {
+//  top: ToRem(8);
+//}
+//
+//.Agreement a {
+//  color: #2FA7E0;
+//  padding-top: ToRem(9);
+//  font-size: ToRem(24);
+//}
+//
+//.Agreement .a1 {
+//  margin-left: ToRem(50);
+//}
+//
+//.WhiteSpace5 {
+//  width: 100%;
+//  height: ToRem(50);
+//}
+//
+//.RegButton {
+//  width: ToRem(586);
+//  height: ToRem(154);
+//  display: flex;
+//  justify-content: center;
+//}
+//
+//.RegNor {
+//  background-image: url("../../assets/btn_nor@2x.png");
+//  background-repeat: no-repeat;
+//  background-size: 100% 100%;
+//}
+//
+//.RegPre {
+//  background-image: url("../../assets/btn_pre@2x.png");
+//  background-repeat: no-repeat;
+//  background-size: 100% 100%;
+//}
+//
+//.RegButton .Button {
+//  width: ToRem(510);
+//  height: ToRem(80);
+//  margin-top: ToRem(10);
+//  cursor: pointer;
+//  display: flex;
+//  align-items: center;
+//  justify-content: center;
+//}
+//
+//.RegButton .Button span {
+//  color: #00498A;
+//  font-size: ToRem(40);
+//}
+//
+//.phoneCode {
+//  width: 100%;
+//  height: ToRem(80);
+//  display: flex;
+//  flex-direction: row;
+//  align-items: center;
+//}
+//
+//.phoneCode img {
+//  width: ToRem(176);
+//  height: ToRem(60);
+//}
+//
+//.phoneCode .VerifyCode {
+//  height: ToRem(60);
+//  width: ToRem(300);
+//  padding: 0;
+//  margin: 0;
+//  border-bottom: 1px solid #4A4A4A;
+//}
+//
+//.phoneCode .VerifyCode input {
+//  padding-left: ToRem(10)
+//}
+//
+//.UserTypeSegmented {
+//  margin-top: ToRem(30);
+//  height: ToRem(60);
+//}
+//
+//.UserTypeSegmented div {
+//  font-size: ToRem(28) !important;
+//}
+//
+//.OpenAccountBox {
+//  background: #ffffff;
+//  padding-bottom: ToRem(60);
+//
+//  .OpenAccountCheckBox, .userAgreement {
+//    display: inline-block;
+//    vertical-align: middle;
+//  }
+//
+//  .userAgreement {
+//    font-size: ToRem(26);
+//    color: #3682ed;
+//  }
+//
+//  .OpenAccountCheckBoxView {
+//    padding-bottom: ToRem(60);
+//
+//    label {
+//      color: #5f5f5f;
+//    }
+//  }
+//
+//  .am-button {
+//    width: 86%;
+//    margin: 0 auto;
+//  }
+//
+//  .open-account-prompt {
+//    border-top: ToRem(10) solid #f9f9f9;
+//    background: #ffffff;
+//    padding: ToRem(36) ToRem(20);
+//
+//    .prompt {
+//      padding-top: ToRem(24);
+//      font-size: 12px;
+//      color: #2b2b2b;
+//      .prompt-tit {
+//        margin-bottom: ToRem(38);
+//        text-align: center;
+//        font-weight: 600;
+//        color: #808080;
+//        .line {
+//          display: inline-block;
+//          vertical-align: middle;
+//          width: ToRem(102);
+//          height: 2px;;
+//          margin: 0 ToRem(20);
+//          background: -webkit-linear-gradient(to right, #ffffff 20%, #b4b4b4);
+//          background: -moz-linear-gradient(to right, #ffffff 20%, #b4b4b4);
+//          background: -ms-linear-gradient(to right, #ffffff 20%, #b4b4b4);
+//          background: -o-linear-gradient(to right, #ffffff 20%, #b4b4b4);
+//          background: linear-gradient(to right, #ffffff 20%, #b4b4b4);
+//        }
+//        .toright-line {
+//          background: -webkit-linear-gradient(to left, #ffffff 20%, #b4b4b4);
+//          background: -moz-linear-gradient(to left, #ffffff 20%, #b4b4b4);
+//          background: -ms-linear-gradient(to left, #ffffff 20%, #b4b4b4);
+//          background: -o-linear-gradient(to left, #ffffff 20%, #b4b4b4);
+//          background: linear-gradient(to left, #ffffff 20%, #b4b4b4);
+//        }
+//      }
+//    }
+//
+//  }
+//}
+//
+//.aLookBankCode{
+//  color: #3F9BFF;
+//  font-size: ToRem(28);
+//}
+//
+//.DivTextBox2 .SearchButton {
+//  width: ToRem750(180);
+//  height: ToRem750(80);
+//  border-radius: ToRem750(10);
+//  background-color: #A9E3F9;
+//  display: flex;
+//  cursor: pointer;
+//  justify-content: center;
+//  align-items: center;
+//}
+//
+//.DivTextBox2 .SearchButton span {
+//  color: #00498A;
+//  font-size: ToRem750(40);
+//}
+//
+//.DivBankInfo {
+//  width: 100%;
+//  display: flex;
+//  flex-direction: column;
+//}
+//
+//.DivBankInfo p {
+//  width: 100%;
+//  color: #9B9B9B;
+//  font-size: ToRem(28);
+//  line-height: ToRem(40);
+//}
