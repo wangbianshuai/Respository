@@ -127,6 +127,9 @@ ProductBrandId uniqueidentifier not null,                       --商品品牌
 Model nvarchar(500),                                            --型号
 Spec nvarchar(500),                                             --规格
 Unit nvarchar(20),                                              --计量单位
+InitStock float default(0) not null,                            --初始库存
+InPrice money not null,                                         --进价
+OutPrice money not null,                                        --出价
 Remark nvarchar(4000),                                          --说明
 IsDelete tinyint not null default(0),                           --是否删除
 CreateUser uniqueidentifier not null,                           --创建人   
@@ -311,4 +314,181 @@ inner join t_Sale b on a.SaleId=b.Id and b.IsDelete=0
 left join t_Product c on a.ProductId=c.Id
 left join t_ProductType d on c.ProductTypeId=d.Id
 left join t_ProductBrand e on c.ProductBrandId=e.Id
+go
+
+--库存盘点
+drop table t_StockCheck
+go
+
+create table t_StockCheck
+(
+Id uniqueidentifier not null primary key default(newid()),      --主键
+ProductId uniqueidentifier not null,                            --商品Id
+ShouldStock float not null,                                     --应有库存
+RealStock float not null,                                       --实有库存
+CheckDate datetime not null,                                    --盘点日期
+CheckUser uniqueidentifier not null,                            --盘点人
+InPrice float not null,                                         --进价
+Remark nvarchar(200),                                           --备注
+IsDelete tinyint not null default(0),                           --是否删除
+CreateUser uniqueidentifier not null,                           --创建人   
+CreateDate datetime default(getdate()) not null,                --创建时间
+UpdateUser uniqueidentifier,                                    --更新人    
+UpdateDate datetime,                                            --更新时间
+RowVersion timestamp not null                                   --行版本
+)
+go
+
+--账目类型
+drop table t_BillType
+go
+
+create table t_BillType
+(
+Id uniqueidentifier not null primary key default(newid()),   --主键
+Name nvarchar(100) not null,
+IncomePayment tinyint not null, -- 1: 收入，2：支出
+Remark nvarchar(200),                                           --备注
+IsDelete tinyint not null default(0),                           --是否删除
+CreateUser uniqueidentifier not null,                           --创建人   
+CreateDate datetime default(getdate()) not null,                --创建时间
+UpdateUser uniqueidentifier,                                    --更新人    
+UpdateDate datetime,                                            --更新时间
+RowVersion timestamp not null                                   --行版本
+)
+go
+
+drop view v_BillType
+go
+
+create view v_BillType
+as
+select a.*,
+case when a.IncomePayment = 1 then '收入'  when a.IncomePayment = 2 then '支出' else'' end IncomePaymentName
+ from t_BillType a where IsDelete=0
+go
+
+--账目
+drop table t_Bill
+go
+
+create table t_Bill
+(
+Id uniqueidentifier not null primary key default(newid()),   --主键
+DataId uniqueidentifier,
+Amount money,
+BillTypeId uniqueidentifier not null,
+IncomePayment tinyint not null, -- 1: 收入，2：支出
+BillDate datetime not null default(getdate()),   
+Remark nvarchar(200),                                           --备注
+IsDelete tinyint not null default(0),                           --是否删除
+CreateUser uniqueidentifier not null,                           --创建人   
+CreateDate datetime default(getdate()) not null,                --创建时间
+UpdateUser uniqueidentifier,                                    --更新人    
+UpdateDate datetime,                                            --更新时间
+RowVersion timestamp not null                                   --行版本
+)
+go
+
+drop view v_Bill
+go
+
+create view v_Bill
+as
+select a.*,
+case when a.IncomePayment = 1 then '收入'  when a.IncomePayment = 2 then '支出' else'' end IncomePaymentName,
+case when a.IncomePayment = 2 then  0-a.Amount  else a.Amount end Amount2,
+e.Name as BillTypeName
+from t_Bill a
+left join t_BillType e on a.BillTypeId=e.Id
+where a.IsDelete=0
+go
+
+
+--个人账目类型
+drop table t_PersonBillType
+go
+
+create table t_PersonBillType
+(
+Id uniqueidentifier not null primary key default(newid()),   --主键
+Name nvarchar(100) not null,
+IncomePayment tinyint not null, -- 1: 收入，2：支出
+Remark nvarchar(200),                                           --备注
+IsDelete tinyint not null default(0),                           --是否删除
+CreateUser uniqueidentifier not null,                           --创建人   
+CreateDate datetime default(getdate()) not null,                --创建时间
+UpdateUser uniqueidentifier,                                    --更新人    
+UpdateDate datetime,                                            --更新时间
+RowVersion timestamp not null                                   --行版本
+)
+go
+
+drop view v_PersonBillType
+go
+
+create view v_PersonBillType
+as
+select a.*,
+case when a.IncomePayment = 1 then '收入'  when a.IncomePayment = 2 then '支出' else'' end IncomePaymentName
+ from t_PersonBillType a where IsDelete=0
+go
+
+drop table t_PersonBill
+go
+
+create table t_PersonBill
+(
+Id uniqueidentifier not null primary key default(newid()),   --主键
+Amount money,
+IncomePayment tinyint not null, -- 1: 收入，2：支出
+BillTypeId uniqueidentifier not null,
+BillDate datetime not null default(getdate()),   
+Remark nvarchar(200),                                           --备注
+IsDelete tinyint not null default(0),                           --是否删除
+CreateUser uniqueidentifier not null,                           --创建人   
+CreateDate datetime default(getdate()) not null,                --创建时间
+UpdateUser uniqueidentifier,                                    --更新人    
+UpdateDate datetime,                                            --更新时间
+RowVersion timestamp not null                                   --行版本
+)
+go
+
+drop view v_PersonBill
+go
+
+create view v_PersonBill
+as
+select a.*,
+case when a.IncomePayment = 1 then '收入'  when a.IncomePayment = 2 then '支出' else'' end IncomePaymentName,
+case when a.IncomePayment = 2 then  0-a.Amount  else a.Amount end Amount2
+from t_PersonBill a
+where a.IsDelete=0
+go
+
+-- 键值配置
+drop table t_Dictionary
+go
+
+create table t_Dictionary
+(
+Id uniqueidentifier not null primary key default(newid()),   --主键
+Name nvarchar(50) not null,                                -- 名称 
+Value nvarchar(2000),                                      -- 值
+Remark nvarchar(200),                                           --备注
+IsDelete tinyint not null default(0),                           --是否删除
+CreateUser uniqueidentifier not null,                           --创建人   
+CreateDate datetime default(getdate()) not null,                --创建时间
+UpdateUser uniqueidentifier,                                    --更新人    
+UpdateDate datetime,                                            --更新时间
+RowVersion timestamp not null                                   --行版本
+)
+go
+
+drop view v_Dictionary
+go
+
+create view v_Dictionary
+as
+select * from t_dictionary where IsDelete=0
 go
