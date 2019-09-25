@@ -75,7 +75,7 @@ namespace PurchaseSale.Web.Controllers
         /// <returns></returns>
         public HttpResponseMessage RequestAction(string entityName, string methodName, bool blGet)
         {
-            if (!JudgeRight()) return new HttpResponseMessage(HttpStatusCode.InternalServerError);
+            //if (!JudgeRight()) return new HttpResponseMessage(HttpStatusCode.InternalServerError);
 
             Func<string, string, Type> getClassType = (classNamespace, className) =>
             {

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace PurchaseSale.Entity
 {
-    [TableProperty(Name = "t_d_User", PrimaryKey = "UserId", NoSelectNames = "IsDelete,LoginPassword")]
+    [TableProperty(Name = "t_User", PrimaryKey = "UserId", NoSelectNames = "IsDelete,LoginPassword")]
     public class User : EntityModel, IEntity
     {
         /// <summary> 
@@ -30,38 +30,6 @@ namespace PurchaseSale.Entity
         /// 最近登录时间
         /// </summary>
         public DateTime LastLoginDate { get; set; }
-        /// <summary>
-        /// 数据权限
-        /// </summary>
-        public int DataRight { get; set; }
-        /// <summary>
-        /// 手机
-        /// </summary>
-        public string Phone { get; set; }
-        /// <summary>
-        /// 电话
-        /// </summary>
-        public string Telephone { get; set; }
-        /// <summary>
-        /// 传真
-        /// </summary>
-        public string Fax { get; set; }
-        /// <summary>
-        /// 地址
-        /// </summary>
-        public string Address { get; set; }
-        /// <summary>
-        /// 银行账号
-        /// </summary>
-        public string BankCardNo { get; set; }
-        /// <summary>
-        /// 开户行
-        /// </summary>
-        public string OpenBank { get; set; }
-        /// <summary> 
-        /// 备注
-        /// </summary> 
-        public string Remark { get; set; }
         /// <summary> 
         /// 逻辑删除，1：删除,0:正常
         /// </summary> 
@@ -70,6 +38,12 @@ namespace PurchaseSale.Entity
         /// 创建时间
         /// </summary> 
         public DateTime CreateDate { get; set; }
+
+        public string CreateUser { get; set; }
+
+        public string UpdateUser { get; set; }
+
+        public string UpdateDate { get; set; }
 
         public string RowVersion { get; set; }
 
@@ -92,23 +66,5 @@ namespace PurchaseSale.Entity
     [TableProperty(Name = "v_User", PrimaryKey = "UserId", NoSelectNames = "IsDelete,LoginPassword")]
     public class ViewUser : User
     {
-        /// <summary>
-        /// 数据权限
-        /// </summary>
-        public string DataRightName { get; set; }
-    }
-
-    [TableProperty(Name = "v_DealingsUser", PrimaryKey = "UserId")]
-    public class ViewDealingsUser : EntityModel, IEntity
-    {
-        public int UserType { get; set; }
-        /// <summary> 
-        /// 主键
-        /// </summary> 
-        public Guid UserId { get; set; }
-        /// <summary> 
-        /// 用户名
-        /// </summary> 
-        public string UserName { get; set; }
     }
 }
