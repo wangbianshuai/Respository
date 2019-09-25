@@ -63,6 +63,7 @@
     <Compile Include="Request.cs" />
     <Compile Include="RequestHandler.cs" />
     <Compile Include="RequestLog.cs" />
+    <Compile Include="UserToken.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\OpenDataAccess.Data\OpenDataAccess.Data.csproj">

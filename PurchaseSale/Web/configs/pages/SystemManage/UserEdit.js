@@ -44,10 +44,10 @@ function GetButtonProperties() {
 
 function GetProperties() {
     return [
-        GetTextBox2("Login_Name", "登录名", 1, 1, "", "请输入登录名", 50, false),
-        GetTextBox2("User_Name", "用户名", 2, 1, "", "请输入用户名", 50, false),
-        { ...GetTextBox2("Login_Password", "登录密码", 3, 1, "", "请输入登录密码", 50, false), IsJudgeNullable: false, ControlType: "password" },
-        { ...GetTextBox2("Login_AgainPassword", "确认确认", 4, 1, "", "请输入确认确认", 50, false), IsJudgeNullable: false, ControlType: "password" },
+        GetTextBox2("LoginName", "登录名", 1, 1, "", "请输入登录名", 50, false),
+        GetTextBox2("UserName", "用户名", 2, 1, "", "请输入用户名", 50, false),
+        { ...GetTextBox2("LoginPassword", "登录密码", 3, 1, "", "请输入登录密码", 50, false), IsJudgeNullable: false, ControlType: "password" },
+        { ...GetTextBox2("LoginAgainPassword", "确认确认", 4, 1, "", "请输入确认确认", 50, false), IsJudgeNullable: false, ControlType: "password" },
         GetButtonView()
     ]
 }

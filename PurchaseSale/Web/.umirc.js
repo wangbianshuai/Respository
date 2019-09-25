@@ -22,8 +22,8 @@ export default {
       },
     }],
   ],
-  publicPath: "/html/",
-  base: "/html/",
+  publicPath: "/",
+  base: "/",
   hash: true,
   runtimePublicPath: true,
   exportStatic: {

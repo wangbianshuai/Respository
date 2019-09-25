@@ -1,16 +1,16 @@
 module.exports= {
     Name: "User",
-    PrimaryKey: "User_Id",
+    PrimaryKey: "UserId",
     Properties: GetProperties()
 }
 
 function GetProperties() {
     return [
-        GetProperty("User_Id", "User_Id"),
-        GetProperty("User_Name", "用户名"),
-        GetProperty("Login_Name", "登录名"),
-        GetProperty("Last_Login_Date", "最近登录时间"),
-        GetProperty("Create_Date", "创建时间")
+        GetProperty("UserId", "UserId"),
+        GetProperty("UserName", "用户名"),
+        GetProperty("LoginName", "登录名"),
+        GetProperty("LastLoginDate", "最近登录时间"),
+        GetProperty("CreateDate", "创建时间")
     ]
 }
 

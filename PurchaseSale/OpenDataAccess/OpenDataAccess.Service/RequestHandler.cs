@@ -75,15 +75,8 @@ namespace OpenDataAccess.Service
                 }
                 this.SetEntityAndMethodName(request, request.EntityName, request.MethodName);
 
-                if (JudgeRight(request) || request.IsDirectRequest())
-                {
-                    obj = this.InvokeMethod(request, getClassType);
-                    responseContent = Parse.ToJson(obj);
-                }
-                else
-                {
-                    responseContent = Common.ToJson(new { Message = "登录信息过期，请重新登录！" });
-                }
+                obj = this.InvokeMethod(request, getClassType);
+                responseContent = Parse.ToJson(obj);
             }
             catch (Exception ex)
             {
@@ -109,16 +102,6 @@ namespace OpenDataAccess.Service
             return responseContent;
         }
 
-        bool JudgeRight(Request request)
-        {
-            if (request.EntityName.ToLower().Equals("user") && request.MethodName.ToLower().Equals("login")) return true;
-
-            string userId = request.GetParameterValue("LoginUserId");
-            string token = request.GetParameterValue("Token");
-            if (string.IsNullOrEmpty(userId) || string.IsNullOrEmpty(token)) return false;
-
-            return DataCache.JudgeToken(Guid.Parse(userId), token);
-        }
 
         private void SetEntityAndMethodName(Request request, string entityName, string methodName)
         {

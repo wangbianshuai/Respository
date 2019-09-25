@@ -35,8 +35,6 @@ namespace OpenDataAccess.Service
         public string RawUrl { get; set; }
         public string PathInfo { get; set; }
 
-        public Func<bool> IsDirectRequest { get; set; }
-
         public Request()
         {
             this.RequestId = Guid.NewGuid();

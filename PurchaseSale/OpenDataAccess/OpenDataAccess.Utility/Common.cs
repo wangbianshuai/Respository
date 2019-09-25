@@ -262,6 +262,24 @@ namespace OpenDataAccess.Utility
             return ConfigurationManager.AppSettings[key];
         }
 
+        public static T GetAppSettingsValue<T>(string name, object defaultValue = null)
+        {
+            string value = ConfigurationManager.AppSettings[name];
+
+            if (string.IsNullOrEmpty(value) && defaultValue != null) return Common.GetValue<T>(defaultValue);
+
+            return Common.GetValue<T>(value);
+        }
+
+        public static T GetValue<T>(object value)
+        {
+            object obj = ChangeType(value, typeof(T));
+
+            if (obj == null) return default(T);
+
+            return (T)obj;
+        }
+
         #region 该方法获取数据列宽度
         /// <summary>
         /// 该方法获取数据列宽度

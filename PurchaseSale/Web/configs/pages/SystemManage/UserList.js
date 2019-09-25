@@ -43,7 +43,7 @@ function GetKeyword() {
     const p = GetTextBox("Keyword", "", "Search", 2, 3, "请输入关键字")
     p.ColStyle = { paddingRight: 8, paddingLeft: 2 };
     p.IsCondition = true;
-    p.PropertyName = "Login_Name,User_Name";
+    p.PropertyName = "LoginName,UserName";
     p.OperateLogic = "like";
     p.EventActionName = "SearchQuery";
     p.PressEnterEventActionName = "SearchQuery";
@@ -68,7 +68,7 @@ function GetDataGridView() {
         Title: "用户信息",
         IsRowSelection: true,
         IsSingleSelection: true,
-        Properties: AssignProporties(User, ["Login_Name", "User_Name", "Last_Login_Date", { Name: "Create_Date", OrderByType: "desc" }])
+        Properties: AssignProporties(User, ["LoginName", "UserName", "LastLoginDate", { Name: "CreateDate", OrderByType: "desc" }])
     }
 }
 
@@ -92,7 +92,7 @@ function GetEventActions() {
         Type: "DataGridView/SelectRowToPage",
         DataGridView: "DataGridView1",
         AlertMessage: "AlertMessage",
-        PageUrl: "/ConfigManage/UserEdit?User_Id=#{User_Id}&MenuName=" + escape("修改")
+        PageUrl: "/ConfigManage/UserEdit?UserId=#{UserId}&MenuName=" + escape("修改")
     },
     {
         Name: "DeleteUser",

@@ -64,9 +64,7 @@ namespace PurchaseSale.Component
 
             Task.Run(() => UpdateLoginDate(entityData));
 
-
-            string token = DataCache.AddLoginToken(entityData.GetValue<Guid>("UserId"));
-            entityData.SetValue("Token", token);
+            entityData.SetValue("Token", UserToken.CreateToken(entityData.GetStringValue("UserId")));
 
             return entityData;
         }

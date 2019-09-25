@@ -87,7 +87,7 @@ var _ClientConfig = {
 function SetApiServiceHeader(data, serviceName) {
     data = data || { headers: {}, method: "GET" };
 
-    let clientId = "OpenDataApi";
+    let clientId = "PurchaseSaleWeb";
 
     if (_ClientConfig[serviceName]) clientId = _ClientConfig[serviceName];
 

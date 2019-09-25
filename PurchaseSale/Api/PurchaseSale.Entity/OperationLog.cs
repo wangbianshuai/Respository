@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace PurchaseSale.Entity
 {
-    [TableProperty(Name = "t_d_OperationLog", PrimaryKey="LogId")]
+    [TableProperty(Name = "t_OperationLog", PrimaryKey="LogId")]
     public class OperationLog : EntityModel, IEntity
     {
         public Guid LogId { get; set; }

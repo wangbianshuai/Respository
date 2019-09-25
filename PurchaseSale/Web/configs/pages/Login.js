@@ -19,8 +19,8 @@ function GetProperties() {
         {
             Name: "LoginTitle", Type: "SpanText", X: 1, Y: 1, Text: "账户登录", ClassName: "LoginHeader"
         },
-        GetTextBox2("Login_Name", "", 1, 1, "", "请输入登录名", 50, false, "user"),
-        GetTextBox2("Login_Password", "", 2, 1, "Password", "请输入登录密码", 50, false, "lock"),
+        GetTextBox2("LoginName", "", 1, 1, "", "请输入登录名", 50, false, "user"),
+        GetTextBox2("LoginPassword", "", 2, 1, "Password", "请输入登录密码", 50, false, "lock"),
         GetButton2("Login", "登录", "primary", 3, 1)
     ]
 }

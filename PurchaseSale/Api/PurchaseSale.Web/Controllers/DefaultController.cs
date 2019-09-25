@@ -82,9 +82,20 @@ namespace PurchaseSale.Web.Controllers
                 return Activator.CreateInstance(classNamespace, string.Format("{0}.{1}", classNamespace, className)).Unwrap().GetType();
             };
 
+            string content = string.Empty;
+
+            try
+            {
+                content = new OpenDataAccess.Service.RequestHandler().ProcessRequest(Code.Request.GetRequest(this, blGet, entityName, methodName), getClassType, entityName, methodName);
+            }
+            catch (Exception ex)
+            {
+                content = OpenDataAccess.Utility.Common.ToJson(new { Exception = ex.Message });
+            }
+
             return new HttpResponseMessage(HttpStatusCode.OK)
             {
-                Content = new StringContent(new OpenDataAccess.Service.RequestHandler().ProcessRequest(Code.Request.GetRequest(this, blGet, entityName, methodName), getClassType, entityName, methodName), Encoding.UTF8, "application/json")
+                Content = new StringContent(content, Encoding.UTF8, "application/json")
             };
         }
 

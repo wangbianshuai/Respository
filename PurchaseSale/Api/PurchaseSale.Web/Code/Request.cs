@@ -11,29 +11,18 @@ namespace PurchaseSale.Web.Code
 {
     public class Request
     {
-        static List<string> _DirectRequestList { get; set; }
-
-        static Request()
-        {
-            _DirectRequestList = new List<string>()
-            {
-                "vieworder/getorder2"
-            };
-        }
-
         public static OpenDataAccess.Service.Request GetRequest(ApiController controller, bool blGet, string entityName, string methodName)
         {
             OpenDataAccess.Service.Request request = new OpenDataAccess.Service.Request();
 
             request.Content = controller.Request.Content.ReadAsStringAsync().Result;
             request.IPAddress = GetClientIp(controller.Request);
-            request.OperationUser = GetParameterValue(controller.Request, "LoginUserId");
             request.PathAndQuery = controller.Request.RequestUri.PathAndQuery;
             request.QueryString = GetQueryString(controller);
             request.RawUrl = controller.Request.RequestUri.AbsoluteUri;
             request.RootPath = AppDomain.CurrentDomain.BaseDirectory;
             request.RequestType = blGet ? "GET" : "POST";
-            request.IsDirectRequest = () => JudgeDirectRequest(entityName, string.IsNullOrEmpty(methodName) ? string.Empty : methodName);
+            request.OperationUser = OpenDataAccess.Service.UserToken.ParseToken(GetHeadersValue(controller.Request, "token"));
 
             int index = request.PathAndQuery.IndexOf("api/");
             if (index >= 0)
@@ -46,12 +35,6 @@ namespace PurchaseSale.Web.Code
             }
 
             return request;
-        }
-
-        public static bool JudgeDirectRequest(string entityName, string methodName)
-        {
-            methodName = methodName.Split('(')[0];
-            return _DirectRequestList.Contains(string.Concat(entityName.ToLower(), "/", methodName.ToLower()));
         }
 
         private static NameValueCollection GetQueryString(ApiController controller)
@@ -96,6 +79,14 @@ namespace PurchaseSale.Web.Code
                 }
             }
 
+            return string.Empty;
+        }
+
+        public static string GetHeadersValue(HttpRequestMessage request, string name)
+        {
+            if (!request.Headers.Contains(name)) return string.Empty;
+            var values = request.Headers.GetValues(name);
+            if (values != null) return values.FirstOrDefault();
             return string.Empty;
         }
     }
