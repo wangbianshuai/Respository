@@ -25,24 +25,54 @@ namespace PurchaseSale.Web.Controllers
         /// GET请求
         /// </summary>
         /// <returns></returns>
-        public HttpResponseMessage Get(string entityName)
+        public async Task<HttpResponseMessage> Get(string entityName)
         {
-            return Get(entityName, string.Empty);
+            return await Get(entityName, string.Empty);
         }
 
         /// <summary>
         /// GET请求
         /// </summary>
         /// <returns></returns>
-        public HttpResponseMessage Get(string entityName, string methodName)
+        public async Task<HttpResponseMessage> Get(string entityName, string methodName)
         {
-            HttpResponseMessage response = new HttpResponseMessage(HttpStatusCode.OK)
-            {
-                Content = new ByteArrayContent(Convert.FromBase64String("R0lGODlhAQABAIABAAAAAP///yH5BAEAAAEALAAAAAABAAEAAAICTAEAOw=="))
-            };
-            response.Content.Headers.ContentType = new MediaTypeHeaderValue("image/gif");
+            return await Post(entityName, methodName);
+        }
 
-            return response;
+        /// <summary>
+        /// GET请求
+        /// </summary>
+        /// <returns></returns>
+        public async Task<HttpResponseMessage> Put(string entityName)
+        {
+            return await Put(entityName, string.Empty);
+        }
+
+        /// <summary>
+        /// PUT请求
+        /// </summary>
+        /// <returns></returns>
+        public async Task<HttpResponseMessage> Put(string entityName, string methodName)
+        {
+            return await Post(entityName, methodName);
+        }
+
+        /// <summary>
+        /// DELETE请求
+        /// </summary>
+        /// <returns></returns>
+        public async Task<HttpResponseMessage> Delete(string entityName)
+        {
+            return await Delete(entityName, string.Empty);
+        }
+
+        /// <summary>
+        /// GET请求
+        /// </summary>
+        /// <returns></returns>
+        public async Task<HttpResponseMessage> Delete(string entityName, string methodName)
+        {
+            return await Post(entityName, methodName);
         }
 
         /// <summary>
@@ -53,7 +83,7 @@ namespace PurchaseSale.Web.Controllers
         /// <returns></returns>
         public async Task<HttpResponseMessage> Post(string entityName)
         {
-            return await Task<HttpResponseMessage>.Run(() => { return this.RequestAction(entityName, string.Empty, false); });
+            return await Post(entityName, string.Empty);
         }
 
         /// <summary>
@@ -64,7 +94,7 @@ namespace PurchaseSale.Web.Controllers
         /// <returns></returns>
         public async Task<HttpResponseMessage> Post(string entityName, string methodName)
         {
-            return await Task<HttpResponseMessage>.Run(() => { return this.RequestAction(entityName, methodName, false); });
+            return await Task<HttpResponseMessage>.Run(() => { return this.RequestAction(entityName, methodName); });
         }
 
         /// <summary>
@@ -73,7 +103,7 @@ namespace PurchaseSale.Web.Controllers
         /// <param name="entityName"></param>
         /// <param name="methodName"></param>
         /// <returns></returns>
-        public HttpResponseMessage RequestAction(string entityName, string methodName, bool blGet)
+        public HttpResponseMessage RequestAction(string entityName, string methodName)
         {
             //if (!JudgeRight()) return new HttpResponseMessage(HttpStatusCode.InternalServerError);
 
@@ -86,7 +116,7 @@ namespace PurchaseSale.Web.Controllers
 
             try
             {
-                content = new OpenDataAccess.Service.RequestHandler().ProcessRequest(Code.Request.GetRequest(this, blGet, entityName, methodName), getClassType, entityName, methodName);
+                content = new OpenDataAccess.Service.RequestHandler().ProcessRequest(Code.Request.GetRequest(this, entityName, methodName), getClassType, entityName, methodName);
             }
             catch (Exception ex)
             {

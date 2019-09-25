@@ -31,7 +31,7 @@ export default {
   },
   proxy: {
     '/api/': {
-      target: 'http://localhost/ps',
+      target: 'http://localhost/ps/',
       changeOrigin: true
     }
   },

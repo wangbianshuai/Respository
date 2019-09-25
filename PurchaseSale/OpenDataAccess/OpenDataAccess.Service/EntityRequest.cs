@@ -382,6 +382,7 @@ namespace OpenDataAccess.Service
                 IDbTransaction trans = this.CurrentDataBase.BeginTransaction(this.CurrentDataBase.ConnectionString);
                 foreach (IEntityData entityData in _Request.Entities[_Request.Entity.Name])
                 {
+                    AddCreateUser(entityData);
                     blSucceed = this.InsertEntity(entityData, out primaryKey, trans);
                     if (!blSucceed)
                     {
@@ -404,6 +405,21 @@ namespace OpenDataAccess.Service
             {
                 return GetBoolDict(false);
             }
+        }
+
+        void AddCreateUser(IEntityData entityData)
+        {
+            var p= this.EntityType.Properties.Where(w => w.Name.Equals("CreateUser")).FirstOrDefault();
+            if (p != null) entityData.SetValue(p.Name, this._Request.OperationUser);
+        }
+
+        void AddUpdateUser(IEntityData entityData)
+        {
+            var p = this.EntityType.Properties.Where(w => w.Name.Equals("UpdateUser")).FirstOrDefault();
+            if (p != null) entityData.SetValue(p.Name, this._Request.OperationUser);
+
+            p = this.EntityType.Properties.Where(w => w.Name.Equals("UpdateDate")).FirstOrDefault();
+            if (p != null) entityData.SetValue(p.Name, DateTime.Now);
         }
 
         public object Update()
@@ -429,6 +445,8 @@ namespace OpenDataAccess.Service
                         return GetMessageDict(message);
                     }
                 }
+
+                AddUpdateUser(entityData);
                 return GetBoolDict(this.UpdateEntity(_QueryRequest.ToQuery(), entityData));
             }
             else

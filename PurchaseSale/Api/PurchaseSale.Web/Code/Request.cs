@@ -11,7 +11,7 @@ namespace PurchaseSale.Web.Code
 {
     public class Request
     {
-        public static OpenDataAccess.Service.Request GetRequest(ApiController controller, bool blGet, string entityName, string methodName)
+        public static OpenDataAccess.Service.Request GetRequest(ApiController controller, string entityName, string methodName)
         {
             OpenDataAccess.Service.Request request = new OpenDataAccess.Service.Request();
 
@@ -21,7 +21,7 @@ namespace PurchaseSale.Web.Code
             request.QueryString = GetQueryString(controller);
             request.RawUrl = controller.Request.RequestUri.AbsoluteUri;
             request.RootPath = AppDomain.CurrentDomain.BaseDirectory;
-            request.RequestType = blGet ? "GET" : "POST";
+            request.RequestType = controller.Request.Method.Method;
             request.OperationUser = OpenDataAccess.Service.UserToken.ParseToken(GetHeadersValue(controller.Request, "token"));
 
             int index = request.PathAndQuery.IndexOf("api/");

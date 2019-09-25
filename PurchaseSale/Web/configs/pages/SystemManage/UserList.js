@@ -85,14 +85,14 @@ function GetEventActions() {
     {
         Name: "ToEditPage",
         Type: "Page/ToPage",
-        PageUrl: "/ConfigManage/UserEdit"
+        PageUrl: "/SystemManage/UserEdit"
     },
     {
         Name: "EditUser",
         Type: "DataGridView/SelectRowToPage",
         DataGridView: "DataGridView1",
         AlertMessage: "AlertMessage",
-        PageUrl: "/ConfigManage/UserEdit?UserId=#{UserId}&MenuName=" + escape("修改")
+        PageUrl: "/SystemManage/UserEdit?UserId=#{UserId}&MenuName=" + escape("修改")
     },
     {
         Name: "DeleteUser",

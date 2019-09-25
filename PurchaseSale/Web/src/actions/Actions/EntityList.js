@@ -10,7 +10,7 @@ export default class EntityList extends BaseIndex {
 
     SearchQuery(id, actionType, data) {
         const { RequestList } = data;
-        const payload = { Action: this.GetAction(id, actionType) };
+        const payload = { Action: this.GetAction(id, actionType, false) };
 
         payload.RequestList = RequestList;
 

@@ -97,7 +97,7 @@ function GetEventActions() {
     return [{
         Name: "BackToLast",
         Type: "Page/ToPage",
-        PageUrl: "/ConfigManage/UserList"
+        PageUrl: "/SystemManage/UserList"
     },
     {
         Name: "SaveEntityData",

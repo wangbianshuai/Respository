@@ -67,6 +67,7 @@ export default class Index {
     }
 
     SetResponseData(id, actionType, data) {
+        if (data && data.Action && data.Action.IsCheckedId && !this.Receives[id]) return false;
         const key = "Set" + this.ActionTypeKeys[actionType];
         if (this[key]) return this[key](id, actionType, data);
         else return this.SetApiResponse(data);
@@ -92,8 +93,9 @@ export default class Index {
         return stateActionTypes;
     }
 
-    GetAction(id, actionType) {
-        return { Id: id, ActionType: actionType, Time: new Date().getTime() };
+    GetAction(id, actionType, isCheckedId) {
+        isCheckedId = isCheckedId === undefined ? true : isCheckedId;
+        return { Id: id, ActionType: actionType, Time: new Date().getTime(), IsCheckedId: isCheckedId };
     }
 
     JudgeNullable(data, entity) {
