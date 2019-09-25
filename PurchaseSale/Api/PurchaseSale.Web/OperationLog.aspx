@@ -1,1 +1,1 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="OperationLog.aspx.cs" Inherits="PurchaseSale.Entity.OperationLog"     ValidateRequest="false" EnableEventValidation="false" EnableViewState="false"%>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="OperationLog.aspx.cs" Inherits="PurchaseSale.Web.OperationLog"     ValidateRequest="false" EnableEventValidation="false" EnableViewState="false"%>

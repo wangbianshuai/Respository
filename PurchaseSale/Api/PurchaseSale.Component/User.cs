@@ -91,7 +91,7 @@ namespace PurchaseSale.Component
             parameterList.Add(this.CurrentDataBase.InParameter("@LoginPassword", loginPassword));
 
             IQuery query = new Query(this.EntityType.TableName, this.EntityType.Name);
-            query.Select("LoginName,UserName,UserId,LastLoginDate,DataRight");
+            query.Select("LoginName,UserName,UserId,LastLoginDate");
             query.Where("where LoginName=@LoginName and LoginPassword=@LoginPassword", parameterList);
 
             return this.SelectEntity(query);

@@ -1,1 +1,1 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="download.aspx.cs" Inherits="PurchaseSale.Entity.download" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="download.aspx.cs" Inherits="PurchaseSale.Web.download" %>
