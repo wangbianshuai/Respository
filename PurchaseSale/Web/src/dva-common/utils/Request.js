@@ -39,7 +39,6 @@ function FetchRequest(url, data, resKey, serviceName, headers, callback) {
         data = SetParamsHeader(data, headers);
         url = GetFullUrl(url);
         if (callback) return SyncAjax(url, data, resKey, callback);
-        data.credentials = "include";
         return fetch(url, data).then(res => SetResult(res)).then(d => HttpResponse.GetResponse(d, resKey), res => HttpResponse.GetErrorResponse(res));
     }
     catch (error) {
