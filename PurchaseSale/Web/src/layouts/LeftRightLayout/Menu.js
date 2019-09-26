@@ -19,7 +19,9 @@ function GetSystemManageNavNenu() {
     menuList.push(AddMenu("Dictionary2List", "键值配置", false, "table", "/SystemManage/Dictionary2List"));
     menuList.push(AddMenu("Dictionary2Edit", "新增", true, "form", "/SystemManage/Dictionary2Edit", "", null, false, "键值配置", "/SystemManage/Dictionary2List", null, true));
 
-    return AddNavMenu("SystemManage", "系统管理", false, menuList, true, ["UserList","Dictionary2List"]);
+    menuList.push(AddMenu("OperationLog", "操作日志", false, "table", "/SystemManage/OperationLog"));
+
+    return AddNavMenu("SystemManage", "系统管理", false, menuList, true, ["UserList", "Dictionary2List", "OperationLog"]);
 }
 
 function AddNavMenu(key, name, isRight, menuList, IsVisible, MenuKeys) {

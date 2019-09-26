@@ -7,7 +7,7 @@ export default class DataGridView extends BaseIndex {
         if (!action.Parameters) this.InitSearchQueryAction(props, action);
 
         else action.IsSearch = props.Property.Type !== "DataGridView";
-        this.SearchData(props, action.Parameters, props.PageIndex || 1, props.PageSize || 10);
+        this.SearchData(props, action.Parameters, props.PageIndex || 1, props.PageSize || 10, action.IsClearQuery);
     }
 
     InitSearchQueryAction(props, action) {
@@ -21,18 +21,19 @@ export default class DataGridView extends BaseIndex {
         action.Parameters = { DataGridView, SearchButton, SearchView, AlertMessage, ExpandSearchQueryLoad }
     }
 
-    SearchData(props, parameters, pageIndex, pageSize) {
+    SearchData(props, parameters, pageIndex, pageSize, isClearQuery) {
         const { DataGridView, SearchButton } = parameters;
         const { ActionTypes, Invoke, EntitySearchQuery } = DataGridView;
         const { SearchQuery } = ActionTypes;
         const { EventActions, IsData } = props;
 
-        const ConditionList = this.GetConditionList(parameters);
+        const ConditionList = this.GetConditionList(parameters, isClearQuery);
         if (ConditionList === false) return;
 
         const queryInfo = this.GetQueryInfo(DataGridView);
         queryInfo.WhereFields = ConditionList;
 
+        DataGridView.SearchButton = SearchButton;
         DataGridView.SetDataLoading(true);
         SearchButton && SearchButton.SetDisabled(true);
 
@@ -45,7 +46,9 @@ export default class DataGridView extends BaseIndex {
         const { EventActions, Property, IsData } = props;
         const action = EventActions.GetAction(Property.EventActionName);
         if (!action.Parameters) this.InitSearchQueryAction(props, action);
-        const { SearchButton, AlertMessage, ExpandSearchQueryLoad } = action.Parameters;
+        const { AlertMessage, ExpandSearchQueryLoad } = action.Parameters;
+
+        const SearchButton = Property.SearchButton || action.Parameters.SearchButton;
 
         let pageRecord = data.PageRecord || 0;
         if (data.PageInfo) pageRecord = data.PageInfo.PageRecord;
@@ -65,17 +68,25 @@ export default class DataGridView extends BaseIndex {
         if (ExpandSearchQueryLoad) ExpandSearchQueryLoad({ data, props })
     }
 
-    GetConditionList(parameters) {
+    GetConditionList(parameters, isClearQuery) {
         const { SearchView } = parameters;
         if (!SearchView) return {};
 
         const conditionList = [];
         SearchView.Properties.forEach(p => {
             const name = p.PropertyName || p.Name;
-            if (p.IsCondition && p.GetValue) conditionList.push({ Name: name, Label: p.Label, OperateLogic: p.OperateLogic || "=", DataType: p.DataType || "string", Value: p.GetValue() });
+            if (p.IsCondition && p.GetValue) conditionList.push({ Name: name, Label: p.Label, OperateLogic: p.OperateLogic || "=", DataType: p.DataType || "string", Value: this.GetPropertyValues(p, isClearQuery) });
         });
 
         return conditionList;
+    }
+
+    GetPropertyValues(p, isClearQuery) {
+        if (isClearQuery) {
+            p.SetValue(p.DefaultValue);
+            return p.DefaultValue;
+        }
+        return p.GetValue();
     }
 
     GetQueryInfo(dataGridView) {
