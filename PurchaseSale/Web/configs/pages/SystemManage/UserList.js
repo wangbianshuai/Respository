@@ -65,6 +65,8 @@ function GetDataGridView() {
         Type: "DataGridView",
         EntitySearchQuery: DataActionTypes.SearchQuery,
         EventActionName: "SearchQuery",
+        IsDiv:true,
+        ClassName:"DivInfoView3",
         IsRowSelection: true,
         IsSingleSelection: true,
         Properties: AssignProporties(User, ["LoginName", "UserName", "LastLoginDate", { Name: "CreateDate", OrderByType: "desc" }])

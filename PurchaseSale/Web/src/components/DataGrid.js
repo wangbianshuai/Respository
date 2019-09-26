@@ -1,5 +1,5 @@
 import React, { Component } from "react"
-import { Table, Alert, Pagination } from "antd"
+import { Table, Alert, Pagination } from "antd";
 const { Column } = Table;
 
 export default class DataGrid extends Component {
@@ -108,6 +108,7 @@ export default class DataGrid extends Component {
 
     GetRowClassName(key) {
         const list = ["ant-table-row", "ant-table-row-level-0"]
+
         if (key !== undefined && this.state.SelectedRowKey === key) list.push("RowSelected")
         return list.join(" ")
     }

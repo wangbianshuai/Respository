@@ -11,6 +11,10 @@ body {
   background-color: #e6f7ff;
 }
 
+.ant-table-row-selected td{
+  background-color: #e6f7ff !important;
+}
+
 input:read-only,textarea:read-only{
   color: #1890ff;
 }

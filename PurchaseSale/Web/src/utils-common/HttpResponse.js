@@ -8,6 +8,7 @@ export function GetResponseData(d, resKey) {
     if (d.Exception || d.Message) {
         const msg = d.Exception || d.Message;
         obj = { IsSuccess: false, Message: msg }
+        if (d.IsReLogin) obj.IsReLogin = true;
     }
     else if (resKey) {
         if (d && d[resKey]) obj = d[resKey];

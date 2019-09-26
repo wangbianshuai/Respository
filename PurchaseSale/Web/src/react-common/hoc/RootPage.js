@@ -73,7 +73,9 @@ export default (WrapComponent) => class RootPage extends BaseIndex {
     }
 
     SetResponseMessage(d, stateName) {
-        if (d && d.IsReLogin && d.IsSuccess === false && !this.IsLoginPage()) {
+        var data = d.Data ? d.Data : d;
+        if (Common.IsArray(data) && data.length > 0) data = data[0];
+        if (data && data.IsReLogin && data.IsSuccess === false && !this.IsLoginPage()) {
             this.ToLogin();
             return true;
         }

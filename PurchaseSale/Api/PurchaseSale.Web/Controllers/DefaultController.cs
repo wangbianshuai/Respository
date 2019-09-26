@@ -113,20 +113,21 @@ namespace PurchaseSale.Web.Controllers
             };
 
             string content = string.Empty;
+            string userId = string.Empty;
 
             try
             {
-                content = new OpenDataAccess.Service.RequestHandler().ProcessRequest(Code.Request.GetRequest(this, entityName, methodName), getClassType, entityName, methodName);
+                userId = OpenDataAccess.Service.UserToken.ParseToken(Code.Request.GetHeadersValue(this.Request, "token"));
             }
             catch (Exception ex)
             {
-                content = OpenDataAccess.Utility.Common.ToJson(new { Exception = ex.Message });
+                content = OpenDataAccess.Utility.Common.ToJson(new { IsReLogin = true, Exception = ex.Message });
+                userId = null;
             }
 
-            return new HttpResponseMessage(HttpStatusCode.OK)
-            {
-                Content = new StringContent(content, Encoding.UTF8, "application/json")
-            };
+            if (userId != null) content = new OpenDataAccess.Service.RequestHandler().ProcessRequest(Code.Request.GetRequest(this, entityName, methodName, userId), getClassType, entityName, methodName);
+
+            return new HttpResponseMessage(HttpStatusCode.OK) { Content = new StringContent(content, Encoding.UTF8, "application/json") };
         }
 
         bool JudgeRight()

@@ -4,6 +4,7 @@ import DataGrid from "./DataGrid";
 import BaseIndex from "./BaseIndex";
 import { ConnectAction } from "ReactCommon";
 import { Card } from "antd";
+import styles from "../styles/View.css";
 
 class DataGridView extends BaseIndex {
     constructor(props) {
@@ -174,6 +175,11 @@ class DataGridView extends BaseIndex {
                 </Card>
             )
         }
+
+        let className = this.Property.ClassName;
+        if (className && styles[className]) className = styles[className];
+
+        if (this.Property.IsDiv) return <div className={className} style={this.Property.Style}>{this.RenderDataView()}</div>
         else return this.RenderDataView();
     }
 }
