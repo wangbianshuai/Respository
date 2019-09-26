@@ -16,9 +16,9 @@ namespace PurchaseSale.Web.Controllers
         /// OPTIONS请求
         /// </summary>
         /// <returns></returns>
-        public string Options()
+        public HttpResponseMessage Options()
         {
-            return null;
+            return new HttpResponseMessage(HttpStatusCode.OK);
         }
 
         /// <summary>
@@ -103,7 +103,7 @@ namespace PurchaseSale.Web.Controllers
         /// <param name="entityName"></param>
         /// <param name="methodName"></param>
         /// <returns></returns>
-        public HttpResponseMessage RequestAction(string entityName, string methodName)
+        HttpResponseMessage RequestAction(string entityName, string methodName)
         {
             //if (!JudgeRight()) return new HttpResponseMessage(HttpStatusCode.InternalServerError);
 

@@ -39,6 +39,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Dictionary2.cs" />
     <Compile Include="PersonBill.cs" />
     <Compile Include="User.cs" />
     <Compile Include="OperationLog.cs" />
