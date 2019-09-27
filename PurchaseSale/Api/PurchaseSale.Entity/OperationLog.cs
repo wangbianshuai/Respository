@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 namespace PurchaseSale.Entity
 {
     [TableProperty(Name = "t_OperationLog", PrimaryKey="LogId")]
+    [RequestMethod(IsDelete = false, IsPost = false, IsPut = false, IsGet = false)]
     public class OperationLog : EntityModel, IEntity
     {
         public Guid LogId { get; set; }
@@ -36,6 +37,7 @@ namespace PurchaseSale.Entity
     }
 
     [TableProperty(Name = "v_OperationLog", PrimaryKey = "LogId")]
+    [RequestMethod(IsDelete = false, IsPost = false, IsPut = false)]
     public class ViewOperationLog : OperationLog
     {
         public string UserName { get; set; }

@@ -9,7 +9,7 @@ const DataActionTypes = {
     DeleteEntityData: 201
 };
 
-const Entity = { Name: Dictionary2.Name, PrimaryKey: Dictionary2.PropertyPrimaryKey || Dictionary2.PrimaryKey }
+const Entity = { Name: Dictionary2.Name, PrimaryKey: Dictionary2.PrimaryKey, ViewName: "ViewDictionary2" }
 
 module.exports = {
     Name: "Dictionary2List",
@@ -65,11 +65,11 @@ function GetDataGridView() {
         Type: "DataGridView",
         EntitySearchQuery: DataActionTypes.SearchQuery,
         EventActionName: "SearchQuery",
-        IsDiv:true,
-        ClassName:"DivInfoView3",
+        IsDiv: true,
+        ClassName: "DivInfoView3",
         IsRowSelection: true,
         IsSingleSelection: true,
-        Properties: AssignProporties(Dictionary2, ["Name", "Value", "Remark", { Name: "CreateDate", OrderByType: "desc" }])
+        Properties: AssignProporties(Dictionary2, ["Name", "Value", "Remark", { Name: "CreateDate", OrderByType: "desc" }, { Name: "RowVersion", IsVisible: false }])
     }
 }
 

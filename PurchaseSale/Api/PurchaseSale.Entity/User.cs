@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 namespace PurchaseSale.Entity
 {
     [TableProperty(Name = "t_User", PrimaryKey = "UserId", NoSelectNames = "IsDelete,LoginPassword")]
+    [RequestMethod(IsDelete = false)]
     public class User : EntityModel, IEntity
     {
         /// <summary> 
@@ -64,6 +65,7 @@ namespace PurchaseSale.Entity
     }
 
     [TableProperty(Name = "v_User", PrimaryKey = "UserId", NoSelectNames = "IsDelete,LoginPassword")]
+    [RequestMethod(IsDelete = false, IsPost = false, IsPut = false)]
     public class ViewUser : User
     {
     }

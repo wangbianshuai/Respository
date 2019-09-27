@@ -16,6 +16,8 @@ export default class DataGrid extends BaseIndex {
             return;
         }
 
+        const selectDataList = DataGridView.GetSelectDataList();
+
         if (selectRowKeys.length > 0 && AlertMessage) AlertMessage.SetValue("")
 
         //设置接收数据行数返回数据
@@ -29,7 +31,7 @@ export default class DataGrid extends BaseIndex {
         const onOk = () => {
             Property.SetDisabled(true);
 
-            EventActions.Invoke(DataActionType, { SelectRowKeys: selectRowKeys, Entity: DataGridView.Entity, EntityData: entityData })
+            EventActions.Invoke(DataActionType, { SelectRowKeys: selectRowKeys, Entity: DataGridView.Entity, EntityData: entityData, SelectDataList: selectDataList })
         };
 
         if (Property.ConfirmTip) EventActions.Confirm(Property.ConfirmTip, onOk);

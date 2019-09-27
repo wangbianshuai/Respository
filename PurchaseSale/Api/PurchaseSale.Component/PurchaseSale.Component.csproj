@@ -43,6 +43,7 @@
   <ItemGroup>
     <Compile Include="Bill.cs" />
     <Compile Include="BillType.cs" />
+    <Compile Include="Dictionary2.cs" />
     <Compile Include="PersonBill.cs" />
     <Compile Include="User.cs" />
     <Compile Include="CommonOperation.cs" />

@@ -7,7 +7,7 @@ const DataActionTypes = {
     SearchQuery: 400,
 };
 
-const Entity = { Name: OperationLog.Name, PrimaryKey: OperationLog.PrimaryKey }
+const Entity = { Name: OperationLog.Name, PrimaryKey: OperationLog.PrimaryKey, ViewName: "ViewOperationLog" }
 
 module.exports = {
     Name: "OperationLog",
@@ -99,11 +99,9 @@ function GetLookDetail() {
     return {
         Name: "LookDetail",
         IsOpenPage: true,
-        PageUrl: "/OperationLog.aspx?Path={LogPath}"
+        PageUrl: "/OperationLog.aspx?Path=#{LogPath}"
     }
 }
-
-
 
 function GetEventActions() {
     return [{

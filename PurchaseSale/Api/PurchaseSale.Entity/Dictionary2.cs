@@ -7,6 +7,7 @@ using OpenDataAccess.Entity;
 namespace PurchaseSale.Entity
 {
     [TableProperty(Name = "t_Dictionary", PrimaryKey = "Id", NoSelectNames = "IsDelete")]
+    [RequestMethod(IsDelete = false)]
     public class Dictionary2 : EntityModel, IEntity
     {
         /// <summary>
@@ -64,6 +65,7 @@ namespace PurchaseSale.Entity
     }
 
     [TableProperty(Name = "v_Dictionary", PrimaryKey = "Id", NoSelectNames = "IsDelete")]
+    [RequestMethod(IsDelete = false, IsPost = false, IsPut = false)]
     public class ViewDictionary2 : Dictionary2
     {
     }

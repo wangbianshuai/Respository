@@ -3,7 +3,7 @@ export default (name) => {
         Name: name + "Service",
         ServiceName: "ApiService",
         ActionList: [
-            post("SearchQuery", name, "SearchQuery", name, true),
+            post("SearchQuery", name, "SearchQuery", "View" + name, true),
             post("Insert", name, "SaveEntityData", null, true, true),
             put("Update", name, "SaveEntityData", null, true, true),
             delete2("Delete", name, "DeleteEntityData", null, true, true),

@@ -26,7 +26,8 @@ export default class EntityList extends BaseIndex {
 
     DeleteEntityData(id, actionType, data) {
         const primaryKey = data.SelectRowKeys[0];
-        const pathQuery = `(${primaryKey})`;
+        const { RowVersion } = data.SelectDataList[0];
+        const pathQuery = `/Delete2(${primaryKey})?RowVersion=` + RowVersion;
         this.DvaActions.Dispatch(this.ServiceName, "Delete", { PathQuery: pathQuery, Action: this.GetAction(id, actionType) });
     }
 

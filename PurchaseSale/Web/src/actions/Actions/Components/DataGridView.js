@@ -14,8 +14,10 @@ export default class DataGridView extends BaseIndex {
     SearchQuery(id, actionType, data) {
         const { QueryInfo, PageSize, PageIndex, Entity, IsData } = data;
 
-        const dataUrl = `${Entity.Name}?$query=true&$data=true&pagesize=${PageSize}&pageindex=${PageIndex}`;
-        const pageUrl = `${Entity.Name}?$query=true&$page=true&pagesize=${PageSize}&pageindex=${PageIndex}`;
+        const entityName = Entity.ViewName || Entity.Name;
+
+        const dataUrl = `${entityName}?$query=true&$data=true&pagesize=${PageSize}&pageindex=${PageIndex}`;
+        const pageUrl = `${entityName}?$query=true&$page=true&pagesize=${PageSize}&pageindex=${PageIndex}`;
 
         const RequestList = [];
 
