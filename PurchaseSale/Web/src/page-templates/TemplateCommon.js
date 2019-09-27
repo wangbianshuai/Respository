@@ -44,7 +44,7 @@ export default class TemplateCommon {
         return (state, ownProps) => {
             const states = {};
             config.ActionList.forEach(a => {
-                if (actionNames && actionNames.indexOf(a.ActionName) >= 0) states[a.ActionName] = state[getServiceName(a.ServiceName)][a.StateName]
+                if (a.IsExpand || (actionNames && actionNames.indexOf(a.ActionName) >= 0)) states[a.ActionName] = state[getServiceName(a.ServiceName)][a.StateName]
             });
 
             const props = StaticIndex.MapStateToProps(state, ownProps, states);

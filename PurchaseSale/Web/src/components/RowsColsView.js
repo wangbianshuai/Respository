@@ -41,7 +41,7 @@ export default class RowsColsView extends BaseIndex {
         if (className && styles[className]) className = styles[className];
 
         return (
-            <div className={className}>
+            <div className={className} style={this.Property.Style}>
                 {this.RenderFormView()}
             </div>
         )

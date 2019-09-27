@@ -1,7 +1,7 @@
 import EntityEdit from "./EntityEdit";
 import EntityModelsConfig from "./EntityModelsConfig";
 
-export default (name, enityName, minActionType, pageExpand) => {
+export default (name, enityName, minActionType, pageExpand, configExpand) => {
     const config = {
         PageName: name,
         ActionNames: ["GetEntityData", "Insert", "Update"],
@@ -9,6 +9,8 @@ export default (name, enityName, minActionType, pageExpand) => {
         ModelsConfig: EntityModelsConfig(enityName),
         PageExpand: pageExpand
     };
+
+    if(configExpand) configExpand(config)
 
     return EntityEdit(config);
 }

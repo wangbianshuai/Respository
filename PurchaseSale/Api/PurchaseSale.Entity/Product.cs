@@ -89,13 +89,18 @@ namespace PurchaseSale.Entity
 
         public override void InsertValidate(List<Func<IValidate, IEntityData, string>> validateList)
         {
-            validateList.Add(this.ValidateExists<Product>("IsDelete=0 and Name=@Name", "对不起，该名称已存在！"));
+            validateList.Add(this.ValidateExists<Product>("IsDelete=0 and Name=@Name", "对不起，该商品名称已存在！"));
+
+            validateList.Add(this.ValidateExists<Product>("IsDelete=0 and ProductCode=@ProductCode", "对不起，该商品编号已存在！"));
         }
 
         public override void UpdateValidate(List<Func<IValidate, IEntityData, string>> validateList)
         {
             validateList.Add(this.ValidateExists<Product>("Id=@Id and Name=@Name", "true"));
-            validateList.Add(this.ValidateExists<Product>("IsDelete=0 and Name=@Name", "对不起，该名称已存在！"));
+            validateList.Add(this.ValidateExists<Product>("IsDelete=0 and Name=@Name", "对不起，该商品名称已存在！"));
+
+            validateList.Add(this.ValidateExists<Product>("Id=@Id and ProductCode=@ProductCode", "true"));
+            validateList.Add(this.ValidateExists<Product>("IsDelete=0 and ProductCode=@ProductCode", "对不起，该商品编号已存在！"));
         }
     }
 

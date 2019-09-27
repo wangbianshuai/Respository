@@ -120,8 +120,8 @@ create table t_Product
 (
 Id uniqueidentifier not null primary key default(newid()),      --主键
 Name nvarchar(100) not null,                                    --名称
-ProductCode varchar(50) not null,                               --商品编号
-ProductBarCode varchar(50),                                     --商品条形码  
+ProductCode nvarchar(50) not null,                              --商品编号
+ProductBarCode nvarchar(50),                                    --商品条形码  
 ProductTypeId uniqueidentifier not null,                        --商品类型
 ProductBrandId uniqueidentifier not null,                       --商品品牌
 Model nvarchar(500),                                            --型号
