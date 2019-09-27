@@ -6,9 +6,9 @@ using OpenDataAccess.Entity;
 
 namespace PurchaseSale.Entity
 {
-    [TableProperty(Name = "t_ProductBland", PrimaryKey = "Id", NoSelectNames = "IsDelete")]
+    [TableProperty(Name = "t_ProductBrand", PrimaryKey = "Id", NoSelectNames = "IsDelete")]
     [RequestMethod(IsDelete = false)]
-    public class ProductBland : EntityModel, IEntity
+    public class ProductBrand : EntityModel, IEntity
     {
         /// <summary>
         /// 主键
@@ -50,19 +50,19 @@ namespace PurchaseSale.Entity
 
         public override void InsertValidate(List<Func<IValidate, IEntityData, string>> validateList)
         {
-            validateList.Add(this.ValidateExists<ProductBland>("IsDelete=0 and Name=@Name", "对不起，该名称已存在！"));
+            validateList.Add(this.ValidateExists<ProductBrand>("IsDelete=0 and Name=@Name", "对不起，该名称已存在！"));
         }
 
         public override void UpdateValidate(List<Func<IValidate, IEntityData, string>> validateList)
         {
-            validateList.Add(this.ValidateExists<ProductBland>("Id=@Id and Name=@Name", "true"));
-            validateList.Add(this.ValidateExists<ProductBland>("IsDelete=0 and Name=@Name", "对不起，该名称已存在！"));
+            validateList.Add(this.ValidateExists<ProductBrand>("Id=@Id and Name=@Name", "true"));
+            validateList.Add(this.ValidateExists<ProductBrand>("IsDelete=0 and Name=@Name", "对不起，该名称已存在！"));
         }
     }
 
-    [TableProperty(Name = "v_ProductBland", PrimaryKey = "Id", NoSelectNames = "IsDelete")]
+    [TableProperty(Name = "v_ProductBrand", PrimaryKey = "Id", NoSelectNames = "IsDelete")]
     [RequestMethod(IsDelete = false, IsPost = false, IsPut = false)]
-    public class ViewProductBland : ProductBland
+    public class ViewProductBrand : ProductBrand
     {
     }
 }

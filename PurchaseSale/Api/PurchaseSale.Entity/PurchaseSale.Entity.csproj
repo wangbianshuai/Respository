@@ -42,7 +42,7 @@
     <Compile Include="Dictionary2.cs" />
     <Compile Include="PersonBill.cs" />
     <Compile Include="Product.cs" />
-    <Compile Include="ProductBland.cs" />
+    <Compile Include="ProductBrand.cs" />
     <Compile Include="ProductType.cs" />
     <Compile Include="StockCheck.cs" />
     <Compile Include="User.cs" />

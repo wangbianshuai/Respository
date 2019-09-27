@@ -36,10 +36,10 @@ function GetProductManageNavMenu() {
     menuList.push(AddMenu("ProductTypeList", "商品类型", false, "table", "/ProductManage/ProductTypeList"));
     menuList.push(AddMenu("ProductTypeEdit", "新增", true, "form", "/ProductManage/ProductTypeEdit", "", null, false, "商品类型", "/ProductManage/ProductTypeList", null, true));
 
-    menuList.push(AddMenu("ProductBlandList", "商品品牌", false, "table", "/ProductManage/ProductBlandList"));
-    menuList.push(AddMenu("ProductBlandEdit", "新增", true, "form", "/ProductManage/ProductBlandEdit", "", null, false, "商品品牌", "/ProductManage/ProductBlandList", null, true));
+    menuList.push(AddMenu("ProductBrandList", "商品品牌", false, "table", "/ProductManage/ProductBrandList"));
+    menuList.push(AddMenu("ProductBrandEdit", "新增", true, "form", "/ProductManage/ProductBrandEdit", "", null, false, "商品品牌", "/ProductManage/ProductBrandList", null, true));
 
-    return AddNavMenu("ProductManage", "商品管理", false, menuList, true, ["ProductList", "StockCheckList", "ProductTypeList", "ProductBlandList"]);
+    return AddNavMenu("ProductManage", "商品管理", false, menuList, true, ["ProductList", "StockCheckList", "ProductTypeList", "ProductBrandList"]);
 }
 
 function AddNavMenu(key, name, isRight, menuList, IsVisible, MenuKeys) {

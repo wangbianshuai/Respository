@@ -1,5 +1,5 @@
 module.exports = {
-    Name: "ProductBland",
+    Name: "ProductBrand",
     PrimaryKey: "Id",
     Properties: GetProperties()
 }

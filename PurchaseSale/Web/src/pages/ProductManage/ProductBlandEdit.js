@@ -1,3 +1,3 @@
 import { EntityPageEdit } from "PageTemplates";
 
-export default EntityPageEdit("ProductManage_ProductBlandEdit", "ProductBland", 800);
+export default EntityPageEdit("ProductManage_ProductBrandEdit", "ProductBrand", 800);

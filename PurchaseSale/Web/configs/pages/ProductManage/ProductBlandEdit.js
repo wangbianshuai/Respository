@@ -1,4 +1,4 @@
-const ProductBland = require("../../entities/ProductBland");
+const ProductBrand = require("../../entities/ProductBrand");
 const { AssignProporties, GetTextBox, GetButton } = require("../../Common");
 
 //商品管理/商品品牌编辑 800-899
@@ -9,18 +9,18 @@ const DataActionTypes = {
     SaveEntityData: 801
 }
 
-const Entity = { Name: ProductBland.Name, PrimaryKey: ProductBland.PrimaryKey }
+const Entity = { Name: ProductBrand.Name, PrimaryKey: ProductBrand.PrimaryKey }
 
 module.exports = {
-    Name: "ProductBlandEdit",
+    Name: "ProductBrandEdit",
     Type: "View",
     EventActions: GetEventActions(),
-    Properties: AssignProporties({ Name: "ProductBlandEdit" }, [GeEditView()])
+    Properties: AssignProporties({ Name: "ProductBrandEdit" }, [GeEditView()])
 }
 
 function GeEditView() {
     return {
-        Name: "ProductBlandEdit2",
+        Name: "ProductBrandEdit2",
         Type: "RowsColsView",
         Entity: Entity,
         IsForm: true,
@@ -28,7 +28,7 @@ function GeEditView() {
         IsClear: true,
         SaveEntityDataActionType: DataActionTypes.SaveEntityData,
         GetEntityDataActionType: DataActionTypes.GetEntityData,
-        Properties: AssignProporties(ProductBland, GetProperties())
+        Properties: AssignProporties(ProductBrand, GetProperties())
     }
 }
 
@@ -60,7 +60,7 @@ function GetButtonView() {
         ColSpan: 24,
         X: 6,
         Y: 1,
-        Properties: AssignProporties({ Name: "ProductBlandEdit" }, GetButtonProperties())
+        Properties: AssignProporties({ Name: "ProductBrandEdit" }, GetButtonProperties())
     }
 }
 
@@ -96,16 +96,16 @@ function GetEventActions() {
     return [{
         Name: "BackToLast",
         Type: "Page/ToPage",
-        PageUrl: "/SystemManage/ProductBlandList"
+        PageUrl: "/SystemManage/ProductBrandList"
     },
     {
         Name: "SaveEntityData",
         Type: "EntityEdit/SaveEntityData",
-        EditView: "ProductBlandEdit2"
+        EditView: "ProductBrandEdit2"
     },
     {
         Name: "GetEntityData",
         Type: "EntityEdit/GetEntityData",
-        EditView: "ProductBlandEdit2"
+        EditView: "ProductBrandEdit2"
     }]
 }

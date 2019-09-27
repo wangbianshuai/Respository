@@ -1,4 +1,4 @@
-const ProductBland = require("../../entities/ProductBland");
+const ProductBrand = require("../../entities/ProductBrand");
 const { GetButton, AssignProporties, GetTextBox } = require("../../Common");
 
 //商品管理/商品品牌列表 500-599
@@ -9,13 +9,13 @@ const DataActionTypes = {
     DeleteEntityData: 501
 };
 
-const Entity = { Name: ProductBland.Name, PrimaryKey: ProductBland.PrimaryKey, ViewName: "ViewProductBland" }
+const Entity = { Name: ProductBrand.Name, PrimaryKey: ProductBrand.PrimaryKey, ViewName: "ViewProductBrand" }
 
 module.exports = {
-    Name: "ProductBlandList",
+    Name: "ProductBrandList",
     Type: "View",
     EventActions: GetEventActions(),
-    Properties: AssignProporties({ Name: "ProductBlandList" }, [GetSearchOperationView(), GetAlert(), GetDataGridView()])
+    Properties: AssignProporties({ Name: "ProductBrandList" }, [GetSearchOperationView(), GetAlert(), GetDataGridView()])
 }
 
 function GetSearchOperationView() {
@@ -24,15 +24,15 @@ function GetSearchOperationView() {
         Entity: Entity,
         Type: "RowsColsView",
         ClassName: "DivLeftRightView",
-        Properties: AssignProporties({ Name: "ProductBlandList" }, [{ EventActionName: "ToEditPage", ...GetButton("ToEditPage", "新增", "primary", 1, 1) },
-        { EventActionName: "EditProductBland", ColStyle: { paddingLeft: 0 }, ...GetButton("EditProductBland", "修改", "default", 1, 2) },
+        Properties: AssignProporties({ Name: "ProductBrandList" }, [{ EventActionName: "ToEditPage", ...GetButton("ToEditPage", "新增", "primary", 1, 1) },
+        { EventActionName: "EditProductBrand", ColStyle: { paddingLeft: 0 }, ...GetButton("EditProductBrand", "修改", "default", 1, 2) },
         {
-            EventActionName: "DeleteProductBland",
+            EventActionName: "DeleteProductBrand",
             ColStyle: { paddingLeft: 0 },
             DataActionType: DataActionTypes.DeleteEntityData,
             SuccessTip: "删除成功！",
             ConfirmTip: "请确认是否删除当前商品品牌？",
-            ...GetButton("DeleteProductBland", "删除", "default", 1, 4)
+            ...GetButton("DeleteProductBrand", "删除", "default", 1, 4)
         },
         GetKeyword()
         ])
@@ -69,7 +69,7 @@ function GetDataGridView() {
         ClassName: "DivInfoView3",
         IsRowSelection: true,
         IsSingleSelection: true,
-        Properties: AssignProporties(ProductBland, ["Name", "Remark", { Name: "CreateDate", OrderByType: "desc" }, { Name: "RowVersion", IsVisible: false }])
+        Properties: AssignProporties(ProductBrand, ["Name", "Remark", { Name: "CreateDate", OrderByType: "desc" }, { Name: "RowVersion", IsVisible: false }])
     }
 }
 
@@ -86,17 +86,17 @@ function GetEventActions() {
     {
         Name: "ToEditPage",
         Type: "Page/ToPage",
-        PageUrl: "/SystemManage/ProductBlandEdit"
+        PageUrl: "/SystemManage/ProductBrandEdit"
     },
     {
-        Name: "EditProductBland",
+        Name: "EditProductBrand",
         Type: "DataGridView/SelectRowToPage",
         DataGridView: "DataGridView1",
         AlertMessage: "AlertMessage",
-        PageUrl: "/SystemManage/ProductBlandEdit?Id=#{Id}&MenuName=" + escape("修改")
+        PageUrl: "/SystemManage/ProductBrandEdit?Id=#{Id}&MenuName=" + escape("修改")
     },
     {
-        Name: "DeleteProductBland",
+        Name: "DeleteProductBrand",
         Type: "DataGrid/BatchUpdateRowDataList",
         DataGridView: "DataGridView1",
         AlertMessage: "AlertMessage"
