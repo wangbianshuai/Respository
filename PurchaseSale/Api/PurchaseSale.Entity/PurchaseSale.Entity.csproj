@@ -41,6 +41,10 @@
   <ItemGroup>
     <Compile Include="Dictionary2.cs" />
     <Compile Include="PersonBill.cs" />
+    <Compile Include="Product.cs" />
+    <Compile Include="ProductBland.cs" />
+    <Compile Include="ProductType.cs" />
+    <Compile Include="StockCheck.cs" />
     <Compile Include="User.cs" />
     <Compile Include="OperationLog.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

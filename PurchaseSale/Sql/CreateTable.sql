@@ -128,8 +128,8 @@ Model nvarchar(500),                                            --ÐÍºÅ
 Spec nvarchar(500),                                             --¹æ¸ñ
 Unit nvarchar(20),                                              --¼ÆÁ¿µ¥Î»
 InitStock float default(0) not null,                            --³õÊ¼¿â´æ
-InPrice money not null,                                         --½ø¼Û
-OutPrice money not null,                                        --³ö¼Û
+BidPrice money not null,                                        --½ø¼Û
+SillingPrice money not null,                                    --ÊÛ¼Û
 Remark nvarchar(4000),                                          --ËµÃ÷
 IsDelete tinyint not null default(0),                           --ÊÇ·ñÉ¾³ý
 CreateUser uniqueidentifier not null,                           --´´½¨ÈË   
@@ -145,11 +145,37 @@ go
 
 create view v_Product
 as
-select a.*,b.Name as ProductTypeName, c.Name as ProductBrandName from t_Product a 
+with PurchaseNumber as
+(
+select b.ProductId,
+sum(case when a.PurchaseType=1 then b.Number else 0-Number end) SumNumber from t_Purchase a, t_PurchaseDetail b
+where a.IsDelete=0 and a.PurchaseStatus=1
+group by b.ProductId
+),
+SaleNumber as
+(
+select b.ProductId,
+sum(case when a.SaleType=1 then b.Number else 0-Number end) SumNumber from t_Sale a, t_SaleDetail b
+where a.IsDelete=0 and a.SaleStatus=1
+group by b.ProductId
+),
+StockCheckNumber as
+(
+select ProductId,Sum(ShouldStock- RealStock) SumNumber from t_StockCheck where IsDelete=0
+group by ProductId
+)
+select a.*,b.Name as ProductTypeName, c.Name as ProductBrandName,
+a.InitStock+ isnull(e.SumNumber,0) - isnull(f.SumNumber,0)- ISNULL(g.SumNumber,0) CurrentStock
+from t_Product a 
 left join t_ProductType b on a.ProductTypeId=b.Id
 left join t_ProductBrand c on a.ProductBrandId=c.Id
+left join PurchaseNumber e on a.Id= e.ProductId
+left join SaleNumber f on a.Id=f.ProductId
+left join StockCheckNumber g on a.Id=g.ProductId
 where a.IsDelete=0
 go
+
+
 
 --²É¹º
 drop table t_Purchase
@@ -164,7 +190,8 @@ PurchaseDate datetime not null,                                 --²É¹ºÈÕÆÚ
 PurchaseType tinyint not null default(1),                       --²É¹ºÀàÐÍ£¬1£º½ø»õ£¬2£ºÍË»õ
 LogisticsFee money,                                             --ÎïÁ÷·Ñ
 OtherFee money,                                                 --ÆäËû·Ñ
-DiscountFee money,                                              --ÕÛ¿Û·Ñ          
+DiscountFee money,                                              --ÕÛ¿Û·Ñ
+PurchaseStatus tinyint not null default(0),                     --²É¹º×´Ì¬,0:±£´æ,1:Ìá½»         
 Remark nvarchar(200),                                           --±¸×¢
 IsDelete tinyint not null default(0),                           --ÊÇ·ñÉ¾³ý
 CreateUser uniqueidentifier not null,                           --´´½¨ÈË   
@@ -230,6 +257,8 @@ go
 create view v_PurchaseDetail
 as
 select a.*,
+b.PurchaseStatus,
+b.PurchaseType,
 c.Model,
 c.Name as ProductName,
 c.ProductBarCode,
@@ -259,7 +288,9 @@ SaleType tinyint not null default(1),                           --ÏúÊÛÀàÐÍ£¬1£º³
 LogisticsFee money,                                             --ÎïÁ÷·Ñ
 OtherFee money,                                                 --ÆäËû·Ñ
 DiscountFee money,                                              --ÕÛ¿Û·Ñ
-CustomerName nvarchar(50),                                      --¹Ë¿ÍÐÕÃû          
+CustomerName nvarchar(50),                                      --¹Ë¿ÍÐÕÃû
+CustomerPhone varchar(50),                                      --¹Ë¿ÍÊÖ»ú
+SaleStatus tinyint not null default(0),                         --ÏúÊÛ×´Ì¬,0:±£´æ,1:Ìá½»           
 Remark nvarchar(200),                                           --±¸×¢
 IsDelete tinyint not null default(0),                           --ÊÇ·ñÉ¾³ý
 CreateUser uniqueidentifier not null,                           --´´½¨ÈË   
@@ -301,6 +332,8 @@ go
 create view v_SaleDetail
 as
 select a.*,
+b.SaleType,
+b.SaleStatus,
 c.Model,
 c.Name as ProductName,
 c.ProductBarCode,
@@ -328,7 +361,7 @@ ShouldStock float not null,                                     --Ó¦ÓÐ¿â´æ
 RealStock float not null,                                       --ÊµÓÐ¿â´æ
 CheckDate datetime not null,                                    --ÅÌµãÈÕÆÚ
 CheckUser uniqueidentifier not null,                            --ÅÌµãÈË
-InPrice float not null,                                         --½ø¼Û
+BidPrice float not null,                                        --½ø¼Û
 Remark nvarchar(200),                                           --±¸×¢
 IsDelete tinyint not null default(0),                           --ÊÇ·ñÉ¾³ý
 CreateUser uniqueidentifier not null,                           --´´½¨ÈË   
@@ -337,6 +370,26 @@ UpdateUser uniqueidentifier,                                    --¸üÐÂÈË
 UpdateDate datetime,                                            --¸üÐÂÊ±¼ä
 RowVersion timestamp not null                                   --ÐÐ°æ±¾
 )
+go
+
+drop view v_StockCheck
+go
+
+create view v_StockCheck
+as
+select a.*,
+c.Model,
+c.Name as ProductName,
+c.ProductBarCode,
+c.ProductCode,
+c.Spec,
+c.Unit,
+d.Name ProductTypeName,
+e.Name ProductBrandName
+from t_StockCheck a
+left join t_Product c on a.ProductId=c.Id
+left join t_ProductType d on c.ProductTypeId=d.Id
+left join t_ProductBrand e on c.ProductBrandId=e.Id
 go
 
 --ÕËÄ¿ÀàÐÍ

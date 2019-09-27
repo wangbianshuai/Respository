@@ -5,7 +5,8 @@ export default () => {
     Menus = {};
     return {
         NavMenuList: [
-            GetSystemManageNavNenu(),
+            GetProductManageNavMenu(),
+            GetSystemManageNavNenu()
         ],
         Menus
     }
@@ -22,6 +23,23 @@ function GetSystemManageNavNenu() {
     menuList.push(AddMenu("OperationLog", "操作日志", false, "table", "/SystemManage/OperationLog"));
 
     return AddNavMenu("SystemManage", "系统管理", false, menuList, true, ["UserList", "Dictionary2List", "OperationLog"]);
+}
+
+function GetProductManageNavMenu() {
+    var menuList = [];
+    menuList.push(AddMenu("ProductList", "商品列表", false, "table", "/ProductManage/ProductList"));
+    menuList.push(AddMenu("ProductEdit", "新增", true, "form", "/ProductManage/ProductEdit", "", null, false, "商品列表", "/ProductManage/ProductList", null, true));
+
+    menuList.push(AddMenu("StockCheckList", "库存盘点", false, "table", "/ProductManage/StockCheckList"));
+    menuList.push(AddMenu("StockCheckEdit", "新增", true, "form", "/ProductManage/StockCheckEdit", "", null, false, "商品列表", "/ProductManage/StockCheckList", null, true));
+
+    menuList.push(AddMenu("ProductTypeList", "商品类型", false, "table", "/ProductManage/ProductTypeList"));
+    menuList.push(AddMenu("ProductTypeEdit", "新增", true, "form", "/ProductManage/ProductTypeEdit", "", null, false, "商品类型", "/ProductManage/ProductTypeList", null, true));
+
+    menuList.push(AddMenu("ProductBlandList", "商品品牌", false, "table", "/ProductManage/ProductBlandList"));
+    menuList.push(AddMenu("ProductBlandEdit", "新增", true, "form", "/ProductManage/ProductBlandEdit", "", null, false, "商品品牌", "/ProductManage/ProductBlandList", null, true));
+
+    return AddNavMenu("ProductManage", "商品管理", false, menuList, true, ["ProductList", "StockCheckList", "ProductTypeList", "ProductBlandList"]);
 }
 
 function AddNavMenu(key, name, isRight, menuList, IsVisible, MenuKeys) {
