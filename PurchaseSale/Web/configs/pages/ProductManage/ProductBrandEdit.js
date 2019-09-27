@@ -96,7 +96,7 @@ function GetEventActions() {
     return [{
         Name: "BackToLast",
         Type: "Page/ToPage",
-        PageUrl: "/SystemManage/ProductBrandList"
+        PageUrl: "/ProductManage/ProductBrandList"
     },
     {
         Name: "SaveEntityData",

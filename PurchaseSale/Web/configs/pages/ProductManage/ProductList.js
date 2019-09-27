@@ -86,14 +86,14 @@ function GetEventActions() {
     {
         Name: "ToEditPage",
         Type: "Page/ToPage",
-        PageUrl: "/SystemManage/ProductEdit"
+        PageUrl: "/ProductManage/ProductEdit"
     },
     {
         Name: "EditProduct",
         Type: "DataGridView/SelectRowToPage",
         DataGridView: "DataGridView1",
         AlertMessage: "AlertMessage",
-        PageUrl: "/SystemManage/ProductEdit?Id=#{Id}&MenuName=" + escape("修改")
+        PageUrl: "/ProductManage/ProductEdit?Id=#{Id}&MenuName=" + escape("修改")
     },
     {
         Name: "DeleteProduct",
