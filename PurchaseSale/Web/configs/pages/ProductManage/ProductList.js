@@ -86,7 +86,14 @@ function GetDataGridView() {
         IsRowSelection: true,
         IsSingleSelection: true,
         GroupByInfoHtml: GetGroupByInfoHtml(),
-        Properties: AssignProporties(Product, ["ProductCode", "Name", "ProductTypeName", "ProductBrandName", "BidPrice", "SillingPrice", "InitStock", "CurrentStock", "Unit", { Name: "CreateDate", OrderByType: "desc" }, { Name: "RowVersion", IsVisible: false }])
+        Properties: AssignProporties(Product, ["ProductCode", "Name", "ProductTypeName", "ProductBrandName", GetAmount("BidPrice"), GetAmount("SillingPrice"), "InitStock", "CurrentStock", "Unit", { Name: "CreateDate", OrderByType: "desc" }, { Name: "RowVersion", IsVisible: false }])
+    }
+}
+
+function GetAmount(Name) {
+    return {
+        Name,
+        Scale: 2, IsCurrency: true, FontColor: "#1890ff"
     }
 }
 

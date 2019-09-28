@@ -72,6 +72,16 @@ class DataGridView extends BaseIndex {
                 return text;
             };
         }
+        else if (p.IsCurrency && p.Render === undefined) {
+            p.Render = (text, record, index) => {
+                if (p.IsRender && !p.IsRender(text, record, index)) return this.EmptyRender();
+                if (parseFloat(text) < 0) return <span style={{ color: "red" }}>{Common.ToCurrency(text, p.IsFixed2)}</span>
+
+                if (p.FontColor) return <span style={{ color: p.FontColor }}>{Common.ToCurrency(text, p.IsFixed2)}</span>
+
+                return Common.ToCurrency(text, p.IsFixed2)
+            };
+        }
         else if (p.IsOpenPage && p.Render === undefined) {
             p.Render = (text, record, index) => {
                 if (p.IsRender && !p.IsRender(text, record, index)) return this.EmptyRender();

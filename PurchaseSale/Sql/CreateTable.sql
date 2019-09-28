@@ -149,14 +149,14 @@ with PurchaseNumber as
 (
 select b.ProductId,
 sum(case when a.PurchaseType=1 then b.Number else 0-Number end) SumNumber from t_Purchase a, t_PurchaseDetail b
-where a.IsDelete=0 and a.PurchaseStatus=1
+where a.IsDelete=0 and a.PurchaseStatus in (1,2)
 group by b.ProductId
 ),
 SaleNumber as
 (
 select b.ProductId,
 sum(case when a.SaleType=1 then b.Number else 0-Number end) SumNumber from t_Sale a, t_SaleDetail b
-where a.IsDelete=0 and a.SaleStatus=1
+where a.IsDelete=0 and a.SaleStatus in (1,2)
 group by b.ProductId
 ),
 StockCheckNumber as
@@ -175,6 +175,15 @@ left join StockCheckNumber g on a.Id=g.ProductId
 where a.IsDelete=0
 go
 
+drop view v_Product2
+go
+
+create view v_Product2
+as
+select *
+from t_Product a 
+where a.IsDelete=0
+go
 
 
 --²É¹º
@@ -191,7 +200,7 @@ PurchaseType tinyint not null default(1),                       --²É¹ºÀàÐÍ£¬1£º½
 LogisticsFee money,                                             --ÎïÁ÷·Ñ
 OtherFee money,                                                 --ÆäËû·Ñ
 DiscountFee money,                                              --ÕÛ¿Û·Ñ
-PurchaseStatus tinyint not null default(0),                     --²É¹º×´Ì¬,0:±£´æ,1:Ìá½»         
+PurchaseStatus tinyint not null default(0),                     --²É¹º×´Ì¬,0:±£´æ,1:Ìá½»,2:´æµµ£¬3£º×÷·Ï         
 Remark nvarchar(200),                                           --±¸×¢
 IsDelete tinyint not null default(0),                           --ÊÇ·ñÉ¾³ý
 CreateUser uniqueidentifier not null,                           --´´½¨ÈË   
@@ -290,7 +299,7 @@ OtherFee money,                                                 --ÆäËû·Ñ
 DiscountFee money,                                              --ÕÛ¿Û·Ñ
 CustomerName nvarchar(50),                                      --¹Ë¿ÍÐÕÃû
 CustomerPhone varchar(50),                                      --¹Ë¿ÍÊÖ»ú
-SaleStatus tinyint not null default(0),                         --ÏúÊÛ×´Ì¬,0:±£´æ,1:Ìá½»           
+SaleStatus tinyint not null default(0),                         --ÏúÊÛ×´Ì¬,0:±£´æ,1:Ìá½»,2:´æµµ£¬3£º×÷·Ï                
 Remark nvarchar(200),                                           --±¸×¢
 IsDelete tinyint not null default(0),                           --ÊÇ·ñÉ¾³ý
 CreateUser uniqueidentifier not null,                           --´´½¨ÈË   
@@ -387,7 +396,8 @@ c.Unit,
 c.ProductTypeId,
 c.ProductBrandId,
 d.Name ProductTypeName,
-e.Name ProductBrandName
+e.Name ProductBrandName,
+(a.ShouldStock-a.RealStock)*a.BidPrice LossAmount
 from t_StockCheck a
 left join t_Product c on a.ProductId=c.Id
 left join t_ProductType d on c.ProductTypeId=d.Id
