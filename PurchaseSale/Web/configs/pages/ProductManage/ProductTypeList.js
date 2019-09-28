@@ -1,12 +1,12 @@
 const ProductType = require("../../entities/ProductType");
 const { GetButton, AssignProporties, GetTextBox } = require("../../Common");
 
-//商品管理/商品类型列表 600-699
+//商品管理/商品类型列表 1200-1299
 const DataActionTypes = {
     //搜索查询
-    SearchQuery: 600,
+    SearchQuery: 1200,
     //删除实体数据
-    DeleteEntityData: 601
+    DeleteEntityData: 1201
 };
 
 const Entity = { Name: ProductType.Name, PrimaryKey: ProductType.PrimaryKey, ViewName: "ViewProductType" }

@@ -82,24 +82,26 @@ function GetEditSelect(Name, Label, DataSource, X, Y, IsNullable, PlaceHolder, D
     }
 }
 
-function GetProductTypeDataSource(){
+function GetProductTypeDataSource() {
     return {
         ValueName: "Id",
         TextName: "Name",
         StateName: "ProductTypes",
         ServiceName: "ProductService",
         ActionName: "GetProductTypes",
+        IsRefresh: true,
         Payload: {}
     }
 }
 
-function GetProductBrandDataSource(){
+function GetProductBrandDataSource() {
     return {
         ValueName: "Id",
         TextName: "Name",
         StateName: "ProductBrands",
         ServiceName: "ProductService",
         ActionName: "GetProductBrands",
+        IsRefresh: true,
         Payload: {}
     }
 }
@@ -111,6 +113,7 @@ function GetUnitDataSource() {
         StateName: "Units",
         ServiceName: "ProductService",
         ActionName: "GetUnits",
+        IsRefresh: true,
         Payload: {}
     }
 }

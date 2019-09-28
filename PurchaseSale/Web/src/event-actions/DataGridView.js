@@ -36,7 +36,7 @@ export default class DataGridView extends BaseIndex {
         DataGridView.SearchButton = SearchButton;
         DataGridView.SetDataLoading(true);
         SearchButton && SearchButton.SetDisabled(true);
-
+        
         const data = { EntitySearchQuery, Entity: DataGridView.Entity, IsData, PageIndex: pageIndex, PageSize: pageSize, QueryInfo: queryInfo, PageData: EventActions.PageData }
 
         Invoke(SearchQuery, data);
