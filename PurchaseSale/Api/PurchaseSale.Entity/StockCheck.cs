@@ -109,5 +109,7 @@ namespace PurchaseSale.Entity
         public Guid ProductBrandId { get; set; }
 
         public decimal LossAmount { get; set; }
+
+        public string CheckUserName { get; set; }
     }
 }

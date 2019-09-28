@@ -3,8 +3,7 @@ module.exports = {
     PrimaryKey: "Id",
     Properties: GetProperties(),
     ProductTypeDataSource: GetProductTypeDataSource(),
-    ProductBrandDataSource: GetProductBrandDataSource(),
-    UnitDataSource: GetUnitDataSource()
+    ProductBrandDataSource: GetProductBrandDataSource()
 }
 
 function GetProperties() {
@@ -20,6 +19,7 @@ function GetProperties() {
         GetProperty("RealStock", "实有库存"),
         GetProperty("CheckDate", "盘点日期"),
         GetProperty("CheckUserName", "盘点人"),
+        GetProperty("Unit", "单位"),
         GetProperty("Remark", "备注"),
         GetProperty("CreateDate", "创建时间")
     ]

@@ -43,15 +43,18 @@ namespace PurchaseSale.Component
         void QueryProductGroupByInfo(IEntityData data, string whereSql, List<IDbDataParameter> paramterList)
         {
             IQuery query = new Query(this.EntityType.TableName);
-            query.Select("sum(BidPrice*CurrentStock) as CostAmount");
+            query.Select("sum(BidPrice*CurrentStock) as CostAmount,sum(SillingPrice*CurrentStock) as CanSaleAmount");
             query.Where(whereSql, paramterList);
 
             IEntityData entityData = this.SelectEntity(query);
 
             decimal costAmount = entityData.GetValue<decimal>("CostAmount");
+            decimal canSaleAmount = entityData.GetValue<decimal>("CanSaleAmount");
 
             IEntityData groupByInfo = new EntityData(string.Empty);
             groupByInfo.SetValue("CostAmount", costAmount.ToString("C"));
+            groupByInfo.SetValue("CanSaleAmount", canSaleAmount.ToString("C"));
+            groupByInfo.SetValue("CanSaleAmountColor", canSaleAmount >= 0 ? "#1890ff" : "red");
             groupByInfo.SetValue("CostAmountColor", costAmount >= 0 ? "#1890ff" : "red");
 
             data.SetValue("GroupByInfo", groupByInfo);

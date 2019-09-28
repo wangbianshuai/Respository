@@ -397,11 +397,13 @@ c.ProductTypeId,
 c.ProductBrandId,
 d.Name ProductTypeName,
 e.Name ProductBrandName,
+f.UserName CheckUserName,
 (a.ShouldStock-a.RealStock)*a.BidPrice LossAmount
 from t_StockCheck a
 left join t_Product c on a.ProductId=c.Id
 left join t_ProductType d on c.ProductTypeId=d.Id
 left join t_ProductBrand e on c.ProductBrandId=e.Id
+left join t_User f on a.CheckUser=f.UserId
 go
 
 --’Àƒø¿‡–Õ

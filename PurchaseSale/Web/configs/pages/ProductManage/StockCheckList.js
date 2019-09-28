@@ -1,21 +1,21 @@
-const Product = require("../../entities/Product");
+const StockCheck = require("../../entities/StockCheck");
 const { GetButton, AssignProporties, GetTextBox, GetSelect } = require("../../Common");
 
-//商品管理/商品列表 1100-1199
+//商品管理/库存盘点 1300-1399
 const DataActionTypes = {
     //搜索查询
-    SearchQuery: 1100,
+    SearchQuery: 1300,
     //删除实体数据
-    DeleteEntityData: 1101
+    DeleteEntityData: 1301
 };
 
-const Entity = { Name: Product.Name, PrimaryKey: Product.PrimaryKey, ViewName: "ViewProduct", IsGroupByInfo: true }
+const Entity = { Name: StockCheck.Name, PrimaryKey: StockCheck.PrimaryKey, ViewName: "ViewStockCheck", IsGroupByInfo: true }
 
 module.exports = {
-    Name: "ProductList",
+    Name: "StockCheckList",
     Type: "View",
     EventActions: GetEventActions(),
-    Properties: AssignProporties({ Name: "ProductList" }, [GetSearchOperationView(), GetDataGridView()])
+    Properties: AssignProporties({ Name: "StockCheckList" }, [GetSearchOperationView(), GetDataGridView()])
 }
 
 function GetSearchOperationView() {
@@ -24,24 +24,23 @@ function GetSearchOperationView() {
         Entity: Entity,
         Type: "RowsColsView",
         ClassName: "DivSerachView",
-        Properties: AssignProporties({ Name: "ProductList" }, [
-            GetEditSelect("ProductTypeId", "类型", Product.ProductTypeDataSource, 1, 1),
-            GetEditSelect("ProductBrandId", "品牌", Product.ProductBrandDataSource, 1, 2),
+        Properties: AssignProporties({ Name: "StockCheckList" }, [
+            GetEditSelect("ProductTypeId", "类型", StockCheck.ProductTypeDataSource, 1, 1),
+            GetEditSelect("ProductBrandId", "品牌", StockCheck.ProductBrandDataSource, 1, 2),
             {
-                ...GetTextBox2("Keyword", "关键字", 1, 3, "", "编号/名称"), PropertyName: "Name,ProductCode",
+                ...GetTextBox2("Keyword", "关键字", 1, 3, "", "编号/名称/备注"), PropertyName: "Name,ProductCOde",
                 OperateLogic: "like", PressEnterEventActionName: "SearchQuery"
             },
             { ...GetButton("Search", "搜索", "primary", 1, 4), IsFormItem: true, Icon: "search", EventActionName: "SearchQuery", PressEnterEventActionName: "SearchQuery" },
             { ...GetButton("ClearQuery", "清空", "default", 1, 5), IsFormItem: true, EventActionName: "ClearQuery" },
             { EventActionName: "ToEditPage", ...GetButton("ToEditPage", "新增", "primary", 2, 1), Style: { marginLeft: 16, marginBottom: 16 } },
-            { EventActionName: "EditProduct", ColStyle: { paddingLeft: 0 }, ...GetButton("EditProduct", "修改", "default", 2, 2) },
             {
-                EventActionName: "DeleteProduct",
+                EventActionName: "DeleteStockCheck",
                 ColStyle: { paddingLeft: 0 },
                 DataActionType: DataActionTypes.DeleteEntityData,
                 SuccessTip: "删除成功！",
-                ConfirmTip: "请确认是否删除当前商品？",
-                ...GetButton("DeleteProduct", "删除", "default", 2, 4)
+                ConfirmTip: "请确认是否删除当前库存盘点？",
+                ...GetButton("DeleteStockCheck", "删除", "default", 2, 4)
             }
         ])
     }
@@ -86,7 +85,7 @@ function GetDataGridView() {
         IsRowSelection: true,
         IsSingleSelection: true,
         GroupByInfoHtml: GetGroupByInfoHtml(),
-        Properties: AssignProporties(Product, ["ProductCode", "Name", "ProductTypeName", "ProductBrandName", GetAmount("BidPrice"), GetAmount("SillingPrice"), "InitStock", "CurrentStock", "Unit", { Name: "CreateDate", OrderByType: "desc" }, { Name: "RowVersion", IsVisible: false }])
+        Properties: AssignProporties(StockCheck, ["ProductCode", "ProductName", "ProductTypeName", "ProductBrandName","ShouldStock", "RealStock","Unit", GetAmount("BidPrice"), GetAmount("LossAmount"),"Remark", { Name: "CreateDate", OrderByType: "desc" }, { Name: "RowVersion", IsVisible: false }])
     }
 }
 
@@ -100,8 +99,7 @@ function GetAmount(Name) {
 function GetGroupByInfoHtml() {
     var html = [];
 
-    html.push("当前库存成本：<span style=\"color:{CostAmountColor};\">{CostAmount}</span>，");
-    html.push("当前库存可售金额：<span style=\"color:{CanSaleAmountColor};\">{CanSaleAmount}</span>");
+    html.push("亏损成本：<span style=\"color:{CostAmountColor};\">{CostAmount}</span>");
 
     return html.join("");
 }
@@ -125,16 +123,10 @@ function GetEventActions() {
     {
         Name: "ToEditPage",
         Type: "Page/ToPage",
-        PageUrl: "/ProductManage/ProductEdit"
+        PageUrl: "/ProductManage/StockCheckEdit"
     },
     {
-        Name: "EditProduct",
-        Type: "DataGridView/SelectRowToPage",
-        DataGridView: "DataGridView1",
-        PageUrl: "/ProductManage/ProductEdit?Id=#{Id}&MenuName=" + escape("修改")
-    },
-    {
-        Name: "DeleteProduct",
+        Name: "DeleteStockCheck",
         Type: "DataGrid/BatchUpdateRowDataList",
         DataGridView: "DataGridView1"
     }]
