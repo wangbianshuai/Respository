@@ -1,5 +1,5 @@
 const StockCheck = require("../../entities/StockCheck");
-const { GetButton, AssignProporties, GetTextBox, GetSelect } = require("../../Common");
+const { GetButton, AssignProporties, GetTextBox, GetSelect, GetDatePicker } = require("../../Common");
 
 //商品管理/库存盘点 1300-1399
 const DataActionTypes = {
@@ -27,22 +27,39 @@ function GetSearchOperationView() {
         Properties: AssignProporties({ Name: "StockCheckList" }, [
             GetEditSelect("ProductTypeId", "类型", StockCheck.ProductTypeDataSource, 1, 1),
             GetEditSelect("ProductBrandId", "品牌", StockCheck.ProductBrandDataSource, 1, 2),
+            GetEditSelect("CheckUser", "盘点人", StockCheck.UserDataSource, 1, 3),
+            { ...GetDatePicker2("StartDate", "盘点日期", 2, 1, "大于或等于其值"), PropertyName: "CheckDate", OperateLogic: ">=" },
+            { ...GetDatePicker2("EndDate", "至", 2, 2, "小于其值"), PropertyName: "CheckDate", OperateLogic: "<" },
             {
-                ...GetTextBox2("Keyword", "关键字", 1, 3, "", "编号/名称/备注"), PropertyName: "Name,ProductCOde",
+                ...GetTextBox2("Keyword", "关键字", 2, 3, "", "商品编号/名称"), PropertyName: "ProductName,ProductCode",
                 OperateLogic: "like", PressEnterEventActionName: "SearchQuery"
             },
-            { ...GetButton("Search", "搜索", "primary", 1, 4), IsFormItem: true, Icon: "search", EventActionName: "SearchQuery", PressEnterEventActionName: "SearchQuery" },
-            { ...GetButton("ClearQuery", "清空", "default", 1, 5), IsFormItem: true, EventActionName: "ClearQuery" },
-            { EventActionName: "ToEditPage", ...GetButton("ToEditPage", "新增", "primary", 2, 1), Style: { marginLeft: 16, marginBottom: 16 } },
+            { ...GetButton("Search", "搜索", "primary", 2, 4), IsFormItem: true, Icon: "search", EventActionName: "SearchQuery", PressEnterEventActionName: "SearchQuery" },
+            { ...GetButton("ClearQuery", "清空", "default", 2, 5), IsFormItem: true, EventActionName: "ClearQuery" },
+            { EventActionName: "ToEditPage", ...GetButton("ToEditPage", "新增", "primary", 3, 1), Style: { marginLeft: 16, marginBottom: 16 } },
             {
                 EventActionName: "DeleteStockCheck",
                 ColStyle: { paddingLeft: 0 },
                 DataActionType: DataActionTypes.DeleteEntityData,
                 SuccessTip: "删除成功！",
                 ConfirmTip: "请确认是否删除当前库存盘点？",
-                ...GetButton("DeleteStockCheck", "删除", "default", 2, 4)
+                ...GetButton("DeleteStockCheck", "删除", "default", 3, 4)
             }
         ])
+    }
+}
+
+function GetDatePicker2(Name, Label, X, Y, PlaceHolder, DefaultValue) {
+    return {
+        ...GetDatePicker(Name, Label, X, Y, DefaultValue),
+        IsFormItem: true, ColSpan: 6,
+        IsNullable: true,
+        PlaceHolder: PlaceHolder,
+        MaxLength: 20,
+        LabelCol: 8,
+        WrapperCol: 15,
+        DataType: "DateTime",
+        IsCondition: true
     }
 }
 

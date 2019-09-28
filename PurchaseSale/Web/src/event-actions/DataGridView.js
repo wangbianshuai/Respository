@@ -55,7 +55,10 @@ export default class DataGridView extends BaseIndex {
 
         //设置提示信息
         let msg = ""
-        if (data.IsSuccess === false) msg = data.Message;
+        if (data.IsSuccess === false) {
+            msg = data.Message;
+            if (!AlertMessage) this.Alert(msg, EventActions.ShowMessage);
+        }
         else if ((action.IsSearch || !action.IsQuery) && !IsData) msg = `符合当前查询条件的结果总计${pageRecord}条！`;
 
         action.IsQuery = true;
