@@ -36,7 +36,7 @@ export default class DataGridView extends BaseIndex {
         DataGridView.SearchButton = SearchButton;
         DataGridView.SetDataLoading(true);
         SearchButton && SearchButton.SetDisabled(true);
-        
+
         const data = { EntitySearchQuery, Entity: DataGridView.Entity, IsData, PageIndex: pageIndex, PageSize: pageSize, QueryInfo: queryInfo, PageData: EventActions.PageData }
 
         Invoke(SearchQuery, data);
@@ -151,7 +151,7 @@ export default class DataGridView extends BaseIndex {
 
         const selectDataList = DataGridView.GetSelectDataList();
         if (selectDataList.length === 0) {
-            if (AlertMessage) AlertMessage.SetValue("请选择记录再操作！")
+            this.Alert("请选择记录再操作！", EventActions.ShowMessage, AlertMessage)
             return;
         }
 
@@ -183,7 +183,7 @@ export default class DataGridView extends BaseIndex {
 
         const selectDataList = DataGridView.GetSelectDataList();
         if (selectDataList.length === 0) {
-            if (AlertMessage) AlertMessage.SetValue("请选择记录再操作！")
+            this.Alert("请选择记录再操作！", EventActions.ShowMessage, AlertMessage)
             return;
         }
 

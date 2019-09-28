@@ -14,7 +14,7 @@ export default class Dialog extends BaseIndex {
 
         const selectRowKeys = DataGridView.GetSelectedRowKeys();
         if (selectRowKeys.length === 0) {
-            if (AlertMessage) AlertMessage.SetValue("请选择记录再操作！")
+            this.Alert("请选择记录再操作！", EventActions.ShowMessage, AlertMessage)
             return;
         }
 

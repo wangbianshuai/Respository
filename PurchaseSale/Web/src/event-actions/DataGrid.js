@@ -12,7 +12,7 @@ export default class DataGrid extends BaseIndex {
 
         const selectRowKeys = DataGridView.GetSelectedRowKeys();
         if (selectRowKeys.length === 0 && !Property.IsNoRowsSelected) {
-            if (AlertMessage) AlertMessage.SetValue("请选择记录再操作！")
+            this.Alert("请选择记录再操作！", EventActions.ShowMessage, AlertMessage)
             return;
         }
 
@@ -45,7 +45,7 @@ export default class DataGrid extends BaseIndex {
         Property.SetDisabled(false);
 
         if (this.IsSuccessNextsProps(data, EventActions.Alert, AlertMessage)) {
-            AlertMessage.SetValue(Property.SuccessTip);
+            this.Alert(Property.SuccessTip, EventActions.ShowMessage, AlertMessage)
             //刷新查询
             DataGridView.Refresh();
         }

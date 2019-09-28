@@ -53,11 +53,11 @@ namespace PurchaseSale.Entity
         /// <summary>
         /// 采购价
         /// </summary>
-        public decimal PurchasePrice { get; set; }
+        public decimal BidPrice { get; set; }
         /// <summary>
         /// 销售价
         /// </summary>
-        public decimal SalePrice { get; set; }
+        public decimal SillingPrice { get; set; }
         /// <summary>
         /// 备注
         /// </summary>

@@ -1,10 +1,9 @@
 const ActionList = GetActionList();
-const ActionNames = ActionList.map(m => m.ActionName);
 
 export default {
     ActionList,
-    ListActionNames: ActionNames,
-    EditActionNames: ActionNames
+    ListActionNames: ["GetProductTypes", "GetProductBrands"],
+    EditActionNames: ActionList.map(m => m.ActionName)
 }
 
 function GetActionList() {

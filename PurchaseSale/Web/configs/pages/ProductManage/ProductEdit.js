@@ -48,11 +48,11 @@ function GetProperties() {
         GetTextBox2("Name", "名称", 1, 2, "", "请输入名称", 50, false),
         GetTextBox2("ProductCode", "编号", 1, 3, "", "请输入编号", 50, false),
         GetLeftWhite("LeftSpace13", 2, 1),
-        GetEditSelect("ProductTypeId", "类型", GetProductTypeDataSource(), 2, 2, false, "请选择类型"),
-        GetEditSelect("ProductBrandId", "品牌", GetProductBrandDataSource(), 2, 3, false, "请选择品牌"),
+        GetEditSelect("ProductTypeId", "类型", Product.ProductTypeDataSource, 2, 2, false, "请选择类型"),
+        GetEditSelect("ProductBrandId", "品牌", Product.ProductBrandDataSource, 2, 3, false, "请选择品牌"),
         GetLeftWhite("LeftSpace13", 3, 1),
         { ...GetTextBox2("InitStock", "初始库存", 3, 2, "", "请输入初始库存", 20, false), DataType: "float" },
-        GetEditSelect("Unit", "单位", GetUnitDataSource(), 3, 3, false, "请选择单位"),
+        GetEditSelect("Unit", "单位", Product.UnitDataSource, 3, 3, false, "请选择单位"),
         GetLeftWhite("LeftSpace14", 4, 1),
         { ...GetTextBox2("BidPrice", "进价", 4, 2, "", "请输入进价", 20, false), DataType: "float" },
         { ...GetTextBox2("SillingPrice", "售价", 4, 3, "", "请输入售价", 20, false), DataType: "float" },
@@ -79,42 +79,6 @@ function GetEditSelect(Name, Label, DataSource, X, Y, IsNullable, PlaceHolder, D
         IsEdit: true,
         ServiceDataSource: DataSource,
         PlaceHolder: PlaceHolder
-    }
-}
-
-function GetProductTypeDataSource() {
-    return {
-        ValueName: "Id",
-        TextName: "Name",
-        StateName: "ProductTypes",
-        ServiceName: "ProductService",
-        ActionName: "GetProductTypes",
-        IsRefresh: true,
-        Payload: {}
-    }
-}
-
-function GetProductBrandDataSource() {
-    return {
-        ValueName: "Id",
-        TextName: "Name",
-        StateName: "ProductBrands",
-        ServiceName: "ProductService",
-        ActionName: "GetProductBrands",
-        IsRefresh: true,
-        Payload: {}
-    }
-}
-
-function GetUnitDataSource() {
-    return {
-        ValueName: "Value",
-        TextName: "Value",
-        StateName: "Units",
-        ServiceName: "ProductService",
-        ActionName: "GetUnits",
-        IsRefresh: true,
-        Payload: {}
     }
 }
 

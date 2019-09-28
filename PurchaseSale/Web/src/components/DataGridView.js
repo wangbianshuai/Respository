@@ -116,7 +116,7 @@ class DataGridView extends BaseIndex {
         }
         else if (Common.IsArray(data.DataList)) {
             this.DataList = data.DataList;
-            this.GroupByInfo = data.GroupByInfo;
+            if (data.GroupByInfo) this.GroupByInfo = data.GroupByInfo;
             if (data.PageRecord !== undefined) this.PageInfo = this.GetPageInfo(data.PageRecord);
             else if (data.PageInfo) this.PageInfo = data.PageInfo;
         }

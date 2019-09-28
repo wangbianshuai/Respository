@@ -98,6 +98,14 @@ namespace PurchaseSale.Entity
         /// <summary>
         /// 计量单位
         /// </summary>
-        public string Unit { get; set; }
+        public string Unit { get; set; },
+        /// <summary>
+        /// 商品类型
+        /// </summary>
+        public Guid ProductTypeId { get; set; }
+        /// <summary>
+        /// 商品品牌
+        /// </summary>
+        public Guid ProductBrandId { get; set; }
     }
 }

@@ -1,4 +1,5 @@
 import BaseIndex from "../../BaseIndex";
+import { Common } from "UtilsCommon";
 
 export default class DataGridView extends BaseIndex {
     constructor(props) {
@@ -16,8 +17,12 @@ export default class DataGridView extends BaseIndex {
 
         const entityName = Entity.ViewName || Entity.Name;
 
-        const dataUrl = `${entityName}?$query=true&$data=true&pagesize=${PageSize}&pageindex=${PageIndex}`;
-        const pageUrl = `${entityName}?$query=true&$page=true&pagesize=${PageSize}&pageindex=${PageIndex}`;
+        const methodName = Entity.IsGroupByInfo ? Entity.QueryPageUrl || "/Select2" : "";
+
+        var dataUrl = `${entityName}?$query=true&$data=true&pagesize=${PageSize}&pageindex=${PageIndex}`;
+        var pageUrl = `${entityName}${methodName}?$query=true&$page=true&pagesize=${PageSize}&pageindex=${PageIndex}`;
+
+        if (Entity.IsGroupByInfo) pageUrl = Common.AddUrlParams(pageUrl, "$groupbyinfo", "true");
 
         const RequestList = [];
 

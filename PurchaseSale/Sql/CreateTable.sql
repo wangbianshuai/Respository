@@ -384,6 +384,8 @@ c.ProductBarCode,
 c.ProductCode,
 c.Spec,
 c.Unit,
+c.ProductTypeId,
+c.ProductBrandId,
 d.Name ProductTypeName,
 e.Name ProductBrandName
 from t_StockCheck a

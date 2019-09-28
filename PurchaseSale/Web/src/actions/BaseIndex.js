@@ -43,9 +43,12 @@ export default class Index {
             const res1 = data[0];
             if (res1.IsSuccess === false) return res1;
             const DataList = res1[dataName] || (res1 || []);
-            var PageInfo = null;
-            if (data.length === 2) PageInfo = data[1].PageInfo;
-            return { DataList, PageInfo };
+            var PageInfo = null, GroupByInfo = null;
+            if (data.length === 2) {
+                PageInfo = data[1].PageInfo;
+                GroupByInfo = data[1].GroupByInfo;
+            }
+            return { DataList, PageInfo, GroupByInfo };
         }
         else if (data[dataName] !== undefined) {
             const DataList = data[dataName] || [];

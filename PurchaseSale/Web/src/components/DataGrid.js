@@ -58,7 +58,7 @@ export default class DataGrid extends Component {
     RenderGroupByInfoAlert() {
         if (!this.props.GroupByInfo || !this.props.GroupByInfoHtml) return null;
 
-        return <Alert message={this.RenderGroupByInfo()} type="info" showIcon={true} style={{ marginBottom: "8px" }} />
+        return <Alert message={this.RenderGroupByInfo()} type="info" showIcon={true} />
     }
 
     RenderGroupByInfo() {

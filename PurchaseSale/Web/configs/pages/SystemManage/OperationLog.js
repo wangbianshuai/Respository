@@ -47,7 +47,9 @@ function GetEditSelect(Name, Label, DataSource, X, Y, DefaultValue) {
     return {
         ...GetSelect(Name, Label, DataSource, X, Y, DefaultValue),
         IsFormItem: true,
-        ColSpan: 5,
+        ColSpan: 6,
+        LabelCol: 8,
+        WrapperCol: 15,
         OperateLogic: "=",
         IsNullable: true,
         AllowClear: true,
@@ -59,7 +61,9 @@ function GetTextBox2(Name, Label, X, Y, ContorlType, PlaceHolder, MaxLength) {
     return {
         ...GetTextBox(Name, Label, ContorlType, X, Y, PlaceHolder, MaxLength || 50),
         IsFormItem: true,
-        ColSpan: 5,
+        ColSpan: 6,
+        LabelCol: 8,
+        WrapperCol: 15,
         OperateLogic: "=",
         IsNullable: true,
         IsCondition: true
@@ -70,10 +74,12 @@ function GetTextBox2(Name, Label, X, Y, ContorlType, PlaceHolder, MaxLength) {
 function GetDatePicker2(Name, Label, X, Y, PlaceHolder, DefaultValue) {
     return {
         ...GetDatePicker(Name, Label, X, Y, DefaultValue),
-        IsFormItem: true, ColSpan: 5,
+        IsFormItem: true, ColSpan: 6,
         IsNullable: true,
         PlaceHolder: PlaceHolder,
         MaxLength: 20,
+        LabelCol: 8,
+        WrapperCol: 15,
         DataType: "DateTime",
         IsCondition: true
     }

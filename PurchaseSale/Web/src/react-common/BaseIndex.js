@@ -212,7 +212,7 @@ export default class BaseIndex extends Component {
             SetModalDialog: Page.Current.Invoke("RootPage", "SetModalDialog"), GetProperty: this.GetProperty.bind(this),
             Controls: [], InvokeAction: this.InvokeEventAction.bind(this), GetFunction: this.GetFunction.bind(this),
             GetAction: this.GetEventAction.bind(this), Components: [], GetViewProperty: this.GetViewProperty.bind(this),
-            GetView: this.GetView.bind(this), OpenPage: this.OpenPage.bind(this),
+            GetView: this.GetView.bind(this), OpenPage: this.OpenPage.bind(this), ShowMessage: this.ShowMessage.bind(this),
             Alert: this.Alert.bind(this), Confirm: this.Confirm.bind(this), AlertSuccess: this.AlertSuccess.bind(this),
             Receives: {}, ToPage: this.ToPage.bind(this), PageData: this.PageData,
             GetControl: this.GetControl.bind(this), GetComponent: this.GetComponent.bind(this),

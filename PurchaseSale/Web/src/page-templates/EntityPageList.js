@@ -15,8 +15,6 @@ export default (name, enityName, minActionType, pageExpand, expandModelsConfig) 
         if (expandModelsConfig.ListActionNames) config.ActionNames = config.ActionNames.concat(expandModelsConfig.ListActionNames);
     }
 
-    console.log(config);
-
     return EntityList(config);
 }
 

@@ -134,9 +134,27 @@ namespace OpenDataAccess.Service
             {
                 IEntityData pageInfo = new EntityData("PageInfo");
 
-                QueryPage(query, pageInfo);
+                if (_QueryRequest.IsGroupByInfo && QueryGroupByInfo != null)
+                {
+                    IEntityData data = new EntityData(this.EntityType);
 
-                return pageInfo;
+                    Parallel.Invoke(() =>
+                    {
+                        QueryGroupByInfo(data, this._QueryRequest.GroupByInfoWhereSql, this._QueryRequest.GroupByInfoParameterList);
+                    },
+                   () =>
+                   {
+                       QueryPage(query, pageInfo);
+                       data.SetValue("PageInfo", pageInfo);
+                   });
+
+                    return data;
+                }
+                else
+                {
+                    QueryPage(query, pageInfo);
+                    return pageInfo;
+                }
             }
             else if (_QueryRequest.IsData && action != "Excel")
             {
@@ -184,27 +202,7 @@ namespace OpenDataAccess.Service
                     }
                     else
                     {
-                        if (_QueryRequest.IsGroupByInfo && QueryGroupByInfo != null)
-                        {
-                            IEntityData data = new EntityData(this.EntityType);
-                            data.SetValue("DataList", new List<IEntityData>());
-                            data.SetValue("GroupByInfo", null);
-
-                            Parallel.Invoke(() =>
-                            {
-                                QueryGroupByInfo(data, this._QueryRequest.GroupByInfoWhereSql, this._QueryRequest.GroupByInfoParameterList);
-                            },
-                           () =>
-                           {
-                               data.SetValue("DataList", this.SelectEntities(query));
-                           });
-
-                            return data;
-                        }
-                        else
-                        {
-                            return this.SelectEntities(query);
-                        }
+                        return this.SelectEntities(query);
                     }
                 }
                 else
