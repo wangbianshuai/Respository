@@ -111,11 +111,13 @@ namespace PurchaseSale.Entity
         public string ProductTypeName { get; set; }
         public string ProductBrandName { get; set; }
         public float CurrentStock { get; set; }
+        public string ProductName { get; set; }
     }
 
     [TableProperty(Name = "v_Product2", PrimaryKey = "Id", NoSelectNames = "IsDelete")]
     [RequestMethod(IsDelete = false, IsPost = false, IsPut = false)]
     public class ViewProduct2 : Product
     {
+        public string ProductName { get; set; }
     }
 }

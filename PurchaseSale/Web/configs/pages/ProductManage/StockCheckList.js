@@ -85,7 +85,7 @@ function GetDataGridView() {
         IsRowSelection: true,
         IsSingleSelection: true,
         GroupByInfoHtml: GetGroupByInfoHtml(),
-        Properties: AssignProporties(StockCheck, ["ProductCode", "ProductName", "ProductTypeName", "ProductBrandName","ShouldStock", "RealStock","Unit", GetAmount("BidPrice"), GetAmount("LossAmount"),"Remark", { Name: "CreateDate", OrderByType: "desc" }, { Name: "RowVersion", IsVisible: false }])
+        Properties: AssignProporties(StockCheck, ["ProductCode", "ProductName", "ProductTypeName", "ProductBrandName", "CurrentStock", "RealStock", "Unit", GetAmount("BidPrice"), GetAmount("LossAmount"), "CheckDate", "CheckUserName", { Name: "CreateDate", OrderByType: "desc" }, { Name: "RowVersion", IsVisible: false }])
     }
 }
 

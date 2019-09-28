@@ -21,7 +21,7 @@ namespace PurchaseSale.Entity
         /// <summary>
         /// 应有库存
         /// </summary>
-        public float ShouldStock { get; set; }
+        public float CurrentStock { get; set; }
         /// <summary>
         /// 实有库存
         /// </summary>

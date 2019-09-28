@@ -97,6 +97,8 @@ export default class BaseIndex extends Component {
         if (this.Property.IsCurrentDay) this.Property.DefaultValue = Common.GetCurrentDate().substr(0, 10);
 
         if (this.Property.IsMonthFirst) this.Property.DefaultValue = Common.GetCurrentDate().substr(0, 8) + "01";
+
+        if (this.Property.IsCurrentUser) this.Property.DefaultValue = Common.GetStorage("LoginUserId");
     }
 
     componentWillUnmount() {

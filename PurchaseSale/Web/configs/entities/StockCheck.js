@@ -3,7 +3,8 @@ module.exports = {
     PrimaryKey: "Id",
     Properties: GetProperties(),
     ProductTypeDataSource: GetProductTypeDataSource(),
-    ProductBrandDataSource: GetProductBrandDataSource()
+    ProductBrandDataSource: GetProductBrandDataSource(),
+    UserDataSource:GetUserDataSource()
 }
 
 function GetProperties() {
@@ -15,7 +16,7 @@ function GetProperties() {
         GetProperty("ProductBrandName", "品牌"),
         GetProperty("BidPrice", "进价"),
         GetProperty("LossAmount", "亏损金额"),
-        GetProperty("ShouldStock", "应有库存"),
+        GetProperty("CurrentStock", "应有库存"),
         GetProperty("RealStock", "实有库存"),
         GetProperty("CheckDate", "盘点日期"),
         GetProperty("CheckUserName", "盘点人"),
@@ -32,7 +33,7 @@ function GetProductTypeDataSource() {
         ValueName: "Id",
         TextName: "Name",
         StateName: "ProductTypes",
-        ServiceName: "ProductService",
+        ServiceName: "StockCheckService",
         ActionName: "GetProductTypes",
         IsRefresh: true,
         Payload: {}
@@ -44,8 +45,20 @@ function GetProductBrandDataSource() {
         ValueName: "Id",
         TextName: "Name",
         StateName: "ProductBrands",
-        ServiceName: "ProductService",
+        ServiceName: "StockCheckService",
         ActionName: "GetProductBrands",
+        IsRefresh: true,
+        Payload: {}
+    }
+}
+
+function GetUserDataSource(){
+    return {
+        ValueName: "UserId",
+        TextName: "UserName",
+        StateName: "Users",
+        ServiceName: "StockCheckService",
+        ActionName: "GetUsers",
         IsRefresh: true,
         Payload: {}
     }

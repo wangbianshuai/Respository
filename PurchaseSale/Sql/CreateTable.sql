@@ -161,10 +161,10 @@ group by b.ProductId
 ),
 StockCheckNumber as
 (
-select ProductId,Sum(ShouldStock- RealStock) SumNumber from t_StockCheck where IsDelete=0
+select ProductId,Sum(CurrentStock- RealStock) SumNumber from t_StockCheck where IsDelete=0
 group by ProductId
 )
-select a.*,b.Name as ProductTypeName, c.Name as ProductBrandName,
+select a.*,b.Name as ProductTypeName, c.Name as ProductBrandName,'('+ a.ProductCode+')'+ a.Name ProductName,
 a.InitStock+ isnull(e.SumNumber,0) - isnull(f.SumNumber,0)- ISNULL(g.SumNumber,0) CurrentStock
 from t_Product a 
 left join t_ProductType b on a.ProductTypeId=b.Id
@@ -180,7 +180,7 @@ go
 
 create view v_Product2
 as
-select *
+select *,'('+ a.ProductCode+')'+ a.Name ProductName
 from t_Product a 
 where a.IsDelete=0
 go
@@ -366,7 +366,7 @@ create table t_StockCheck
 (
 Id uniqueidentifier not null primary key default(newid()),      --主键
 ProductId uniqueidentifier not null,                            --商品Id
-ShouldStock float not null,                                     --应有库存
+CurrentStock float not null,                                    --应有库存
 RealStock float not null,                                       --实有库存
 CheckDate datetime not null,                                    --盘点日期
 CheckUser uniqueidentifier not null,                            --盘点人
@@ -398,12 +398,13 @@ c.ProductBrandId,
 d.Name ProductTypeName,
 e.Name ProductBrandName,
 f.UserName CheckUserName,
-(a.ShouldStock-a.RealStock)*a.BidPrice LossAmount
+(a.CurrentStock-a.RealStock)*a.BidPrice LossAmount
 from t_StockCheck a
 left join t_Product c on a.ProductId=c.Id
 left join t_ProductType d on c.ProductTypeId=d.Id
 left join t_ProductBrand e on c.ProductBrandId=e.Id
 left join t_User f on a.CheckUser=f.UserId
+where a.IsDelete=0;
 go
 
 --账目类型
