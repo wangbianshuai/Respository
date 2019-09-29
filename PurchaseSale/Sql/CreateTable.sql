@@ -260,6 +260,14 @@ RowVersion timestamp not null                                   --�а汾
 )
 go
 
+drop view v_Supplier
+go
+
+create view v_Supplier
+as
+select * from t_Supplier where IsDelete=0
+go
+
 drop view v_PurchaseDetail
 go
 

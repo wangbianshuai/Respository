@@ -46,6 +46,7 @@
     <Compile Include="ProductBrand.cs" />
     <Compile Include="ProductType.cs" />
     <Compile Include="StockCheck.cs" />
+    <Compile Include="Supplier.cs" />
     <Compile Include="User.cs" />
     <Compile Include="OperationLog.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
