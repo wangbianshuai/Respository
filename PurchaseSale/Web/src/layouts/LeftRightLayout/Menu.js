@@ -42,7 +42,7 @@ function GetPurchaseSaleNavMenu() {
     menuList.push(AddMenu("ProductPurchaseSaleCount", "商品进销统计", false, "table", "/PurchaseSaleManage/ProductPurchaseSaleCount"));
 
     menuList.push(AddMenu("BillTypeList", "账目类型", false, "table", "/PurchaseSaleManage/BillTypeList"));
-    menuList.push(AddMenu("PersonBillTypeEdit", "新增", true, "form", "/PurchaseSaleManage/PersonBillTypeEdit", "", null, false, "账目类型", "/PurchaseSaleManage/BillTypeList", null, true));
+    menuList.push(AddMenu("BillTypeEdit", "新增", true, "form", "/PurchaseSaleManage/BillTypeEdit", "", null, false, "账目类型", "/PurchaseSaleManage/BillTypeList", null, true));
 
     menuList.push(AddMenu("SupplierList", "供应商", false, "table", "/PurchaseSaleManage/SupplierList"));
     menuList.push(AddMenu("SupplierEdit", "新增", true, "form", "/PurchaseSaleManage/SupplierEdit", "", null, false, "供应商", "/PurchaseSaleManage/SupplierList", null, true));

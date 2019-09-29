@@ -471,12 +471,17 @@ go
 
 create view v_Bill
 as
-select a.*,
+select a.*,case when b.PurchaseCode is not null then b.PurchaseCode else c.SaleCode end DataCode,
+case when b.PurchaseCode is not null then 'PurchaseList?PurchaseId='+ convert(varchar(36),a.DataId) 
+ when c.SaleCode is not null then 'SaleList?SaleId='+ convert(varchar(36),a.DataId) else '' end DataPageUrl,
 case when a.IncomePayment = 1 then '收入'  when a.IncomePayment = 2 then '支出' else'' end IncomePaymentName,
 case when a.IncomePayment = 2 then  0-a.Amount  else a.Amount end Amount2,
-e.Name as BillTypeName
+e.Name as BillTypeName,d.UserName CreateUserName
 from t_Bill a
 left join t_BillType e on a.BillTypeId=e.Id
+left join t_Purchase b on a.DataId=b.PurchaseId
+left join t_Sale c on a.DataId=c.SaleId
+left join t_User d on a.CreateUser=d.UserId
 where a.IsDelete=0
 go
 

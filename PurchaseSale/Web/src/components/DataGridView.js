@@ -94,6 +94,18 @@ class DataGridView extends BaseIndex {
                 return text;
             };
         }
+        else if (p.IsToPage && p.Render === undefined) {
+            p.Render = (text, record, index) => {
+                if (p.IsRender && !p.IsRender(text, record, index)) return this.EmptyRender();
+                if (!Common.IsNullOrEmpty(text)) {
+                    let url = p.PageUrl;
+                    url = Common.ReplaceDataContent(record, url, true)
+                    if (Common.IsNullOrEmpty(url)) return text;
+                    else return <a href={url}>{text}</a>
+                }
+                return text;
+            };
+        }
         return p;
     }
 
