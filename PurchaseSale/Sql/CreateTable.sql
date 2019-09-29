@@ -192,7 +192,7 @@ go
 
 create table t_Purchase
 (
-Id uniqueidentifier not null primary key default(newid()),      --主键
+PurchaseId uniqueidentifier not null primary key default(newid()),      --主键
 PurchaseCode varchar(50) not null,                              --采购单号
 PurchaseUser uniqueidentifier not null,                         --采购人
 PurchaseDate datetime not null,                                 --采购日期
@@ -277,7 +277,7 @@ c.Unit,
 d.Name ProductTypeName,
 e.Name ProductBrandName
 from t_PurchaseDetail a
-inner join t_Purchase b on a.PurchaseId=b.Id and b.IsDelete=0
+inner join t_Purchase b on a.PurchaseId=b.PurchaseId and b.IsDelete=0
 left join t_Product c on a.ProductId=c.Id
 left join t_ProductType d on c.ProductTypeId=d.Id
 left join t_ProductBrand e on c.ProductBrandId=e.Id
@@ -289,7 +289,7 @@ go
 
 create table t_Sale
 (
-Id uniqueidentifier not null primary key default(newid()),      --主键
+SaleId uniqueidentifier not null primary key default(newid()),      --主键
 SaleCode varchar(50) not null,                                  --销售订单
 SaleUser uniqueidentifier not null,                             --销售人
 SaleDate datetime not null,                                     --销售日期
@@ -352,7 +352,7 @@ c.Unit,
 d.Name ProductTypeName,
 e.Name ProductBrandName
 from t_SaleDetail a
-inner join t_Sale b on a.SaleId=b.Id and b.IsDelete=0
+inner join t_Sale b on a.SaleId=b.SaleId and b.IsDelete=0
 left join t_Product c on a.ProductId=c.Id
 left join t_ProductType d on c.ProductTypeId=d.Id
 left join t_ProductBrand e on c.ProductBrandId=e.Id

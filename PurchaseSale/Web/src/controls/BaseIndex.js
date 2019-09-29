@@ -33,7 +33,7 @@ export default class BaseIndex extends Component {
 
         this.Property.GetValue = this.GetValue.bind(this)
 
-        this.Property.SetValue = (v) => this.setState({ Value: v });
+        this.Property.SetValue = (v) => this.setState({ Value: (v === undefined ? null : v) });
 
         this.Property.SetStyle = (s) => this.setState({ Style: s });
 
