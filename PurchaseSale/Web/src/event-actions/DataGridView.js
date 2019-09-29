@@ -81,6 +81,20 @@ export default class DataGridView extends BaseIndex {
             if (p.IsCondition && p.GetValue) conditionList.push({ Name: name, Label: p.Label, OperateLogic: p.OperateLogic || "=", DataType: p.DataType || "string", Value: this.GetPropertyValues(p, isClearQuery) });
         });
 
+        if (Common.IsArray(SearchView.DefaultConditions)) {
+            SearchView.DefaultConditions.forEach(p => {
+                var condition = {
+                    Name: p.Name,
+                    Label: p.Label,
+                    OperateLogic: p.OperateLogic || "=",
+                    DataType: p.DataType || "string",
+                    Value: p.DefaultValue
+                }
+                if (p.IsCurrentUser) condition.Value = Common.GetStorage("LoginUserId");
+
+                if (!Common.IsNullOrEmpty(condition.Value)) conditionList.push(condition)
+            });
+        }
         return conditionList;
     }
 

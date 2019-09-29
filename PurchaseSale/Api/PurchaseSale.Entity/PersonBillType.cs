@@ -54,13 +54,13 @@ namespace PurchaseSale.Entity
 
         public override void InsertValidate(List<Func<IValidate, IEntityData, string>> validateList)
         {
-            validateList.Add(this.ValidateExists<PersonBillType>("IsDelete=0 and Name=@Name", "对不起，该名称已存在！"));
+            validateList.Add(this.ValidateExists<PersonBillType>("IsDelete=0 and Name=@Name and CreateUser=@CreateUser", "对不起，该名称已存在！"));
         }
 
         public override void UpdateValidate(List<Func<IValidate, IEntityData, string>> validateList)
         {
-            validateList.Add(this.ValidateExists<PersonBillType>("Id=@Id and Name=@Name", "true"));
-            validateList.Add(this.ValidateExists<PersonBillType>("IsDelete=0 and Name=@Name", "对不起，该名称已存在！"));
+            validateList.Add(this.ValidateExists<PersonBillType>("Id=@Id and Name=@Name and CreateUser=@CreateUser", "true"));
+            validateList.Add(this.ValidateExists<PersonBillType>("IsDelete=0 and Name=@Name and CreateUser=@CreateUser", "对不起，该名称已存在！"));
         }
     }
 

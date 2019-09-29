@@ -4,7 +4,7 @@ export default {
     GetProductBrands: get("GetProductBrands", "ViewProductBrand?$select=Id,Name&$orderby CreateDate", "ProductBrands", "ViewProductBrand"),
     GetProductList:get("GetProductList", "ViewProduct?$select=Id,ProductName,CurrentStock,BidPrice&$orderby CreateDate", "ProductList", "ViewProduct"),
     GetUsers: get("GetUsers", "ViewUser?$select=UserId,UserName&$orderby CreateDate", "Users", "ViewUser"),
-    GetPersonBillTypes: get("GetPersonBillTypes", "ViewPersonBillType?$select=Id,Name&$orderby CreateDate", "PersonBillTypes", "ViewPersonBillType"),
+    GetPersonBillTypes: get("GetPersonBillTypes", "ViewPersonBillType?$select=Id,Name,IncomePayment&$orderby CreateDate", "PersonBillTypes", "ViewPersonBillType"),
 }
 
 function get(actionName, url, stateName, dataKey, isToken, hasToken) {

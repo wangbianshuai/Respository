@@ -24,11 +24,12 @@ function GetSearchOperationView() {
         Entity: Entity,
         Type: "RowsColsView",
         ClassName: "DivSerachView",
+        DefaultConditions: GetDefaultConditions(),
         Properties: AssignProporties({ Name: "PersonBillList" }, [
             GetEditSelect("BillTypeId", "类型", PersonBill.PersonTypeDataSource, 1, 1),
-            { ...GetDatePicker2("StartDate", "盘点日期", 1, 2, "大于或等于其值"), PropertyName: "CheckDate", OperateLogic: ">=" },
-            { ...GetDatePicker2("EndDate", "至", 1, 3, "小于其值"), PropertyName: "CheckDate", OperateLogic: "<" },
-            GetEditSelect("IncomePayment", "收支", PersonBill.IncomePaymentDataSource, 2, 1),
+            { ...GetDatePicker2("StartDate", "日期", 1, 2, "大于或等于其值"), PropertyName: "BillDate", OperateLogic: ">=" },
+            { ...GetDatePicker2("EndDate", "至", 1, 3, "小于其值"), PropertyName: "BillDate", OperateLogic: "<" },
+            GetEditSelect2("IncomePayment", "收支", PersonBill.IncomePaymentDataSource, 2, 1),
             {
                 ...GetTextBox2("Remark", "备注", 2, 3, "", ""),
                 OperateLogic: "like", PressEnterEventActionName: "SearchQuery"
@@ -36,6 +37,7 @@ function GetSearchOperationView() {
             { ...GetButton("Search", "搜索", "primary", 2, 4), IsFormItem: true, Icon: "search", EventActionName: "SearchQuery", PressEnterEventActionName: "SearchQuery" },
             { ...GetButton("ClearQuery", "清空", "default", 2, 5), IsFormItem: true, EventActionName: "ClearQuery" },
             { EventActionName: "ToEditPage", ...GetButton("ToEditPage", "新增", "primary", 3, 1), Style: { marginLeft: 16, marginBottom: 16 } },
+            { EventActionName: "EditPersonBill", ColStyle: { paddingLeft: 0 }, ...GetButton("EditPersonBill", "修改", "default", 3, 2) },
             {
                 EventActionName: "DeletePersonBill",
                 ColStyle: { paddingLeft: 0 },
@@ -46,6 +48,14 @@ function GetSearchOperationView() {
             }
         ])
     }
+}
+
+function GetDefaultConditions() {
+    return [{
+        Name: "CreateUser",
+        Type: "Guid",
+        IsCurrentUser: true
+    }]
 }
 
 function GetDatePicker2(Name, Label, X, Y, PlaceHolder, DefaultValue) {
@@ -61,6 +71,21 @@ function GetDatePicker2(Name, Label, X, Y, PlaceHolder, DefaultValue) {
         IsCondition: true
     }
 }
+
+function GetEditSelect2(Name, Label, DataSource, X, Y, DefaultValue) {
+    return {
+        ...GetSelect(Name, Label, DataSource, X, Y, DefaultValue),
+        IsFormItem: true,
+        ColSpan: 6,
+        LabelCol: 8,
+        WrapperCol: 15,
+        OperateLogic: "=",
+        IsNullable: true,
+        AllowClear: true,
+        IsCondition: true
+    }
+}
+
 
 function GetEditSelect(Name, Label, DataSource, X, Y, DefaultValue) {
     return {
@@ -101,7 +126,7 @@ function GetDataGridView() {
         IsRowSelection: true,
         IsSingleSelection: true,
         GroupByInfoHtml: GetGroupByInfoHtml(),
-        Properties: AssignProporties(PersonBill, ["BillDate", "PersonBillTypeName", "IncomePaymentName", GetAmount("Amount"), { Name: "CreateDate", OrderByType: "desc" }, { Name: "RowVersion", IsVisible: false }])
+        Properties: AssignProporties(PersonBill, ["BillDate", "PersonBillTypeName", "IncomePaymentName", GetAmount("Amount"), "Remark", { Name: "CreateDate", OrderByType: "desc" }, { Name: "RowVersion", IsVisible: false }])
     }
 }
 
@@ -139,9 +164,16 @@ function GetEventActions() {
         IsClearQuery: true
     },
     {
+        Name: "EditPersonBill",
+        Type: "DataGridView/SelectRowToPage",
+        DataGridView: "DataGridView1",
+        AlertMessage: "AlertMessage",
+        PageUrl: "/PersonBillManage/PersonBillEdit?Id=#{Id}&MenuName=" + escape("修改")
+    },
+    {
         Name: "ToEditPage",
         Type: "Page/ToPage",
-        PageUrl: "/ProductManage/PersonBillEdit"
+        PageUrl: "/PersonBillManage/PersonBillEdit"
     },
     {
         Name: "DeletePersonBill",

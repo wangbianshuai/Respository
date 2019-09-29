@@ -45,7 +45,10 @@ function GetButtonProperties() {
 function GetProperties() {
     return [
         GetIncomePayment(),
-        { ...GetEditSelect("BillTypeId", "类型", PersonBill.PersonTypeDataSource, 2, 1, false, "请选择类型") },
+        {
+            ...GetEditSelect("BillTypeId", "类型", PersonBill.PersonTypeDataSource, 2, 1, false, "请选择类型"),
+            ParentName: "IncomePayment", ParentPropertyName: "IncomePayment", IsLoadValue: true
+        },
         { ...GetTextBox2("Amount", "金额", 3, 1, "", "请输入金额", 20, false), DataType: "float" },
         GetDatePicker2("BillDate", "日期", 4, 1, "", "请选择日期", 10, false),
         GetTextArea("Remark", "备注", 5, 1),
@@ -82,12 +85,14 @@ function GetDatePicker2(Name, Label, X, Y, IsNullable, PlaceHolder, DefaultValue
 
 function GetIncomePayment() {
     return {
-        ...GetRadio("IncomePayment", "收支", PersonBill.IncomePaymentDataSource, 1, 1, 1, 160),
+        ...GetRadio("IncomePayment", "收支", PersonBill.IncomePaymentDataSource, 1, 1, 2, "50%"),
         IsFormItem: true,
         ColSpan: 24,
         IsLoadValue: true,
         LabelCol: 8,
         WrapperCol: 8,
+        Style: { width: "100%" },
+        ChildNames: ["BillTypeId"],
         IsEdit: true
     }
 }
@@ -138,7 +143,7 @@ function GetEventActions() {
     return [{
         Name: "BackToLast",
         Type: "Page/ToPage",
-        PageUrl: "/ProductManage/PersonBillList"
+        PageUrl: "/PersonBillManage/PersonBillList"
     },
     {
         Name: "SaveEntityData",

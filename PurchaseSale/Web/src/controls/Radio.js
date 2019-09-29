@@ -23,7 +23,7 @@ class Radio2 extends BaseIndex {
         this.Property.DataSource.forEach(d => {
             if (this.Property.IsButton) {
                 const style = {}
-                if (this.Property.ButtonWidth > 0) {
+                if (this.Property.ButtonWidth) {
                     style.width = this.Property.ButtonWidth;
                     style.textAlign = "center";
                 }

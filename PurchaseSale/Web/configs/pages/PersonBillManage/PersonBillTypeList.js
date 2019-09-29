@@ -24,6 +24,7 @@ function GetSearchOperationView() {
         Entity: Entity,
         Type: "RowsColsView",
         ClassName: "DivLeftRightView",
+        DefaultConditions: GetDefaultConditions(),
         Properties: AssignProporties({ Name: "PersonBillTypeList" }, [{ EventActionName: "ToEditPage", ...GetButton("ToEditPage", "新增", "primary", 1, 1) },
         { EventActionName: "EditPersonBillType", ColStyle: { paddingLeft: 0 }, ...GetButton("EditPersonBillType", "修改", "default", 1, 2) },
         {
@@ -74,6 +75,14 @@ function GetDataGridView() {
 }
 
 
+function GetDefaultConditions() {
+    return [{
+        Name: "CreateUser",
+        Type: "Guid",
+        IsCurrentUser: true
+    }]
+}
+
 function GetEventActions() {
     return [{
         Name: "SearchQuery",
@@ -86,14 +95,14 @@ function GetEventActions() {
     {
         Name: "ToEditPage",
         Type: "Page/ToPage",
-        PageUrl: "/ProductManage/PersonBillTypeEdit"
+        PageUrl: "/PersonBillManage/PersonBillTypeEdit"
     },
     {
         Name: "EditPersonBillType",
         Type: "DataGridView/SelectRowToPage",
         DataGridView: "DataGridView1",
         AlertMessage: "AlertMessage",
-        PageUrl: "/ProductManage/PersonBillTypeEdit?Id=#{Id}&MenuName=" + escape("修改")
+        PageUrl: "/PersonBillManage/PersonBillTypeEdit?Id=#{Id}&MenuName=" + escape("修改")
     },
     {
         Name: "DeletePersonBillType",

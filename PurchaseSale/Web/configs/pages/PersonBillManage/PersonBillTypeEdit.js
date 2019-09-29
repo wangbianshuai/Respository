@@ -53,12 +53,13 @@ function GetProperties() {
 
 function GetIncomePayment() {
     return {
-        ...GetRadio("IncomePayment", "收支", PersonBillType.IncomePaymentDataSource, 1, 1, 1, 160),
+        ...GetRadio("IncomePayment", "收支", PersonBillType.IncomePaymentDataSource, 1, 1, 2, "50%"),
         IsFormItem: true,
         ColSpan: 24,
         IsLoadValue: true,
         LabelCol: 8,
         WrapperCol: 8,
+        Style: { width: "100%" },
         IsEdit: true
     }
 }
@@ -109,7 +110,7 @@ function GetEventActions() {
     return [{
         Name: "BackToLast",
         Type: "Page/ToPage",
-        PageUrl: "/ProductManage/PersonBillTypeList"
+        PageUrl: "/PersonBillManage/PersonBillTypeList"
     },
     {
         Name: "SaveEntityData",

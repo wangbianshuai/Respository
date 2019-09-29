@@ -26,6 +26,7 @@ export default class LeftRightLayout extends Component {
         this.JudgeLogin();
         this.PageData = {};
         this.UserId = Common.GetStorage("LoginUserId");
+        this.LoginUser = this.GetLoginUser();
 
         this.Init();
     }
@@ -39,6 +40,13 @@ export default class LeftRightLayout extends Component {
         this.Menus2 = {};
         this.RightConfig2 = {};
         for (var key in this.Menus) this.Menus2[this.Menus[key].MenuName] = key;
+    }
+
+    GetLoginUser() {
+        var info = Common.GetStorage("LoginUserInfo");
+        if (!info) return {};
+
+        return JSON.parse(info);
     }
 
     Alert(msg, title) {
@@ -324,7 +332,7 @@ export default class LeftRightLayout extends Component {
 
         const pageName = selectedKeys.length > 0 ? selectedKeys[0] : "";
 
-        const loginName = "admin";
+        const loginName = this.LoginUser.UserName;
 
         this.props.location.PageData = this.PageData;
 

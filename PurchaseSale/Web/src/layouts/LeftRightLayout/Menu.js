@@ -14,7 +14,7 @@ export default () => {
     }
 };
 
-function GetPurchaseSaleNavMenu(){
+function GetPurchaseSaleNavMenu() {
     var menuList = [];
     menuList.push(AddMenu("SaleInput", "销售单录入", false, "form", "/PurchaseSaleManage/SaleInput"));
     menuList.push(AddMenu("SaleList", "销售单列表", false, "table", "/PurchaseSaleManage/SaleList"));
@@ -37,18 +37,19 @@ function GetPurchaseSaleNavMenu(){
     menuList.push(AddMenu("SupplierList", "供应商", false, "table", "/PurchaseSaleManage/SupplierList"));
     menuList.push(AddMenu("SupplierEdit", "新增", true, "form", "/PurchaseSaleManage/SupplierEdit", "", null, false, "供应商", "/PurchaseSaleManage/SupplierList", null, true));
 
-    return AddNavMenu("PurchaseSaleManage", "进销管理", false, menuList, true, ["SaleInput", "SaleList","PurchaseInput", "PurchaseList","BillList","BillTypeList","SupplierList","PurchaseSaleCount",""]);
+    return AddNavMenu("PurchaseSaleManage", "进销管理", false, menuList, true, ["SaleInput", "SaleList", "PurchaseInput", "PurchaseList", "BillList", "BillTypeList", "SupplierList", "PurchaseSaleCount", ""]);
 }
 
-function GetPersonBillNavMenu(){
+function GetPersonBillNavMenu() {
     var menuList = [];
-    menuList.push(AddMenu("PersonBillTypeList", "账目类型", false, "table", "/PersonBillManage/PersonBillTypeList"));
-    menuList.push(AddMenu("PersonBillTypeEdit", "新增", true, "form", "/PersonBillManage/PersonBillTypeEdit", "", null, false, "账目类型", "/PersonBillManage/PersonBillTypeList", null, true));
 
     menuList.push(AddMenu("PersonBillList", "个人收支", false, "table", "/PersonBillManage/PersonBillList"));
     menuList.push(AddMenu("PersonBillEdit", "新增", true, "form", "/PersonBillManage/PersonBillEdit", "", null, false, "个人收支", "/PersonBillManage/PersonBillList", null, true));
 
-    return AddNavMenu("PersonBillManage", "个人记账", false, menuList, true, ["PersonBillTypeList", "PersonBillList"]);
+    menuList.push(AddMenu("PersonBillTypeList", "账目类型", false, "table", "/PersonBillManage/PersonBillTypeList"));
+    menuList.push(AddMenu("PersonBillTypeEdit", "新增", true, "form", "/PersonBillManage/PersonBillTypeEdit", "", null, false, "账目类型", "/PersonBillManage/PersonBillTypeList", null, true));
+
+    return AddNavMenu("PersonBillManage", "个人记账", false, menuList, true, ["PersonBillList", "PersonBillTypeList"]);
 }
 
 function GetSystemManageNavNenu() {

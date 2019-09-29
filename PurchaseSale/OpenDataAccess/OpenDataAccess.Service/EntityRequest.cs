@@ -366,6 +366,7 @@ namespace OpenDataAccess.Service
                 string message = string.Empty;
                 foreach (IEntityData entityData in _Request.Entities[_Request.Entity.Name])
                 {
+                    AddCreateUser(entityData);
                     message = this.Validate(entityData, this.EntityType.InsertValidateList);
                     if (!string.IsNullOrEmpty(message))
                     {
@@ -380,7 +381,6 @@ namespace OpenDataAccess.Service
                 IDbTransaction trans = this.CurrentDataBase.BeginTransaction(this.CurrentDataBase.ConnectionString);
                 foreach (IEntityData entityData in _Request.Entities[_Request.Entity.Name])
                 {
-                    AddCreateUser(entityData);
                     blSucceed = this.InsertEntity(entityData, out primaryKey, trans);
                     if (!blSucceed)
                     {
@@ -425,6 +425,7 @@ namespace OpenDataAccess.Service
             if (_Request.Entities.ContainsKey(_Request.Entity.Name) && _Request.Entities[_Request.Entity.Name] != null)
             {
                 IEntityData entityData = _Request.Entities[_Request.Entity.Name].FirstOrDefault();
+                AddUpdateUser(entityData);
                 string message = this.Validate(entityData, this.EntityType.UpdateValidateList);
                 if (!string.IsNullOrEmpty(message))
                 {
@@ -443,8 +444,7 @@ namespace OpenDataAccess.Service
                         return GetMessageDict(message);
                     }
                 }
-
-                AddUpdateUser(entityData);
+             
                 return GetBoolDict(this.UpdateEntity(_QueryRequest.ToQuery(), entityData));
             }
             else

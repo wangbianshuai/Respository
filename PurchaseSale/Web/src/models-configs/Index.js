@@ -1,7 +1,9 @@
 import Product from "./Product";
-import StockCheck from "./StockCheck"
+import StockCheck from "./StockCheck";
+import PersonBill from "./PersonBill";
 
 export {
     Product,
-    StockCheck
+    StockCheck,
+    PersonBill
 }
