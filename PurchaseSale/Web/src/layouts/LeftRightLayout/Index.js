@@ -238,13 +238,13 @@ export default class LeftRightLayout extends Component {
     }
 
     SelectMenuClick(item) {
-        if (item.key === "PersonCenter") router.push("/EntityList.html?Name=1234");
+        if (item.key === "ChangePassword") router.push("/ChangePassword");
         else if (item.key === "Logout") router.push("/login")
     }
 
     RenderUserRightMenuList() {
         return (<Menu selectedKeys={[]} className={styles.UserRightMenu} onClick={this.SelectMenuClick.bind(this)}>
-            <Menu.Item key="PersonCenter" className={styles.UserRightMenuItem} ><Icon type="setting" /><span>个人中心</span></Menu.Item>
+            <Menu.Item key="ChangePassword" className={styles.UserRightMenuItem} ><Icon type="setting" /><span>修改密码</span></Menu.Item>
             <Menu.Divider />
             <Menu.Item key="Logout" className={styles.UserRightMenuItem}><Icon type="logout" /><span>退出登录</span></Menu.Item>
         </Menu>)

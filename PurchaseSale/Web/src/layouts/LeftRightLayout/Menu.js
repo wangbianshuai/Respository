@@ -5,12 +5,51 @@ export default () => {
     Menus = {};
     return {
         NavMenuList: [
+            GetPurchaseSaleNavMenu(),
             GetProductManageNavMenu(),
+            GetPersonBillNavMenu(),
             GetSystemManageNavNenu()
         ],
         Menus
     }
 };
+
+function GetPurchaseSaleNavMenu(){
+    var menuList = [];
+    menuList.push(AddMenu("SaleInput", "销售单录入", false, "form", "/PurchaseSaleManage/SaleInput"));
+    menuList.push(AddMenu("SaleList", "销售单列表", false, "table", "/PurchaseSaleManage/SaleList"));
+
+    menuList.push(AddMenu("PurchaseInput", "采购单录入", false, "form", "/PurchaseSaleManage/PurchaseInput"));
+    menuList.push(AddMenu("PurchaseList", "采购单列表", false, "table", "/PurchaseSaleManage/PurchaseList"));
+
+    menuList.push(AddMenu("BillList", "收支明细", false, "table", "/PurchaseSaleManage/BillList"));
+    menuList.push(AddMenu("BillEdit", "新增", true, "form", "/PurchaseSaleManage/BillEdit", "", null, false, "收支明细", "/PurchaseSaleManage/BillList", null, true));
+
+    menuList.push(AddMenu("PurchaseSaleCount", "进销统计", false, "table", "/PurchaseSaleManage/PurchaseSaleCount"));
+
+    menuList.push(AddMenu("ProductPurchaseSaleCount", "商品进销统计", false, "table", "/PurchaseSaleManage/ProductPurchaseSaleCount"));
+
+    menuList.push(AddMenu("ProductPurchaseSaleCount", "商品进销统计", false, "table", "/PurchaseSaleManage/ProductPurchaseSaleCount"));
+
+    menuList.push(AddMenu("BillTypeList", "账目类型", false, "table", "/PurchaseSaleManage/BillTypeList"));
+    menuList.push(AddMenu("PersonBillTypeEdit", "新增", true, "form", "/PurchaseSaleManage/PersonBillTypeEdit", "", null, false, "账目类型", "/PurchaseSaleManage/BillTypeList", null, true));
+
+    menuList.push(AddMenu("SupplierList", "供应商", false, "table", "/PurchaseSaleManage/SupplierList"));
+    menuList.push(AddMenu("SupplierEdit", "新增", true, "form", "/PurchaseSaleManage/SupplierEdit", "", null, false, "供应商", "/PurchaseSaleManage/SupplierList", null, true));
+
+    return AddNavMenu("PurchaseSaleManage", "进销管理", false, menuList, true, ["SaleInput", "SaleList","PurchaseInput", "PurchaseList","BillList","BillTypeList","SupplierList","PurchaseSaleCount",""]);
+}
+
+function GetPersonBillNavMenu(){
+    var menuList = [];
+    menuList.push(AddMenu("PersonBillTypeList", "账目类型", false, "table", "/PersonBillManage/PersonBillTypeList"));
+    menuList.push(AddMenu("PersonBillTypeEdit", "新增", true, "form", "/PersonBillManage/PersonBillTypeEdit", "", null, false, "账目类型", "/PersonBillManage/PersonBillTypeList", null, true));
+
+    menuList.push(AddMenu("PersonBillList", "个人收支", false, "table", "/PersonBillManage/PersonBillList"));
+    menuList.push(AddMenu("PersonBillEdit", "新增", true, "form", "/PersonBillManage/PersonBillEdit", "", null, false, "个人收支", "/PersonBillManage/PersonBillList", null, true));
+
+    return AddNavMenu("PersonBillManage", "个人记账", false, menuList, true, ["PersonBillTypeList", "PersonBillList"]);
+}
 
 function GetSystemManageNavNenu() {
     var menuList = [];
