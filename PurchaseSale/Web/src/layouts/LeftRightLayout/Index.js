@@ -246,7 +246,7 @@ export default class LeftRightLayout extends Component {
     }
 
     SelectMenuClick(item) {
-        if (item.key === "ChangePassword") router.push("/ChangePassword");
+        if (item.key === "ChangePassword") router.push("/PersonCenter/ChangePassword");
         else if (item.key === "Logout") router.push("/login")
     }
 
@@ -340,7 +340,7 @@ export default class LeftRightLayout extends Component {
             <Layout style={{ minWidth: 1200 }}>
                 <Header style={{ background: '#fff', padding: 0, margin: 0 }}>
                     <div className={styles.logo} >
-                        <img src={this.GetImageUrl("logo-3_01.png")} width={30} alt="" />
+                        <img src={this.GetImageUrl("logo-3_01.png")} width={100} alt="" />
                         <span>进销存</span>
                     </div>
                     {loginName ? (

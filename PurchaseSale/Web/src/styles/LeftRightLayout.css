@@ -25,12 +25,15 @@
      float: left;
   }
 
+  .logo img{
+    float: left;
+    margin-top: 12px;
+  }
   .logo span{
-    line-height: 50px;
     color: #333333;
     font-size: 18px;
-    font-family: 700;
-    margin-left: 10px;
+    display: block;
+    float: left;
   }
 
   .UserRightMenu{

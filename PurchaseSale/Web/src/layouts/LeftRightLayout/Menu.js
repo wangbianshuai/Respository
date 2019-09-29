@@ -8,19 +8,29 @@ export default () => {
             GetPurchaseSaleNavMenu(),
             GetProductManageNavMenu(),
             GetPersonBillNavMenu(),
-            GetSystemManageNavNenu()
+            GetSystemManageNavNenu(),
+            GetPersonCenterNavMenu()
         ],
         Menus
     }
 };
 
+function GetPersonCenterNavMenu() {
+    var menuList = [];
+    menuList.push(AddMenu("ChangePassword", "修改密码", true, "idcard", "/PersonCenter/ChangePassword"));
+
+    return AddNavMenu("PersonCenter", "个人中心", true, menuList, false);
+}
+
 function GetPurchaseSaleNavMenu() {
     var menuList = [];
     menuList.push(AddMenu("SaleInput", "销售单录入", false, "form", "/PurchaseSaleManage/SaleInput"));
     menuList.push(AddMenu("SaleList", "销售单列表", false, "table", "/PurchaseSaleManage/SaleList"));
+    menuList.push(AddMenu("SaleDetailList", "销售单明细", false, "table", "/PurchaseSaleManage/SaleDetailList"));
 
     menuList.push(AddMenu("PurchaseInput", "采购单录入", false, "form", "/PurchaseSaleManage/PurchaseInput"));
     menuList.push(AddMenu("PurchaseList", "采购单列表", false, "table", "/PurchaseSaleManage/PurchaseList"));
+    menuList.push(AddMenu("PurchaseDetailList", "采购单明细", false, "table", "/PurchaseSaleManage/PurchaseDetailList"));
 
     menuList.push(AddMenu("BillList", "收支明细", false, "table", "/PurchaseSaleManage/BillList"));
     menuList.push(AddMenu("BillEdit", "新增", true, "form", "/PurchaseSaleManage/BillEdit", "", null, false, "收支明细", "/PurchaseSaleManage/BillList", null, true));

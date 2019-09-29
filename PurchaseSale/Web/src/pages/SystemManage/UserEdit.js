@@ -8,7 +8,7 @@ const UserEdit = {
             this.Alert("登录密码不能为空！"); return;
         }
 
-        if (!Common.IsNullOrEmpty(entityData.Login_Password) && !Common.IsEquals(entityData.LoginPassword, entityData.LoginAgainPassword)) {
+        if (!Common.IsNullOrEmpty(entityData.LoginPassword) && !Common.IsEquals(entityData.LoginPassword, entityData.LoginAgainPassword)) {
             this.Alert("登录密码与确认密码不一致！")
             return false;
         }
