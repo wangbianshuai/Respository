@@ -45,6 +45,7 @@
     <Compile Include="BillType.cs" />
     <Compile Include="Dictionary2.cs" />
     <Compile Include="PersonBill.cs" />
+    <Compile Include="PersonBillType.cs" />
     <Compile Include="Product.cs" />
     <Compile Include="ProductBrand.cs" />
     <Compile Include="ProductType.cs" />

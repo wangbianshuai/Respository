@@ -527,10 +527,11 @@ go
 
 create view v_PersonBill
 as
-select a.*,
+select a.*,b.Name PersonBillTypeName,
 case when a.IncomePayment = 1 then '收入'  when a.IncomePayment = 2 then '支出' else'' end IncomePaymentName,
 case when a.IncomePayment = 2 then  0-a.Amount  else a.Amount end Amount2
 from t_PersonBill a
+left join t_PersonBillType b on a.BillTypeId=b.Id
 where a.IsDelete=0
 go
 

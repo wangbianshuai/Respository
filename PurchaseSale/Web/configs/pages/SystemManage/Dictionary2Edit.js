@@ -75,7 +75,7 @@ function GetTextArea(Name, Label, X, Y, PlaceHolder) {
         Rows: 3,
         PlaceHolder,
         LabelCol: 8,
-        WrapperCol: 10
+        WrapperCol: 8
     }
 }
 
@@ -86,7 +86,7 @@ function GetTextBox2(Name, Label, X, Y, ContorlType, PlaceHolder, MaxLength, IsN
         IsFormItem: true,
         ColSpan: 24,
         LabelCol: 8,
-        WrapperCol: 10,
+        WrapperCol: 8,
         IsNullable,
         IsVisible,
         IsEdit: true

@@ -22,29 +22,6 @@ namespace PurchaseSale.Component
         }
 
         [Log]
-        public object Insert2()
-        {
-            IEntityData entityData = this._Request.Entities[this.EntityType.Name].FirstOrDefault();
-
-            entityData.SetDefaultValue("BillDate", DateTime.Now);
-            entityData.SetDefaultValue("CreateUser", this._Request.OperationUser);
-            entityData.SetDefaultValue("UpdateDate", DateTime.Now);
-
-            return this.Insert();
-        }
-
-        [Log]
-        public object Update2()
-        {
-            IEntityData entityData = this._Request.Entities[this.EntityType.Name].FirstOrDefault();
-
-            entityData.SetDefaultValue("BillDate", DateTime.Now);
-            entityData.SetDefaultValue("UpdateDate", DateTime.Now);
-
-            return this.Update();
-        }
-
-        [Log]
         public object Delete2()
         {
             return CommonOperation.DeleteByLogic<PersonBill>(this, null);

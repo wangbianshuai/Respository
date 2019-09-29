@@ -7,7 +7,8 @@ using System.Threading.Tasks;
 
 namespace PurchaseSale.Entity
 {
-    [TableProperty(Name = "t_d_PersonBill", PrimaryKey = "Id", NoSelectNames = "IsDelete")]
+    [TableProperty(Name = "t_PersonBill", PrimaryKey = "Id", NoSelectNames = "IsDelete")]
+    [RequestMethod(IsDelete = false)]
     public class PersonBill : EntityModel, IEntity
     {
         /// <summary> 
@@ -22,6 +23,10 @@ namespace PurchaseSale.Entity
         /// 收入支出  -- 1: 收入，2：支出
         /// </summary>
         public byte IncomePayment { get; set; }
+        /// <summary>
+        /// 账目类型
+        /// </summary>
+        public Guid BillTypeId { get; set; }
         /// <summary>
         /// 创建人
         /// </summary>
@@ -55,9 +60,11 @@ namespace PurchaseSale.Entity
     }
 
     [TableProperty(Name = "v_PersonBill", PrimaryKey = "Id", NoSelectNames = "IsDelete")]
-    public class ViewPersonBill : Bill
+    [RequestMethod(IsDelete = false, IsPost = false, IsPut = false)]
+    public class ViewPersonBill : PersonBill
     {
         public string IncomePaymentName { get; set; }
         public decimal Amount2 { get; set; }
+        public string PersonBillTypeName { get; set; }
     }
 }

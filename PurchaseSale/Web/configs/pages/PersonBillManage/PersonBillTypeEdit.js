@@ -1,26 +1,26 @@
-const User = require("../../entities/User");
-const { AssignProporties, GetTextBox, GetButton } = require("../../Common");
+const PersonBillType = require("../../entities/PersonBillType");
+const { AssignProporties, GetTextBox, GetButton, GetRadio } = require("../../Common");
 
-//配置管理/用户编辑 700-799
+//个人记账/账目类型编辑 1600-1699
 const DataActionTypes = {
     //获取实体数据
-    GetEntityData: 700,
+    GetEntityData: 1600,
     //保存实体数据
-    SaveEntityData: 701
+    SaveEntityData: 1601
 }
 
-const Entity = { Name: User.Name, PrimaryKey: User.PropertyPrimaryKey || User.PrimaryKey }
+const Entity = { Name: PersonBillType.Name, PrimaryKey: PersonBillType.PrimaryKey }
 
 module.exports = {
-    Name: "UserEdit",
+    Name: "PersonBillTypeEdit",
     Type: "View",
     EventActions: GetEventActions(),
-    Properties: AssignProporties({ Name: "UserEdit" }, [GeEditView()])
+    Properties: AssignProporties({ Name: "PersonBillTypeEdit" }, [GeEditView()])
 }
 
 function GeEditView() {
     return {
-        Name: "UserEdit2",
+        Name: "PersonBillTypeEdit2",
         Type: "RowsColsView",
         Entity: Entity,
         IsForm: true,
@@ -28,7 +28,7 @@ function GeEditView() {
         IsClear: true,
         SaveEntityDataActionType: DataActionTypes.SaveEntityData,
         GetEntityDataActionType: DataActionTypes.GetEntityData,
-        Properties: AssignProporties(User, GetProperties())
+        Properties: AssignProporties(PersonBillType, GetProperties())
     }
 }
 
@@ -44,12 +44,23 @@ function GetButtonProperties() {
 
 function GetProperties() {
     return [
-        GetTextBox2("LoginName", "登录名", 1, 1, "", "请输入登录名", 50, false),
-        GetTextBox2("UserName", "用户名", 2, 1, "", "请输入用户名", 50, false),
-        { ...GetTextBox2("LoginPassword", "登录密码", 3, 1, "", "请输入登录密码", 50, false), IsJudgeNullable: false, ControlType: "password" },
-        { ...GetTextBox2("LoginAgainPassword", "确认确认", 4, 1, "", "请输入确认确认", 50, false), IsJudgeNullable: false, ControlType: "password" },
+        GetIncomePayment(),
+        GetTextBox2("Name", "名称", 2, 1, "", "请输入名称", 50, false),
+        GetTextArea("Remark", "备注", 3, 1),
         GetButtonView()
     ]
+}
+
+function GetIncomePayment() {
+    return {
+        ...GetRadio("IncomePayment", "收支", PersonBillType.IncomePaymentDataSource, 1, 1, 1, 160),
+        IsFormItem: true,
+        ColSpan: 24,
+        IsLoadValue: true,
+        LabelCol: 8,
+        WrapperCol: 8,
+        IsEdit: true
+    }
 }
 
 function GetButtonView() {
@@ -62,11 +73,11 @@ function GetButtonView() {
         ColSpan: 24,
         X: 6,
         Y: 1,
-        Properties: AssignProporties({ Name: "UserEdit" }, GetButtonProperties())
+        Properties: AssignProporties({ Name: "PersonBillTypeEdit" }, GetButtonProperties())
     }
 }
 
-function GetTextArea(Name, Label, X, Y) {
+function GetTextArea(Name, Label, X, Y, PlaceHolder) {
     return {
         ...GetTextBox(Name, Label, "TextArea", X, Y),
         IsFormItem: true,
@@ -74,6 +85,7 @@ function GetTextArea(Name, Label, X, Y) {
         IsEdit: true,
         ColSpan: 24,
         Rows: 3,
+        PlaceHolder,
         LabelCol: 8,
         WrapperCol: 8
     }
@@ -97,17 +109,16 @@ function GetEventActions() {
     return [{
         Name: "BackToLast",
         Type: "Page/ToPage",
-        PageUrl: "/SystemManage/UserList"
+        PageUrl: "/ProductManage/PersonBillTypeList"
     },
     {
         Name: "SaveEntityData",
         Type: "EntityEdit/SaveEntityData",
-        EditView: "UserEdit2",
-        ExpandSetEntityData: "ExpandSetUserData"
+        EditView: "PersonBillTypeEdit2"
     },
     {
         Name: "GetEntityData",
         Type: "EntityEdit/GetEntityData",
-        EditView: "UserEdit2"
+        EditView: "PersonBillTypeEdit2"
     }]
 }

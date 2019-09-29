@@ -1,26 +1,26 @@
-const StockCheck = require("../../entities/StockCheck");
-const { AssignProporties, GetTextBox, GetButton, GetDatePicker, GetSelect } = require("../../Common");
+const PersonBill = require("../../entities/PersonBill");
+const { AssignProporties, GetTextBox, GetButton, GetRadio, GetDatePicker, GetSelect } = require("../../Common");
 
-//商品管理/库存盘点 1400-1499
+//个人记账/个人收支编辑 1800-1899
 const DataActionTypes = {
     //获取实体数据
-    GetEntityData: 1400,
+    GetEntityData: 1800,
     //保存实体数据
-    SaveEntityData: 1401
+    SaveEntityData: 1801
 }
 
-const Entity = { Name: StockCheck.Name, PrimaryKey: StockCheck.PrimaryKey }
+const Entity = { Name: PersonBill.Name, PrimaryKey: PersonBill.PrimaryKey }
 
 module.exports = {
-    Name: "StockCheckEdit",
+    Name: "PersonBillEdit",
     Type: "View",
     EventActions: GetEventActions(),
-    Properties: AssignProporties({ Name: "StockCheckEdit" }, [GeEditView()])
+    Properties: AssignProporties({ Name: "PersonBillEdit" }, [GeEditView()])
 }
 
 function GeEditView() {
     return {
-        Name: "StockCheckEdit2",
+        Name: "PersonBillEdit2",
         Type: "RowsColsView",
         Entity: Entity,
         IsForm: true,
@@ -28,7 +28,7 @@ function GeEditView() {
         IsClear: true,
         SaveEntityDataActionType: DataActionTypes.SaveEntityData,
         GetEntityDataActionType: DataActionTypes.GetEntityData,
-        Properties: AssignProporties(StockCheck, GetProperties())
+        Properties: AssignProporties(PersonBill, GetProperties())
     }
 }
 
@@ -44,13 +44,11 @@ function GetButtonProperties() {
 
 function GetProperties() {
     return [
-        GetSelectProductProperty(),
-        GetReadOnlyTextBox2("BidPrice", "进价", 2, 1),
-        GetReadOnlyTextBox2("CurrentStock", "应有库存", 3, 1),
-        { ...GetTextBox2("RealStock", "实有库存", 4, 1, "", "请输入实有库存", 20, false), DataType: "float" },
-        GetDatePicker2("CheckDate", "盘点日期", 5, 1, "", "请选择盘点日期", 10, false),
-        { ...GetEditSelect("CheckUser", "盘点人", StockCheck.UserDataSource, 6, 1, false, "请选择盘点人"), IsCurrentUser: true },
-        GetTextArea("Remark", "备注", 7, 1),
+        GetIncomePayment(),
+        { ...GetEditSelect("BillTypeId", "类型", PersonBill.PersonTypeDataSource, 2, 1, false, "请选择类型") },
+        { ...GetTextBox2("Amount", "金额", 3, 1, "", "请输入金额", 20, false), DataType: "float" },
+        GetDatePicker2("BillDate", "日期", 4, 1, "", "请选择日期", 10, false),
+        GetTextArea("Remark", "备注", 5, 1),
         GetButtonView()
     ]
 }
@@ -82,47 +80,14 @@ function GetDatePicker2(Name, Label, X, Y, IsNullable, PlaceHolder, DefaultValue
     }
 }
 
-
-function GetSelectProductProperty() {
+function GetIncomePayment() {
     return {
-        Name: "ProductId",
-        Type: "Select",
+        ...GetRadio("IncomePayment", "收支", PersonBill.IncomePaymentDataSource, 1, 1, 1, 160),
         IsFormItem: true,
         ColSpan: 24,
-        LabelCol: 8,
-        WrapperCol: 8,
-        IsEdit: true,
-        Label: "商品",
-        IsNullable: false,
-        X: 1,
-        Y: 1,
         IsLoadValue: true,
-        PlaceHolder: "请输入商员编号或名称关键字",
-        SelectDataToProperties: ["CurrentStock", "BidPrice"],
-        ServiceDataSource: GetProductDataSource()
-    }
-}
-
-function GetProductDataSource() {
-    return {
-        ValueName: "Id",
-        TextName: "ProductName",
-        StateName: "ProductList",
-        ServiceName: "StockCheckService",
-        ActionName: "GetProductList",
-        IsRefresh: true,
-        Payload: {}
-    }
-}
-
-function GetReadOnlyTextBox2(Name, Label, X, Y) {
-    return {
-        ...GetTextBox(Name, Label, "", X, Y),
-        IsFormItem: true,
-        ColSpan: 24,
         LabelCol: 8,
         WrapperCol: 8,
-        IsReadOnly: true,
         IsEdit: true
     }
 }
@@ -135,9 +100,9 @@ function GetButtonView() {
         IsDiv: true,
         IsFormItem: true,
         ColSpan: 24,
-        X: 8,
+        X: 6,
         Y: 1,
-        Properties: AssignProporties({ Name: "StockCheckEdit" }, GetButtonProperties())
+        Properties: AssignProporties({ Name: "PersonBillEdit" }, GetButtonProperties())
     }
 }
 
@@ -173,16 +138,16 @@ function GetEventActions() {
     return [{
         Name: "BackToLast",
         Type: "Page/ToPage",
-        PageUrl: "/ProductManage/StockCheckList"
+        PageUrl: "/ProductManage/PersonBillList"
     },
     {
         Name: "SaveEntityData",
         Type: "EntityEdit/SaveEntityData",
-        EditView: "StockCheckEdit2"
+        EditView: "PersonBillEdit2"
     },
     {
         Name: "GetEntityData",
         Type: "EntityEdit/GetEntityData",
-        EditView: "StockCheckEdit2"
+        EditView: "PersonBillEdit2"
     }]
 }
