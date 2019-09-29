@@ -1,0 +1,33 @@
+.DivLogin {
+    POSITION: absolute; 
+      MARGIN-TOP: -140px; 
+      WIDTH: 368px; 
+      HEIGHT: 280px; 
+      MARGIN-LEFT: -184px; 
+      TOP: 50%; 
+    LEFT: 50%;
+  }
+  
+  .DivContainer{
+    background: #f0f2f5;
+    background-image: url("../assets/loginbg.svg");
+    width: 100%;
+    min-height: 100%;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 100%;
+  }
+  
+  .DivHeader{
+    height: 60px;
+    text-align: center;
+    border-bottom: 2px solid #1890ff;
+  }
+  
+  .DivHeader span{
+    line-height: 48px;
+    font-size: 24px;
+    color:#1890ff;
+    font-family: 'Myriad Pro', 'Helvetica Neue', Arial, Helvetica, sans-serif;
+    font-weight: 500;
+  }
