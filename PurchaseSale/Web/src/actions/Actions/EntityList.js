@@ -1,11 +1,21 @@
 import BaseIndex from "../BaseIndex";
 import DataGriViewActionType from "../ActionTypes/Components/DataGridView";
+import Expand from "./Expand"
 
 export default class EntityList extends BaseIndex {
     constructor(props) {
         super(props);
 
         this.Init();
+
+        this.InitExpand();
+    }
+
+    InitExpand() {
+        if (Expand[this.Name]) {
+            const expand = Expand[this.Name]
+            for (var key in expand) this[key] = expand[key];
+        }
     }
 
     SearchQuery(id, actionType, data) {

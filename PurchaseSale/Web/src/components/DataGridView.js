@@ -111,12 +111,25 @@ class DataGridView extends BaseIndex {
             p.Render = (text, record, index) => {
                 let list = Common.ArrayClone(p.ActionList);
                 list = this.SetSelfOperationActionList(p, list, record, index);
+                list = this.SetDataValueOperationActionList(p, list, record, index);
                 const fn = this.EventActions.GetFunction(p.ExpandSetOperation);
                 if (fn) list = fn(list, record, index);
                 return this.RenderActions(list, record, index);
             }
         }
         return p;
+    }
+
+    SetDataValueOperationActionList(p, actionList, record, index) {
+        const list = [];
+        actionList.forEach(a => {
+            if (a.ValueName) {
+                if (Common.IsEquals(a.DataValue, record[a.ValueName], true)) list.push(a);
+            }
+            else list.push(a);
+        });
+
+        return list;
     }
 
     SetSelfOperationActionList(p, actionList, record, index) {

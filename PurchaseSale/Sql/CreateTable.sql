@@ -131,6 +131,7 @@ InitStock float default(0) not null,                            --初始库存
 BidPrice money not null,                                        --进价
 SillingPrice money not null,                                    --售价
 Remark nvarchar(4000),                                          --说明
+ProductStatus tinyint not null default(0),                      --是否下架，1：下架
 IsDelete tinyint not null default(0),                           --是否删除
 CreateUser uniqueidentifier not null,                           --创建人   
 CreateDate datetime default(getdate()) not null,                --创建时间
@@ -165,7 +166,8 @@ select ProductId,Sum(CurrentStock- RealStock) SumNumber from t_StockCheck where 
 group by ProductId
 )
 select a.*,b.Name as ProductTypeName, c.Name as ProductBrandName,'('+ a.ProductCode+')'+ a.Name ProductName,
-a.InitStock+ isnull(e.SumNumber,0) - isnull(f.SumNumber,0)- ISNULL(g.SumNumber,0) CurrentStock
+a.InitStock+ isnull(e.SumNumber,0) - isnull(f.SumNumber,0)- ISNULL(g.SumNumber,0) CurrentStock,
+case when a.ProductStatus=1 then '下架'else '上架' end ProductStatusName
 from t_Product a 
 left join t_ProductType b on a.ProductTypeId=b.Id
 left join t_ProductBrand c on a.ProductBrandId=c.Id
@@ -182,7 +184,7 @@ create view v_Product2
 as
 select *,'('+ a.ProductCode+')'+ a.Name ProductName
 from t_Product a 
-where a.IsDelete=0
+where a.IsDelete=0 and a.ProductStatus=0
 go
 
 

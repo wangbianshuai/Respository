@@ -19,6 +19,8 @@ function GetProperties() {
         GetProperty("InitStock", "初始库存"),
         GetProperty("CurrentStock", "当前库存"),
         GetProperty("Unit", "单位"),
+        GetProperty("ProductStatus", "状态"),
+        GetProperty("ProductStatusName", "状态"),
         GetProperty("Remark", "说明"),
         GetProperty("CreateDate", "创建时间")
     ]

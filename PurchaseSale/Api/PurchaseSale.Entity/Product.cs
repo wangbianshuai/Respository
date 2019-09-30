@@ -59,6 +59,10 @@ namespace PurchaseSale.Entity
         /// </summary>
         public decimal SillingPrice { get; set; }
         /// <summary>
+        /// 状态
+        /// </summary>
+        public byte ProductStatus { get; set; }
+        /// <summary>
         /// 备注
         /// </summary>
         public string Remark { get; set; }
@@ -112,6 +116,7 @@ namespace PurchaseSale.Entity
         public string ProductBrandName { get; set; }
         public float CurrentStock { get; set; }
         public string ProductName { get; set; }
+        public string ProductStatusName { get; set; }
     }
 
     [TableProperty(Name = "v_Product2", PrimaryKey = "Id", NoSelectNames = "IsDelete")]

@@ -6,7 +6,8 @@ const DataActionTypes = {
     //搜索查询
     SearchQuery: 1100,
     //删除实体数据
-    DeleteEntityData: 1101
+    DeleteEntityData: 1101,
+    UpdateProductStatus: 1102
 };
 
 const Entity = { Name: Product.Name, PrimaryKey: Product.PrimaryKey, ViewName: "ViewProduct", IsGroupByInfo: true }
@@ -86,7 +87,31 @@ function GetDataGridView() {
         IsRowSelection: true,
         IsSingleSelection: true,
         GroupByInfoHtml: GetGroupByInfoHtml(),
-        Properties: AssignProporties(Product, ["ProductCode", "Name", "ProductTypeName", "ProductBrandName", GetAmount("BidPrice"), GetAmount("SillingPrice"), "InitStock", "CurrentStock", "Unit", { Name: "CreateDate", OrderByType: "desc" }, { Name: "RowVersion", IsVisible: false }])
+        Properties: AssignProporties(Product, ["ProductCode", "Name", "ProductTypeName", "ProductBrandName", GetAmount("BidPrice"), GetAmount("SillingPrice"), "InitStock", "CurrentStock", "Unit", "ProductStatusName",
+            { Name: "CreateDate", OrderByType: "desc" }, GetOperation(), { Name: "RowVersion", IsVisible: false }, { Name: "ProductStatus", IsVisible: false }])
+    }
+}
+
+function GetOperation() {
+    return {
+        Name: "Operation",
+        Label: "操作",
+        IsData: false,
+        ActionList: AssignProporties(Product, [GetUpdateProductStatusAction(0), GetUpdateProductStatusAction(1)])
+    }
+}
+
+function GetUpdateProductStatusAction(status) {
+    return {
+        Name: "UpdateProductStatus",
+        ValueName: "ProductStatus",
+        DataValue: status,
+        Label: status === 0 ? "下架" : "上架",
+        EventActionName: "UpdateProductStatus",
+        Type: "Popconfirm",
+        DataActionType: DataActionTypes.UpdateProductStatus,
+        SuccessTip: "操作成功！",
+        Title: "请确认是否" + (status === 0 ? "下架" : "上架") + "当前商品？"
     }
 }
 
@@ -132,6 +157,11 @@ function GetEventActions() {
         Type: "DataGridView/SelectRowToPage",
         DataGridView: "DataGridView1",
         PageUrl: "/ProductManage/ProductEdit?Id=#{Id}&MenuName=" + escape("修改")
+    },
+    {
+        Name: "UpdateProductStatus",
+        Type: "DataGrid/BatchUpdateRowDataList",
+        DataGridView: "DataGridView1"
     },
     {
         Name: "DeleteProduct",
