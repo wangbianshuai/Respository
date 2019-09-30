@@ -4,6 +4,7 @@ import DataGrid from "./DataGrid";
 import BaseIndex from "./BaseIndex";
 import { ConnectAction } from "ReactCommon";
 import { Card } from "antd";
+import { Link } from "dva/router";
 import styles from "../styles/View.css";
 
 class DataGridView extends BaseIndex {
@@ -101,12 +102,36 @@ class DataGridView extends BaseIndex {
                     let url = p.PageUrl;
                     url = Common.ReplaceDataContent(record, url, true)
                     if (Common.IsNullOrEmpty(url)) return text;
-                    else return <a href={url}>{text}</a>
+                    else return <Link to={url}>{text}</Link>
                 }
                 return text;
             };
         }
+        else if (p.IsData === false && p.ActionList) {
+            p.Render = (text, record, index) => {
+                let list = Common.ArrayClone(p.ActionList);
+                list = this.SetSelfOperationActionList(p, list, record, index);
+                const fn = this.EventActions.GetFunction(p.ExpandSetOperation);
+                if (fn) list = fn(list, record, index);
+                return this.RenderActions(list, record, index);
+            }
+        }
         return p;
+    }
+
+    SetSelfOperationActionList(p, actionList, record, index) {
+        const { SelfPropertyName } = p
+
+        const userId = this.EventActions.GetLoginUserId();
+        const blEdit = Common.IsEquals(userId, record[SelfPropertyName], true);
+        if (blEdit) return actionList;
+
+        const list = [];
+        actionList.forEach(a => {
+            if (!(a.IsSelfOperation && !blEdit)) list.push(a);
+        });
+
+        return list;
     }
 
     componentDidMount() {

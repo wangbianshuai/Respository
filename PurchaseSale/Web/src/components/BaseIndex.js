@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Common } from "UtilsCommon";
-import { Row, Col } from "antd";
+import { Row, Col, Divider } from "antd";
+import { Link } from "dva/router";
 import PropertyItem from "./PropertyItem";
 
 export default class BaseIndex extends Component {
@@ -128,4 +129,35 @@ export default class BaseIndex extends Component {
     GetPropertyItem(p) {
         return (<PropertyItem Property={p} EventActions={this.EventActions} View={this.Property} key={"pt_" + p.Id} />)
     }
+
+    RenderActions(actionList, record) {
+        const list = []
+
+        for (let i = 0; i < actionList.length; i++) {
+            actionList[i].Params= record;
+            if (i > 0) list.push(<Divider type="vertical" key={i} />)
+            if (actionList[i].IsToPage) list.push(this.GetLinkAction(actionList[i], record));
+            else list.push(<PropertyItem Property={actionList[i]} EventActions={this.EventActions} View={this.Property} key={actionList[i].Name} />)
+        }
+
+        return (<span>{list.map(m => m)}</span>)
+    }
+
+    GetLinkAction(p, record) {
+        const text = p.Text;
+        if (!Common.IsNullOrEmpty(text)) {
+            let url = p.PageUrl, v;
+
+            p.PropertyNames.forEach(n => {
+                v = record[n];
+                url = url.replace("#{" + n + "}", escape(v));
+            })
+
+            url = Common.AddUrlRandom(url);
+
+            return <Link to={url} key={p.Name}>{text}</Link>
+        }
+        return text;
+    }
+
 }

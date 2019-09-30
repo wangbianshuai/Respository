@@ -200,6 +200,7 @@ PurchaseType tinyint not null default(1),                       --²É¹ºÀàÐÍ£¬1£º½
 LogisticsFee money,                                             --ÎïÁ÷·Ñ
 OtherFee money,                                                 --ÆäËû·Ñ
 DiscountFee money,                                              --ÕÛ¿Û·Ñ
+SupplierId uniqueidentifier,                                    --¹©Ó¦ÉÌ
 PurchaseStatus tinyint not null default(0),                     --²É¹º×´Ì¬,0:±£´æ,1:Ìá½»,2:´æµµ£¬3£º×÷·Ï         
 Remark nvarchar(200),                                           --±¸×¢
 IsDelete tinyint not null default(0),                           --ÊÇ·ñÉ¾³ý
@@ -216,7 +217,13 @@ go
 
 create view v_Purchase
 as
-select * from t_Purchase where IsDelete=0
+select a.*,b.UserName PurchaseUserName,c.Name SupplierName,
+case when a.PurchaseType = 1 then '½ø»õ' when a.PurchaseType=2 then 'ÍË»õ' else '' end PurchaseTypeName,
+case when a.PurchaseStatus=1 then 'Ìá½»' when a.PurchaseStatus=2 then '´æµµ' when a.PurchaseStatus=3 then '×÷·Ï' else '´ýÌá½»' end PurchaseStatusName
+from t_Purchase a
+left join t_User b on a.PurchaseUser=b.UserId
+left join t_Supplier c on a.SupplierId=c.Id
+where a.IsDelete=0
 go
 
 --²É¹ºÃ÷Ï¸
@@ -229,9 +236,7 @@ Id uniqueidentifier not null primary key default(newid()),      --Ö÷¼ü
 PurchaseId uniqueidentifier not null,                           --²É¹ºId
 ProductId uniqueidentifier not null,                            --ÉÌÆ·Id
 Price money not null,                                           --¼Û¸ñ
-Discount money,                                                 --ÕÛ¿Û
 Number float not null,                                          --ÊýÁ¿
-SupplierId uniqueidentifier,                                    --¹©Ó¦ÉÌ
 Remark nvarchar(200)                                            --±¸×¢                                                  
 )
 go
@@ -276,6 +281,8 @@ as
 select a.*,
 b.PurchaseStatus,
 b.PurchaseType,
+case when b.PurchaseType = 1 then '½ø»õ' when b.PurchaseType=2 then 'ÍË»õ' else '' end PurchaseTypeName,
+case when b.PurchaseStatus=1 then 'Ìá½»' when b.PurchaseStatus=2 then '´æµµ' when b.PurchaseStatus=3 then '×÷·Ï' else '´ýÌá½»' end PurchaseStatusName,
 c.Model,
 c.Name as ProductName,
 c.ProductBarCode,
@@ -323,7 +330,12 @@ go
 
 create view v_Sale
 as
-select * from t_Purchase where IsDelete=0
+select a.*, b.UserName SaleUserName,
+case when a.SaleType = 1 then '³ö»õ' when a.SaleType=2 then 'ÍË»õ' else '' end SaleTypeName,
+case when a.SaleStatus=1 then 'Ìá½»' when a.SaleStatus=2 then '´æµµ' when a.SaleStatus=3 then '×÷·Ï' else '´ýÌá½»' end SaleStatusName
+from t_Sale a
+left join t_User b on a.SaleUser=b.UserId
+where a.IsDelete=0
 go
 
 --ÏúÊÛÃ÷Ï¸
@@ -351,6 +363,8 @@ as
 select a.*,
 b.SaleType,
 b.SaleStatus,
+case when b.SaleType = 1 then '³ö»õ' when b.SaleType=2 then 'ÍË»õ' else '' end SaleTypeName,
+case when b.SaleStatus=1 then 'Ìá½»' when b.SaleStatus=2 then '´æµµ' when b.SaleStatus=3 then '×÷·Ï' else '´ýÌá½»' end SaleStatusName,
 c.Model,
 c.Name as ProductName,
 c.ProductBarCode,

@@ -11,7 +11,9 @@ import DatePicker from "./DatePicker";
 import BaseIndex from "./BaseIndex";
 import Upload from "./Upload";
 import Tree from "./Tree";
-import Cascader from "./Cascader"
+import Cascader from "./Cascader";
+import AButton from "./AButton";
+import Popconfirm from "./Popconfirm";
 
 export default {
     Button,
@@ -27,5 +29,7 @@ export default {
     BaseIndex,
     Upload,
     Tree,
-    Cascader
+    Cascader,
+    AButton,
+    Popconfirm
 }

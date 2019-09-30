@@ -10,15 +10,22 @@ export default class DataGrid extends BaseIndex {
         const { DataGridView, AlertMessage, EntityProperties } = action.Parameters;
         const { DataActionType } = Property;
 
-        const selectRowKeys = DataGridView.GetSelectedRowKeys();
-        if (selectRowKeys.length === 0 && !Property.IsNoRowsSelected) {
-            this.Alert("请选择记录再操作！", EventActions.ShowMessage, AlertMessage)
-            return;
+        var selectDataList = null, selectRowKeys = null;
+        if (Property.Params) {
+            selectDataList = [Property.Params];
+            selectRowKeys = [Property.Params[DataGridView.Entity.PrimaryKey]];
         }
+        else {
+            selectRowKeys = DataGridView.GetSelectedRowKeys();
+            if (selectRowKeys.length === 0 && !Property.IsNoRowsSelected) {
+                this.Alert("请选择记录再操作！", EventActions.ShowMessage, AlertMessage)
+                return;
+            }
 
-        const selectDataList = DataGridView.GetSelectDataList();
+            selectDataList = DataGridView.GetSelectDataList();
 
-        if (selectRowKeys.length > 0 && AlertMessage) AlertMessage.SetValue("")
+            if (selectRowKeys.length > 0 && AlertMessage) AlertMessage.SetValue("")
+        }
 
         //设置接收数据行数返回数据
         EventActions.Receives[DataActionType] = (d) => this.ReceiveBatchUpdateRowDataList(d, props, action)
@@ -29,7 +36,7 @@ export default class DataGrid extends BaseIndex {
         }
 
         const onOk = () => {
-            Property.SetDisabled(true);
+            Property.SetDisabled && Property.SetDisabled(true);
 
             EventActions.Invoke(DataActionType, { SelectRowKeys: selectRowKeys, Entity: DataGridView.Entity, EntityData: entityData, SelectDataList: selectDataList })
         };
@@ -42,7 +49,7 @@ export default class DataGrid extends BaseIndex {
         const { AlertMessage, DataGridView } = action.Parameters;
         const { EventActions, Property } = props;
 
-        Property.SetDisabled(false);
+        Property.SetDisabled && Property.SetDisabled(false);
 
         if (this.IsSuccessNextsProps(data, EventActions.Alert, AlertMessage)) {
             this.Alert(Property.SuccessTip, EventActions.ShowMessage, AlertMessage)

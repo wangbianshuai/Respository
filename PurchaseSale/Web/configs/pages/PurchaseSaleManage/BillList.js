@@ -36,16 +36,7 @@ function GetSearchOperationView() {
             },
             { ...GetButton("Search", "搜索", "primary", 2, 4), IsFormItem: true, Icon: "search", EventActionName: "SearchQuery", PressEnterEventActionName: "SearchQuery" },
             { ...GetButton("ClearQuery", "清空", "default", 2, 5), IsFormItem: true, EventActionName: "ClearQuery" },
-            { EventActionName: "ToEditPage", ...GetButton("ToEditPage", "新增", "primary", 3, 1), Style: { marginLeft: 16, marginBottom: 16 } },
-            { EventActionName: "EditBill", ColStyle: { paddingLeft: 0 }, ...GetButton("EditBill", "修改", "default", 3, 2) },
-            {
-                EventActionName: "DeleteBill",
-                ColStyle: { paddingLeft: 0 },
-                DataActionType: DataActionTypes.DeleteEntityData,
-                SuccessTip: "删除成功！",
-                ConfirmTip: "请确认是否删除当前收支明细？",
-                ...GetButton("DeleteBill", "删除", "default", 3, 4)
-            }
+            { EventActionName: "ToEditPage", ...GetButton("ToEditPage", "新增", "primary", 3, 1), Style: { marginLeft: 16, marginBottom: 16 } }
         ])
     }
 }
@@ -115,10 +106,42 @@ function GetDataGridView() {
         EventActionName: "SearchQuery",
         IsDiv: true,
         ClassName: "DivInfoView3",
-        IsRowSelection: true,
-        IsSingleSelection: true,
         GroupByInfoHtml: GetGroupByInfoHtml(),
-        Properties: AssignProporties(Bill, ["BillDate", GetDataCode(), "BillTypeName", "IncomePaymentName", GetAmount("Amount2"), "CreateUserName", "Remark", { Name: "CreateDate", OrderByType: "desc" }, { Name: "RowVersion", IsVisible: false }])
+        Properties: AssignProporties(Bill, ["BillDate", GetDataCode(), "BillTypeName", "IncomePaymentName", GetAmount("Amount2"), "CreateUserName", "Remark",
+         { Name: "CreateDate", OrderByType: "desc" }, { Name: "RowVersion", IsVisible: false },{ Name: "CreateUser", IsVisible: false }, GetOperation()])
+    }
+}
+
+function GetOperation() {
+    return {
+        Name: "Operation",
+        Label: "操作",
+        IsData: false,
+        SelfPropertyName:"CreateUser",
+        ActionList: AssignProporties(Bill, [GetEditAction(), GetDeleteAction()])
+    }
+}
+
+function GetEditAction() {
+    return {
+        Name: "EditBill",
+        Label: "修改",
+        EventActionName: "EditBill",
+        IsSelfOperation: true,
+        Type:"AButton"
+    }
+}
+
+function GetDeleteAction() {
+    return {
+        Name: "DeleteBill",
+        Label: "删除",
+        Type:"Popconfirm",
+        EventActionName: "DeleteBill",
+        IsSelfOperation: true,
+        DataActionType: DataActionTypes.DeleteEntityData,
+        SuccessTip: "删除成功！",
+        Title: "请确认是否删除当前收支明细？"
     }
 }
 

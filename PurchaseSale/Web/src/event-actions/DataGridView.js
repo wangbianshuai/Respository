@@ -164,17 +164,21 @@ export default class DataGridView extends BaseIndex {
         if (!action.Parameters) this.SelectRowToPageAction(props, action);
 
         const { DataGridView, AlertMessage, SetPageUrl } = action.Parameters;
-        const { EventActions } = props;
+        const { EventActions, Property } = props;
 
-        const selectDataList = DataGridView.GetSelectDataList();
-        if (selectDataList.length === 0) {
-            this.Alert("请选择记录再操作！", EventActions.ShowMessage, AlertMessage)
-            return;
+        var data = null;
+        if (Property.Params) data = Property.Params;
+        else {
+            const selectDataList = DataGridView.GetSelectDataList();
+            if (selectDataList.length === 0) {
+                this.Alert("请选择记录再操作！", EventActions.ShowMessage, AlertMessage)
+                return;
+            }
+
+            if (selectDataList.length > 0 && AlertMessage) AlertMessage.SetValue("")
+
+            data = selectDataList[0];
         }
-
-        if (selectDataList.length > 0 && AlertMessage) AlertMessage.SetValue("")
-
-        const data = selectDataList[0];
 
         if (action.IsLocalData) {
             const editData = {};
