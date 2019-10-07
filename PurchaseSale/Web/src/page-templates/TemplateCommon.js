@@ -27,8 +27,8 @@ export default class TemplateCommon {
         window.PageConfigs = window.PageConfigs || {};
         if (!window.PageConfigs[pageName]) {
             const name = pageName.replace("_", "/");
-            var url = `/html/configs/${name}.json`
-            if (window.location.href.indexOf("localhost") > 0) url = "/html/configs/getconfig?name=" + pageName;
+            var url = `/configs/${name}.json`
+            if (window.location.href.indexOf("localhost") > 0) url = "/configs/getconfig?name=" + pageName;
 
             AjaxRequest.GetRequest(url, {}, (res) => {
                 if (res.IsSuccess === false) alert(res.Message)

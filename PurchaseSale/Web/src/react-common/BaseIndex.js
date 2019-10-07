@@ -184,8 +184,8 @@ export default class BaseIndex extends Component {
         window.PageConfigs = window.PageConfigs || {};
         if (!window.PageConfigs[this.Name]) {
             const name = this.Name.replace("_", "/");
-            var url = `/html/configs/${name}.json`
-            if (EnvConfig.Env === "local") url = "/html/configs/getconfig?name=" + this.Name;
+            var url = `/configs/${name}.json`
+            if (EnvConfig.Env === "local") url = "/configs/getconfig?name=" + this.Name;
 
             AjaxRequest.GetRequest(url, {}, (res) => {
                 if (res.IsSuccess === false) this.Alert(res.Message)
