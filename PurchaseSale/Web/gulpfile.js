@@ -12,7 +12,7 @@ gulp.task("buildConfigs", () => {
 });
 
 function BuildConfig(name) {
-    const pathUrl = name.replace(".js", "")
+    const pathUrl = name.replace(".js", "").replace("\\", "/")
 
     const pageConfig = require(`./configs/pages/${pathUrl}`);
     const content = JSON.stringify(pageConfig);
@@ -33,11 +33,12 @@ function BuildConfig(name) {
 }
 
 function SaveContent(fileUrl, content) {
+    console.log(fileUrl);
     fs.writeFile(fileUrl, content, function () { })
 }
 
 var copyList = [
-    { src: "./dist/**/*", dest: path.resolve(__dirname, "").replace("Web", "Api/src/resources/public/html/") }
+    { src: "./dist/**/*", dest: path.resolve(__dirname, "").replace("Web", "Api/PurchaseSale.Web/") }
 ];
 
 gulp.task("copy", ["buildConfigs"], () => {
