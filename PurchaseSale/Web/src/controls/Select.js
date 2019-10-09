@@ -49,8 +49,9 @@ class Select2 extends BaseIndex {
     }
 
     JudgeSearch(inputValue, text) {
+        console.log(inputValue)
         if (Common.IsNullOrEmpty(inputValue)) return true;
-        else if (text && text.toString().indexOf(inputValue) >= 0) return true;
+        else if (text && text.toString().toLowerCase().indexOf(inputValue.toLowerCase()) >= 0) return true;
         return false;
     }
 
@@ -96,7 +97,7 @@ class Select2 extends BaseIndex {
     }
 
     OnSerach(value) {
-        this.SearchVaue = value;
+        this.SearchValue = value;
         this.StopTimeout();
         this.TimeoutId = setTimeout(() => this.Search(), 300);
     }
@@ -167,7 +168,7 @@ class Select2 extends BaseIndex {
             maxTagCount={Property.MaxTagCount}
             placeholder={Property.PlaceHolder}
             showSearch={Property.IsSearch}
-            showArrow={!Property.IsSearch}
+            filterOption={false}
             onSearch={Property.IsSearch ? this.OnSerach.bind(this) : null}
             notFoundContent={null}
             defaultValue={Property.DefaultValue} >{this.state.Options}</Select>)

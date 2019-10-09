@@ -81,7 +81,7 @@ function GetProductManageNavMenu() {
     menuList.push(AddMenu("ProductEdit", "新增", true, "form", "/ProductManage/ProductEdit", "", null, false, "商品列表", "/ProductManage/ProductList", null, true));
 
     menuList.push(AddMenu("StockCheckList", "库存盘点", false, "table", "/ProductManage/StockCheckList"));
-    menuList.push(AddMenu("StockCheckEdit", "新增", true, "form", "/ProductManage/StockCheckEdit", "", null, false, "商品列表", "/ProductManage/StockCheckList", null, true));
+    menuList.push(AddMenu("StockCheckEdit", "新增", true, "form", "/ProductManage/StockCheckEdit", "", null, false, "库存盘点", "/ProductManage/StockCheckList", null, true));
 
     menuList.push(AddMenu("ProductTypeList", "商品类型", false, "table", "/ProductManage/ProductTypeList"));
     menuList.push(AddMenu("ProductTypeEdit", "新增", true, "form", "/ProductManage/ProductTypeEdit", "", null, false, "商品类型", "/ProductManage/ProductTypeList", null, true));

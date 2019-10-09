@@ -93,6 +93,7 @@ function GetSelectProductProperty() {
         WrapperCol: 8,
         IsEdit: true,
         Label: "商品",
+        IsSearch: true,
         IsNullable: false,
         X: 1,
         Y: 1,
