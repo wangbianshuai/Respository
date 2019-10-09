@@ -182,8 +182,11 @@ go
 
 create view v_Product2
 as
-select *,'('+ a.ProductCode+')'+ a.Name ProductName
+select a.*,'('+ a.ProductCode+')'+ a.Name ProductName,
+b.Name as ProductTypeName, c.Name as ProductBrandName
 from t_Product a 
+left join t_ProductType b on a.ProductTypeId=b.Id
+left join t_ProductBrand c on a.ProductBrandId=c.Id
 where a.IsDelete=0 and a.ProductStatus=0
 go
 
@@ -307,7 +310,7 @@ go
 create table t_Sale
 (
 SaleId uniqueidentifier not null primary key default(newid()),      --主键
-SaleCode varchar(50) not null,                                  --销售订单
+SaleCode varchar(50) not null,                                  --销售单号
 SaleUser uniqueidentifier not null,                             --销售人
 SaleDate datetime not null,                                     --销售日期
 SaleType tinyint not null default(1),                           --销售类型，1：出货，2：退货
@@ -349,11 +352,10 @@ create table t_SaleDetail
 Id uniqueidentifier not null primary key default(newid()),      --主键
 SaleId uniqueidentifier not null,                               --销售Id
 ProductId uniqueidentifier not null,                            --商品Id
-Price money not null,                                           --价格
+SillingPrice money not null,                                    --价格
 BidPrice money not null,                                        --进价
 Discount money,                                                 --折扣
-Number float not null,                                          --数量
-Remark nvarchar(200)                                            --备注                                                  
+Number float not null,                                          --数量                                                  
 )
 go
 

@@ -94,8 +94,6 @@ function GetDataGridView() {
         EventActionName: "SearchQuery",
         IsDiv: true,
         ClassName: "DivInfoView3",
-        IsRowSelection: true,
-        IsSingleSelection: true,
         Properties: AssignProporties(OperationLog, ["LogType", "RequestType", "EntityName", "MethodName", "IPAddress", "StartTime", "EndTime", "ElapsedMilliseconds", "UserName",
             { Name: "CreateDate", OrderByType: "desc" }, GetLookDetail(), { Name: "LogPath", IsVisible: false }])
     }

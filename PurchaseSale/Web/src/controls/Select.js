@@ -49,7 +49,6 @@ class Select2 extends BaseIndex {
     }
 
     JudgeSearch(inputValue, text) {
-        console.log(inputValue)
         if (Common.IsNullOrEmpty(inputValue)) return true;
         else if (text && text.toString().toLowerCase().indexOf(inputValue.toLowerCase()) >= 0) return true;
         return false;

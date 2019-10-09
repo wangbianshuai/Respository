@@ -49,7 +49,7 @@ function GetProperties() {
         GetReadOnlyTextBox2("CurrentStock", "应有库存", 3, 1),
         { ...GetTextBox2("RealStock", "实有库存", 4, 1, "", "请输入实有库存", 20, false), DataType: "float" },
         GetDatePicker2("CheckDate", "盘点日期", 5, 1, "", "请选择盘点日期", 10, false),
-        { ...GetEditSelect("CheckUser", "盘点人", StockCheck.UserDataSource, 6, 1, false, "请选择盘点人"), IsCurrentUser: true },
+        { ...GetEditSelect("CheckUser", "盘点员", StockCheck.UserDataSource, 6, 1, false, "请选择盘点人"), IsCurrentUser: true },
         GetTextArea("Remark", "备注", 7, 1),
         GetButtonView()
     ]

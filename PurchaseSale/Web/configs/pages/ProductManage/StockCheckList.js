@@ -27,7 +27,7 @@ function GetSearchOperationView() {
         Properties: AssignProporties({ Name: "StockCheckList" }, [
             GetEditSelect("ProductTypeId", "类型", StockCheck.ProductTypeDataSource, 1, 1),
             GetEditSelect("ProductBrandId", "品牌", StockCheck.ProductBrandDataSource, 1, 2),
-            GetEditSelect("CheckUser", "盘点人", StockCheck.UserDataSource, 1, 3),
+            GetEditSelect("CheckUser", "盘点员", StockCheck.UserDataSource, 1, 3),
             { ...GetDatePicker2("StartDate", "盘点日期", 2, 1, "大于或等于其值"), PropertyName: "CheckDate", OperateLogic: ">=" },
             { ...GetDatePicker2("EndDate", "至", 2, 2, "小于其值"), PropertyName: "CheckDate", OperateLogic: "<" },
             {

@@ -7,6 +7,7 @@ export default {
     GetPersonBillTypes: get("GetPersonBillTypes", "ViewPersonBillType?$select=Id,Name,IncomePayment&$orderby CreateDate", "PersonBillTypes", "ViewPersonBillType"),
     GetBillTypes: get("GetBillTypes", "ViewBillType?$select=Id,Name,IncomePayment&$orderby CreateDate", "BillTypes", "ViewBillType"),
     UpdateProductStatus: post("UpdateProductStatus", "Product/UpdateStatus", "UpdateStatus", "", true),
+    GetProducts: get("GetProducts", "ViewProduct2?$select=Id,ProductName,Unit,SillingPrice,BidPrice,ProductTypeName,ProductBrandName&$orderby CreateDate&", "Products", "ViewProduct2"),
 }
 
 function get(actionName, url, stateName, dataKey, isToken, hasToken) {

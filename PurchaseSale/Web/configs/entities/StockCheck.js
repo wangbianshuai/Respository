@@ -19,7 +19,7 @@ function GetProperties() {
         GetProperty("CurrentStock", "应有库存"),
         GetProperty("RealStock", "实有库存"),
         GetProperty("CheckDate", "盘点日期"),
-        GetProperty("CheckUserName", "盘点人"),
+        GetProperty("CheckUserName", "盘点员"),
         GetProperty("Unit", "单位"),
         GetProperty("Remark", "备注"),
         GetProperty("CreateDate", "创建时间")

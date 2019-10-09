@@ -124,5 +124,7 @@ namespace PurchaseSale.Entity
     public class ViewProduct2 : Product
     {
         public string ProductName { get; set; }
+        public string ProductTypeName { get; set; }
+        public string ProductBrandName { get; set; }
     }
 }
