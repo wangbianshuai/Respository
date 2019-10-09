@@ -5,10 +5,8 @@ export default EntityPageEdit("PurchaseSaleManage_SaleInput", "Sale", 2500, {
     SetDetailEntityData({ entityData, props, view }) {
         if (!this.ProductIdProperty) this.ProductIdProperty = this.GetViewProperty(view, "ProductId");
         const selectData = this.ProductIdProperty.GetSelectData();
-        entityData.Price = entityData.SillingPrice;
+        entityData.Discount = selectData.SillingPrice - entityData.SillingPrice;
         entityData.BidPrice = selectData.BidPrice;
-
-        delete entityData.SillingPrice;
 
         return entityData;
     }

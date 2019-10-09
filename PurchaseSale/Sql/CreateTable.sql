@@ -240,9 +240,9 @@ create table t_PurchaseDetail
 Id uniqueidentifier not null primary key default(newid()),      --主键
 PurchaseId uniqueidentifier not null,                           --采购Id
 ProductId uniqueidentifier not null,                            --商品Id
-Price money not null,                                           --价格
-Number float not null,                                          --数量
-Remark nvarchar(200)                                            --备注                                                  
+BidPrice money not null,                                        --价格
+Discount money,                                                 --折扣
+Number float not null                                           --数量                                                
 )
 go
 
@@ -355,7 +355,7 @@ ProductId uniqueidentifier not null,                            --商品Id
 SillingPrice money not null,                                    --价格
 BidPrice money not null,                                        --进价
 Discount money,                                                 --折扣
-Number float not null,                                          --数量                                                  
+Number float not null                                           --数量                                                  
 )
 go
 
