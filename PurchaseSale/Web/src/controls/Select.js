@@ -157,7 +157,8 @@ class Select2 extends BaseIndex {
 
         if (Property.IsMultiple) return this.RenderMultipleSelect();
 
-        const value = this.GetSelectValue()
+        var value = this.GetSelectValue();
+        if (Common.IsNullOrEmpty(value)) value = undefined;
 
         return (<Select disabled={this.state.Disabled}
             style={{ width: width }}

@@ -98,7 +98,7 @@ function GetSelectProductProperty() {
         X: 1,
         Y: 1,
         IsLoadValue: true,
-        PlaceHolder: "请输入商员编号或名称关键字",
+        PlaceHolder: "请输入商品编号或名称关键字",
         SelectDataToProperties: ["CurrentStock", "BidPrice"],
         ServiceDataSource: GetProductDataSource()
     }
