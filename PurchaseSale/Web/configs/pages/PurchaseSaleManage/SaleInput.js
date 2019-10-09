@@ -44,7 +44,7 @@ function GetDetailEditView() {
         Entity: DetailEntity,
         IsForm: true,
         IsClear: true,
-        GetEntityDataActionType: DataActionTypes.AddDetail,
+        SaveEntityDataActionType: DataActionTypes.AddDetail,
         Properties: AssignProporties(SaleDetail, GetDetailProperties())
     }
 }
@@ -207,7 +207,8 @@ function GetEventActions() {
         Name: "AddDetail",
         Type: "EntityEdit/SaveEntityData",
         EditView: "DetailEditView",
-        ExpandSetEntityData: "SetDetailEntityData"
+        ExpandSetEntityData: "SetDetailEntityData",
+        SuccessCallback: "SetDetailEntityDataCallback"
     },
     {
         Name: "GetEntityData",

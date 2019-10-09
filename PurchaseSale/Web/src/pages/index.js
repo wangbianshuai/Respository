@@ -1,8 +1,8 @@
 import React from "react";
-import Login from './login';
+import SaleInput from './PurchaseSaleManage/SaleInput';
 
 export default (props) => {
   return (
-    <Login {...props} />
+    <SaleInput {...props} />
   )
 }
