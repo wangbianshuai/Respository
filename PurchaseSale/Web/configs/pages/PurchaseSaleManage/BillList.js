@@ -108,7 +108,7 @@ function GetDataGridView() {
         ClassName: "DivInfoView3",
         GroupByInfoHtml: GetGroupByInfoHtml(),
         Properties: AssignProporties(Bill, ["BillDate", GetDataCode(), "BillTypeName", "IncomePaymentName", GetAmount("Amount2"), "CreateUserName", "Remark",
-         { Name: "CreateDate", OrderByType: "desc" }, { Name: "RowVersion", IsVisible: false },{ Name: "CreateUser", IsVisible: false }, GetOperation()])
+            { Name: "CreateDate", OrderByType: "desc" }, { Name: "RowVersion", IsVisible: false }, { Name: "DataPageUrl", IsVisible: false }, { Name: "CreateUser", IsVisible: false }, GetOperation()])
     }
 }
 
@@ -117,7 +117,7 @@ function GetOperation() {
         Name: "Operation",
         Label: "操作",
         IsData: false,
-        SelfPropertyName:"CreateUser",
+        SelfPropertyName: "CreateUser",
         ActionList: AssignProporties(Bill, [GetEditAction(), GetDeleteAction()])
     }
 }
@@ -128,7 +128,7 @@ function GetEditAction() {
         Label: "修改",
         EventActionName: "EditBill",
         IsSelfOperation: true,
-        Type:"AButton"
+        Type: "AButton"
     }
 }
 
@@ -136,7 +136,7 @@ function GetDeleteAction() {
     return {
         Name: "DeleteBill",
         Label: "删除",
-        Type:"Popconfirm",
+        Type: "Popconfirm",
         EventActionName: "DeleteBill",
         IsSelfOperation: true,
         DataActionType: DataActionTypes.DeleteEntityData,
@@ -149,6 +149,7 @@ function GetDataCode() {
     return {
         Name: "DataCode",
         IsToPage: true,
+        IsUrl: false,
         PageUrl: "/PurchaseSaleManage/#{DataPageUrl}"
     }
 }

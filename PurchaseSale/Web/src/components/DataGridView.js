@@ -143,7 +143,8 @@ class DataGridView extends BaseIndex {
                 if (p.IsRender && !p.IsRender(text, record, index)) return this.EmptyRender();
                 if (!Common.IsNullOrEmpty(text)) {
                     let url = p.PageUrl;
-                    url = Common.ReplaceDataContent(record, url, true)
+                    const blUrl = !(p.IsUrl === false)
+                    url = Common.ReplaceDataContent(record, url, blUrl)
                     if (Common.IsNullOrEmpty(url)) return text;
                     else return <Link to={url}>{text}</Link>
                 }
