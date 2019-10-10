@@ -22,119 +22,29 @@ namespace PurchaseSale.Component
         {
         }
 
-        public bool DeleteOrderBill(Guid orderId)
+        public bool DeleteBill(Guid dataId)
         {
-            Guid billTypeId = Guid.Parse(System.Configuration.ConfigurationManager.AppSettings["PaidDepositBillTypeId"]);
-
-            IEntityData bill = GetOrderPaidDepositBill(orderId, billTypeId);
-
-            if (bill != null)
-            {
-                IEntityData data = new EntityData(this.EntityType);
-
-                object id = bill.GetValue("Id");
-                data.SetValue("Id", id);
-                data.SetValue("IsDelete", 1);
-
-                return this.UpdateEntityByPrimaryKey(id, data);
-            }
-
-            return true;
+            string sql = string.Format("update t_Bill set IsDelete=1 where DataId='{0}'", dataId);
+            return this.CurrentDataBase.ExecSqlNonQuery(sql);
         }
 
-        public bool EditBill(Guid orderId, string orderCode, Guid userId, decimal amount, DateTime billDate)
+        public bool EditBill(Guid dataId, byte dataType, byte incomePayment, string remark, Guid userId, Guid billTypeId, decimal amount, DateTime billDate)
         {
-            Guid billTypeId = Guid.Parse(System.Configuration.ConfigurationManager.AppSettings["PaidDepositBillTypeId"]);
-            IEntityData bill = GetOrderPaidDepositBill(orderId);
-
-            if (bill == null && amount == 0) return true;
+            DeleteBill(dataId);
 
             IEntityData data = new EntityData(this.EntityType);
 
             data.SetValue("Amount", amount);
-            data.SetValue("Remark", string.Format("订单编号{0}收款", orderCode));
+            data.SetValue("Remark", remark);
+            data.SetValue("DataId", dataId);
+            data.SetValue("DataType", dataType);
             data.SetValue("BillTypeId", billTypeId);
-            data.SetValue("UpdateDate", DateTime.Now);
-            data.SetValue("IncomePayment", 1);
+            data.SetValue("CreateUser", userId);
+            data.SetValue("IncomePayment", incomePayment);
             data.SetValue("BillDate", billDate);
 
-            if (bill == null)
-            {
-                data.SetValue("DataId", orderId);
-                data.SetValue("DataType", 1);
-                data.SetValue("CreateUser", userId);
-
-                object primaryKey = null;
-                return this.InsertEntity(data, out primaryKey);
-            }
-            else if (amount == 0)
-            {
-                object id = bill.GetValue("Id");
-                data.SetValue("Id", id);
-                data.SetValue("IsDelete", 1);
-
-                return this.UpdateEntityByPrimaryKey(id, data);
-            }
-            else
-            {
-                object id = bill.GetValue("Id");
-                data.SetValue("Id", id);
-                data.SetValue("UpdateDate", DateTime.Now);
-
-                return this.UpdateEntityByPrimaryKey(id, data);
-            }
-        }
-
-        IEntityData GetOrderPaidDepositBill(Guid orderId)
-        {
-            IQuery query = new Query(this.EntityType.TableName);
-            query.Select("Id,BillStatus");
-            query.Where(string.Format("where IsDelete=0 and DataType=1 and DataId='{0}'", orderId));
-
-            return this.SelectEntity(query);
-        }
-
-        IEntityData GetOrderPaidDepositBill(Guid orderId, Guid billTypeId)
-        {
-            IQuery query = new Query(this.EntityType.TableName);
-            query.Select("Id,BillStatus");
-            query.Where(string.Format("where IsDelete=0 and DataType=1 and DataId='{0}' and BillTypeId='{1}'", orderId, billTypeId));
-
-            return this.SelectEntity(query);
-        }
-
-        [Log]
-        public object Insert2()
-        {
-            IEntityData entityData = this._Request.Entities[this.EntityType.Name].FirstOrDefault();
-
-            entityData.SetDefaultValue("BillDate", DateTime.Now);
-            entityData.SetDefaultValue("CreateUser", this._Request.OperationUser);
-            entityData.SetDefaultValue("UpdateDate", DateTime.Now);
-
-            return this.Insert();
-        }
-
-        [Log]
-        public object Update2()
-        {
-            IEntityData entityData = this._Request.Entities[this.EntityType.Name].FirstOrDefault();
-
-            entityData.SetDefaultValue("BillDate", DateTime.Now);
-            entityData.SetDefaultValue("UpdateDate", DateTime.Now);
-
-            return this.Update();
-        }
-
-        [Log]
-        public object UpdateStatus()
-        {
-            IEntityData entityData = this._Request.Entities[this.EntityType.Name].FirstOrDefault();
-
-            entityData.SetDefaultValue("ApproveUser", this._Request.OperationUser);
-            entityData.SetDefaultValue("ApproveDate", DateTime.Now);
-
-            return this.Update();
+            object primaryKey = null;
+            return this.InsertEntity(data, out primaryKey);
         }
 
         [Log]

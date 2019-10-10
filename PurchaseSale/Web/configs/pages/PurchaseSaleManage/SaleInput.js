@@ -14,7 +14,7 @@ const DataActionTypes = {
     AddDetail: 2503
 }
 
-const Entity = { Name: Sale.Name, PrimaryKey: Sale.PrimaryKey }
+const Entity = { Name: Sale.Name, PrimaryKey: Sale.PrimaryKey, ExpandMethods: { GetEntityData: "GetSale", Update: "Update2", Insert: "Insert2" } }
 const DetailEntity = { Name: SaleDetail.Name, PrimaryKey: SaleDetail.PrimaryKey }
 
 module.exports = {

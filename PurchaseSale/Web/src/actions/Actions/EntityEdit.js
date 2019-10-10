@@ -9,7 +9,7 @@ export default class EntityEdit extends BaseIndex {
 
         this.InitExpand();
     }
-    
+
     InitExpand() {
         if (Expand[this.Name]) {
             const expand = Expand[this.Name]
@@ -18,22 +18,26 @@ export default class EntityEdit extends BaseIndex {
     }
 
     GetEntityData(id, actionType, data) {
-        const { PrimaryKey } = data.Entity;
+        const { PrimaryKey, ExpandMethods } = data.Entity;
+        const method = ExpandMethods && ExpandMethods.GetEntityData ? "/" + ExpandMethods.GetEntityData : "";
         const primaryKey = data.EntityData[PrimaryKey];
-        const pathQuery = `(${primaryKey})`;
+        const pathQuery = `${method}(${primaryKey})`;
         this.DvaActions.Dispatch(this.ServiceName, "GetEntityData", { PathQuery: pathQuery, Action: this.GetAction(id, actionType) });
     }
 
     SaveEntityData(id, actionType, data) {
-        const { Name, PrimaryKey } = data.Entity;
+        const { Name, PrimaryKey, ExpandMethods } = data.Entity;
         const primaryKey = data.OldEntityData && data.OldEntityData[PrimaryKey] ? data.OldEntityData[PrimaryKey] : null;
 
         const serviceName = primaryKey ? "Update" : "Insert";
 
+        var method = ExpandMethods && ExpandMethods.Insert ? "/" + ExpandMethods.Insert : "";
+        if (primaryKey) method = ExpandMethods && ExpandMethods.Update ? "/" + ExpandMethods.Update : "";
+
         var pathQuery = "";
         if (primaryKey) {
             data.EntityData[PrimaryKey] = primaryKey;
-            pathQuery = `(${primaryKey})`;
+            pathQuery = `${method}(${primaryKey})`;
         }
 
         const payload = { Action: this.GetAction(id, actionType) };

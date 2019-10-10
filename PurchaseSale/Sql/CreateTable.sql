@@ -199,6 +199,7 @@ create table t_Purchase
 (
 PurchaseId uniqueidentifier not null primary key default(newid()),      --主键
 PurchaseCode varchar(50) not null,                              --采购单号
+PurchaseIntCode int not null,                                   --采购单号
 PurchaseUser uniqueidentifier not null,                         --采购人
 PurchaseDate datetime not null,                                 --采购日期
 PurchaseType tinyint not null default(1),                       --采购类型，1：进货，2：退货
@@ -311,6 +312,7 @@ create table t_Sale
 (
 SaleId uniqueidentifier not null primary key default(newid()),      --主键
 SaleCode varchar(50) not null,                                  --销售单号
+SaleIntCode int not null,						                --销售单号
 SaleUser uniqueidentifier not null,                             --销售人
 SaleDate datetime not null,                                     --销售日期
 SaleType tinyint not null default(1),                           --销售类型，1：出货，2：退货
@@ -335,12 +337,38 @@ go
 
 create view v_Sale
 as
+with SaleDetail as
+(
+select SaleId, sum(round(SillingPrice*Number,2)) SaleAmount,
+sum(round(BidPrice*Number,2)) BidAmount from t_SaleDetail
+group by SaleId
+),
+SaleBill as
+(
+select DataId, sum(case when IncomePayment=1 then Amount else 0-Amount end) as RealAmount from t_Bill where IsDelete=0 and DataType=2
+group by DataId
+),
+Sale as 
+(
 select a.*, b.UserName SaleUserName,
 case when a.SaleType = 1 then '出货' when a.SaleType=2 then '退货' else '' end SaleTypeName,
-case when a.SaleStatus=1 then '提交' when a.SaleStatus=2 then '存档' when a.SaleStatus=3 then '作废' else '待提交' end SaleStatusName
+case when a.SaleStatus=1 then '提交' when a.SaleStatus=2 then '存档' when a.SaleStatus=3 then '作废' else '待提交' end SaleStatusName,
+case when a.SaleType=1 then isNull(c.SaleAmount,0)+ ISNULL(a.LogisticsFee,0)+ ISNULL(a.OtherFee,0) - ISNULL(a.DiscountFee,0)
+else 0- (isNull(c.SaleAmount,0)+ ISNULL(a.LogisticsFee,0)+ ISNULL(a.OtherFee,0) - ISNULL(a.DiscountFee,0)) end as ShouldAmount,
+isnull(d.RealAmount,0) RealAmount,
+case when a.SaleType=1 then isnull(c.BidAmount,0) else 0-isnull(c.BidAmount,0) end BidAmount,
+case when a.SaleType=1 then isNull(c.SaleAmount,0)+ ISNULL(a.LogisticsFee,0)+ ISNULL(a.OtherFee,0) - ISNULL(a.DiscountFee,0)-c.BidAmount
+else 0- (isNull(c.SaleAmount,0)+ ISNULL(a.LogisticsFee,0)+ ISNULL(a.OtherFee,0) - ISNULL(a.DiscountFee,0)-c.BidAmount) end as Profit
 from t_Sale a
 left join t_User b on a.SaleUser=b.UserId
+left join SaleDetail c on a.SaleId=c.SaleId
+left join SaleBill d on a.SaleId=d.DataId
 where a.IsDelete=0
+)
+select *, 
+case when ShouldAmount=0 then 0 else ROUND(Profit*100/ShouldAmount,2) end ProfitRate,
+case when ABS(ShouldAmount)<= Abs(RealAmount) then '已结清' when RealAmount=0 then '未结款' else '部分结款' end AmountType 
+from Sale
 go
 
 --销售明细
@@ -375,6 +403,8 @@ c.ProductBarCode,
 c.ProductCode,
 c.Spec,
 c.Unit,
+c.ProductTypeId,
+c.ProductBrandId,
 d.Name ProductTypeName,
 e.Name ProductBrandName
 from t_SaleDetail a
@@ -470,7 +500,8 @@ create table t_Bill
 (
 Id uniqueidentifier not null primary key default(newid()),   --主键
 DataId uniqueidentifier,
-Amount money,
+DataType tinyint, --1:采购，2：销售
+Amount money not null,
 BillTypeId uniqueidentifier not null,
 IncomePayment tinyint not null, -- 1: 收入，2：支出
 BillDate datetime not null default(getdate()),   
@@ -497,8 +528,8 @@ case when a.IncomePayment = 2 then  0-a.Amount  else a.Amount end Amount2,
 e.Name as BillTypeName,d.UserName CreateUserName
 from t_Bill a
 left join t_BillType e on a.BillTypeId=e.Id
-left join t_Purchase b on a.DataId=b.PurchaseId
-left join t_Sale c on a.DataId=c.SaleId
+left join t_Purchase b on a.DataId=b.PurchaseId and a.DataType=1
+left join t_Sale c on a.DataId=c.SaleId and a.DataType=2
 left join t_User d on a.CreateUser=d.UserId
 where a.IsDelete=0
 go

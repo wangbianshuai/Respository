@@ -28,6 +28,10 @@ namespace PurchaseSale.Entity
         /// </summary>
         public Guid DataId { get; set; }
         /// <summary>
+        /// 数据类型  -- 1:采购，2：销售
+        /// </summary>
+        public byte DataType { get; set; }
+        /// <summary>
         /// 账目类型
         /// </summary>
         public Guid BillTypeId { get; set; }
