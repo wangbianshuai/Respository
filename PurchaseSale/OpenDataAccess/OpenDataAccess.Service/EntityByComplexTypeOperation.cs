@@ -39,9 +39,10 @@ namespace OpenDataAccess.Service
 
         public static object Insert<T>(T entityRequest, EntityType complexTypeEntity, string complexTypePropertyName, Func<IDbTransaction, IEntityData, Property, bool> insertChildComplexType = null) where T : IEntityRequest
         {
+            IDbTransaction trans = entityRequest.CurrentDataBase.BeginTransaction(entityRequest.CurrentDataBase.ConnectionString);
             try
             {
-                IDbTransaction trans = entityRequest.CurrentDataBase.BeginTransaction(entityRequest.CurrentDataBase.ConnectionString);
+                trans = entityRequest.CurrentDataBase.BeginTransaction(entityRequest.CurrentDataBase.ConnectionString);
                 bool blSucceed = true;
                 object primaryKey = null;
                 if (entityRequest._Request.Entities.ContainsKey(entityRequest.EntityType.Name))
@@ -68,6 +69,7 @@ namespace OpenDataAccess.Service
             }
             catch (Exception ex)
             {
+                entityRequest.CurrentDataBase.CommitTransaction(trans, false);
                 return entityRequest.GetExceptionDict(ex.Message);
             }
         }
@@ -75,9 +77,9 @@ namespace OpenDataAccess.Service
 
         public static object Insert<T>(T entityRequest, Dictionary<string, EntityType> complexDictionary) where T : IEntityRequest
         {
+            IDbTransaction trans = entityRequest.CurrentDataBase.BeginTransaction(entityRequest.CurrentDataBase.ConnectionString);
             try
             {
-                IDbTransaction trans = entityRequest.CurrentDataBase.BeginTransaction(entityRequest.CurrentDataBase.ConnectionString);
                 bool blSucceed = true;
                 object primaryKey = null;
                 if (entityRequest._Request.Entities.ContainsKey(entityRequest.EntityType.Name))
@@ -112,6 +114,7 @@ namespace OpenDataAccess.Service
             }
             catch (Exception ex)
             {
+                entityRequest.CurrentDataBase.CommitTransaction(trans, false);
                 return entityRequest.GetExceptionDict(ex.Message);
             }
         }
@@ -173,9 +176,9 @@ namespace OpenDataAccess.Service
 
         public static object Update<T>(T entityRequest, EntityType complexTypeEntity, string complexTypePropertyName, Func<IDbTransaction, IEntityData, Property, bool> insertChildComplexType = null) where T : IEntityRequest
         {
+            IDbTransaction trans = entityRequest.CurrentDataBase.BeginTransaction(entityRequest.CurrentDataBase.ConnectionString);
             try
             {
-                IDbTransaction trans = entityRequest.CurrentDataBase.BeginTransaction(entityRequest.CurrentDataBase.ConnectionString);
                 bool blSucceed = true;
                 if (entityRequest._Request.Entities.ContainsKey(entityRequest.EntityType.Name))
                 {
@@ -214,15 +217,16 @@ namespace OpenDataAccess.Service
             }
             catch (Exception ex)
             {
+                entityRequest.CurrentDataBase.CommitTransaction(trans, false);
                 return entityRequest.GetExceptionDict(ex.Message);
             }
         }
 
         public static object Update<T>(T entityRequest, Dictionary<string, EntityType> complexDictionary) where T : IEntityRequest
         {
+            IDbTransaction trans = entityRequest.CurrentDataBase.BeginTransaction(entityRequest.CurrentDataBase.ConnectionString);
             try
             {
-                IDbTransaction trans = entityRequest.CurrentDataBase.BeginTransaction(entityRequest.CurrentDataBase.ConnectionString);
                 bool blSucceed = true;
                 if (entityRequest._Request.Entities.ContainsKey(entityRequest.EntityType.Name))
                 {
@@ -268,6 +272,7 @@ namespace OpenDataAccess.Service
             }
             catch (Exception ex)
             {
+                entityRequest.CurrentDataBase.CommitTransaction(trans, false);
                 return entityRequest.GetExceptionDict(ex.Message);
             }
         }
@@ -285,9 +290,9 @@ namespace OpenDataAccess.Service
 
         public static object Delete<T>(T entityRequest, EntityType complexTypeEntity) where T : IEntityRequest
         {
+            IDbTransaction trans = entityRequest.CurrentDataBase.BeginTransaction(entityRequest.CurrentDataBase.ConnectionString);
             try
             {
-                IDbTransaction trans = entityRequest.CurrentDataBase.BeginTransaction(entityRequest.CurrentDataBase.ConnectionString);
                 bool blSucceed = true;
                 string rowVersion = entityRequest._QueryRequest.GetParameterValue("RowVersion");
                 if (!string.IsNullOrEmpty(rowVersion))
@@ -315,6 +320,7 @@ namespace OpenDataAccess.Service
             }
             catch (Exception ex)
             {
+                entityRequest.CurrentDataBase.CommitTransaction(trans, false);
                 return entityRequest.GetExceptionDict(ex.Message);
             }
         }

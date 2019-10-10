@@ -34,7 +34,7 @@ export default class EntityEdit extends BaseIndex {
         var method = ExpandMethods && ExpandMethods.Insert ? "/" + ExpandMethods.Insert : "";
         if (primaryKey) method = ExpandMethods && ExpandMethods.Update ? "/" + ExpandMethods.Update : "";
 
-        var pathQuery = "";
+        var pathQuery = method;
         if (primaryKey) {
             data.EntityData[PrimaryKey] = primaryKey;
             pathQuery = `${method}(${primaryKey})`;

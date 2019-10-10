@@ -70,7 +70,7 @@ function GetDetailProperties() {
         },
         { ...GetTextBox2("SillingPrice", "价格", 2, 1, "", "请输入价格", 10, false), DataType: "float" },
         { ...GetTextBox2("Number", "数量", 4, 1, "", "请输入数量", 8, false), DataType: "float", DefaultValue: 1 },
-        { ...GetButton("AddDetail", "添加", "primary"), EventActionName: "AddDetail", X: 4, Y: 2, Icon: "plus", IsFormItem: true }
+        { ...GetButton("AddDetail", "添加", "primary"), EventActionName: "AddDetail", X: 4, Y: 2, Icon: "plus", IsFormItem: true, IsComplexEntity: true }
     ]
 }
 

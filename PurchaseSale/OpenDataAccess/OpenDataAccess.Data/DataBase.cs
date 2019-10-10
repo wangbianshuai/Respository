@@ -351,6 +351,7 @@ namespace OpenDataAccess.Data
 
         public bool CommitTransaction(IDbTransaction trans, bool blSucceed)
         {
+            if (trans == null) return false;
             try
             {
                 if (blSucceed)

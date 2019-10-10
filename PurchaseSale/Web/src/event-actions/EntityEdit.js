@@ -132,7 +132,7 @@ export default class EntityEdit extends BaseIndex {
         if (view.ExpandSetEntityData) entityData = view.ExpandSetEntityData(entityData);
 
         if (entityData === false) return false;
-        
+
         if (ExpandSetEntityData) entityData = ExpandSetEntityData({ entityData, props, view });
 
         if (entityData === false) return false;
@@ -149,7 +149,8 @@ export default class EntityEdit extends BaseIndex {
         if (EditPropertiyViewList) EditView = EditPropertiyViewList[0];
 
         const { EventActions, Property } = props;
-        Property.SetLoading && Property.SetLoading(false);
+        if (Property.IsComplexEntity) setTimeout(() => Property.SetLoading && Property.SetLoading(false), 200);
+        else Property.SetLoading && Property.SetLoading(false);
         if (this.IsSuccessNextsProps(data, EventActions.Alert, null)) {
             if (EditView.EntityData) EditView.EntityData = { ...EditView.EntityData, ...EditView.EditData }; //更新
             else if (EditPropertiyViewList) {

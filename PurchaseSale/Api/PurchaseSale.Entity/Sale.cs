@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace PurchaseSale.Entity
 {
-    [TableProperty(Name = "t_Sale", PrimaryKey = "Id", NoSelectNames = "IsDelete")]
+    [TableProperty(Name = "t_Sale", PrimaryKey = "SaleId", NoSelectNames = "IsDelete")]
     [RequestMethod(IsDelete = false)]
     public class Sale : EntityModel, IEntity
     {
@@ -87,7 +87,7 @@ namespace PurchaseSale.Entity
         public string RowVersion { get; set; }
     }
 
-    [TableProperty(Name = "v_Sale", PrimaryKey = "Id", NoSelectNames = "IsDelete")]
+    [TableProperty(Name = "v_Sale", PrimaryKey = "SaleId", NoSelectNames = "IsDelete")]
     [RequestMethod(IsDelete = false, IsPost = false, IsPut = false)]
     public class ViewSale : Sale
     {
