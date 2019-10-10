@@ -103,9 +103,32 @@ function GetDataGridView() {
         X: 4,
         Y: 1,
         IsEdit: true,
+        IsComplexEntity: true,
+        IsPaging: false,
+        IsNullable: false,
+        NullTipMessage: "请先添加商品！",
+        DataType: "Array",
         ClassName: "DivInfoView3",
         Style: { marginBottom: 16 },
-        Properties: AssignProporties(SaleDetail, ["ProductName", "ProductTypeName", "ProductBrandName", "SillingPrice", "Discount", "Number", "Unit", "Amount"])
+        Properties: AssignProporties(SaleDetail, ["ProductName", "ProductTypeName", "ProductBrandName", "SillingPrice", "Number", "Unit", "Amount", GetOperation()])
+    }
+}
+
+function GetOperation() {
+    return {
+        Name: "Operation",
+        Label: "操作",
+        IsData: false,
+        ActionList: AssignProporties(SaleDetail, [GetDeleteAction()])
+    }
+}
+
+function GetDeleteAction() {
+    return {
+        Name: "DeleteDetail",
+        Label: "删除",
+        EventActionName: "DeleteDetail",
+        Type: "AButton"
     }
 }
 
@@ -209,6 +232,11 @@ function GetEventActions() {
         EditView: "DetailEditView",
         ExpandSetEntityData: "SetDetailEntityData",
         SuccessCallback: "SetDetailEntityDataCallback"
+    },
+    {
+        Name: "DeleteDetail",
+        Type: "DataListView/Remove",
+        DataListView: "Details"
     },
     {
         Name: "GetEntityData",

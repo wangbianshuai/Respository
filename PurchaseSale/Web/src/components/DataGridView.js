@@ -13,8 +13,13 @@ class DataGridView extends BaseIndex {
 
         this.Init();
 
-        this.state = Object.assign({ IsDataLoading: false, RefreshId: "" }, this.state);
-
+        this.Property.Add = this.Add.bind(this);
+        this.Property.Update = this.Update.bind(this);
+        this.Property.Remove = this.Remove.bind(this);
+        this.Property.SetValue = this.SetValue.bind(this);
+        this.Property.GetValue = () => this.state.DataList;
+        const dataList = this.Property.Value || this.Property.DefaultValue || [];
+        this.state = Object.assign({ IsDataLoading: false, RefreshId: "", DataList: dataList }, this.state);
         this.Property.SetColumnsVisible = this.SetColumnsVisible.bind(this);
     }
 
@@ -36,6 +41,44 @@ class DataGridView extends BaseIndex {
         this.Property.Refresh = this.Refresh.bind(this);
 
         this.InitDataProperties();
+    }
+
+
+    Add(data) {
+        const { DataList } = this.state;
+
+        const id = data[this.PrimaryKey];
+        let blExists = false;
+        const list = [];
+
+        for (let i = 0; i < DataList.length; i++) {
+            if (DataList[i][this.PrimaryKey] === id) blExists = true;
+            else list.push(DataList[i])
+        }
+
+        if (blExists) return;
+        else list.push(data);
+
+        this.SetValue(list);
+    }
+
+    Update(data) {
+        const id = data[this.PrimaryKey];
+        const dataList = this.state.DataList
+        const editData = Common.ArrayFirst(dataList, (f) => Common.IsEquals(f[this.PrimaryKey], id, true));
+        if (editData !== null) {
+            for (let key in data) editData[key] = data[key];
+        }
+        this.SetValue(dataList.map(m => m));
+    }
+
+    Remove(id) {
+        this.SetValue(this.state.DataList.filter(f => !Common.IsEquals(f[this.PrimaryKey], id, true)));
+    }
+
+    SetValue(dataList) {
+        dataList = dataList || [];
+        this.setState({ DataList: dataList });
     }
 
     SetColumnsVisible(hideColNames) {
@@ -181,7 +224,7 @@ class DataGridView extends BaseIndex {
             else if (data.PageInfo) this.PageInfo = data.PageInfo;
         }
 
-        this.DataList.forEach((d, i) => d.key = d[this.PrimaryKey]);
+        this.DataList.forEach(d => d.key = d[this.PrimaryKey]);
     }
 
     GetPageInfo(PageRecord) {
@@ -213,7 +256,12 @@ class DataGridView extends BaseIndex {
     }
 
     RenderDataView() {
-        this.SetDataList();
+        if (this.Property.IsComplexEntity) {
+            this.DataList = this.state.DataList;
+            this.DataList.forEach(d => d.key = d[this.PrimaryKey]);
+            if (this.Property.SetChangeDataList) setTimeout(() => this.Property.SetChangeDataList(this.DataList), 100);
+        }
+        else this.SetDataList();
 
         let dataList = this.DataList;
 

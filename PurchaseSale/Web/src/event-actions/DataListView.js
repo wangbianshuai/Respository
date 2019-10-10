@@ -24,10 +24,13 @@ export default class DataListView extends BaseIndex {
         if (!action.Parameters) this.InitRemoveAction(props, action);
 
         const { DataListView } = action.Parameters;
+        
+        var id = props.Property.DataId;
+        if (props.Property.Params) id = props.Property.Params[DataListView.Entity.PrimaryKey]
 
         //自定义扩展移除数据
         if (action.ExpandRemove) action.ExpandRemove(props, action)
-        else DataListView.Remove(props.Property.DataId);
+        else DataListView.Remove(id);
     }
 
     InitRemoveAction(props, action) {

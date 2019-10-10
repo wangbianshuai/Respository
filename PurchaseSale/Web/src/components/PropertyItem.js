@@ -11,9 +11,12 @@ export default class PropertyItem extends Component {
 
         this.Id = props.Property.Id;
 
-        this.state = { IsVisible: this.GetIsVisible() }
+        this.state = { IsVisible: this.GetIsVisible(), Label: props.Property.Label }
 
-        if (props.Property.IsFormItem) props.Property.SetFormItemVisible = (v) => this.setState({ IsVisible: v });
+        if (props.Property.IsFormItem) {
+            props.Property.SetFormItemVisible = (v) => this.setState({ IsVisible: v });
+            props.Property.SetLabel = (label) => this.setState({ Label: label })
+        }
 
         this.SetIsReadOnly();
 
@@ -84,13 +87,14 @@ export default class PropertyItem extends Component {
 
     RenderLabel() {
         const { Property } = this.props;
+        const {Label}=this.state;
 
         if (Property.IsAddOptional) {
             const exLabel = Property.ExLabel || "";
-            return <React.Fragment>{Property.Label}<span style={{ color: "#999999" }}>（选填）</span>{exLabel}</React.Fragment>
+            return <React.Fragment>{Label}<span style={{ color: "#999999" }}>（选填）</span>{exLabel}</React.Fragment>
         }
 
-        return Property.Label;
+        return Label;
     }
 
     render() {
