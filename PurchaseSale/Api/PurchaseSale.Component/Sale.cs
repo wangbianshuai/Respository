@@ -38,10 +38,20 @@ namespace PurchaseSale.Component
         [Log]
         public object Insert2()
         {
+            return EditSale(false);
+        }
+
+        object EditSale(bool blUpdate)
+        {
             IEntityData entityData = this._Request.Entities[this.EntityType.Name].FirstOrDefault();
 
             entityData.SetDefaultValue("SaleDate", DateTime.Now);
-            entityData.SetDefaultValue("CreateUser", this._Request.OperationUser);
+            if (blUpdate)
+            {
+                entityData.SetDefaultValue("UpdateUser", this._Request.OperationUser);
+                entityData.SetDefaultValue("UpdateDate", DateTime.Now);
+            }
+            else entityData.SetDefaultValue("CreateUser", this._Request.OperationUser);
             int orderCode = GetSaleCode(entityData.GetValue<DateTime>("SaleDate"));
             if (string.IsNullOrEmpty(entityData.GetStringValue("SaleCode")))
             {
@@ -50,24 +60,38 @@ namespace PurchaseSale.Component
             }
 
             byte saleType = entityData.GetValue<byte>("SaleType");
-            
-            string name = saleType == 1 ? "销售单" : saleType == 2 ? "销售单退货" : "";
-            if (string.IsNullOrEmpty(name)) return this.GetMessageDict("未知销售类型！");
 
-            Guid billTypeId = new BillType().GetBillTypeId(name);
-            if (billTypeId == Guid.Empty)
+            byte saleStatus = entityData.GetValue<byte>("SaleStatus");
+
+            string name = string.Empty;
+            Guid billTypeId = Guid.Empty;
+
+            if (saleStatus == 1)
             {
-                return this.GetMessageDict("销售单账目类型不存在，请在账目类型中新增名为\"" + name + "\"的账目类型！");
+                name = saleType == 1 ? "销售单" : saleType == 2 ? "销售单退货" : "";
+                if (string.IsNullOrEmpty(name)) return this.GetMessageDict("未知销售类型！");
+
+                billTypeId = new BillType().GetBillTypeId(name);
+                if (billTypeId == Guid.Empty)
+                {
+                    return this.GetMessageDict("销售单账目类型不存在，请在账目类型中新增名为\"" + name + "\"的账目类型！");
+                }
             }
 
             string remark = saleType == 1 ? string.Format("销售单{0}收款", entityData.GetStringValue("SaleCode")) : string.Format("销售单退货{0}付款", entityData.GetStringValue("SaleCode"));
 
-            object obj = EntityByComplexTypeOperation.Insert<Sale>(this, _SaleDetailEntity, "Details");
+            object obj = null;
+            if (blUpdate) obj = EntityByComplexTypeOperation.Update<Sale>(this, _SaleDetailEntity, "Details");
+            else obj = EntityByComplexTypeOperation.Insert<Sale>(this, _SaleDetailEntity, "Details");
 
-            if (obj is Dictionary<string, object>)
+            if (obj is Dictionary<string, object> && saleStatus == 1)
             {
-                Guid saleId = (obj as Dictionary<string, object>).GetValue<Guid>("PrimaryKey");
-                if (saleId != Guid.Empty)
+                Guid saleId = Guid.Empty;
+
+                if (blUpdate) saleId = (Guid)this._QueryRequest.PrimaryKeyProperty.Value;
+                else saleId = (obj as Dictionary<string, object>).GetValue<Guid>("PrimaryKey");
+
+                if ((!blUpdate && saleId != Guid.Empty) || (blUpdate && (obj as Dictionary<string, object>).ContainsKey("Succeed")))
                 {
                     decimal realAmount = entityData.GetValue<decimal>("RealAmount");
                     if (realAmount > 0) new Bill().EditBill(saleId, 2, saleType, remark, Guid.Parse(this._Request.OperationUser), billTypeId, realAmount, entityData.GetValue<DateTime>("SaleDate"));
@@ -80,45 +104,7 @@ namespace PurchaseSale.Component
         [Log]
         public object Update2()
         {
-            IEntityData entityData = this._Request.Entities[this.EntityType.Name].FirstOrDefault();
-
-            entityData.SetDefaultValue("SaleDate", DateTime.Now);
-            entityData.SetDefaultValue("UpdateUser", this._Request.OperationUser);
-            entityData.SetDefaultValue("UpdateDate", DateTime.Now);
-            int orderCode = GetSaleCode(entityData.GetValue<DateTime>("SaleDate"));
-            if (string.IsNullOrEmpty(entityData.GetStringValue("SaleCode")))
-            {
-                entityData.SetDefaultValue("SaleCode", string.Format("S{0}", orderCode));
-                entityData.SetDefaultValue("SaleIntCode", orderCode);
-            }
-
-            Guid saleId = (Guid)this._QueryRequest.PrimaryKeyProperty.Value;
-
-            byte saleType = entityData.GetValue<byte>("SaleType");
-
-            string name = saleType == 1 ? "销售单" : saleType == 2 ? "销售单退货" : "";
-            if (string.IsNullOrEmpty(name)) return this.GetMessageDict("未知销售类型！");
-
-            Guid billTypeId = new BillType().GetBillTypeId(name);
-            if (billTypeId == Guid.Empty)
-            {
-                return this.GetMessageDict("销售单账目类型不存在，请在账目类型中新增名为\"" + name + "\"的账目类型！");
-            }
-
-            string remark = saleType == 1 ? string.Format("销售单{0}收款", entityData.GetStringValue("SaleCode")) : string.Format("销售单退货{0}付款", entityData.GetStringValue("SaleCode"));
-
-            object obj = EntityByComplexTypeOperation.Update<Sale>(this, _SaleDetailEntity, "Details");
-
-            if (obj is Dictionary<string, object>)
-            {
-                if ((obj as Dictionary<string, object>).ContainsKey("Succeed"))
-                {
-                    decimal realAmount = entityData.GetValue<decimal>("RealAmount");
-                    if (realAmount > 0) new Bill().EditBill(saleId, 2, saleType, remark, Guid.Parse(this._Request.OperationUser), billTypeId, realAmount, entityData.GetValue<DateTime>("SaleDate"));
-                }
-            }
-
-            return obj;
+            return EditSale(true);
         }
 
 
@@ -143,7 +129,7 @@ namespace PurchaseSale.Component
             int ymd = int.Parse(orderDate.Date.ToString("yyMMdd"));
             IQuery query = new Query(this.EntityType.TableName);
             query.Select("Max(SaleIntCode) SaleIntCode");
-            query.Where(string.Format("where IsDelete=0 and SUBSTRING(SaleCode,1,6)='{0}'", ymd));
+            query.Where(string.Format("where IsDelete=0 and SUBSTRING(SaleCode,2,6)='{0}'", ymd));
 
             IEntityData entityData = this.SelectEntity(query);
 

@@ -20,6 +20,15 @@ export default EntityPageEdit("PurchaseSaleManage_SaleInput", "Sale", 2500, {
     SetDetailEntityDataCallback({ data, props, action }) {
         if (data.IsSuccess !== false && data.EntityData) this.DetailsGridView.Add(data.EntityData);
     },
+    SubmitEntityDataCallback({ data, props, action }) {
+        if (data.IsSuccess !== false) {
+            const onOk = () => {
+                if (!data.PrimaryKey) this.ToPage("/PurchaseSaleManage/SaleList");
+            };
+
+            this.AlertSuccess("提交成功", onOk);
+        }
+    },
     componentDidMount() {
         this.DetailsGridView = this.GetViewProperty(this.PageConfig, "Details");
         this.DetailsGridView.SetChangeDataList = this.SetChangeDataList.bind(this);

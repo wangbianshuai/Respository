@@ -351,8 +351,8 @@ group by DataId
 Sale as 
 (
 select a.*, b.UserName SaleUserName,
-case when a.SaleType = 1 then '出货' when a.SaleType=2 then '退货' else '' end SaleTypeName,
-case when a.SaleStatus=1 then '提交' when a.SaleStatus=2 then '存档' when a.SaleStatus=3 then '作废' else '待提交' end SaleStatusName,
+case when a.SaleType = 1 then '销售' when a.SaleType=2 then '退货' else '' end SaleTypeName,
+case when a.SaleStatus=1 then '已提交' when a.SaleStatus=2 then '已存档' when a.SaleStatus=3 then '已作废' else '待提交' end SaleStatusName,
 case when a.SaleType=1 then isNull(c.SaleAmount,0)+ ISNULL(a.LogisticsFee,0)+ ISNULL(a.OtherFee,0) - ISNULL(a.DiscountFee,0)
 else 0- (isNull(c.SaleAmount,0)+ ISNULL(a.LogisticsFee,0)+ ISNULL(a.OtherFee,0) - ISNULL(a.DiscountFee,0)) end as ShouldAmount,
 isnull(d.RealAmount,0) RealAmount,
@@ -395,8 +395,8 @@ as
 select a.*,
 b.SaleType,
 b.SaleStatus,
-case when b.SaleType = 1 then '出货' when b.SaleType=2 then '退货' else '' end SaleTypeName,
-case when b.SaleStatus=1 then '提交' when b.SaleStatus=2 then '存档' when b.SaleStatus=3 then '作废' else '待提交' end SaleStatusName,
+case when b.SaleType = 1 then '销售' when b.SaleType=2 then '退货' else '' end SaleTypeName,
+case when b.SaleStatus=1 then '已提交' when b.SaleStatus=2 then '已存档' when b.SaleStatus=3 then '已作废' else '待提交' end SaleStatusName,
 c.Model,
 c.Name as ProductName,
 c.ProductBarCode,

@@ -55,7 +55,7 @@ function GetButtonProperties() {
         Type: "WhiteSpace",
         ClassName: "ant-col ant-col-8 ant-form-item-label"
     },
-    { ...GetButton("SumbitEntityData", "提交", "primary"), EventActionName: "SaveEntityData", SaveEntityDataActionType: DataActionTypes.SumbitEntityData, Icon: "save" },
+    { ...GetButton("SumbitEntityData", "提交", "primary"), EventActionName: "SubmitEntityData", SaveEntityDataActionType: DataActionTypes.SumbitEntityData, Icon: "save" },
     { ...GetButton("SaveEntityData", "保存", ""), EventActionName: "SaveEntityData", SaveEntityDataActionType: DataActionTypes.SaveEntityData, Icon: "save", Style: { marginLeft: 10 } },
     { ...GetButton("BackToLast", "返回", ""), EventActionName: "BackToLast", Style: { marginLeft: 10 }, Icon: "left", }]
 }
@@ -224,7 +224,13 @@ function GetEventActions() {
     {
         Name: "SaveEntityData",
         Type: "EntityEdit/SaveEntityData",
-        EditView: "SaleEdit2"
+        EditView: "SaleEdit2",
+    },
+    {
+        Name: "SubmitEntityData",
+        Type: "EntityEdit/SaveEntityData",
+        EditView: "SaleEdit2",
+        SuccessCallback: "SubmitEntityDataCallback"
     },
     {
         Name: "AddDetail",
