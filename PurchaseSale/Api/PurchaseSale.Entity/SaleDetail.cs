@@ -38,6 +38,10 @@ namespace PurchaseSale.Entity
         /// 数量
         /// </summary>
         public float Number { get; set; }
+        /// <summary>
+        /// 金额
+        /// </summary>
+        public decimal Amount { get; set; }
     }
 
     [TableProperty(Name = "v_SaleDetail", PrimaryKey = "Id")]

@@ -139,6 +139,11 @@ namespace PurchaseSale.Component
 
             return orderIntCode + 1;
         }
+
+        public object GetSale()
+        {
+            return EntityByComplexTypeOperation.GetEntityData<Sale>(this, _SaleDetailEntity, "Details") as IEntityData;
+        }
     }
 
     public class ViewSale : EntityRequest
@@ -160,7 +165,7 @@ namespace PurchaseSale.Component
         void QueryBillGroupByInfo(IEntityData data, string whereSql, List<IDbDataParameter> paramterList)
         {
             IQuery query = new Query(this.EntityType.TableName);
-            query.Select("sum(ShouldAmount) as TotalShouldAmount,sum(RealAmount) as TotalRealAmount,sum(BidAmount) as TotalBidAmount,sum(Profit) as TotalProfit");
+            query.Select("sum(ShouldAmount) as TotalShouldAmount,sum(RealAmount) as TotalRealAmount,sum(SaleAmount) as TotalSaleAmount,sum(BidAmount) as TotalBidAmount,sum(Profit) as TotalProfit");
             query.Where(whereSql, paramterList);
 
             IEntityData entityData = this.SelectEntity(query);
@@ -168,15 +173,18 @@ namespace PurchaseSale.Component
             decimal totalShouldAmount = entityData.GetValue<decimal>("TotalShouldAmount");
             decimal totalRealAmount = entityData.GetValue<decimal>("TotalRealAmount");
             decimal totalBidAmount = entityData.GetValue<decimal>("TotalBidAmount");
+            decimal totalSaleAmount = entityData.GetValue<decimal>("TotalSaleAmount");
             decimal totalProfit = entityData.GetValue<decimal>("TotalProfit");
 
             IEntityData groupByInfo = new EntityData(string.Empty);
             groupByInfo.SetValue("TotalShouldAmount", totalShouldAmount.ToString("C"));
-            groupByInfo.SetValue("TotalShouldAmountColor", totalProfit >= 0 ? "#1890ff" : "red");
+            groupByInfo.SetValue("TotalShouldAmountColor", totalShouldAmount >= 0 ? "#1890ff" : "red");
             groupByInfo.SetValue("TotalRealAmount", totalRealAmount.ToString("C"));
-            groupByInfo.SetValue("TotalRealAmountColor", totalProfit >= 0 ? "#1890ff" : "red");
+            groupByInfo.SetValue("TotalRealAmountColor", totalRealAmount >= 0 ? "#1890ff" : "red");
+            groupByInfo.SetValue("TotalSaleAmount", totalSaleAmount.ToString("C"));
+            groupByInfo.SetValue("TotalSaleAmountColor", totalSaleAmount >= 0 ? "#1890ff" : "red");
             groupByInfo.SetValue("TotalBidAmount", totalBidAmount.ToString("C"));
-            groupByInfo.SetValue("TotalBidAmountColor", totalProfit >= 0 ? "#1890ff" : "red");
+            groupByInfo.SetValue("TotalBidAmountColor", totalBidAmount >= 0 ? "#1890ff" : "red");
             groupByInfo.SetValue("TotalProfit", totalProfit.ToString("C"));
             groupByInfo.SetValue("TotalProfitColor", totalProfit >= 0 ? "#1890ff" : "red");
 

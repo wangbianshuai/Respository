@@ -206,6 +206,8 @@ PurchaseType tinyint not null default(1),                       --²É¹ºÀàÐÍ£¬1£º½
 LogisticsFee money,                                             --ÎïÁ÷·Ñ
 OtherFee money,                                                 --ÆäËû·Ñ
 DiscountFee money,                                              --ÕÛ¿Û·Ñ
+ShouldAmount money,                                             --Ó¦¸¶½ð¶î  
+RealAmount money,                                               --Êµ¸¶½ð¶î
 SupplierId uniqueidentifier,                                    --¹©Ó¦ÉÌ
 PurchaseStatus tinyint not null default(0),                     --²É¹º×´Ì¬,0:±£´æ,1:Ìá½»,2:´æµµ£¬3£º×÷·Ï         
 Remark nvarchar(200),                                           --±¸×¢
@@ -319,6 +321,8 @@ SaleType tinyint not null default(1),                           --ÏúÊÛÀàÐÍ£¬1£º³
 LogisticsFee money,                                             --ÎïÁ÷·Ñ
 OtherFee money,                                                 --ÆäËû·Ñ
 DiscountFee money,                                              --ÕÛ¿Û·Ñ
+ShouldAmount money,                                             --Ó¦ÊÕ½ð¶î  
+RealAmount money,                                               --ÊµÊÕ½ð¶î
 CustomerName nvarchar(50),                                      --¹Ë¿ÍÐÕÃû
 CustomerPhone varchar(50),                                      --¹Ë¿ÍÊÖ»ú
 SaleStatus tinyint not null default(0),                         --ÏúÊÛ×´Ì¬,0:±£´æ,1:Ìá½»,2:´æµµ£¬3£º×÷·Ï                
@@ -339,7 +343,7 @@ create view v_Sale
 as
 with SaleDetail as
 (
-select SaleId, sum(round(SillingPrice*Number,2)) SaleAmount,
+select SaleId, sum(Amount) SaleAmount,
 sum(round(BidPrice*Number,2)) BidAmount from t_SaleDetail
 group by SaleId
 ),
@@ -354,9 +358,10 @@ select a.*, b.UserName SaleUserName,
 case when a.SaleType = 1 then 'ÏúÊÛ' when a.SaleType=2 then 'ÍË»õ' else '' end SaleTypeName,
 case when a.SaleStatus=1 then 'ÒÑÌá½»' when a.SaleStatus=2 then 'ÒÑ´æµµ' when a.SaleStatus=3 then 'ÒÑ×÷·Ï' else '´ýÌá½»' end SaleStatusName,
 case when a.SaleType=1 then isNull(c.SaleAmount,0)+ ISNULL(a.LogisticsFee,0)+ ISNULL(a.OtherFee,0) - ISNULL(a.DiscountFee,0)
-else 0- (isNull(c.SaleAmount,0)+ ISNULL(a.LogisticsFee,0)+ ISNULL(a.OtherFee,0) - ISNULL(a.DiscountFee,0)) end as ShouldAmount,
-isnull(d.RealAmount,0) RealAmount,
+else 0- (isNull(c.SaleAmount,0)+ ISNULL(a.LogisticsFee,0)+ ISNULL(a.OtherFee,0) - ISNULL(a.DiscountFee,0)) end as ShouldAmount2,
+isnull(d.RealAmount,0) RealAmount2,
 case when a.SaleType=1 then isnull(c.BidAmount,0) else 0-isnull(c.BidAmount,0) end BidAmount,
+case when a.SaleType=1 then isnull(c.SaleAmount,0) else 0-isnull(c.SaleAmount,0) end SaleAmount,
 case when a.SaleType=1 then isNull(c.SaleAmount,0)+ ISNULL(a.LogisticsFee,0)+ ISNULL(a.OtherFee,0) - ISNULL(a.DiscountFee,0)-c.BidAmount
 else 0- (isNull(c.SaleAmount,0)+ ISNULL(a.LogisticsFee,0)+ ISNULL(a.OtherFee,0) - ISNULL(a.DiscountFee,0)-c.BidAmount) end as Profit
 from t_Sale a
@@ -383,7 +388,8 @@ ProductId uniqueidentifier not null,                            --ÉÌÆ·Id
 SillingPrice money not null,                                    --¼Û¸ñ
 BidPrice money not null,                                        --½ø¼Û
 Discount money,                                                 --ÕÛ¿Û
-Number float not null                                           --ÊýÁ¿                                                  
+Number float not null,                                          --ÊýÁ¿
+Amount money not null                                           --½ð¶î                                                  
 )
 go
 

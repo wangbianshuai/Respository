@@ -48,6 +48,14 @@ namespace PurchaseSale.Entity
         /// </summary>
         public decimal DiscountFee { get; set; }
         /// <summary>
+        /// 应收金额
+        /// </summary>
+        public decimal ShouldAmount { get; set; }
+        /// <summary>
+        /// 实收金额
+        /// </summary>
+        public decimal RealAmount { get; set; }
+        /// <summary>
         /// 顾客姓名
         /// </summary>
         public string CustomerName { get; set; }
@@ -94,9 +102,10 @@ namespace PurchaseSale.Entity
         public string SaleUserName { get; set; }
         public string SaleTypeName { get; set; }
         public string SaleStatusName { get; set; }
-        public decimal ShouldAmount { get; set; }
-        public decimal RealAmount { get; set; }
+        public decimal ShouldAmount2 { get; set; }
+        public decimal RealAmount2 { get; set; }
         public decimal BidAmount { get; set; }
+        public decimal SaleAmount { get; set; }
         public decimal Profit { get; set; }
         public decimal ProfitRate { get; set; }
         public string AmountType { get; set; }

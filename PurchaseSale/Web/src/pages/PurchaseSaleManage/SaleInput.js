@@ -12,7 +12,6 @@ export default EntityPageEdit("PurchaseSaleManage_SaleInput", "Sale", 2500, {
         entityData.ProductBrandName = selectData.ProductBrandName;
         entityData.ProductName = selectData.ProductName;
         entityData.Unit = selectData.Unit;
-        entityData.Amount = Common.GetNumber(Common.GetNumber(entityData.SillingPrice) * Common.GetNumber(entityData.Number))
         entityData.Id = Common.CreateGuid();
 
         return entityData;
@@ -46,12 +45,33 @@ export default EntityPageEdit("PurchaseSaleManage_SaleInput", "Sale", 2500, {
         this.OtherFee.ValueChange = this.OtherFeeValueChange.bind(this);
         this.DiscountFee.ValueChange = this.DiscountFeeValueChange.bind(this);
         this.SaleType.ValueChange = this.SaleTypeValueChange.bind(this);
+
+
+        this.DetailEditView = this.GetViewProperty(this.PageConfig, "DetailEditView");
+        this.SillingPrice = this.GetViewProperty(this.DetailEditView, "SillingPrice");
+        this.Number = this.GetViewProperty(this.DetailEditView, "Number");
+        this.Amount = this.GetViewProperty(this.DetailEditView, "Amount");
+
+        this.SillingPrice.ValueChange = this.SillingPriceValueChange.bind(this);
+        this.Number.ValueChange = this.NumberValueChange.bind(this);
+    },
+    SillingPriceValueChange(value) {
+        this.ComputeProductAmount(Common.GetNumber(value), null);
+    },
+    NumberValueChange(value) {
+        this.ComputeProductAmount(null, Common.GetNumber(value));
+    },
+    ComputeProductAmount(sillingPrice, number) {
+        if (sillingPrice === null) sillingPrice = Common.GetNumber(this.SillingPrice.GetValue());
+        if (number === null) number = Common.GetNumber(this.Number.GetValue());
+
+        this.Amount.SetValue(Common.GetNumber(sillingPrice * number, 2));
     },
     SetChangeDataList(dataList) {
         dataList = dataList || [];
         let sumAmount = 0;
         dataList.forEach(d => {
-            sumAmount += d.Amount
+            sumAmount += Common.GetNumber(d.Amount)
         });
         sumAmount = Common.GetNumber(sumAmount);
         this.SumAmount.SetValue(sumAmount);

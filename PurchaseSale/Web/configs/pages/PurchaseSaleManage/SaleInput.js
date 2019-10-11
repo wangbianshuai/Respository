@@ -68,8 +68,9 @@ function GetDetailProperties() {
             PlaceHolder: "请输入商品编号或名称关键字",
             SelectDataToProperties: ["SillingPrice"],
         },
-        { ...GetTextBox2("SillingPrice", "价格", 2, 1, "", "请输入价格", 10, false), DataType: "float" },
-        { ...GetTextBox2("Number", "数量", 4, 1, "", "请输入数量", 8, false), DataType: "float", DefaultValue: 1 },
+        { ...GetTextBox2("SillingPrice", "价格", 2, 1, "", "请输入价格", 10, false), DataType: "float", IsLoadValue: true },
+        { ...GetTextBox2("Number", "数量", 3, 1, "", "请输入数量", 8, false), DataType: "float", DefaultValue: 1, IsLoadValue: true },
+        { ...GetTextBox2("Amount", "金额", 4, 1, "", "请输入金额", 20, false), DataType: "float" },
         { ...GetButton("AddDetail", "添加", "primary"), EventActionName: "AddDetail", X: 4, Y: 2, Icon: "plus", IsFormItem: true, IsComplexEntity: true }
     ]
 }
