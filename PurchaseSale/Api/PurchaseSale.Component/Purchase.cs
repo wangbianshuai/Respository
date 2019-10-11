@@ -130,7 +130,11 @@ namespace PurchaseSale.Component
             entityData.SetDefaultValue("UpdateUser", this._Request.OperationUser);
             entityData.SetDefaultValue("UpdateDate", DateTime.Now);
 
-            return this.Update();
+            object obj = this.Update();
+
+            if (obj is Dictionary<string, object> && entityData.GetValue<byte>("PurchaseStatus") == 3 && (obj as Dictionary<string, object>).ContainsKey("Succeed")) new Bill().DeleteBill(purchaseId);
+
+            return obj;
         }
 
         int GetPurchaseCode(DateTime purchaseDate)

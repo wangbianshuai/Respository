@@ -223,7 +223,6 @@ go
 drop view v_Purchase
 go
 
-
 create view v_Purchase
 as
 with PurchaseDetail as
