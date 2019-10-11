@@ -269,6 +269,14 @@ export default class BaseIndex extends Component {
             }
             return v;
         }
+        if (this.PageConfig.DialogViews) {
+            let v = null;
+            for (let i = 0; i < this.PageConfig.DialogViews.length; i++) {
+                v = this.GetViewProperty(this.PageConfig.DialogViews[i], name);
+                if (v !== null) break;
+            }
+            return v;
+        }
         return null;
     }
 

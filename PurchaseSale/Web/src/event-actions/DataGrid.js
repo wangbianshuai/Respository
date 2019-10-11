@@ -9,7 +9,7 @@ export default class DataGrid extends BaseIndex {
 
         const { DataGridView, AlertMessage, EntityProperties } = action.Parameters;
         const { DataActionType } = Property;
-
+        
         var selectDataList = null, selectRowKeys = null;
         if (Property.Params) {
             selectDataList = [Property.Params];

@@ -109,5 +109,6 @@ namespace PurchaseSale.Entity
         public decimal Profit { get; set; }
         public decimal ProfitRate { get; set; }
         public string AmountType { get; set; }
+        public decimal DueAmount { get; set; }
     }
 }

@@ -7,6 +7,8 @@ export default {
     GetPersonBillTypes: get("GetPersonBillTypes", "ViewPersonBillType?$select=Id,Name,IncomePayment&$orderby CreateDate", "PersonBillTypes", "ViewPersonBillType"),
     GetBillTypes: get("GetBillTypes", "ViewBillType?$select=Id,Name,IncomePayment&$orderby CreateDate", "BillTypes", "ViewBillType"),
     UpdateProductStatus: post("UpdateProductStatus", "Product/UpdateStatus", "UpdateStatus", "", true),
+    UpdateSaleStatus2: post("UpdateSaleStatus2", "Sale/UpdateStatus", "UpdateStatus", "", true),
+    UpdateSaleStatus3: post("UpdateSaleStatus3", "Sale/UpdateStatus", "UpdateStatus", "", true),
     GetProducts: get("GetProducts", "ViewProduct2?$select=Id,ProductName,Unit,SillingPrice,BidPrice,ProductTypeName,ProductBrandName&$orderby CreateDate&", "Products", "ViewProduct2"),
 }
 

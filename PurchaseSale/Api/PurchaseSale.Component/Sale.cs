@@ -15,6 +15,7 @@ namespace PurchaseSale.Component
     public class Sale : EntityRequest
     {
         EntityType _SaleDetailEntity { get; set; }
+        EntityType _ViewSaleDetailEntity { get; set; }
 
         public Sale()
         {
@@ -24,6 +25,7 @@ namespace PurchaseSale.Component
             : base(request)
         {
             _SaleDetailEntity = EntityType.GetEntityType<Entity.SaleDetail>();
+            _ViewSaleDetailEntity = EntityType.GetEntityType<Entity.ViewSaleDetail>();
         }
 
         [Log]
@@ -142,13 +144,13 @@ namespace PurchaseSale.Component
 
         public object GetSale()
         {
-            return EntityByComplexTypeOperation.GetEntityData<Sale>(this, _SaleDetailEntity, "Details") as IEntityData;
+            return EntityByComplexTypeOperation.GetEntityData<Sale>(this, _ViewSaleDetailEntity, "Details") as IEntityData;
         }
     }
 
     public class ViewSale : EntityRequest
     {
-        EntityType _SaleDetailEntity { get; set; }
+        EntityType _ViewSaleDetailEntity { get; set; }
 
         public ViewSale()
         {
@@ -157,7 +159,7 @@ namespace PurchaseSale.Component
         public ViewSale(Request request)
             : base(request)
         {
-            _SaleDetailEntity = EntityType.GetEntityType<Entity.SaleDetail>();
+            _ViewSaleDetailEntity = EntityType.GetEntityType<Entity.ViewSaleDetail>();
 
             this.QueryGroupByInfo = (data, wherqSql, parameterList) => this.QueryBillGroupByInfo(data, wherqSql, parameterList);
         }
@@ -165,7 +167,12 @@ namespace PurchaseSale.Component
         void QueryBillGroupByInfo(IEntityData data, string whereSql, List<IDbDataParameter> paramterList)
         {
             IQuery query = new Query(this.EntityType.TableName);
-            query.Select("sum(ShouldAmount) as TotalShouldAmount,sum(RealAmount) as TotalRealAmount,sum(SaleAmount) as TotalSaleAmount,sum(BidAmount) as TotalBidAmount,sum(Profit) as TotalProfit");
+            query.Select(@"sum(case when SaleStatus=3 then 0 else ShouldAmount2 end) as TotalShouldAmount,
+                           sum(case when SaleStatus=3 then 0 else RealAmount2 end) as TotalRealAmount,
+                           sum(case when SaleStatus=3 then 0 else DueAmount end) as TotalDueAmount, 
+                           sum(case when SaleStatus=3 then 0 else SaleAmount end) as TotalSaleAmount,
+                           sum(case when SaleStatus=3 then 0 else BidAmount end) as TotalBidAmount,
+                           sum(case when SaleStatus=3 then 0 else Profit end) as TotalProfit");
             query.Where(whereSql, paramterList);
 
             IEntityData entityData = this.SelectEntity(query);
@@ -175,6 +182,7 @@ namespace PurchaseSale.Component
             decimal totalBidAmount = entityData.GetValue<decimal>("TotalBidAmount");
             decimal totalSaleAmount = entityData.GetValue<decimal>("TotalSaleAmount");
             decimal totalProfit = entityData.GetValue<decimal>("TotalProfit");
+            decimal totalDueAmount = entityData.GetValue<decimal>("TotalDueAmount");
 
             IEntityData groupByInfo = new EntityData(string.Empty);
             groupByInfo.SetValue("TotalShouldAmount", totalShouldAmount.ToString("C"));
@@ -187,6 +195,8 @@ namespace PurchaseSale.Component
             groupByInfo.SetValue("TotalBidAmountColor", totalBidAmount >= 0 ? "#1890ff" : "red");
             groupByInfo.SetValue("TotalProfit", totalProfit.ToString("C"));
             groupByInfo.SetValue("TotalProfitColor", totalProfit >= 0 ? "#1890ff" : "red");
+            groupByInfo.SetValue("TotalDueAmount", totalDueAmount.ToString("C"));
+            groupByInfo.SetValue("TotalDueAmountColor", totalDueAmount >= 0 ? "#1890ff" : "red");
 
             data.SetValue("GroupByInfo", groupByInfo);
         }
@@ -198,11 +208,7 @@ namespace PurchaseSale.Component
 
         public object GetSale()
         {
-            IEntityData entityData = EntityByComplexTypeOperation.GetEntityData<ViewSale>(this,_SaleDetailEntity,"Details") as IEntityData;
-  
-            entityData.EntityName = "Sale";
-
-            return entityData;
+            return EntityByComplexTypeOperation.GetEntityData<ViewSale>(this, _ViewSaleDetailEntity, "Details") as IEntityData;
         }
     }
 }

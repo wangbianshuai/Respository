@@ -222,7 +222,8 @@ export default class EntityEdit extends BaseIndex {
         if (EditView.Entity) {
             const { PropertyPrimaryKey, PrimaryKey } = EditView.Entity;
 
-            const id = EventActions.PageData[PrimaryKey];
+            var id = EventActions.PageData[PrimaryKey];
+            if (EditView.PrimaryKey) id = EditView.PrimaryKey;
             if (!id) return;
 
             const name = PropertyPrimaryKey || PrimaryKey;

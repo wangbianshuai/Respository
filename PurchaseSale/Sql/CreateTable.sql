@@ -150,14 +150,14 @@ with PurchaseNumber as
 (
 select b.ProductId,
 sum(case when a.PurchaseType=1 then b.Number else 0-Number end) SumNumber from t_Purchase a, t_PurchaseDetail b
-where a.IsDelete=0 and a.PurchaseStatus in (1,2)
+where a.PurchaseId=b.PurchaseId and a.IsDelete=0 and a.PurchaseStatus in (1,2)
 group by b.ProductId
 ),
 SaleNumber as
 (
 select b.ProductId,
 sum(case when a.SaleType=1 then b.Number else 0-Number end) SumNumber from t_Sale a, t_SaleDetail b
-where a.IsDelete=0 and a.SaleStatus in (1,2)
+where a.SaleId=b.SaleId and a.IsDelete=0 and a.SaleStatus in (1,2)
 group by b.ProductId
 ),
 StockCheckNumber as
@@ -359,11 +359,11 @@ case when a.SaleType = 1 then '销售' when a.SaleType=2 then '退货' else '' end S
 case when a.SaleStatus=1 then '已提交' when a.SaleStatus=2 then '已存档' when a.SaleStatus=3 then '已作废' else '待提交' end SaleStatusName,
 case when a.SaleType=1 then isNull(c.SaleAmount,0)+ ISNULL(a.LogisticsFee,0)+ ISNULL(a.OtherFee,0) - ISNULL(a.DiscountFee,0)
 else 0- (isNull(c.SaleAmount,0)+ ISNULL(a.LogisticsFee,0)+ ISNULL(a.OtherFee,0) - ISNULL(a.DiscountFee,0)) end as ShouldAmount2,
-isnull(d.RealAmount,0) RealAmount2,
+case when SaleStatus=0 then a.RealAMount else isnull(d.RealAmount,0) end RealAmount2,
 case when a.SaleType=1 then isnull(c.BidAmount,0) else 0-isnull(c.BidAmount,0) end BidAmount,
 case when a.SaleType=1 then isnull(c.SaleAmount,0) else 0-isnull(c.SaleAmount,0) end SaleAmount,
-case when a.SaleType=1 then isNull(c.SaleAmount,0)+ ISNULL(a.LogisticsFee,0)+ ISNULL(a.OtherFee,0) - ISNULL(a.DiscountFee,0)-c.BidAmount
-else 0- (isNull(c.SaleAmount,0)+ ISNULL(a.LogisticsFee,0)+ ISNULL(a.OtherFee,0) - ISNULL(a.DiscountFee,0)-c.BidAmount) end as Profit
+case when a.SaleType=1 then isNull(c.SaleAmount,0)-c.BidAmount
+else 0- (isNull(c.SaleAmount,0)-c.BidAmount) end as Profit
 from t_Sale a
 left join t_User b on a.SaleUser=b.UserId
 left join SaleDetail c on a.SaleId=c.SaleId
@@ -371,7 +371,8 @@ left join SaleBill d on a.SaleId=d.DataId
 where a.IsDelete=0
 )
 select *, 
-case when ShouldAmount=0 then 0 else ROUND(Profit*100/ShouldAmount,2) end ProfitRate,
+case when SaleAmount=0 then 0 else ROUND(Profit*100/SaleAmount,2) end ProfitRate,
+ShouldAmount2-RealAmount2 DueAmount,
 case when ABS(ShouldAmount)<= Abs(RealAmount) then '已结清' when RealAmount=0 then '未结款' else '部分结款' end AmountType 
 from Sale
 go

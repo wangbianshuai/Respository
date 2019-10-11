@@ -165,6 +165,7 @@ export default class BaseIndex {
                 Style: dialogView.DialogStyle,
                 BodyStyle: dialogView.BodyStyle,
                 Component: EventActions.GetReactComponent(dialogView),
+                IsOk: !!onOk,
                 OnOk: onOk
             };
             EventActions.SetModalDialog(action.ModalDialog);

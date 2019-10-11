@@ -20,7 +20,7 @@ export default class Dialog extends BaseIndex {
 
         if (selectRowKeys.length > 0) if (AlertMessage) AlertMessage.SetValue("")
 
-        DialogView.SelectRowKeys= selectRowKeys;
+        DialogView.SelectRowKeys = selectRowKeys;
 
         //设置接收数据行数返回数据
         EventActions.Receives[SetSelectValuesOkActionType] = (d) => this.ReceiveDialogOkActionType(d, props, action)
@@ -120,5 +120,30 @@ export default class Dialog extends BaseIndex {
         const DataGridView = EventActions.GetViewProperty(DialogView, action.DataGridView)
 
         action.Parameters = { DataGridView, DialogView, ToSetView }
+    }
+
+    //弹出层查看
+    ShowDialogLookData(props, action) {
+        if (!action.Parameters) this.InitShowDialogLookDataAction(props, action);
+        const { EventActions, Property } = props;
+        const { DialogView, LookView } = action.Parameters;
+
+        const data = Property.Params ? Property.Params : null;
+
+        if (data) LookView.PrimaryKey = data[LookView.Entity.PrimaryKey];
+
+        const properties = LookView.Properties.filter(f => f.IsClear);
+        this.SetPropertiesValue(properties);
+
+        this.ShowDialog(action, EventActions, DialogView);
+    }
+
+    InitShowDialogLookDataAction(props, action) {
+        const { EventActions } = props;
+        //设置数据视图
+        const DialogView = Common.ArrayFirst(EventActions.PageConfig.DialogViews, (f) => f.Name === action.DialogView);
+        const LookView = EventActions.GetViewProperty(DialogView, action.LookView);
+
+        action.Parameters = { DialogView, LookView }
     }
 }
