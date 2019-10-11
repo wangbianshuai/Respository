@@ -35,7 +35,7 @@ function GetSearchOperationView() {
             },
             { ...GetButton("Search", "搜索", "primary", 2, 4), IsFormItem: true, Icon: "search", EventActionName: "SearchQuery", PressEnterEventActionName: "SearchQuery" },
             { ...GetButton("ClearQuery", "清空", "default", 2, 5), IsFormItem: true, EventActionName: "ClearQuery" },
-            { EventActionName: "ExportExcel", ...GetButton("ExportExcel", "导出Excel", "primary", 3, 1), Style: { marginLeft: 16, marginBottom: 16 } }
+            { EventActionName: "ExportExcel", ...GetButton("ExportExcel", "Excel导出", "primary", 3, 1), Style: { marginLeft: 16, marginBottom: 16 } }
         ])
     }
 }
