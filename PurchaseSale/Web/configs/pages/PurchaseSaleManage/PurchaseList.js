@@ -1,27 +1,27 @@
-const Sale = require("../../entities/Sale");
+const Purchase = require("../../entities/Purchase");
 const { GetButton, AssignProporties, GetTextBox, GetSelect, GetDatePicker } = require("../../Common");
-const LookSaleView = require("./LookSaleView");
+const LookPurchaseView = require("./LookPurchaseView");
 
-//进销管理/销售单列表 2600-2699
+//进销管理/采购单列表 2900-2999
 const DataActionTypes = {
     //搜索查询
-    SearchQuery: 2600,
+    SearchQuery: 2900,
     //删除实体数据
-    DeleteEntityData: 2601,
-    //更新销售状态
-    UpdateSaleStatus2: 2602,
-    //更新销售状态
-    UpdateSaleStatus3: 2603
+    DeleteEntityData: 2901,
+    //更新采购状态
+    UpdatePurchaseStatus2: 2902,
+    //更新采购状态
+    UpdatePurchaseStatus3: 2903
 };
 
-const Entity = { Name: Sale.Name, PrimaryKey: Sale.PrimaryKey, ViewName: "ViewSale", IsGroupByInfo: true }
+const Entity = { Name: Purchase.Name, PrimaryKey: Purchase.PrimaryKey, ViewName: "ViewPurchase", IsGroupByInfo: true }
 
 module.exports = {
-    Name: "SaleList",
+    Name: "PurchaseList",
     Type: "View",
-    DialogViews: [LookSaleView],
+    DialogViews: [LookPurchaseView],
     EventActions: GetEventActions(),
-    Properties: AssignProporties({ Name: "SaleList" }, [GetSearchOperationView(), GetDataGridView()])
+    Properties: AssignProporties({ Name: "PurchaseList" }, [GetSearchOperationView(), GetDataGridView()])
 }
 
 function GetSearchOperationView() {
@@ -30,16 +30,16 @@ function GetSearchOperationView() {
         Entity: Entity,
         Type: "RowsColsView",
         ClassName: "DivSerachView",
-        Properties: AssignProporties({ Name: "SaleList" }, [
+        Properties: AssignProporties({ Name: "PurchaseList" }, [
 
-            { ...GetDatePicker2("StartDate", "日期", 1, 1, "大于或等于其值"), PropertyName: "SaleDate", OperateLogic: ">=" },
-            { ...GetDatePicker2("EndDate", "至", 1, 2, "小于其值"), PropertyName: "SaleDate", OperateLogic: "<" },
-            GetEditSelect2("SaleType", "类型", Sale.SaleTypeDataSource, 1, 3),
-            GetEditSelect2("AmountType", "收款状态", Sale.AmountTypeDataSource, 1, 4),
-            GetEditSelect2("SaleStatus", "状态", Sale.SaleStatusDataSource, 2, 1),
-            GetEditSelect("SaleUser", "销售员", Sale.UserDataSource, 2, 2),
+            { ...GetDatePicker2("StartDate", "日期", 1, 1, "大于或等于其值"), PropertyName: "PurchaseDate", OperateLogic: ">=" },
+            { ...GetDatePicker2("EndDate", "至", 1, 2, "小于其值"), PropertyName: "PurchaseDate", OperateLogic: "<" },
+            GetEditSelect2("PurchaseType", "类型", Purchase.PurchaseTypeDataSource, 1, 3),
+            GetEditSelect2("AmountType", "付款状态", Purchase.AmountTypeDataSource, 1, 4),
+            GetEditSelect2("PurchaseStatus", "状态", Purchase.PurchaseStatusDataSource, 2, 1),
+            GetEditSelect("PurchaseUser", "采购员", Purchase.UserDataSource, 2, 2),
             {
-                ...GetTextBox2("Keyword", "关键字", 2, 3, "", "销售单号/顾客姓名/手机/备注"), PropertyName: "SaleCode,CustomerName,CustomerPhone,Remark",
+                ...GetTextBox2("Keyword", "关键字", 2, 3, "", "采购单号/供应商名称/备注"), PropertyName: "PurchaseCode,SupplierName,Remark",
                 OperateLogic: "like", PressEnterEventActionName: "SearchQuery"
             },
             { ...GetButton("Search", "搜索", "primary", 2, 4), IsFormItem: true, Icon: "search", EventActionName: "SearchQuery", PressEnterEventActionName: "SearchQuery" },
@@ -115,9 +115,9 @@ function GetDataGridView() {
         IsDiv: true,
         ClassName: "DivInfoView3",
         GroupByInfoHtml: GetGroupByInfoHtml(),
-        Properties: AssignProporties(Sale, [GetSaleCode(), "SaleDate", GetAmount("SaleAmount"), GetAmount("BidAmount"), GetAmount("Profit"),
-        GetAmount("ShouldAmount2"), GetAmount("RealAmount2"), GetAmount("DueAmount"), "SaleUserName", "SaleStatusName",
-        { Name: "CreateDate", OrderByType: "desc" }, { Name: "RowVersion", IsVisible: false }, { Name: "CreateUser", IsVisible: false }, { Name: "SaleStatus", IsVisible: false }, GetOperation()])
+        Properties: AssignProporties(Purchase, [GetPurchaseCode(), "PurchaseDate", GetAmount("PurchaseAmount"),
+        GetAmount("ShouldAmount2"), GetAmount("RealAmount2"), GetAmount("DueAmount"), "PurchaseUserName", "PurchaseStatusName",
+        { Name: "CreateDate", OrderByType: "desc" }, { Name: "RowVersion", IsVisible: false }, { Name: "CreateUser", IsVisible: false }, { Name: "PurchaseStatus", IsVisible: false }, GetOperation()])
     }
 }
 
@@ -127,46 +127,46 @@ function GetOperation() {
         Label: "操作",
         IsData: false,
         SelfPropertyName: "CreateUser",
-        ActionList: AssignProporties(Sale, [GetEditAction(0), GetDeleteAction(0), GetLookAction(), GetBillAction(), GetUpdateSaleStatus2(1), GetUpdateSaleStatus3(1)])
+        ActionList: AssignProporties(Purchase, [GetEditAction(0), GetDeleteAction(0), GetLookAction(), GetBillAction(), GetUpdatePurchaseStatus2(1), GetUpdatePurchaseStatus3(1)])
     }
 }
 
-function GetUpdateSaleStatus2(status) {
+function GetUpdatePurchaseStatus2(status) {
     return {
-        Name: "UpdateSaleStatus2",
-        ValueName: "SaleStatus",
+        Name: "UpdatePurchaseStatus2",
+        ValueName: "PurchaseStatus",
         DataValue: status,
         Label: "存档",
-        EventActionName: "UpdateSaleStatus",
+        EventActionName: "UpdatePurchaseStatus",
         Type: "Popconfirm",
         IsSelfOperation: true,
-        DataActionType: DataActionTypes.UpdateSaleStatus2,
+        DataActionType: DataActionTypes.UpdatePurchaseStatus2,
         SuccessTip: "操作成功！",
-        Title: "请确认是否存档当前销售单？"
+        Title: "请确认是否存档当前采购单？"
     }
 }
 
 
-function GetUpdateSaleStatus3(status) {
+function GetUpdatePurchaseStatus3(status) {
     return {
-        Name: "UpdateSaleStatus3",
-        ValueName: "SaleStatus",
+        Name: "UpdatePurchaseStatus3",
+        ValueName: "PurchaseStatus",
         DataValue: status,
         Label: "作废",
         IsSelfOperation: true,
-        EventActionName: "UpdateSaleStatus",
+        EventActionName: "UpdatePurchaseStatus",
         Type: "Popconfirm",
-        DataActionType: DataActionTypes.UpdateSaleStatus3,
+        DataActionType: DataActionTypes.UpdatePurchaseStatus3,
         SuccessTip: "操作成功！",
-        Title: "请确认是否作废当前销售单？"
+        Title: "请确认是否作废当前采购单？"
     }
 }
 
 function GetLookAction() {
     return {
-        Name: "LookSale",
+        Name: "LookPurchase",
         Label: "查看",
-        EventActionName: "LookSale",
+        EventActionName: "LookPurchase",
         Type: "AButton"
     }
 }
@@ -175,20 +175,20 @@ function GetBillAction() {
     return {
         Name: "ToBill",
         IsToPage: true,
-        Text: "收支",
-        PropertyNames: ["SaleCode", "SaleId"],
-        PageUrl: "/PurchaseSaleManage/BillList?DataCode=#{SaleCode}&DataType=2&DataId=#{SaleId}"
+        Text: "付支",
+        PropertyNames: ["PurchaseCode", "PurchaseId"],
+        PageUrl: "/PurchaseSaleManage/BillList?DataCode=#{PurchaseCode}&DataType=2&DataId=#{PurchaseId}"
     }
 }
 
 
 function GetEditAction(status) {
     return {
-        Name: "EditSale",
-        ValueName: "SaleStatus",
+        Name: "EditPurchase",
+        ValueName: "PurchaseStatus",
         DataValue: status,
         Label: "修改",
-        EventActionName: "EditSale",
+        EventActionName: "EditPurchase",
         IsSelfOperation: true,
         Type: "AButton"
     }
@@ -197,24 +197,24 @@ function GetEditAction(status) {
 
 function GetDeleteAction(status) {
     return {
-        Name: "DeleteSale",
-        ValueName: "SaleStatus",
+        Name: "DeletePurchase",
+        ValueName: "PurchaseStatus",
         DataValue: status,
         Label: "删除",
         Type: "Popconfirm",
-        EventActionName: "DeleteSale",
+        EventActionName: "DeletePurchase",
         IsSelfOperation: true,
         DataActionType: DataActionTypes.DeleteEntityData,
         SuccessTip: "删除成功！",
-        Title: "请确认是否删除当前销售单？"
+        Title: "请确认是否删除当前采购单？"
     }
 }
 
-function GetSaleCode() {
+function GetPurchaseCode() {
     return {
-        Name: "SaleCode",
+        Name: "PurchaseCode",
         IsToPage: true,
-        PageUrl: "/PurchaseSaleManage/SaleDetailList?SaleCode=#{SaleCode}"
+        PageUrl: "/PurchaseSaleManage/PurchaseDetailList?PurchaseCode=#{PurchaseCode}"
     }
 }
 
@@ -228,12 +228,10 @@ function GetAmount(Name) {
 function GetGroupByInfoHtml() {
     var html = [];
 
-    html.push("商品金额：<span style=\"color:{TotalSaleAmountColor};\">{TotalSaleAmount}</span>，");
-    html.push("商品成本：<span style=\"color:{TotalBidAmountColor};\">{TotalBidAmount}</span>，");
-    html.push("商品利润：<span style=\"color:{TotalProfitColor};\">{TotalProfit}</span>，");
-    html.push("应收金额：<span style=\"color:{TotalShouldAmountColor};\">{TotalShouldAmount}</span>，");
-    html.push("实收金额：<span style=\"color:{TotalRealAmountColor};\">{TotalRealAmount}</span>，");
-    html.push("待收金额：<span style=\"color:{TotalDueAmountColor};\">{TotalDueAmount}</span>");
+    html.push("商品金额：<span style=\"color:{TotalPurchaseAmountColor};\">{TotalPurchaseAmount}</span>，");
+    html.push("应付金额：<span style=\"color:{TotalShouldAmountColor};\">{TotalShouldAmount}</span>，");
+    html.push("实付金额：<span style=\"color:{TotalRealAmountColor};\">{TotalRealAmount}</span>，");
+    html.push("待付金额：<span style=\"color:{TotalDueAmountColor};\">{TotalDueAmount}</span>");
 
     return html.join("");
 }
@@ -255,35 +253,35 @@ function GetEventActions() {
         IsClearQuery: true
     },
     {
-        Name: "EditSale",
+        Name: "EditPurchase",
         Type: "DataGridView/SelectRowToPage",
         DataGridView: "DataGridView1",
         AlertMessage: "AlertMessage",
-        PageUrl: "/PurchaseSaleManage/SaleInput?SaleId=#{SaleId}"
+        PageUrl: "/PurchaseSaleManage/PurchaseInput?PurchaseId=#{PurchaseId}"
     },
     {
         Name: "ToEditPage",
         Type: "Page/ToPage",
-        PageUrl: "/PurchaseSaleManage/SaleInput"
+        PageUrl: "/PurchaseSaleManage/PurchaseInput"
     },
     {
-        Name: "UpdateSaleStatus",
+        Name: "UpdatePurchaseStatus",
         Type: "DataGrid/BatchUpdateRowDataList",
         DataGridView: "DataGridView1"
     },
     {
-        Name: "LookSale",
+        Name: "LookPurchase",
         Type: "Dialog/ShowDialogLookData",
-        DialogView: "LookSaleView",
-        LookView: "SaleEdit2"
+        DialogView: "LookPurchaseView",
+        LookView: "PurchaseEdit2"
     },
     {
         Name: "GetEntityData",
         Type: "EntityEdit/GetEntityData",
-        EditView: "SaleEdit2"
+        EditView: "PurchaseEdit2"
     },
     {
-        Name: "DeleteSale",
+        Name: "DeletePurchase",
         Type: "DataGrid/BatchUpdateRowDataList",
         DataGridView: "DataGridView1"
     }]

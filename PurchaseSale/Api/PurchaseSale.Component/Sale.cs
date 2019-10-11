@@ -54,11 +54,11 @@ namespace PurchaseSale.Component
                 entityData.SetDefaultValue("UpdateDate", DateTime.Now);
             }
             else entityData.SetDefaultValue("CreateUser", this._Request.OperationUser);
-            int orderCode = GetSaleCode(entityData.GetValue<DateTime>("SaleDate"));
+            int saleCode = GetSaleCode(entityData.GetValue<DateTime>("SaleDate"));
             if (string.IsNullOrEmpty(entityData.GetStringValue("SaleCode")))
             {
-                entityData.SetDefaultValue("SaleCode", string.Format("S{0}", orderCode));
-                entityData.SetDefaultValue("SaleIntCode", orderCode);
+                entityData.SetDefaultValue("SaleCode", string.Format("S{0}", saleCode));
+                entityData.SetDefaultValue("SaleIntCode", saleCode);
             }
 
             byte saleType = entityData.GetValue<byte>("SaleType");
@@ -126,20 +126,20 @@ namespace PurchaseSale.Component
             return this.Update();
         }
 
-        int GetSaleCode(DateTime orderDate)
+        int GetSaleCode(DateTime saleDate)
         {
-            int ymd = int.Parse(orderDate.Date.ToString("yyMMdd"));
+            int ymd = int.Parse(saleDate.Date.ToString("yyMMdd"));
             IQuery query = new Query(this.EntityType.TableName);
             query.Select("Max(SaleIntCode) SaleIntCode");
             query.Where(string.Format("where IsDelete=0 and SUBSTRING(SaleCode,2,6)='{0}'", ymd));
 
             IEntityData entityData = this.SelectEntity(query);
 
-            int orderIntCode = entityData.GetValue<int>("SaleIntCode");
+            int saleIntCode = entityData.GetValue<int>("SaleIntCode");
 
-            if (orderIntCode < ymd) orderIntCode = ymd * 1000;
+            if (saleIntCode < ymd) saleIntCode = ymd * 1000;
 
-            return orderIntCode + 1;
+            return saleIntCode + 1;
         }
 
         public object GetSale()

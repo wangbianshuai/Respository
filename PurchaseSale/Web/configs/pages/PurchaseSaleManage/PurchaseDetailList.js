@@ -1,19 +1,19 @@
-const SaleDetail = require("../../entities/SaleDetail");
+const PurchaseDetail = require("../../entities/PurchaseDetail");
 const { GetButton, AssignProporties, GetTextBox, GetSelect, GetDatePicker } = require("../../Common");
 
-//进销管理/销售单列表 2700-2799
+//进销管理/采购单列表 3000-3099
 const DataActionTypes = {
     //搜索查询
-    SearchQuery: 2700
+    SearchQuery: 3000
 };
 
-const Entity = { Name: SaleDetail.Name, PrimaryKey: SaleDetail.PrimaryKey, ViewName: "ViewSaleDetail", IsGroupByInfo: true }
+const Entity = { Name: PurchaseDetail.Name, PrimaryKey: PurchaseDetail.PrimaryKey, ViewName: "ViewPurchaseDetail", IsGroupByInfo: true }
 
 module.exports = {
-    Name: "SaleDetailList",
+    Name: "PurchaseDetailList",
     Type: "View",
     EventActions: GetEventActions(),
-    Properties: AssignProporties({ Name: "SaleDetailList" }, [GetSearchOperationView(), GetDataGridView()])
+    Properties: AssignProporties({ Name: "PurchaseDetailList" }, [GetSearchOperationView(), GetDataGridView()])
 }
 
 function GetSearchOperationView() {
@@ -22,15 +22,15 @@ function GetSearchOperationView() {
         Entity: Entity,
         Type: "RowsColsView",
         ClassName: "DivSerachView",
-        Properties: AssignProporties({ Name: "SaleDetailList" }, [
+        Properties: AssignProporties({ Name: "PurchaseDetailList" }, [
 
-            { ...GetDatePicker2("StartDate", "日期", 1, 1, "大于或等于其值"), PropertyName: "SaleDate", OperateLogic: ">=" },
-            { ...GetDatePicker2("EndDate", "至", 1, 2, "小于其值"), PropertyName: "SaleDate", OperateLogic: "<" },
-            GetEditSelect("ProductTypeId", "类型", SaleDetail.ProductTypeDataSource, 1, 3),
-            GetEditSelect("ProductBrandId", "品牌", SaleDetail.ProductBrandDataSource, 2, 1), 
-            GetEditSelect2("SaleStatus", "状态", SaleDetail.SaleStatusDataSource, 2, 2),
+            { ...GetDatePicker2("StartDate", "日期", 1, 1, "大于或等于其值"), PropertyName: "PurchaseDate", OperateLogic: ">=" },
+            { ...GetDatePicker2("EndDate", "至", 1, 2, "小于其值"), PropertyName: "PurchaseDate", OperateLogic: "<" },
+            GetEditSelect("ProductTypeId", "类型", PurchaseDetail.ProductTypeDataSource, 1, 3),
+            GetEditSelect("ProductBrandId", "品牌", PurchaseDetail.ProductBrandDataSource, 2, 1),
+            GetEditSelect2("PurchaseStatus", "状态", PurchaseDetail.PurchaseStatusDataSource, 2, 2),
             {
-                ...GetTextBox2("Keyword", "关键字", 2, 3, "", "销售单号/商品名称/编号"), PropertyName: "SaleCode,ProductName",
+                ...GetTextBox2("Keyword", "关键字", 2, 3, "", "采购单号/商品名称/编号"), PropertyName: "PurchaseCode,ProductName",
                 OperateLogic: "like", PressEnterEventActionName: "SearchQuery"
             },
             { ...GetButton("Search", "搜索", "primary", 2, 4), IsFormItem: true, Icon: "search", EventActionName: "SearchQuery", PressEnterEventActionName: "SearchQuery" },
@@ -105,16 +105,16 @@ function GetDataGridView() {
         IsDiv: true,
         ClassName: "DivInfoView3",
         GroupByInfoHtml: GetGroupByInfoHtml(),
-        Properties: AssignProporties(SaleDetail, [GetSaleCode(), "SaleDate", "ProductName", "ProductTypeName", "ProductBrandName", "SillingPrice", "BidPrice", "Number", GetAmount("Amount2"), GetAmount("BidAmount2"), GetAmount("Profit"),
-            "ProfitRate", GetAmount("Discount2"),"SaleStatusName"])
+        Properties: AssignProporties(PurchaseDetail, [GetPurchaseCode(), "PurchaseDate", "ProductName", "ProductTypeName", "ProductBrandName", "BidPrice", "Number", GetAmount("Amount2"),
+        GetAmount("Discount2"), "PurchaseStatusName"])
     }
 }
 
-function GetSaleCode() {
+function GetPurchaseCode() {
     return {
-        Name: "SaleCode",
+        Name: "PurchaseCode",
         IsToPage: true,
-        PageUrl: "/PurchaseSaleManage/SaleList?SaleCode=#{SaleCode}"
+        PageUrl: "/PurchaseSaleManage/PurchaseList?PurchaseCode=#{PurchaseCode}"
     }
 }
 
@@ -129,8 +129,6 @@ function GetGroupByInfoHtml() {
     var html = [];
 
     html.push("金额：<span style=\"color:{TotalAmount2Color};\">{TotalAmount2}</span>，");
-    html.push("成本：<span style=\"color:{TotalBidAmount2Color};\">{TotalBidAmount2}</span>，");
-    html.push("利润：<span style=\"color:{TotalProfitColor};\">{TotalProfit}</span>，");
     html.push("折扣：<span style=\"color:{TotalDiscount2Color};\">{TotalDiscount2}</span>");
 
     return html.join("");

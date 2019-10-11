@@ -66,7 +66,7 @@ function GetUserDataSource() {
         ValueName: "UserId",
         TextName: "UserName",
         StateName: "Users",
-        ServiceName: "StockCheckService",
+        ServiceName: "SaleService",
         ActionName: "GetUsers",
         IsRefresh: true,
         Payload: {}

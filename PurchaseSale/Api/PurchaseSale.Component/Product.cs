@@ -14,11 +14,22 @@ namespace PurchaseSale.Component
     {
         public Product()
         {
+            this.EntityType = EntityType.GetEntityType<Entity.Product>();
         }
 
         public Product(Request request)
             : base(request)
         {
+        }
+
+        public bool UpdateBidPrice(Guid productId, decimal bidPrice, Guid userId)
+        {
+            IEntityData entityData = new EntityData(this.EntityType);
+            entityData.SetValue("BidPrice", bidPrice);
+            entityData.SetValue("UpdateDate", DateTime.Now);
+            entityData.SetValue("UpdateUser", userId);
+
+            return this.UpdateEntityByPrimaryKey(productId, entityData);
         }
 
         [Log]

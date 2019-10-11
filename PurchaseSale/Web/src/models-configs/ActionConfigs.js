@@ -9,6 +9,9 @@ export default {
     UpdateProductStatus: post("UpdateProductStatus", "Product/UpdateStatus", "UpdateStatus", "", true),
     UpdateSaleStatus2: post("UpdateSaleStatus2", "Sale/UpdateStatus", "UpdateStatus", "", true),
     UpdateSaleStatus3: post("UpdateSaleStatus3", "Sale/UpdateStatus", "UpdateStatus", "", true),
+    UpdatePurchaseStatus2: post("UpdatePurchaseStatus2", "Purchase/UpdateStatus", "UpdateStatus", "", true),
+    UpdatePurchaseStatus3: post("UpdatePurchaseStatus3", "Purchase/UpdateStatus", "UpdateStatus", "", true),
+    GetSuppliers: get("GetSuppliers", "ViewSupplier?$select=Id,Name&$orderby CreateDate&", "Suppliers", "ViewSupplier"),
     GetProducts: get("GetProducts", "ViewProduct2?$select=Id,ProductName,Unit,SillingPrice,BidPrice,ProductTypeName,ProductBrandName&$orderby CreateDate&", "Products", "ViewProduct2"),
 }
 

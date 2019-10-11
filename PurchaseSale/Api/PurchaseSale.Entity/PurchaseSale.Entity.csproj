@@ -45,6 +45,8 @@
     <Compile Include="Product.cs" />
     <Compile Include="ProductBrand.cs" />
     <Compile Include="ProductType.cs" />
+    <Compile Include="Purchase.cs" />
+    <Compile Include="PurchaseDetail.cs" />
     <Compile Include="Sale.cs" />
     <Compile Include="SaleDetail.cs" />
     <Compile Include="StockCheck.cs" />

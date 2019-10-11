@@ -223,16 +223,41 @@ go
 drop view v_Purchase
 go
 
+
 create view v_Purchase
 as
-select a.*,b.UserName PurchaseUserName,c.Name SupplierName,
+with PurchaseDetail as
+(
+select PurchaseId, sum(Amount) PurchaseAmount from t_PurchaseDetail
+group by PurchaseId
+),
+PurchaseBill as
+(
+select DataId, sum(case when IncomePayment=1 then Amount else 0-Amount end) as RealAmount from t_Bill where IsDelete=0 and DataType=1
+group by DataId
+),
+Purchase as 
+(
+select a.*, b.UserName PurchaseUserName,e.Name SupplierName,
 case when a.PurchaseType = 1 then '进货' when a.PurchaseType=2 then '退货' else '' end PurchaseTypeName,
-case when a.PurchaseStatus=1 then '提交' when a.PurchaseStatus=2 then '存档' when a.PurchaseStatus=3 then '作废' else '待提交' end PurchaseStatusName
+case when a.PurchaseStatus=1 then '已提交' when a.PurchaseStatus=2 then '已存档' when a.PurchaseStatus=3 then '已作废' else '待提交' end PurchaseStatusName,
+case when a.PurchaseType=2 then isNull(c.PurchaseAmount,0)+ ISNULL(a.LogisticsFee,0)+ ISNULL(a.OtherFee,0) - ISNULL(a.DiscountFee,0)
+else 0- (isNull(c.PurchaseAmount,0)+ ISNULL(a.LogisticsFee,0)+ ISNULL(a.OtherFee,0) - ISNULL(a.DiscountFee,0)) end as ShouldAmount2,
+case when PurchaseStatus=0 then a.RealAMount else isnull(d.RealAmount,0) end RealAmount2,
+case when a.PurchaseType=2 then isnull(c.PurchaseAmount,0) else 0-isnull(c.PurchaseAmount,0) end PurchaseAmount
 from t_Purchase a
 left join t_User b on a.PurchaseUser=b.UserId
-left join t_Supplier c on a.SupplierId=c.Id
+left join t_Supplier e on a.SupplierId=e.Id
+left join PurchaseDetail c on a.PurchaseId=c.PurchaseId
+left join PurchaseBill d on a.PurchaseId=d.DataId
 where a.IsDelete=0
+)
+select *, 
+ShouldAmount2-RealAmount2 DueAmount,
+case when ABS(ShouldAmount)<= Abs(RealAmount) then '已结清' when RealAmount=0 then '未结款' else '部分结款' end AmountType 
+from Purchase
 go
+
 
 --采购明细
 drop table t_PurchaseDetail
@@ -245,7 +270,8 @@ PurchaseId uniqueidentifier not null,                           --采购Id
 ProductId uniqueidentifier not null,                            --商品Id
 BidPrice money not null,                                        --价格
 Discount money,                                                 --折扣
-Number float not null                                           --数量                                                
+Number float not null,                                          --数量
+Amount money not null                                           --金额                                               
 )
 go
 
@@ -287,16 +313,22 @@ go
 create view v_PurchaseDetail
 as
 select a.*,
-b.PurchaseStatus,
+b.PurchaseCode,
+b.PurchaseDate,
+case when b.PurchaseType=2 then Amount else 0-Amount end Amount2,
+case when b.PurchaseType=2 then Discount else 0-Discount end Discount2,
 b.PurchaseType,
+b.PurchaseStatus,
 case when b.PurchaseType = 1 then '进货' when b.PurchaseType=2 then '退货' else '' end PurchaseTypeName,
-case when b.PurchaseStatus=1 then '提交' when b.PurchaseStatus=2 then '存档' when b.PurchaseStatus=3 then '作废' else '待提交' end PurchaseStatusName,
+case when b.PurchaseStatus=1 then '已提交' when b.PurchaseStatus=2 then '已存档' when b.PurchaseStatus=3 then '已作废' else '待提交' end PurchaseStatusName,
 c.Model,
-c.Name as ProductName,
+'('+ c.ProductCode+')'+ c.Name  as ProductName,
 c.ProductBarCode,
 c.ProductCode,
 c.Spec,
 c.Unit,
+c.ProductTypeId,
+c.ProductBrandId,
 d.Name ProductTypeName,
 e.Name ProductBrandName
 from t_PurchaseDetail a
