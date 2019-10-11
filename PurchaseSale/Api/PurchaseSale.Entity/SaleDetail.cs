@@ -88,5 +88,14 @@ namespace PurchaseSale.Entity
         public byte SaleStatus { get; set; }
         public string SaleTypeName { get; set; }
         public string SaleStatusName { get; set; }
+
+        public string SaleCode { get; set; }
+        public decimal Amount2 { get; set; }
+        public decimal Discount2 { get; set; }
+        public decimal BidAmount2 { get; set; }
+        public decimal Profit { get; set; }
+        public float ProfitRate { get; set; }
+
+        public DateTime SaleDate { get; set; }
     }
 }

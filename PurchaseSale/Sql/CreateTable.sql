@@ -400,6 +400,17 @@ go
 create view v_SaleDetail
 as
 select a.*,
+b.SaleCode,
+b.SaleDate,
+case when b.SaleType=1 then Amount else 0-Amount end Amount2,
+case when b.SaleType=1 then Discount else 0-Discount end Discount2,
+case when b.SaleType=1 then ROUND(a.BidPrice*Number,2) else 0-ROUND(a.BidPrice*Number,2) end BidAmount2,
+case when b.SaleType=1 then Amount-ROUND(a.BidPrice*Number,2) else 0-(Amount-ROUND(a.BidPrice*Number,2)) end Profit,
+case when b.SaleType=1 and Amount=0 then 0
+when b.SaleType=1 and Amount<>0 then ROUND((Amount-ROUND(a.BidPrice*Number,2))*100/Amount,2) 
+when b.SaleType=2 and Amount=0 then 0
+when b.SaleType=2 and Amount<>0 then  0-ROUND((Amount-ROUND(a.BidPrice*Number,2))*100/Amount,2)
+else 0 end ProfitRate,
 b.SaleType,
 b.SaleStatus,
 case when b.SaleType = 1 then 'œ˙ €' when b.SaleType=2 then 'ÕÀªı' else '' end SaleTypeName,

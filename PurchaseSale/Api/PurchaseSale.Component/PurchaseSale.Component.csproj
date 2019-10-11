@@ -50,6 +50,7 @@
     <Compile Include="ProductBrand.cs" />
     <Compile Include="ProductType.cs" />
     <Compile Include="Sale.cs" />
+    <Compile Include="SaleDetail.cs" />
     <Compile Include="StockCheck.cs" />
     <Compile Include="Supplier.cs" />
     <Compile Include="User.cs" />
