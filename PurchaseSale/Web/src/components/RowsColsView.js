@@ -9,7 +9,7 @@ export default class RowsColsView extends BaseIndex {
         super(props)
 
         props.EventActions.Components.push(props.Property);
-
+        props.Property.ReLoad= this.componentDidMount.bind(this);
         this.InitSetView();
     }
 

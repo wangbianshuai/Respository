@@ -262,21 +262,34 @@ export default class BaseIndex extends Component {
         if (view.Properties) {
             let v = null;
             for (let i = 0; i < view.Properties.length; i++) {
-                v = this.GetViewProperty(view.Properties[i], name);
-                if (v !== null) {
-                    break;
-                }
+                v = this.GetViewProperty2(view.Properties[i], name);
+                if (v !== null) break;
             }
             return v;
         }
         if (this.PageConfig.DialogViews) {
             let v = null;
             for (let i = 0; i < this.PageConfig.DialogViews.length; i++) {
-                v = this.GetViewProperty(this.PageConfig.DialogViews[i], name);
+                v = this.GetViewProperty2(this.PageConfig.DialogViews[i], name);
                 if (v !== null) break;
             }
             return v;
         }
+        return null;
+    }
+
+    GetViewProperty2(view, name) {
+        if (view.Name === name) return view;
+
+        if (view.Properties) {
+            let v = null;
+            for (let i = 0; i < view.Properties.length; i++) {
+                v = this.GetViewProperty2(view.Properties[i], name);
+                if (v !== null) break;
+            }
+            return v;
+        }
+
         return null;
     }
 

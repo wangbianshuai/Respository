@@ -135,6 +135,8 @@ export default class Dialog extends BaseIndex {
         const properties = LookView.Properties.filter(f => f.IsClear);
         this.SetPropertiesValue(properties);
 
+        if(LookView.ReLoad) LookView.ReLoad();
+
         this.ShowDialog(action, EventActions, DialogView);
     }
 

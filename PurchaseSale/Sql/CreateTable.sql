@@ -405,7 +405,7 @@ b.SaleStatus,
 case when b.SaleType = 1 then '销售' when b.SaleType=2 then '退货' else '' end SaleTypeName,
 case when b.SaleStatus=1 then '已提交' when b.SaleStatus=2 then '已存档' when b.SaleStatus=3 then '已作废' else '待提交' end SaleStatusName,
 c.Model,
-c.Name as ProductName,
+'('+ c.ProductCode+')'+ c.Name  as ProductName,
 c.ProductBarCode,
 c.ProductCode,
 c.Spec,
@@ -528,8 +528,8 @@ go
 create view v_Bill
 as
 select a.*,case when b.PurchaseCode is not null then b.PurchaseCode else c.SaleCode end DataCode,
-case when b.PurchaseCode is not null then 'PurchaseList?PurchaseId='+ convert(varchar(36),a.DataId) 
- when c.SaleCode is not null then 'SaleList?SaleId='+ convert(varchar(36),a.DataId) else '' end DataPageUrl,
+case when b.PurchaseCode is not null then 'PurchaseList?PurchaseCode='+ b.PurchaseCode 
+ when c.SaleCode is not null then 'SaleList?SaleCode='+ SaleCode else '' end DataPageUrl,
 case when a.IncomePayment = 1 then '收入'  when a.IncomePayment = 2 then '支出' else'' end IncomePaymentName,
 case when a.IncomePayment = 2 then  0-a.Amount  else a.Amount end Amount2,
 e.Name as BillTypeName,d.UserName CreateUserName

@@ -192,12 +192,14 @@ function GetEventActions() {
         Type: "DataGridView/SelectRowToPage",
         DataGridView: "DataGridView1",
         AlertMessage: "AlertMessage",
-        PageUrl: "/PurchaseSaleManage/BillEdit?Id=#{Id}&MenuName=" + escape("修改")
+        PageUrl: "/PurchaseSaleManage/BillEdit?Id=#{Id}&MenuName=" + escape("修改"),
+        ExpandSetPageUrl: "ExpandSetPageUrl"
     },
     {
         Name: "ToEditPage",
         Type: "Page/ToPage",
-        PageUrl: "/PurchaseSaleManage/BillEdit"
+        PageUrl: "/PurchaseSaleManage/BillEdit",
+        ExpandSetPageUrl: "ExpandSetPageUrl"
     },
     {
         Name: "DeleteBill",

@@ -192,6 +192,10 @@ export default class DataGridView extends BaseIndex {
             if (url === false) return false;
         }
         else url = Common.ReplaceDataContent(data, action.PageUrl, true);
+
+        const ExpandSetPageUrl = EventActions.GetFunction(action.ExpandSetPageUrl);
+        if (ExpandSetPageUrl) url = ExpandSetPageUrl(url);
+        
         if (action.IsOpenUrl) EventActions.OpenPage(url)
         else EventActions.ToPage(url)
     }

@@ -176,8 +176,8 @@ function GetBillAction() {
         Name: "ToBill",
         IsToPage: true,
         Text: "收支",
-        PropertyNames: ["SaleCode"],
-        PageUrl: "/PurchaseSaleManage/BillList?DataCode=#{SaleCode}"
+        PropertyNames: ["SaleCode", "SaleId"],
+        PageUrl: "/PurchaseSaleManage/BillList?DataCode=#{SaleCode}&DataType=2&DataId=#{SaleId}"
     }
 }
 

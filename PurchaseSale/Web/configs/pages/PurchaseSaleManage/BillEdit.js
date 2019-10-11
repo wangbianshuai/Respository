@@ -143,12 +143,14 @@ function GetEventActions() {
     return [{
         Name: "BackToLast",
         Type: "Page/ToPage",
-        PageUrl: "/PurchaseSaleManage/BillList"
+        PageUrl: "/PurchaseSaleManage/BillList",
+        ExpandSetPageUrl: "ExpandSetPageUrl"
     },
     {
         Name: "SaveEntityData",
         Type: "EntityEdit/SaveEntityData",
-        EditView: "BillEdit2"
+        EditView: "BillEdit2",
+        ExpandSetEntityData: "ExpandSetEntityData"
     },
     {
         Name: "GetEntityData",

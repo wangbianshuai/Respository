@@ -11,6 +11,7 @@ export default class View extends Component {
         this.Id = Common.CreateGuid()
         this.state = { IsVisible: props.Property.IsVisible !== false }
         props.Property.SetVisible = this.SetVisible.bind(this);
+        props.Property.ReLoad= this.componentDidMount.bind(this);
     }
 
     SetVisible(v) {

@@ -19,6 +19,8 @@ export default (config) => {
             if (pageConfig.PageExpand) Common.Inherit(this, pageConfig.PageExpand);
 
             this.InitEventAction();
+
+            if (this.ExpandInit) this.ExpandInit();
         }
 
         render() {

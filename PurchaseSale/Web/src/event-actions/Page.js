@@ -5,7 +5,9 @@ export default class Page extends BaseIndex {
 
     ToPage(props, action) {
         const { EventActions } = props;
-        const url = Common.ReplaceDataContent(EventActions.PageData, action.PageUrl, true);
+        var url = Common.ReplaceDataContent(EventActions.PageData, action.PageUrl, true);
+        const ExpandSetPageUrl = EventActions.GetFunction(action.ExpandSetPageUrl);
+        if (ExpandSetPageUrl) url = ExpandSetPageUrl(url);
         EventActions.ToPage(url)
     }
 
