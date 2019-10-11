@@ -4,6 +4,8 @@ import PersonBill from "./PersonBill";
 import Bill from "./Bill";
 import Sale from "./Sale";
 import SaleDetail from "./SaleDetail";
+import Purchase from "./Purchase";
+import PurchaseDetail from "./PurchaseDetail";
 
 export {
     Product,
@@ -11,5 +13,7 @@ export {
     PersonBill,
     Bill,
     Sale,
-    SaleDetail
+    SaleDetail,
+    Purchase,
+    PurchaseDetail
 }

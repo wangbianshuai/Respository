@@ -265,7 +265,7 @@ export default class BaseIndex extends Component {
                 v = this.GetViewProperty2(view.Properties[i], name);
                 if (v !== null) break;
             }
-            return v;
+            if (v != null) return v;
         }
         if (this.PageConfig.DialogViews) {
             let v = null;
@@ -273,7 +273,7 @@ export default class BaseIndex extends Component {
                 v = this.GetViewProperty2(this.PageConfig.DialogViews[i], name);
                 if (v !== null) break;
             }
-            return v;
+            if (v != null) return v;
         }
         return null;
     }

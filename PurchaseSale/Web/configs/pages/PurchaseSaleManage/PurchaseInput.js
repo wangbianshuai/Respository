@@ -79,7 +79,7 @@ function GetProperties() {
     return [
         GetDataGridView(),
         GetPurchaseType(),
-        GetEditSelect("SupplierId", "供应商", Sale.SupplierDataSource, 5, 2),
+        GetEditSelect("SupplierId", "供应商", Purchase.SupplierDataSource, 5, 2),
         { ...GetTextBox2("SumAmount", "商品金额", 6, 1, "", "", 20, true), DataType: "float", IsReadOnly: true },
         { ...GetTextBox2("LogisticsFee", "物流费", 6, 2, "", "", 10, true), DataType: "float" },
         { ...GetTextBox2("OtherFee", "其他费用", 7, 1, "", "", 10, true), DataType: "float" },

@@ -21,7 +21,7 @@ export default EntityPageEdit("PurchaseSaleManage_PurchaseInput", "Purchase", 28
     SubmitEntityDataCallback({ data, props, action }) {
         if (data.IsSuccess !== false) {
             const onOk = () => {
-                if (!data.PrimaryKey) this.ToPage("/PurchasePurchaseManage/PurchaseList");
+                if (!data.PrimaryKey) this.ToPage("/PurchaseSaleManage/PurchaseList");
             };
 
             this.AlertSuccess("提交成功", onOk);

@@ -62,6 +62,8 @@ namespace PurchaseSale.Component
             }
 
             byte purchaseType = entityData.GetValue<byte>("PurchaseType");
+            byte incomePayment = 2;
+            if (purchaseType == 2) incomePayment = 1;
 
             byte purchaseStatus = entityData.GetValue<byte>("PurchaseStatus");
 
@@ -97,7 +99,7 @@ namespace PurchaseSale.Component
                 {
                     Guid userId = Guid.Parse(this._Request.OperationUser);
                     decimal realAmount = entityData.GetValue<decimal>("RealAmount");
-                    if (realAmount > 0) new Bill().EditBill(purchaseId, 1, purchaseType, remark, userId, billTypeId, realAmount, entityData.GetValue<DateTime>("PurchaseDate"));
+                    if (realAmount > 0) new Bill().EditBill(purchaseId, 1, incomePayment, remark, userId, billTypeId, realAmount, entityData.GetValue<DateTime>("PurchaseDate"));
 
                     var details = entityData.GetValue<List<Dictionary<string, object>>>("Details");
                     Product product = new Product();

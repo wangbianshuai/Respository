@@ -243,7 +243,7 @@ case when a.PurchaseType = 1 then '进货' when a.PurchaseType=2 then '退货' else 
 case when a.PurchaseStatus=1 then '已提交' when a.PurchaseStatus=2 then '已存档' when a.PurchaseStatus=3 then '已作废' else '待提交' end PurchaseStatusName,
 case when a.PurchaseType=2 then isNull(c.PurchaseAmount,0)+ ISNULL(a.LogisticsFee,0)+ ISNULL(a.OtherFee,0) - ISNULL(a.DiscountFee,0)
 else 0- (isNull(c.PurchaseAmount,0)+ ISNULL(a.LogisticsFee,0)+ ISNULL(a.OtherFee,0) - ISNULL(a.DiscountFee,0)) end as ShouldAmount2,
-case when PurchaseStatus=0 then a.RealAMount else isnull(d.RealAmount,0) end RealAmount2,
+case when PurchaseStatus=0 then case when a.PurchaseType=2 then a.RealAMount else 0-a.RealAmount end else isnull(d.RealAmount,0) end RealAmount2,
 case when a.PurchaseType=2 then isnull(c.PurchaseAmount,0) else 0-isnull(c.PurchaseAmount,0) end PurchaseAmount
 from t_Purchase a
 left join t_User b on a.PurchaseUser=b.UserId
@@ -316,7 +316,7 @@ select a.*,
 b.PurchaseCode,
 b.PurchaseDate,
 case when b.PurchaseType=2 then Amount else 0-Amount end Amount2,
-case when b.PurchaseType=2 then Discount else 0-Discount end Discount2,
+case when b.PurchaseType=1 then Discount else 0-Discount end Discount2,
 b.PurchaseType,
 b.PurchaseStatus,
 case when b.PurchaseType = 1 then '进货' when b.PurchaseType=2 then '退货' else '' end PurchaseTypeName,
@@ -391,7 +391,7 @@ case when a.SaleType = 1 then '销售' when a.SaleType=2 then '退货' else '' end S
 case when a.SaleStatus=1 then '已提交' when a.SaleStatus=2 then '已存档' when a.SaleStatus=3 then '已作废' else '待提交' end SaleStatusName,
 case when a.SaleType=1 then isNull(c.SaleAmount,0)+ ISNULL(a.LogisticsFee,0)+ ISNULL(a.OtherFee,0) - ISNULL(a.DiscountFee,0)
 else 0- (isNull(c.SaleAmount,0)+ ISNULL(a.LogisticsFee,0)+ ISNULL(a.OtherFee,0) - ISNULL(a.DiscountFee,0)) end as ShouldAmount2,
-case when SaleStatus=0 then a.RealAMount else isnull(d.RealAmount,0) end RealAmount2,
+case when SaleStatus=0 then case when a.SaleType=1 then a.RealAMount else 0-a.RealAmount end else isnull(d.RealAmount,0) end RealAmount2,
 case when a.SaleType=1 then isnull(c.BidAmount,0) else 0-isnull(c.BidAmount,0) end BidAmount,
 case when a.SaleType=1 then isnull(c.SaleAmount,0) else 0-isnull(c.SaleAmount,0) end SaleAmount,
 case when a.SaleType=1 then isNull(c.SaleAmount,0)-c.BidAmount
@@ -435,7 +435,7 @@ select a.*,
 b.SaleCode,
 b.SaleDate,
 case when b.SaleType=1 then Amount else 0-Amount end Amount2,
-case when b.SaleType=1 then Discount else 0-Discount end Discount2,
+case when b.SaleType=2 then Discount else 0-Discount end Discount2,
 case when b.SaleType=1 then ROUND(a.BidPrice*Number,2) else 0-ROUND(a.BidPrice*Number,2) end BidAmount2,
 case when b.SaleType=1 then Amount-ROUND(a.BidPrice*Number,2) else 0-(Amount-ROUND(a.BidPrice*Number,2)) end Profit,
 case when b.SaleType=1 and Amount=0 then 0
