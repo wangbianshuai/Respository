@@ -64,7 +64,7 @@ function GetDetailProperties() {
     return [
         {
             ...GetEditSelect("ProductId", "商品", Sale.ProductDataSource, 1, 1, false, "请输入商品编号或名称关键字"),
-            IsLoadValue: true,
+            IsLoadValue: true, IsSearch: true,
             PlaceHolder: "请输入商品编号或名称关键字",
             SelectDataToProperties: ["SillingPrice"],
         },
