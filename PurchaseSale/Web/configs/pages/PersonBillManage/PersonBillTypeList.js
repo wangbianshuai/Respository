@@ -6,7 +6,9 @@ const DataActionTypes = {
     //搜索查询
     SearchQuery: 1500,
     //删除实体数据
-    DeleteEntityData: 1501
+    DeleteEntityData: 1501,
+    //Excel导出
+    ExcelExport: 1502
 };
 
 const Entity = { Name: PersonBillType.Name, PrimaryKey: PersonBillType.PrimaryKey, ViewName: "ViewPersonBillType" }

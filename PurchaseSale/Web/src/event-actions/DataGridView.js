@@ -35,6 +35,8 @@ export default class DataGridView extends BaseIndex {
 
         DataGridView.SearchButton = SearchButton;
         DataGridView.SetDataLoading(true);
+        DataGridView.QueryInfo = queryInfo;
+        DataGridView.PageSize = pageSize;
         SearchButton && SearchButton.SetDisabled(true);
 
         const data = { EntitySearchQuery, Entity: DataGridView.Entity, IsData, PageIndex: pageIndex, PageSize: pageSize, QueryInfo: queryInfo, PageData: EventActions.PageData }
@@ -251,4 +253,76 @@ export default class DataGridView extends BaseIndex {
 
         action.Parameters = { DataGridView, AlertMessage }
     }
+
+    ExcelExport(props, action) {
+        if (!action.Parameters) this.InitExcelExportActoin(props, action);
+
+        const { DataGridView } = action.Parameters;
+        const { EventActions } = props;
+
+        if (DataGridView.GetPageRecord() > 30000) { EventActions.Alert("对不起，您要导出的数据量超过3万条，请先进行相应的数据筛选！"); return; }
+
+        EventActions.Confirm("确定将数据Excel导出吗？", () => this.ExecExcelExport(props, action));
+    }
+
+    ExecExcelExport(props, action) {
+        const { DataGridView } = action.Parameters;
+        const { EventActions, Property } = props;
+
+        const { ActionTypes, Invoke, EntityExcelExport } = DataGridView;
+        const { ExcelExport } = ActionTypes;
+
+        const Title = DataGridView.Title || DataGridView.Entity.Name;
+
+        const properties = DataGridView.GetDataProperties2();
+        var headerList = [];
+        var header = {}, p = null;
+        for (var i = 0; i < properties.length; i++) {
+            p = properties[i];
+            if (p.IsData !== false) {
+                header = {};
+                header.Label = p.Label;
+                header.Name = p.Name;
+                header.Width = p.ColumnWidth || 0;
+                headerList.push(header);
+            }
+        }
+
+        const queryInfo = DataGridView.QueryInfo;
+        queryInfo.HeaderInfos = headerList;
+
+        Property && Property.SetDisabled(true);
+        DataGridView.ExcelExportButton = Property;
+
+        const data = { EntityExcelExport, Title, Entity: DataGridView.Entity, PageIndex: 1, PageSize: DataGridView.PageSize, QueryInfo: queryInfo, PageData: EventActions.PageData }
+
+        Invoke(ExcelExport, data);
+    }
+
+    InitExcelExportActoin(props, action) {
+        const { EventActions } = props;
+        const DataGridView = EventActions.GetComponent(action.DataGridView);
+
+        action.Parameters = { DataGridView }
+    }
+
+    ReceiveExcelExport(data, props) {
+        const { EventActions, Property } = props;
+
+        //设置搜索按钮
+        Property.ExcelExportButton && Property.ExcelExportButton.SetDisabled(false);
+
+        if (data.IsSuccess === false || !data.FileName) {
+            this.Alert(data.Message || "导出失败！", EventActions.ShowMessage);
+            return;
+        }
+
+        this.DownLoad(data.FileName)
+    }
+
+    DownLoad(fileName) {
+        var url = "/download.aspx?fn=" + fileName;
+        window.open(url, "_self");
+    }
+
 }

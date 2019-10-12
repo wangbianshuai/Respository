@@ -7,7 +7,8 @@ export default (name) => {
             post("Insert", name, "SaveEntityData", null, true, true),
             put("Update", name, "SaveEntityData", null, true, true),
             delete2("Delete", name, "DeleteEntityData", null, true, true),
-            get("GetEntityData", name, "GetEntityData", name, true)
+            get("GetEntityData", name, "GetEntityData", name, true),
+            post("ExcelExport", name, "ExcelExport", "", true),
         ]
     }
 }

@@ -42,4 +42,21 @@ export default class DataGridView extends BaseIndex {
         if (!this.Receives[id]) return false;
         return data;
     }
+
+    ExcelExport(id, actionType, data) {
+        const { QueryInfo, Entity, Title } = data;
+
+        const entityName = Entity.ViewName || Entity.Name;
+
+        var dataUrl = `?$query=true&Action=Excel&Title=${escape(Title)}&EntityName=${entityName}`;
+
+        if (data.EntityExcelExport) {
+            this.InvokeAction(id, data.EntityExcelExport, { PathQuery: dataUrl, DataGridViewExcelExport: actionType, QueryInfo });
+        }
+    }
+
+    SetExcelExport(id, action, data) {
+        if (!this.Receives[id]) return false;
+        return data;
+    }
 }

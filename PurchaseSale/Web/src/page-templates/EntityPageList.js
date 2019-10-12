@@ -4,7 +4,7 @@ import EntityModelsConfig from "./EntityModelsConfig";
 export default (name, enityName, minActionType, pageExpand, expandModelsConfig) => {
     const config = {
         PageName: name,
-        ActionNames: ["SearchQuery", "Delete"],
+        ActionNames: ["SearchQuery", "Delete","ExcelExport"],
         ActionOptions: GetActionOptions(name, enityName, minActionType, expandModelsConfig),
         ModelsConfig: EntityModelsConfig(enityName),
         PageExpand: pageExpand
@@ -25,7 +25,9 @@ function GetActionOptions(name, entityName, minActionType, expandModelsConfig) {
         //搜索查询
         SearchQuery: GetActionType(),
         //删除实体数据
-        DeleteEntityData: GetActionType()
+        DeleteEntityData: GetActionType(),
+        //Excel导出
+        ExcelExport: GetActionType()
     };
 
     if (expandModelsConfig && expandModelsConfig.ListActionTypeKeys) {

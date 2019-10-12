@@ -6,7 +6,9 @@ const DataActionTypes = {
     //搜索查询
     SearchQuery: 1700,
     //删除实体数据
-    DeleteEntityData: 1701
+    DeleteEntityData: 1701,
+    //Excel导出
+    ExcelExport: 1702
 };
 
 const Entity = { Name: PersonBill.Name, PrimaryKey: PersonBill.PrimaryKey, ViewName: "ViewPersonBill", IsGroupByInfo: true }
@@ -45,7 +47,8 @@ function GetSearchOperationView() {
                 SuccessTip: "删除成功！",
                 ConfirmTip: "请确认是否删除当前个人收支？",
                 ...GetButton("DeletePersonBill", "删除", "default", 3, 4)
-            }
+            },
+            { EventActionName: "ExcelExport", ...GetButton("ExcelExport", "Excel导出", "default", 3, 5), ColStyle: { paddingLeft: 0 } }
         ])
     }
 }
@@ -120,6 +123,7 @@ function GetDataGridView() {
         Entity: Entity,
         Type: "DataGridView",
         EntitySearchQuery: DataActionTypes.SearchQuery,
+        EntityExcelExport: DataActionTypes.ExcelExport,
         EventActionName: "SearchQuery",
         IsDiv: true,
         ClassName: "DivInfoView3",
@@ -162,6 +166,11 @@ function GetEventActions() {
         SearchButton: "ClearQuery",
         DataGridView: "DataGridView1",
         IsClearQuery: true
+    },
+    {
+        Name: "ExcelExport",
+        Type: "DataGridView/ExcelExport",
+        DataGridView: "DataGridView1"
     },
     {
         Name: "EditPersonBill",

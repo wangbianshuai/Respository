@@ -22,6 +22,8 @@ class DataGridView extends BaseIndex {
         this.state = Object.assign({ IsDataLoading: false, RefreshId: "", DataList: dataList }, this.state);
         this.Property.SetColumnsVisible = this.SetColumnsVisible.bind(this);
         this.Property.SetColumnsVisible2 = this.SetColumnsVisible2.bind(this);
+        this.Property.GetPageRecord = () => this.PageInfo.PageRecord;
+        this.Property.GetDataProperties2 = () => this.DataProperties2;
     }
 
     Init() {
@@ -208,6 +210,12 @@ class DataGridView extends BaseIndex {
     ReceiveSearchQuery(data) {
         this.Property.SetDataLoading(false);
         this.EventActions.DataGridView.ReceiveSearchQuery(data, this.props);
+
+        return true;
+    }
+
+    ReceiveExcelExport(data) {
+        this.EventActions.DataGridView.ReceiveExcelExport(data, this.props);
 
         return true;
     }

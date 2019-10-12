@@ -6,7 +6,9 @@ const DataActionTypes = {
     //搜索查询
     SearchQuery: 1300,
     //删除实体数据
-    DeleteEntityData: 1301
+    DeleteEntityData: 1301,
+    //Excel导出
+    ExcelExport: 1302
 };
 
 const Entity = { Name: StockCheck.Name, PrimaryKey: StockCheck.PrimaryKey, ViewName: "ViewStockCheck", IsGroupByInfo: true }

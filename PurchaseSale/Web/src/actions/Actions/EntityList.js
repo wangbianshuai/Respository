@@ -44,4 +44,18 @@ export default class EntityList extends BaseIndex {
         this.DvaActions.Dispatch(this.ServiceName, "Delete", { PathQuery: pathQuery, Action: this.GetAction(id, actionType) });
     }
 
+    ExcelExport(id, actionType, data) {
+        data.Action = this.GetAction(id, actionType, false);
+        data.Action.DataGridViewExcelExport = data.DataGridViewExcelExport;
+
+        delete data.DataGridViewExcelExport;
+
+        this.DvaActions.Dispatch(this.ServiceName, "ExcelExport", data);
+    }
+
+    SetExcelExport(id, actionType, data) {
+        actionType = data.Action.DataGridViewExcelExport;
+        this.DispatchAction(id, actionType, data);
+        return false;
+    }
 }

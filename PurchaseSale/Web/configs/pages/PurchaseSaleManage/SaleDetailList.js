@@ -4,7 +4,9 @@ const { GetButton, AssignProporties, GetTextBox, GetSelect, GetDatePicker } = re
 //进销管理/销售单列表 2700-2799
 const DataActionTypes = {
     //搜索查询
-    SearchQuery: 2700
+    SearchQuery: 2700,
+    //Excel导出
+    ExcelExport: 2702
 };
 
 const Entity = { Name: SaleDetail.Name, PrimaryKey: SaleDetail.PrimaryKey, ViewName: "ViewSaleDetail", IsGroupByInfo: true }
@@ -27,7 +29,7 @@ function GetSearchOperationView() {
             { ...GetDatePicker2("StartDate", "日期", 1, 1, "大于或等于其值"), PropertyName: "SaleDate", OperateLogic: ">=" },
             { ...GetDatePicker2("EndDate", "至", 1, 2, "小于其值"), PropertyName: "SaleDate", OperateLogic: "<" },
             GetEditSelect("ProductTypeId", "类型", SaleDetail.ProductTypeDataSource, 1, 3),
-            GetEditSelect("ProductBrandId", "品牌", SaleDetail.ProductBrandDataSource, 2, 1), 
+            GetEditSelect("ProductBrandId", "品牌", SaleDetail.ProductBrandDataSource, 2, 1),
             GetEditSelect2("SaleStatus", "状态", SaleDetail.SaleStatusDataSource, 2, 2),
             {
                 ...GetTextBox2("Keyword", "关键字", 2, 3, "", "销售单号/商品名称/编号"), PropertyName: "SaleCode,ProductName",
@@ -35,7 +37,7 @@ function GetSearchOperationView() {
             },
             { ...GetButton("Search", "搜索", "primary", 2, 4), IsFormItem: true, Icon: "search", EventActionName: "SearchQuery", PressEnterEventActionName: "SearchQuery" },
             { ...GetButton("ClearQuery", "清空", "default", 2, 5), IsFormItem: true, EventActionName: "ClearQuery" },
-            { EventActionName: "ExportExcel", ...GetButton("ExportExcel", "Excel导出", "primary", 3, 1), Style: { marginLeft: 16, marginBottom: 16 } }
+            { EventActionName: "ExcelExport", ...GetButton("ExcelExport", "Excel导出", "primary", 3, 1), Style: { marginLeft: 16, marginBottom: 16 } }
         ])
     }
 }
@@ -106,7 +108,7 @@ function GetDataGridView() {
         ClassName: "DivInfoView3",
         GroupByInfoHtml: GetGroupByInfoHtml(),
         Properties: AssignProporties(SaleDetail, [GetSaleCode(), "SaleDate", "ProductName", "ProductTypeName", "ProductBrandName", "SillingPrice", "BidPrice", "Number", GetAmount("Amount2"), GetAmount("BidAmount2"), GetAmount("Profit"),
-            "ProfitRate", GetAmount("Discount2"),"SaleStatusName"])
+            "ProfitRate", GetAmount("Discount2"), "SaleStatusName"])
     }
 }
 

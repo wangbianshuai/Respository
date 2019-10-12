@@ -7,7 +7,10 @@ const DataActionTypes = {
     SearchQuery: 1100,
     //删除实体数据
     DeleteEntityData: 1101,
-    UpdateProductStatus: 1102
+    //Excel导出
+    ExcelExport: 1102,
+    //更新状态
+    UpdateProductStatus: 1103
 };
 
 const Entity = { Name: Product.Name, PrimaryKey: Product.PrimaryKey, ViewName: "ViewProduct", IsGroupByInfo: true }

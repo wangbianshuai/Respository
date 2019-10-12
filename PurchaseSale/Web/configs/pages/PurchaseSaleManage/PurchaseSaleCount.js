@@ -4,7 +4,9 @@ const { GetButton, AssignProporties, GetDatePicker } = require("../../Common");
 //进销管理/进销统计 3100-3199
 const DataActionTypes = {
     //搜索查询
-    SearchQuery: 3100
+    SearchQuery: 3100,
+    //Excel导出
+    ExcelExport: 3102
 };
 
 const Entity = { Name: PurchaseSale.Name, PrimaryKey: PurchaseSale.PrimaryKey }
@@ -28,7 +30,7 @@ function GetSearchOperationView() {
             { ...GetDatePicker2("EndDate", "至", 1, 2, "小于其值"), PropertyName: "SaleDate", OperateLogic: "<" },
             { ...GetButton("Search", "搜索", "primary", 1, 3), IsFormItem: true, Icon: "search", EventActionName: "SearchQuery", PressEnterEventActionName: "SearchQuery" },
             { ...GetButton("ClearQuery", "清空", "default", 1, 4), IsFormItem: true, EventActionName: "ClearQuery" },
-            { EventActionName: "ExportExcel", ...GetButton("ExportExcel", "Excel导出", "primary", 3, 1), Style: { marginLeft: 16, marginBottom: 16 } }
+            { EventActionName: "ExcelExport", ...GetButton("ExcelExport", "Excel导出", "primary", 3, 1), Style: { marginLeft: 16, marginBottom: 16 } }
         ])
     }
 }

@@ -8,10 +8,12 @@ const DataActionTypes = {
     SearchQuery: 2600,
     //删除实体数据
     DeleteEntityData: 2601,
+    //Excel导出
+    ExcelExport: 2602,
     //更新销售状态
-    UpdateSaleStatus2: 2602,
+    UpdateSaleStatus2: 2603,
     //更新销售状态
-    UpdateSaleStatus3: 2603
+    UpdateSaleStatus3: 2604
 };
 
 const Entity = { Name: Sale.Name, PrimaryKey: Sale.PrimaryKey, ViewName: "ViewSale", IsGroupByInfo: true }

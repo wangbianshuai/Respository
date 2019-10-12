@@ -4,7 +4,9 @@ const { GetButton, AssignProporties, GetDatePicker, GetSelect, GetTextBox } = re
 //进销管理/商品进销统计 3200-3299
 const DataActionTypes = {
     //搜索查询
-    SearchQuery: 3200
+    SearchQuery: 3200,
+    //Excel导出
+    ExcelExport: 3202
 };
 
 const Entity = { Name: ProductPurchaseSale.Name, PrimaryKey: ProductPurchaseSale.PrimaryKey }
@@ -34,7 +36,7 @@ function GetSearchOperationView() {
             },
             { ...GetButton("Search", "搜索", "primary", 2, 3), IsFormItem: true, Icon: "search", EventActionName: "SearchQuery", PressEnterEventActionName: "SearchQuery" },
             { ...GetButton("ClearQuery", "清空", "default", 2, 4), IsFormItem: true, EventActionName: "ClearQuery" },
-            { EventActionName: "ExportExcel", ...GetButton("ExportExcel", "Excel导出", "primary", 3, 1), Style: { marginLeft: 16, marginBottom: 16 } }
+            { EventActionName: "ExcelExport", ...GetButton("ExcelExport", "Excel导出", "primary", 3, 1), Style: { marginLeft: 16, marginBottom: 16 } }
         ])
     }
 }
