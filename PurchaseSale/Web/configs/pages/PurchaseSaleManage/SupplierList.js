@@ -34,8 +34,9 @@ function GetSearchOperationView() {
             DataActionType: DataActionTypes.DeleteEntityData,
             SuccessTip: "删除成功！",
             ConfirmTip: "请确认是否删除当前供应商？",
-            ...GetButton("DeleteSupplier", "删除", "default", 1, 4)
+            ...GetButton("DeleteSupplier", "删除", "default", 1, 3)
         },
+        { EventActionName: "ExcelExport", ...GetButton("ExcelExport", "Excel导出", "default", 1, 4), Icon: "download", ColStyle: { paddingLeft: 0 } },
         GetKeyword()
         ])
     }
@@ -66,6 +67,7 @@ function GetDataGridView() {
         Entity: Entity,
         Type: "DataGridView",
         EntitySearchQuery: DataActionTypes.SearchQuery,
+        EntityExcelExport: DataActionTypes.ExcelExport,
         EventActionName: "SearchQuery",
         IsDiv: true,
         ClassName: "DivInfoView3",
@@ -83,6 +85,11 @@ function GetEventActions() {
         SearchButton: "Keyword",
         DataGridView: "DataGridView1",
         AlertMessage: "AlertMessage"
+    },
+    {
+        Name: "ExcelExport",
+        Type: "DataGridView/ExcelExport",
+        DataGridView: "DataGridView1"
     },
     {
         Name: "ToEditPage",

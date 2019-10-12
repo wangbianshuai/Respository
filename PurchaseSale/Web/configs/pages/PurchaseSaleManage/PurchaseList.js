@@ -46,7 +46,8 @@ function GetSearchOperationView() {
             },
             { ...GetButton("Search", "搜索", "primary", 2, 4), IsFormItem: true, Icon: "search", EventActionName: "SearchQuery", PressEnterEventActionName: "SearchQuery" },
             { ...GetButton("ClearQuery", "清空", "default", 2, 5), IsFormItem: true, EventActionName: "ClearQuery" },
-            { EventActionName: "ToEditPage", ...GetButton("ToEditPage", "新增", "primary", 3, 1), Style: { marginLeft: 16, marginBottom: 16 } }
+            { EventActionName: "ToEditPage", ...GetButton("ToEditPage", "新增", "primary", 3, 1), Style: { marginLeft: 16, marginBottom: 16 } },
+            { EventActionName: "ExcelExport", ...GetButton("ExcelExport", "Excel导出", "default", 3, 2), Icon: "download", ColStyle: { paddingLeft: 0 } }
         ])
     }
 }
@@ -113,6 +114,7 @@ function GetDataGridView() {
         Entity: Entity,
         Type: "DataGridView",
         EntitySearchQuery: DataActionTypes.SearchQuery,
+        EntityExcelExport: DataActionTypes.ExcelExport,
         EventActionName: "SearchQuery",
         IsDiv: true,
         ClassName: "DivInfoView3",
@@ -253,6 +255,11 @@ function GetEventActions() {
         SearchButton: "ClearQuery",
         DataGridView: "DataGridView1",
         IsClearQuery: true
+    },
+    {
+        Name: "ExcelExport",
+        Type: "DataGridView/ExcelExport",
+        DataGridView: "DataGridView1"
     },
     {
         Name: "EditPurchase",

@@ -48,7 +48,7 @@ function GetSearchOperationView() {
                 ConfirmTip: "请确认是否删除当前个人收支？",
                 ...GetButton("DeletePersonBill", "删除", "default", 3, 4)
             },
-            { EventActionName: "ExcelExport", ...GetButton("ExcelExport", "Excel导出", "default", 3, 5), ColStyle: { paddingLeft: 0 } }
+            { EventActionName: "ExcelExport", ...GetButton("ExcelExport", "Excel导出", "default", 3, 5), Icon: "download", ColStyle: { paddingLeft: 0 } }
         ])
     }
 }

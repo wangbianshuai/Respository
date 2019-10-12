@@ -46,7 +46,8 @@ function GetSearchOperationView() {
                 SuccessTip: "删除成功！",
                 ConfirmTip: "请确认是否删除当前库存盘点？",
                 ...GetButton("DeleteStockCheck", "删除", "default", 3, 4)
-            }
+            },
+            { EventActionName: "ExcelExport", ...GetButton("ExcelExport", "Excel导出", "default", 3, 5), Icon: "download", ColStyle: { paddingLeft: 0 } }
         ])
     }
 }
@@ -98,6 +99,7 @@ function GetDataGridView() {
         Entity: Entity,
         Type: "DataGridView",
         EntitySearchQuery: DataActionTypes.SearchQuery,
+        EntityExcelExport: DataActionTypes.ExcelExport,
         EventActionName: "SearchQuery",
         IsDiv: true,
         ClassName: "DivInfoView3",
@@ -138,6 +140,11 @@ function GetEventActions() {
         SearchButton: "ClearQuery",
         DataGridView: "DataGridView1",
         IsClearQuery: true
+    },
+    {
+        Name: "ExcelExport",
+        Type: "DataGridView/ExcelExport",
+        DataGridView: "DataGridView1"
     },
     {
         Name: "ToEditPage",

@@ -243,7 +243,7 @@ class DataGridView extends BaseIndex {
             else if (data.PageInfo) this.PageInfo = data.PageInfo;
         }
 
-        this.DataList.forEach(d => d.key = d[this.PrimaryKey]);
+        this.DataList.forEach(d => d.key = d[this.PrimaryKey] || Common.CreateGuid());
     }
 
     GetPageInfo(PageRecord) {
@@ -277,7 +277,7 @@ class DataGridView extends BaseIndex {
     RenderDataView() {
         if (this.Property.IsComplexEntity) {
             this.DataList = this.state.DataList;
-            this.DataList.forEach(d => d.key = d[this.PrimaryKey]);
+            this.DataList.forEach(d => d.key = d[this.PrimaryKey] || Common.CreateGuid());
             if (this.Property.SetChangeDataList) setTimeout(() => this.Property.SetChangeDataList(this.DataList), 100);
         }
         else this.SetDataList();

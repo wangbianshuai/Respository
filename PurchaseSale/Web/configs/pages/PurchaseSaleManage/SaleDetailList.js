@@ -37,7 +37,7 @@ function GetSearchOperationView() {
             },
             { ...GetButton("Search", "搜索", "primary", 2, 4), IsFormItem: true, Icon: "search", EventActionName: "SearchQuery", PressEnterEventActionName: "SearchQuery" },
             { ...GetButton("ClearQuery", "清空", "default", 2, 5), IsFormItem: true, EventActionName: "ClearQuery" },
-            { EventActionName: "ExcelExport", ...GetButton("ExcelExport", "Excel导出", "primary", 3, 1), Style: { marginLeft: 16, marginBottom: 16 } }
+            { EventActionName: "ExcelExport", ...GetButton("ExcelExport", "Excel导出", "primary", 3, 1), Icon: "download", Style: { marginLeft: 16, marginBottom: 16 } }
         ])
     }
 }
@@ -103,6 +103,7 @@ function GetDataGridView() {
         Entity: Entity,
         Type: "DataGridView",
         EntitySearchQuery: DataActionTypes.SearchQuery,
+        EntityExcelExport: DataActionTypes.ExcelExport,
         EventActionName: "SearchQuery",
         IsDiv: true,
         ClassName: "DivInfoView3",
@@ -144,6 +145,11 @@ function GetEventActions() {
         Type: "DataGridView/SearchQuery",
         SearchView: "SearchOperationView1",
         SearchButton: "Search",
+        DataGridView: "DataGridView1"
+    },
+    {
+        Name: "ExcelExport",
+        Type: "DataGridView/ExcelExport",
         DataGridView: "DataGridView1"
     },
     {
