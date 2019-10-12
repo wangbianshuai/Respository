@@ -6,6 +6,7 @@ import Sale from "./Sale";
 import SaleDetail from "./SaleDetail";
 import Purchase from "./Purchase";
 import PurchaseDetail from "./PurchaseDetail";
+import ProductPurchaseSale from "./ProductPurchaseSale";
 
 export {
     Product,
@@ -15,5 +16,6 @@ export {
     Sale,
     SaleDetail,
     Purchase,
-    PurchaseDetail
+    PurchaseDetail,
+    ProductPurchaseSale
 }

@@ -21,7 +21,7 @@ namespace PurchaseSale.Entity
         public decimal SaleDiscount { get; set; }
         public decimal SaleProfit { get; set; }
         public decimal PurchaseAmount { get; set; }
-        public decimal PurhcaseDiscount { get; set; }
+        public decimal PurchaseDiscount { get; set; }
         public string ProductName { get; set; }
         public string ProductTypeName { get; set; }
         public string ProductBrandName { get; set; }

@@ -1,7 +1,9 @@
 module.exports = {
     Name: "ProductPurchaseSale",
     PrimaryKey: "ProductId",
-    Properties: GetProperties()
+    Properties: GetProperties(),
+    ProductTypeDataSource: GetProductTypeDataSource(),
+    ProductBrandDataSource: GetProductBrandDataSource(),
 }
 
 function GetProperties() {
@@ -24,3 +26,27 @@ function GetProperties() {
 }
 
 function GetProperty(Name, Label) { return { Name, Label } }
+
+function GetProductTypeDataSource() {
+    return {
+        ValueName: "Id",
+        TextName: "Name",
+        StateName: "ProductTypes",
+        ServiceName: "ProductPurchaseSaleService",
+        ActionName: "GetProductTypes",
+        IsRefresh: true,
+        Payload: {}
+    }
+}
+
+function GetProductBrandDataSource() {
+    return {
+        ValueName: "Id",
+        TextName: "Name",
+        StateName: "ProductBrands",
+        ServiceName: "ProductPurchaseSaleService",
+        ActionName: "GetProductBrands",
+        IsRefresh: true,
+        Payload: {}
+    }
+}

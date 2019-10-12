@@ -1,7 +1,7 @@
 const PurchaseSale = require("../../entities/PurchaseSale");
 const { GetButton, AssignProporties, GetDatePicker } = require("../../Common");
 
-//进销管理/销售单列表 3100-3199
+//进销管理/进销统计 3100-3199
 const DataActionTypes = {
     //搜索查询
     SearchQuery: 3100
