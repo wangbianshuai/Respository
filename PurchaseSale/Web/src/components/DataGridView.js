@@ -21,6 +21,7 @@ class DataGridView extends BaseIndex {
         const dataList = this.Property.Value || this.Property.DefaultValue || [];
         this.state = Object.assign({ IsDataLoading: false, RefreshId: "", DataList: dataList }, this.state);
         this.Property.SetColumnsVisible = this.SetColumnsVisible.bind(this);
+        this.Property.SetColumnsVisible2 = this.SetColumnsVisible2.bind(this);
     }
 
     Init() {
@@ -83,6 +84,13 @@ class DataGridView extends BaseIndex {
 
     SetColumnsVisible(hideColNames) {
         this.DataProperties.forEach(p => p.IsVisible = !(hideColNames.indexOf(p.Name) >= 0));
+        this.DataProperties2 = this.DataProperties.filter(f => f.IsVisible !== false);
+
+        this.setState({ RefreshId: Common.CreateGuid() })
+    }
+
+    SetColumnsVisible2(visibleColNames) {
+        this.DataProperties.forEach(p => p.IsVisible = (visibleColNames.indexOf(p.Name) >= 0));
         this.DataProperties2 = this.DataProperties.filter(f => f.IsVisible !== false);
 
         this.setState({ RefreshId: Common.CreateGuid() })

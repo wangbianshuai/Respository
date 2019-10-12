@@ -20,7 +20,9 @@ export default class EntityList extends BaseIndex {
 
     SearchQuery(id, actionType, data) {
         const { RequestList } = data;
+
         const payload = { Action: this.GetAction(id, actionType, false) };
+        payload.Action.DataName = data.EntityName;
 
         payload.RequestList = RequestList;
 
@@ -28,7 +30,8 @@ export default class EntityList extends BaseIndex {
     }
 
     SetSearchQuery(id, actionType, data) {
-        data = this.SetSearchQueryResponse(data);
+        const dataName = data.Action ? data.Action.DataName : "";
+        data = this.SetSearchQueryResponse(data, dataName);
         actionType = DataGriViewActionType.SearchQuery;
         this.DispatchAction(id, actionType, data);
         return false;

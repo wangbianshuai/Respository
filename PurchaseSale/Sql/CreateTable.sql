@@ -253,7 +253,7 @@ where a.IsDelete=0
 )
 select *, 
 ShouldAmount2-RealAmount2 DueAmount,
-case when ABS(ShouldAmount)<= Abs(RealAmount) then '已结清' when RealAmount=0 then '未结款' else '部分结款' end AmountType 
+case when ABS(ShouldAmount2)<= Abs(RealAmount2) then '已结清' when RealAmount2=0 then '未结款' else '部分结款' end AmountType 
 from Purchase
 go
 
@@ -404,7 +404,7 @@ where a.IsDelete=0
 select *, 
 case when SaleAmount=0 then 0 else ROUND(Profit*100/SaleAmount,2) end ProfitRate,
 ShouldAmount2-RealAmount2 DueAmount,
-case when ABS(ShouldAmount)<= Abs(RealAmount) then '已结清' when RealAmount=0 then '未结款' else '部分结款' end AmountType 
+case when ABS(ShouldAmount2)<= Abs(RealAmount2) then '已结清' when RealAmount2=0 then '未结款' else '部分结款' end AmountType 
 from Sale
 go
 
@@ -671,4 +671,156 @@ go
 create view v_Dictionary
 as
 select * from t_dictionary where IsDelete=0
+go
+
+drop view v_PurchaseSale
+go
+
+create view v_PurchaseSale
+as
+with SaleDetail as
+(
+select SaleId, sum(Amount) SaleAmount,
+sum(round(BidPrice*Number,2)) BidAmount from t_SaleDetail
+group by SaleId
+),
+SaleBill as
+(
+select DataId, sum(case when IncomePayment=1 then Amount else 0-Amount end) as RealAmount from t_Bill where IsDelete=0 and DataType=2
+group by DataId
+),
+Sale as 
+(
+select convert(datetime,convert(varchar(10),SaleDate,120)) SaleDate,year(SaleDate) SaleYear,DATENAME(MONTH,SaleDate) SaleMonth,day(SaleDate) SaleDay,
+case when a.SaleType=1 then isNull(c.SaleAmount,0)+ ISNULL(a.LogisticsFee,0)+ ISNULL(a.OtherFee,0) - ISNULL(a.DiscountFee,0)
+else 0- (isNull(c.SaleAmount,0)+ ISNULL(a.LogisticsFee,0)+ ISNULL(a.OtherFee,0) - ISNULL(a.DiscountFee,0)) end as ShouldAmount2,
+case when SaleStatus=0 then case when a.SaleType=1 then a.RealAMount else 0-a.RealAmount end else isnull(d.RealAmount,0) end RealAmount2,
+case when a.SaleType=1 then isnull(c.BidAmount,0) else 0-isnull(c.BidAmount,0) end BidAmount,
+case when a.SaleType=1 then isnull(c.SaleAmount,0) else 0-isnull(c.SaleAmount,0) end SaleAmount,
+case when a.SaleType=1 then isNull(c.SaleAmount,0)-c.BidAmount
+else 0- (isNull(c.SaleAmount,0)-c.BidAmount) end as Profit
+from t_Sale a
+left join t_User b on a.SaleUser=b.UserId
+left join SaleDetail c on a.SaleId=c.SaleId
+left join SaleBill d on a.SaleId=d.DataId
+where a.IsDelete=0 and a.SaleStatus in (1,2)
+),
+DaySale as
+(
+select SaleDate,SaleYear,SaleMonth,SaleDay,case when SaleDay<10 then '0'+ CONVERT(varchar(1), SaleDay) else CONVERT(varchar(2),SaleDay) end SaleDay2, 
+sum(ShouldAmount2) SaleShouldAmount, sum(RealAmount2) SaleRealAmount,
+sum(BidAmount) SaleBidAmount, sum(SaleAmount) SaleAmount,sum(Profit) SaleProfit, 
+sum(ShouldAmount2-RealAmount2) SaleDueAmount
+from Sale
+group by SaleDate,SaleYear,SaleMonth,SaleDay
+),
+PurchaseDetail as
+(
+select PurchaseId, sum(Amount) PurchaseAmount from t_PurchaseDetail
+group by PurchaseId
+),
+PurchaseBill as
+(
+select DataId, sum(case when IncomePayment=1 then Amount else 0-Amount end) as RealAmount from t_Bill where IsDelete=0 and DataType=1
+group by DataId
+),
+Purchase as 
+(
+select convert(datetime,convert(varchar(10),PurchaseDate,120)) SaleDate, year(PurchaseDate) SaleYear,DATENAME(MONTH,PurchaseDate) SaleMonth,day(PurchaseDate) SaleDay,
+case when a.PurchaseType=2 then isNull(c.PurchaseAmount,0)+ ISNULL(a.LogisticsFee,0)+ ISNULL(a.OtherFee,0) - ISNULL(a.DiscountFee,0)
+else 0- (isNull(c.PurchaseAmount,0)+ ISNULL(a.LogisticsFee,0)+ ISNULL(a.OtherFee,0) - ISNULL(a.DiscountFee,0)) end as ShouldAmount2,
+case when PurchaseStatus=0 then case when a.PurchaseType=2 then a.RealAMount else 0-a.RealAmount end else isnull(d.RealAmount,0) end RealAmount2,
+case when a.PurchaseType=2 then isnull(c.PurchaseAmount,0) else 0-isnull(c.PurchaseAmount,0) end PurchaseAmount
+from t_Purchase a
+left join t_User b on a.PurchaseUser=b.UserId
+left join PurchaseDetail c on a.PurchaseId=c.PurchaseId
+left join PurchaseBill d on a.PurchaseId=d.DataId
+where a.IsDelete=0 and a.PurchaseStatus in(1,2)
+),
+DayPurchase as
+(
+select SaleDate,SaleYear,SaleMonth,SaleDay,case when SaleDay<10 then '0'+ CONVERT(varchar(1), SaleDay) else CONVERT(varchar(2),SaleDay) end SaleDay2, 
+sum(ShouldAmount2) PurchaseShouldAmount, sum(RealAmount2) PurchaseRealAmount,
+sum(ShouldAmount2-RealAmount2) PurchaseDueAmount,sum(PurchaseAmount) PurchaseAmount
+from Purchase
+group by SaleDate,SaleYear,SaleMonth,SaleDay
+),
+YearMonthDay as
+(
+select SaleDate,SaleYear,SaleMonth,SaleDay2 SaleDay from DaySale
+union 
+select SaleDate,SaleYear,SaleMonth,SaleDay2 SaleDay from DayPurchase
+)
+select a.*,
+isnull(b.SaleAmount,0) SaleAmount,ISNULL(b.SaleBidAmount,0) SaleBidAmount,ISNULL(b.SaleDueAmount,0) SaleDueAmount,
+ISNULL(b.SaleProfit,0) SaleProfit,ISNULL(b.SaleRealAmount,0) SaleRealAmount,ISNULL(b.SaleShouldAmount,0) SaleShouldAmount,
+ISNULL(c.PurchaseDueAmount,0) PurchaseDueAmount, ISNULL(c.PurchaseAmount,0) PurchaseAmount,ISNULL(c.PurchaseRealAmount,0) PurchaseRealAmount,
+ISNULL(c.PurchaseShouldAmount,0) PurchaseShouldAmount 
+from YearMonthDay a
+left join DaySale b on a.SaleYear=b.SaleYear and a.SaleMonth=b.SaleMonth and a.SaleDay=b.SaleDay2
+left join DayPurchase c on a.SaleYear=c.SaleYear and a.SaleMonth=c.SaleMonth and a.SaleDay=c.SaleDay2
+go
+
+
+drop view v_ProductPurchaseSale
+go
+
+create view v_ProductPurchaseSale
+as
+with SaleDetail as
+(
+select a.ProductId,convert(datetime,convert(varchar(10),SaleDate,120)) SaleDate,
+year(SaleDate) SaleYear,DATENAME(MONTH,SaleDate) SaleMonth,day(SaleDate) SaleDay,
+case when b.SaleType=1 then Amount else 0-Amount end Amount2,
+case when b.SaleType=2 then Discount else 0-Discount end Discount2,
+case when b.SaleType=1 then ROUND(a.BidPrice*Number,2) else 0-ROUND(a.BidPrice*Number,2) end BidAmount2,
+case when b.SaleType=1 then Amount-ROUND(a.BidPrice*Number,2) else 0-(Amount-ROUND(a.BidPrice*Number,2)) end Profit
+from t_SaleDetail a
+inner join t_Sale b on a.SaleId=b.SaleId and b.IsDelete=0 and b.SaleStatus in (1,2)
+),
+DaySaleDetail as
+(
+select SaleDate,SaleYear,SaleMonth,SaleDay,ProductId,case when SaleDay<10 then '0'+ CONVERT(varchar(1), SaleDay) else CONVERT(varchar(2),SaleDay) end SaleDay2, 
+sum(Amount2) SaleAmount, sum(Discount2) SaleDiscount,
+sum(BidAmount2) SaleBidAmount,sum(Profit) SaleProfit
+from SaleDetail
+group by SaleDate,SaleYear,SaleMonth,SaleDay,ProductId
+),
+PurchaseDetail as
+(
+select a.ProductId,convert(datetime,convert(varchar(10),PurchaseDate,120)) SaleDate,
+year(PurchaseDate) SaleYear,DATENAME(MONTH,PurchaseDate) SaleMonth,day(PurchaseDate) SaleDay,
+case when b.PurchaseType=2 then Amount else 0-Amount end Amount2,
+case when b.PurchaseType=1 then Discount else 0-Discount end Discount2
+from t_PurchaseDetail a
+inner join t_Purchase b on a.PurchaseId=b.PurchaseId and b.IsDelete=0 and b.PurchaseStatus in (1,2)
+),
+DayPurchaseDetail as
+(
+select SaleDate,SaleYear,SaleMonth,SaleDay,ProductId,case when SaleDay<10 then '0'+ CONVERT(varchar(1), SaleDay) else CONVERT(varchar(2),SaleDay) end SaleDay2, 
+sum(Amount2) PurchaseAmount, sum(Discount2) PurchaseDiscount
+from PurchaseDetail
+group by SaleDate,SaleYear,SaleMonth,SaleDay,ProductId
+),
+YearMonthDay as
+(
+select ProductId,SaleDate,SaleYear,SaleMonth,SaleDay2 SaleDay from DaySaleDetail
+union 
+select ProductId,SaleDate,SaleYear,SaleMonth,SaleDay2 SaleDay from DayPurchaseDetail
+)
+select a.*,
+isnull(b.SaleAmount,0) SaleAmount,ISNULL(b.SaleBidAmount,0) SaleBidAmount,
+ISNULL(b.SaleProfit,0) SaleProfit,ISNULL(b.SaleDiscount,0) SaleDiscount,
+ISNULL(c.PurchaseAmount,0) PurchaseAmount,ISNULL(c.PurchaseDiscount,0) PurchaseDiscount,
+'('+ f.ProductCode+')'+ f.Name  as ProductName,
+f.ProductTypeId,
+f.ProductBrandId,
+d.Name ProductTypeName,
+e.Name ProductBrandName
+from YearMonthDay a
+left join DaySaleDetail b on a.SaleYear=b.SaleYear and a.SaleMonth=b.SaleMonth and a.SaleDay=b.SaleDay2 and a.ProductId=b.ProductId
+left join DayPurchaseDetail c on a.SaleYear=c.SaleYear and a.SaleMonth=c.SaleMonth and a.SaleDay=c.SaleDay2 and a.ProductId= c.ProductId
+left join t_Product f on a.ProductId=f.Id
+left join t_ProductType d on f.ProductTypeId=d.Id
+left join t_ProductBrand e on f.ProductBrandId=e.Id
 go

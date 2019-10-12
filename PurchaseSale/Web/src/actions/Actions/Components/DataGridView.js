@@ -33,6 +33,7 @@ export default class DataGridView extends BaseIndex {
 
         if (data.EntitySearchQuery) {
             data.DataGridViewSearchQuery = actionType;
+            data.EntityName = entityName;
             this.InvokeAction(id, data.EntitySearchQuery, data);
         }
     }

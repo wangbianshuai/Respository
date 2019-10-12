@@ -1,5 +1,5 @@
 import React, { Component } from "react"
-import { Table, Alert, Pagination } from "antd";
+import { Table, Alert, Pagination, Button } from "antd";
 const { Column } = Table;
 
 export default class DataGrid extends Component {
@@ -120,12 +120,20 @@ export default class DataGrid extends Component {
         }
     }
 
+    SetShowColumns() {
+        this.props.EventActions.InvokeAction(this.props.Property.SetColumnsEventActionName, this.props);
+    }
+
     render() {
         const rowSelection = this.props.IsRowSelection ? {
             selectedRowKeys: this.state.SelectedRowKeys,
             onChange: this.SelectChanged.bind(this),
             getCheckboxProps: this.GetCheckboxProps.bind(this)
         } : undefined;
+
+        var justifyContent = "flex-end";
+        const { SetColumnsEventActionName } = this.props.Property;
+        if (SetColumnsEventActionName) justifyContent = "space-between";
 
         return (
             <React.Fragment>
@@ -135,7 +143,10 @@ export default class DataGrid extends Component {
                     pagination={this.props.IsPartPaging ? false : this.GetPagination()} >
                     {this.props.DataProperties.map(p => this.GetColumn(p))}
                 </Table>
-                {this.props.IsPartPaging ? <div style={{ width: "100%", height: "60px", display: "flex", alignItems: "center", justifyContent: "flex-end" }}><Pagination {...this.GetPagination()} /></div> : null}
+                {this.props.IsPartPaging ? <div style={{ width: "100%", height: "60px", display: "flex", alignItems: "center", justifyContent: justifyContent }}>
+                    {SetColumnsEventActionName && <Button onClick={this.SetShowColumns.bind(this)} style={{ marginLeft: 16 }}>自定义显示列</Button>}
+                    <Pagination {...this.GetPagination()} />
+                </div> : null}
             </React.Fragment>
         );
     }
