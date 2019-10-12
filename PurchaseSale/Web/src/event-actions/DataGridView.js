@@ -1,5 +1,5 @@
 import BaseIndex from "./BaseIndex";
-import { Common } from "UtilsCommon";
+import { Common, EnvConfig } from "UtilsCommon";
 
 export default class DataGridView extends BaseIndex {
 
@@ -321,7 +321,9 @@ export default class DataGridView extends BaseIndex {
     }
 
     DownLoad(fileName) {
-        var url = "/download.aspx?fn=" + fileName;
+        var host = "";
+        if (EnvConfig.Env === "local") host = "http://localhost/ps/";
+        var url = host + "/download.aspx?fn=" + fileName;
         window.open(url, "_self");
     }
 
