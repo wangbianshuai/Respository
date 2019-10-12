@@ -71,6 +71,7 @@ export default class DatePicker2 extends BaseIndex {
     }
 
     OnChange(value, valueString) {
+        this.IsLoadValue = true;
         this.setState({ Value: valueString }, () => this.BindDataValue())
     }
 

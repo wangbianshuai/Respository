@@ -44,7 +44,6 @@ class DataGridView extends BaseIndex {
         this.InitDataProperties();
     }
 
-
     Add(data) {
         const { DataList } = this.state;
 
@@ -92,8 +91,11 @@ class DataGridView extends BaseIndex {
     SetColumnsVisible2(visibleColNames) {
         this.DataProperties.forEach(p => p.IsVisible = (visibleColNames.indexOf(p.Name) >= 0));
         this.DataProperties2 = this.DataProperties.filter(f => f.IsVisible !== false);
-
-        this.setState({ RefreshId: Common.CreateGuid() })
+        if (this.Property.IsGroupByQuery) {
+            this.PageInfo.PageIndex = 1;
+            this.Refresh();
+        }
+        else this.setState({ RefreshId: Common.CreateGuid() })
     }
 
     InitDataProperties() {

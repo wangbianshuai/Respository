@@ -28,6 +28,7 @@ class AutoComplete2 extends BaseIndex {
     }
 
     OnChange(value) {
+        this.IsLoadValue = true;
         this.setState({ Value: value }, () => this.BindDataValue())
     }
 

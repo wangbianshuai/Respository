@@ -26,6 +26,7 @@ class CheckBoxGroup2 extends BaseIndex {
     }
 
     CheckBoxChange(value) {
+        this.IsLoadValue = true;
         if (this.Property.IsSingleSelection && value && value.length > 1) value = [value[value.length - 1]];
 
         this.setState({ Value: value });

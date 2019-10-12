@@ -25,5 +25,7 @@ namespace PurchaseSale.Entity
         public decimal PurchaseDueAmount { get; set; }
         public decimal PurchaseRealAmount { get; set; }
         public decimal PurchaseShouldAmount { get; set; }
+        public decimal ShouldBalance { get; set; }
+        public decimal RealBalance { get; set; }
     }
 }

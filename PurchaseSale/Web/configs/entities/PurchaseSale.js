@@ -19,7 +19,9 @@ function GetProperties() {
         GetProperty("PurchaseAmount", "采购商品金额"),
         GetProperty("PurchaseDueAmount", "采购待付金额"),
         GetProperty("PurchaseRealAmount", "采购实付金额"),
-        GetProperty("PurchaseShouldAmount", "采购应付金额")
+        GetProperty("PurchaseShouldAmount", "采购应付金额"),
+        GetProperty("ShouldBalance", "应结余金额"),
+        GetProperty("RealBalance", "实结余金额")
     ]
 }
 

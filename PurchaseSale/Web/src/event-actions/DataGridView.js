@@ -110,8 +110,11 @@ export default class DataGridView extends BaseIndex {
         const primaryKey = dataGridView.Entity.PropertyPrimaryKey || dataGridView.Entity.PrimaryKey;
         var property = null, isGroupBy = false, hasPrimaryKey = false, name = "";
         var queryInfo = {}, orderByList = [], groupByFieldList = [], groupByList = [], selectFieldList = [];
+        var firstFieldOrderBy = "";
         for (var i = 0; i < dataGridView.Properties.length; i++) {
             property = dataGridView.Properties[i];
+            if (dataGridView.IsGroupByQuery && property.IsVisible === false) continue;
+
             name = property.PropertyName || property.Name;
             if (name === primaryKey) hasPrimaryKey = true;
             if (Common.IsNullOrEmpty(property.GroupByExpression)) {
@@ -120,25 +123,31 @@ export default class DataGridView extends BaseIndex {
                     orderByList.push(name + " " + property.OrderByType);
                 }
                 groupByList.push(name);
+
+                if (!firstFieldOrderBy) firstFieldOrderBy = name + (property.OrderByType || " desc");
             }
             else {
                 isGroupBy = true;
                 groupByFieldList.push(property.GroupByExpression + " as " + name);
                 if (!Common.IsNullOrEmpty(property.OrderByType)) {
-                    orderByList.push(name + " " + property.OrderByType);
+                    orderByList.push(property.GroupByExpression + " " + property.OrderByType);
                 }
+
+                if (!firstFieldOrderBy) firstFieldOrderBy = property.GroupByExpression + (property.OrderByType || " desc");
             }
         }
-        if (!hasPrimaryKey) selectFieldList.splice(0, 0, primaryKey);
 
-        if (!isGroupBy) groupByList = [];
+        if (!isGroupBy) {
+            groupByList = [];
+            if (!hasPrimaryKey) selectFieldList.splice(0, 0, primaryKey);
+        }
+        else if (orderByList.length === 0) orderByList.push(firstFieldOrderBy);
 
         queryInfo.HasLabel = selectFieldList.length === 0;
         queryInfo.FieldSql = selectFieldList.join(",");
         queryInfo.OrderBySql = orderByList.join(",");
         queryInfo.GroupBySql = groupByList.join(",");
         queryInfo.GroupByFieldSql = groupByFieldList.join(",");
-        queryInfo.WhereFields = selectFieldList.join("");
 
         return queryInfo;
     }
@@ -195,7 +204,7 @@ export default class DataGridView extends BaseIndex {
 
         const ExpandSetPageUrl = EventActions.GetFunction(action.ExpandSetPageUrl);
         if (ExpandSetPageUrl) url = ExpandSetPageUrl(url);
-        
+
         if (action.IsOpenUrl) EventActions.OpenPage(url)
         else EventActions.ToPage(url)
     }

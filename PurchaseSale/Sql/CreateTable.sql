@@ -755,7 +755,9 @@ select a.*,
 isnull(b.SaleAmount,0) SaleAmount,ISNULL(b.SaleBidAmount,0) SaleBidAmount,ISNULL(b.SaleDueAmount,0) SaleDueAmount,
 ISNULL(b.SaleProfit,0) SaleProfit,ISNULL(b.SaleRealAmount,0) SaleRealAmount,ISNULL(b.SaleShouldAmount,0) SaleShouldAmount,
 ISNULL(c.PurchaseDueAmount,0) PurchaseDueAmount, ISNULL(c.PurchaseAmount,0) PurchaseAmount,ISNULL(c.PurchaseRealAmount,0) PurchaseRealAmount,
-ISNULL(c.PurchaseShouldAmount,0) PurchaseShouldAmount 
+ISNULL(c.PurchaseShouldAmount,0) PurchaseShouldAmount,
+Isnull(b.SaleShouldAmount,0)+isnull(c.PurchaseShouldAmount,0) ShouldBalance,
+isnull(b.SaleRealAmount,0)+isnull(c.PurchaseRealAmount,0) RealBalance 
 from YearMonthDay a
 left join DaySale b on a.SaleYear=b.SaleYear and a.SaleMonth=b.SaleMonth and a.SaleDay=b.SaleDay2
 left join DayPurchase c on a.SaleYear=c.SaleYear and a.SaleMonth=c.SaleMonth and a.SaleDay=c.SaleDay2

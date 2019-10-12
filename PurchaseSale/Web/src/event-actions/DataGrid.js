@@ -82,9 +82,30 @@ export default class DataGrid extends BaseIndex {
         const { ColumnsView } = action.Parameters;
 
         const value = props.DataProperties.map(m => m.Name);
-        const colPropertery = ColumnsView.Properties[0];
+        const allSelect = ColumnsView.Properties[0];
+        const colPropertery = ColumnsView.Properties[1];
         if (!colPropertery.SetValue) colPropertery.Value = value;
         else colPropertery.SetValue(value);
+
+        const allSelected = value.length === DataGridView.Properties.length;
+        if (!allSelect.SetValue) allSelect.Value = allSelected;
+        else allSelect.SetValue(allSelected);
+
+        var colSelected = false, allSelected2 = false;
+        const nameList = DataGridView.Properties.map(m => m.Name);
+        allSelect.ValueChange = (v) => {
+            if (colSelected) { colSelected = false; return; }
+
+            allSelected2 = true;
+            colPropertery.SetValue(v ? nameList : []);
+        };
+
+        colPropertery.ValueChange = (v) => {
+            if (allSelected2) { allSelected2 = false; return; }
+
+            colSelected = true;
+            allSelect.SetValue(v.length === nameList.length);
+        };
 
         const onOk = (e, p) => this.SetSelectShowColumns(e, p, props, action);
         this.ShowDialog(action, EventActions, ColumnsView, onOk);
@@ -93,7 +114,7 @@ export default class DataGrid extends BaseIndex {
     SetSelectShowColumns(e, p, props, action) {
         const { EventActions } = props;
         const { ColumnsView, DataGridView } = action.Parameters;
-        const colPropertery = ColumnsView.Properties[0];
+        const colPropertery = ColumnsView.Properties[1];
         const value = colPropertery.GetValue();
 
         if (value.length === 0) { this.Alert("最少需选择一列！", EventActions.Alert); return; }
@@ -123,6 +144,15 @@ export default class DataGrid extends BaseIndex {
             DialogStyle: { maxHeight: 500, overflow: "auto" },
             BodyStyle: { padding: "16px 32px", margin: 0 },
             Properties: [{
+                Id: Common.CreateGuid(),
+                Name: name + "AllSelect",
+                Type: "CheckBox",
+                CheckedValue: true,
+                UnCheckedValue: false,
+                Text: "全选",
+                Style: { width: "100%", borderTop: "1px solid #e8e8e8", color: "#1890ff", paddingTop: 8, paddingBottom: 10, background: "#fafafa" }
+            }, {
+                Id: Common.CreateGuid(),
                 Name: name + "Columns",
                 Type: "CheckBoxGroup",
                 IsFlexColumn: true,

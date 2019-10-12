@@ -58,8 +58,9 @@ function GetDataGridView() {
         ClassName: "DivInfoView3",
         SetColumnsEventActionName: "SetShowColumns",
         IsPartPaging: true,
+        IsGroupByQuery: true,
         Properties: AssignProporties(PurchaseSale, [{ Name: "SaleDate", OrderByType: "desc", IsVisible: false }, "SaleYear", "SaleMonth", "SaleDay", GetAmount("PurchaseAmount"), GetAmount("PurchaseShouldAmount"), GetAmount("PurchaseRealAmount"),
-        GetAmount("PurchaseDueAmount"), GetAmount("SaleAmount"), GetAmount("SaleBidAmount"), GetAmount("SaleProfit"), GetAmount("SaleShouldAmount"), GetAmount("SaleRealAmount"), GetAmount("SaleDueAmount")])
+        GetAmount("PurchaseDueAmount"), GetAmount("SaleAmount"), GetAmount("SaleBidAmount"), GetAmount("SaleProfit"), GetAmount("SaleShouldAmount"), GetAmount("SaleRealAmount"), GetAmount("SaleDueAmount"), GetAmount("ShouldBalance"), GetAmount("RealBalance")])
     }
 }
 
