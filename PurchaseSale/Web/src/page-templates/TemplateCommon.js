@@ -1,4 +1,4 @@
-import { AjaxRequest, EnvConfig } from "UtilsCommon";
+import { AjaxRequest, EnvConfig,Common} from "UtilsCommon";
 import { StaticIndex } from "ReactCommon";
 import DvaIndex from "DvaCommon";
 
@@ -30,6 +30,7 @@ export default class TemplateCommon {
             var url = `/configs/${name}.json`
             if (window.location.href.indexOf("localhost") > 0) url = "/configs/getconfig?name=" + pageName;
 
+            url= Common.AddUrlRandom(url)
             AjaxRequest.GetRequest(url, {}, (res) => {
                 if (res.IsSuccess === false) alert(res.Message)
                 else window.PageConfigs[pageName] = res;
