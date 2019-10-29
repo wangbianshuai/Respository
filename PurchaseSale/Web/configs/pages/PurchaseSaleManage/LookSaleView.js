@@ -5,7 +5,7 @@ const { AssignProporties, GetTextBox, CreateGuid } = require("../../Common");
 //进销管理/销售单列表
 const DataActionTypes = {
     //获取实体数据
-    GetEntityData: 2604
+    GetEntityData: 2605
 }
 
 const Entity = { Name: "ViewSale", PrimaryKey: Sale.PrimaryKey }
