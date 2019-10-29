@@ -187,6 +187,7 @@ export default class BaseIndex extends Component {
             var url = `/configs/${name}.json`
             if (EnvConfig.Env === "local") url = "/configs/getconfig?name=" + this.Name;
 
+            url= Common.AddUrlRandom(url)
             AjaxRequest.GetRequest(url, {}, (res) => {
                 if (res.IsSuccess === false) this.Alert(res.Message)
                 else window.PageConfigs[this.Name] = res;
