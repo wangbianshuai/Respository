@@ -64,7 +64,7 @@ export default {
     ReactCommon: path.resolve(__dirname, './src/react-common/Index.js'),
     // Components: path.resolve(__dirname, './src/components/Index.js'),
     // Controls: path.resolve(__dirname, './src/controls/Index.js'),
-    // Actions: path.resolve(__dirname, './src/actions/Index.js'),
+    Actions: path.resolve(__dirname, './src/actions/Index.js'),
     // EventActions: path.resolve(__dirname, './src/event-actions/Index.js'),
     // PageControls: path.resolve(__dirname, './src/page-controls/Index.js'),
     // PageTemplates: path.resolve(__dirname, './src/page-templates/Index.js'),

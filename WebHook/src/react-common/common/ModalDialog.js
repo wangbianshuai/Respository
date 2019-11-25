@@ -8,22 +8,9 @@ export default ({ Property }) => {
 
     if (!Property.SetVisible) Property.SetVisible = (v) => setVisible(v);
 
-    const ok = useCallback((e) => {
-        if (okProperty.SetDisabled === undefined) {
-            okProperty.Element = e.target;
-            okProperty.SetDisabled = (disabled) => { okProperty.Element.disabled = disabled }
-        }
+    const ok = Ok(okProperty, Property);
 
-        if (Property.OnOk) Property.OnOk(e, Property);
-    }, [okProperty, Property]);
-
-    const cancel = useCallback(() => {
-        if (Property && Property.SetDisabled) Property.SetDisabled(false);
-        setVisible(false)
-        if (Property.OnCancel) Property.OnCancel();
-    }, [Property])
-
-    console.log("redner")
+    const cancel = Cancel(Property, setVisible)
 
     if (!Property || !visible) return null;
 
@@ -47,6 +34,25 @@ export default ({ Property }) => {
             </Modal>
         )
     }
+}
+
+function Ok(okProperty, property) {
+    return useCallback((e) => {
+        if (okProperty.SetDisabled === undefined) {
+            okProperty.Element = e.target;
+            okProperty.SetDisabled = (disabled) => { okProperty.Element.disabled = disabled }
+        }
+
+        if (property.OnOk) property.OnOk(e, property);
+    }, [okProperty, property]);
+}
+
+function Cancel(property, setVisible) {
+    return useCallback(() => {
+        if (property && property.SetDisabled) property.SetDisabled(false);
+        setVisible(false)
+        if (property.OnCancel) property.OnCancel();
+    }, [property, setVisible])
 }
 
 function RenderComponent(property) {
