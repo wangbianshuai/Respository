@@ -6,6 +6,7 @@ function Init(obj, name, options, receive) {
     if (!obj.IsInit) {
         obj.IsInit = true;
         obj.Name = options ? options.Name : name
+        obj.ActionTypes = Actions.GetActionTypes(obj.Name)
         Actions.InitAction(name, options);
         Actions.Receive(obj.Name, obj.Id, (actionType, data) => receive(actionType, data));
     }
@@ -21,7 +22,7 @@ function Receive(obj, actionData, setActionData) {
     }, [obj, actionData, setActionData]);
 }
 
-function Invoke(obj) {
+function Invoke(obj, receive) {
     return useCallback((actionType, data) => {
         try {
             Actions.Invoke(obj.Id, actionType, data);
@@ -29,7 +30,7 @@ function Invoke(obj) {
         catch (err) {
             receive(actionType, { IsSuccess: false, Message: err.message })
         }
-    }, [obj]);
+    }, [obj, receive]);
 }
 
 function Destory(obj) {
@@ -45,9 +46,9 @@ export default (name, options) => {
 
     Init(obj, name, options, receive);
 
-    const invoke = Invoke(obj);
+    const invoke = Invoke(obj, receive);
 
-    useEffect(() => { return Destory }, [obj])
+    useEffect(() => { return () => Destory(obj) }, [obj])
 
-    return [invoke, Actions.GetActionTypes, actionData]
+    return [invoke, obj.ActionTypes, actionData]
 }

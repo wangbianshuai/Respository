@@ -1,10 +1,12 @@
 import styles from './index.css';
-import { ModalDialog } from "ReactCommon";
+import { ModalDialog, useConnectAction } from "ReactCommon";
 import { Common } from "UtilsCommon";
-import { useCallback, useState, useMemo } from 'react';
+import { useCallback, useState, useMemo, useEffect } from 'react';
 
 export default function () {
   const [dialogList, setDialogList] = useState([]);
+
+  const [invoke, actionTypes, actionData] = useConnectAction("Login")
 
   const property = useMemo(() => {
     return {
@@ -22,10 +24,19 @@ export default function () {
     else property.SetVisible(true)
   }, [property, dialogList]);
 
+  const login = useCallback(() => {
+    invoke(actionTypes.Login, { EntityData: { LoginName: "admin", LoginPassword: "admin" } })
+  }, [invoke, actionTypes])
+
+  useEffect(() => {
+    console.log(actionData)
+  }, [actionData])
+
   return (
     <div className={styles.normal}>
       <div className={styles.welcome} />
       <button onClick={showModal}>ShowModal</button>
+      <button onClick={login}>Login</button>
       <ul className={styles.list}>
         <li>To get started, edit <code>src/pages/index.js</code> and save to reload.</li>
         <li>

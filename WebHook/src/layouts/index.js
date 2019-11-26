@@ -18,6 +18,10 @@ export default class Index extends Component {
   }
 
   render() {
+    return this.props.children;
+  }
+
+  render2() {
     if (this.IsLogin()) return this.props.children;
 
     return <LeftRightLayout {...this.props} />

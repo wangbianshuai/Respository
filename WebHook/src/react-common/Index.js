@@ -5,6 +5,7 @@ import StaticIndex from "./static/Index";
 import ConnectAction from "./hoc/ConnectAction";
 import MapToProps from "./hoc/MapToProps";
 import RootPage from "./hoc/RootPage";
+import useConnectAction from "./useHooks/useConnectAction"
 
 export {
     BaseIndex,
@@ -13,5 +14,6 @@ export {
     ConnectAction,
     MapToProps,
     RootPage,
-    ModalDialog
+    ModalDialog,
+    useConnectAction
 };
