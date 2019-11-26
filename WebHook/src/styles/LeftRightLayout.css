@@ -1,0 +1,72 @@
+.trigger {
+    font-size: 18px;
+    line-height: 50px;
+    padding: 0 16px;
+    cursor: pointer;
+    margin-top: 3px;
+    transition: color .3s;
+    float: left;
+  }
+  
+ .trigger:hover {
+    color: #108ee9;
+  }
+
+  .Breadcrumb{
+    float: left;
+  }
+
+  .Breadcrumb span{
+    line-height: 50px;
+  }
+  
+ .logo {
+     margin-left: 30px;
+     float: left;
+  }
+
+  .logo img{
+    float: left;
+    margin-top: 12px;
+  }
+  .logo span{
+    color: #333333;
+    font-size: 18px;
+    display: block;
+    float: left;
+  }
+
+  .UserRightMenu{
+    width: 160px;
+  }
+
+  .Dropdown{
+float: right;
+margin-right: 20px;
+padding: 0px 12px 0 12px;
+  }
+
+  .Dropdown:hover{
+    background: #e6f7ff;
+  }
+
+  .UserRightMenuItem{
+    height: 40px;
+    line-height: 40px;
+    display:flex;
+    align-items: center;
+  }
+
+  .UserRightMenuItem span{
+    margin-left: 20px;
+  }
+
+  .avatar {
+    margin: 20px 8px 20px 0;
+    background: rgba(255, 255, 255, .85);
+    vertical-align: middle;
+  }
+
+  .RightMenu{
+      float: right;
+  }

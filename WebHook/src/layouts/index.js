@@ -1,12 +1,25 @@
-import styles from './index.css';
+import React, { Component } from "react";
+import LeftRightLayout from './LeftRightLayout/Index';
+import { EnvConfig } from "UtilsCommon";
 
-function BasicLayout(props) {
-  return (
-    <div className={styles.normal}>
-      <h1 className={styles.title}>Yay! Welcome to umi!</h1>
-      {props.children}
-    </div>
-  );
+export default class Index extends Component {
+  constructor(props) {
+    super(props);
+
+    this.Name = "Index";
+
+    EnvConfig.SetEnv();
+  }
+
+  IsLogin() {
+    const { location: { pathname } } = this.props;
+    let name = pathname.toLowerCase().replace(".html", "");
+    return name === '/login';
+  }
+
+  render() {
+    if (this.IsLogin()) return this.props.children;
+
+    return <LeftRightLayout {...this.props} />
+  }
 }
-
-export default BasicLayout;

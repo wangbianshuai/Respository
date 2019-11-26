@@ -14,12 +14,12 @@ export default (config) => {
         state[a.StateName] = a.DefaultValue;
         //effects
         if (a.IsRequest === false) effects[a.ActionName] = InvokeAction(a.ActionName);
-        else effects[a.ActionName] = InvokeService(service(a.ActionName), a.ActionName);
+        else effects[a.ActionName] = InvokeService(service(a), a.ActionName);
         //reducers
         SetState(reducers, a.ActionName, a.StateName)
     });
 
-    return { namespace: config.Name, state, effects, reducers };
+    return { namespace: config.Name, state, effects, reducers, actions: actionList };
 }
 
 function InvokeService(fn, type) {

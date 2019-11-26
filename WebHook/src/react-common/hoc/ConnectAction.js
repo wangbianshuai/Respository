@@ -1,53 +1,45 @@
-import { useState, useMemo, useCallback, useEffect } from "react";
+import React, { Component } from "react";
 import Actions from "Actions";
 import { Common } from "UtilsCommon";
 
-function Init(obj, name, options, receive) {
-    if (!obj.IsInit) {
-        obj.IsInit = true;
-        obj.Name = options ? options.Name : name
+export default (name, WrapComponent, options) => class ConnectAction extends Component {
+    constructor(props) {
+        super(props);
+
+        this.state = { ActionData: {} };
+        this.ActionData = {};
+        
+        this.Name = name;
+        this.Id = Common.CreateGuid();
         Actions.InitAction(name, options);
-        Actions.Receive(obj.Name, obj.Id, (actionType, data) => receive(actionType, data));
+        this.ActionName = options ? options.Name : name;
+        Actions.Receive(this.ActionName, this.Id, this.Receive.bind(this));
     }
-}
 
-function Receive(obj, actionData, setActionData) {
-    return useCallback((actionType, data) => {
-        if (obj.IsDestory) return;
-        if (data && data.Action && data.Data) data = data.Data;
-        const currentActionData = { ...actionData };
-        currentActionData[actionType] = data;
-        setActionData(currentActionData);
-    }, [obj, actionData, setActionData]);
-}
-
-function Invoke(obj) {
-    return useCallback((actionType, data) => {
+    Invoke(actionType, data) {
         try {
-            Actions.Invoke(obj.Id, actionType, data);
+            Actions.Invoke(this.Id, actionType, data);
         }
         catch (err) {
-            receive(actionType, { IsSuccess: false, Message: err.message })
+            this.Receive(actionType, { IsSuccess: false, Message: err.message })
         }
-    }, [obj]);
-}
+    }
 
-function Destory(obj) {
-    obj.IsDestory = true;
-    Actions.RemoveReceive(obj.Name, obj.Id);
-}
+    Receive(actionType, data) {
+        if (this.IsDestory) return;
+        if (data && data.Action && data.Data) data = data.Data;
+        const actionData = { ...this.ActionData };
+        actionData[actionType] = data;
+        this.ActionData = actionData;
+        this.setState({ ActionData: actionData })
+    }
 
-export default (name, WrapComponent, options) => props => {
-    const [actionData, setActionData] = useState({});
-    const obj = useMemo(() => { return { IsDestory: false, Id: Common.CreateGuid(), IsInit: false } }, []);
+    componentWillUnmount() {
+        this.IsDestory = true;
+        Actions.RemoveReceive(this.ActionName, this.Id);
+    }
 
-    const receive = Receive(obj, actionData, setActionData)
-
-    Init(obj, name, options, receive);
-
-    const invoke = Invoke(obj);
-
-    useEffect(() => { return Destory }, [obj])
-
-    return <WrapComponent {...props} Invoke={invoke} GetActionTypes={Actions.GetActionTypes} {...actionData} />
+    render() {
+        return <WrapComponent {...this.props} Invoke={this.Invoke.bind(this)} GetActionTypes={Actions.GetActionTypes} {...this.state.ActionData} />
+    }
 }
