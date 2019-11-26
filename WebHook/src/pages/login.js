@@ -1,7 +1,6 @@
 import React from "react";
-import { connect } from "dva";
-import { BaseIndex, RootPage, ConnectAction, StaticIndex } from "ReactCommon";
-import { EnvConfig, Common } from "UtilsCommon";
+import { BaseIndex, RootPage } from "ReactCommon";
+import {Common } from "UtilsCommon";
 import Components from "Components";
 import styles from "../styles/Login.css"
 
@@ -34,13 +33,10 @@ class Login extends BaseIndex {
     }
 }
 
-function mapStateToProps(state, ownProps) {
-    const props = StaticIndex.MapStateToProps(state, ownProps, {
+function mapStateToProps(state) {
+    return {
         Login: state.ApiService.Login
-    });
-
-    !EnvConfig.IsProd && console.log(props);
-    return props;
+    }
 }
 
-export default connect(mapStateToProps, StaticIndex.MapDispatchToProps)(RootPage(ConnectAction("Login", Login)));
+export default RootPage(Login, mapStateToProps);

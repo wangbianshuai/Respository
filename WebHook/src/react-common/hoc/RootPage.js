@@ -1,132 +1,151 @@
-import React from "react";
+import React, { useMemo, useState } from "react";
 import { Common, Page } from "UtilsCommon";
-import { BaseIndex } from "ReactCommon";
 import Actions from "Actions";
 import ModalDialog from "../common/ModalDialog";
 import ComponentList from "../ComponentList";
-import { message } from "antd"
+import { message } from "antd";
+import useDvaData from "../useHooks/useDvaData";
+import router from 'umi/router';
 
-export default (WrapComponent) => class RootPage extends BaseIndex {
-    constructor(props) {
-        super(props);
+export default (WrapComponent, mapStateToProps) => props => {
+    const obj = useMemo(() => { return { Name: "RootPage", IsInit: false, Token: Common.GetCookie("Token") } }, []);
 
-        this.Name = "RootPage";
+    const [dispatch, dispatchAction, setActionState, state] = useDvaData(mapStateToProps, obj.Token)
 
-        this.Init()
+    Init(obj, dispatch, dispatchAction, setActionState);
+
+    useState(() => {
+        if (obj.state === undefined) InitProps(state, obj.StateActionTypes)
+        else ShouldComponentUpdate(state, obj.state, props, obj.StateActionTypes)
+        obj.state = state;
+    }, [state])
+
+    return (
+        <React.Fragment>
+            <WrapComponent PageData={props.location.PageData} />
+            <ComponentList Page={obj.Page} Name="Dialogs" />
+        </React.Fragment>
+    )
+}
+
+function Init(obj, dispatch, dispatchAction, setActionState) {
+    if (obj.IsInit) return;
+
+    obj.Token = Common.GetCookie("Token");
+    obj.IsInit = true;
+    obj.Page = new Page();
+
+    obj.Functions = { Dispatch: dispatch, DispatchAction: dispatchAction, SetActionState: setActionState, ToLogin }
+    obj.Invoke = () => (name) => obj.Functions[name] || function () { };
+
+    obj.Page.Init();
+    obj.Page.InitInstance(obj.Name, obj.Invoke());
+    obj.Page.InitInvoke("Dialogs", (instance) => obj.AddDialog = instance.Invoke("Add"));
+    obj.Functions.SetModalDialog = SetModalDialog(obj)
+
+    obj.StateActionTypes = {};
+    Actions.InitDvaActions(InitDvaActions(obj, dispatch, dispatchAction, setActionState));
+}
+
+function SetModalDialog(obj) {
+    return (p) => {
+        obj.AddDialog(<ModalDialog key={p.Id} Property={p} />);
     }
+}
 
-    Init() {
-        this.Page = new Page();
-
-        this.Page.Init();
-        this.Page.InitInstance(this.Name, this.Invoke());
-        this.Page.InitInvoke("Dialogs", (obj) => this.AddDialog = obj.Invoke("Add"));
-
-        this.StateActionTypes = {};
-        Actions.InitDvaActions(this.InitDvaActions());
+function InitDvaActions(obj, dispatch, dispatchAction, setActionState) {
+    return {
+        Dispatch: dispatch,
+        DispatchAction: dispatchAction,
+        SetActionState: setActionState,
+        SetStateActionTypes: SetStateActionTypes(obj)
     }
+}
 
-    InitDvaActions() {
-        return {
-            Dispatch: this.Dispatch.bind(this),
-            DispatchAction: this.DispatchAction.bind(this),
-            SetActionState: this.SetActionState.bind(this),
-            SetStateActionTypes: this.SetStateActionTypes.bind(this)
-        }
-    }
-
-    SetStateActionTypes(stateActionTypes) {
+function SetStateActionTypes(obj) {
+    return (stateActionTypes) => {
         for (var key in stateActionTypes) {
-            if (!this.StateActionTypes[key]) this.StateActionTypes[key] = stateActionTypes[key];
-            else this.SetStateActionTypes[key] = this.StateActionTypes[key].concat(stateActionTypes[key])
+            if (!obj.StateActionTypes[key]) obj.StateActionTypes[key] = stateActionTypes[key];
+            else obj.SetStateActionTypes[key] = obj.StateActionTypes[key].concat(stateActionTypes[key])
+        }
+    }
+}
+
+function SetLoading(nextState) {
+    if (nextState.Loading) message.loading("加载中……", 0)
+    else if (nextState.Loading === false) message.destroy()
+}
+
+function IsLoginPage(props) {
+    const { location: { pathname } } = props;
+    let name = pathname.toLowerCase().replace(".html", "");
+    return name === '/login';
+}
+
+function ShouldComponentUpdate(nextState, state, props, stateActionTypes) {
+    //Show while loading
+    if (nextState.Loading !== state.Loading) SetLoading(nextState);
+
+    let blChangedProps = false;
+
+    for (let key in nextState) {
+        if (nextState[key] !== undefined && !Common.IsFunction(nextState[key]) && state[key] !== nextState[key]) {
+            blChangedProps = true;
+
+            if (SetResponseMessage(nextState[key], props)) blChangedProps = false;
+
+            if (blChangedProps) break;
         }
     }
 
-    componentDidMount() {
-        this.InitProps();
+    if (blChangedProps) ComponentWillReceiveProps2(nextState, stateActionTypes);
+
+    return blChangedProps;
+}
+
+function SetResponseMessage(d, props) {
+    var data = d.Data ? d.Data : d;
+    if (Common.IsArray(data) && data.length > 0) data = data[0];
+    if (data && data.IsReLogin && data.IsSuccess === false && !IsLoginPage(props)) {
+        ToLogin();
+        return true;
     }
 
-    SetLoading(nextProps) {
-        if (nextProps.Loading) message.loading("加载中……", 0)
-        else if (nextProps.Loading === false) message.destroy()
+    if (d && !d.Action && d && d.IsSuccess === false && d.Message) {
+        ShowMessage(d.Message);
+        return true;
     }
 
-    shouldComponentUpdate(nextProps, nextState) {
-        //设置加载中显示
-        if (nextProps.Loading !== this.props.Loading) this.SetLoading(nextProps);
+    return false
+}
 
-        let blChangedProps = false;
+function ToLogin() {
+    router.push("/login")
+}
 
-        for (let key in nextProps) {
-            if (nextProps[key] !== undefined && !Common.IsFunction(nextProps[key]) && this.props[key] !== nextProps[key]) {
-                blChangedProps = true;
+function ShowMessage(msg) {
+    message.warning(msg, 3)
+}
 
-                if (this.SetResponseMessage(nextProps[key], key)) blChangedProps = false;
-
-                if (blChangedProps) break;
-            }
-        }
-
-        if (blChangedProps) this.componentWillReceiveProps2(nextProps);
-
-        return blChangedProps;
+function ComponentWillReceiveProps2(nextState, state, stateActionTypes) {
+    for (let key in nextState) {
+        if (nextState[key] !== state[key]) ReceiveActionData(key, nextState[key], stateActionTypes);
     }
+}
 
-    SetResponseMessage(d, stateName) {
-        var data = d.Data ? d.Data : d;
-        if (Common.IsArray(data) && data.length > 0) data = data[0];
-        if (data && data.IsReLogin && data.IsSuccess === false && !this.IsLoginPage()) {
-            this.ToLogin();
-            return true;
-        }
-
-        if (d && !d.Action && d && d.IsSuccess === false && d.Message) {
-            this.ShowMessage(d.Message);
-            return true;
-        }
-
-        return false
+function InitProps(state, stateActionTypes) {
+    for (let key in state) {
+        ReceiveActionData(key, state[key], stateActionTypes);
     }
+}
 
-    IsLoginPage() {
-        const { location: { pathname } } = this.props;
-        let name = pathname.toLowerCase().replace(".html", "");
-        return name === '/login';
+function ReceiveActionData(key, data, stateActionTypes) {
+    if (!data) return;
+    try {
+        if (data.Action && data.Action.ActionType > 0) Actions.Dispatch(data.Action.ActionType, data);
+        else if (stateActionTypes[key]) stateActionTypes[key].forEach(a => Actions.Dispatch(a, data));
     }
-
-    componentWillReceiveProps2(nextProps) {
-        for (let key in nextProps) {
-            if (nextProps[key] !== this.props[key]) this.ReceiveActionData(key, nextProps[key]);
-        }
-    }
-
-    InitProps() {
-        for (let key in this.props) {
-            this.ReceiveActionData(key, this.props[key]);
-        }
-    }
-
-    ReceiveActionData(key, data) {
-        if (!data) return;
-        try {
-            if (data.Action && data.Action.ActionType > 0) Actions.Dispatch(data.Action.ActionType, data);
-            else if (this.StateActionTypes[key]) this.StateActionTypes[key].forEach(a => Actions.Dispatch(a, data));
-        }
-        catch (err) {
-            this.SetResponseMessage({ IsSuccess: false, Message: err.message });
-        }
-    }
-
-    SetModalDialog(p) {
-        this.AddDialog(<ModalDialog key={p.Id} Property={p} />);
-    }
-
-    render() {
-        return (
-            <React.Fragment>
-                <WrapComponent Dispatch={this.props.Dispatch} PageData={this.props.location.PageData} />
-                <ComponentList Page={this.Page} Name="Dialogs" />
-            </React.Fragment>
-        )
+    catch (err) {
+        SetResponseMessage({ IsSuccess: false, Message: err.message });
     }
 }
