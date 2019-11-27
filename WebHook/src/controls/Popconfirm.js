@@ -10,7 +10,7 @@ export default class Popconfirm2 extends BaseIndex {
     }
 
     ConfirmAction() {
-        this.PageAxis.InvokeAction(this.Property.EventActionName, this.props);
+        this.PageAxis.InvokeEventAction(this.Property.EventActionName, this.props);
     }
 
     render() {

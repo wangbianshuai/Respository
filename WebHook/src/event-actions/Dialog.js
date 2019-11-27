@@ -61,7 +61,7 @@ export default class Dialog extends BaseIndex {
 
         //数据行为跟页面调用数据行为走
         //SetSelectValuesOkActionType:设置选择值集合确认数据行为类型
-        PageAxis.Invoke(DialogView.SetSelectValuesOkActionType, data);
+        PageAxis.InvokeDataAction(DialogView.SetSelectValuesOkActionType, data);
     }
 
     InitSelectViewDataToListAction(props, action) {

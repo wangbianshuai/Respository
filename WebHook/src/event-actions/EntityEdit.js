@@ -52,7 +52,7 @@ export default class EntityEdit extends BaseIndex {
         p.SetDisabled(true);
 
         //数据行为跟页面调用数据行为走
-        PageAxis.Invoke(DialogView.UdpateEntityOkActionType, data);
+        PageAxis.InvokeDataAction(DialogView.UdpateEntityOkActionType, data);
     }
 
     InitSelectRowUpdateAction(props, action) {
@@ -98,7 +98,7 @@ export default class EntityEdit extends BaseIndex {
         Property.SetLoading && Property.SetLoading(true);
 
         //数据行为跟页面调用数据行为走
-        PageAxis.Invoke(actionType, data);
+        PageAxis.InvokeDataAction(actionType, data);
     }
 
     SaveEntityDataViews(props, action) {
@@ -244,7 +244,7 @@ export default class EntityEdit extends BaseIndex {
         if (action.AsyncRequest) data.AsyncRequest = action.AsyncRequest;
 
         //数据行为跟页面调用数据行为走
-        PageAxis.Invoke(EditView.GetEntityDataActionType, data);
+        PageAxis.InvokeDataAction(EditView.GetEntityDataActionType, data);
     }
 
     ReceiveGetEntityDataActionType(data, props, action) {

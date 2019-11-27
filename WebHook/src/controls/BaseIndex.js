@@ -266,7 +266,7 @@ export default class BaseIndex extends Component {
 
         window.setTimeout(() => {
             //值改变调用事件行为
-            if (Property.ValueChangeEventActionName) this.PageAxis.InvokeAction(Property.ValueChangeEventActionName, this.props);
+            if (Property.ValueChangeEventActionName) this.PageAxis.InvokeEventAction(Property.ValueChangeEventActionName, this.props);
 
             this.ChildPropertiesChanged(value);
         }, 100);

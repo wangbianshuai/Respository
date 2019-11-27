@@ -20,7 +20,7 @@ export default class RowsColsView extends BaseIndex {
 
     componentDidMount() {
         if (this.Property.EventActionName) {
-            this.PageAxis.InvokeAction(this.Property.EventActionName, this.props);
+            this.PageAxis.InvokeEventAction(this.Property.EventActionName, this.props);
         }
     }
 

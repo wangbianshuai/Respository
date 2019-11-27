@@ -205,7 +205,7 @@ class DataGridView extends BaseIndex {
     }
 
     componentDidMount() {
-        if (this.Property.IsSearchQuery !== false) this.PageAxis.InvokeAction(this.Property.EventActionName, this.props);
+        if (this.Property.IsSearchQuery !== false) this.PageAxis.InvokeEventAction(this.Property.EventActionName, this.props);
     }
 
     ReceiveSearchQuery(data) {
@@ -268,7 +268,7 @@ class DataGridView extends BaseIndex {
         this.PageInfo.PageIndex = pageIndex;
         this.PageInfo.PageSize = pageSize;
         if (this.Property.IsLocalPage) this.setState({ RefreshId: Common.CreateGuid() });
-        else this.PageAxis.InvokeAction(this.Property.EventActionName, { ...this.props, PageIndex: pageIndex, PageSize: pageSize, IsData: isData });
+        else this.PageAxis.InvokeEventAction(this.Property.EventActionName, { ...this.props, PageIndex: pageIndex, PageSize: pageSize, IsData: isData });
     }
 
     Refresh() {

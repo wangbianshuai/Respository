@@ -11,7 +11,7 @@ export default class ASpanText extends Controls.BaseIndex {
 
     ClickAction() {
         if (!this.Property.EventActionName) return;
-        this.PageAxis.InvokeAction(this.Property.EventActionName, this.props);
+        this.PageAxis.InvokeEventAction(this.Property.EventActionName, this.props);
     }
 
     render() {

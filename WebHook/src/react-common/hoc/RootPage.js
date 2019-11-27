@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from "react";
+import React, { useMemo, useEffect } from "react";
 import { Common, Page, EnvConfig } from "UtilsCommon";
 import Actions from "Actions";
 import ModalDialog from "../common/ModalDialog";
@@ -16,13 +16,13 @@ export default (WrapComponent, mapStateToProps) => props => {
 
     Init(obj, dispatch, dispatchAction, setActionState)
 
-    useState(() => {
+    useEffect(() => {
         if (obj.state === undefined) InitProps(state, obj.StateActionTypes);
         else ShouldComponentUpdate(state, obj.state, props, obj.StateActionTypes);
         obj.state = state;
 
         !EnvConfig.IsProd && console.log(state);
-    }, [state])
+    }, [state, obj, props])
 
     return (
         <React.Fragment>
@@ -95,7 +95,7 @@ function ShouldComponentUpdate(nextState, state, props, stateActionTypes) {
     for (let key in nextState) {
         if (nextState[key] !== undefined && !Common.IsFunction(nextState[key]) && state[key] !== nextState[key]) {
             blChangedProps = true;
-
+            
             if (SetResponseMessage(nextState[key], props)) blChangedProps = false;
 
             if (blChangedProps) break;

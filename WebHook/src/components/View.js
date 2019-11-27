@@ -22,7 +22,7 @@ export default class View extends Component {
         const { Property, PageAxis } = this.props;
 
         if (Property.EventActionName) {
-            PageAxis.InvokeAction(Property.EventActionName, this.props);
+            PageAxis.InvokeEventAction(Property.EventActionName, this.props);
         }
     }
 
