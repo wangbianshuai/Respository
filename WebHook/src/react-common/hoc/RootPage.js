@@ -17,11 +17,13 @@ export default (WrapComponent, mapStateToProps) => props => {
     Init(obj, dispatch, dispatchAction, setActionState)
 
     useEffect(() => {
-        if (obj.state === undefined) InitProps(state, obj.StateActionTypes);
-        else ShouldComponentUpdate(state, obj.state, props, obj.StateActionTypes);
-        obj.state = state;
+        let blChanged = false;
+        if (obj.state === undefined) { InitProps(state, obj.StateActionTypes); blChanged = true; }
+        else blChanged = ShouldComponentUpdate(state, obj.state, props, obj.StateActionTypes);
 
-        !EnvConfig.IsProd && console.log(state);
+        blChanged && !EnvConfig.IsProd && console.log(state);
+
+        obj.state = state;
     }, [state, obj, props])
 
     return (
@@ -95,7 +97,7 @@ function ShouldComponentUpdate(nextState, state, props, stateActionTypes) {
     for (let key in nextState) {
         if (nextState[key] !== undefined && !Common.IsFunction(nextState[key]) && state[key] !== nextState[key]) {
             blChangedProps = true;
-            
+
             if (SetResponseMessage(nextState[key], props)) blChangedProps = false;
 
             if (blChangedProps) break;
