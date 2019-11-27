@@ -8,7 +8,7 @@ export default class RowsColsView extends BaseIndex {
     constructor(props) {
         super(props)
 
-        props.EventActions.Components.push(props.Property);
+        props.PageAxis.Components.push(props.Property);
         props.Property.ReLoad= this.componentDidMount.bind(this);
         this.InitSetView();
     }
@@ -20,7 +20,7 @@ export default class RowsColsView extends BaseIndex {
 
     componentDidMount() {
         if (this.Property.EventActionName) {
-            this.EventActions.InvokeAction(this.Property.EventActionName, this.props);
+            this.PageAxis.InvokeAction(this.Property.EventActionName, this.props);
         }
     }
 
@@ -29,7 +29,7 @@ export default class RowsColsView extends BaseIndex {
 
         if (this.Property.Title) {
             return (
-                <Card title={Common.ReplaceDataContent(this.EventActions.PageData, this.Property.Title)} style={this.Property.Style} bordered={false} headStyle={{ padding: 0, margin: 0, paddingLeft: 16 }} bodyStyle={{ padding: 16, margin: 0 }}>
+                <Card title={Common.ReplaceDataContent(this.PageAxis.PageData, this.Property.Title)} style={this.Property.Style} bordered={false} headStyle={{ padding: 0, margin: 0, paddingLeft: 16 }} bodyStyle={{ padding: 16, margin: 0 }}>
                     {this.RenderFormView()}
                 </Card>
             )

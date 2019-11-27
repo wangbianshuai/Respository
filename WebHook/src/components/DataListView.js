@@ -15,7 +15,7 @@ export default class DataListView extends BaseIndex {
         this.Property.GetValue = () => this.state.DataList;
         const dataList = this.Property.Value || this.Property.DefaultValue || [];
         this.state = Object.assign({ DataList: dataList }, this.state);
-        this.EventActions.Components.push(this.Property);
+        this.PageAxis.Components.push(this.Property);
         this.Property.SetDisabled = this.SetDisabled.bind(this);
         this.Property.JudgeNullable = this.JudgeNullable.bind(this);
         this.ControlProperties = {}
@@ -119,9 +119,9 @@ export default class DataListView extends BaseIndex {
     RenderItemProperty(p, id, data, index) {
         p = this.AssignProperty(p, id, data, index);
 
-        const { EventActions, Property } = this;
+        const { PageAxis, Property } = this;
 
-        return <PropertyItem Property={p} key={p.Id} View={Property} EventActions={EventActions} />
+        return <PropertyItem Property={p} key={p.Id} View={Property} PageAxis={PageAxis} />
     }
 
     AssignProperty(p, id, data, index) {

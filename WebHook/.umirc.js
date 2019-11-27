@@ -31,7 +31,7 @@ export default {
         antd: true,
         dva: true,
         dynamicImport: false,
-        title: 'ReactTest',
+        title: 'Web Hook',
         dll: false,
         routes: {
           exclude: [

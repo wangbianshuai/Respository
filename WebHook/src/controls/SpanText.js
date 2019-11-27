@@ -13,11 +13,11 @@ export default class SpanText extends BaseIndex {
     render() {
         if (!this.state.IsVisible) return null;
 
-        const { EventActions } = this;
+        const { PageAxis } = this;
         const { Value, Text, Label, Style, ClassName } = this.props.Property;
         let text = Value || Text;
 
-        text = Common.ReplaceDataContent(EventActions.PageData, text);
+        text = Common.ReplaceDataContent(PageAxis.PageData, text);
 
         if (!Common.IsNullOrEmpty(this.state.Value)) text = this.state.Value;
 

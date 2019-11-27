@@ -1,5 +1,5 @@
-import React, { useMemo, useState } from "react";
-import { Common, Page } from "UtilsCommon";
+import React, { useState, useMemo } from "react";
+import { Common, Page, EnvConfig } from "UtilsCommon";
 import Actions from "Actions";
 import ModalDialog from "../common/ModalDialog";
 import ComponentList from "../ComponentList";
@@ -7,32 +7,34 @@ import { message } from "antd";
 import useDvaData from "../useHooks/useDvaData";
 import router from 'umi/router';
 
+const Token = Common.GetCookie("Token");
+
 export default (WrapComponent, mapStateToProps) => props => {
-    const obj = useMemo(() => { return { Name: "RootPage", IsInit: false, Token: Common.GetCookie("Token") } }, []);
+    const [dispatch, dispatchAction, setActionState, state] = useDvaData(mapStateToProps, Token);
 
-    const [dispatch, dispatchAction, setActionState, state] = useDvaData(mapStateToProps, obj.Token)
+    const obj = useMemo(() => { return { Name: "RootPage" } }, []);
 
-    Init(obj, dispatch, dispatchAction, setActionState);
+    Init(obj, dispatch, dispatchAction, setActionState)
 
     useState(() => {
-        if (obj.state === undefined) InitProps(state, obj.StateActionTypes)
-        else ShouldComponentUpdate(state, obj.state, props, obj.StateActionTypes)
+        if (obj.state === undefined) InitProps(state, obj.StateActionTypes);
+        else ShouldComponentUpdate(state, obj.state, props, obj.StateActionTypes);
         obj.state = state;
+
+        !EnvConfig.IsProd && console.log(state);
     }, [state])
 
     return (
         <React.Fragment>
-            <WrapComponent PageData={props.location.PageData} />
+            <WrapComponent PageData={props.location.PageData} DispatchAction={dispatchAction} Dispatch={dispatch} SetActionState={setActionState} />
             <ComponentList Page={obj.Page} Name="Dialogs" />
         </React.Fragment>
     )
 }
 
 function Init(obj, dispatch, dispatchAction, setActionState) {
-    if (obj.IsInit) return;
+    if (!obj.IsInit) obj.IsInit = true; else return;
 
-    obj.Token = Common.GetCookie("Token");
-    obj.IsInit = true;
     obj.Page = new Page();
 
     obj.Functions = { Dispatch: dispatch, DispatchAction: dispatchAction, SetActionState: setActionState, ToLogin }
@@ -45,6 +47,8 @@ function Init(obj, dispatch, dispatchAction, setActionState) {
 
     obj.StateActionTypes = {};
     Actions.InitDvaActions(InitDvaActions(obj, dispatch, dispatchAction, setActionState));
+
+    return obj;
 }
 
 function SetModalDialog(obj) {

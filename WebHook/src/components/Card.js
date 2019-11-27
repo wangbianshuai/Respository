@@ -13,7 +13,7 @@ export default class Card2 extends BaseIndex {
     render() {
         if (!this.state.IsVisible) return null;
 
-        const { Property, EventActions } = this.props;
+        const { Property, PageAxis } = this.props;
         const bordered = !!Property.Bordered;
         const headStyle = Property.HeadStyle || { padding: 0, margin: 0, paddingLeft: 16 };
         const bodyStyle = Property.BodyStyle || { padding: 16, margin: 0 };
@@ -21,7 +21,7 @@ export default class Card2 extends BaseIndex {
 
         return (
             <Card title={Property.Title} size={size} bordered={bordered} headStyle={headStyle} bodyStyle={bodyStyle}>
-                {Property.Properties.map(m => <PropertyItem Property={m} View={Property} key={m.Id} EventActions={EventActions} />)}
+                {Property.Properties.map(m => <PropertyItem Property={m} View={Property} key={m.Id} PageAxis={PageAxis} />)}
             </Card>
         )
 

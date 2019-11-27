@@ -1,36 +1,41 @@
-import { useState, useMemo, useCallback, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import Actions from "Actions";
 import { Common } from "UtilsCommon";
 
-function Init(obj, name, options, receive) {
-    if (!obj.IsInit) {
-        obj.IsInit = true;
-        obj.Name = options ? options.Name : name
-        obj.ActionTypes = Actions.GetActionTypes(obj.Name)
-        Actions.InitAction(name, options);
-        Actions.Receive(obj.Name, obj.Id, (actionType, data) => receive(actionType, data));
+function Init(obj, name, options) {
+    if (!obj.IsInit) obj.IsInit = true; else return;
+    
+    obj.Name = options ? options.Name : name
+    obj.ActionTypes = Actions.GetActionTypes(obj.Name);
+
+    obj.Receive = Receive(obj);
+    obj.Invoke = Invoke(obj);
+
+    Actions.InitAction(name, options);
+    Actions.Receive(obj.Name, obj.Id, obj.Receive);
+
+    return obj;
+}
+
+function Receive(obj) {
+    return (actionType, data) => {
+        if (obj.IsDestory) return;
+        if (data && data.Action && data.Data) data = data.Data;
+        obj.actionData = { ...obj.actionData };
+        obj.actionData[actionType] = data;
+        obj.setActionData(obj.actionData);
     }
 }
 
-function Receive(obj, actionData, setActionData) {
-    return useCallback((actionType, data) => {
-        if (obj.IsDestory) return;
-        if (data && data.Action && data.Data) data = data.Data;
-        const currentActionData = { ...actionData };
-        currentActionData[actionType] = data;
-        setActionData(currentActionData);
-    }, [obj, actionData, setActionData]);
-}
-
-function Invoke(obj, receive) {
-    return useCallback((actionType, data) => {
+function Invoke(obj) {
+    return (actionType, data) => {
         try {
             Actions.Invoke(obj.Id, actionType, data);
         }
         catch (err) {
-            receive(actionType, { IsSuccess: false, Message: err.message })
+            obj.Receive(actionType, { IsSuccess: false, Message: err.message })
         }
-    }, [obj, receive]);
+    }
 }
 
 function Destory(obj) {
@@ -40,15 +45,14 @@ function Destory(obj) {
 
 export default (name, options) => {
     const [actionData, setActionData] = useState({});
-    const obj = useMemo(() => { return { IsDestory: false, Id: Common.CreateGuid(), IsInit: false } }, []);
+    const obj = useMemo(() => { return { IsDestory: false, Id: Common.CreateGuid() } }, []);
 
-    const receive = Receive(obj, actionData, setActionData)
+    Init(obj, name, options);
 
-    Init(obj, name, options, receive);
-
-    const invoke = Invoke(obj, receive);
+    obj.actionData = actionData;
+    obj.setActionData = setActionData;
 
     useEffect(() => { return () => Destory(obj) }, [obj])
 
-    return [invoke, obj.ActionTypes, actionData]
+    return [obj.Invoke, obj.ActionTypes, actionData]
 }

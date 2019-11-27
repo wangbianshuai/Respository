@@ -81,7 +81,7 @@ export default class DataGrid extends Component {
 
     OnChange(pagination, filters, sorter) {
         this.setState({ Sorter: sorter });
-        this.props.EventActions.DataGridView.SetOrderBy(pagination, filters, sorter);
+        this.props.PageAxis.DataGridView.SetOrderBy(pagination, filters, sorter);
     }
 
     OnRowClick(record, index, e) {
@@ -121,7 +121,7 @@ export default class DataGrid extends Component {
     }
 
     SetShowColumns() {
-        this.props.EventActions.InvokeAction(this.props.Property.SetColumnsEventActionName, this.props);
+        this.props.PageAxis.InvokeAction(this.props.Property.SetColumnsEventActionName, this.props);
     }
 
     render() {

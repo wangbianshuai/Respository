@@ -34,16 +34,16 @@ export default class DataListView extends BaseIndex {
     }
 
     InitRemoveAction(props, action) {
-        const { EventActions } = props;
-        const DataListView = EventActions.GetComponent(action.DataListView);
+        const { PageAxis } = props;
+        const DataListView = PageAxis.GetComponent(action.DataListView);
 
         action.Parameters = { DataListView }
     }
 
     InitAddAction(props, action) {
-        const { EventActions } = props;
-        const DataListView = EventActions.GetComponent(action.DataListView);
-        const SelectDataProperty = EventActions.GetControl(action.SelectDataProperty);
+        const { PageAxis } = props;
+        const DataListView = PageAxis.GetComponent(action.DataListView);
+        const SelectDataProperty = PageAxis.GetControl(action.SelectDataProperty);
 
         action.Parameters = { DataListView, SelectDataProperty }
     }

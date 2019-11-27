@@ -4,17 +4,17 @@ import { Common } from "UtilsCommon";
 export default class Page extends BaseIndex {
 
     ToPage(props, action) {
-        const { EventActions } = props;
-        var url = Common.ReplaceDataContent(EventActions.PageData, action.PageUrl, true);
-        const ExpandSetPageUrl = EventActions.GetFunction(action.ExpandSetPageUrl);
+        const { PageAxis } = props;
+        var url = Common.ReplaceDataContent(PageAxis.PageData, action.PageUrl, true);
+        const ExpandSetPageUrl = PageAxis.GetFunction(action.ExpandSetPageUrl);
         if (ExpandSetPageUrl) url = ExpandSetPageUrl(url);
-        EventActions.ToPage(url)
+        PageAxis.ToPage(url)
     }
 
     OpenUrl(props, action) {
-        const { EventActions } = props;
-        const url = Common.ReplaceDataContent(EventActions.PageData, action.PageUrl, true);
-        EventActions.OpenPage(url);
+        const { PageAxis } = props;
+        const url = Common.ReplaceDataContent(PageAxis.PageData, action.PageUrl, true);
+        PageAxis.OpenPage(url);
     }
 
 
@@ -28,9 +28,9 @@ export default class Page extends BaseIndex {
     }
 
     InitSetPropertiesVisible(props, action) {
-        const { EventActions } = props;
+        const { PageAxis } = props;
 
-        const Properties = action.Properties.map(m => EventActions.GetView(m));
+        const Properties = action.Properties.map(m => PageAxis.GetView(m));
 
         action.Parameters = { Properties };
     }
@@ -45,9 +45,9 @@ export default class Page extends BaseIndex {
     }
 
     InitSetPropertiesExpandCollapse(props, action) {
-        const { EventActions } = props;
+        const { PageAxis } = props;
 
-        const Properties = action.Properties.map(m => EventActions.GetView(m));
+        const Properties = action.Properties.map(m => PageAxis.GetView(m));
 
         action.Parameters = { Properties };
     }

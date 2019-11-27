@@ -6,7 +6,7 @@ export default class DataGrid extends BaseIndex {
     //批量更新行数据列表
     BatchUpdateRowDataList(props, action) {
         if (!action.Parameters) this.InitBatchUpdateRowDataListAction(props, action);
-        const { EventActions, Property } = props;
+        const { PageAxis, Property } = props;
 
         const { DataGridView, AlertMessage, EntityProperties } = action.Parameters;
         const { DataActionType } = Property;
@@ -19,7 +19,7 @@ export default class DataGrid extends BaseIndex {
         else {
             selectRowKeys = DataGridView.GetSelectedRowKeys();
             if (selectRowKeys.length === 0 && !Property.IsNoRowsSelected) {
-                this.Alert("请选择记录再操作！", EventActions.ShowMessage, AlertMessage)
+                this.Alert("请选择记录再操作！", PageAxis.ShowMessage, AlertMessage)
                 return;
             }
 
@@ -29,31 +29,31 @@ export default class DataGrid extends BaseIndex {
         }
 
         //设置接收数据行数返回数据
-        EventActions.Receives[DataActionType] = (d) => this.ReceiveBatchUpdateRowDataList(d, props, action)
+        PageAxis.Receives[DataActionType] = (d) => this.ReceiveBatchUpdateRowDataList(d, props, action)
 
         let entityData = null;
         if (EntityProperties) {
-            entityData = this.GetPropertyValues(EntityProperties, EventActions)
+            entityData = this.GetPropertyValues(EntityProperties, PageAxis)
         }
 
         const onOk = () => {
             Property.SetDisabled && Property.SetDisabled(true);
 
-            EventActions.Invoke(DataActionType, { SelectRowKeys: selectRowKeys, Entity: DataGridView.Entity, EntityData: entityData, SelectDataList: selectDataList })
+            PageAxis.Invoke(DataActionType, { SelectRowKeys: selectRowKeys, Entity: DataGridView.Entity, EntityData: entityData, SelectDataList: selectDataList })
         };
 
-        if (Property.ConfirmTip) EventActions.Confirm(Property.ConfirmTip, onOk);
+        if (Property.ConfirmTip) PageAxis.Confirm(Property.ConfirmTip, onOk);
         else onOk();
     }
 
     ReceiveBatchUpdateRowDataList(data, props, action) {
         const { AlertMessage, DataGridView } = action.Parameters;
-        const { EventActions, Property } = props;
+        const { PageAxis, Property } = props;
 
         Property.SetDisabled && Property.SetDisabled(false);
 
-        if (this.IsSuccessNextsProps(data, EventActions.Alert, AlertMessage)) {
-            this.Alert(Property.SuccessTip, EventActions.ShowMessage, AlertMessage)
+        if (this.IsSuccessNextsProps(data, PageAxis.Alert, AlertMessage)) {
+            this.Alert(Property.SuccessTip, PageAxis.ShowMessage, AlertMessage)
             //刷新查询
             DataGridView.Refresh();
         }
@@ -61,19 +61,19 @@ export default class DataGrid extends BaseIndex {
     }
 
     InitBatchUpdateRowDataListAction(props, action) {
-        const { EventActions } = props;
-        const DataGridView = EventActions.GetComponent(action.DataGridView);
-        const AlertMessage = EventActions.GetControl(action.AlertMessage);
+        const { PageAxis } = props;
+        const DataGridView = PageAxis.GetComponent(action.DataGridView);
+        const AlertMessage = PageAxis.GetControl(action.AlertMessage);
 
         let EntityProperties = null;
-        if (action.EntityProperties) EntityProperties = action.EntityProperties.map(m => EventActions.GetProperty(m));
+        if (action.EntityProperties) EntityProperties = action.EntityProperties.map(m => PageAxis.GetProperty(m));
 
         action.Parameters = { DataGridView, AlertMessage, EntityProperties }
     }
 
     SetDataGridShowColumns(props, action) {
         if (!action.Parameters) this.InitSetDataGridShowColumnsAction(props, action);
-        const { EventActions } = props;
+        const { PageAxis } = props;
 
         const { DataGridView } = action.Parameters;
 
@@ -108,24 +108,24 @@ export default class DataGrid extends BaseIndex {
         };
 
         const onOk = (e, p) => this.SetSelectShowColumns(e, p, props, action);
-        this.ShowDialog(action, EventActions, ColumnsView, onOk);
+        this.ShowDialog(action, PageAxis, ColumnsView, onOk);
     }
 
     SetSelectShowColumns(e, p, props, action) {
-        const { EventActions } = props;
+        const { PageAxis } = props;
         const { ColumnsView, DataGridView } = action.Parameters;
         const colPropertery = ColumnsView.Properties[1];
         const value = colPropertery.GetValue();
 
-        if (value.length === 0) { this.Alert("最少需选择一列！", EventActions.Alert); return; }
+        if (value.length === 0) { this.Alert("最少需选择一列！", PageAxis.Alert); return; }
         DataGridView.SetColumnsVisible2(value);
 
         action.ModalDialog.SetVisible(false);
     }
 
     InitSetDataGridShowColumnsAction(props, action) {
-        const { EventActions } = props;
-        const DataGridView = EventActions.GetComponent(action.DataGridView);
+        const { PageAxis } = props;
+        const DataGridView = PageAxis.GetComponent(action.DataGridView);
 
         action.Parameters = { DataGridView }
     }

@@ -19,17 +19,17 @@ export default class View extends Component {
     }
 
     componentDidMount() {
-        const { Property, EventActions } = this.props;
+        const { Property, PageAxis } = this.props;
 
         if (Property.EventActionName) {
-            EventActions.InvokeAction(Property.EventActionName, this.props);
+            PageAxis.InvokeAction(Property.EventActionName, this.props);
         }
     }
 
     GetReactComponent(p) {
-        const { Property, EventActions } = this.props;
+        const { Property, PageAxis } = this.props;
 
-        const props = { Property: p, View: Property, EventActions, key: p.Id }
+        const props = { Property: p, View: Property, PageAxis, key: p.Id }
 
         return <PropertyItem {...props} />
     }
@@ -41,11 +41,11 @@ export default class View extends Component {
     render() {
         if (!this.state.IsVisible) return null;
 
-        const { Property, EventActions } = this.props;
+        const { Property, PageAxis } = this.props;
 
         if (Property.Title) {
             return (
-                <Card title={Common.ReplaceDataContent(EventActions.PageData, Property.Title)} style={Property.Style} bordered={false} headStyle={{ padding: 0, margin: 0, paddingLeft: 16 }} bodyStyle={{ padding: 16, margin: 0 }}>
+                <Card title={Common.ReplaceDataContent(PageAxis.PageData, Property.Title)} style={Property.Style} bordered={false} headStyle={{ padding: 0, margin: 0, paddingLeft: 16 }} bodyStyle={{ padding: 16, margin: 0 }}>
                     {this.RenderProperties()}
                 </Card>
             )

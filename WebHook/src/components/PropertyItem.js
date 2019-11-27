@@ -20,15 +20,15 @@ export default class PropertyItem extends Component {
 
         this.SetIsReadOnly();
 
-        props.EventActions.GetReactComponent = this.GetReactComponent.bind(this);
+        props.PageAxis.GetReactComponent = this.GetReactComponent.bind(this);
     }
 
     //设置只读权限
     SetIsReadOnly() {
-        const { Property, EventActions } = this.props;
+        const { Property, PageAxis } = this.props;
         let readOnly = !!Property.IsReadOnly;
         //判断是否有显示权限
-        if (!readOnly && Property.ReadRightName) readOnly = !EventActions.GetRight(Property.ReadRightName);
+        if (!readOnly && Property.ReadRightName) readOnly = !PageAxis.GetRight(Property.ReadRightName);
 
         if (readOnly && !Property.IsNullable) Property.IsNullable = true;
         if (readOnly && Property.PlaceHolder) Property.PlaceHolder = "";
@@ -38,16 +38,16 @@ export default class PropertyItem extends Component {
 
     //设置显示权限
     GetIsVisible() {
-        const { Property, EventActions } = this.props;
+        const { Property, PageAxis } = this.props;
         let isVisible = Property.IsVisible !== false;
 
         //判断是否有显示权限
-        if (isVisible) isVisible = EventActions.GetRight(Property.Name);
+        if (isVisible) isVisible = PageAxis.GetRight(Property.Name);
         //判断多个权限名组合有否显示
         if (isVisible && Property.RightNames) {
             let visible = false;
             for (let i = 0; i < Property.RightNames.length; i++) {
-                visible = EventActions.GetRight(Property.RightNames[i]);
+                visible = PageAxis.GetRight(Property.RightNames[i]);
                 if (!visible) break;
             }
             isVisible = visible;
@@ -79,8 +79,8 @@ export default class PropertyItem extends Component {
     }
 
     GetReactComponent(property, view) {
-        const { EventActions } = this.props
-        const props = { Property: property, key: property.Id, View: view || {}, EventActions }
+        const { PageAxis } = this.props
+        const props = { Property: property, key: property.Id, View: view || {}, PageAxis }
 
         return this.CreateComponent(property.Type, props);
     }

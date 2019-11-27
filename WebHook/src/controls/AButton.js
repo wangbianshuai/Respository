@@ -9,7 +9,7 @@ export default class AButton extends BaseIndex {
     }
 
     ClickAction() {
-        this.EventActions.InvokeAction(this.Property.EventActionName, this.props);
+        this.PageAxis.InvokeAction(this.Property.EventActionName, this.props);
     }
 
     render() {

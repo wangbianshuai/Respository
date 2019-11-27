@@ -1,29 +1,15 @@
-import React, { Component } from "react";
 import LeftRightLayout from './LeftRightLayout/Index';
 import { EnvConfig } from "UtilsCommon";
 
-export default class Index extends Component {
-  constructor(props) {
-    super(props);
+EnvConfig.SetEnv();
 
-    this.Name = "Index";
+function IsLogin(props) {
+  const { location: { pathname } } = props;
+  let name = pathname.toLowerCase().replace(".html", "");
+  return name === '/login';
+}
 
-    EnvConfig.SetEnv();
-  }
-
-  IsLogin() {
-    const { location: { pathname } } = this.props;
-    let name = pathname.toLowerCase().replace(".html", "");
-    return name === '/login';
-  }
-
-  render() {
-    return this.props.children;
-  }
-
-  render2() {
-    if (this.IsLogin()) return this.props.children;
-
-    return <LeftRightLayout {...this.props} />
-  }
+export default props => {
+  if (IsLogin(props)) return props.children
+  return <LeftRightLayout {...props} />
 }

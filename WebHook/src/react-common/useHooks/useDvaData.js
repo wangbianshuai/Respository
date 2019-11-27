@@ -1,26 +1,31 @@
-import { Common, EnvConfig } from "UtilsCommon";
+import { Common } from "UtilsCommon";
 import { useSelector, useDispatch } from "dva";
 import { useMemo } from "react";
 
 export default (mapStateToProps, token) => {
     const props = useSelector((state) => MapStateToProps(state, mapStateToProps(state)));
+
     const dispatch = useDispatch();
 
-    const [dispatch2, dispatchAction, setActionState] = useMemo(() => {
-        return [Dispatch(dispatch, token), DispatchAction(dispatch, token), SetActionState(dispatch)]
-    }, [dispatch, token])
+    const obj = useMemo(() => { return {} }, []);
 
-    return [dispatch2, dispatchAction, setActionState, props];
+    Init(obj, dispatch, token);
+
+    return [obj.Dispatch, obj.DispatchAction, obj.SetActionState, props];
+}
+
+function Init(obj, dispatch, token) {
+    if (!obj.IsInit) obj.IsInit = true; else return;
+
+    obj.Dispatch = Dispatch(dispatch, token);
+    obj.DispatchAction = DispatchAction(dispatch, token);
+    obj.SetActionState = SetActionState(dispatch);
 }
 
 function MapStateToProps(state, props) {
     let loading = false;
-    for (let key in state) {
-        if (state[key].Loading) { loading = true; break; }
-    }
+    for (let key in state) if (state[key].Loading) { loading = true; break; }
     props.Loading = loading
-
-    !EnvConfig.IsProd && console.log(props);
 
     return props;
 }
@@ -38,7 +43,7 @@ function Dispatch(dispatch, token) {
 
         if (action.IsToken && !payload.Token) payload.Token = token;
         if (action.IsLoading === false) isloading = false;
-        return dispatch(name + "/" + actionName, payload, isloading);
+        return dispatch({ type: name + "/" + actionName, payload, isloading });
     }
 }
 
@@ -50,7 +55,7 @@ function DispatchAction(dispatch, token) {
 
 function SetActionState(dispatch) {
     return (name, actionName, payload) => {
-        return dispatch(name + "/Set_" + actionName, payload)
+        return dispatch({ type: name + "/Set_" + actionName, payload })
     }
 }
 

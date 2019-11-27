@@ -109,16 +109,16 @@ export default class TextBox2 extends BaseIndex {
 
     OnSearch(value) {
         const props = { ...this.props, SearchValue: value }
-        this.EventActions.InvokeAction(this.Property.EventActionName, props);
+        this.PageAxis.InvokeAction(this.Property.EventActionName, props);
     }
 
     OnPressEnter() {
         const { PressEnterEventActionName, PressEnterEventPropertyName } = this.Property;
         if (PressEnterEventActionName) {
             const props = { ...this.props };
-            if (PressEnterEventPropertyName) props.Property = this.EventActions.GetProperty(PressEnterEventPropertyName);
+            if (PressEnterEventPropertyName) props.Property = this.PageAxis.GetProperty(PressEnterEventPropertyName);
 
-            this.EventActions.InvokeAction(PressEnterEventActionName, props);
+            this.PageAxis.InvokeAction(PressEnterEventActionName, props);
         }
     }
 

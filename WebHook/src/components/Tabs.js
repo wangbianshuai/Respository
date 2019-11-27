@@ -18,11 +18,11 @@ export default class Tabs2 extends Component {
     }
 
     GetReactComponent(p) {
-        const { Property, EventActions } = this.props;
+        const { Property, PageAxis } = this.props;
 
         p.TabPaneId = p.TabPaneId || Common.CreateGuid();
 
-        const props = { Property: p, View: Property, EventActions, key: p.Id }
+        const props = { Property: p, View: Property, PageAxis, key: p.Id }
 
         let tab = p.TabLabel;
         if (p.TabIcon) tab = <React.Fragment><Icon type={p.TabIcon} /><span>{tab}</span></React.Fragment>

@@ -69,7 +69,7 @@ class Select2 extends BaseIndex {
         if (Property.SelectDataToProperties) this.SetSelectDataToProperties(this.GetSelectData(value));
 
         //值改变调用事件行为
-        if (Property.ValueChangeEventActionName) this.EventActions.InvokeAction(Property.ValueChangeEventActionName, this.props);
+        if (Property.ValueChangeEventActionName) this.PageAxis.InvokeAction(Property.ValueChangeEventActionName, this.props);
 
         this.ChildPropertiesChanged(value);
     }

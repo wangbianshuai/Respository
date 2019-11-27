@@ -32,7 +32,7 @@ class DataGridView extends BaseIndex {
         this.ActionTypes = this.props.GetActionTypes("Components_DataGridView");
         this.Property.Invoke = this.props.Invoke;
         this.Property.ActionTypes = this.ActionTypes;
-        this.EventActions.Components.push(this.Property);
+        this.PageAxis.Components.push(this.Property);
 
         const { PrimaryKey, PropertyPrimaryKey } = this.Property.Entity;
         this.PrimaryKey = PropertyPrimaryKey || PrimaryKey;
@@ -169,7 +169,7 @@ class DataGridView extends BaseIndex {
                 let list = Common.ArrayClone(p.ActionList);
                 list = this.SetSelfOperationActionList(p, list, record, index);
                 list = this.SetDataValueOperationActionList(p, list, record, index);
-                const fn = this.EventActions.GetFunction(p.ExpandSetOperation);
+                const fn = this.PageAxis.GetFunction(p.ExpandSetOperation);
                 if (fn) list = fn(list, record, index);
                 return this.RenderActions(list, record, index);
             }
@@ -192,7 +192,7 @@ class DataGridView extends BaseIndex {
     SetSelfOperationActionList(p, actionList, record, index) {
         const { SelfPropertyName } = p
 
-        const userId = this.EventActions.GetLoginUserId();
+        const userId = this.PageAxis.GetLoginUserId();
         const blEdit = Common.IsEquals(userId, record[SelfPropertyName], true);
         if (blEdit) return actionList;
 
@@ -205,18 +205,18 @@ class DataGridView extends BaseIndex {
     }
 
     componentDidMount() {
-        if (this.Property.IsSearchQuery !== false) this.EventActions.InvokeAction(this.Property.EventActionName, this.props);
+        if (this.Property.IsSearchQuery !== false) this.PageAxis.InvokeAction(this.Property.EventActionName, this.props);
     }
 
     ReceiveSearchQuery(data) {
         this.Property.SetDataLoading(false);
-        this.EventActions.DataGridView.ReceiveSearchQuery(data, this.props);
+        this.PageAxis.DataGridView.ReceiveSearchQuery(data, this.props);
 
         return true;
     }
 
     ReceiveExcelExport(data) {
-        this.EventActions.DataGridView.ReceiveExcelExport(data, this.props);
+        this.PageAxis.DataGridView.ReceiveExcelExport(data, this.props);
 
         return true;
     }
@@ -268,7 +268,7 @@ class DataGridView extends BaseIndex {
         this.PageInfo.PageIndex = pageIndex;
         this.PageInfo.PageSize = pageSize;
         if (this.Property.IsLocalPage) this.setState({ RefreshId: Common.CreateGuid() });
-        else this.EventActions.InvokeAction(this.Property.EventActionName, { ...this.props, PageIndex: pageIndex, PageSize: pageSize, IsData: isData });
+        else this.PageAxis.InvokeAction(this.Property.EventActionName, { ...this.props, PageIndex: pageIndex, PageSize: pageSize, IsData: isData });
     }
 
     Refresh() {
@@ -287,7 +287,7 @@ class DataGridView extends BaseIndex {
 
         const isPartPaging = !!this.Property.IsPartPaging
 
-        return (<DataGrid EventActions={this.EventActions} PrimaryKey={this.PrimaryKey} DataList={dataList} IsPartPaging={isPartPaging} PageInfo={this.PageInfo} IsPaging={this.Property.IsPaging}
+        return (<DataGrid PageAxis={this.PageAxis} PrimaryKey={this.PrimaryKey} DataList={dataList} IsPartPaging={isPartPaging} PageInfo={this.PageInfo} IsPaging={this.Property.IsPaging}
             IsRowSelection={this.Property.IsRowSelection} IsSingleSelection={this.Property.IsSingleSelection} Property={this.Property}
             PageIndexChange={this.PageIndexChange.bind(this)} GroupByInfo={this.GroupByInfo} GroupByInfoHtml={this.Property.GroupByInfoHtml}
             IsLoading={this.state.IsDataLoading} DataProperties={this.DataProperties2} />)
@@ -298,7 +298,7 @@ class DataGridView extends BaseIndex {
 
         if (this.Property.Title) {
             return (
-                <Card title={Common.ReplaceDataContent(this.EventActions.PageData, this.Property.Title)} style={this.Property.Style} bordered={false} headStyle={{ padding: 0, margin: 0, paddingLeft: 16 }} bodyStyle={{ padding: 16, margin: 0 }}>
+                <Card title={Common.ReplaceDataContent(this.PageAxis.PageData, this.Property.Title)} style={this.Property.Style} bordered={false} headStyle={{ padding: 0, margin: 0, paddingLeft: 16 }} bodyStyle={{ padding: 16, margin: 0 }}>
                     {this.RenderDataView()}
                 </Card>
             )

@@ -11,13 +11,13 @@ export default class DataGridView extends BaseIndex {
     }
 
     InitSearchQueryAction(props, action) {
-        const { Property, EventActions } = props;
+        const { Property, PageAxis } = props;
         //判断props.Property 是 查询按钮或搜索框 还是DataGridView
-        const DataGridView = Property.Type === "DataGridView" ? Property : EventActions.GetComponent(action.DataGridView);
-        const SearchButton = Property.Type === "DataGridView" ? EventActions.GetControl(action.SearchButton) : Property;
-        const SearchView = EventActions.GetComponent(action.SearchView);
-        const AlertMessage = EventActions.GetControl(action.AlertMessage);
-        const ExpandSearchQueryLoad = EventActions.GetFunction(action.ExpandSearchQueryLoad)
+        const DataGridView = Property.Type === "DataGridView" ? Property : PageAxis.GetComponent(action.DataGridView);
+        const SearchButton = Property.Type === "DataGridView" ? PageAxis.GetControl(action.SearchButton) : Property;
+        const SearchView = PageAxis.GetComponent(action.SearchView);
+        const AlertMessage = PageAxis.GetControl(action.AlertMessage);
+        const ExpandSearchQueryLoad = PageAxis.GetFunction(action.ExpandSearchQueryLoad)
         action.Parameters = { DataGridView, SearchButton, SearchView, AlertMessage, ExpandSearchQueryLoad }
     }
 
@@ -25,7 +25,7 @@ export default class DataGridView extends BaseIndex {
         const { DataGridView, SearchButton } = parameters;
         const { ActionTypes, Invoke, EntitySearchQuery } = DataGridView;
         const { SearchQuery } = ActionTypes;
-        const { EventActions, IsData } = props;
+        const { PageAxis, IsData } = props;
 
         const ConditionList = this.GetConditionList(parameters, isClearQuery);
         if (ConditionList === false) return;
@@ -39,14 +39,14 @@ export default class DataGridView extends BaseIndex {
         DataGridView.PageSize = pageSize;
         SearchButton && SearchButton.SetDisabled(true);
 
-        const data = { EntitySearchQuery, Entity: DataGridView.Entity, IsData, PageIndex: pageIndex, PageSize: pageSize, QueryInfo: queryInfo, PageData: EventActions.PageData }
+        const data = { EntitySearchQuery, Entity: DataGridView.Entity, IsData, PageIndex: pageIndex, PageSize: pageSize, QueryInfo: queryInfo, PageData: PageAxis.PageData }
 
         Invoke(SearchQuery, data);
     }
 
     ReceiveSearchQuery(data, props) {
-        const { EventActions, Property, IsData } = props;
-        const action = EventActions.GetAction(Property.EventActionName);
+        const { PageAxis, Property, IsData } = props;
+        const action = PageAxis.GetAction(Property.EventActionName);
         if (!action.Parameters) this.InitSearchQueryAction(props, action);
         const { AlertMessage, ExpandSearchQueryLoad } = action.Parameters;
 
@@ -59,7 +59,7 @@ export default class DataGridView extends BaseIndex {
         let msg = ""
         if (data.IsSuccess === false) {
             msg = data.Message;
-            if (!AlertMessage) this.Alert(msg, EventActions.ShowMessage);
+            if (!AlertMessage) this.Alert(msg, PageAxis.ShowMessage);
         }
         else if ((action.IsSearch || !action.IsQuery) && !IsData) msg = `符合当前查询条件的结果总计${pageRecord}条！`;
 
@@ -175,14 +175,14 @@ export default class DataGridView extends BaseIndex {
         if (!action.Parameters) this.SelectRowToPageAction(props, action);
 
         const { DataGridView, AlertMessage, SetPageUrl } = action.Parameters;
-        const { EventActions, Property } = props;
+        const { PageAxis, Property } = props;
 
         var data = null;
         if (Property.Params) data = Property.Params;
         else {
             const selectDataList = DataGridView.GetSelectDataList();
             if (selectDataList.length === 0) {
-                this.Alert("请选择记录再操作！", EventActions.ShowMessage, AlertMessage)
+                this.Alert("请选择记录再操作！", PageAxis.ShowMessage, AlertMessage)
                 return;
             }
 
@@ -204,22 +204,22 @@ export default class DataGridView extends BaseIndex {
         }
         else url = Common.ReplaceDataContent(data, action.PageUrl, true);
 
-        const ExpandSetPageUrl = EventActions.GetFunction(action.ExpandSetPageUrl);
+        const ExpandSetPageUrl = PageAxis.GetFunction(action.ExpandSetPageUrl);
         if (ExpandSetPageUrl) url = ExpandSetPageUrl(url);
 
-        if (action.IsOpenUrl) EventActions.OpenPage(url)
-        else EventActions.ToPage(url)
+        if (action.IsOpenUrl) PageAxis.OpenPage(url)
+        else PageAxis.ToPage(url)
     }
 
     AlertByRowData(props, action) {
         if (!action.Parameters) this.AlertByRowDataAction(props, action);
 
         const { DataGridView, AlertMessage } = action.Parameters;
-        const { EventActions } = props;
+        const { PageAxis } = props;
 
         const selectDataList = DataGridView.GetSelectDataList();
         if (selectDataList.length === 0) {
-            this.Alert("请选择记录再操作！", EventActions.ShowMessage, AlertMessage)
+            this.Alert("请选择记录再操作！", PageAxis.ShowMessage, AlertMessage)
             return;
         }
 
@@ -228,28 +228,28 @@ export default class DataGridView extends BaseIndex {
         const { StatusName, StatusValue, NullTipMessage } = action;
         if (StatusName && StatusValue) {
             if (!Common.IsEquals(data[StatusName], StatusValue)) {
-                EventActions.Alert(NullTipMessage);
+                PageAxis.Alert(NullTipMessage);
                 return;
             }
         }
 
         const msg = Common.ReplaceDataContent(data, action.TipMessage);
-        EventActions.Alert(msg, action.Title)
+        PageAxis.Alert(msg, action.Title)
     }
 
     SelectRowToPageAction(props, action) {
-        const { EventActions } = props;
-        const DataGridView = EventActions.GetComponent(action.DataGridView);
-        const AlertMessage = EventActions.GetControl(action.AlertMessage);
-        const SetPageUrl = EventActions.GetFunction(action.SetPageUrl);
+        const { PageAxis } = props;
+        const DataGridView = PageAxis.GetComponent(action.DataGridView);
+        const AlertMessage = PageAxis.GetControl(action.AlertMessage);
+        const SetPageUrl = PageAxis.GetFunction(action.SetPageUrl);
 
         action.Parameters = { DataGridView, AlertMessage, SetPageUrl }
     }
 
     AlertByRowDataAction(props, action) {
-        const { EventActions } = props;
-        const DataGridView = EventActions.GetComponent(action.DataGridView);
-        const AlertMessage = EventActions.GetControl(action.AlertMessage);
+        const { PageAxis } = props;
+        const DataGridView = PageAxis.GetComponent(action.DataGridView);
+        const AlertMessage = PageAxis.GetControl(action.AlertMessage);
 
         action.Parameters = { DataGridView, AlertMessage }
     }
@@ -258,16 +258,16 @@ export default class DataGridView extends BaseIndex {
         if (!action.Parameters) this.InitExcelExportActoin(props, action);
 
         const { DataGridView } = action.Parameters;
-        const { EventActions } = props;
+        const { PageAxis } = props;
 
-        if (DataGridView.GetPageRecord() > 30000) { EventActions.Alert("对不起，您要导出的数据量超过3万条，请先进行相应的数据筛选！"); return; }
+        if (DataGridView.GetPageRecord() > 30000) { PageAxis.Alert("对不起，您要导出的数据量超过3万条，请先进行相应的数据筛选！"); return; }
 
-        EventActions.Confirm("确定将数据Excel导出吗？", () => this.ExecExcelExport(props, action));
+        PageAxis.Confirm("确定将数据Excel导出吗？", () => this.ExecExcelExport(props, action));
     }
 
     ExecExcelExport(props, action) {
         const { DataGridView } = action.Parameters;
-        const { EventActions, Property } = props;
+        const { PageAxis, Property } = props;
 
         const { ActionTypes, Invoke, EntityExcelExport } = DataGridView;
         const { ExcelExport } = ActionTypes;
@@ -294,26 +294,26 @@ export default class DataGridView extends BaseIndex {
         Property && Property.SetDisabled(true);
         DataGridView.ExcelExportButton = Property;
 
-        const data = { EntityExcelExport, Title, Entity: DataGridView.Entity, PageIndex: 1, PageSize: DataGridView.PageSize, QueryInfo: queryInfo, PageData: EventActions.PageData }
+        const data = { EntityExcelExport, Title, Entity: DataGridView.Entity, PageIndex: 1, PageSize: DataGridView.PageSize, QueryInfo: queryInfo, PageData: PageAxis.PageData }
 
         Invoke(ExcelExport, data);
     }
 
     InitExcelExportActoin(props, action) {
-        const { EventActions } = props;
-        const DataGridView = EventActions.GetComponent(action.DataGridView);
+        const { PageAxis } = props;
+        const DataGridView = PageAxis.GetComponent(action.DataGridView);
 
         action.Parameters = { DataGridView }
     }
 
     ReceiveExcelExport(data, props) {
-        const { EventActions, Property } = props;
+        const { PageAxis, Property } = props;
 
         //设置搜索按钮
         Property.ExcelExportButton && Property.ExcelExportButton.SetDisabled(false);
 
         if (data.IsSuccess === false || !data.FileName) {
-            this.Alert(data.Message || "导出失败！", EventActions.ShowMessage);
+            this.Alert(data.Message || "导出失败！", PageAxis.ShowMessage);
             return;
         }
 

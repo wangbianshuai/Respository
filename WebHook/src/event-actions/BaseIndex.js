@@ -157,18 +157,18 @@ export default class BaseIndex {
         })
     }
 
-    ShowDialog(action, EventActions, dialogView, onOk, setValue) {
+    ShowDialog(action, PageAxis, dialogView, onOk, setValue) {
         if (!action.ModalDialog) {
             action.ModalDialog = {
                 Id: dialogView.DialogId, Title: dialogView.DialogTitle, Visible: true,
                 Width: dialogView.DialogWidth,
                 Style: dialogView.DialogStyle,
                 BodyStyle: dialogView.BodyStyle,
-                Component: EventActions.GetReactComponent(dialogView),
+                Component: PageAxis.GetReactComponent(dialogView),
                 IsOk: !!onOk,
                 OnOk: onOk
             };
-            EventActions.SetModalDialog(action.ModalDialog);
+            PageAxis.SetModalDialog(action.ModalDialog);
         }
         else {
             setValue && setValue();
@@ -179,8 +179,8 @@ export default class BaseIndex {
     ReceiveDialogOkActionType(data, props, action) {
         action.OkProperty.SetDisabled(false);
         const { AlertMessage, DataGridView, DialogView } = action.Parameters;
-        const { EventActions } = props;
-        if (this.IsSuccessNextsProps(data, EventActions.Alert, null)) {
+        const { PageAxis } = props;
+        if (this.IsSuccessNextsProps(data, PageAxis.Alert, null)) {
             AlertMessage.SetValue(DialogView.SuccessTip);
             //刷新查询
             DataGridView.Refresh();

@@ -23,7 +23,7 @@ export default (config) => {
         }
 
         render() {
-            return <Components.PropertyItem Property={this.PageConfig} EventActions={this.EventActions} />
+            return <Components.PropertyItem Property={this.PageConfig} PageAxis={this.PageAxis} />
         }
     }
 

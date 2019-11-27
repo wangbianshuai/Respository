@@ -7,10 +7,10 @@ export default class BaseIndex extends Component {
         super(props)
 
         this.Id = props.Property.Id || Common.CreateGuid()
-        props.EventActions.Controls.push(props.Property);
+        props.PageAxis.Controls.push(props.Property);
         this.Property = props.Property;
         this.View = props.View;
-        this.EventActions = props.EventActions;
+        this.PageAxis = props.PageAxis;
         this.IsLoadValue = props.Property.IsLoadValue === true;
 
         this.SetDateDefaultValue();
@@ -171,7 +171,7 @@ export default class BaseIndex extends Component {
     }
 
     ReceiveDataSource(res) {
-        const { Property, EventActions } = this.props
+        const { Property, PageAxis } = this.props
 
         let dataList = []
         if (this.IsSuccessProps(res)) {
@@ -181,7 +181,7 @@ export default class BaseIndex extends Component {
 
             //扩展设置数据列表
             if (Property.ExpandSetDataList) {
-                dataList = EventActions.GetFunction(Property.ExpandSetDataList)({ dataList, Property });
+                dataList = PageAxis.GetFunction(Property.ExpandSetDataList)({ dataList, Property });
             }
         }
         if (Property.IsOnlyInit) Property.InitDataList = dataList;
@@ -231,7 +231,7 @@ export default class BaseIndex extends Component {
                 if (this.IsSuccessProps(state) && !Property.ServiceDataSource.IsRefresh) this.ReceiveDataSource(state);
                 else {
                     var payload = Property.ServiceDataSource.Payload || {};
-                    if (Property.ServiceDataSource.GetPayload) payload = this.EventActions.GetFunction(Property.ServiceDataSource.GetPayload)({ Property, View })
+                    if (Property.ServiceDataSource.GetPayload) payload = this.PageAxis.GetFunction(Property.ServiceDataSource.GetPayload)({ Property, View })
                     this.props.DispatchAction(Property.ServiceDataSource.ServiceName, Property.ServiceDataSource.ActionName, payload).then(res => this.ReceiveDataSource(res));
                 }
             }
@@ -266,7 +266,7 @@ export default class BaseIndex extends Component {
 
         window.setTimeout(() => {
             //值改变调用事件行为
-            if (Property.ValueChangeEventActionName) this.EventActions.InvokeAction(Property.ValueChangeEventActionName, this.props);
+            if (Property.ValueChangeEventActionName) this.PageAxis.InvokeAction(Property.ValueChangeEventActionName, this.props);
 
             this.ChildPropertiesChanged(value);
         }, 100);

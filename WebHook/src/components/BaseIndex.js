@@ -13,7 +13,7 @@ export default class BaseIndex extends Component {
         this.Id = props.Property.Id;
         this.Property = props.Property;
         this.View = props.View;
-        this.EventActions = props.EventActions;
+        this.PageAxis = props.PageAxis;
         this.state = { IsVisible: true }
         this.Property.SetVisible = this.SetVisible.bind(this);
     }
@@ -129,7 +129,7 @@ export default class BaseIndex extends Component {
     }
 
     GetPropertyItem(p) {
-        return (<PropertyItem Property={p} EventActions={this.EventActions} View={this.Property} key={"pt_" + p.Id} />)
+        return (<PropertyItem Property={p} PageAxis={this.PageAxis} View={this.Property} key={"pt_" + p.Id} />)
     }
 
     RenderActions(actionList, record) {
@@ -139,7 +139,7 @@ export default class BaseIndex extends Component {
             actionList[i].Params = record;
             if (i > 0) list.push(<Divider type="vertical" key={i} />)
             if (actionList[i].IsToPage) list.push(this.GetLinkAction(actionList[i], record));
-            else list.push(<PropertyItem Property={actionList[i]} EventActions={this.EventActions} View={this.Property} key={actionList[i].Name} />)
+            else list.push(<PropertyItem Property={actionList[i]} PageAxis={this.PageAxis} View={this.Property} key={actionList[i].Name} />)
         }
 
         return (<span>{list.map(m => m)}</span>)
