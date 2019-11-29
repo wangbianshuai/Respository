@@ -4,6 +4,8 @@ import { Common } from "UtilsCommon";
 import Components from "Components";
 import TemplateCommon from "./TemplateCommon";
 
+const Name="EntityList";
+
 export default (config) => {
     const pageConfig = TemplateCommon.GetPageConfig(config);
     if (!pageConfig) return null;
