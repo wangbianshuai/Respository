@@ -24,7 +24,9 @@ function Init(obj, dispatch, token) {
 
 function MapStateToProps(state, props) {
     let loading = false;
-    for (let key in state) if (state[key].Loading) { loading = true; break; }
+    for (let key in state) {
+        if (state[key] && state[key].Loading) { loading = true; break; }
+    }
     props.Loading = loading;
 
     return props;

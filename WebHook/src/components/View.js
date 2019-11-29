@@ -1,17 +1,30 @@
-import React, { Component } from "react"
+import { useMemo, useState, useEffect } from "react"
 import { Common } from "UtilsCommon";
 import PropertyItem from "./PropertyItem";
 import { Card } from "antd";
 import styles from "../styles/View.css";
+import BaseIndex from "./BaseIndex";
 
-export default class View extends Component {
-    constructor(props) {
-        super(props)
+export default (props) => {
+    const instance = useMemo(() => new View(), []);
+
+    instance.Init2(props);
+
+    instance.InitState("IsVisible", useState(props.Property.IsVisible !== false));
+
+    useEffect(() => { instance.componentDidMount() }, [instance])
+
+    return instance.render();
+}
+
+class View extends BaseIndex {
+
+    Init2(props) {
+        this.Init(props);
 
         this.Id = Common.CreateGuid()
-        this.state = { IsVisible: props.Property.IsVisible !== false }
         props.Property.SetVisible = this.SetVisible.bind(this);
-        props.Property.ReLoad= this.componentDidMount.bind(this);
+        props.Property.ReLoad = this.componentDidMount.bind(this);
     }
 
     SetVisible(v) {

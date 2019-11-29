@@ -1,37 +1,41 @@
-import React from "react";
+import { useMemo, useState, useEffect } from "react"
 import { Common } from "UtilsCommon";
 import DataGrid from "./DataGrid";
 import BaseIndex from "./BaseIndex";
-import { ConnectAction } from "ReactCommon";
+import { useConnectAction } from "ReactCommon";
 import { Card } from "antd";
 import { router } from "dva";
 import styles from "../styles/View.css";
 const Link = router.Link
 
+const Name = "Components_DataGridView";
+
+export default (props) => {
+    const instance = useMemo(() => new DataGridView(), []);
+    const [invoke, actionTypes, actionData] = useConnectAction(Name)
+
+    instance.Init2(props, invoke, actionTypes);
+
+    instance.InitState("IsVisible", useState(true));
+    instance.InitState("IsDataLoading", useState(false));
+    instance.InitState("RefreshId", useState(""));
+    instance.InitState("DataList", useState(instance.DataList));
+
+    useEffect(() => instance.ReceiveActionData(actionData), [instance, actionData]);
+
+    useEffect(() => { instance.componentDidMount() }, [instance])
+
+    return instance.render();
+}
+
 class DataGridView extends BaseIndex {
-    constructor(props) {
-        super(props);
 
-        this.Init();
+    Init2(props, invoke, actionTypes) {
+        this.Init(props);
 
-        this.Property.Add = this.Add.bind(this);
-        this.Property.Update = this.Update.bind(this);
-        this.Property.Remove = this.Remove.bind(this);
-        this.Property.SetValue = this.SetValue.bind(this);
-        this.Property.GetValue = () => this.state.DataList;
-        const dataList = this.Property.Value || this.Property.DefaultValue || [];
-        this.state = Object.assign({ IsDataLoading: false, RefreshId: "", DataList: dataList }, this.state);
-        this.Property.SetColumnsVisible = this.SetColumnsVisible.bind(this);
-        this.Property.SetColumnsVisible2 = this.SetColumnsVisible2.bind(this);
-        this.Property.GetPageRecord = () => this.PageInfo.PageRecord;
-        this.Property.GetDataProperties2 = () => this.DataProperties2;
-    }
-
-    Init() {
         //数据行为类型
-        this.ActionTypes = this.props.GetActionTypes("Components_DataGridView");
-        this.Property.Invoke = this.props.Invoke;
-        this.Property.ActionTypes = this.ActionTypes;
+        this.Property.Invoke = invoke;
+        this.Property.ActionTypes = actionTypes;
         this.PageAxis.Components.push(this.Property);
 
         const { PrimaryKey, PropertyPrimaryKey } = this.Property.Entity;
@@ -45,6 +49,17 @@ class DataGridView extends BaseIndex {
         this.Property.Refresh = this.Refresh.bind(this);
 
         this.InitDataProperties();
+
+        this.Property.Add = this.Add.bind(this);
+        this.Property.Update = this.Update.bind(this);
+        this.Property.Remove = this.Remove.bind(this);
+        this.Property.SetValue = this.SetValue.bind(this);
+        this.Property.GetValue = () => this.state.DataList;
+        this.DataList = this.Property.Value || this.Property.DefaultValue || [];
+        this.Property.SetColumnsVisible = this.SetColumnsVisible.bind(this);
+        this.Property.SetColumnsVisible2 = this.SetColumnsVisible2.bind(this);
+        this.Property.GetPageRecord = () => this.PageInfo.PageRecord;
+        this.Property.GetDataProperties2 = () => this.DataProperties2;
     }
 
     Add(data) {
@@ -311,5 +326,3 @@ class DataGridView extends BaseIndex {
         else return this.RenderDataView();
     }
 }
-
-export default ConnectAction("Components_DataGridView", DataGridView);

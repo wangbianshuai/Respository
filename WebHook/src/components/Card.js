@@ -1,14 +1,19 @@
-import React from "react";
 import { Card } from "antd";
 import PropertyItem from "./PropertyItem";
 import BaseIndex from "./BaseIndex";
+import { useMemo, useState } from "react";
 
-export default class Card2 extends BaseIndex {
-    constructor(props) {
-        super(props);
+export default (props) => {
+    const instance = useMemo(() => new Card2(), []);
 
-        this.Name = "Card";
-    }
+    instance.Init(props);
+
+    instance.InitState("IsVisible", useState(true))
+
+    return instance.render();
+}
+
+class Card2 extends BaseIndex {
 
     render() {
         if (!this.state.IsVisible) return null;
@@ -24,6 +29,5 @@ export default class Card2 extends BaseIndex {
                 {Property.Properties.map(m => <PropertyItem Property={m} View={Property} key={m.Id} PageAxis={PageAxis} />)}
             </Card>
         )
-
     }
 }

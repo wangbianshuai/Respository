@@ -1,20 +1,31 @@
-import React from "react"
+import { useMemo, useState } from "react"
 import { Common } from "UtilsCommon";
 import PropertyItem from "./PropertyItem";
 import BaseIndex from "./BaseIndex";
 import { List } from "antd";
 
-export default class DataListView extends BaseIndex {
-    constructor(props) {
-        super(props);
+export default (props) => {
+    const instance = useMemo(() => new DataListView(), []);
+
+    instance.Init2(props);
+
+    instance.InitState("IsVisible", useState(true));
+    instance.InitState("DataList", useState(instance.DataList));
+
+    return instance.render();
+}
+
+class DataListView extends BaseIndex {
+
+    Init2(props) {
+        this.Init(props);
 
         this.Property.Add = this.Add.bind(this);
         this.Property.Update = this.Update.bind(this);
         this.Property.Remove = this.Remove.bind(this);
         this.Property.SetValue = this.SetValue.bind(this);
         this.Property.GetValue = () => this.state.DataList;
-        const dataList = this.Property.Value || this.Property.DefaultValue || [];
-        this.state = Object.assign({ DataList: dataList }, this.state);
+        this.DataList = this.Property.Value || this.Property.DefaultValue || [];
         this.PageAxis.Components.push(this.Property);
         this.Property.SetDisabled = this.SetDisabled.bind(this);
         this.Property.JudgeNullable = this.JudgeNullable.bind(this);

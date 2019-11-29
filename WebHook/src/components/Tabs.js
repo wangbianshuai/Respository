@@ -1,12 +1,24 @@
-import React, { Component } from "react"
+import React, { useMemo, useState } from "react"
 import { Common } from "UtilsCommon";
 import PropertyItem from "./PropertyItem";
 import { Tabs, Icon } from "antd";
 import styles from "../styles/View.css";
+import BaseIndex from "./BaseIndex";
 
-export default class Tabs2 extends Component {
-    constructor(props) {
-        super(props)
+export default (props) => {
+    const instance = useMemo(() => new Tabs2(), []);
+
+    instance.Init2(props);
+
+    instance.InitState("IsVisible", useState(true));
+
+    return instance.render();
+}
+
+class Tabs2 extends BaseIndex {
+
+    Init2(props) {
+        this.Init(props)
 
         this.Id = Common.CreateGuid()
         this.state = { IsVisible: true }

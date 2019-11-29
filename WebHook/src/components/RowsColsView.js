@@ -1,15 +1,28 @@
-import React from "react";
-import BaseIndex from "./BaseIndex";
+import { useMemo, useState, useEffect } from "react";
 import styles from "../styles/View.css";
 import { Card, Form } from "antd";
 import { Common } from "UtilsCommon";
+import BaseIndex from "./BaseIndex";
 
-export default class RowsColsView extends BaseIndex {
-    constructor(props) {
-        super(props)
+export default (props) => {
+    const instance = useMemo(() => new RowsColsView(), []);
+
+    instance.Init2(props);
+
+    instance.InitState("IsVisible", useState(true));
+
+    useEffect(() => { instance.componentDidMount() }, [instance])
+
+    return instance.render();
+}
+
+class RowsColsView extends BaseIndex {
+    
+    Init2(props) {
+        this.Init(props)
 
         props.PageAxis.Components.push(props.Property);
-        props.Property.ReLoad= this.componentDidMount.bind(this);
+        props.Property.ReLoad = this.componentDidMount.bind(this);
         this.InitSetView();
     }
 

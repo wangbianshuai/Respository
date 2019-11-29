@@ -1,19 +1,28 @@
-import React, { Component } from "react"
+import React, { useMemo, useState } from "react"
 import { Table, Alert, Pagination, Button } from "antd";
+import BaseIndex from "./BaseIndex";
 const { Column } = Table;
 
-export default class DataGrid extends Component {
-    constructor(props) {
-        super(props)
+export default (props) => {
+    const instance = useMemo(() => new DataGrid(), []);
 
-        this.Name = "DataGrid";
+    instance.Init2(props);
 
-        this.state = { SelectedRowKeys: [], Sorter: {}, SelectedRowKey: "" }
+    instance.InitState("IsVisible", useState(true));
+    instance.InitState("SelectedRowKeys", useState([]));
+    instance.InitState("Sorter", useState({}));
+    instance.InitState("SelectedRowKey", useState(""));
 
-        this.Init();
-    }
+    return instance.render();
+}
 
-    Init() {
+class DataGrid extends BaseIndex {
+
+    Init2(props) {
+        this.Init(props);
+
+        if (!this.IsInit) this.IsInit = true; else return;
+
         if (this.props.IsRowSelection) this.props.Property.GetSelectedRowKeys = () => this.state.SelectedRowKeys;
 
         this.props.Property.GetDataList = () => this.props.DataList;

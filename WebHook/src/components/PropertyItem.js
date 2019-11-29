@@ -1,17 +1,28 @@
-import React, { Component } from "react"
+import React, { useMemo, useState } from "react"
 import Controls from "Controls";
 import Components from "Components"
 import PageControls from "PageControls";
 import { Common } from "UtilsCommon";
 import { Form, Col } from "antd";
+import BaseIndex from "./BaseIndex";
 
-export default class PropertyItem extends Component {
-    constructor(props) {
-        super(props);
+export default (props) => {
+    const instance = useMemo(() => new PropertyItem(), []);
+
+    instance.Init2(props);
+
+    instance.InitState("IsVisible", useState(instance.GetIsVisible()));
+    instance.InitState("Label", useState(props.Property.Label));
+
+    return instance.render();
+}
+
+class PropertyItem extends BaseIndex {
+
+    Init2(props) {
+        this.Init(props);
 
         this.Id = props.Property.Id;
-
-        this.state = { IsVisible: this.GetIsVisible(), Label: props.Property.Label }
 
         if (props.Property.IsFormItem) {
             props.Property.SetFormItemVisible = (v) => this.setState({ IsVisible: v });
@@ -87,7 +98,7 @@ export default class PropertyItem extends Component {
 
     RenderLabel() {
         const { Property } = this.props;
-        const {Label}=this.state;
+        const { Label } = this.state;
 
         if (Property.IsAddOptional) {
             const exLabel = Property.ExLabel || "";

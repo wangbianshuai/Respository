@@ -1,12 +1,23 @@
-import React, { Component } from "react"
+import { useMemo, useState } from "react"
 import styles from "../styles/View.css";
+import BaseIndex from "./BaseIndex";
 
-export default class WhiteSpace extends Component {
-    constructor(props) {
-        super(props);
+export default (props) => {
+    const instance = useMemo(() => new WhiteSpace(), []);
+
+    instance.Init2(props);
+
+    instance.InitState("IsVisible", useState(true));
+
+    return instance.render();
+}
+
+class WhiteSpace extends BaseIndex {
+
+    Init2(props) {
+        this.Init(props);
 
         this.Name = "WhiteSpace"
-        this.state = { IsVisible: true }
         props.Property.SetVisible = this.SetVisible.bind(this);
     }
 

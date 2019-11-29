@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import { Common } from "UtilsCommon";
 import { Row, Col, Divider } from "antd";
 import { router } from "dva";
@@ -6,15 +6,18 @@ import PropertyItem from "./PropertyItem";
 
 const Link = router.Link;
 
-export default class BaseIndex extends Component {
-    constructor(props) {
-        super(props);
+export default class BaseIndex {
+    
+    Init(props) {
+        if (!this.IsInit) this.IsInit = true; else return;
 
+        this.props = props;
         this.Id = props.Property.Id;
         this.Property = props.Property;
         this.View = props.View;
         this.PageAxis = props.PageAxis;
-        this.state = { IsVisible: true }
+        this.state = {}
+        this.fnState = {}
         this.Property.SetVisible = this.SetVisible.bind(this);
     }
 
@@ -22,6 +25,17 @@ export default class BaseIndex extends Component {
         this.Property.IsVisible = v;
         if (this.Property.IsFormItem && this.Property.SetFormItemVisible) this.Property.SetFormItemVisible(v);
         else this.setState({ IsVisible: v })
+    }
+
+    InitState(name, list) {
+        this.state[name] = list[0]
+        this.fnState[name] = list[1]
+    }
+
+    setState(state) {
+        for (var key in state) {
+            if (this.fnState[key]) this.fnState[key](state[key])
+        }
     }
 
     JudgeChanged(nextProps, name) {

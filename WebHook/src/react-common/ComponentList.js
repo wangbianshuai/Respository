@@ -1,16 +1,23 @@
-import { Component } from "react"
+import { useState, useMemo } from "react"
 
-export default class Index extends Component {
-    constructor(props) {
-        super(props);
+export default (props) => {
+    const [list, setList] = useState([]);
+    const obj = useMemo(() => new Index(), []);
 
-        this.Init();
-        this.state = { List: this.List };
-    }
+    obj.Init(props, list, setList);
 
-    Init() {
-        this.List = [];
-        const { Name, Page } = this.props;
+    obj.List = list;
+
+    return list;
+}
+
+class Index {
+    Init(props, list, setList) {
+        if (!this.IsInit) this.IsInit = true; else return;
+
+        this.List = list;
+        this.setList = setList
+        const { Name, Page } = props;
         Page.InitInstance(Name, this.Invoke());
     }
 
@@ -18,26 +25,16 @@ export default class Index extends Component {
         return (name) => (this[name]) ? this[name].bind(this) : function () { };
     }
 
-    static get defaultProps() {
-        return {
-            Name: ""
-        }
-    }
-
     AddList(list) {
         this.List = this.List.concat(list);
-        this.setState({ List: this.List });
+        this.setList(this.List);
         return this.List;
     }
 
     Add(item) {
         this.List = this.List.map(m => m);
         this.List.push(item);
-        this.setState({ List: this.List });
+        this.setList(this.List);
         return this.List;
-    }
-
-    render() {
-        return this.state.List;
     }
 }
