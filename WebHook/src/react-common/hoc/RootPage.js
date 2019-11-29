@@ -104,7 +104,7 @@ function ShouldComponentUpdate(nextState, state, props, stateActionTypes) {
         }
     }
 
-    if (blChangedProps) ComponentWillReceiveProps2(nextState, stateActionTypes);
+    if (blChangedProps) ComponentWillReceiveProps2(nextState, state, stateActionTypes);
 
     return blChangedProps;
 }
