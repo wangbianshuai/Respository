@@ -1,6 +1,5 @@
-import React from "react";
-import { connect } from "dva";
-import { BaseIndex, RootPage, ConnectAction, StaticIndex } from "ReactCommon";
+import { useEffect, useMemo } from "react";
+import { PageAxis, RootPage, useConnectAction } from "ReactCommon";
 import { Common } from "UtilsCommon";
 import Components from "Components";
 import TemplateCommon from "./TemplateCommon";
@@ -9,25 +8,29 @@ export default (config) => {
     const pageConfig = TemplateCommon.GetPageConfig(config);
     if (!pageConfig) return null;
 
-    class EntityList extends BaseIndex {
-        constructor(props) {
-            super(props);
+    const Init = (pageAxis) => {
+        pageAxis.Name = pageConfig.PageName;
+        if (pageConfig.ActionOptions) pageAxis.ActionTypes = pageConfig.ActionOptions.ActionTypes;
+        if (pageConfig.PageExpand) Common.Inherit(pageAxis, pageConfig.PageExpand);
 
-            this.Name = pageConfig.PageName;
-            if (pageConfig.ActionOptions) this.ActionTypes = pageConfig.ActionOptions.ActionTypes;
-            if (pageConfig.PageExpand) Common.Inherit(this, pageConfig.PageExpand);
+        if (pageAxis.ExpandInit) pageAxis.ExpandInit();
 
-            this.InitEventAction();
+        return pageAxis
+    }
 
-            if (this.ExpandInit) this.ExpandInit();
-        }
+    const EntityList = (props) => {
+        const [invoke, actionTypes, actionData] = useConnectAction(Name, pageConfig.ActionOptions)
+        const pageAxis = useMemo(() => new PageAxis(Name), []);
 
-        render() {
-            return <Components.PropertyItem Property={this.PageConfig} PageAxis={this.PageAxis} />
-        }
+        pageAxis.InitSet(props, invoke, actionTypes, Init);
+
+        useEffect(() => pageAxis.ReceiveActionData(actionData), [pageAxis, actionData]);
+
+        return <Components.PropertyItem Property={this.PageConfig} PageAxis={this.PageAxis} />
     }
 
     TemplateCommon.InitModels(pageConfig.ModelsConfig);
 
-    return connect(TemplateCommon.MapStateToProps(pageConfig.ModelsConfig, pageConfig.ActionNames), StaticIndex.MapDispatchToProps)(RootPage(ConnectAction("EntityList", EntityList, pageConfig.ActionOptions)));
+    return RootPage(EntityList, TemplateCommon.MapStateToProps(pageConfig.ModelsConfig, pageConfig.ActionNames));
 }
+

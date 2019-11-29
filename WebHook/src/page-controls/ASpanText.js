@@ -1,8 +1,18 @@
-import React from "react"
+import { useMemo, useState } from "react";
 import Controls from "Controls";
 import styles from "../styles/View.css"
 
-export default class ASpanText extends Controls.BaseIndex {
+export default (props) => {
+    const instance = useMemo(() => new ASpanText(), []);
+
+    instance.Init(props);
+
+    instance.InitState("IsVisible", useState(instance.InitialState.IsVisible))
+
+    return instance.render();
+}
+
+class ASpanText extends Controls.BaseIndex {
     constructor(props) {
         super(props)
 

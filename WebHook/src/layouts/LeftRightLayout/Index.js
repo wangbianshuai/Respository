@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import { useMemo, useState, useEffect } from "react";
 import { Common } from "UtilsCommon";
 import { Layout, Menu, Icon, Dropdown, Avatar, Breadcrumb, Spin, Modal } from 'antd';
 import styles from "../../styles/LeftRightLayout.css"
@@ -7,17 +7,42 @@ import Link from 'umi/link';
 import router from 'umi/router';
 import RightConfig from "./RightConfig";
 
-export default class LeftRightLayout extends Component {
-    constructor(props) {
-        super(props)
+export default (props) => {
+    const instance = useMemo(() => new LeftRightLayout(), []);
 
-        this.state = {
-            collapsed: false,
-            MenuList: [],
-            OpenKeys: null,
-            Loading: false
-        };
+    instance.Init(props);
 
+    instance.InitState("collapsed", useState(false));
+    instance.InitState("MenuList", useState([]));
+    instance.InitState("OpenKeys", useState(null));
+    instance.InitState("Loading", useState(false));
+
+    useEffect(() => {
+        instance.JudgeLogin();
+    }, [instance, instance.Token]);
+
+    return instance.render();
+}
+
+class LeftRightLayout {
+
+    InitState(name, list) {
+        this.state[name] = list[0]
+        this.fnState[name] = list[1]
+    }
+
+    setState(state, callback) {
+        for (var key in state) {
+            this.state[key] = state[key];
+            if (this.fnState[key]) this.fnState[key](state[key])
+        }
+        callback && callback();
+    }
+
+    Init(props) {
+        if (!this.IsInit) this.IsInit = true; else return true;
+
+        this.props = props;
         this.NavSelectedKeys = [];
         this.OpenKeys = [];
         this.MenuList = [];
@@ -28,10 +53,6 @@ export default class LeftRightLayout extends Component {
         this.UserId = Common.GetStorage("LoginUserId");
         this.LoginUser = this.GetLoginUser();
 
-        this.Init();
-    }
-
-    Init() {
         const menuConfig = MenuConfig();
         this.NavMenuList = menuConfig.NavMenuList;
         this.Menus = menuConfig.Menus;
@@ -54,14 +75,6 @@ export default class LeftRightLayout extends Component {
             title: title || "提示",
             content: msg
         });
-    }
-
-    shouldComponentUpdate(nextProps, nextState) {
-        if (this.IsDestory) return false;
-        const isLogin = this.JudgeLogin();
-        if (!isLogin) return false;
-
-        return true;
     }
 
     MapMenu(data) {
@@ -311,10 +324,6 @@ export default class LeftRightLayout extends Component {
         this.IsOnOpenChange = true;
         if (value && value.length > 1) value = [value[value.length - 1]];
         this.setState({ OpenKeys: value });
-    }
-
-    componentWillUnmount() {
-        this.IsDestory = true;
     }
 
     Logout() {
