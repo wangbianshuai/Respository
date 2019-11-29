@@ -1,12 +1,15 @@
-import React from "react"
+import { useMemo } from "react"
 import BaseIndex from "./BaseIndex"
 
-export default class AButton extends BaseIndex {
-    constructor(props) {
-        super(props)
+export default (props) => {
+    const instance = useMemo(() => new AButton(), []);
 
-        this.Name = "AButton";
-    }
+    instance.Init(props);
+
+    return instance.render();
+}
+
+class AButton extends BaseIndex {
 
     ClickAction() {
         this.PageAxis.InvokeEventAction(this.Property.EventActionName, this.props);

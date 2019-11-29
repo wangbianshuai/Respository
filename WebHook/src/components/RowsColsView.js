@@ -17,9 +17,9 @@ export default (props) => {
 }
 
 class RowsColsView extends BaseIndex {
-    
+
     Init2(props) {
-        this.Init(props)
+         if (this.Init(props)) return;
 
         props.PageAxis.Components.push(props.Property);
         props.Property.ReLoad = this.componentDidMount.bind(this);

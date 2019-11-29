@@ -20,7 +20,7 @@ export default (props) => {
 class View extends BaseIndex {
 
     Init2(props) {
-        this.Init(props);
+        if (this.Init(props)) return;
 
         this.Id = Common.CreateGuid()
         props.Property.SetVisible = this.SetVisible.bind(this);

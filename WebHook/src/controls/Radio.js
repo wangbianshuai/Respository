@@ -1,16 +1,40 @@
-import React from "react";
+import { useMemo, useState, useEffect } from "react"
 import { Common } from "UtilsCommon";
 import BaseIndex from "./BaseIndex";
 import { Radio, Input } from "antd";
-import { MapToProps } from "ReactCommon";
+import { useMapToProps } from "ReactCommon";
 const RadioGroup = Radio.Group
 const RadioButton = Radio.Button;
 
-class Radio2 extends BaseIndex {
-    constructor(props) {
-        super(props)
+export default (props) => {
+    const instance = useMemo(() => new Radio2(), []);
+    const [dispatchAction, getStateValue] = useMapToProps(["DispatchAction", "GetStateValue"])
 
-        this.state = Object.assign({ Options: [] }, this.state);
+    instance.Init2(props, dispatchAction, getStateValue);
+
+    const { Value, IsReadOnly, ClassName, Style, IsVisible } = instance.InitialState;
+
+    instance.InitState("Value", useState(Value))
+    instance.InitState("IsReadOnly", useState(IsReadOnly))
+    instance.InitState("ClassName", useState(ClassName))
+    instance.InitState("Style", useState(Style))
+    instance.InitState("IsVisible", useState(IsVisible))
+
+    instance.InitState("Options", useState([]))
+
+    useEffect(() => instance.componentDidMount(), [instance])
+
+    useEffect(() => instance.ValueChangeEffect(), [instance, instance.state.Value]);
+
+    return instance.render();
+}
+
+class Radio2 extends BaseIndex {
+    Init2(props, dispatchAction, getStateValue) {
+        if (this.Init(props)) return;
+
+        this.DispatchAction = dispatchAction;
+        this.GetStateValue = getStateValue;
     }
 
     componentDidMount() {
@@ -71,12 +95,3 @@ class Radio2 extends BaseIndex {
             defaultValue={Property.DefaultValue} >{this.state.Options}</RadioGroup>)
     }
 }
-
-function setProps(owner, page) {
-    return {
-        DispatchAction: owner.DispatchAction,
-        GetStateValue: owner.GetStateValue
-    }
-}
-
-export default MapToProps(setProps)(Radio2);

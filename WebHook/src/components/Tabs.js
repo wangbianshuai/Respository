@@ -18,7 +18,7 @@ export default (props) => {
 class Tabs2 extends BaseIndex {
 
     Init2(props) {
-        this.Init(props)
+        if (this.Init(props)) return;
 
         this.Id = Common.CreateGuid()
         this.state = { IsVisible: true }

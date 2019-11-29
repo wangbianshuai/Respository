@@ -1,17 +1,31 @@
-import React from "react"
+import { useMemo, useState, useEffect } from "react"
 import { Common, EnvConfig } from "UtilsCommon"
 import BaseIndex from "./BaseIndex"
 import { Upload, message, Button, Icon } from "antd";
 
-export default class Upload2 extends BaseIndex {
-    constructor(props) {
-        super(props)
+export default (props) => {
+    const instance = useMemo(() => new Upload2(), []);
 
-        this.InitState = Object.assign({
-            UploadUrl: this.Property.UploadUrl,
-            Accept: this.Property.Accept,
-            Value: []
-        }, this.state);
+    instance.Init2(props);
+
+    const { ClassName, Style, IsVisible } = instance.InitialState;
+
+    instance.InitState("ClassName", useState(ClassName));
+    instance.InitState("Style", useState(Style));
+    instance.InitState("IsVisible", useState(IsVisible));
+
+    instance.InitState("UploadUrl", useState([]));
+    instance.InitState("Accept", useState(props.Property.UploadUrl));
+    instance.InitState("Value", useState(props.Property.Accept));
+
+    useEffect(() => instance.componentDidMount(), [instance])
+
+    return instance.render();
+}
+
+class Upload2 extends BaseIndex {
+    Init2(props) {
+        if (this.Init(props)) return;
 
         this.Property.SetUploadState = (state) => this.setState(state);
     }

@@ -1,15 +1,37 @@
-import React from "react"
+import { useMemo, useState, useEffect, useRef } from "react"
 import { Common } from "UtilsCommon"
 import BaseIndex from "./BaseIndex"
 import { Input, InputNumber, Select } from "antd";
 const { TextArea, Search } = Input;
 const Option = Select.Option;
 
-export default class TextBox2 extends BaseIndex {
-    constructor(props) {
-        super(props)
+export default (props) => {
+    const instance = useMemo(() => new TextBox2(), []);
+    const input = useRef(null)
 
-        this.Name = "TextBox2";
+    instance.Init2(props, input);
+
+    const { Value, IsReadOnly, ClassName, Style, IsVisible } = instance.InitialState;
+
+    instance.InitState("Value", useState(Value))
+    instance.InitState("IsReadOnly", useState(IsReadOnly))
+    instance.InitState("ClassName", useState(ClassName))
+    instance.InitState("Style", useState(Style))
+    instance.InitState("IsVisible", useState(IsVisible))
+
+    useEffect(() => instance.componentDidMount(), [instance])
+
+    useEffect(() => instance.ValueChangeEffect(), [instance, instance.state.Value]);
+    useEffect(() => instance.ValueChange2(instance.state.Value2), [instance, instance.state.Value2]);
+
+    return instance.render();
+}
+
+class TextBox2 extends BaseIndex {
+    Init2(props, input) {
+        if (this.Init(props)) return;
+
+        this.Input = input;
 
         if (this.Property.KeyPressRegExp) this.OnKeyPress = this.KeyPress.bind(this)
 
@@ -79,7 +101,7 @@ export default class TextBox2 extends BaseIndex {
     }
 
     SetFocus() {
-        this.refs.Input.focus();
+        this.Input.current.focus();
     }
 
     OnBlur(e) {
@@ -123,9 +145,9 @@ export default class TextBox2 extends BaseIndex {
     }
 
     componentDidMount() {
-        if (this.refs.Input && this.refs.Input.input) {
-            this.Input = this.refs.Input.input;
-            if (this.OnKeyPress !== null && this.Input) this.Input.onkeypress = this.OnKeyPress;
+        const input = this.Input.current;
+        if (input) {
+            if (this.OnKeyPress !== null && this.input) input.onkeypress = this.OnKeyPress;
         }
     }
 
@@ -226,7 +248,7 @@ export default class TextBox2 extends BaseIndex {
                 disabled={this.state.Disabled && !this.state.IsReadOnly}
                 addonAfter={addonAfter}
                 type={type}
-                ref="Input"
+                ref={this.Input}
                 prefix={this.RenderPrefix()}
                 size={Property.Size}
                 onPressEnter={this.OnPressEnter.bind(this)}

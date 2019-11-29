@@ -7,9 +7,9 @@ import PropertyItem from "./PropertyItem";
 const Link = router.Link;
 
 export default class BaseIndex {
-    
+
     Init(props) {
-        if (!this.IsInit) this.IsInit = true; else return;
+        if (!this.IsInit) this.IsInit = true; else return true;
 
         this.props = props;
         this.Id = props.Property.Id;
@@ -32,10 +32,12 @@ export default class BaseIndex {
         this.fnState[name] = list[1]
     }
 
-    setState(state) {
+    setState(state, callback) {
         for (var key in state) {
+            this.state[key] = state[key];
             if (this.fnState[key]) this.fnState[key](state[key])
         }
+        callback && callback();
     }
 
     JudgeChanged(nextProps, name) {

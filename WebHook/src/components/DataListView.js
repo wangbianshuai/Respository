@@ -18,7 +18,7 @@ export default (props) => {
 class DataListView extends BaseIndex {
 
     Init2(props) {
-        this.Init(props);
+        if (this.Init(props)) return;
 
         this.Property.Add = this.Add.bind(this);
         this.Property.Update = this.Update.bind(this);

@@ -15,7 +15,7 @@ export default (props) => {
 class WhiteSpace extends BaseIndex {
 
     Init2(props) {
-        this.Init(props);
+        if (this.Init(props)) return;
 
         this.Name = "WhiteSpace"
         props.Property.SetVisible = this.SetVisible.bind(this);

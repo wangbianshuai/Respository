@@ -1,10 +1,26 @@
-import React from "react"
+import { useMemo, useState } from "react"
 import BaseIndex from "./BaseIndex"
 import { Button } from "antd"
 
-export default class Button2 extends BaseIndex {
-    constructor(props) {
-        super(props)
+export default (props) => {
+    const instance = useMemo(() => new Button2(), []);
+
+    instance.Init2(props);
+
+    const { Disabled, IsVisible, Loading, Text, BututonType } = instance.state;
+
+    instance.InitState("Disabled", useState(Disabled))
+    instance.InitState("IsVisible", useState(IsVisible))
+    instance.InitState("Loading", useState(Loading))
+    instance.InitState("Text", useState(Text))
+    instance.InitState("BututonType", useState(BututonType))
+
+    return instance.render();
+}
+
+class Button2 extends BaseIndex {
+    Init2(props) {
+        if (this.Init(props)) return;
 
         this.state = {
             Disabled: this.Property.Disabled === undefined ? false : this.Property.Disabled,

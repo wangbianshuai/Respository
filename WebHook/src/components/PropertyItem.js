@@ -20,7 +20,7 @@ export default (props) => {
 class PropertyItem extends BaseIndex {
 
     Init2(props) {
-        this.Init(props);
+        if (this.Init(props)) return;
 
         this.Id = props.Property.Id;
 

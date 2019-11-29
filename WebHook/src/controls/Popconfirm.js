@@ -1,13 +1,16 @@
-import React from "react"
+import { useMemo } from "react"
 import BaseIndex from "./BaseIndex"
 import { Popconfirm } from "antd"
 
-export default class Popconfirm2 extends BaseIndex {
-    constructor(props) {
-        super(props)
+export default (props) => {
+    const instance = useMemo(() => new Popconfirm2(), []);
 
-        this.Name = "Popconfirm2";
-    }
+    instance.Init(props);
+
+    return instance.render();
+}
+
+class Popconfirm2 extends BaseIndex {
 
     ConfirmAction() {
         this.PageAxis.InvokeEventAction(this.Property.EventActionName, this.props);

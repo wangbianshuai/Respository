@@ -1,10 +1,14 @@
-import { Component } from "react";
 import { Common } from "UtilsCommon";
 import { Icon } from "antd";
 
-export default class BaseIndex extends Component {
-    constructor(props) {
-        super(props)
+export default class BaseIndex {
+
+    Init(props) {
+        if (!this.IsInit) this.IsInit = true; else return true;
+
+        this.props = props;
+        this.state = {};
+        this.fnState = {};
 
         this.Id = props.Property.Id || Common.CreateGuid()
         props.PageAxis.Controls.push(props.Property);
@@ -15,7 +19,7 @@ export default class BaseIndex extends Component {
 
         this.SetDateDefaultValue();
 
-        this.InitState = {
+        this.InitialState = {
             Disabled: this.Property.Disabled,
             Value: this.GetInitValue(),
             IsReadOnly: this.Property.IsReadOnly,
@@ -23,8 +27,6 @@ export default class BaseIndex extends Component {
             Style: null,
             IsVisible: this.Property.IsVisible !== false || this.Property.IsFormItem
         }
-
-        this.state = this.InitState;
 
         this.Property.SetDisabled = (disabled) => this.setState({ Disabled: disabled });
         this.Property.GetDisabled = () => this.state.Disabled;
@@ -39,7 +41,7 @@ export default class BaseIndex extends Component {
 
         this.Property.SetReadOnly = (isReadOnly) => this.setState({ IsReadOnly: isReadOnly });
 
-        this.Property.InitState = (initState) => { this.IsLoadValue = this.Property.IsLoadValue === true; this.setState(Object.assign({}, this.InitState, initState)); }
+        this.Property.InitState = (initialState) => { this.IsLoadValue = this.Property.IsLoadValue === true; this.setState(Object.assign({}, this.InitialState, initialState)); }
 
         this.Property.InitSet = (obj) => { if (obj) for (let key in obj) this[key] = obj[key] };
 
@@ -50,6 +52,19 @@ export default class BaseIndex extends Component {
         this.Property.GetSelectData = this.GetSelectData.bind(this);
 
         this.Property.GetDataSource = this.GetDataSource.bind(this);
+    }
+
+    InitState(name, list) {
+        this.state[name] = list[0]
+        this.fnState[name] = list[1]
+    }
+
+    setState(state, callback) {
+        for (var key in state) {
+            this.state[key] = state[key];
+            if (this.fnState[key]) this.fnState[key](state[key])
+        }
+        callback && callback();
     }
 
     InitRegExp() {
@@ -117,45 +132,11 @@ export default class BaseIndex extends Component {
         return this.props.Property[name] || this[name]
     }
 
-    shouldComponentUpdate(nextProps, nextState) {
-        let blChangedProps = false;
+    ValueChangeEffect() {
+        if (this.IsLoadValue === false) this.IsLoadValue = true;
+        else this.ValueChange(this.state.Value);
 
-        for (let key in nextProps) {
-            if (nextProps[key] !== undefined && !Common.IsFunction(nextProps[key]) && this.props[key] !== nextProps[key]) {
-                blChangedProps = true; break;
-            }
-        }
-
-        if (!blChangedProps) {
-            for (let key in nextState) {
-                if (this.state[key] !== nextState[key] && !Common.IsFunction(nextState[key])) {
-                    blChangedProps = true;
-                    if (key === "Value") {
-                        if (this.IsLoadValue === false) this.IsLoadValue = true;
-                        else this.ValueChange(nextState.Value);
-
-                        this.StateValueChange(nextState.Value);
-
-                        break;
-                    }
-                }
-            }
-
-            if (this.IsValue2) {
-                for (let key in nextState) {
-                    if (this.state[key] !== nextState[key] && !Common.IsFunction(nextState[key])) {
-                        blChangedProps = true;
-
-                        if (key === "Value2") {
-                            this.ValueChange2(nextState.Value2);
-                            break;
-                        }
-                    }
-                }
-            }
-        }
-
-        return blChangedProps;
+        this.StateValueChange(this.state.Value);
     }
 
     StateValueChange(value) {
@@ -227,12 +208,12 @@ export default class BaseIndex extends Component {
             Property.DataSource = []
 
             if (!Property.ServiceDataSource.IsLocal) {
-                const state = this.props.GetStateValue(Property.ServiceDataSource.StateName);
+                const state = this.GetStateValue(Property.ServiceDataSource.StateName);
                 if (this.IsSuccessProps(state) && !Property.ServiceDataSource.IsRefresh) this.ReceiveDataSource(state);
                 else {
                     var payload = Property.ServiceDataSource.Payload || {};
                     if (Property.ServiceDataSource.GetPayload) payload = this.PageAxis.GetFunction(Property.ServiceDataSource.GetPayload)({ Property, View })
-                    this.props.DispatchAction(Property.ServiceDataSource.ServiceName, Property.ServiceDataSource.ActionName, payload).then(res => this.ReceiveDataSource(res));
+                    this.DispatchAction(Property.ServiceDataSource.ServiceName, Property.ServiceDataSource.ActionName, payload).then(res => this.ReceiveDataSource(res));
                 }
             }
         }

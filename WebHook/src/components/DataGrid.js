@@ -19,9 +19,7 @@ export default (props) => {
 class DataGrid extends BaseIndex {
 
     Init2(props) {
-        this.Init(props);
-
-        if (!this.IsInit) this.IsInit = true; else return;
+        if (this.Init(props)) return;
 
         if (this.props.IsRowSelection) this.props.Property.GetSelectedRowKeys = () => this.state.SelectedRowKeys;
 

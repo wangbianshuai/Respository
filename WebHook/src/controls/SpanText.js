@@ -1,9 +1,19 @@
-import React from "react"
+import { useMemo, useState } from "react"
 import BaseIndex from "./BaseIndex";
 import styles from "../styles/View.css"
 import { Common } from "UtilsCommon";
 
-export default class SpanText extends BaseIndex {
+export default (props) => {
+    const instance = useMemo(() => new SpanText(), []);
+
+    instance.Init(props);
+
+    instance.InitState("IsVisible", useState(instance.InitialState.IsVisible))
+
+    return instance.render();
+}
+
+class SpanText extends BaseIndex {
     constructor(props) {
         super(props)
 

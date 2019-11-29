@@ -31,7 +31,7 @@ export default (props) => {
 class DataGridView extends BaseIndex {
 
     Init2(props, invoke, actionTypes) {
-        this.Init(props);
+        if (this.Init(props)) return;
 
         //数据行为类型
         this.Property.Invoke = invoke;

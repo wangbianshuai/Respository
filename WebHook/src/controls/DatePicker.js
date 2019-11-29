@@ -1,4 +1,4 @@
-import React from "react"
+import { useMemo, useState, useEffect } from "react"
 import { Common } from "UtilsCommon";
 import BaseIndex from "./BaseIndex"
 import { DatePicker, Input } from "antd"
@@ -6,11 +6,27 @@ import moment from "moment";
 
 const { RangePicker } = DatePicker;
 
-export default class DatePicker2 extends BaseIndex {
-    constructor(props) {
-        super(props)
+export default (props) => {
+    const instance = useMemo(() => new DatePicker2(), []);
 
-        this.Name = "DatePicker2";
+    instance.Init2(props);
+
+    const { Value, IsReadOnly, ClassName, Style, IsVisible } = instance.InitialState;
+
+    instance.InitState("Value", useState(Value))
+    instance.InitState("IsReadOnly", useState(IsReadOnly))
+    instance.InitState("ClassName", useState(ClassName))
+    instance.InitState("Style", useState(Style))
+    instance.InitState("IsVisible", useState(IsVisible))
+
+    useEffect(() => instance.ValueChangeEffect(), [instance, instance.state.Value]);
+
+    return instance.render();
+}
+
+class DatePicker2 extends BaseIndex {
+    Init2(props) {
+        if (this.Init(props)) return;
 
         if (this.Property.ControlType === "RangePicker") {
             this.Property.SetValueByData = this.SetValueByData.bind(this);
