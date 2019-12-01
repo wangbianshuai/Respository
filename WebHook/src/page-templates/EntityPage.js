@@ -2,12 +2,9 @@ import { useEffect, useMemo } from "react";
 import { PageAxis, RootPage, useConnectAction } from "ReactCommon";
 import { Common } from "UtilsCommon";
 import Components from "Components";
-
 import TemplateCommon from "./TemplateCommon";
 
-const Name = "EntityEdit";
-
-export default (config) => {
+export default (name, config) => {
     const pageConfig = TemplateCommon.GetPageConfig(config);
     if (!pageConfig) return null;
 
@@ -21,9 +18,9 @@ export default (config) => {
         return pageAxis
     }
 
-    const EntityEdit = (props) => {
-        const [invoke, actionTypes, actionData] = useConnectAction(Name, pageConfig.ActionOptions)
-        const pageAxis = useMemo(() => new PageAxis(Name), []);
+    const EntityList = (props) => {
+        const [invoke, actionTypes, actionData] = useConnectAction(name, pageConfig.ActionOptions)
+        const pageAxis = useMemo(() => new PageAxis(name), []);
 
         pageAxis.InitSet(props, invoke, actionTypes, Init);
 
@@ -34,6 +31,6 @@ export default (config) => {
 
     TemplateCommon.InitModels(pageConfig.ModelsConfig);
 
-    return RootPage(EntityEdit, TemplateCommon.MapStateToProps(pageConfig.ModelsConfig, pageConfig.ActionNames));
+    return RootPage(EntityList, TemplateCommon.MapStateToProps(pageConfig.ModelsConfig, pageConfig.ActionNames));
 }
 

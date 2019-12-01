@@ -1,10 +1,10 @@
-import EntityList from "./EntityList";
+import EntityPage from "./EntityPage";
 import EntityModelsConfig from "./EntityModelsConfig";
 
 export default (name, enityName, minActionType, pageExpand, expandModelsConfig) => {
     const config = {
         PageName: name,
-        ActionNames: ["SearchQuery", "Delete","ExcelExport"],
+        ActionNames: ["SearchQuery", "Delete", "ExcelExport"],
         ActionOptions: GetActionOptions(name, enityName, minActionType, expandModelsConfig),
         ModelsConfig: EntityModelsConfig(enityName),
         PageExpand: pageExpand
@@ -15,7 +15,7 @@ export default (name, enityName, minActionType, pageExpand, expandModelsConfig) 
         if (expandModelsConfig.ListActionNames) config.ActionNames = config.ActionNames.concat(expandModelsConfig.ListActionNames);
     }
 
-    return EntityList(config);
+    return EntityPage("EntityList", config);
 }
 
 function GetActionOptions(name, entityName, minActionType, expandModelsConfig) {

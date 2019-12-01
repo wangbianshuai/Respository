@@ -42,6 +42,8 @@ class LeftRightLayout {
     Init(props) {
         if (!this.IsInit) this.IsInit = true; else return true;
 
+        this.state = {};
+        this.fnState = {};
         this.props = props;
         this.NavSelectedKeys = [];
         this.OpenKeys = [];
