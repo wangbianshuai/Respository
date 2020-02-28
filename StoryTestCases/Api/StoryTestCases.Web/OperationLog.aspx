@@ -1,0 +1,1 @@
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="OperationLog.aspx.cs" Inherits="StoryTestCases.Web.OperationLog"     ValidateRequest="false" EnableEventValidation="false" EnableViewState="false"%>
