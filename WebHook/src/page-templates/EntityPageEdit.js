@@ -1,4 +1,4 @@
-import EntityEdit from "./EntityEdit";
+import EntityPage from "./EntityPage";
 import EntityModelsConfig from "./EntityModelsConfig";
 
 export default (name, enityName, minActionType, pageExpand, expandModelsConfig) => {
@@ -15,12 +15,12 @@ export default (name, enityName, minActionType, pageExpand, expandModelsConfig) 
         if (expandModelsConfig.EditActionNames) config.ActionNames = config.ActionNames.concat(expandModelsConfig.EditActionNames);
     }
 
-    return EntityEdit(config);
+    return EntityPage("EntityEdit", config);
 }
 
 function GetActionOptions(name, entityName, minActionType, expandModelsConfig) {
     var ActionType = minActionType;
-    
+
     const ActionTypes = {
         //获取实体数据
         GetEntityData: GetActionType(),
