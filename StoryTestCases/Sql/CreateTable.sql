@@ -59,38 +59,147 @@ left join t_User b
 on a.OperationUser=convert(varchar(36),b.UserId)
 go
 
---story test cases
-drop table t_StoryTestCases
+drop table t_Story
 go
 
-create table t_StoryTestCases
+create table t_Story
 (
 Id uniqueidentifier not null primary key default(newid()),      --主键
 StoryId int not null,                                           --Story Id
 StoryTitle varchar(1000) not null,                              --Story Title
 StoryUrl varchar(200) not null,                                 --Story Url
-PullRequestId int not null,                                     --Pull Request Id
-PullRequestTitle varchar(500) not null,                         --Pull Request Title
-PullRequestUrl varchar(200) not null,                           --Pull Request Url    
-TestCases int not null,                                         --Test Cases
-Comments int not null,                                          --Commencts
-StartDate date not null,                                        --Start Date
-EndDate date not null,                                          --End Date   
 Remark nvarchar(200),                                           --备注
 IsDelete tinyint not null default(0),                           --是否删除
 CreateUser uniqueidentifier not null,                           --创建人   
 CreateDate datetime default(getdate()) not null,                --创建时间
+UpdateUser uniqueidentifier,
 UpdateDate datetime,                                            --更新时间
 RowVersion timestamp not null                                   --行版本
 )
 go
 
-drop view v_StoryTestCases
+drop view v_Story
 go
 
-create view v_StoryTestCases
+create view v_Story
 as
-select a.*,b.UserName as CreateUserName from t_StoryTestCases a
+select a.*
+from t_Story a where IsDelete=0
+go
+
+
+drop table t_PullRequest
+go
+
+create table t_PullRequest
+(
+Id uniqueidentifier not null primary key default(newid()),      --主键
+StoryId uniqueidentifier not null,                              --Story Id
+PullRequestId int not null,                                     --Pull Request Id
+PullRequestTitle varchar(500) not null,                         --Pull Request Title
+PullRequestUrl varchar(200) not null,                           --Pull Request Url    
+TestCases int not null,                                         --Test Cases
+Comments int not null,                                          --Commencts 
+Remark nvarchar(200),                                           --备注
+IsDelete tinyint not null default(0),                           --是否删除
+CreateUser uniqueidentifier not null,                           --创建人   
+CreateDate datetime default(getdate()) not null,                --创建时间
+UpdateUser uniqueidentifier,
+UpdateDate datetime,                                            --更新时间
+RowVersion timestamp not null                                   --行版本
+)
+go
+
+drop view v_PullRequest
+go
+
+create view v_PullRequest
+as
+select a.*,b.UserName as CreateUserName,c.StoryId,c.StoryTitle,c.StoryUrl from t_PullRequest a
 left join t_User b on a.CreateUser=b.UserId
+left join t_Story c on a.StoryId=c.Id 
+where a.IsDelete=0
+go
+
+drop table t_Week
+go
+
+create table t_Week
+(
+Id uniqueidentifier not null primary key default(newid()),      --主键
+StartDate datetime not null,
+EndDate datetime not null,
+WorkingHours int not null,
+Remark nvarchar(200),                                           --备注
+IsDelete tinyint not null default(0),                           --是否删除
+CreateUser uniqueidentifier not null,                           --创建人   
+CreateDate datetime default(getdate()) not null,                --创建时间
+UpdateUser uniqueidentifier,
+UpdateDate datetime,                                            --更新时间
+RowVersion timestamp not null                                   --行版本
+)
+go
+
+
+drop table t_WorkingHours
+go
+
+create table t_WorkingHours
+(
+Id uniqueidentifier not null primary key default(newid()),      --主键
+StoryId uniqueidentifier,                                       --Story Id
+WorkId uniqueidentifier not null,                               --Week Id
+Title varchar(500) not null,                                    --Pull Request Title
+WorkingHours int not null,
+Remark nvarchar(200),                                           --备注
+IsDelete tinyint not null default(0),                           --是否删除
+CreateUser uniqueidentifier not null,                           --创建人   
+CreateDate datetime default(getdate()) not null,                --创建时间
+UpdateUser uniqueidentifier,
+UpdateDate datetime,                                            --更新时间
+RowVersion timestamp not null                                   --行版本
+)
+go
+
+drop view v_WorkingHours
+go
+
+create view v_WorkingHours
+as
+select a.*,b.UserName as CreateUserName,c.StoryId,c.StoryTitle,c.StoryUrl,
+d.StartDate,d.EndDate,d.WorkingHours from t_WorkingHours a
+left join t_User b on a.CreateUser=b.UserId
+left join t_Story c on a.StoryId=c.Id 
+left join t_Week d on a.WeekId=d.Id 
+where a.IsDelete=0
+go
+
+drop table t_Daily
+go
+
+create table t_Daily
+(
+Id uniqueidentifier not null primary key default(newid()),      --主键
+StoryId uniqueidentifier,                                       --Story Id
+Content varchar(100) not null,                                  --Conent
+WorkingDate datetime not null,
+Remark nvarchar(200),                                           --备注
+IsDelete tinyint not null default(0),                           --是否删除
+CreateUser uniqueidentifier not null,                           --创建人   
+CreateDate datetime default(getdate()) not null,                --创建时间
+UpdateUser uniqueidentifier,
+UpdateDate datetime,                                            --更新时间
+RowVersion timestamp not null                                   --行版本
+)
+go
+
+drop view v_Daily
+go
+
+create view v_Daily
+as
+select a.*,b.UserName as CreateUserName,c.StoryId,c.StoryTitle,c.StoryUrl from t_Daily a
+left join t_User b on a.CreateUser=b.UserId
+left join t_Story c on a.StoryId=c.Id 
 where a.IsDelete=0
 go
