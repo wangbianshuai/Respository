@@ -165,11 +165,11 @@
     </ProjectReference>
     <ProjectReference Include="..\WorkReport.Component\WorkReport.Component.csproj">
       <Project>{820376c1-aeac-4040-b0bf-f7c11d273dd3}</Project>
-      <Name>PurchaseSale.Component</Name>
+      <Name>WorkReport.Component</Name>
     </ProjectReference>
     <ProjectReference Include="..\WorkReport.Entity\WorkReport.Entity.csproj">
       <Project>{bfbc43dd-2968-492f-818e-9f43505515c0}</Project>
-      <Name>PurchaseSale.Entity</Name>
+      <Name>WorkReport.Entity</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

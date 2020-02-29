@@ -322,7 +322,7 @@ export default class DataGridView extends BaseIndex {
 
     DownLoad(fileName) {
         var host = "";
-        if (EnvConfig.Env === "local") host = "http://localhost/ps/";
+        if (EnvConfig.Env === "local") host = "http://localhost/wr/";
         var url = host + "/download.aspx?fn=" + fileName;
         window.open(url, "_self");
     }

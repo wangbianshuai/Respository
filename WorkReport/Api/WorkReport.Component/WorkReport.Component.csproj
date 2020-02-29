@@ -44,6 +44,7 @@
     <Compile Include="User.cs" />
     <Compile Include="CommonOperation.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Week.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\OpenDataAccess\OpenDataAccess.Data\OpenDataAccess.Data.csproj">
@@ -62,9 +63,9 @@
       <Project>{ea6d7d97-2a3e-48af-aa65-a6dca3f5b672}</Project>
       <Name>OpenDataAccess.Utility</Name>
     </ProjectReference>
-    <ProjectReference Include="..\PurchaseSale.Entity\PurchaseSale.Entity.csproj">
+    <ProjectReference Include="..\WorkReport.Entity\WorkReport.Entity.csproj">
       <Project>{bfbc43dd-2968-492f-818e-9f43505515c0}</Project>
-      <Name>PurchaseSale.Entity</Name>
+      <Name>WorkReport.Entity</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

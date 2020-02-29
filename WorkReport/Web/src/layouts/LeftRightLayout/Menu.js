@@ -31,7 +31,7 @@ function GetWorkReportNavMenu() {
     menuList.push(AddMenu("StoryList", "Story", false, "table", "/WorkReportManage/StoryList"));
     menuList.push(AddMenu("StoryEdit", "Add", true, "form", "/WorkReportManage/StoryEdit", "", null, false, "Story", "/WorkReportManage/StoryList", null, true));
     menuList.push(AddMenu("WeekList", "Week", false, "table", "/WorkReportManage/WeekList"));
-    menuList.push(AddMenu("WeekEdit", "Add", true, "form", "/WorkReportManage/WeekEdit", "", null, false, "Week", "/WorkReportManage/WeekLis", null, true));
+    menuList.push(AddMenu("WeekEdit", "Add", true, "form", "/WorkReportManage/WeekEdit", "", null, false, "Week", "/WorkReportManage/WeekList", null, true));
 
     return AddNavMenu("WorkReportManage", "Work Report", false, menuList, true, ["DailyInput", "DailyList", "PullRequestInput", "PullRequestList",
         "WorkingHoursList", "StoryList", "WeekList"]);
