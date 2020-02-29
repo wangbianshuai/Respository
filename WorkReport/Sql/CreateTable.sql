@@ -198,7 +198,8 @@ go
 
 create view v_Daily
 as
-select a.*,b.UserName as CreateUserName,c.StoryTitle,c.StoryUrl from t_Daily a
+select a.*,b.UserName as CreateUserName,'ch'+ ltrim(rtrim(str(c.StoryId))) as StoryName,
+c.StoryTitle,c.StoryUrl from t_Daily a
 left join t_User b on a.CreateUser=b.UserId
 left join t_Story c on a.StoryId=c.Id 
 where a.IsDelete=0
