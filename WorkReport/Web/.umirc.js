@@ -8,7 +8,7 @@ export default {
       antd: true,
       dva: true,
       dynamicImport: false,
-      title: 'Story test cases',
+      title: 'Work Report',
       dll: false,
 
       routes: {
@@ -31,7 +31,7 @@ export default {
   },
   proxy: {
     '/api/': {
-      target: 'http://localhost/stc/',
+      target: 'http://localhost/wr/',
       changeOrigin: true
     }
   },

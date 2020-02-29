@@ -21,7 +21,7 @@ export default class LeftRightLayout extends Component {
         this.NavSelectedKeys = [];
         this.OpenKeys = [];
         this.MenuList = [];
-        this.DefaultPageName = "/WorkReportManage/WorkReportInput";
+        this.DefaultPageName = "/WorkReportManage/DailyInput";
         this.Token = Common.GetCookie("Token");
         this.JudgeLogin();
         this.PageData = {};
@@ -340,8 +340,8 @@ export default class LeftRightLayout extends Component {
             <Layout style={{ minWidth: 1200 }}>
                 <Header style={{ background: '#fff', padding: 0, margin: 0 }}>
                     <div className={styles.logo} >
-                        <img src={this.GetImageUrl("logo-3_01.png")} width={100} alt="" />
-                        <span>进销存</span>
+                        <img src={this.GetImageUrl("logo-3_01.png")} width={140} alt="" />
+                        <span>Work Report</span>
                     </div>
                     {loginName ? (
                         <Dropdown overlay={this.RenderUserRightMenuList()} >

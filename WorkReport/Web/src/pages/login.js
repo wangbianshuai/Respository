@@ -20,7 +20,7 @@ class Login extends BaseIndex {
     LoginSuccess({ data, props, action }) {
         Common.SetStorage("LoginUserInfo", JSON.stringify(data))
         Common.SetStorage("LoginUserId", data.UserId)
-        this.ToPage("/WorkReportManage/WorkReportInput");
+        this.ToPage("/WorkReportManage/DailyInput");
     }
 
     render() {

@@ -1,8 +1,8 @@
 import React from "react";
-import WorkReportInput from './WorkReportManage/WorkReportInput';
+import DailyInput from './WorkReportManage/DailyInput';
 
 export default (props) => {
   return (
-    <WorkReportInput {...props} />
+    <DailyInput {...props} />
   )
 }

@@ -22,11 +22,19 @@ function GetPersonCenterNavMenu() {
 
 function GetWorkReportNavMenu() {
     var menuList = [];
-    menuList.push(AddMenu("WorkReportInput", "Story Test Cases Input", false, "form", "/WorkReportManage/WorkReportInput"));
-    menuList.push(AddMenu("WorkReportList", "Story Test Cases List", false, "table", "/WorkReportManage/WorkReportList"));
-    menuList.push(AddMenu("WorkReportCount", "Story Test Cases Count", false, "table", "/WorkReportManage/WorkReportCount"));
+    menuList.push(AddMenu("DailyInput", "Daily Input", false, "form", "/WorkReportManage/DailyInput"));
+    menuList.push(AddMenu("DailyList", "Daily List", false, "table", "/WorkReportManage/DailyList"));
+    menuList.push(AddMenu("PullRequestInput", "Pull Request Input", false, "form", "/WorkReportManage/PullRequestInput"));
+    menuList.push(AddMenu("PullRequestList", "Pull Request List", false, "table", "/WorkReportManage/PullRequestList"));
+    menuList.push(AddMenu("WorkingHoursList", "Working Hours", false, "table", "/WorkReportManage/WorkingHoursList"));
+    menuList.push(AddMenu("WOrkingHoursEdit", "Add", true, "form", "/WorkReportManage/WOrkingHoursEdit", "", null, false, "Working Hours", "/WorkReportManage/WorkingHoursList", null, true));
+    menuList.push(AddMenu("StoryList", "Story", false, "table", "/WorkReportManage/StoryList"));
+    menuList.push(AddMenu("StoryEdit", "Add", true, "form", "/WorkReportManage/StoryEdit", "", null, false, "Story", "/WorkReportManage/StoryList", null, true));
+    menuList.push(AddMenu("WeekList", "Week", false, "table", "/WorkReportManage/WeekList"));
+    menuList.push(AddMenu("WeekEdit", "Add", true, "form", "/WorkReportManage/WeekEdit", "", null, false, "Week", "/WorkReportManage/WeekLis", null, true));
 
-    return AddNavMenu("WorkReportManage", "Story Test Cases", false, menuList, true, ["WorkReportInput", "WorkReportList", "WorkReportCount"]);
+    return AddNavMenu("WorkReportManage", "Work Report", false, menuList, true, ["DailyInput", "DailyList", "PullRequestInput", "PullRequestList",
+        "WorkingHoursList", "StoryList", "WeekList"]);
 }
 
 function GetSystemManageNavNenu() {
