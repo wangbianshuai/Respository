@@ -1,0 +1,78 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{820376C1-AEAC-4040-B0BF-F7C11D273DD3}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>WorkReport.Component</RootNamespace>
+    <AssemblyName>WorkReport.Component</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="User.cs" />
+    <Compile Include="CommonOperation.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\OpenDataAccess\OpenDataAccess.Data\OpenDataAccess.Data.csproj">
+      <Project>{26e9b38f-5cfe-4e81-b09c-e9679fdd5ef2}</Project>
+      <Name>OpenDataAccess.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\OpenDataAccess\OpenDataAccess.Entity\OpenDataAccess.Entity.csproj">
+      <Project>{a1e203b2-377b-4dc7-90cc-72c1a5acf081}</Project>
+      <Name>OpenDataAccess.Entity</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\OpenDataAccess\OpenDataAccess.Service\OpenDataAccess.Service.csproj">
+      <Project>{95c85e2e-40f4-401c-b577-f4e681090bad}</Project>
+      <Name>OpenDataAccess.Service</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\OpenDataAccess\OpenDataAccess.Utility\OpenDataAccess.Utility.csproj">
+      <Project>{ea6d7d97-2a3e-48af-aa65-a6dca3f5b672}</Project>
+      <Name>OpenDataAccess.Utility</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\PurchaseSale.Entity\PurchaseSale.Entity.csproj">
+      <Project>{bfbc43dd-2968-492f-818e-9f43505515c0}</Project>
+      <Name>PurchaseSale.Entity</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
