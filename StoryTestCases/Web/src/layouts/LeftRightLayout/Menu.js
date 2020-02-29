@@ -6,8 +6,6 @@ export default () => {
     return {
         NavMenuList: [
             GetStoryTestCasesNavMenu(),
-            GetProductManageNavMenu(),
-            GetPersonBillNavMenu(),
             GetSystemManageNavNenu(),
             GetPersonCenterNavMenu()
         ],
