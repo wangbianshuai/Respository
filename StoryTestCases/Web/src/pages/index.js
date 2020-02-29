@@ -1,8 +1,8 @@
 import React from "react";
-import SaleInput from './StoryTestCasesManage/SaleInput';
+import StoryTestCasesInput from './StoryTestCasesManage/StoryTestCasesInput';
 
 export default (props) => {
   return (
-    <SaleInput {...props} />
+    <StoryTestCasesInput {...props} />
   )
 }

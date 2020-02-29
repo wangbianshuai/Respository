@@ -8,7 +8,7 @@ export default {
       antd: true,
       dva: true,
       dynamicImport: false,
-      title: '进销存系统',
+      title: 'Story test cases',
       dll: false,
 
       routes: {
@@ -31,7 +31,7 @@ export default {
   },
   proxy: {
     '/api/': {
-      target: 'http://localhost/ps/',
+      target: 'http://localhost/stc/',
       changeOrigin: true
     }
   },

@@ -200,7 +200,7 @@
           <AutoAssignPort>False</AutoAssignPort>
           <DevelopmentServerPort>54137</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost/ps</IISUrl>
+          <IISUrl>http://localhost/stc</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

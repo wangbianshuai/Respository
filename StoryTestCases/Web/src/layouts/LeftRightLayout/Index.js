@@ -21,7 +21,7 @@ export default class LeftRightLayout extends Component {
         this.NavSelectedKeys = [];
         this.OpenKeys = [];
         this.MenuList = [];
-        this.DefaultPageName = "/StoryTestCasesManage/SaleInput";
+        this.DefaultPageName = "/StoryTestCasesManage/StoryTestCasesInput";
         this.Token = Common.GetCookie("Token");
         this.JudgeLogin();
         this.PageData = {};
