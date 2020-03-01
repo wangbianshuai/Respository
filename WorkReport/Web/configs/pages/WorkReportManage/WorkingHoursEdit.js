@@ -1,26 +1,26 @@
-const Week = require("../../entities/Week");
-const { AssignProporties, GetTextBox, GetButton, GetDatePicker } = require("../../Common");
+const WorkingHours = require("../../entities/WorkingHours");
+const { AssignProporties, GetTextBox, GetButton, GetSelect } = require("../../Common");
 
-//WorkReportManage/WeekEdit 400-299
+//WorkReportManage/WorkingHoursEdit 800-899
 const DataActionTypes = {
   //Get Entity Data
-  GetEntityData: 400,
+  GetEntityData: 800,
   //Save Entity Data
-  SaveEntityData: 401
+  SaveEntityData: 801
 }
 
-const Entity = { Name: Week.Name, PrimaryKey: Week.PrimaryKey }
+const Entity = { Name: WorkingHours.Name, PrimaryKey: WorkingHours.PrimaryKey }
 
 module.exports = {
-  Name: "WeekEdit",
+  Name: "WorkingHoursEdit",
   Type: "View",
   EventActions: GetEventActions(),
-  Properties: AssignProporties({ Name: "WeekEdit" }, [GeEditView()])
+  Properties: AssignProporties({ Name: "WorkingHoursEdit" }, [GeEditView()])
 }
 
 function GeEditView() {
   return {
-    Name: "WeekEdit2",
+    Name: "WorkingHoursEdit2",
     Type: "RowsColsView",
     Entity: Entity,
     IsForm: true,
@@ -28,7 +28,7 @@ function GeEditView() {
     IsClear: true,
     SaveEntityDataActionType: DataActionTypes.SaveEntityData,
     GetEntityDataActionType: DataActionTypes.GetEntityData,
-    Properties: AssignProporties(Week, GetProperties())
+    Properties: AssignProporties(WorkingHours, GetProperties())
   }
 }
 
@@ -44,12 +44,27 @@ function GetButtonProperties() {
 
 function GetProperties() {
   return [
-    GetDatePicker2("StartDate", "Start Date", 1, 1, false, "Please select a date"),
-    GetDatePicker2("EndDate", "End Date", 2, 1, false, "Please select a date"),
-    { ...GetTextBox2("WorkingHours", "Working Hours", 3, 1, "", "Please input working hours", 2, false), DataType: "int" },
-    GetTextArea("Remark", "Remark", 4, 1),
+    GetEditSelect("WeekId", "Week", WorkingHours.WeekDataSource, 1, 1, false, "Please select week"),
+    GetEditSelect("StoryId", "Story", WorkingHours.StoryDataSource, 2, 1, true, "Please select story or input content"),
+    { ...GetTextArea("Content", "Content", 3, 1, 'Please select story or input content'), MaxLength: 500 },
+    { ...GetTextBox2("HourCount", "Working Hours", 4, 1, "", "Please input working hours", 2, false), DataType: "int" },
+    GetTextArea("Remark", "Remark", 5, 1),
     GetButtonView()
   ]
+}
+
+function GetEditSelect(Name, Label, DataSource, X, Y, IsNullable, PlaceHolder, DefaultValue) {
+  return {
+    ...GetSelect(Name, Label, null, X, Y, DefaultValue),
+    IsFormItem: true,
+    ColSpan: 24,
+    LabelCol: 8,
+    WrapperCol: 8,
+    IsNullable,
+    IsEdit: true,
+    ServiceDataSource: DataSource,
+    PlaceHolder: PlaceHolder
+  }
 }
 
 function GetTextBox2(Name, Label, X, Y, ContorlType, PlaceHolder, MaxLength, IsNullable, IsVisible, ValidateNames, ValidateTipMessage) {
@@ -66,18 +81,6 @@ function GetTextBox2(Name, Label, X, Y, ContorlType, PlaceHolder, MaxLength, IsN
   }
 }
 
-function GetDatePicker2(Name, Label, X, Y, IsNullable, PlaceHolder, DefaultValue) {
-  return {
-    ...GetDatePicker(Name, Label, X, Y, DefaultValue),
-    IsFormItem: true, ColSpan: 24,
-    LabelCol: 8,
-    WrapperCol: 8,
-    IsNullable: IsNullable,
-    PlaceHolder: PlaceHolder,
-    IsEdit: true
-  }
-}
-
 function GetButtonView() {
   return {
     Name: "ButtonView",
@@ -88,7 +91,7 @@ function GetButtonView() {
     ColSpan: 24,
     X: 6,
     Y: 1,
-    Properties: AssignProporties({ Name: "WeekEdit" }, GetButtonProperties())
+    Properties: AssignProporties({ Name: "WorkingHoursEdit" }, GetButtonProperties())
   }
 }
 
@@ -110,18 +113,18 @@ function GetEventActions() {
   return [{
     Name: "BackToLast",
     Type: "Page/ToPage",
-    PageUrl: "/WorkReportManage/WeekList",
+    PageUrl: "/WorkReportManage/WorkingHoursList",
     ExpandSetPageUrl: "ExpandSetPageUrl"
   },
   {
     Name: "SaveEntityData",
     Type: "EntityEdit/SaveEntityData",
-    EditView: "WeekEdit2",
+    EditView: "WorkingHoursEdit2",
     ExpandSetEntityData: "ExpandSetEntityData"
   },
   {
     Name: "GetEntityData",
     Type: "EntityEdit/GetEntityData",
-    EditView: "WeekEdit2"
+    EditView: "WorkingHoursEdit2"
   }]
 }

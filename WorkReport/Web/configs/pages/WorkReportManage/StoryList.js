@@ -1,23 +1,23 @@
-const Week = require("../../entities/Week");
-const { GetButton, AssignProporties, GetDatePicker } = require("../../Common");
+const Story = require("../../entities/Story");
+const { GetButton, AssignProporties, GetTextBox } = require("../../Common");
 
-//WorkReportManage/WeekList 200-299
+//WorkReportManage/StoryList 500-599
 const DataActionTypes = {
   //Search Query
-  SearchQuery: 200,
+  SearchQuery: 500,
   //Delete Entity Data
-  DeleteEntityData: 201,
+  DeleteEntityData: 501,
   //Excel Export
-  ExcelExport: 202
+  ExcelExport: 502
 };
 
-const Entity = { Name: Week.Name, PrimaryKey: Week.PrimaryKey, ViewName: "ViewWeek" }
+const Entity = { Name: Story.Name, PrimaryKey: Story.PrimaryKey, ViewName: "ViewStory" }
 
 module.exports = {
-  Name: "WeekList",
+  Name: "StoryList",
   Type: "View",
   EventActions: GetEventActions(),
-  Properties: AssignProporties({ Name: "WeekList" }, [GetSearchOperationView(), GetDataGridView()])
+  Properties: AssignProporties({ Name: "StoryList" }, [GetSearchOperationView(), GetDataGridView()])
 }
 
 function GetSearchOperationView() {
@@ -26,9 +26,15 @@ function GetSearchOperationView() {
     Entity: Entity,
     Type: "RowsColsView",
     ClassName: "DivSerachView",
-    Properties: AssignProporties({ Name: "WeekList" }, [
-      { ...GetDatePicker2("StartDate", "Start Date", 1, 2, "Greater than or equal to its value"), OperateLogic: ">=" },
-      { ...GetDatePicker2("EndDate", "End Date", 1, 3, "Less than its value"), OperateLogic: "<" },
+    Properties: AssignProporties({ Name: "StoryList" }, [
+      {
+        ...GetTextBox2("StoryId", "Story Id", 1, 1, "", "Story Id"), DataType: "int",
+        OperateLogic: "=", PressEnterEventActionName: "SearchQuery"
+      },
+      {
+        ...GetTextBox2("Keyword", "Keyword", 1, 2, "", "Story Title/Story Url/Remark"), PropertyName: "StoryTitle,StoryUrl,Remark",
+        OperateLogic: "like", PressEnterEventActionName: "SearchQuery"
+      },
       { ...GetButton("Search", "Search", "primary", 1, 4), IsFormItem: true, Icon: "search", EventActionName: "SearchQuery", PressEnterEventActionName: "SearchQuery" },
       { ...GetButton("ClearQuery", "Clear", "default", 1, 5), IsFormItem: true, EventActionName: "ClearQuery" },
       { EventActionName: "ToEditPage", ...GetButton("ToEditPage", "Add", "primary", 2, 1), Style: { marginLeft: 16, marginBottom: 16 } },
@@ -37,16 +43,14 @@ function GetSearchOperationView() {
   }
 }
 
-function GetDatePicker2(Name, Label, X, Y, PlaceHolder, DefaultValue) {
+function GetTextBox2(Name, Label, X, Y, ContorlType, PlaceHolder, MaxLength) {
   return {
-    ...GetDatePicker(Name, Label, X, Y, DefaultValue),
-    IsFormItem: true, ColSpan: 6,
-    IsNullable: true,
-    PlaceHolder: PlaceHolder,
-    MaxLength: 20,
+    ...GetTextBox(Name, Label, ContorlType, X, Y, PlaceHolder, MaxLength || 50),
+    IsFormItem: true,
+    ColSpan: 6,
     LabelCol: 8,
     WrapperCol: 15,
-    DataType: "DateTime",
+    IsNullable: true,
     IsCondition: true
   }
 }
@@ -61,8 +65,17 @@ function GetDataGridView() {
     EventActionName: "SearchQuery",
     IsDiv: true,
     ClassName: "DivInfoView3",
-    Properties: AssignProporties(Week, ["StartDate", "EndDate", "WorkingHours", "Remark",
+    Properties: AssignProporties(Story, ["StoryId", GetStoryTitle(), "Remark", { Name: "StoryUrl", IsVisible: false },
       { Name: "CreateDate", OrderByType: "desc" }, { Name: "RowVersion", IsVisible: false }, GetOperation()])
+  }
+}
+
+function GetStoryTitle() {
+  return {
+    Name: "StoryTitle",
+    IsOpenPage: true,
+    IsHttp: true,
+    PageUrl: "#{StoryUrl}"
   }
 }
 
@@ -71,28 +84,28 @@ function GetOperation() {
     Name: "Operation",
     Label: "Operation",
     IsData: false,
-    ActionList: AssignProporties(Week, [GetEditAction(), GetDeleteAction()])
+    ActionList: AssignProporties(Story, [GetEditAction(), GetDeleteAction()])
   }
 }
 
 function GetEditAction() {
   return {
-    Name: "EditWeek",
+    Name: "EditStory",
     Label: "Edit",
-    EventActionName: "EditWeek",
+    EventActionName: "EditStory",
     Type: "AButton"
   }
 }
 
 function GetDeleteAction() {
   return {
-    Name: "DeleteWeek",
+    Name: "DeleteStory",
     Label: "Delete",
     Type: "Popconfirm",
-    EventActionName: "DeleteWeek",
+    EventActionName: "DeleteStory",
     DataActionType: DataActionTypes.DeleteEntityData,
     SuccessTip: "Delete Succeed!",
-    Title: "Please confirm whether to delete the current Week?"
+    Title: "Please confirm whether to delete the current Story?"
   }
 }
 function GetEventActions() {
@@ -117,21 +130,21 @@ function GetEventActions() {
     DataGridView: "DataGridView1"
   },
   {
-    Name: "EditWeek",
+    Name: "EditStory",
     Type: "DataGridView/SelectRowToPage",
     DataGridView: "DataGridView1",
     AlertMessage: "AlertMessage",
-    PageUrl: "/WorkReportManage/WeekEdit?Id=#{Id}&MenuName=" + escape("Edit"),
+    PageUrl: "/WorkReportManage/StoryEdit?Id=#{Id}&MenuName=" + escape("Edit"),
     ExpandSetPageUrl: "ExpandSetPageUrl"
   },
   {
     Name: "ToEditPage",
     Type: "Page/ToPage",
-    PageUrl: "/WorkReportManage/WeekEdit",
+    PageUrl: "/WorkReportManage/StoryEdit",
     ExpandSetPageUrl: "ExpandSetPageUrl"
   },
   {
-    Name: "DeleteWeek",
+    Name: "DeleteStory",
     Type: "DataGrid/BatchUpdateRowDataList",
     DataGridView: "DataGridView1"
   }]

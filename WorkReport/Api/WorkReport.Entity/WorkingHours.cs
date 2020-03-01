@@ -58,11 +58,9 @@ namespace WorkReport.Entity
     public class ViewWorkingHours : WorkingHours
     {
         public string StoryName { get; set; }
-        public string StoryTitle { get; set; }
         public string StoryUrl { get; set; }
         public string CreateUserName { get; set; }
-        public DateTime StartDate { get; set; }
-        public DateTime EndDate { get; set; }
+        public string WeekName { get; set; }
         public int WeekWorkingHours { get; set; }
     }
 }

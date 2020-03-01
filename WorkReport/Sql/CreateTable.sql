@@ -83,7 +83,7 @@ go
 
 create view v_Story
 as
-select a.*
+select a.*,'ch'+ ltrim(rtrim(str(a.StoryId)))+' '+ a.StoryTitle as StoryName
 from t_Story a where IsDelete=0
 go
 
@@ -115,7 +115,9 @@ go
 
 create view v_PullRequest
 as
-select a.*,b.UserName as CreateUserName,c.StoryTitle,c.StoryUrl from t_PullRequest a
+select a.*,b.UserName as CreateUserName,
+case when c.StoryId is not null then 'ch'+ ltrim(rtrim(str(c.StoryId)))+' '+ c.StoryTitle else '' end as StoryName,c.StoryUrl
+from t_PullRequest a
 left join t_User b on a.CreateUser=b.UserId
 left join t_Story c on a.StoryId=c.Id 
 where a.IsDelete=0
@@ -140,6 +142,16 @@ RowVersion timestamp not null                                   --行版本
 )
 go
 
+drop view v_Week
+go
+
+create view v_Week
+as
+select a.*,
+convert(varchar(10),a.StartDate,111)+' - '+convert(varchar(10),a.EndDate,111) as WeekName
+from t_Week a
+where a.IsDelete=0
+go
 
 drop table t_WorkingHours
 go
@@ -149,8 +161,8 @@ create table t_WorkingHours
 Id uniqueidentifier not null primary key default(newid()),      --主键
 StoryId uniqueidentifier,                                       --Story Id
 WeekId uniqueidentifier not null,                               --Week Id
-Title varchar(500) not null,                                    --Pull Request Title
-WorkingHours int not null,
+Content varchar(500) null,                                    --Pull Request Title
+HourCount int not null,
 Remark nvarchar(200),                                           --备注
 IsDelete tinyint not null default(0),                           --是否删除
 CreateUser uniqueidentifier not null,                           --创建人   
@@ -166,8 +178,9 @@ go
 
 create view v_WorkingHours
 as
-select a.*,b.UserName as CreateUserName,c.StoryTitle,c.StoryUrl,
-d.StartDate,d.EndDate,d.WorkingHours as WeekWorkingHours from t_WorkingHours a
+select a.*,b.UserName as CreateUserName,
+case when c.StoryId is not null then 'ch'+ ltrim(rtrim(str(c.StoryId)))+' '+ c.StoryTitle else '' end as StoryName,c.StoryUrl,
+convert(varchar(10),d.StartDate,111)+' - '+convert(varchar(10),d.EndDate,111) as WeekName,d.WorkingHours as WeekWorkingHours from t_WorkingHours a
 left join t_User b on a.CreateUser=b.UserId
 left join t_Story c on a.StoryId=c.Id 
 left join t_Week d on a.WeekId=d.Id 
@@ -198,7 +211,7 @@ go
 
 create view v_Daily
 as
-select a.*,b.UserName as CreateUserName,'ch'+ ltrim(rtrim(str(c.StoryId))) as StoryName,
+select a.*,b.UserName as CreateUserName,'ch'+ ltrim(rtrim(str(c.StoryId)))+' '+ c.StoryTitle as StoryName,
 c.StoryTitle,c.StoryUrl from t_Daily a
 left join t_User b on a.CreateUser=b.UserId
 left join t_Story c on a.StoryId=c.Id 

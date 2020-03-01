@@ -143,7 +143,7 @@ class DataGridView extends BaseIndex {
                 if (p.IsRender && !p.IsRender(text, record, index)) return this.EmptyRender();
                 if (!Common.IsNullOrEmpty(text)) {
                     let url = p.PageUrl;
-                    url = Common.ReplaceDataContent(record, url, true)
+                    url = Common.ReplaceDataContent(record, url, !p.IsHttp)
                     if (Common.IsNullOrEmpty(url)) return text;
                     else return <a href={url} target="_blank" rel="noopener noreferrer">{text}</a>
                 }
