@@ -13,7 +13,8 @@ const UserEdit = {
             return false;
         }
 
-        entityData.LoginPassword = Md5(entityData.LoginPassword);
+        if (entityData.LoginPassword) entityData.LoginPassword = Md5(entityData.LoginPassword);
+        else delete entityData.LoginPassword;
 
         return entityData;
     }
