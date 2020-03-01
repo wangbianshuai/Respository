@@ -26,6 +26,7 @@ function GetWorkReportNavMenu() {
     menuList.push(AddMenu("DailyList", "Daily List", false, "table", "/WorkReportManage/DailyList"));
     menuList.push(AddMenu("PullRequestInput", "Pull Request Input", false, "form", "/WorkReportManage/PullRequestInput"));
     menuList.push(AddMenu("PullRequestList", "Pull Request List", false, "table", "/WorkReportManage/PullRequestList"));
+    menuList.push(AddMenu("PullRequestStatistics", "Pull Request Statistics", false, "table", "/WorkReportManage/PullRequestStatistics"));
     menuList.push(AddMenu("WorkingHoursList", "Working Hours", false, "table", "/WorkReportManage/WorkingHoursList"));
     menuList.push(AddMenu("WOrkingHoursEdit", "Add", true, "form", "/WorkReportManage/WOrkingHoursEdit", "", null, false, "Working Hours", "/WorkReportManage/WorkingHoursList", null, true));
     menuList.push(AddMenu("StoryList", "Story", false, "table", "/WorkReportManage/StoryList"));
