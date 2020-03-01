@@ -20,10 +20,6 @@ namespace WorkReport.Entity
         /// </summary> 
         public Guid StoryId { get; set; }
         /// <summary>
-        /// Pull Request Id
-        /// </summary>
-        public int PullRequestId { get; set; }
-        /// <summary>
         /// Pull Request Title
         /// </summary>
         public string PullRequestTitle { get; set; }
@@ -62,13 +58,13 @@ namespace WorkReport.Entity
 
         public override void InsertValidate(List<Func<IValidate, IEntityData, string>> validateList)
         {
-            validateList.Add(this.ValidateExists<Story>("IsDelete=0 and PullRequestId=@PullRequestId and CreateUser=@CreateUser", "Sorry, The Pull Request Id already exist!"));
+            validateList.Add(this.ValidateExists<PullRequest>("IsDelete=0 and PullRequestUrl=@PullRequestUrl and CreateUser=@CreateUser", "Sorry, The Pull Request Url already exist!"));
         }
 
         public override void UpdateValidate(List<Func<IValidate, IEntityData, string>> validateList)
         {
-            validateList.Add(this.ValidateExists<Story>("Id=@Id and PullRequestId=@PullRequestId and CreateUser=@CreateUser", "true"));
-            validateList.Add(this.ValidateExists<Story>("IsDelete=0 and PullRequestId=@PullRequestId and CreateUser=@CreateUser", "Sorry, The Pull Request Id already exist!"));
+            validateList.Add(this.ValidateExists<PullRequest>("Id=@Id and PullRequestUrl=@PullRequestUrl and CreateUser=@UpdateUser", "true"));
+            validateList.Add(this.ValidateExists<PullRequest>("IsDelete=0 and PullRequestUrl=@PullRequestUrl and CreateUser=@UpdateUser", "Sorry, The Pull Request Url already exist!"));
         }
     }
 
@@ -77,7 +73,6 @@ namespace WorkReport.Entity
     public class ViewPullRequest : PullRequest
     {
         public string StoryName { get; set; }
-        public string StoryTitle { get; set; }
         public string StoryUrl { get; set; }
         public string CreateUserName { get; set; }
     }

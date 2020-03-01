@@ -41,6 +41,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Daily.cs" />
+    <Compile Include="PullRequest.cs" />
     <Compile Include="Story.cs" />
     <Compile Include="User.cs" />
     <Compile Include="CommonOperation.cs" />

@@ -1,23 +1,23 @@
-const WorkingHours = require("../../entities/WorkingHours");
+const PullRequest = require("../../entities/PullRequest");
 const { GetButton, AssignProporties, GetTextBox, GetSelect } = require("../../Common");
 
-//WorkReportManage/WorkingHoursList 700-799
+//WorkReportManage/PullRequestList 900-999
 const DataActionTypes = {
   //Search Query
-  SearchQuery: 700,
+  SearchQuery: 900,
   //Delete Entity Data
-  DeleteEntityData: 701,
+  DeleteEntityData: 901,
   //Excel Export
-  ExcelExport: 702
+  ExcelExport: 902
 };
 
-const Entity = { Name: WorkingHours.Name, PrimaryKey: WorkingHours.PrimaryKey, ViewName: "ViewWorkingHours" };
+const Entity = { Name: PullRequest.Name, PrimaryKey: PullRequest.PrimaryKey, ViewName: "ViewPullRequest", IsGroupByInfo: true };
 
 module.exports = {
-  Name: "WorkingHoursList",
+  Name: "PullRequestList",
   Type: "View",
   EventActions: GetEventActions(),
-  Properties: AssignProporties({ Name: "WorkingHoursList" }, [GetSearchOperationView(), GetDataGridView()])
+  Properties: AssignProporties({ Name: "PullRequestList" }, [GetSearchOperationView(), GetDataGridView()])
 }
 
 function GetSearchOperationView() {
@@ -26,22 +26,20 @@ function GetSearchOperationView() {
     Entity: Entity,
     Type: "RowsColsView",
     ClassName: "DivSerachView",
-    Properties: AssignProporties({ Name: "WorkingHoursList" }, [
-      GetEditSelect("WeekId", "Week", WorkingHours.WeekDataSource, 1, 1),
-      GetEditSelect("StoryId", "Story", WorkingHours.StoryDataSource, 1, 2),
-      GetEditSelect("CreateUser", "User", WorkingHours.UserDataSource, 2, 1),
+    Properties: AssignProporties({ Name: "PullRequestList" }, [
+      GetEditSelect("StoryId", "Story", PullRequest.StoryDataSource, 1, 1),
+      GetEditSelect("CreateUser", "User", PullRequest.UserDataSource, 1, 2),
       {
-        ...GetTextBox2("Keyword", "Keyword", 2, 2, "", "Story Id/Story Title/Remark"), PropertyName: "StoryName,Content,Remark",
+        ...GetTextBox2("Keyword", "Keyword", 1, 3, "", "Pull Request Title/Remark"), PropertyName: "PullRequestTitle,Remark",
         OperateLogic: "like", PressEnterEventActionName: "SearchQuery"
       },
-      { ...GetButton("Search", "Search", "primary", 2, 4), IsFormItem: true, Icon: "search", EventActionName: "SearchQuery", PressEnterEventActionName: "SearchQuery" },
-      { ...GetButton("ClearQuery", "Clear", "default", 2, 5), IsFormItem: true, EventActionName: "ClearQuery" },
-      { EventActionName: "ToEditPage", ...GetButton("ToEditPage", "Add", "primary", 3, 1), Style: { marginLeft: 16, marginBottom: 16 } },
-      { EventActionName: "ExcelExport", ...GetButton("ExcelExport", "Excel Export", "default", 3, 2), Icon: "download", ColStyle: { paddingLeft: 0 } }
+      { ...GetButton("Search", "Search", "primary", 1, 4), IsFormItem: true, Icon: "search", EventActionName: "SearchQuery", PressEnterEventActionName: "SearchQuery" },
+      { ...GetButton("ClearQuery", "Clear", "default", 1, 5), IsFormItem: true, EventActionName: "ClearQuery" },
+      { EventActionName: "ToEditPage", ...GetButton("ToEditPage", "Add", "primary", 2, 1), Style: { marginLeft: 16, marginBottom: 16 } },
+      { EventActionName: "ExcelExport", ...GetButton("ExcelExport", "Excel Export", "default", 2, 2), Icon: "download", ColStyle: { paddingLeft: 0 } }
     ])
   }
 }
-
 
 function GetEditSelect(Name, Label, DataSource, X, Y, DefaultValue) {
   return {
@@ -80,9 +78,20 @@ function GetDataGridView() {
     EventActionName: "SearchQuery",
     IsDiv: true,
     ClassName: "DivInfoView3",
-    Properties: AssignProporties(WorkingHours, ["CreateUserName", "WeekName", "WeekWorkingHours", GetStory(), "Content", "HourCount", "Remark", { Name: "StoryUrl", IsVisible: false },
-      { Name: "CreateDate", OrderByType: "desc" }, { Name: "RowVersion", IsVisible: false }, { Name: "CreateUser", IsVisible: false }, GetOperation()])
+    GroupByInfoHtml: GetGroupByInfoHtml(),
+    Properties: AssignProporties(PullRequest, ["CreateUserName", GetStory(), GetPullRequestTitle(), "TestCases", "Comments", "Remark", { Name: "StoryUrl", IsVisible: false },
+      { Name: "CreateDate", OrderByType: "desc" }, { Name: "PullRequestUrl", IsVisible: false }, { Name: "RowVersion", IsVisible: false },
+      { Name: "CreateUser", IsVisible: false }, GetOperation()])
   }
+}
+
+function GetGroupByInfoHtml() {
+  var html = [];
+
+  html.push("Total Test Cases：<span style=\"color:#1890ff;\">{TotalTestCases}</span>，");
+  html.push("Total Comments：<span  style=\"color:#1890ff;\">{TotalComments}</span>");
+
+  return html.join("");
 }
 
 function GetStory() {
@@ -94,21 +103,30 @@ function GetStory() {
   }
 }
 
+function GetPullRequestTitle() {
+  return {
+    Name: "PullRequestTitle",
+    IsOpenPage: true,
+    IsHttp: true,
+    PageUrl: "#{PullRequestUrl}"
+  }
+}
+
 function GetOperation() {
   return {
     Name: "Operation",
     Label: "Operation",
     IsData: false,
     SelfPropertyName: "CreateUser",
-    ActionList: AssignProporties(WorkingHours, [GetEditAction(), GetDeleteAction()])
+    ActionList: AssignProporties(PullRequest, [GetEditAction(), GetDeleteAction()])
   }
 }
 
 function GetEditAction() {
   return {
-    Name: "EditWorkingHours",
+    Name: "EditPullRequest",
     Label: "Edit",
-    EventActionName: "EditWorkingHours",
+    EventActionName: "EditPullRequest",
     IsSelfOperation: true,
     Type: "AButton"
   }
@@ -116,14 +134,14 @@ function GetEditAction() {
 
 function GetDeleteAction() {
   return {
-    Name: "DeleteWorkingHours",
+    Name: "DeletePullRequest",
     Label: "Delete",
     Type: "Popconfirm",
-    EventActionName: "DeleteWorkingHours",
+    EventActionName: "DeletePullRequest",
     IsSelfOperation: true,
     DataActionType: DataActionTypes.DeleteEntityData,
     SuccessTip: "Delete Succeed!",
-    Title: "Please confirm whether to delete the current WorkingHours?"
+    Title: "Please confirm whether to delete the current PullRequest?"
   }
 }
 function GetEventActions() {
@@ -148,21 +166,21 @@ function GetEventActions() {
     DataGridView: "DataGridView1"
   },
   {
-    Name: "EditWorkingHours",
+    Name: "EditPullRequest",
     Type: "DataGridView/SelectRowToPage",
     DataGridView: "DataGridView1",
     AlertMessage: "AlertMessage",
-    PageUrl: "/WorkReportManage/WorkingHoursEdit?Id=#{Id}&MenuName=" + escape("Edit"),
+    PageUrl: "/WorkReportManage/PullRequestInput?Id=#{Id}",
     ExpandSetPageUrl: "ExpandSetPageUrl"
   },
   {
     Name: "ToEditPage",
     Type: "Page/ToPage",
-    PageUrl: "/WorkReportManage/WorkingHoursEdit",
+    PageUrl: "/WorkReportManage/PullRequestInput",
     ExpandSetPageUrl: "ExpandSetPageUrl"
   },
   {
-    Name: "DeleteWorkingHours",
+    Name: "DeletePullRequest",
     Type: "DataGrid/BatchUpdateRowDataList",
     DataGridView: "DataGridView1"
   }]

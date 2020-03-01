@@ -1,23 +1,23 @@
-const WorkingHours = require("../../entities/WorkingHours");
-const { GetButton, AssignProporties, GetTextBox, GetSelect } = require("../../Common");
+const Daily = require("../../entities/Daily");
+const { GetButton, AssignProporties, GetTextBox, GetSelect, GetDatePicker } = require("../../Common");
 
-//WorkReportManage/WorkingHoursList 700-799
+//WorkReportManage/DailyList 1000-1199
 const DataActionTypes = {
   //Search Query
-  SearchQuery: 700,
+  SearchQuery: 1100,
   //Delete Entity Data
-  DeleteEntityData: 701,
+  DeleteEntityData: 1101,
   //Excel Export
-  ExcelExport: 702
+  ExcelExport: 1102
 };
 
-const Entity = { Name: WorkingHours.Name, PrimaryKey: WorkingHours.PrimaryKey, ViewName: "ViewWorkingHours" };
+const Entity = { Name: Daily.Name, PrimaryKey: Daily.PrimaryKey, ViewName: "ViewDaily" };
 
 module.exports = {
-  Name: "WorkingHoursList",
+  Name: "DailyList",
   Type: "View",
   EventActions: GetEventActions(),
-  Properties: AssignProporties({ Name: "WorkingHoursList" }, [GetSearchOperationView(), GetDataGridView()])
+  Properties: AssignProporties({ Name: "DailyList" }, [GetSearchOperationView(), GetDataGridView()])
 }
 
 function GetSearchOperationView() {
@@ -26,12 +26,13 @@ function GetSearchOperationView() {
     Entity: Entity,
     Type: "RowsColsView",
     ClassName: "DivSerachView",
-    Properties: AssignProporties({ Name: "WorkingHoursList" }, [
-      GetEditSelect("WeekId", "Week", WorkingHours.WeekDataSource, 1, 1),
-      GetEditSelect("StoryId", "Story", WorkingHours.StoryDataSource, 1, 2),
-      GetEditSelect("CreateUser", "User", WorkingHours.UserDataSource, 2, 1),
+    Properties: AssignProporties({ Name: "DailyList" }, [
+      GetEditSelect("StoryId", "Story", Daily.StoryDataSource, 1, 1),
+      { ...GetDatePicker2("StartDate", "Working Date", 1, 2, "Greater than or equal to its value"), PropertyName: "WorkingDate", OperateLogic: ">=" },
+      { ...GetDatePicker2("EndDate", "To", 1, 3, "Less than its value"), PropertyName: "WorkingDate", OperateLogic: "<" },
+      GetEditSelect("CreateUser", "User", Daily.UserDataSource, 2, 1),
       {
-        ...GetTextBox2("Keyword", "Keyword", 2, 2, "", "Story Id/Story Title/Remark"), PropertyName: "StoryName,Content,Remark",
+        ...GetTextBox2("Keyword", "Keyword", 2, 3, "", "Story Id/Story Title/Content/Remark"), PropertyName: "StoryName,Content,Remark",
         OperateLogic: "like", PressEnterEventActionName: "SearchQuery"
       },
       { ...GetButton("Search", "Search", "primary", 2, 4), IsFormItem: true, Icon: "search", EventActionName: "SearchQuery", PressEnterEventActionName: "SearchQuery" },
@@ -42,6 +43,19 @@ function GetSearchOperationView() {
   }
 }
 
+function GetDatePicker2(Name, Label, X, Y, PlaceHolder, DefaultValue) {
+  return {
+    ...GetDatePicker(Name, Label, X, Y, DefaultValue),
+    IsFormItem: true, ColSpan: 6,
+    IsNullable: true,
+    PlaceHolder: PlaceHolder,
+    MaxLength: 20,
+    LabelCol: 8,
+    WrapperCol: 15,
+    DataType: "DateTime",
+    IsCondition: true
+  }
+}
 
 function GetEditSelect(Name, Label, DataSource, X, Y, DefaultValue) {
   return {
@@ -80,7 +94,7 @@ function GetDataGridView() {
     EventActionName: "SearchQuery",
     IsDiv: true,
     ClassName: "DivInfoView3",
-    Properties: AssignProporties(WorkingHours, ["CreateUserName", "WeekName", "WeekWorkingHours", GetStory(), "Content", "HourCount", "Remark", { Name: "StoryUrl", IsVisible: false },
+    Properties: AssignProporties(Daily, ["CreateUserName", GetStory(), "Content", "WorkingDate", "Remark", { Name: "StoryUrl", IsVisible: false },
       { Name: "CreateDate", OrderByType: "desc" }, { Name: "RowVersion", IsVisible: false }, { Name: "CreateUser", IsVisible: false }, GetOperation()])
   }
 }
@@ -100,15 +114,15 @@ function GetOperation() {
     Label: "Operation",
     IsData: false,
     SelfPropertyName: "CreateUser",
-    ActionList: AssignProporties(WorkingHours, [GetEditAction(), GetDeleteAction()])
+    ActionList: AssignProporties(Daily, [GetEditAction(), GetDeleteAction()])
   }
 }
 
 function GetEditAction() {
   return {
-    Name: "EditWorkingHours",
+    Name: "EditDaily",
     Label: "Edit",
-    EventActionName: "EditWorkingHours",
+    EventActionName: "EditDaily",
     IsSelfOperation: true,
     Type: "AButton"
   }
@@ -116,14 +130,14 @@ function GetEditAction() {
 
 function GetDeleteAction() {
   return {
-    Name: "DeleteWorkingHours",
+    Name: "DeleteDaily",
     Label: "Delete",
     Type: "Popconfirm",
-    EventActionName: "DeleteWorkingHours",
+    EventActionName: "DeleteDaily",
     IsSelfOperation: true,
     DataActionType: DataActionTypes.DeleteEntityData,
     SuccessTip: "Delete Succeed!",
-    Title: "Please confirm whether to delete the current WorkingHours?"
+    Title: "Please confirm whether to delete the current Daily?"
   }
 }
 function GetEventActions() {
@@ -148,21 +162,21 @@ function GetEventActions() {
     DataGridView: "DataGridView1"
   },
   {
-    Name: "EditWorkingHours",
+    Name: "EditDaily",
     Type: "DataGridView/SelectRowToPage",
     DataGridView: "DataGridView1",
     AlertMessage: "AlertMessage",
-    PageUrl: "/WorkReportManage/WorkingHoursEdit?Id=#{Id}&MenuName=" + escape("Edit"),
+    PageUrl: "/WorkReportManage/DailyInput?Id=#{Id}",
     ExpandSetPageUrl: "ExpandSetPageUrl"
   },
   {
     Name: "ToEditPage",
     Type: "Page/ToPage",
-    PageUrl: "/WorkReportManage/WorkingHoursEdit",
+    PageUrl: "/WorkReportManage/DailyInput",
     ExpandSetPageUrl: "ExpandSetPageUrl"
   },
   {
-    Name: "DeleteWorkingHours",
+    Name: "DeleteDaily",
     Type: "DataGrid/BatchUpdateRowDataList",
     DataGridView: "DataGridView1"
   }]

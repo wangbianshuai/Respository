@@ -95,7 +95,6 @@ create table t_PullRequest
 (
 Id uniqueidentifier not null primary key default(newid()),      --主键
 StoryId uniqueidentifier not null,                              --Story Id
-PullRequestId int not null,                                     --Pull Request Id
 PullRequestTitle varchar(500) not null,                         --Pull Request Title
 PullRequestUrl varchar(200) not null,                           --Pull Request Url    
 TestCases int not null,                                         --Test Cases
@@ -194,7 +193,7 @@ create table t_Daily
 (
 Id uniqueidentifier not null primary key default(newid()),      --主键
 StoryId uniqueidentifier,                                       --Story Id
-Content varchar(100) not null,                                  --Conent
+Content varchar(500) not null,                                  --Conent
 WorkingDate datetime not null,
 Remark nvarchar(200),                                           --备注
 IsDelete tinyint not null default(0),                           --是否删除
