@@ -273,7 +273,7 @@ export default class LeftRightLayout extends Component {
 
     GetMenuItem(m, pageName) {
         if (!m.IsVisible || !m.IsRight || !this.IsMenuVisible(m)) return null;
-        return <Menu.Item key={m.PageName}>
+        return <Menu.Item key={m.PageName} className={styles.MenuItem}>
             {
                 Common.IsEquals(m.PageName, pageName, true) ?
                     <div>

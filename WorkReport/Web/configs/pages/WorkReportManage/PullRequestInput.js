@@ -1,5 +1,5 @@
 const PullRequest = require("../../entities/PullRequest");
-const { AssignProporties, GetTextBox, GetButton, GetSelect } = require("../../Common");
+const { AssignProporties, GetTextBox, GetButton, GetSelect, GetDatePicker } = require("../../Common");
 
 //WorkReportManage/PullRequestEdit 1000-1099
 const DataActionTypes = {
@@ -49,9 +49,23 @@ function GetProperties() {
     GetTextBox2("PullRequestUrl", "PullRequest url", 3, 1, "", "Please input pull request url", 200, false),
     { ...GetTextBox2("TestCases", "Test Cases", 4, 1, "", "Please input test cases", 10, false), DataType: "int" },
     { ...GetTextBox2("Comments", "Comments", 5, 1, "", "Please input comments", 10, false), DataType: "int" },
-    GetTextArea("Remark", "Remark", 6, 1),
+    GetDatePicker2("StartDate", "Start Date", 6, 1, true, ""),
+    GetDatePicker2("EndDate", "End Date", 7, 1, true, ""),
+    GetTextArea("Remark", "Remark", 8, 1),
     GetButtonView()
   ]
+}
+
+function GetDatePicker2(Name, Label, X, Y, IsNullable, PlaceHolder, DefaultValue) {
+  return {
+    ...GetDatePicker(Name, Label, X, Y, DefaultValue),
+    IsFormItem: true, ColSpan: 24,
+    LabelCol: 8,
+    WrapperCol: 8,
+    IsNullable: IsNullable,
+    PlaceHolder: PlaceHolder,
+    IsEdit: true
+  }
 }
 
 function GetEditSelect(Name, Label, DataSource, X, Y, IsNullable, PlaceHolder, DefaultValue) {
@@ -90,7 +104,7 @@ function GetButtonView() {
     IsDiv: true,
     IsFormItem: true,
     ColSpan: 24,
-    X: 7,
+    X: 9,
     Y: 1,
     Properties: AssignProporties({ Name: "PullRequestEdit" }, GetButtonProperties())
   }

@@ -13,6 +13,8 @@ function GetProperties() {
     GetProperty("StoryName", "Story"),
     GetProperty("TestCases", "Test Cases"),
     GetProperty("Comments", "Comments"),
+    GetProperty("StartDate", "Start Date"),
+    GetProperty("EndDate", "End Date"),
     GetProperty("Remark", "Remark"),
     GetProperty("CreateUserName", "User"),
     GetProperty("CreateDate", "Create Date")

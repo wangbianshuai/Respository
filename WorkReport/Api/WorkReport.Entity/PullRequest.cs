@@ -35,6 +35,14 @@ namespace WorkReport.Entity
         /// Comments
         /// </summary>
         public int Comments { get; set; }
+        /// <summary> 
+        /// Start Date
+        /// </summary> 
+        public DateTime StartDate { get; set; }
+        /// <summary>
+        /// End Date
+        /// </summary>
+        public DateTime EndDate { get; set; }
         /// <summary>
         /// Remark
         /// </summary>

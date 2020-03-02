@@ -47,9 +47,23 @@ function GetProperties() {
     { ...GetTextBox2("StoryId", "Story Id", 1, 1, "", "Please input story id", 10, false), DataType: "int" },
     { ...GetTextArea("StoryTitle", "Story Title", 2, 1, 'Please input story title'), IsNullable: false, MaxLength: 1000 },
     GetTextBox2("StoryUrl", "Story url", 3, 1, "", "Please input story url", 200, false),
-    GetTextArea("Remark", "Remark", 4, 1),
+    GetDatePicker2("StartDate", "Start Date", 4, 1, true, ""),
+    GetDatePicker2("EndDate", "End Date", 5, 1, true, ""),
+    GetTextArea("Remark", "Remark", 6, 1),
     GetButtonView()
   ]
+}
+
+function GetDatePicker2(Name, Label, X, Y, IsNullable, PlaceHolder, DefaultValue) {
+  return {
+    ...GetDatePicker(Name, Label, X, Y, DefaultValue),
+    IsFormItem: true, ColSpan: 24,
+    LabelCol: 8,
+    WrapperCol: 8,
+    IsNullable: IsNullable,
+    PlaceHolder: PlaceHolder,
+    IsEdit: true
+  }
 }
 
 function GetTextBox2(Name, Label, X, Y, ContorlType, PlaceHolder, MaxLength, IsNullable, IsVisible, ValidateNames, ValidateTipMessage) {
@@ -74,7 +88,7 @@ function GetButtonView() {
     IsDiv: true,
     IsFormItem: true,
     ColSpan: 24,
-    X: 6,
+    X: 7,
     Y: 1,
     Properties: AssignProporties({ Name: "StoryEdit" }, GetButtonProperties())
   }

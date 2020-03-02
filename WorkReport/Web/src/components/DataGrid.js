@@ -1,5 +1,6 @@
 import React, { Component } from "react"
 import { Table, Alert, Pagination, Button } from "antd";
+import { Common } from "UtilsCommon";
 const { Column } = Table;
 
 export default class DataGrid extends Component {
@@ -56,7 +57,7 @@ export default class DataGrid extends Component {
     }
 
     RenderGroupByInfoAlert() {
-        if (!this.props.GroupByInfo || !this.props.GroupByInfoHtml) return null;
+        if (Common.IsEmptyObject(this.props.GroupByInfo) || !this.props.GroupByInfoHtml) return null;
 
         return <Alert message={this.RenderGroupByInfo()} type="info" showIcon={true} />
     }

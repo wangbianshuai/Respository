@@ -65,7 +65,7 @@ function GetDataGridView() {
     EventActionName: "SearchQuery",
     IsDiv: true,
     ClassName: "DivInfoView3",
-    Properties: AssignProporties(Story, ["StoryId", GetStoryTitle(), "Remark", { Name: "StoryUrl", IsVisible: false },
+    Properties: AssignProporties(Story, ["StoryId", GetStoryTitle(), "StartDate", "EndDate", "Remark", { Name: "StoryUrl", IsVisible: false },
       { Name: "CreateDate", OrderByType: "desc" }, { Name: "RowVersion", IsVisible: false }, GetOperation()])
   }
 }

@@ -68,6 +68,8 @@ Id uniqueidentifier not null primary key default(newid()),      --主键
 StoryId int not null,                                           --Story Id
 StoryTitle varchar(1000) not null,                              --Story Title
 StoryUrl varchar(200) not null,                                 --Story Url
+StartDate datetime,
+EndDate datetime,
 Remark nvarchar(200),                                           --备注
 IsDelete tinyint not null default(0),                           --是否删除
 CreateUser uniqueidentifier not null,                           --创建人   
@@ -98,7 +100,9 @@ StoryId uniqueidentifier not null,                              --Story Id
 PullRequestTitle varchar(500) not null,                         --Pull Request Title
 PullRequestUrl varchar(200) not null,                           --Pull Request Url    
 TestCases int not null,                                         --Test Cases
-Comments int not null,                                          --Commencts 
+Comments int not null,                                          --Commencts
+StartDate datetime,
+EndDate datetime, 
 Remark nvarchar(200),                                           --备注
 IsDelete tinyint not null default(0),                           --是否删除
 CreateUser uniqueidentifier not null,                           --创建人   

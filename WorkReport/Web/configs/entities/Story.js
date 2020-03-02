@@ -10,6 +10,8 @@ function GetProperties() {
       GetProperty("StoryId", "Story Id"),
       GetProperty("StoryTitle", "Story Title"),
       GetProperty("StoryUrl", "Story Url"),
+      GetProperty("StartDate", "Start Date"),
+      GetProperty("EndDate", "End Date"),
       GetProperty("Remark", "Remark"),
       GetProperty("CreateDate", "Create Date")
   ]
