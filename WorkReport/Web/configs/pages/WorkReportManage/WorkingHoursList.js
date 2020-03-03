@@ -27,9 +27,9 @@ function GetSearchOperationView() {
     Type: "RowsColsView",
     ClassName: "DivSerachView",
     Properties: AssignProporties({ Name: "WorkingHoursList" }, [
-      GetEditSelect("WeekId", "Week", WorkingHours.WeekDataSource, 1, 1),
-      GetEditSelect("StoryId", "Story", WorkingHours.StoryDataSource, 1, 2),
-      GetEditSelect("CreateUser", "User", WorkingHours.UserDataSource, 1, 3),
+      GetEditSelect("WeekId", "Week", WorkingHours.WeekDataSource, 1, 1, true),
+      GetEditSelect("StoryId", "Story", WorkingHours.StoryDataSource, 1, 2, true),
+      GetEditSelect("CreateUser", "User", WorkingHours.UserDataSource, 1, 3, false),
       { ...GetDatePicker2("StartDate", "Start Date", 2, 1, "Greater than or equal to its value"), PropertyName: "StartDate", OperateLogic: ">=" },
       { ...GetDatePicker2("EndDate", "To", 2, 2, "Less than its value"), PropertyName: "StartDate", OperateLogic: "<" },
       {
@@ -60,17 +60,18 @@ function GetDatePicker2(Name, Label, X, Y, PlaceHolder, DefaultValue) {
   }
 }
 
-function GetEditSelect(Name, Label, DataSource, X, Y, DefaultValue) {
+function GetEditSelect(Name, Label, DataSource, X, Y, IsSearch) {
   return {
-    ...GetSelect(Name, Label, null, X, Y, DefaultValue),
+    ...GetSelect(Name, Label, null, X, Y),
     IsFormItem: true,
     ColSpan: 6,
     LabelCol: 8,
     WrapperCol: 15,
+    IsSearch,
+    AllowClear: true,
     OperateLogic: "=",
     ServiceDataSource: DataSource,
     IsNullable: true,
-    AllowClear: true,
     IsCondition: true
   }
 }

@@ -25,8 +25,8 @@ function GetSearchOperationView() {
     Type: "RowsColsView",
     ClassName: "DivSerachView",
     Properties: AssignProporties({ Name: "PullRequestStatistics" }, [
-      GetEditSelect("StoryId", "Story", PullRequest.StoryDataSource, 1, 1),
-      GetEditSelect("CreateUser", "User", PullRequest.UserDataSource, 1, 2),
+      GetEditSelect("StoryId", "Story", PullRequest.StoryDataSource, 1, 1, true),
+      GetEditSelect("CreateUser", "User", PullRequest.UserDataSource, 1, 2, false),
       {
         ...GetTextBox2("Keyword", "Keyword", 1, 3, "", "Pull Request Title/Remark"), PropertyName: "PullRequestTitle,Remark",
         OperateLogic: "like", PressEnterEventActionName: "SearchQuery"
@@ -56,17 +56,18 @@ function GetDatePicker2(Name, Label, X, Y, PlaceHolder, DefaultValue) {
   }
 }
 
-function GetEditSelect(Name, Label, DataSource, X, Y, DefaultValue) {
+function GetEditSelect(Name, Label, DataSource, X, Y, IsSearch) {
   return {
-    ...GetSelect(Name, Label, null, X, Y, DefaultValue),
+    ...GetSelect(Name, Label, null, X, Y),
     IsFormItem: true,
     ColSpan: 6,
     LabelCol: 8,
     WrapperCol: 15,
+    IsSearch,
+    AllowClear: true,
     OperateLogic: "=",
     ServiceDataSource: DataSource,
     IsNullable: true,
-    AllowClear: true,
     IsCondition: true
   }
 }

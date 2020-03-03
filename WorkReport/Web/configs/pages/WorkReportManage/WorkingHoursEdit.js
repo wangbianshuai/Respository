@@ -62,6 +62,7 @@ function GetEditSelect(Name, Label, DataSource, X, Y, IsNullable, PlaceHolder, D
     WrapperCol: 8,
     IsNullable,
     IsEdit: true,
+    AllowClear: true, IsSearch: true,
     ServiceDataSource: DataSource,
     PlaceHolder: PlaceHolder
   }

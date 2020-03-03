@@ -27,7 +27,7 @@ function GetSearchOperationView() {
     Type: "RowsColsView",
     ClassName: "DivSerachView",
     Properties: AssignProporties({ Name: "DailyList" }, [
-      GetEditSelect("StoryId", "Story", Daily.StoryDataSource, 1, 1),
+      GetEditSelect("StoryId", "Story", Daily.StoryDataSource, 1, 1, true),
       { ...GetDatePicker2("StartDate", "Working Date", 1, 2, "Greater than or equal to its value"), PropertyName: "WorkingDate", OperateLogic: ">=" },
       { ...GetDatePicker2("EndDate", "To", 1, 3, "Less than its value"), PropertyName: "WorkingDate", OperateLogic: "<" },
       GetEditSelect("CreateUser", "User", Daily.UserDataSource, 2, 1),
@@ -57,17 +57,18 @@ function GetDatePicker2(Name, Label, X, Y, PlaceHolder, DefaultValue) {
   }
 }
 
-function GetEditSelect(Name, Label, DataSource, X, Y, DefaultValue) {
+function GetEditSelect(Name, Label, DataSource, X, Y, IsSearch) {
   return {
-    ...GetSelect(Name, Label, null, X, Y, DefaultValue),
+    ...GetSelect(Name, Label, null, X, Y),
     IsFormItem: true,
     ColSpan: 6,
     LabelCol: 8,
     WrapperCol: 15,
+    IsSearch,
+    AllowClear: true,
     OperateLogic: "=",
     ServiceDataSource: DataSource,
     IsNullable: true,
-    AllowClear: true,
     IsCondition: true
   }
 }
