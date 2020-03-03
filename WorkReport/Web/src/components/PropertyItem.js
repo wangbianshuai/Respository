@@ -74,6 +74,7 @@ export default class PropertyItem extends Component {
             return null;
         }
         catch (err) {
+            console.warn("components/PropertyItem/GetPageComponent", err);
             return null
         }
     }
@@ -87,7 +88,7 @@ export default class PropertyItem extends Component {
 
     RenderLabel() {
         const { Property } = this.props;
-        const {Label}=this.state;
+        const { Label } = this.state;
 
         if (Property.IsAddOptional) {
             const exLabel = Property.ExLabel || "";

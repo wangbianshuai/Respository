@@ -230,6 +230,7 @@ export function SetStorage(key, value, time) {
         }
     }
     catch (ex) {
+        console.warn("utils-common/Common", ex);
     }
 }
 
@@ -258,6 +259,7 @@ export function GetStorage(key) {
         }
     }
     catch (ex) {
+        console.warn("utils-common/Common", ex);
     }
     return IsNullOrEmpty(value) ? "" : value
 }
@@ -267,6 +269,7 @@ export function RemoveStorage(key) {
         window.localStorage.removeItem(key);
     }
     catch (ex) {
+        console.warn("utils-common/Common", ex);
     }
 }
 

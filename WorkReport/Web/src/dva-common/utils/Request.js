@@ -42,6 +42,7 @@ function FetchRequest(url, data, resKey, serviceName, headers, callback) {
         return fetch(url, data).then(res => SetResult(res)).then(d => HttpResponse.GetResponse(d, resKey), res => HttpResponse.GetErrorResponse(res));
     }
     catch (error) {
+        console.warn("dva-common/utils/Request/FetchRequest", error);
         const res = { IsSuccess: false, Message: error.message || error }
         return HttpResponse.GetErrorResponse(res, url, data)
     }
@@ -56,6 +57,7 @@ function SyncAjax(url, data, resKey, callback) {
             }, false);
         }
         catch (error) {
+            console.warn("dva-common/utils/Request/SyncAjax", error);
             const res = { IsSuccess: false, Message: error.message || error }
             callback && callback(res);
             resolve(res)

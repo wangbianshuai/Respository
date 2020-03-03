@@ -21,6 +21,7 @@ export default (name, WrapComponent, options) => class ConnectAction extends Com
             Actions.Invoke(this.Id, actionType, data);
         }
         catch (err) {
+            console.warn("react-common/hoc/ConnectAction/Invoke", err);
             this.Receive(actionType, { IsSuccess: false, Message: err.message })
         }
     }

@@ -6,7 +6,7 @@ const DataActionTypes = {
   //搜索查询
   SearchQuery: 1400,
   //Excel导出
-  ExcelExport: 1401
+  ExcelExport: 1402
 };
 
 const Entity = { Name: WorkingHours.Name, PrimaryKey: WorkingHours.PrimaryKey, ViewName: "ViewWorkingHours", }

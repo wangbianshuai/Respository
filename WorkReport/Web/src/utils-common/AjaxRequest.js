@@ -29,6 +29,7 @@ export default class Index {
             return jqXHR;
         }
         catch (ex) {
+            console.warn("utils-common/AjaxRequest", ex);
             request.Callback({ IsSuccess: false, Message: ex.message })
         }
     }
@@ -79,6 +80,7 @@ export default class Index {
                 Index.PostRequest(url, headers, data, (res) => resolve(res), false);
             }
             catch (error) {
+                console.warn("utils-common/AjaxRequest", error);
                 resolve({ IsSuccess: false, Message: error.message || error })
             }
         });

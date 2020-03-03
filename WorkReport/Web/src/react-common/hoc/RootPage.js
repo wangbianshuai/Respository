@@ -113,6 +113,7 @@ export default (WrapComponent) => class RootPage extends BaseIndex {
             else if (this.StateActionTypes[key]) this.StateActionTypes[key].forEach(a => Actions.Dispatch(a, data));
         }
         catch (err) {
+            console.warn("react-common/hoc/RootPage/ReceiveActionData", err);
             this.SetResponseMessage({ IsSuccess: false, Message: err.message });
         }
     }

@@ -46,6 +46,7 @@ export default class Index {
                 else return this.RequestData(s, url, data, s.DataKey, serviceName, headers, callback);
             }
             catch (error) {
+                console.warn("dva-common/services/index/InitActionService", error);
                 const res = { IsSuccess: false, Message: error.message || error };
                 return Promise.resolve(res);
             }

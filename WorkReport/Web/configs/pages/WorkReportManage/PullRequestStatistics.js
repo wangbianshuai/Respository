@@ -6,7 +6,7 @@ const DataActionTypes = {
   //搜索查询
   SearchQuery: 1300,
   //Excel导出
-  ExcelExport: 1301
+  ExcelExport: 1302
 };
 
 const Entity = { Name: PullRequest.Name, PrimaryKey: PullRequest.PrimaryKey, ViewName: "ViewPullRequest", }

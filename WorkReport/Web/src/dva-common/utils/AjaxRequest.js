@@ -23,6 +23,7 @@ export default class Index {
             return jqXHR;
         }
         catch (ex) {
+            console.warn("dva-common/utils/AjaxRequest", ex);
             request.Callback({ IsSuccess: false, Message: ex.message })
         }
     }
