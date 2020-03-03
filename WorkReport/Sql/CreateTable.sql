@@ -183,6 +183,7 @@ create view v_WorkingHours
 as
 select a.*,b.UserName as CreateUserName,
 case when c.StoryId is not null then 'ch'+ ltrim(rtrim(str(c.StoryId)))+' '+ c.StoryTitle else '' end as StoryName,c.StoryUrl,
+d.StartDate,d.EndDate,
 convert(varchar(10),d.StartDate,111)+' - '+convert(varchar(10),d.EndDate,111) as WeekName,d.WorkingHours as WeekWorkingHours from t_WorkingHours a
 left join t_User b on a.CreateUser=b.UserId
 left join t_Story c on a.StoryId=c.Id 

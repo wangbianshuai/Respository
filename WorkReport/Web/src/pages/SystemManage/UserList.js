@@ -1,3 +1,3 @@
 import { EntityPageList } from "PageTemplates";
 
-export default EntityPageList("SystemManage_UserList", "User", 600);
+export default EntityPageList("SystemManage_UserList", "User", 4300);

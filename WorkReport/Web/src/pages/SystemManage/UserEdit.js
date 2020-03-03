@@ -20,4 +20,4 @@ const UserEdit = {
     }
 };
 
-export default EntityPageEdit("SystemManage_UserEdit", "User", 700, UserEdit);
+export default EntityPageEdit("SystemManage_UserEdit", "User", 4400, UserEdit);

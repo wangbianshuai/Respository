@@ -1,5 +1,5 @@
 const Story = require("../../entities/Story");
-const { GetButton, AssignProporties, GetTextBox } = require("../../Common");
+const { GetButton, AssignProporties, GetTextBox, GetDatePicker } = require("../../Common");
 
 //WorkReportManage/StoryList 500-599
 const DataActionTypes = {
@@ -27,19 +27,38 @@ function GetSearchOperationView() {
     Type: "RowsColsView",
     ClassName: "DivSerachView",
     Properties: AssignProporties({ Name: "StoryList" }, [
+      { ...GetDatePicker2("StartDate", "Start Date", 1, 1, "Greater than or equal to its value"), PropertyName: "StartDate", OperateLogic: ">=" },
+      { ...GetDatePicker2("EndDate", "To", 1, 2, "Less than its value"), PropertyName: "StartDate", OperateLogic: "<" },
       {
-        ...GetTextBox2("StoryId", "Story Id", 1, 1, "", "Story Id"), DataType: "int",
+        ...GetTextBox2("StoryId", "Story Id", 1, 3, "", "Story Id"), DataType: "int",
         OperateLogic: "=", PressEnterEventActionName: "SearchQuery"
       },
+      { ...GetDatePicker2("StartDate2", "End Date", 2, 1, "Greater than or equal to its value"), PropertyName: "EndDate", OperateLogic: ">=" },
+      { ...GetDatePicker2("EndDate2", "To", 2, 2, "Less than its value"), PropertyName: "EndDate", OperateLogic: "<" },
+     
       {
-        ...GetTextBox2("Keyword", "Keyword", 1, 2, "", "Story Title/Story Url/Remark"), PropertyName: "StoryTitle,StoryUrl,Remark",
+        ...GetTextBox2("Keyword", "Keyword", 2, 3, "", "Story Title/Story Url/Remark"), PropertyName: "StoryTitle,StoryUrl,Remark",
         OperateLogic: "like", PressEnterEventActionName: "SearchQuery"
       },
-      { ...GetButton("Search", "Search", "primary", 1, 4), IsFormItem: true, Icon: "search", EventActionName: "SearchQuery", PressEnterEventActionName: "SearchQuery" },
-      { ...GetButton("ClearQuery", "Clear", "default", 1, 5), IsFormItem: true, EventActionName: "ClearQuery" },
-      { EventActionName: "ToEditPage", ...GetButton("ToEditPage", "Add", "primary", 2, 1), Style: { marginLeft: 16, marginBottom: 16 } },
-      { EventActionName: "ExcelExport", ...GetButton("ExcelExport", "Excel Export", "default", 2, 2), Icon: "download", ColStyle: { paddingLeft: 0 } }
+      { ...GetButton("Search", "Search", "primary", 2, 4), IsFormItem: true, Icon: "search", EventActionName: "SearchQuery", PressEnterEventActionName: "SearchQuery" },
+      { ...GetButton("ClearQuery", "Clear", "default", 2, 5), IsFormItem: true, EventActionName: "ClearQuery" },
+      { EventActionName: "ToEditPage", ...GetButton("ToEditPage", "Add", "primary", 3, 1), Style: { marginLeft: 16, marginBottom: 16 } },
+      { EventActionName: "ExcelExport", ...GetButton("ExcelExport", "Excel Export", "default", 3, 2), Icon: "download", ColStyle: { paddingLeft: 0 } }
     ])
+  }
+}
+
+function GetDatePicker2(Name, Label, X, Y, PlaceHolder, DefaultValue) {
+  return {
+    ...GetDatePicker(Name, Label, X, Y, DefaultValue),
+    IsFormItem: true, ColSpan: 6,
+    IsNullable: true,
+    PlaceHolder: PlaceHolder,
+    MaxLength: 20,
+    LabelCol: 8,
+    WrapperCol: 15,
+    DataType: "DateTime",
+    IsCondition: true
   }
 }
 

@@ -1,12 +1,12 @@
 const User = require("../../entities/User");
 const { AssignProporties, GetTextBox, GetButton } = require("../../Common");
 
-//配置管理/用户编辑 700-799
+//配置管理/用户编辑 4400-4499
 const DataActionTypes = {
     //获取实体数据
-    GetEntityData: 700,
+    GetEntityData: 4400,
     //保存实体数据
-    SaveEntityData: 701
+    SaveEntityData: 4401
 }
 
 const Entity = { Name: User.Name, PrimaryKey: User.PropertyPrimaryKey || User.PrimaryKey }

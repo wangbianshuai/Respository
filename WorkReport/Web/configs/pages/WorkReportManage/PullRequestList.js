@@ -1,5 +1,5 @@
 const PullRequest = require("../../entities/PullRequest");
-const { GetButton, AssignProporties, GetTextBox, GetSelect } = require("../../Common");
+const { GetButton, AssignProporties, GetTextBox, GetSelect, GetDatePicker } = require("../../Common");
 
 //WorkReportManage/PullRequestList 900-999
 const DataActionTypes = {
@@ -33,11 +33,29 @@ function GetSearchOperationView() {
         ...GetTextBox2("Keyword", "Keyword", 1, 3, "", "Pull Request Title/Remark"), PropertyName: "PullRequestTitle,Remark",
         OperateLogic: "like", PressEnterEventActionName: "SearchQuery"
       },
-      { ...GetButton("Search", "Search", "primary", 1, 4), IsFormItem: true, Icon: "search", EventActionName: "SearchQuery", PressEnterEventActionName: "SearchQuery" },
-      { ...GetButton("ClearQuery", "Clear", "default", 1, 5), IsFormItem: true, EventActionName: "ClearQuery" },
-      { EventActionName: "ToEditPage", ...GetButton("ToEditPage", "Add", "primary", 2, 1), Style: { marginLeft: 16, marginBottom: 16 } },
-      { EventActionName: "ExcelExport", ...GetButton("ExcelExport", "Excel Export", "default", 2, 2), Icon: "download", ColStyle: { paddingLeft: 0 } }
+      { ...GetDatePicker2("StartDate", "Start Date", 2, 1, "Greater than or equal to its value"), PropertyName: "StartDate", OperateLogic: ">=" },
+      { ...GetDatePicker2("EndDate", "To", 2, 2, "Less than its value"), PropertyName: "StartDate", OperateLogic: "<" },
+      { ...GetDatePicker2("StartDate2", "End Date", 3, 1, "Greater than or equal to its value"), PropertyName: "EndDate", OperateLogic: ">=" },
+      { ...GetDatePicker2("EndDate2", "To", 3, 2, "Less than its value"), PropertyName: "EndDate", OperateLogic: "<" },
+      { ...GetButton("Search", "Search", "primary", 3, 4), IsFormItem: true, Icon: "search", EventActionName: "SearchQuery", PressEnterEventActionName: "SearchQuery" },
+      { ...GetButton("ClearQuery", "Clear", "default", 3, 5), IsFormItem: true, EventActionName: "ClearQuery" },
+      { EventActionName: "ToEditPage", ...GetButton("ToEditPage", "Add", "primary", 4, 1), Style: { marginLeft: 16, marginBottom: 16 } },
+      { EventActionName: "ExcelExport", ...GetButton("ExcelExport", "Excel Export", "default", 4, 2), Icon: "download", ColStyle: { paddingLeft: 0 } }
     ])
+  }
+}
+
+function GetDatePicker2(Name, Label, X, Y, PlaceHolder, DefaultValue) {
+  return {
+    ...GetDatePicker(Name, Label, X, Y, DefaultValue),
+    IsFormItem: true, ColSpan: 6,
+    IsNullable: true,
+    PlaceHolder: PlaceHolder,
+    MaxLength: 20,
+    LabelCol: 8,
+    WrapperCol: 15,
+    DataType: "DateTime",
+    IsCondition: true
   }
 }
 

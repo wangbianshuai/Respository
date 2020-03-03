@@ -1,10 +1,10 @@
 const OperationLog = require("../../entities/OperationLog");
 const { GetButton, AssignProporties, GetTextBox, GetSelect, GetDatePicker } = require("../../Common");
 
-//系统管理/操作日志 400-499
+//系统管理/操作日志 4200-4299
 const DataActionTypes = {
     //搜索查询
-    SearchQuery: 400,
+    SearchQuery: 4200,
 };
 
 const Entity = { Name: OperationLog.Name, PrimaryKey: OperationLog.PrimaryKey, ViewName: "ViewOperationLog" }

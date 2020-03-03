@@ -27,12 +27,14 @@ function GetSearchOperationView() {
     Type: "RowsColsView",
     ClassName: "DivSerachView",
     Properties: AssignProporties({ Name: "WeekList" }, [
-      { ...GetDatePicker2("StartDate", "Start Date", 1, 2, "Greater than or equal to its value"), OperateLogic: ">=" },
-      { ...GetDatePicker2("EndDate", "End Date", 1, 3, "Less than its value"), OperateLogic: "<" },
-      { ...GetButton("Search", "Search", "primary", 1, 4), IsFormItem: true, Icon: "search", EventActionName: "SearchQuery", PressEnterEventActionName: "SearchQuery" },
-      { ...GetButton("ClearQuery", "Clear", "default", 1, 5), IsFormItem: true, EventActionName: "ClearQuery" },
-      { EventActionName: "ToEditPage", ...GetButton("ToEditPage", "Add", "primary", 2, 1), Style: { marginLeft: 16, marginBottom: 16 } },
-      { EventActionName: "ExcelExport", ...GetButton("ExcelExport", "Excel Export", "default", 2, 2), Icon: "download", ColStyle: { paddingLeft: 0 } }
+      { ...GetDatePicker2("StartDate", "Start Date", 1, 1, "Greater than or equal to its value"), PropertyName: "StartDate", OperateLogic: ">=" },
+      { ...GetDatePicker2("EndDate", "To", 1, 2, "Less than its value"), PropertyName: "StartDate", OperateLogic: "<" },
+      { ...GetDatePicker2("StartDate2", "End Date", 2, 1, "Greater than or equal to its value"), PropertyName: "EndDate", OperateLogic: ">=" },
+      { ...GetDatePicker2("EndDate2", "To", 2, 2, "Less than its value"), PropertyName: "EndDate", OperateLogic: "<" },
+      { ...GetButton("Search", "Search", "primary", 2, 3), IsFormItem: true, Icon: "search", EventActionName: "SearchQuery", PressEnterEventActionName: "SearchQuery" },
+      { ...GetButton("ClearQuery", "Clear", "default", 2, 4), IsFormItem: true, EventActionName: "ClearQuery" },
+      { EventActionName: "ToEditPage", ...GetButton("ToEditPage", "Add", "primary", 3, 1), Style: { marginLeft: 16, marginBottom: 16 } },
+      { EventActionName: "ExcelExport", ...GetButton("ExcelExport", "Excel Export", "default", 3, 2), Icon: "download", ColStyle: { paddingLeft: 0 } }
     ])
   }
 }

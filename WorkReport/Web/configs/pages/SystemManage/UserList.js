@@ -1,14 +1,14 @@
 const User = require("../../entities/User");
 const { GetButton, AssignProporties, GetTextBox } = require("../../Common");
 
-//配置管理/用户 600-699
+//配置管理/用户 4300-4399
 const DataActionTypes = {
     //搜索查询
-    SearchQuery: 600,
+    SearchQuery: 4300,
     //删除实体数据
-    DeleteEntityData: 601,
+    DeleteEntityData: 4301,
     //Excel导出
-    ExcelExport: 602
+    ExcelExport: 4302
 };
 
 const Entity = { Name: User.Name, PrimaryKey: User.PrimaryKey, ViewName: "ViewUser" }
