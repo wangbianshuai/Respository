@@ -72,6 +72,9 @@ namespace WorkReport.Entity
     [RequestMethod(IsDelete = false, IsPost = false, IsPut = false)]
     public class ViewStory : Story
     {
+        public string CreateUserName { get; set; }
+        public string StartMonth { get; set; }
+        public string EndMonth { get; set; }
         public string StoryName { get; set; }
     }
 }

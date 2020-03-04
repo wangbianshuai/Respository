@@ -98,7 +98,10 @@ function GetDataGridView() {
     SetColumnsEventActionName: "SetShowColumns",
     IsPartPaging: true,
     IsGroupByQuery: true,
-    Properties: AssignProporties(WorkingHours, ["CreateUserName", "WeekName", "WeekWorkingHours", "StoryName", { Name: "CreateDate", OrderByType: "desc", IsVisible: false },
+    Properties: AssignProporties(WorkingHours, ["CreateUserName", "WeekName", "WeekWorkingHours", "StoryName",
+      { Name: "StartMonth", IsVisible: false },
+      { Name: "EndMonth", IsVisible: false },
+      { Name: "CreateDate", OrderByType: "desc", IsVisible: false },
       GetExpression("HourCount")])
   }
 }

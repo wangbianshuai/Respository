@@ -266,15 +266,15 @@ export default class DataGridView extends BaseIndex {
     }
 
     ExecExcelExport(props, action) {
-        const { DataGridView } = action.Parameters;
+        const { DataGridView, ExpandSetExcelExportQueryInfo } = action.Parameters;
         const { EventActions, Property } = props;
 
         const { ActionTypes, Invoke, EntityExcelExport } = DataGridView;
         const { ExcelExport } = ActionTypes;
 
         const Title = DataGridView.Title || DataGridView.Entity.Name;
-
-        const properties = DataGridView.GetDataProperties2();
+        
+        const properties = DataGridView.GetExcelExportProperties();
         var headerList = [];
         var header = {}, p = null;
         for (var i = 0; i < properties.length; i++) {
@@ -288,8 +288,11 @@ export default class DataGridView extends BaseIndex {
             }
         }
 
-        const queryInfo = DataGridView.QueryInfo;
+        let queryInfo = Common.Clone(DataGridView.QueryInfo);
         queryInfo.HeaderInfos = headerList;
+
+        if (ExpandSetExcelExportQueryInfo) queryInfo = ExpandSetExcelExportQueryInfo(queryInfo);
+        if (queryInfo === false) return;
 
         Property && Property.SetDisabled(true);
         DataGridView.ExcelExportButton = Property;
@@ -303,7 +306,9 @@ export default class DataGridView extends BaseIndex {
         const { EventActions } = props;
         const DataGridView = EventActions.GetComponent(action.DataGridView);
 
-        action.Parameters = { DataGridView }
+        const ExpandSetExcelExportQueryInfo = EventActions.GetFunction(action.ExpandSetExcelExportQueryInfo);
+
+        action.Parameters = { DataGridView, ExpandSetExcelExportQueryInfo }
     }
 
     ReceiveExcelExport(data, props) {

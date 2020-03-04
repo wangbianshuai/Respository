@@ -15,6 +15,8 @@ function GetProperties() {
     GetProperty("StoryName", "Story"),
     GetProperty("Content", "Content"),
     GetProperty("HourCount", "Working Hours"),
+    GetProperty("StartMonth", "Start Month"),
+    GetProperty("EndMonth", "End Month"),
     GetProperty("Remark", "Remark"),
     GetProperty("CreateUserName", "User"),
     GetProperty("CreateDate", "Create Date")

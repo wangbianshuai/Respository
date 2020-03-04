@@ -24,6 +24,7 @@ class DataGridView extends BaseIndex {
         this.Property.SetColumnsVisible2 = this.SetColumnsVisible2.bind(this);
         this.Property.GetPageRecord = () => this.PageInfo.PageRecord;
         this.Property.GetDataProperties2 = () => this.DataProperties2;
+        this.Property.GetExcelExportProperties = this.GetExcelExportProperties.bind(this);
     }
 
     Init() {
@@ -88,6 +89,10 @@ class DataGridView extends BaseIndex {
         this.DataProperties2 = this.DataProperties.filter(f => f.IsVisible !== false);
 
         this.setState({ RefreshId: Common.CreateGuid() })
+    }
+
+    GetExcelExportProperties() {
+        return this.DataProperties.filter(f => f.IsVisible !== false || f.IsExcelExport);
     }
 
     SetColumnsVisible2(visibleColNames) {

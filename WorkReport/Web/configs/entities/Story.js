@@ -12,6 +12,8 @@ function GetProperties() {
       GetProperty("StoryUrl", "Story Url"),
       GetProperty("StartDate", "Start Date"),
       GetProperty("EndDate", "End Date"),
+      GetProperty("StartMonth", "Start Month"),
+      GetProperty("EndMonth", "End Month"),
       GetProperty("Remark", "Remark"),
       GetProperty("CreateDate", "Create Date")
   ]

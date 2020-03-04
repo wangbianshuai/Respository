@@ -98,8 +98,9 @@ function GetDataGridView() {
     IsDiv: true,
     ClassName: "DivInfoView3",
     GroupByInfoHtml: GetGroupByInfoHtml(),
-    Properties: AssignProporties(PullRequest, ["CreateUserName", GetStory(), GetPullRequestTitle(), "TestCases", "Comments", "StartDate", "EndDate", "Remark", { Name: "StoryUrl", IsVisible: false },
-      { Name: "CreateDate", OrderByType: "desc" }, { Name: "PullRequestUrl", IsVisible: false }, { Name: "RowVersion", IsVisible: false },
+    Properties: AssignProporties(PullRequest, ["CreateUserName", GetStory(), GetPullRequestTitle(), "TestCases", "Comments", { Name: "StartMonth", IsVisible: false, IsExcelExport: true },
+      { Name: "EndMonth", IsVisible: false, IsExcelExport: true }, "StartDate", "EndDate", "Remark", { Name: "StoryUrl", IsVisible: false, IsExcelExport: true },
+      { Name: "CreateDate", OrderByType: "desc", IsExcelExport: true }, { Name: "PullRequestUrl", IsVisible: false, IsExcelExport: true }, { Name: "RowVersion", IsVisible: false },
       { Name: "CreateUser", IsVisible: false }, GetOperation()])
   }
 }

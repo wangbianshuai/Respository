@@ -35,7 +35,7 @@ function GetSearchOperationView() {
       },
       { ...GetDatePicker2("StartDate2", "End Date", 2, 1, "Greater than or equal to its value"), PropertyName: "EndDate", OperateLogic: ">=" },
       { ...GetDatePicker2("EndDate2", "To", 2, 2, "Less than its value"), PropertyName: "EndDate", OperateLogic: "<" },
-     
+
       {
         ...GetTextBox2("Keyword", "Keyword", 2, 3, "", "Story Title/Story Url/Remark"), PropertyName: "StoryTitle,StoryUrl,Remark",
         OperateLogic: "like", PressEnterEventActionName: "SearchQuery"
@@ -84,7 +84,10 @@ function GetDataGridView() {
     EventActionName: "SearchQuery",
     IsDiv: true,
     ClassName: "DivInfoView3",
-    Properties: AssignProporties(Story, ["StoryId", GetStoryTitle(), "StartDate", "EndDate", "Remark", { Name: "StoryUrl", IsVisible: false },
+    Properties: AssignProporties(Story, ["StoryId", GetStoryTitle(), { Name: "StoryUrl", IsVisible: false, IsExcelExport: true },
+      "StartDate", "EndDate", { Name: "StartMonth", IsVisible: false, IsExcelExport: true },
+      { Name: "EndMonth", IsVisible: false, IsExcelExport: true }, "Remark",
+      { Name: "CreateUserName", Label: "User", IsVisible: false, IsExcelExport: true },
       { Name: "CreateDate", OrderByType: "desc" }, { Name: "RowVersion", IsVisible: false }, GetOperation()])
   }
 }

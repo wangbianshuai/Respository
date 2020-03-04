@@ -80,6 +80,8 @@ namespace WorkReport.Entity
     [RequestMethod(IsDelete = false, IsPost = false, IsPut = false)]
     public class ViewPullRequest : PullRequest
     {
+        public string StartMonth { get; set; }
+        public string EndMonth { get; set; }
         public string StoryName { get; set; }
         public string StoryUrl { get; set; }
         public string CreateUserName { get; set; }

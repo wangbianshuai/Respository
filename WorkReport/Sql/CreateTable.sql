@@ -85,8 +85,12 @@ go
 
 create view v_Story
 as
-select a.*,'ch'+ ltrim(rtrim(str(a.StoryId)))+' '+ a.StoryTitle as StoryName
-from t_Story a where IsDelete=0
+select a.*,'ch'+ ltrim(rtrim(str(a.StoryId)))+' '+ a.StoryTitle as StoryName,b.UserName as CreateUserName,
+ DATENAME(YEAR,a.StartDate)+DATENAME(MONTH,a.StartDate) as StartMonth,
+ DATENAME(YEAR,a.EndDate)+DATENAME(MONTH,a.EndDate) as EndMonth
+from t_Story a 
+left join t_User b on a.CreateUser=b.UserId
+where a.IsDelete=0
 go
 
 
@@ -119,6 +123,8 @@ go
 create view v_PullRequest
 as
 select a.*,b.UserName as CreateUserName,
+ DATENAME(YEAR,a.StartDate)+DATENAME(MONTH,a.StartDate) as StartMonth,
+ DATENAME(YEAR,a.EndDate)+DATENAME(MONTH,a.EndDate) as EndMonth,
 case when c.StoryId is not null then 'ch'+ ltrim(rtrim(str(c.StoryId)))+' '+ c.StoryTitle else '' end as StoryName,c.StoryUrl
 from t_PullRequest a
 left join t_User b on a.CreateUser=b.UserId
@@ -183,7 +189,8 @@ create view v_WorkingHours
 as
 select a.*,b.UserName as CreateUserName,
 case when c.StoryId is not null then 'ch'+ ltrim(rtrim(str(c.StoryId)))+' '+ c.StoryTitle else '' end as StoryName,c.StoryUrl,
-d.StartDate,d.EndDate,
+d.StartDate,d.EndDate, DATENAME(YEAR,d.StartDate)+DATENAME(MONTH,d.StartDate) as StartMonth,
+ DATENAME(YEAR,d.EndDate)+DATENAME(MONTH,d.EndDate) as EndMonth,
 convert(varchar(10),d.StartDate,111)+' - '+convert(varchar(10),d.EndDate,111) as WeekName,d.WorkingHours as WeekWorkingHours from t_WorkingHours a
 left join t_User b on a.CreateUser=b.UserId
 left join t_Story c on a.StoryId=c.Id 

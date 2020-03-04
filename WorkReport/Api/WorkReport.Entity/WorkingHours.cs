@@ -57,6 +57,8 @@ namespace WorkReport.Entity
     [RequestMethod(IsDelete = false, IsPost = false, IsPut = false)]
     public class ViewWorkingHours : WorkingHours
     {
+        public string StartMonth { get; set; }
+        public string EndMonth { get; set; }
         /// <summary> 
         /// Start Date
         /// </summary> 

@@ -97,7 +97,7 @@ function GetDataGridView() {
     SetColumnsEventActionName: "SetShowColumns",
     IsPartPaging: true,
     IsGroupByQuery: true,
-    Properties: AssignProporties(PullRequest, ["CreateUserName", "StoryName", "PullRequestTitle", { Name: "CreateDate", OrderByType: "desc", IsVisible: false },
+    Properties: AssignProporties(PullRequest, ["CreateUserName", "StoryName", "PullRequestTitle", "StartMonth", "EndMonth", { Name: "CreateDate", OrderByType: "desc", IsVisible: false },
       GetExpression("TestCases"), GetExpression("Comments")])
   }
 }
