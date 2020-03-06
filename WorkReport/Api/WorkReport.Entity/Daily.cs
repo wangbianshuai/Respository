@@ -28,6 +28,10 @@ namespace WorkReport.Entity
         /// </summary>
         public DateTime WorkingDate { get; set; }
         /// <summary>
+        /// Hours Count
+        /// </summary>
+        public float HoursCount { get; set; }
+        /// <summary>
         /// Remark
         /// </summary>
         public string Remark { get; set; }

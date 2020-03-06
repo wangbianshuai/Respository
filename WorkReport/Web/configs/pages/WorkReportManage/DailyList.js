@@ -95,7 +95,7 @@ function GetDataGridView() {
     EventActionName: "SearchQuery",
     IsDiv: true,
     ClassName: "DivInfoView3",
-    Properties: AssignProporties(Daily, ["CreateUserName", GetStory(), "Content", "WorkingDate", "Remark", { Name: "StoryUrl", IsVisible: false },
+    Properties: AssignProporties(Daily, ["CreateUserName", GetStory(), "Content", "HoursCount", "WorkingDate", "Remark", { Name: "StoryUrl", IsVisible: false },
       { Name: "CreateDate", OrderByType: "desc" }, { Name: "RowVersion", IsVisible: false }, { Name: "CreateUser", IsVisible: false }, GetOperation()])
   }
 }

@@ -12,7 +12,7 @@ function GetProperties() {
     GetProperty("WorkingDate", "Working Date"),
     GetProperty("StoryName", "Story"),
     GetProperty("Content", "Content"),
-    GetProperty("HourCount", "Working Hours"),
+    GetProperty("HoursCount", "Hours"),
     GetProperty("Remark", "Remark"),
     GetProperty("CreateUserName", "User"),
     GetProperty("CreateDate", "Create Date")

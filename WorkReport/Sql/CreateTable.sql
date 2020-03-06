@@ -207,6 +207,7 @@ Id uniqueidentifier not null primary key default(newid()),      --主键
 StoryId uniqueidentifier,                                       --Story Id
 Content varchar(500) not null,                                  --Conent
 WorkingDate datetime not null,
+HoursCount float,
 Remark nvarchar(200),                                           --备注
 IsDelete tinyint not null default(0),                           --是否删除
 CreateUser uniqueidentifier not null,                           --创建人   

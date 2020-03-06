@@ -46,10 +46,25 @@ function GetProperties() {
   return [
     GetEditSelect("StoryId", "Story", Daily.StoryDataSource, 1, 1, true, "Please select story or input content"),
     { ...GetTextArea("Content", "Content", 2, 1, 'Please select story or input content'), MaxLength: 500, IsNullable: false },
-    GetDatePicker2("WorkingDate", "Working Date", 3, 1, false, "Please select a date"),
-    GetTextArea("Remark", "Remark", 4, 1),
+    { ...GetTextBox2("HoursCount", "Hours", 3, 1, "", "Please input hours", 4, false), DataType: "float" },
+    GetDatePicker2("WorkingDate", "Working Date", 4, 1, false, "Please select a date"),
+    GetTextArea("Remark", "Remark", 5, 1),
     GetButtonView()
   ]
+}
+
+function GetTextBox2(Name, Label, X, Y, ContorlType, PlaceHolder, MaxLength, IsNullable, IsVisible, ValidateNames, ValidateTipMessage) {
+  return {
+    ...GetTextBox(Name, Label, ContorlType, X, Y, PlaceHolder, MaxLength || 50),
+    ValidateNames, ValidateTipMessage,
+    IsFormItem: true,
+    ColSpan: 24,
+    LabelCol: 8,
+    WrapperCol: 8,
+    IsNullable,
+    IsVisible,
+    IsEdit: true
+  }
 }
 
 function GetDatePicker2(Name, Label, X, Y, IsNullable, PlaceHolder, DefaultValue) {
