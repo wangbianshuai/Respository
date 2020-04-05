@@ -1,0 +1,41 @@
+.dataRow{
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  padding: 20px;
+
+  .fieldRow{
+    display: flex;
+    flex-direction: row;
+    padding-top: 10px;
+
+    .label{
+      color: #6a6a77;
+    }
+
+    .text{
+      margin-left: 10px;
+    }
+  }
+}
+
+.dataRow::after{
+  content: '';
+position: absolute;
+-webkit-transform-origin: center;
+transform-origin: center;
+box-sizing: border-box;
+pointer-events: none;
+top: auto;
+left: 24rpx;
+right: 0;
+bottom: 0;
+-webkit-transform: scaleY(0.5);
+transform: scaleY(0.5);
+border-bottom: 1PX solid #d6e4ef;
+}
+
+
+.dataRow:active{
+  background-color: #F7F7F7;
+}

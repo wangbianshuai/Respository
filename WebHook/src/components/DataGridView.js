@@ -4,9 +4,9 @@ import DataGrid from "./DataGrid";
 import BaseIndex from "./BaseIndex";
 import { useConnectAction } from "ReactCommon";
 import { Card } from "antd";
-import { router } from "dva";
+import Link from 'umi/link';
 import styles from "../styles/View.css";
-const Link = router.Link
+
 
 const Name = "Components_DataGridView";
 

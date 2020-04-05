@@ -1,10 +1,8 @@
 import React from "react";
 import { Common } from "UtilsCommon";
 import { Row, Col, Divider } from "antd";
-import { router } from "dva";
+import Link from 'umi/link';
 import PropertyItem from "./PropertyItem";
-
-const Link = router.Link;
 
 export default class BaseIndex {
 

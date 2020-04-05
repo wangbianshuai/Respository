@@ -1,5 +1,5 @@
 import { Common } from "UtilsCommon";
-import { useSelector, useDispatch } from "dva";
+import { useSelector, useDispatch } from "react-redux";
 import { useMemo } from "react";
 
 export default (mapStateToProps, token) => {
