@@ -94,10 +94,10 @@ export default class EntityEdit extends BaseIndex {
       else if (editPropertiyViewList) {
         //新增，清空属性值
         editPropertiyViewList.forEach(v => {
-          if (v.IsClear) this.SetViewPropertiesValue(v.properties, null);
+          if (v.isClear) this.setViewPropertiesValue(v.properties, null);
         });
       }
-      else if (editView.IsClear) this.SetViewPropertiesValue(editView.properties, null); //新增，清空属性值
+      else if (editView.isClear) this.setViewPropertiesValue(editView.properties, null); //新增，清空属性值
 
       //保存之后禁用控件
       if (setDisabledViewList) {
@@ -242,5 +242,35 @@ export default class EntityEdit extends BaseIndex {
     const editView = pageAxis.getProperty(action.editView);
 
     action.parameters = { editView };
+  }
+
+  deleteEntityData(props, action) {
+    const { view, pageAxis } = props;
+    const { dataActionType, confirmTip, isSelfOperation, selfPropertyName } = action;
+    const { entity, entityData } = view;
+
+    if (isSelfOperation && pageAxis.loginUserId !== entityData[selfPropertyName]) {
+      pageAxis.showMessage('The delete operation needs to be operated by myself!');
+      return;
+    }
+
+    pageAxis.receives[dataActionType] = (d) => this.receivedeleteEntityData(d, props, action)
+
+    const onOk = () => {
+      pageAxis.invokeDataAction(dataActionType, { entity, entityData })
+    };
+
+    if (confirmTip) pageAxis.confirm(confirmTip, onOk, 'Delete Confirm');
+    else onOk();
+  }
+
+  receivedeleteEntityData(data, props, action) {
+    const { pageAxis } = props;
+
+    if (this.isSuccessNextsProps(data, pageAxis.alert)) {
+      this.alert(action.successTip, pageAxis.showMessage)
+      pageAxis.toBack();
+    }
+    return false;
   }
 }

@@ -1,4 +1,4 @@
-import Taro, { useEffect, useMemo } from "@tarojs/taro";
+import Taro, { useEffect, useMemo  } from "@tarojs/taro";
 import { PageAxis, useRootPage, useConnectAction } from "PageCommon";
 import { Common } from "UtilsCommon";
 import { PropertyItem } from 'Components';

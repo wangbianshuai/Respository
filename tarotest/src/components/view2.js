@@ -1,4 +1,4 @@
-import Taro, { useMemo, useState, useEffect } from '@tarojs/taro';
+import Taro, { useMemo, useState, useEffect, useDidShow } from '@tarojs/taro';
 import { View } from '@tarojs/components';
 import { Common } from 'UtilsCommon';
 import { PageAxis } from "PageCommon";
@@ -16,9 +16,9 @@ const View2 = (props) => {
 
   init(obj, property, setVisible);
 
-  useEffect(() => {
+  useDidShow(() => {
     if (property.eventActionName) pageAxis.invokeEventAction(property.eventActionName, { property, view, pageAxis });
-  }, [property, view, pageAxis]);
+  });
 
   if (!visible) return <View />;
 

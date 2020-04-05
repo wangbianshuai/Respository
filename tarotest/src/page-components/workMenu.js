@@ -6,11 +6,11 @@ import { PageAxis } from "PageCommon";
 const _Property = {
   eventActionName: 'toSelectPage',
   itemList: [
-    getItem('Daily Input', '/pages/work/dailyInput', 'add'),
+    getItem('Daily Input', '/pages/work/dailyInput', 'edit'),
     getItem('Daily List', '/pages/work/dailyList', 'list'),
-    getItem('Pull Request Input', '/pages/work/pullRequestInput', 'add'),
+    getItem('Pull Request Input', '/pages/work/pullRequestInput', 'edit'),
     getItem('Pull Request List', '/pages/work/pullRequestList', 'list'),
-    getItem('Working Hours Input', '/pages/work/workHoursInput', 'add'),
+    getItem('Working Hours Input', '/pages/work/workHoursInput', 'edit'),
     getItem('Working Hours List', '/pages/work/workHoursList', 'list'),
   ],
 };

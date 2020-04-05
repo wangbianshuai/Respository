@@ -8,7 +8,7 @@ const EntityPageEdit = (props) => {
     return {
       pageName: name,
       entityName,
-      actionNames: ["getEntityData", "saveEntityData"].concat(expandActionNames || []),
+      actionNames: ["getEntityData", "saveEntityData", "deleteEntityData"].concat(expandActionNames || []),
       stateNames: {},
       actionOptions: getActionOptions(name, entityName, minActionType, expandActionNames),
       pageExpand,
@@ -25,7 +25,9 @@ function getActionOptions(name, entityName, minActionType, expandActionNames) {
     //获取实体数据
     getEntityData: getActionType(),
     //保存实体数据
-    saveEntityData: getActionType()
+    saveEntityData: getActionType(),
+    //删除实体数据
+    deleteEntityData: getActionType(),
   };
 
   if (expandActionNames) expandActionNames.forEach(a => actionTypes[getActionName(a)] = getActionType());

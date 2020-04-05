@@ -163,8 +163,13 @@ export default class PageAxis {
   }
 
   toPage(url) {
-    url += '?abc=123'
-    Taro.redirectTo({ url });
+    Taro.navigateTo({ url });
+  }
+
+  toBack() {
+    const pages = Taro.getCurrentPages();
+    let len = pages.length;
+    if (len > 1) Taro.navigateBack({ delta: 1 });
   }
 
   openPage(url) {

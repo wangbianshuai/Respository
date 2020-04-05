@@ -7,6 +7,9 @@ import { PageAxis } from "PageCommon";
 const Button2 = (props) => {
   const { property, view, pageId } = props;
   const [loading, setLoading] = useState(false);
+  const [visible, setVisible] = useState(true);
+
+  const pageAxis = PageAxis.getPageAxis(pageId);
 
   const { text, buttonType, size, className, style } = property;
 
@@ -14,12 +17,13 @@ const Button2 = (props) => {
     id: Common.createGuid(),
   }), []);
 
-  init(obj, property, setLoading);
+  init(obj, property, setLoading, setVisible);
 
   const clickAction = useCallback(() => {
-    const pageAxis = PageAxis.getPageAxis(pageId);
     pageAxis.invokeEventAction(property.eventActionName, { property, view, pageAxis });
-  }, [property, view, pageId]);
+  }, [property, view, pageAxis]);
+
+  if (!visible) return <View />;
 
   if (className || style) {
     return <View className={className} style={style} ><AtButton type={buttonType} size={size} loading={loading} onClick={clickAction}>{text}</AtButton></View>
@@ -28,10 +32,11 @@ const Button2 = (props) => {
   return (<AtButton type={buttonType} size={size} loading={loading} onClick={clickAction}>{text}</AtButton>);
 };
 
-function init(obj, property, setLoading) {
+function init(obj, property, setLoading, setVisible) {
   if (property.id && !obj.isInit) obj.isInit = true; else return;
 
   property.setLoading = setLoading;
+  property.setVisible = setVisible;
 }
 
 Button2.defaultProps = { property: {}, view: {} };

@@ -1,4 +1,4 @@
-import Taro, { useMemo, useState, useEffect, useCallback } from '@tarojs/taro';
+import Taro, { useMemo, useState, useEffect, useCallback, useDidShow } from '@tarojs/taro';
 import { View, ScrollView } from '@tarojs/components';
 import { Common } from 'UtilsCommon';
 import { PageAxis, useConnectAction } from "PageCommon";
@@ -22,9 +22,9 @@ const DataGridView = (props) => {
 
   useEffect(() => pageAxis.receiveActionDataToObject(obj, actionTypes, actionData), [obj, pageAxis, actionTypes, actionData]);
 
-  useEffect(() => {
+  useDidShow(() => {
     if (property.isSearchQuery !== false && property.eventActionName) pageAxis.invokeEventAction(property.eventActionName, { property, view, pageAxis });
-  }, [property, view, pageAxis]);
+  });
 
   const onLongPressRow = useCallback((entityData) => {
     if (property.deleteEventActionName) pageAxis.invokeEventAction(property.deleteEventActionName, { property, entityData, pageAxis });

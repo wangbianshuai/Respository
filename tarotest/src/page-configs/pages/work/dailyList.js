@@ -26,7 +26,8 @@ function getNavBar() {
     fixed: true,
     type: 'NavBar',
     name: 'NavBar1',
-    leftEventActionName: 'navigateBack'
+    rightFirstIconType: 'add',
+    rightFirstEventActionName: 'toEditPage',
   };
 }
 
@@ -52,8 +53,8 @@ function getDataGridView() {
     type: "DataGridView",
     entitySearchQuery: DataActionTypes.searchQuery,
     entityExcelExport: DataActionTypes.excelExport,
-    editEventActionName:'editDaily',
-    deleteEventActionName:'deleteDaily',
+    editEventActionName: 'editDaily',
+    deleteEventActionName: 'deleteDaily',
     eventActionName: "searchQuery",
     properties: assignProporties(Daily, ["CreateUserName", 'StoryName', "Content", "HoursCount", "WorkingDate", "Remark", { name: "StoryUrl", isVisible: false },
       { name: "CreateDate", orderByType: "desc" }, { name: "RowVersion", isVisible: false }, { name: "CreateUser", isVisible: false }])
@@ -72,6 +73,8 @@ function getEventActions() {
     name: "editDaily",
     type: "DataGridView/selectRowToPage",
     pageUrl: "/pages/work/dailyInput?Id=#{Id}",
+    isSelfOperation: true,
+    selfPropertyName: "CreateUser",
   },
   {
     name: "toEditPage",

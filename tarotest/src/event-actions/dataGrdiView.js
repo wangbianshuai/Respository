@@ -199,10 +199,14 @@ export default class DataGridView extends BaseIndex {
 
   selectRowToPage(props, action) {
     const { pageAxis, entityData } = props;
-    const { pageUrl } = action;
+    const { pageUrl, isSelfOperation, selfPropertyName } = action;
 
     let url = pageUrl
     url = Common.replaceDataContent(entityData, url, true);
+
+    if (isSelfOperation && pageAxis.loginUserId !== entityData[selfPropertyName]) {
+      url = Common.addUrlParams(url, 'isEdit', false);
+    }
 
     pageAxis.toPage(url)
   }

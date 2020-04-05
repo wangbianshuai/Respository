@@ -6,7 +6,9 @@ const DataActionTypes = {
   //Get Entity Data
   getEntityData: 1200,
   //Save Entity Data
-  saveEntityData: 1201
+  saveEntityData: 1201,
+  //Delete Entity Data
+  deleteEntityData: 1202,
 }
 
 const entity = { name: Daily.name, primaryKey: Daily.primaryKey }
@@ -40,18 +42,19 @@ function getProperties() {
     { ...getTextBox2("HoursCount", "Hours", 3, 1, "", "Please input hours", 4, false), dataType: "int" },
     getDatePicker2("WorkingDate", "Working Date", 4, 1, false, "Please select a date"),
     getTextArea("Remark", "Remark", 5, 1),
-    { ...getButton("saveEntityData", "Save", "primary"), eventActionName: "saveEntityData", className: 'button1' },
+    { ...getButton("saveEntityData", "Save", "primary"), eventActionName: "saveEntityData", className: 'button1', visibleParamName: 'isEdit' },
     { type: 'SpanText', style: { height: '80px' } }
   ]
 }
 
 function getNavBar() {
   return {
-    title: 'Daily Input',
+    title: 'Add New Daily',
+    updateTitle: 'Update New Daily',
     fixed: true,
     type: 'NavBar',
     name: 'NavBar1',
-    leftEventActionName: 'navigateBack'
+    rightFirstEventActionName: 'deleteDaily',
   };
 }
 
@@ -122,5 +125,14 @@ function getEventActions() {
     name: "getEntityData",
     type: "EntityEdit/getEntityData",
     editView: "DailyEdit2"
+  },
+  {
+    name: "deleteDaily",
+    type: "EntityEdit/deleteEntityData",
+    isSelfOperation: true,
+    selfPropertyName: "CreateUser",
+    dataActionType: DataActionTypes.deleteEntityData,
+    successTip: "Delete Succeed!",
+    confirmTip: "Please confirm whether to delete the current Daily?"
   }]
 }

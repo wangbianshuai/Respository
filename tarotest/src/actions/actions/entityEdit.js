@@ -46,4 +46,12 @@ export default class EntityEdit extends BaseIndex {
 
         this.dvaActions.dispatch(this.serviceName, serviceName, payload);
     }
+
+    deleteEntityData(id, actionType, data) {
+        const { entityData, entity } = data;
+        const primaryKey = entityData[entity.primaryKey];
+        const { RowVersion } = entityData;
+        const pathQuery = `/Delete2(${primaryKey})?RowVersion=` + RowVersion;
+        this.dvaActions.dispatch(this.serviceName, "delete", { pathQuery, action: this.getAction(id, actionType) });
+    }
 }
