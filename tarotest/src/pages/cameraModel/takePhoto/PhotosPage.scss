@@ -1,0 +1,25 @@
+
+.ReviewImage {
+    width: 200px;
+    height: 200px;
+    right: 0px;
+    top: 0px;
+    margin: 12.5px;
+    display: inline-block;
+    position: fixed;
+}
+
+.confirmBtn {
+    flex: 1;
+    margin-left: -100px;
+    width: 200px;
+    bottom: 10px;
+    left: 50%;
+    position: absolute;
+}
+
+.cameraStyle {
+    width: 100%; 
+    height: 100%;
+    position: fixed;
+}

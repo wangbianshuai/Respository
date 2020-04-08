@@ -17,8 +17,8 @@ export default (mapStateToProps) => {
 function init(obj, dispatch) {
   if (!obj.isInit) obj.isInit = true; else return;
 
-  Common.setStorage('Token', 'eqP/rJyG5APDKvB2tcEMYOVVdtRD6FTkM7d5+qUoy/QzZAQ9nMykDikaof9kOCQPdx/+EuDJuIDfh1zCbItRZZBbp/3MC8PVLSqIVcMFKmkmmSlO8pWoUvwgwz6nv2o/oNMMpygBku4=')
-  Common.setStorage('LoginUserId', '9e67cf84-f2ae-4fca-803b-d4f7ee543169');
+  //Common.setStorage('Token', 'eqP/rJyG5APDKvB2tcEMYOVVdtRD6FTkM7d5+qUoy/QzZAQ9nMykDikaof9kOCQPdx/+EuDJuIDfh1zCbItRZXhliU7IZS76wmLAKfJ0PlFLR9nSLOTWMSbGTJJfRBpaZKrrcqgJ7kQ=')
+  //Common.setStorage('LoginUserId', '9e67cf84-f2ae-4fca-803b-d4f7ee543169');
 
   const token = Common.getStorage("Token");
 

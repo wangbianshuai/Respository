@@ -3,13 +3,14 @@ import { View } from '@tarojs/components';
 import { PageAxis } from "PageCommon";
 import { Common } from "UtilsCommon";
 import { TabBar } from 'Controls';
-import { WorkMenu, ConfigMenu } from 'PageComponents';
+import { WorkMenu, ConfigMenu, DemoMenu } from 'PageComponents';
 
 const _Property = {
   fixed: true,
   eventActionName: 'setTabBarIndex',
   tabList: [{ title: "Work", iconType: 'bullet-list' },
   { title: "Config", iconType: 'bullet-list' },
+  { title: "Demo", iconType: 'bullet-list' },
   { title: "User", iconType: 'user' }]
 };
 
@@ -26,7 +27,8 @@ const Index = () => {
     <View>
       {current === 0 && <WorkMenu pageId={pageId} />}
       {current === 1 && <ConfigMenu pageId={pageId} />}
-      {current === 2 && <View>user</View>}
+      {current === 2 && <DemoMenu pageId={pageId} />}
+      {current === 3 && <View>user</View>}
       <TabBar property={_Property} pageId={pageId} view={{}} />
     </View>
   )

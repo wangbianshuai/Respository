@@ -1,5 +1,6 @@
 import Taro, { useMemo, useState, useEffect, useCallback, useDidShow } from '@tarojs/taro';
-import { View, ScrollView } from '@tarojs/components';
+import { View } from '@tarojs/components';
+import { AtLoadMore } from 'taro-ui'
 import { Common } from 'UtilsCommon';
 import { PageAxis, useConnectAction } from "PageCommon";
 import DataRow from '../data-rows/index';
@@ -7,6 +8,7 @@ import DataRow from '../data-rows/index';
 const DataGridView = (props) => {
   const { property, view, pageId } = props;
   const [visible, setVisible] = useState(property.visible !== false);
+  const [loadStatus, setLoadStatus] = useState('noStatus');
   const [invoke, actionTypes, actionData] = useConnectAction('components_dataGridView');
 
   const pageAxis = PageAxis.getPageAxis(pageId);
@@ -18,11 +20,15 @@ const DataGridView = (props) => {
     id: Common.createGuid(),
   }), []);
 
-  init(obj, property, view, pageAxis, setVisible);
-
   useEffect(() => pageAxis.receiveActionDataToObject(obj, actionTypes, actionData), [obj, pageAxis, actionTypes, actionData]);
 
+  useEffect(() => {
+    if (obj.isDidShow) { obj.isDidShow = false; return; }
+    if (property.isSearchQuery !== false && property.eventActionName) pageAxis.invokeEventAction(property.eventActionName, { property, view, pageAxis });
+  }, [property, view, pageAxis, obj]);
+
   useDidShow(() => {
+    obj.isDidShow = true;
     if (property.isSearchQuery !== false && property.eventActionName) pageAxis.invokeEventAction(property.eventActionName, { property, view, pageAxis });
   });
 
@@ -43,6 +49,7 @@ const DataGridView = (props) => {
     pageAxis.invokeEventAction(property.eventActionName, { property, view, pageAxis, pageIndex, pageSize, isData });
   }, [obj, property, view, pageAxis]);
 
+  init(obj, property, view, pageAxis, setVisible, pageIndexChange, setLoadStatus);
 
   if (!property.refresh) property.refresh = () => {
     const { pageInfo } = obj.dataInfo;
@@ -54,7 +61,7 @@ const DataGridView = (props) => {
 
   setDataInfo(obj, actionTypes, actionData);
 
-  return <ScrollView>
+  return <View>
     {obj.dataInfo && obj.dataInfo.dataList && obj.dataInfo.dataList.map(m =>
       <DataRow
         key={m.Id}
@@ -63,7 +70,8 @@ const DataGridView = (props) => {
         onLongPressRow={onLongPressRow}
         onClikRow={onClikRow}
       />)}
-  </ScrollView>
+    {loadStatus !== 'noStatus' && <AtLoadMore status={loadStatus} />}
+  </View>
 };
 
 function setDataInfo(obj, actionTypes, actionData) {
@@ -102,15 +110,45 @@ function getPageInfo(dataInfo, PageRecord) {
   return { PageIndex, PageSize, PageCount, PageRecord };
 }
 
-function init(obj, property, view, pageAxis, setVisible) {
+function init(obj, property, view, pageAxis, setVisible, pageIndexChange, setLoadStatus) {
   if (property.id && !obj.isInit) obj.isInit = true; else return;
 
   property.setVisible = setVisible;
 
   obj.dataInfo = { dataList: [], pageInfo: { PageSize: property.pageSize || 10, PageIndex: 1, PageCount: 0, PageRecord: 0 } };
 
+  const page = pageAxis.getPage();
+
+  const activityIndicatorProperty = pageAxis.getProperty(property.activityIndicatorName);
+
+  page.pullDownRefresh = () => {
+    activityIndicatorProperty && activityIndicatorProperty.setLoading(true);
+    pageIndexChange(1, obj.dataInfo.pageInfo.PageSize, false);
+  };
+
+  page.reachBottom = () => {
+    const { PageIndex, PageCount, PageSize } = obj.dataInfo.pageInfo;
+    if (PageIndex < PageCount) {
+      setLoadStatus('loading');
+      pageIndexChange(PageIndex + 1, PageSize, true);
+    }
+    else {
+      page.isReachBottom = false;
+      setLoadStatus('noMore');
+    }
+  };
+
   obj.receivesearchQuery = (data) => {
     pageAxis.eventActions.DataGridView.receivesearchQuery(data, { property, view, pageAxis });
+
+    if (page.isPullDownRefresh) {
+      Taro.stopPullDownRefresh();
+      activityIndicatorProperty && activityIndicatorProperty.setLoading(false);
+    }
+    if (page.isReachBottom) setLoadStatus('noStatus');
+
+    page.isPullDownRefresh = false;
+    page.isReachBottom = false;
 
     return true;
   };

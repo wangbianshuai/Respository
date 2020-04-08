@@ -4,6 +4,7 @@ import useMapToProps from "./useHooks/useMapToProps";
 import useDvaData from "./useHooks/useDvaData";
 import PageAxis from "./pageAxis";
 import useGetServiceDataSource from './useHooks/useGetServiceDataSource';
+import useGetPageConfig from './useHooks/useGetPageConfig';
 
 export {
   useRootPage,
@@ -11,5 +12,6 @@ export {
   useMapToProps,
   useDvaData,
   useGetServiceDataSource,
-  PageAxis
+  PageAxis,
+  useGetPageConfig
 };

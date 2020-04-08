@@ -7,6 +7,7 @@ import Select2 from './select2';
 import TextArea2 from './textArea2';
 import DatePicker from './datePicker';
 import SearchBar from './searchBar';
+import ActivityIndicator from './activityIndicator';
 
 export {
   TextBox,
@@ -18,4 +19,5 @@ export {
   TextArea2,
   DatePicker,
   SearchBar,
+  ActivityIndicator,
 }

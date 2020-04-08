@@ -2,7 +2,7 @@ import Taro, { useMemo } from "@tarojs/taro";
 import EntityPage from "./entityPage";
 
 const EntityPageEdit = (props) => {
-  const pageConfig = useMemo(() => {
+  const config = useMemo(() => {
     const { name, entityName, minActionType, pageExpand, expandActionNames } = props;
 
     return {
@@ -15,7 +15,7 @@ const EntityPageEdit = (props) => {
     };
   }, [props]);
 
-  return <EntityPage name='entityEdit' pageConfig={pageConfig} params={props.params} />
+  return <EntityPage name='entityEdit' config={config} params={props.params} />
 };
 
 function getActionOptions(name, entityName, minActionType, expandActionNames) {
