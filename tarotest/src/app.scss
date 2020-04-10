@@ -1,4 +1,5 @@
 @import "~taro-ui/dist/style/index.scss";
+@import './style/dataRow.scss';
 
 page{
   height: 100%;
@@ -89,4 +90,16 @@ border-bottom: 1PX solid #d6e4ef;
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.personCenter{
+.userImage{
+  height: 200px;
+  width: 200px;
+	line-height: 200px;
+}
+
+.at-list__item-extra{
+  max-width: none !important;
+}
 }

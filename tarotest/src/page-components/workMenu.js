@@ -10,8 +10,8 @@ const _Property = {
     getItem('Daily List', '/pages/work/dailyList', 'list'),
     getItem('Pull Request Input', '/pages/work/pullRequestInput', 'edit'),
     getItem('Pull Request List', '/pages/work/pullRequestList', 'list'),
-    getItem('Working Hours Input', '/pages/work/workHoursInput', 'edit'),
-    getItem('Working Hours List', '/pages/work/workHoursList', 'list'),
+    getItem('Working Hours Input', '/pages/work/workingHoursInput', 'edit'),
+    getItem('Working Hours List', '/pages/work/workingHoursList', 'list'),
   ],
 };
 

@@ -1,16 +1,17 @@
 // eslint-disable-next-line import/no-commonjs
 module.exports = {
-  name: "User",
-  primaryKey: "UserId",
+  name: "Week",
+  primaryKey: "Id",
   properties: getProperties()
 }
 
 function getProperties() {
   return [
-    getProperty("UserId", "UserId"),
-    getProperty("UserName", "User Name"),
-    getProperty("LoginName", "Login Name"),
-    getProperty("LastLoginDate", "Last Login Date"),
+    getProperty("Id", "Id"),
+    getProperty("StartDate", "Start Date"),
+    getProperty("EndDate", "End Date"),
+    getProperty("WorkingHours", "Working Hours"),
+    getProperty("Remark", "Remark"),
     getProperty("CreateDate", "Create Date")
   ]
 }

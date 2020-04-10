@@ -1,17 +1,18 @@
 import Taro from '@tarojs/taro';
 import { View, Text } from '@tarojs/components';
 
-const DailyDataRow = (props) => {
+const PullRequestDataRow = (props) => {
   const { data, onLongPress, onClick } = props;
 
   if (!data) return <View />;
   const rows = [
     { label: 'Story', text: data.StoryName },
-    { label: 'Content', text: data.Content },
+    { label: 'Pull Request Title', text: data.PullRequestTitle },
+    { label: 'Test Cases', text: data.TestCases },
+    { label: 'Comments', text: data.Comments },
     { label: 'Remark', text: data.Remark },
     { label: 'User', text: data.CreateUserName },
-    { label: 'Hours', text: data.HoursCount },
-    { label: 'Working Date', text: data.WorkingDate },
+    { label: 'Date', text: data.StartDate || '' + ' - ' + data.EndDate || '' },
     { label: 'Create Date', text: data.CreateDate },
   ];
 
@@ -29,6 +30,6 @@ const DailyDataRow = (props) => {
   );
 };
 
-DailyDataRow.options = { addGlobalClass: true };
+PullRequestDataRow.options = { addGlobalClass: true };
 
-export default DailyDataRow;
+export default PullRequestDataRow;

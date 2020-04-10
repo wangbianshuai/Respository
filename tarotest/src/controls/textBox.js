@@ -23,9 +23,9 @@ const TextBox = (props) => {
     setValue(value2);
   }, [property]);
 
-  const { name, title, maxLength, controlType, placeholder, className, style } = property;
+  const { name, title, maxLength, inputType, placeholder, className, style } = property;
   let type = 'text';
-  if (controlType) type = controlType;
+  if (inputType) type = inputType;
 
   return (<AtInput
     name={name}

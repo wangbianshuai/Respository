@@ -1,38 +1,38 @@
 // eslint-disable-next-line import/no-commonjs
-const Daily = require('../../entities/daily');
+const PullRequest = require('../../entities/pullRequest');
 // eslint-disable-next-line import/no-commonjs
 const { assignProporties, getTextBox, getButton, getSelect, getDatePicker } = require('../../Common');
 
-//work/dailyInput 1200-1299
+//work/pullRequestInput 1000-1099
 const DataActionTypes = {
   //Get Entity Data
-  getEntityData: 1200,
+  getEntityData: 1000,
   //Save Entity Data
-  saveEntityData: 1201,
+  saveEntityData: 1001,
   //Delete Entity Data
-  deleteEntityData: 1202,
+  deleteEntityData: 1002,
 }
 
-const entity = { name: Daily.name, primaryKey: Daily.primaryKey };
+const entity = { name: PullRequest.name, primaryKey: PullRequest.primaryKey };
 
 // eslint-disable-next-line import/no-commonjs
 module.exports = {
-  name: "DailyEdit",
+  name: "PullRequestEdit",
   type: "View",
   eventActions: getEventActions(),
-  properties: assignProporties({ name: "DailyEdit" }, [geEditView()])
+  properties: assignProporties({ name: "PullRequestEdit" }, [geEditView()])
 }
 
 function geEditView() {
   return {
-    name: "DailyEdit2",
+    name: "PullRequestEdit2",
     type: "View",
     entity,
     eventActionName: "getEntityData",
     isClear: true,
     saveEntityDataActionType: DataActionTypes.saveEntityData,
     getEntityDataActionType: DataActionTypes.getEntityData,
-    properties: assignProporties(Daily, getProperties())
+    properties: assignProporties(PullRequest, getProperties())
   }
 }
 
@@ -40,10 +40,13 @@ function geEditView() {
 function getProperties() {
   return [
     getNavBar(),
-    getEditSelect("StoryId", "Story", Daily.storyDataSource, 1, 1, true, ""),
-    { ...getTextArea("Content", "Content", 2, 1, 'Please input content'), maxLength: 500, isNullable: false },
-    { ...getTextBox2("HoursCount", "Hours", 3, 1, "", "Please input hours", 4, false), dataType: "int" },
-    getDatePicker2("WorkingDate", "Working Date", 4, 1, false, "Please select a date"),
+    getEditSelect("StoryId", "Story", PullRequest.storyDataSource, 1, 1, false, ""),
+    { ...getTextArea("PullRequestTitle", "Pull Request Title", 2, 1, 'Please input pull request title'), maxLength: 500, isNullable: false },
+    getTextBox2("PullRequestUrl", "PullRequest Url", 3, 1, "", "Please input pull request url", 200, false),
+    { ...getTextBox2("TestCases", "Test Cases", 3, 1, "", "Please input test cases", 10, false), dataType: "int" },
+    { ...getTextBox2("Comments", "Comments", 3, 1, "", "Please input comments", 10, false), dataType: "int" },
+    getDatePicker2("StartDate", "Start Date", 4, 1, true, ""),
+    getDatePicker2("EndDate", "End Date", 4, 1, true, ""),
     getTextArea("Remark", "Remark", 5, 1),
     { ...getButton("saveEntityData", "Save", "primary"), eventActionName: "saveEntityData", className: 'button1', visibleParamName: 'isEdit' },
     { type: 'SpanText', style: { height: '80px' } }
@@ -52,12 +55,12 @@ function getProperties() {
 
 function getNavBar() {
   return {
-    title: 'Add New Daily',
-    updateTitle: 'Update New Daily',
+    title: 'Add New Pull Request',
+    updateTitle: 'Update New Pull Request',
     fixed: true,
     type: 'NavBar',
     name: 'NavBar1',
-    rightFirstEventActionName: 'deleteDaily',
+    rightFirstEventActionName: 'deletePullRequest',
   };
 }
 
@@ -81,7 +84,6 @@ function getDatePicker2(name, label, x, y, isNullable, placeholder, defaultValue
     isNullable: isNullable,
     placeholder: placeholder,
     isEdit: true,
-    isCurrentDay: true,
     type: 'FormItem',
     controlType: 'DatePicker',
     viewClassName: 'formItem',
@@ -122,20 +124,20 @@ function getEventActions() {
   return [{
     name: "saveEntityData",
     type: "EntityEdit/saveEntityData",
-    editView: "DailyEdit2",
+    editView: "PullRequestEdit2",
   },
   {
     name: "getEntityData",
     type: "EntityEdit/getEntityData",
-    editView: "DailyEdit2"
+    editView: "PullRequestEdit2"
   },
   {
-    name: "deleteDaily",
+    name: "deletePullRequest",
     type: "EntityEdit/deleteEntityData",
     isSelfOperation: true,
     selfPropertyName: "CreateUser",
     dataActionType: DataActionTypes.deleteEntityData,
     successTip: "Delete Succeed!",
-    confirmTip: "Please confirm whether to delete the current Daily?"
+    confirmTip: "Please confirm whether to delete the current Pull Request?"
   }]
 }

@@ -2,7 +2,7 @@ import Taro, { usePullDownRefresh, useReachBottom, useMemo } from "@tarojs/taro"
 import { EntityPageList } from "PageTemplates";
 import { Common } from 'UtilsCommon';
 
-const StoryList = () => {
+const PullRequestList = () => {
   const obj = useMemo(() => ({ id: Common.createGuid(), }), []);
 
   usePullDownRefresh(() => {
@@ -18,15 +18,15 @@ const StoryList = () => {
   });
 
   return <EntityPageList
-    name='config_storyList'
-    entityName='Story' minActionType={500}
+    name='work_pullRequestList'
+    entityName='PullRequest' minActionType={900}
     page={obj}
   />
 }
 
-StoryList.config = {
-  navigationBarTitleText: 'Story List',
+PullRequestList.config = {
+  navigationBarTitleText: 'Pull Request List',
   enablePullDownRefresh: true,
 };
 
-export default StoryList;
+export default PullRequestList;

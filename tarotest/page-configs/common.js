@@ -81,8 +81,8 @@ function getRadio(name, label, DataSource, x, y, defaultValue, buttonWidth) {
   return { name, label, type: "Radio", DataSource, x, y, isButton: true, defaultValue, buttonWidth }
 }
 
-function getTextBox(name, label, controlType, x, y, placeholder, maxLength) {
-  return { name, label, type: "TextBox", controlType, placeholder, x, y, maxLength }
+function getTextBox(name, label, inputType, x, y, placeholder, maxLength) {
+  return { name, label, type: "TextBox", inputType, placeholder, x, y, maxLength }
 }
 
 function getSelect(name, label, DataSource, x, y, defaultValue) {

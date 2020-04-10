@@ -1,17 +1,15 @@
 import Taro from '@tarojs/taro';
 import { View, Text } from '@tarojs/components';
 
-const DailyDataRow = (props) => {
+const UserDataRow = (props) => {
   const { data, onLongPress, onClick } = props;
 
   if (!data) return <View />;
   const rows = [
-    { label: 'Story', text: data.StoryName },
-    { label: 'Content', text: data.Content },
+    { label: 'Login Name', text: data.LoginName  },
+    { label: 'User Name', text: data.UserName },
+    { label: 'Last Login Date', text: data.LastLoginDate },
     { label: 'Remark', text: data.Remark },
-    { label: 'User', text: data.CreateUserName },
-    { label: 'Hours', text: data.HoursCount },
-    { label: 'Working Date', text: data.WorkingDate },
     { label: 'Create Date', text: data.CreateDate },
   ];
 
@@ -29,6 +27,6 @@ const DailyDataRow = (props) => {
   );
 };
 
-DailyDataRow.options = { addGlobalClass: true };
+UserDataRow.options = { addGlobalClass: true };
 
-export default DailyDataRow;
+export default UserDataRow;

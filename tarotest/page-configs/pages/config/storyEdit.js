@@ -1,38 +1,38 @@
 // eslint-disable-next-line import/no-commonjs
-const Daily = require('../../entities/daily');
+const Story = require('../../entities/story');
 // eslint-disable-next-line import/no-commonjs
-const { assignProporties, getTextBox, getButton, getSelect, getDatePicker } = require('../../Common');
+const { assignProporties, getTextBox, getButton, getDatePicker } = require('../../Common');
 
-//work/dailyInput 1200-1299
+//config/storyInput 600-699
 const DataActionTypes = {
   //Get Entity Data
-  getEntityData: 1200,
+  getEntityData: 600,
   //Save Entity Data
-  saveEntityData: 1201,
+  saveEntityData: 601,
   //Delete Entity Data
-  deleteEntityData: 1202,
+  deleteEntityData: 602,
 }
 
-const entity = { name: Daily.name, primaryKey: Daily.primaryKey };
+const entity = { name: Story.name, primaryKey: Story.primaryKey };
 
 // eslint-disable-next-line import/no-commonjs
 module.exports = {
-  name: "DailyEdit",
+  name: "StoryEdit",
   type: "View",
   eventActions: getEventActions(),
-  properties: assignProporties({ name: "DailyEdit" }, [geEditView()])
+  properties: assignProporties({ name: "StoryEdit" }, [geEditView()])
 }
 
 function geEditView() {
   return {
-    name: "DailyEdit2",
+    name: "StoryEdit2",
     type: "View",
     entity,
     eventActionName: "getEntityData",
     isClear: true,
     saveEntityDataActionType: DataActionTypes.saveEntityData,
     getEntityDataActionType: DataActionTypes.getEntityData,
-    properties: assignProporties(Daily, getProperties())
+    properties: assignProporties(Story, getProperties())
   }
 }
 
@@ -40,10 +40,12 @@ function geEditView() {
 function getProperties() {
   return [
     getNavBar(),
-    getEditSelect("StoryId", "Story", Daily.storyDataSource, 1, 1, true, ""),
-    { ...getTextArea("Content", "Content", 2, 1, 'Please input content'), maxLength: 500, isNullable: false },
-    { ...getTextBox2("HoursCount", "Hours", 3, 1, "", "Please input hours", 4, false), dataType: "int" },
-    getDatePicker2("WorkingDate", "Working Date", 4, 1, false, "Please select a date"),
+    { ...getTextBox2("StoryId", "Story Id", 3, 1, "", "Please input story id", 10, false), dataType: "int" },
+
+    { ...getTextArea("StoryTitle", "Story Title", 2, 1, 'Please input story title'), maxLength: 1000, isNullable: false },
+    getTextBox2("StoryUrl", "Story url", 3, 1, "", "Please input story url", 200, false),
+    getDatePicker2("StartDate", "Start Date", 4, 1, true, ""),
+    getDatePicker2("EndDate", "End Date", 4, 1, true, ""),
     getTextArea("Remark", "Remark", 5, 1),
     { ...getButton("saveEntityData", "Save", "primary"), eventActionName: "saveEntityData", className: 'button1', visibleParamName: 'isEdit' },
     { type: 'SpanText', style: { height: '80px' } }
@@ -52,12 +54,12 @@ function getProperties() {
 
 function getNavBar() {
   return {
-    title: 'Add New Daily',
-    updateTitle: 'Update New Daily',
+    title: 'Add New Story',
+    updateTitle: 'Update New Story',
     fixed: true,
     type: 'NavBar',
     name: 'NavBar1',
-    rightFirstEventActionName: 'deleteDaily',
+    rightFirstEventActionName: 'deleteStory',
   };
 }
 
@@ -89,21 +91,6 @@ function getDatePicker2(name, label, x, y, isNullable, placeholder, defaultValue
   }
 }
 
-function getEditSelect(name, label, dataSource, x, y, isNullable, placeholder, defaultValue) {
-  return {
-    ...getSelect(name, label, null, x, y, defaultValue),
-    isNullable,
-    isEdit: true,
-    allowClear: true, isSearch: true,
-    serviceDataSource: dataSource,
-    placeholder,
-    type: 'FormItem',
-    controlType: 'Select',
-    viewClassName: 'formItem',
-    labelClassName: "label",
-  }
-}
-
 function getTextArea(name, label, x, y, placeHolder) {
   return {
     ...getTextBox(name, label, "TextArea", x, y),
@@ -122,20 +109,20 @@ function getEventActions() {
   return [{
     name: "saveEntityData",
     type: "EntityEdit/saveEntityData",
-    editView: "DailyEdit2",
+    editView: "StoryEdit2",
   },
   {
     name: "getEntityData",
     type: "EntityEdit/getEntityData",
-    editView: "DailyEdit2"
+    editView: "StoryEdit2"
   },
   {
-    name: "deleteDaily",
+    name: "deleteStory",
     type: "EntityEdit/deleteEntityData",
     isSelfOperation: true,
     selfPropertyName: "CreateUser",
     dataActionType: DataActionTypes.deleteEntityData,
     successTip: "Delete Succeed!",
-    confirmTip: "Please confirm whether to delete the current Daily?"
+    confirmTip: "Please confirm whether to delete the current Story?"
   }]
 }

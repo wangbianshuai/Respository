@@ -1,26 +1,26 @@
 // eslint-disable-next-line import/no-commonjs
-const Daily = require('../../entities/daily');
+const Story = require('../../entities/story');
 // eslint-disable-next-line import/no-commonjs
 const { assignProporties } = require('../../Common');
 
-//WorkReportManage/DailyList 1000-1199
+//WorkReportManage/StoryList 500-599
 const DataActionTypes = {
   //Search Query
-  searchQuery: 1100,
+  searchQuery: 500,
   //Delete Entity Data
-  deleteEntityData: 1101,
+  deleteEntityData: 501,
   //Excel Export
-  excelExport: 1102
+  excelExport: 502
 };
 
-const entity = { name: Daily.name, primaryKey: Daily.primaryKey, viewName: "ViewDaily" };
+const entity = { name: Story.name, primaryKey: Story.primaryKey, viewName: "ViewStory" };
 
 // eslint-disable-next-line import/no-commonjs
 module.exports = {
-  name: "DailyList",
+  name: "StoryList",
   type: "View",
   eventActions: getEventActions(),
-  properties: assignProporties({ name: "DailyList" }, [getNavBar(), {
+  properties: assignProporties({ name: "StoryList" }, [getNavBar(), {
     name: 'ActivityIndicator1',
     type: 'ActivityIndicator'
   }, getSearchOperationView(), getDataGridView()])
@@ -28,7 +28,7 @@ module.exports = {
 
 function getNavBar() {
   return {
-    title: 'Daily List',
+    title: 'Story List',
     fixed: true,
     type: 'NavBar',
     name: 'NavBar1',
@@ -43,9 +43,9 @@ function getSearchOperationView() {
     entity,
     type: "View",
     className: "DivSerachView",
-    properties: assignProporties({ name: "DailyList" }, [
+    properties: assignProporties({ name: "StoryList" }, [
       {
-        name: 'Keyword', placeholder: 'Story Id/Title/Content/Remark', propertyName: 'StoryName,Content,Remark', operateLogic: 'like',
+        name: 'Keyword', placeholder: 'Story Id/Title/Remark', propertyName: 'StoryId,StoryTitle,Remark', operateLogic: 'like',
         label: 'Keyword', type: 'SearchBar', eventActionName: "searchQuery", maxLength: 50, isCondition: true, isNullable: true,
       }
     ])
@@ -59,11 +59,11 @@ function getDataGridView() {
     type: "DataGridView",
     entitySearchQuery: DataActionTypes.searchQuery,
     entityExcelExport: DataActionTypes.excelExport,
-    editEventActionName: 'editDaily',
-    deleteEventActionName: 'deleteDaily',
+    editEventActionName: 'editStory',
+    deleteEventActionName: 'deleteStory',
     eventActionName: "searchQuery",
     activityIndicatorName: 'ActivityIndicator1',
-    properties: assignProporties(Daily, ["CreateUserName", 'StoryName', "Content", "HoursCount", "WorkingDate", "Remark", { name: "StoryUrl", isVisible: false },
+    properties: assignProporties(Story, ["CreateUserName", 'StoryId', "StoryTitle", "StartDate", "EndDate", "Remark", { name: "StoryUrl", isVisible: false },
       { name: "CreateDate", orderByType: "desc" }, { name: "RowVersion", isVisible: false }, { name: "CreateUser", isVisible: false }])
   }
 }
@@ -77,24 +77,24 @@ function getEventActions() {
     dataGridView: "DataGridView1"
   },
   {
-    name: "editDaily",
+    name: "editStory",
     type: "DataGridView/selectRowToPage",
-    pageUrl: "/pages/work/dailyInput?Id=#{Id}",
+    pageUrl: "/pages/config/storyEdit?Id=#{Id}",
     isSelfOperation: true,
     selfPropertyName: "CreateUser",
   },
   {
     name: "toEditPage",
     type: "Page/toPage",
-    pageUrl: "/pages/work/dailyInput",
+    pageUrl: "/pages/config/storyEdit",
   },
   {
-    name: "deleteDaily",
+    name: "deleteStory",
     type: "DataGridView/deleteEntityData",
     isSelfOperation: true,
     selfPropertyName: "CreateUser",
     dataActionType: DataActionTypes.deleteEntityData,
     successTip: "Delete Succeed!",
-    confirmTip: "Please confirm whether to delete the current Daily?"
+    confirmTip: "Please confirm whether to delete the current Story?"
   }]
 }
