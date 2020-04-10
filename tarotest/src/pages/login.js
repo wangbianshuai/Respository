@@ -1,6 +1,6 @@
 import Taro, { useEffect, useMemo } from "@tarojs/taro";
 import { View } from '@tarojs/components';
-import { PageAxis, useRootPage, useConnectAction } from "PageCommon";
+import { PageAxis, useRootPage, useConnectAction, useGetPageConfig } from "PageCommon";
 import { Common } from "UtilsCommon";
 import { PropertyItem } from 'Components';
 import '../style/login.scss';
@@ -11,10 +11,11 @@ const Login = (props) => {
   const [invoke, actionTypes, actionData] = useConnectAction(_Name);
   const pageId = useMemo(() => Common.createGuid(), []);
   const pageAxis = PageAxis.getPageAxis(pageId);
+  const pageConfig = useGetPageConfig(_Name);
 
   useRootPage(mapStateToProps, pageAxis, props);
 
-  pageAxis.initSet(_Name, invoke, actionTypes, init);
+  pageConfig && pageAxis.initSet(_Name, pageConfig, invoke, actionTypes, init);
 
   useEffect(() => { return () => PageAxis.removePageAxis(pageId) }, [pageId]);
 
@@ -45,7 +46,7 @@ function loginSuccess({ data, props }) {
   const { pageAxis } = props;
   Common.setStorage("LoginUserInfo", JSON.stringify(data))
   Common.setStorage("LoginUserId", data.UserId)
-  pageAxis.toPage("/pages/index");
+  pageAxis.openPage("/pages/index");
 }
 
 function mapStateToProps(state) {

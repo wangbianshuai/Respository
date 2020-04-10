@@ -6,28 +6,13 @@ const serviceConfig = {
 
 const envConfig = {
   getServiceUrl,
-  setEnv,
+  getPageConfigUrl,
   env: null,
-  isProd: false
+  isProd: isProd()
 }
 
-//ctx koa object，ctx is not empty to indicate that it is a server
-function setEnv() {
-  envConfig.env = getWebEnv();
-  envConfig.isProd = envConfig.env === "prd";
-}
-
-function getWebEnv() {
-  let h = "localhost";
-  if (typeof window !== undefined) h = window.location.hostname.toLowerCase();
-  return getEnv(h);
-}
-
-function getEnv(h) {
-  if (h.indexOf("localhost") >= 0) return "local"
-  else if (h.indexOf("dev") >= 0) return "dev"
-  else if (h.indexOf("test") >= 0) return "test"
-  else return "prd";
+function isProd() {
+  return process.env.NODE_ENV === 'production'
 }
 
 function getApiSericeUrl() {
@@ -40,6 +25,12 @@ function getServiceUrl(serverName) {
     if (Taro.getEnv() === Taro.ENV_TYPE.WEAPP) hostName = 'https://sabg.beyondsoft.com/workreport'
     return hostName + serviceConfig[serverName]();
   }
+}
+
+function getPageConfigUrl(name) {
+  let url = 'http://localhost:3721/getConfig?name=' + name;
+  if (envConfig.isProd) url = 'https://sabg.beyondsoft.com/workreport/miniprogramconfigs/' + name.replace('_', '/') + '.json';
+  return url;
 }
 
 export default envConfig;

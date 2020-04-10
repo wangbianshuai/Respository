@@ -1,4 +1,5 @@
 @import "~taro-ui/dist/style/index.scss";
+@import './style/dataRow.scss';
 
 page{
   height: 100%;
@@ -81,4 +82,24 @@ bottom: 0;
 -webkit-transform: scaleY(0.5);
 transform: scaleY(0.5);
 border-bottom: 1PX solid #d6e4ef;
+}
+
+.activityIndicator{
+  width: 100%;
+  height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.personCenter{
+.userImage{
+  height: 200px;
+  width: 200px;
+	line-height: 200px;
+}
+
+.at-list__item-extra{
+  max-width: none !important;
+}
 }

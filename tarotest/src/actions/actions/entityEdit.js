@@ -36,7 +36,7 @@ export default class EntityEdit extends BaseIndex {
 
         var pathQuery = method;
         if (primaryKeyValue) {
-            data.entityData[primaryKey] = primaryKey;
+            data.entityData[primaryKey] = primaryKeyValue;
             pathQuery = `${method}(${primaryKeyValue})`;
         }
 

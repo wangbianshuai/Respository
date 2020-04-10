@@ -1,6 +1,5 @@
 import Taro from '@tarojs/taro';
 import { View, Text } from '@tarojs/components';
-import '../style/dataRow.scss';
 
 const DailyDataRow = (props) => {
   const { data, onLongPress, onClick } = props;
@@ -29,5 +28,7 @@ const DailyDataRow = (props) => {
     </View>
   );
 };
+
+DailyDataRow.options = { addGlobalClass: true };
 
 export default DailyDataRow;

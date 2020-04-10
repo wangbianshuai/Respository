@@ -1,4 +1,4 @@
-import Taro, { useMemo, useState, useEffect, useDidShow } from '@tarojs/taro';
+import Taro, { useMemo, useState, useDidShow, useEffect } from '@tarojs/taro';
 import { View } from '@tarojs/components';
 import { Common } from 'UtilsCommon';
 import { PageAxis } from "PageCommon";
@@ -16,7 +16,13 @@ const View2 = (props) => {
 
   init(obj, property, setVisible);
 
+  useEffect(() => {
+    if (obj.isDidShow) { obj.isDidShow = false; return; }
+    if (property.eventActionName) pageAxis.invokeEventAction(property.eventActionName, { property, view, pageAxis });
+  }, [property, view, pageAxis, obj]);
+
   useDidShow(() => {
+    obj.isDidShow = true;
     if (property.eventActionName) pageAxis.invokeEventAction(property.eventActionName, { property, view, pageAxis });
   });
 

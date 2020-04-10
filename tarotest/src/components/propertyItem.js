@@ -1,7 +1,7 @@
 import Taro from '@tarojs/taro';
 import { View } from '@tarojs/components';
 import { View2, List, DataGridView } from "Components"
-import { Button2, SpanText, TextBox, TabBar, NavBar, Select2, TextArea2, DatePicker, SearchBar } from "Controls";
+import { Button2, SpanText, TextBox, TabBar, NavBar, Select2, TextArea2, DatePicker, SearchBar, ActivityIndicator } from "Controls";
 import { FormItem } from 'PageControls';
 import { Common } from 'UtilsCommon';
 import { PageAxis } from 'PageCommon';
@@ -9,7 +9,7 @@ import { PageAxis } from 'PageCommon';
 const PropertyItem = (props) => {
   const { property, pageId, view } = props;
 
-  if (!pageId) return <View />
+  if (!pageId || !property) return <View />
 
   if (!property.id) property.id = Common.createGuid();
 
@@ -40,6 +40,7 @@ const PropertyItem = (props) => {
   if (type === 'DatePicker') return <DatePicker {...props2} />;
   if (type === 'DataGridView') return <DataGridView {...props2} />;
   if (type === 'SearchBar') return <SearchBar {...props2} />;
+  if (type === 'ActivityIndicator') return <ActivityIndicator {...props2} />;
 
   return <View />;
 };

@@ -1,19 +1,21 @@
-import Taro, { useEffect, useMemo  } from "@tarojs/taro";
-import { PageAxis, useRootPage, useConnectAction } from "PageCommon";
+import Taro, { useEffect, useMemo } from "@tarojs/taro";
+import { PageAxis, useRootPage, useConnectAction, useGetPageConfig } from "PageCommon";
 import { Common } from "UtilsCommon";
 import { PropertyItem } from 'Components';
 
 const EntityPage = (props) => {
-  const { name, pageConfig, params } = props;
+  const { name, config, params, page } = props;
 
-  const [invoke, actionTypes, actionData] = useConnectAction(name, pageConfig.actionOptions);
+  const [invoke, actionTypes, actionData] = useConnectAction(name, config.actionOptions);
   const pageId = useMemo(() => Common.createGuid(), []);
   const pageAxis = PageAxis.getPageAxis(pageId);
+  const pageConfig = useGetPageConfig(config.pageName);
 
-  useRootPage(mapStateToProps(pageConfig.actionNames, pageConfig.entityName, pageConfig.stateNames), pageAxis, props);
+  useRootPage(mapStateToProps(config.actionNames, config.entityName, config.stateNames), pageAxis, props);
 
-  pageAxis.initSet(pageConfig.pageName, invoke, actionTypes, () => {
-    if (pageConfig.pageExpand) pageAxis.expandMethod(pageConfig.pageExpand);
+  pageConfig && pageAxis.initSet(config.pageName, pageConfig, invoke, actionTypes, () => {
+    if (config.pageExpand) pageAxis.expandMethod(config.pageExpand);
+    pageAxis.getPage = () => page;
   }, params);
 
   useEffect(() => { return () => PageAxis.removePageAxis(pageId) }, [pageId]);
@@ -23,7 +25,7 @@ const EntityPage = (props) => {
   return <PropertyItem property={pageAxis.pageConfig} pageId={pageId} />
 }
 
-EntityPage.defaultProps = { name: '', pageConfig: { actionOptions: { name: '' } } };
+EntityPage.defaultProps = { name: '', config: { actionOptions: { name: '' } } };
 
 function mapStateToProps(actionNames, entityName, stateNames) {
   if (!actionNames) return () => ({});

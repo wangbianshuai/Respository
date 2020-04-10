@@ -10,9 +10,8 @@ const TabBar = (props) => {
 
   const clickAction = useCallback((value) => {
     setCurrent(value);
-    property.current = value;
     const pageAxis = PageAxis.getPageAxis(pageId);
-    pageAxis.invokeEventAction(property.eventActionName, { property, view, pageAxis });
+    pageAxis.invokeEventAction(property.eventActionName, { property, view, pageAxis, selectIndex: value });
   }, [property, view, pageId]);
 
   return (<AtTabBar

@@ -76,7 +76,10 @@ function setLoading(nextState) {
       isShowLoading = true;
     }
   }, 2000);
-  else if (nextState.loading === false && isShowLoading) Taro.hideLoading();
+  else if (nextState.loading === false && isShowLoading) {
+    Taro.hideLoading();
+    isShowLoading = false;
+  }
 }
 
 function isLoginPage() {

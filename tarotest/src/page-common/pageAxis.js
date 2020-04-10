@@ -5,7 +5,6 @@ Each component can call methods on the page through the page axis object.
 import Taro from "@tarojs/taro";
 import { Common, Page } from "UtilsCommon";
 import EventActions from "EventActions";
-import getPageConfig from '../page-configs/index';
 
 const _PageAxisList = {};
 
@@ -76,11 +75,7 @@ export default class PageAxis {
     Taro.showToast({ title: msg, duration: 3000, icon: 'none' });
   }
 
-  getConfig() {
-    this.pageConfig = Common.clone(getPageConfig(this.name));
-  }
-
-  initSet(name, invokeDataAction, actionTypes, expandInit, params) {
+  initSet(name, pageConfig, invokeDataAction, actionTypes, expandInit, params) {
     if (!name) return;
     if (!this.isInit) this.isInit = true; else return;
 
@@ -90,11 +85,11 @@ export default class PageAxis {
 
     this.token = Common.getStorage("Token");
     this.loginUserId = Common.getStorage("LoginUserId");
-    this.pageConfig = {};
+    this.pageConfig = Common.clone(pageConfig);
     this.receives = {};
     this.controls = [];
     this.components = [];
-    this.getConfig();
+    //this.getConfig();
     this.eventActionsConfig = Common.clone(this.pageConfig.eventActions);
     if (this.pageConfig.actionOptions) this.actionTypes = this.pageConfig.actionOptions.actionTypes;
 
