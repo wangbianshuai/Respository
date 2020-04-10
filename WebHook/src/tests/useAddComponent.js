@@ -1,8 +1,9 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useMemo, useCallback } from "react";
 import { Input } from "antd";
 
 export default props => {
   const [list, setList] = useState([]);
+  const obj = useMemo(() => ({ isFirst: true }), [])
 
   const addComponent = useCallback(() => {
     setTimeout(() => {
@@ -12,9 +13,10 @@ export default props => {
     }, 1000);
   }, [list]);
 
-  useEffect(() => {
+  if (obj.isFirst) {
     addComponent();
-  }, [addComponent]);
+    obj.isFirst = false;
+  }
 
   return list;
 }
