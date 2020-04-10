@@ -1,22 +1,20 @@
 import { useState, useMemo, useCallback } from "react";
-import { Input } from "antd";
 
 export default props => {
-  const [list, setList] = useState([]);
+  const [count, setCount] = useState(0);
   const obj = useMemo(() => ({ isFirst: true }), [])
 
   const addComponent = useCallback(() => {
     setTimeout(() => {
-      list.push(<Input />);
-      setList(list);
+      setCount(count + 1);
       addComponent();
     }, 1000);
-  }, [list]);
+  }, [count]);
 
   if (obj.isFirst) {
     addComponent();
     obj.isFirst = false;
   }
 
-  return list;
+  return count;
 }
