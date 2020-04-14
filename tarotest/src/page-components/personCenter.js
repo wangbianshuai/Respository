@@ -4,7 +4,7 @@ import { Button2 } from 'Controls';
 import { Common } from 'UtilsCommon';
 import { View, Image } from "@tarojs/components";
 
-import headerIcom from '../assets/defaultHeader.jpg';
+import headerIcon from '../assets/defaultHeader.jpg';
 
 const _ButtonProperty = {
   buttonType: 'primary',
@@ -16,6 +16,13 @@ const _ButtonProperty = {
 
 const PersonCenter = (props) => {
   const { pageId } = props;
+
+  let imageUrl = useMemo(() => {
+    const weChatUserInfo = Common.getStorage('WeChatUserInfo');
+    if (weChatUserInfo) return JSON.parse(weChatUserInfo).avatarUrl;
+
+    return headerIcon;
+  }, []);
 
   const property = useMemo(() => {
     const loginUserInfo = Common.getStorage('LoginUserInfo');
@@ -35,7 +42,7 @@ const PersonCenter = (props) => {
   return (
     <View className='personCenter'>
       <View style='text-align: center'>
-        <Image className='userImage' src={headerIcom} />
+        <Image className='userImage' src={imageUrl} />
       </View>
       <List property={property} pageId={pageId} view={{}} />
       <Button2 property={_ButtonProperty} pageId={pageId} view={{}} />

@@ -8,8 +8,11 @@ export default (mapStateToProps, pageAxis, props) => {
 
   const obj = useMemo(() => { return { name: "RootPage" } }, []);
 
-  init(obj, dispatch, dispatchAction, setActionState, pageAxis);
+  init(obj, dispatch, dispatchAction, setActionState);
 
+  if (!pageAxis.dispatch) pageAxis.dispatch = dispatch;
+  if (!pageAxis.dispatchAction) pageAxis.dispatchAction = dispatchAction;
+  if (!pageAxis.setActionState) pageAxis.setActionState = setActionState;
   if (!pageAxis.getStateValue) pageAxis.getStateValue = (stateName) => state[stateName];
 
   useEffect(() => {
@@ -25,14 +28,10 @@ export default (mapStateToProps, pageAxis, props) => {
   return [dispatch, dispatchAction, setActionState]
 }
 
-function init(obj, dispatch, dispatchAction, setActionState, pageAxis) {
+function init(obj, dispatch, dispatchAction, setActionState) {
   if (!obj.isInit) obj.isInit = true; else return;
 
   obj.page = new Page();
-
-  pageAxis.dispatch = dispatch;
-  pageAxis.dispatchAction = dispatchAction;
-  pageAxis.setActionState = setActionState;
 
   obj.functions = { dispatch, dispatchAction, setActionState, toLogin }
   obj.invoke = () => (name) => obj.functions[name] || function () { };

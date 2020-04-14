@@ -55,5 +55,10 @@ function getEventActions() {
     type: "EntityEdit/saveEntityData",
     editView: "LoginView",
     successCallback: "loginSuccess"
+  },
+  {
+    name: "weChatLogin",
+    type: "Page/weChatLogin",
+    successCallback: "loginSuccess"
   }]
 }

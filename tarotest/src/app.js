@@ -10,8 +10,8 @@ const store = dva._store;
 class App extends Component {
   config = {
     pages: [
-      'pages/login',
       'pages/index',
+      'pages/login',
       'pages/work/dailyInput',
       'pages/work/dailyList',
       'pages/work/pullRequestInput',
