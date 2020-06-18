@@ -1,0 +1,61 @@
+
+html, body, #root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+}
+
+.RowSelected {
+  background-color: #e6f7ff;
+}
+
+.ant-table-row-selected td{
+  background-color: #e6f7ff !important;
+}
+
+input:read-only,textarea:read-only{
+  color: #1890ff;
+}
+
+.ant-calendar-range-picker-input,.ant-calendar-picker-input{
+  color: rgba(0, 0, 0, 0.65) !important;
+}
+
+.ant-col-2 label{
+  padding-right: 2px;
+}
+
+.LeftFormItem .ant-form-item-label{
+  text-align: left !important;
+}
+
+
+.SpinDiv{
+  display: flex;
+  flex: 1; 
+  height: 100%;
+  justify-content: center;
+  align-items: center;
+}
+
+.SpinDiv2{
+  display: flex;
+  height: 500px;
+  margin-top: 8px;
+  justify-content: center;
+  align-items: center;
+  background: #ffffff;
+}
+
+.RowHeader{
+  background: #fafafa;
+  text-align: left;
+  color: rgba(0, 0, 0, 0.85);
+  font-weight: 500;
+  border-bottom: 1px solid #e8e8e8;
+  padding: 16px 16px;
+  word-break: break-all;
+  font-size: 14px;
+}
