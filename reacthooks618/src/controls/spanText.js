@@ -14,14 +14,14 @@ export default class SpanText extends BaseIndex {
         if (!this.state.isVisible) return null;
 
         const { pageAxis } = this;
-        const { Value, text, label, style, ClassName } = this.props.property;
+        const { Value, text, label, style, className } = this.props.property;
         let text2 = Value || text;
 
-        text2 = Common.replaceDataContent(pageAxis.PageData, text);
+        text2 = Common.replaceDataContent(pageAxis.pageData, text);
 
         if (!Common.isNullOrEmpty(this.state.Value)) text2 = this.state.Value;
 
-        let className = ClassName;
+        let className = className;
         if (className && styles[className]) className = styles[className];
 
         let label2 = null;

@@ -13,7 +13,7 @@ const entity = { name: adminUser.name, primaryKey: adminUser.PropertyPrimaryKey 
 
 module.exports = {
     name: "AdminUserEdit",
-    type: "view",
+    type: "View",
     eventActions: getEventActions(),
     properties: assignProporties({ name: "AdminUserEdit" }, [getEditView()])
 }
@@ -55,7 +55,7 @@ function getProperties() {
 function getButtonView() {
     return {
         name: "ButtonView",
-        type: "view",
+        type: "View",
         className: "DivCenterButton",
         isDiv: true,
         isFormItem: true,

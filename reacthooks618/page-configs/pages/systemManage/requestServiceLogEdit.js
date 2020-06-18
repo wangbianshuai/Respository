@@ -15,7 +15,7 @@ const entity = {
 
 module.exports = {
     name: "requestServiceLogEdit",
-    type: "view",
+    type: "View",
     eventActions: getEventActions(),
     properties: assignProporties({ name: "requestServiceLogEdit" }, [getEditView()])
 }
@@ -75,7 +75,7 @@ function getTextBox2(name, label, x, y, contorlType, placeHolder, maxLength, isN
 function getButtonView() {
     return {
         name: "ButtonView",
-        type: "view",
+        type: "View",
         className: "DivCenterButton",
         isDiv: true,
         isFormItem: true,

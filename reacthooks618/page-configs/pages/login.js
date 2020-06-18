@@ -8,7 +8,7 @@ const dataActionTypes = {
 
 module.exports= {
     name: "LoginView",
-    type: "view",
+    type: "View",
     eventActions: getEventActions(),
     saveEntityDataActionType: dataActionTypes.Login,
     properties: assignProporties({name:"LoginView"}, getProperties())
@@ -29,7 +29,7 @@ function getTextBox2(name, label, x, y, contorlType, placeHolder, maxLength, isN
     return {
         ...getTextBox(name, label, contorlType, x, y, placeHolder, maxLength || 50),
         isFormItem: true,
-        Size: "large",
+        size: "large",
         isEdit: true,
         pressEnterEventActionName: "Login",
         pressEnterEventPropertyName: "Login",
@@ -43,7 +43,7 @@ function getButton2(name, label, ButtonType, x, y) {
     return {
         ...getButton(name, label, ButtonType, x, y),
         isFormItem: true,
-        Size: "large",
+        size: "large",
         eventActionName: "Login",
         style: { width: "100%" }
     }

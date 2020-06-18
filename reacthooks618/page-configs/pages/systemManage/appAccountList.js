@@ -17,7 +17,7 @@ const entity = { name: AppAccount.name, primaryKey: AppAccount.primaryKey, viewN
 
 module.exports = {
     name: "AppAccountList",
-    type: "view",
+    type: "View",
     eventActions: getEventActions(),
     properties: assignProporties({ name: "AppAccountList" }, [getSearchOperationView(), getDataGridView()])
 }
@@ -46,7 +46,7 @@ function getSearchOperationView() {
                 ConfirmTip: "请确认是否删除当前App账号？",
                 ...getButton("DeleteAppAccount", "删除", "default", 2, 4)
             },
-            { eventActionName: "excelExport", Title: "App账号", ...getButton("excelExport", "Excel导出", "default", 2, 5), Icon: "download", colStyle: { paddingLeft: 0 } }
+            { eventActionName: "excelExport", title: "App账号", ...getButton("excelExport", "Excel导出", "default", 2, 5), Icon: "download", colStyle: { paddingLeft: 0 } }
         ])
     }
 }
@@ -113,7 +113,7 @@ function getUpdateAppAccountStatusAction(status) {
         type: "Popconfirm",
         dataActionType: dataActionTypes.UpdateAppAccountStatus,
         SuccessTip: "操作成功！",
-        Title: "请确认是否" + (status === 1 ? "关闭" : "启用") + "当前App账号？"
+        title: "请确认是否" + (status === 1 ? "关闭" : "启用") + "当前App账号？"
     }
 }
 

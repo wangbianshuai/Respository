@@ -11,7 +11,6 @@ export default class Index {
   init() {
     if (!this.actionTypes) this.actionTypes = this.getActionTypes(this.name);
     this.actionTypeKeys = this.getActionTypeKeys();
-    if (this.dvaActions.setStateActionTypes) this.dvaActions.setStateActionTypes(this.getStateActionTypes());
   }
 
   getActionTypeKeys() {

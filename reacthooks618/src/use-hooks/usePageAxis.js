@@ -3,10 +3,11 @@ Through-page flow object.
 Each component can call methods on the page through the page axis object.
 */
 /*
-props:{
-    name, pageConfig, invokeDataAction, actionTypes,
+page:{
+    name, pageConfig, invokeDataAction, actionTypes, props,init,
     dispatch, dispatchAction, setActionState, getStateValue
 }
+props:父级页面props
 */
 
 import { useMemo, useEffect } from "react";
@@ -14,10 +15,11 @@ import { Common } from 'UtilsCommon';
 import EventActions from 'EventActions';
 
 class PageAxis {
-    constructor(id, props) {
+    constructor(id, parames) {
         this.id = id;
-        for (let key in props) this[key] = props[key];
-        this.props = {};
+        for (let key in parames) this[key] = parames[key];
+        //接收行为数据state
+        this.state = {};
         this.initSet();
         this.init && this.init();
     }
@@ -26,33 +28,33 @@ class PageAxis {
         return (name) => this[name] ? this[name].bind(this) : function () { };
     }
 
-    receiveActionData(nextProps) {
+    receiveActionData(nextState) {
         if (this.actionTypes) {
             let name = "", value = 0;
             for (let key in this.actionTypes) {
                 name = `receive${key}`;
                 value = this.actionTypes[key];
-                if (nextProps[value] !== this.props[value]) {
-                    if (this[name]) this[name](nextProps[value]);
-                    else if (this.receives[value]) this.receives[value](nextProps[value]);
+                if (nextState[value] !== this.state[value]) {
+                    if (this[name]) this[name](nextState[value]);
+                    else if (this.receives[value]) this.receives[value](nextState[value]);
                 }
             }
         }
-        this.props = nextProps;
+        this.state = nextState;
     }
 
-    receiveActionDataToObject(obj, actionTypes, nextProps) {
-        obj.props = obj.props || {};
+    receiveActionDataToObject(obj, actionTypes, nextState) {
+        obj.state = obj.state || {};
         let name = "", value = 0;
         for (let key in actionTypes) {
             name = `receive${key}`;
             value = actionTypes[key];
-            if (nextProps[value] !== obj.props[value]) {
-                if (obj[name]) obj[name](nextProps[value]);
-                else if (this.receives[value]) this.receives[value](nextProps[value]);
+            if (nextState[value] !== obj.state[value]) {
+                if (obj[name]) obj[name](nextState[value]);
+                else if (this.receives[value]) this.receives[value](nextState[value]);
             }
         }
-        obj.prop = nextProps;
+        obj.state = nextState;
     }
 
     judgeLogin() {
@@ -192,7 +194,8 @@ class PageAxis {
 
 const _PageAxises = {};
 
-const usePageAxis = (props) => {
+const usePageAxis = (name, pageConfig, invoke, actionTypes, dispatch, props,
+    dispatchAction, setActionState, getStateValue, init) => {
     const id = useMemo(() => Common.createGuid(), []);
     useEffect(() => {
         return () => {
@@ -200,9 +203,12 @@ const usePageAxis = (props) => {
         }
     }, [id]);
 
-    if (!props.pageConfig) return null;
+    if (!pageConfig) return null;
 
-    if (!_PageAxises[id]) _PageAxises[id] = new PageAxis(id, props);
+    if (!_PageAxises[id]) _PageAxises[id] = new PageAxis(id, {
+        name, pageConfig, invoke, actionTypes, dispatch, props,
+        dispatchAction, setActionState, getStateValue, init
+    });
 
     return _PageAxises[id];
 }

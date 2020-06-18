@@ -42,7 +42,7 @@ function assignProporties(entity, list) {
         if (p2 !== null) {
             p2.x = p2.x || i + 1;
             p2.y = p2.y || 1;
-            p2.RowId = createGuid(entity.name);
+            p2.rowId = createGuid(entity.name);
             p2.ColId = createGuid(entity.name);
             p2.id = createGuid(entity.name);
             p2.isNullable = p2.isNullable === undefined ? true : p2.isNullable

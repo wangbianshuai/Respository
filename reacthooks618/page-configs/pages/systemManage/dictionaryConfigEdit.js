@@ -13,7 +13,7 @@ const entity = { name: DictionaryConfig.name, primaryKey: DictionaryConfig.prima
 
 module.exports = {
   name: "DictionaryConfigEdit",
-  type: "view",
+  type: "View",
   eventActions: getEventActions(),
   properties: assignProporties({ name: "DictionaryConfigEdit" }, [getEditView()])
 }
@@ -68,7 +68,7 @@ function getTextBox2(name, label, x, y, contorlType, placeHolder, maxLength, isN
 function getButtonView() {
   return {
     name: "ButtonView",
-    type: "view",
+    type: "View",
     className: "DivCenterButton",
     isDiv: true,
     isFormItem: true,

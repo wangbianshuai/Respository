@@ -15,7 +15,7 @@ const entity = { name: adminUser.name, primaryKey: adminUser.primaryKey, viewNam
 
 module.exports = {
     name: "AdminUserList",
-    type: "view",
+    type: "View",
     eventActions: getEventActions(),
     properties: assignProporties({ name: "AdminUserList" }, [getSearchOperationView(), getAlert(), getDataGridView()])
 }

@@ -48,7 +48,7 @@ export default class dataGridView extends BaseIndex {
 
     const entityName = entity.viewName || entity.name;
 
-    var dataUrl = `?$query=true&Action=Excel&Title=${escape(title)}&EntityName=${entityName}`;
+    var dataUrl = `?$query=true&Action=Excel&title=${escape(title)}&EntityName=${entityName}`;
 
     if (data.entityExcelExport) {
       this.invokeAction(id, data.entityExcelExport, { pathQuery: dataUrl, dataGridViewExcelExport: actionType, QueryInfo: queryInfo });

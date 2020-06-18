@@ -8,7 +8,7 @@ const dataActionTypes = {
 
 module.exports = {
     name: "ChangePasswordView",
-    type: "view",
+    type: "View",
     eventActions: getEventActions(),
     properties: assignProporties({ name: "changePassword" }, [getEditView()])
 }
@@ -46,7 +46,7 @@ function getProperties() {
 function getButtonView() {
     return {
         name: "ButtonView",
-        type: "view",
+        type: "View",
         className: "DivCenterButton",
         isDiv: true,
         isFormItem: true,

@@ -3,8 +3,8 @@ import Controls from 'Controls';
 import Components from 'Components';
 import PageControls from 'PageControls';
 import { Common } from 'UtilsCommon';
-import { usePageAxis } from 'UseHooks';
 import { Form, Col } from 'antd';
+import base from './base';
 
 const getPageComponent = (type, props) => {
     if (!type) return null;
@@ -100,8 +100,7 @@ const renderItem = (property, view, pageId, isVisible, label) => {
 }
 
 export default (props) => {
-    const { property, view, pageId } = props;
-    const pageAxis = usePageAxis.getPageAxis(pageId);
+    const { property, view, pageId, pageAxis } = base.getProps(props);
     const [isVisible, setIsVisible] = useState(getIsVisible(property, pageAxis));
     const [label, setLabel] = useState(property.label);
 

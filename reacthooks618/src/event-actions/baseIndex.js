@@ -160,10 +160,10 @@ export default class BaseIndex {
     ShowDialog(action, pageAxis, dialogView, onOk, setValue) {
         if (!action.ModalDialog) {
             action.ModalDialog = {
-                id: dialogView.DialogId, Title: dialogView.DialogTitle, Visible: true,
+                id: dialogView.DialogId, title: dialogView.DialogTitle, Visible: true,
                 Width: dialogView.DialogWidth,
                 style: dialogView.DialogStyle,
-                BodyStyle: dialogView.BodyStyle,
+                bodyStyle: dialogView.bodyStyle,
                 Component: pageAxis.getReactComponent(dialogView),
                 isOk: !!onOk,
                 OnOk: onOk
@@ -202,7 +202,7 @@ export default class BaseIndex {
 
         let viewPropertyData = null;
         for (let i = 0; i < viewProperties.length; i++) {
-            viewPropertyData = this.getViewPropertiesValue(viewProperties[i].Properties, eventActions);
+            viewPropertyData = this.getViewPropertiesValue(viewProperties[i].properties, eventActions);
             if (viewPropertyData === false) { entityData = viewPropertyData; break; }
             else for (let key in viewPropertyData) entityData[key] = viewPropertyData[key];
         }
@@ -216,7 +216,7 @@ export default class BaseIndex {
         const viewProperties = properties.filter(f => f.isView);
 
         for (let i = 0; i < viewProperties.length; i++) {
-            this.setViewPropertiesValue(viewProperties[i].Properties, data, isUpdateReadOnly);
+            this.setViewPropertiesValue(viewProperties[i].properties, data, isUpdateReadOnly);
         }
     }
 }

@@ -455,14 +455,14 @@ export function replaceDataContent(data, content, blUrl) {
 }
 
 export function getPageData() {
-    const str = getStorage("PageData");
+    const str = getStorage("pageData");
     if (isNullOrEmpty(str)) return {};
 
     return JSON.parse(str);
 }
 
 export function setPageData(data) {
-    setStorage("PageData", JSON.stringify(data));
+    setStorage("pageData", JSON.stringify(data));
 }
 
 export function assign(a, b, c) {

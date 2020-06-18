@@ -19,7 +19,7 @@ export default class BaseIndex extends Component {
             Disabled: this.property.Disabled,
             Value: this.getInitValue(),
             isReadOnly: this.property.isReadOnly,
-            ClassName: "",
+            className: "",
             style: null,
             isVisible: this.property.isVisible !== false || this.property.isFormItem
         }
@@ -43,7 +43,7 @@ export default class BaseIndex extends Component {
 
         this.property.Initset = (obj) => { if (obj) for (let key in obj) this[key] = obj[key] };
 
-        this.property.setClassName = (className) => this.setState({ ClassName: className });
+        this.property.setClassName = (className) => this.setState({ className: className });
 
         this.property.setFocus = this.setFocus.bind(this);
 
@@ -115,7 +115,7 @@ export default class BaseIndex extends Component {
     }
 
     getProperty(name) {
-        return Common.arrayFirst(this.view.Properties, (f) => f.name === name);
+        return Common.arrayFirst(this.view.properties, (f) => f.name === name);
     }
 
     getPropsValue(name) {
@@ -275,7 +275,7 @@ export default class BaseIndex extends Component {
 
         window.setTimeout(() => {
             //值改变调用事件行为
-            if (property.ValueChangeEventActionName) this.pageAxis.InvokeAction(property.ValueChangeEventActionName, this.props);
+            if (property.ValueChangeEventActionName) this.pageAxis.invokeEventAction(property.ValueChangeEventActionName, this.props);
 
             this.ChildPropertiesChanged(value);
         }, 100);

@@ -17,7 +17,7 @@ const entity = { name: requestServiceLog.name, primaryKey: requestServiceLog.pri
 
 module.exports = {
     name: "requestServiceLog",
-    type: "view",
+    type: "View",
     eventActions: getEventActions(),
     properties: assignProporties({ name: "requestServiceLog" }, [getSearchOperationView(), getDataGridView()])
 }

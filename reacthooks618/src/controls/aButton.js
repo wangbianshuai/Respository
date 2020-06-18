@@ -6,7 +6,7 @@ export default (props) => {
     const pageAxis = usePageAxis.getPageAxis(pageId);
 
     const clickAction = useCallback(() => {
-        pageAxis.InvokeAction(property.EventActionName, { property, view, pageAxis });
+        pageAxis.invokeEventAction(property.EventActionName, { property, view, pageAxis });
     }, [property, view, pageAxis]);
 
 

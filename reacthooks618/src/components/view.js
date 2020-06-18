@@ -1,60 +1,33 @@
-import React, { Component } from "react"
-import { Common } from "UtilsCommon";
-import PropertyItem from "./PropertyItem";
-import { Card } from "antd";
-import styles from "../styles/view.css";
+import React, { useState, useEffect } from 'react'
+import { Common } from 'UtilsCommon';
+import { Card } from 'antd';
+import styles from '../styles/view.css';
+import base from './base';
 
-export default class view extends Component {
-    constructor(props) {
-        super(props)
+export default (props) => {
+    const { property, view, pageId, pageAxis } = base.getProps;
+    const [isVisible, setIsVisible] = useState(props.property.isVisible !== false);
 
-        this.id = Common.createGuid()
-        this.state = { isVisible: props.property.isVisible !== false }
-        props.property.setVisible = this.setVisible.bind(this);
-        props.property.ReLoad= this.componentDidMount.bind(this);
+    useEffect(() => {
+        base.load(property, view, pageAxis);
+    }, [property, view, pageAxis]);
+
+    if (!property.setVisible) property.setVisible = (v) => setIsVisible(v);
+    if (!property.reLoad) property.reLoad = () => base.load(property, view, pageAxis);
+
+    if (!isVisible) return null;
+
+    if (property.title) {
+        return (
+            <Card title={Common.replaceDataContent(pageAxis.pageData, property.title)} style={property.style} bordered={false}
+                headStyle={{ padding: 0, margin: 0, paddingLeft: 16 }} bodyStyle={{ padding: 16, margin: 0 }}>
+                {base.renderProperties(property, pageId)}
+            </Card>
+        )
     }
 
-    setVisible(v) {
-        this.setState({ isVisible: v })
-    }
+    const className = base.getClassName(property, styles);
 
-    componentDidMount() {
-        const { property, pageAxis } = this.props;
-
-        if (property.EventActionName) {
-            pageAxis.InvokeAction(property.EventActionName, this.props);
-        }
-    }
-
-    getReactComponent(p) {
-        const { property, pageAxis } = this.props;
-
-        const props = { property: p, view: property, pageAxis, key: p.id }
-
-        return <PropertyItem {...props} />
-    }
-
-    RenderProperties() {
-        return this.props.property.Properties.map(m => this.getReactComponent(m))
-    }
-
-    render() {
-        if (!this.state.isVisible) return null;
-
-        const { property, pageAxis } = this.props;
-
-        if (property.Title) {
-            return (
-                <Card title={Common.replaceDataContent(pageAxis.PageData, property.Title)} style={property.style} bordered={false} headStyle={{ padding: 0, margin: 0, paddingLeft: 16 }} bodyStyle={{ padding: 16, margin: 0 }}>
-                    {this.RenderProperties()}
-                </Card>
-            )
-        }
-
-        let className = property.ClassName;
-        if (className && styles[className]) className = styles[className];
-
-        if (property.isDiv) return <div className={className} style={property.style}>{this.RenderProperties()}</div>
-        return this.RenderProperties();
-    }
+    if (property.isDiv) return <div className={className} style={property.style}>{base.renderProperties(property, pageId)}</div>
+    return base.renderProperties(property, pageId);
 }

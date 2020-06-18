@@ -10,7 +10,7 @@ export default class Popconfirm2 extends BaseIndex {
     }
 
     ConfirmAction() {
-        this.pageAxis.InvokeAction(this.property.EventActionName, this.props);
+        this.pageAxis.invokeEventAction(this.property.EventActionName, this.props);
     }
 
     render() {
@@ -18,7 +18,7 @@ export default class Popconfirm2 extends BaseIndex {
         const text = property.label || property.text
 
         return (
-            <Popconfirm title={property.Title} onConfirm={this.ConfirmAction.bind(this)} okText="确定" cancelText="取消">
+            <Popconfirm title={property.title} onConfirm={this.ConfirmAction.bind(this)} okText="确定" cancelText="取消">
                 <a href={property.href}>{text}</a>
             </Popconfirm>
         )

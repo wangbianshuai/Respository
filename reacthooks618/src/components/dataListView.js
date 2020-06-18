@@ -103,15 +103,15 @@ export default class DataListView extends BaseIndex {
     }
 
     RenderListItem(data, index) {
-        const { PrimaryKey, Properties, ItemProps } = this.property;
+        const { PrimaryKey, properties, ItemProps } = this.property;
         const id = data[PrimaryKey];
 
-        if (this.property.isComplexEdit) return Properties.map(p => this.RenderItemProperty(p, id, data, index));
+        if (this.property.isComplexEdit) return properties.map(p => this.RenderItemProperty(p, id, data, index));
 
         const itemProps = ItemProps || {}
         return (
             <List.Item key={id} {...itemProps}>
-                {Properties.map(p => this.RenderItemProperty(p, id, data, index))}
+                {properties.map(p => this.RenderItemProperty(p, id, data, index))}
             </List.Item>
         )
     }
@@ -149,7 +149,7 @@ export default class DataListView extends BaseIndex {
 
         if (p.isLastNoVisible && index === this.state.DataList.length - 1) p.isVisible = false;
 
-        if (p.Properties) p.Properties = this.AssingProperties(p.Properties, id, data, index);
+        if (p.properties) p.properties = this.AssingProperties(p.properties, id, data, index);
 
         return p;
     }

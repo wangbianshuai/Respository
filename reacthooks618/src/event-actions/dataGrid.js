@@ -77,22 +77,22 @@ export default class DataGrid extends BaseIndex {
 
         const { DataGridView } = action.Parameters;
 
-        if (!action.Parameters.ColumnsView) action.Parameters.ColumnsView = this.InitColumnsView(DataGridView.name, DataGridView.Properties);
+        if (!action.Parameters.ColumnsView) action.Parameters.ColumnsView = this.InitColumnsView(DataGridView.name, DataGridView.properties);
 
         const { ColumnsView } = action.Parameters;
 
         const value = props.DataProperties.map(m => m.name);
-        const allSelect = ColumnsView.Properties[0];
-        const colPropertery = ColumnsView.Properties[1];
+        const allSelect = ColumnsView.properties[0];
+        const colPropertery = ColumnsView.properties[1];
         if (!colPropertery.setValue) colPropertery.Value = value;
         else colPropertery.setValue(value);
 
-        const allSelected = value.length === DataGridView.Properties.length;
+        const allSelected = value.length === DataGridView.properties.length;
         if (!allSelect.setValue) allSelect.Value = allSelected;
         else allSelect.setValue(allSelected);
 
         var colSelected = false, allSelected2 = false;
-        const nameList = DataGridView.Properties.map(m => m.name);
+        const nameList = DataGridView.properties.map(m => m.name);
         allSelect.ValueChange = (v) => {
             if (colSelected) { colSelected = false; return; }
 
@@ -114,7 +114,7 @@ export default class DataGrid extends BaseIndex {
     setSelectShowColumns(e, p, props, action) {
         const { pageAxis } = props;
         const { ColumnsView, DataGridView } = action.Parameters;
-        const colPropertery = ColumnsView.Properties[1];
+        const colPropertery = ColumnsView.properties[1];
         const value = colPropertery.getValue();
 
         if (value.length === 0) { this.Alert("最少需选择一列！", pageAxis.Alert); return; }
@@ -134,16 +134,16 @@ export default class DataGrid extends BaseIndex {
         const dataDataSource = properties.map(m => { return { Value: m.name, text: m.label } })
         return {
             name: name + "ColumnsView",
-            type: "view",
+            type: "View",
             isDiv: true,
-            ClassName: "DivColumsView",
+            className: "DivColumsView",
             id: Common.createGuid(),
             DialogId: Common.createGuid(),
             DialogWidth: 500,
             DialogTitle: "自定义显示列",
             DialogStyle: { maxHeight: 500, overflow: "auto" },
-            BodyStyle: { padding: "16px 32px", margin: 0 },
-            Properties: [{
+            bodyStyle: { padding: "16px 32px", margin: 0 },
+            properties: [{
                 id: Common.createGuid(),
                 name: name + "AllSelect",
                 type: "CheckBox",

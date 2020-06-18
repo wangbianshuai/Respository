@@ -1,49 +1,39 @@
-import React from "react";
-import BaseIndex from "./BaseIndex";
-import styles from "../styles/view.css";
-import { Card, Form } from "antd";
-import { Common } from "UtilsCommon";
+import React, { useState, useEffect } from 'react';
+import { Card } from 'antd';
+import { Common } from 'UtilsCommon';
+import base from './base';
+import styles from '../styles/view.css';
 
-export default class RowsColsView extends BaseIndex {
-    constructor(props) {
-        super(props)
+export default (props) => {
+    const { property, view, pageId, pageAxis } = base.getProps(props);
+    const [isVisible, setIsVisible] = useState(props.property.isVisible !== false);
 
-        props.pageAxis.Components.push(props.property);
-        props.property.ReLoad= this.componentDidMount.bind(this);
-        this.InitsetView();
-    }
+    if (!property.setVisible) property.setVisible = (v) => setIsVisible(v);
+    if (!property.reLoad) property.reLoad = () => base.load(property, view, pageAxis);
 
-    RenderFormView() {
-        const labelAlign = this.property.LabelAlign || "right";
-        return this.property.isForm ? <Form labelAlign={labelAlign}> {this.RenderView()}</Form> : this.RenderView()
-    }
+    useEffect(() => {
+        base.initSetView(property);
+        base.load(property, view, pageAxis);
+    }, [property, view, pageAxis]);
 
-    componentDidMount() {
-        if (this.property.EventActionName) {
-            this.pageAxis.InvokeAction(this.property.EventActionName, this.props);
-        }
-    }
+    if (!isVisible) return null;
 
-    render() {
-        if (!this.state.isVisible) return null;
-
-        if (this.property.Title) {
-            return (
-                <Card title={Common.replaceDataContent(this.pageAxis.PageData, this.property.Title)} style={this.property.style} bordered={false} headStyle={{ padding: 0, margin: 0, paddingLeft: 16 }} bodyStyle={{ padding: 16, margin: 0 }}>
-                    {this.RenderFormView()}
-                </Card>
-            )
-        }
-
-        if (this.property.isDiv === false) return this.RenderFormView();
-
-        let className = this.property.ClassName || "DivView";
-        if (className && styles[className]) className = styles[className];
-
+    if (property.title) {
         return (
-            <div className={className} style={this.property.style}>
-                {this.RenderFormView()}
-            </div>
+            <Card title={Common.replaceDataContent(pageAxis.pageData, property.title)} style={property.style}
+                bordered={false} headStyle={{ padding: 0, margin: 0, paddingLeft: 16 }} bodyStyle={{ padding: 16, margin: 0 }}>
+                {base.renderFormView(property, pageId)}
+            </Card>
         )
     }
+
+    if (property.isDiv === false) return base.renderFormView(property, pageId);
+
+    const className = base.getClassName(property, styles, 'divView');
+
+    return (
+        <div className={className} style={property.style}>
+            {base.renderFormView(property, pageId)}
+        </div>
+    )
 }

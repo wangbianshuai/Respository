@@ -1,29 +1,24 @@
-import React from "react";
+import React, { useState } from "react";
 import { Card } from "antd";
 import PropertyItem from "./PropertyItem";
-import BaseIndex from "./BaseIndex";
+import base from './base';
 
-export default class Card2 extends BaseIndex {
-    constructor(props) {
-        super(props);
+export default (props) => {
+    const { property, pageId } = base.getProps;
+    const [isVisible, setIsVisible] = useState(props.property.isVisible !== false);
 
-        this.name = "Card";
-    }
+    if (!property.setVisible) property.setVisible = (v) => setIsVisible(v);
 
-    render() {
-        if (!this.state.isVisible) return null;
+    if (isVisible) return null;
 
-        const { property, pageAxis } = this.props;
-        const bordered = !!property.Bordered;
-        const headStyle = property.HeadStyle || { padding: 0, margin: 0, paddingLeft: 16 };
-        const bodyStyle = property.BodyStyle || { padding: 16, margin: 0 };
-        const size = property.Size || "default";
+    const bordered = !!property.bordered;
+    const headStyle = property.headStyle || { padding: 0, margin: 0, paddingLeft: 16 };
+    const bodyStyle = property.bodyStyle || { padding: 16, margin: 0 };
+    const size = property.size || "default";
 
-        return (
-            <Card title={property.Title} size={size} bordered={bordered} headStyle={headStyle} bodyStyle={bodyStyle}>
-                {property.Properties.map(m => <PropertyItem property={m} view={property} key={m.id} pageAxis={pageAxis} />)}
-            </Card>
-        )
-
-    }
+    return (
+        <Card title={property.title} size={size} bordered={bordered} headStyle={headStyle} bodyStyle={bodyStyle}>
+            {property.properties.map(m => <PropertyItem property={m} view={property} key={m.id} pageId={pageId} />)}
+        </Card>
+    )
 }

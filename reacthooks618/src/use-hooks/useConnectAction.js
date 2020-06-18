@@ -2,7 +2,8 @@ import { useState, useEffect, useMemo } from "react";
 import Actions from "Actions";
 import { Common } from "UtilsCommon";
 
-function init(obj, name, options) {
+//初始化
+function init(obj, name, options, dispatch, dispatchAction, setActionState) {
   if (!name) return;
   if (!obj.isInit) obj.isInit = true; else return;
 
@@ -15,10 +16,12 @@ function init(obj, name, options) {
 
   Actions.initAction(name, options);
   Actions.receive(obj.name, obj.id, obj.receive);
+  obj.dispatchActionData = dispatchActionData(Actions.initDvaActions({ dispatch, dispatchAction, setActionState }));
 
   return obj;
 }
 
+//接收行为数据
 function receive(obj) {
   return (actionType, data) => {
     if (obj.isDestory) return;
@@ -29,6 +32,7 @@ function receive(obj) {
   }
 }
 
+//调用行为
 function invoke(obj) {
   return (actionType, data) => {
     try {
@@ -41,9 +45,19 @@ function invoke(obj) {
   }
 }
 
+//销毁，断开与Actions连接
 function destory(obj) {
   obj.isDestory = true;
   Actions.removeReceive(obj.name, obj.id);
+}
+
+//分发行为数据
+function dispatchActionData(stateActionTypes) {
+  return (key, data) => {
+    if (!data) return;
+    if (data.action && data.action.actionType > 0) Actions.dispatch(data.action.actionType, data);
+    else if (stateActionTypes && stateActionTypes[key]) stateActionTypes[key].forEach(a => Actions.dispatch(a, data));
+  }
 }
 
 export default (name, options) => {
@@ -57,5 +71,5 @@ export default (name, options) => {
 
   useEffect(() => { return () => destory(obj) }, [obj]);
 
-  return [obj.invoke, obj.actionTypes, actionData];
+  return [obj.invoke, obj.actionTypes, actionData, obj.dispatchActionData];
 }

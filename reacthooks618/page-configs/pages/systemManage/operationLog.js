@@ -11,7 +11,7 @@ const entity = { name: OperationLog.name, primaryKey: OperationLog.primaryKey, v
 
 module.exports = {
     name: "OperationLog",
-    type: "view",
+    type: "View",
     eventActions: getEventActions(),
     properties: assignProporties({ name: "OperationLog" }, [getSearchOperationView(), getDataGridView()])
 }

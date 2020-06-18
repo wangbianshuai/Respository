@@ -19,7 +19,7 @@ export default class Button2 extends BaseIndex {
     }
 
     ClickAction() {
-        this.pageAxis.InvokeAction(this.property.EventActionName, this.props);
+        this.pageAxis.invokeEventAction(this.property.EventActionName, this.props);
     }
 
     render() {
@@ -34,7 +34,7 @@ export default class Button2 extends BaseIndex {
             style={property.style}
             shape={property.Shape}
             loading={Loading}
-            size={property.Size}
+            size={property.size}
             prefix={this.RenderPrefix()}
             type={BututonType}>{text}</Button>)
     }

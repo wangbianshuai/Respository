@@ -1,29 +1,18 @@
-import React, { Component } from "react"
-import styles from "../styles/view.css";
+import React, { useState } from 'react'
+import styles from '../styles/view.css';
+import base from './base';
 
-export default class WhiteSpace extends Component {
-    constructor(props) {
-        super(props);
+export default (props) => {
+    const { property } = base.getProps;
+    const [isVisible, setIsVisible] = useState(props.property.isVisible !== false);
 
-        this.name = "WhiteSpace"
-        this.state = { isVisible: true }
-        props.property.setVisible = this.setVisible.bind(this);
-    }
+    if (!property.setVisible) property.setVisible = (v) => setIsVisible(v);
 
-    setVisible(v) {
-        this.setState({ isVisible: v })
-    }
+    if (!isVisible) return null;
 
-    render() {
-        if (!this.state.isVisible) return null;
+    const className = base.getClassName(property, styles);
 
-        const { property } = this.props;
-
-        let className = property.ClassName;
-        if (className && styles[className]) className = styles[className];
-
-        return (
-            <div className={className} style={property.style}></div>
-        )
-    }
+    return (
+        <div className={className} style={property.style}></div>
+    )
 }

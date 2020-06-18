@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import LeftRightLayout from './leftRightLayout/index';
 import { ConfigProvider } from 'antd';
 import zh_CN from 'antd/lib/locale/zh_CN';

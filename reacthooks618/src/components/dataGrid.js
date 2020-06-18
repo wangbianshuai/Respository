@@ -122,7 +122,7 @@ export default class DataGrid extends Component {
     }
 
     setShowColumns() {
-        this.props.pageAxis.InvokeAction(this.props.property.setColumnsEventActionName, this.props);
+        this.props.pageAxis.invokeEventAction(this.props.property.setColumnsEventActionName, this.props);
     }
 
     render() {

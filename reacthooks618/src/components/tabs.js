@@ -1,50 +1,37 @@
-import React, { Component } from "react"
+import React, { useState } from "react"
 import { Common } from "UtilsCommon";
 import PropertyItem from "./PropertyItem";
 import { Tabs, Icon } from "antd";
 import styles from "../styles/view.css";
+import base from './base';
 
-export default class Tabs2 extends Component {
-    constructor(props) {
-        super(props)
+const getReactComponent = (p, property, pageId) => {
+    p.tabPaneId = p.tabPaneId || Common.createGuid();
 
-        this.id = Common.createGuid()
-        this.state = { isVisible: true }
-        props.property.setVisible = this.setVisible.bind(this);
-    }
+    const props = { property: p, view: property, pageId, key: p.id };
 
-    setVisible(v) {
-        this.setState({ isVisible: v })
-    }
+    let tab = p.tabLabel;
+    if (p.tabIcon) tab = <React.Fragment><Icon type={p.tabIcon} /><span>{tab}</span></React.Fragment>;
+    return <Tabs.TabPane tab={tab} key={p.tabPaneId}><PropertyItem {...props} /></Tabs.TabPane>;
+};
 
-    getReactComponent(p) {
-        const { property, pageAxis } = this.props;
+const renderProperties = (property, pageId) => {
+    return property.properties.map(m => getReactComponent(m, property, pageId))
+}
 
-        p.TabPaneId = p.TabPaneId || Common.createGuid();
+export default (props) => {
+    const { property, pageId } = base.getProps;
+    const [isVisible, setIsVisible] = useState(props.property.isVisible !== false);
 
-        const props = { property: p, view: property, pageAxis, key: p.id }
+    if (!property.setVisible) property.setVisible = (v) => setIsVisible(v);
 
-        let tab = p.TabLabel;
-        if (p.TabIcon) tab = <React.Fragment><Icon type={p.TabIcon} /><span>{tab}</span></React.Fragment>
-        return <Tabs.TabPane tab={tab} key={p.TabPaneId}><PropertyItem {...props} /></Tabs.TabPane>
-    }
+    if (!isVisible) return null;
 
-    RenderProperties() {
-        return this.props.property.Properties.map(m => this.getReactComponent(m))
-    }
+    const className = base.getClassName(property, styles);
 
-    render() {
-        if (!this.state.isVisible) return null;
-
-        const { property } = this.props;
-
-        let className = property.ClassName;
-        if (className && styles[className]) className = styles[className];
-
-        return (
-            <Tabs className={className} style={property.style} tabBarStyle={property.TabBarStyle}>
-                {this.RenderProperties()}
-            </Tabs>
-        )
-    }
+    return (
+        <Tabs className={className} style={property.style} tabBarStyle={property.tabBarStyle}>
+            {renderProperties(property, pageId)}
+        </Tabs>
+    )
 }

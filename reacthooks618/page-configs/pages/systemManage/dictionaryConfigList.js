@@ -15,7 +15,7 @@ const entity = { name: DictionaryConfig.name, primaryKey: DictionaryConfig.prima
 
 module.exports = {
     name: "DictionaryConfigList",
-    type: "view",
+    type: "View",
     eventActions: getEventActions(),
     properties: assignProporties({ name: "DictionaryConfigList" }, [getSearchOperationView(), getAlert(), getDataGridView()])
 }

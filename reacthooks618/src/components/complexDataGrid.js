@@ -138,11 +138,11 @@ export default class ComplexDataGrid extends BaseIndex {
     }
 
     RenderRowCols(data) {
-        return this.property.Properties.map(m => <Col span={m.Span} key={m.id}>{this.RenderItemProperty(m, data)}</Col>)
+        return this.property.properties.map(m => <Col span={m.Span} key={m.id}>{this.RenderItemProperty(m, data)}</Col>)
     }
 
     RenderHeaderCols() {
-        return this.property.Properties.map(m => <Col span={m.Span} key={m.name}>{m.Header || m.label}</Col>)
+        return this.property.properties.map(m => <Col span={m.Span} key={m.name}>{m.Header || m.label}</Col>)
     }
 
     AddRow() {
@@ -156,7 +156,7 @@ export default class ComplexDataGrid extends BaseIndex {
 
     render() {
         return (
-            <Card title={this.property.Title} headStyle={{ fontWeight: 700 }} extra={this.RenderAddButton()}
+            <Card title={this.property.title} headStyle={{ fontWeight: 700 }} extra={this.RenderAddButton()}
                 bordered={false} style={{ marginBottom: 16 }} bodyStyle={{ padding: 0, paddingTop: 4 }}>
                 {this.RenderHeaderRowsCols()}
                 {this.RendDataItemList()}

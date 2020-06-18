@@ -5,7 +5,7 @@ export default class Page extends BaseIndex {
 
     ToPage(props, action) {
         const { pageAxis } = props;
-        var url = Common.replaceDataContent(pageAxis.PageData, action.PageUrl, true);
+        var url = Common.replaceDataContent(pageAxis.pageData, action.pageUrl, true);
         const expandsetPageUrl = pageAxis.getFunction(action.expandsetPageUrl);
         if (expandsetPageUrl) url = expandsetPageUrl(url);
         pageAxis.ToPage(url)
@@ -13,7 +13,7 @@ export default class Page extends BaseIndex {
 
     OpenUrl(props, action) {
         const { pageAxis } = props;
-        let url = Common.replaceDataContent(pageAxis.PageData, action.PageUrl, true);
+        let url = Common.replaceDataContent(pageAxis.pageData, action.pageUrl, true);
         if (action.isAddBasePath) url = window.routerBase + url;
         pageAxis.OpenPage(url);
     }
@@ -22,34 +22,34 @@ export default class Page extends BaseIndex {
     setPropertiesVisible(props, action) {
         if (!action.Parameters) this.InitsetPropertiesVisible(props, action);
 
-        const { Properties } = action.Parameters;
+        const { properties } = action.Parameters;
         const { property } = props;
 
-        this.setViewPropertiesVisible(Properties, property.isexpanded)
+        this.setViewPropertiesVisible(properties, property.isexpanded)
     }
 
     InitsetPropertiesVisible(props, action) {
         const { pageAxis } = props;
 
-        const Properties = action.Properties.map(m => pageAxis.getView(m));
+        const properties = action.properties.map(m => pageAxis.getView(m));
 
-        action.Parameters = { Properties };
+        action.Parameters = { properties };
     }
 
     setPropertiesexpandCollapse(props, action) {
         if (!action.Parameters) this.InitsetPropertiesexpandCollapse(props, action);
 
-        const { Properties } = action.Parameters;
+        const { properties } = action.Parameters;
         const { property } = props;
 
-        this.setViewPropertiesexpanded(Properties, property.isexpanded)
+        this.setViewPropertiesexpanded(properties, property.isexpanded)
     }
 
     InitsetPropertiesexpandCollapse(props, action) {
         const { pageAxis } = props;
 
-        const Properties = action.Properties.map(m => pageAxis.getView(m));
+        const properties = action.properties.map(m => pageAxis.getView(m));
 
-        action.Parameters = { Properties };
+        action.Parameters = { properties };
     }
 }

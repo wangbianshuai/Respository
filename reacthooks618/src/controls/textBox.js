@@ -109,7 +109,7 @@ export default class TextBox2 extends BaseIndex {
 
     OnSearch(value) {
         const props = { ...this.props, SearchValue: value }
-        this.pageAxis.InvokeAction(this.property.EventActionName, props);
+        this.pageAxis.invokeEventAction(this.property.EventActionName, props);
     }
 
     OnPressEnter() {
@@ -118,7 +118,7 @@ export default class TextBox2 extends BaseIndex {
             const props = { ...this.props };
             if (PressEnterEventPropertyName) props.property = this.pageAxis.getProperty(PressEnterEventPropertyName);
 
-            this.pageAxis.InvokeAction(PressEnterEventActionName, props);
+            this.pageAxis.invokeEventAction(PressEnterEventActionName, props);
         }
     }
 
@@ -229,7 +229,7 @@ export default class TextBox2 extends BaseIndex {
                 type={type}
                 ref="Input"
                 prefix={this.RenderPrefix()}
-                size={property.Size}
+                size={property.size}
                 onPressEnter={this.OnPressEnter.bind(this)}
                 value={value} />
         );

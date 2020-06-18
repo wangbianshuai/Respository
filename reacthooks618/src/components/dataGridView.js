@@ -106,9 +106,9 @@ class DataGridView extends BaseIndex {
     }
 
     InitDataProperties() {
-        const { Properties } = this.property;
+        const { properties } = this.property;
 
-        this.DataProperties = Properties.map(p => this.setDataProperty(p));
+        this.DataProperties = properties.map(p => this.setDataProperty(p));
 
         this.DataProperties2 = this.DataProperties.filter(f => f.isVisible !== false);
     }
@@ -147,7 +147,7 @@ class DataGridView extends BaseIndex {
             p.Render = (text, record, index) => {
                 if (p.isRender && !p.isRender(text, record, index)) return this.EmptyRender();
                 if (!Common.isNullOrEmpty(text)) {
-                    let url = p.PageUrl;
+                    let url = p.pageUrl;
                     if (p.isAddBasePath) url = window.routerBase + url;
                     url = Common.replaceDataContent(record, url, !p.isHttp)
                     if (Common.isNullOrEmpty(url)) return text;
@@ -160,7 +160,7 @@ class DataGridView extends BaseIndex {
             p.Render = (text, record, index) => {
                 if (p.isRender && !p.isRender(text, record, index)) return this.EmptyRender();
                 if (!Common.isNullOrEmpty(text)) {
-                    let url = p.PageUrl;
+                    let url = p.pageUrl;
                     const blUrl = !(p.isUrl === false)
                     url = Common.replaceDataContent(record, url, blUrl)
                     if (Common.isNullOrEmpty(url)) return text;
@@ -210,7 +210,7 @@ class DataGridView extends BaseIndex {
     }
 
     componentDidMount() {
-        if (this.property.isSearchQuery !== false) this.pageAxis.InvokeAction(this.property.EventActionName, this.props);
+        if (this.property.isSearchQuery !== false) this.pageAxis.invokeEventAction(this.property.EventActionName, this.props);
     }
 
     ReceiveSearchQuery(data) {
@@ -273,7 +273,7 @@ class DataGridView extends BaseIndex {
         this.PageInfo.PageIndex = pageIndex;
         this.PageInfo.PageSize = pageSize;
         if (this.property.isLocalPage) this.setState({ RefreshId: Common.createGuid() });
-        else this.pageAxis.InvokeAction(this.property.EventActionName, { ...this.props, PageIndex: pageIndex, PageSize: pageSize, isData: isData });
+        else this.pageAxis.invokeEventAction(this.property.EventActionName, { ...this.props, PageIndex: pageIndex, PageSize: pageSize, isData: isData });
     }
 
     Refresh() {
@@ -301,15 +301,15 @@ class DataGridView extends BaseIndex {
     render() {
         if (!this.state.isVisible) return null;
 
-        if (this.property.Title) {
+        if (this.property.title) {
             return (
-                <Card title={Common.replaceDataContent(this.pageAxis.PageData, this.property.Title)} style={this.property.style} bordered={false} headStyle={{ padding: 0, margin: 0, paddingLeft: 16 }} bodyStyle={{ padding: 16, margin: 0 }}>
+                <Card title={Common.replaceDataContent(this.pageAxis.pageData, this.property.title)} style={this.property.style} bordered={false} headStyle={{ padding: 0, margin: 0, paddingLeft: 16 }} bodyStyle={{ padding: 16, margin: 0 }}>
                     {this.RenderDataView()}
                 </Card>
             )
         }
 
-        let className = this.property.ClassName;
+        let className = this.property.className;
         if (className && styles[className]) className = styles[className];
 
         if (this.property.isDiv) return <div className={className} style={this.property.style}>{this.RenderDataView()}</div>

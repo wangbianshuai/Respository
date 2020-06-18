@@ -24,7 +24,7 @@ export default class LeftRightLayout extends Component {
         this.DefaultPageName = "/MessageManage/MessageConfigInput";
         this.Token = Common.getCookie("Token");
         this.JudgeLogin();
-        this.PageData = {};
+        this.pageData = {};
         this.id = Common.getStorage("LoginUserId");
         this.LoginUser = this.getLoginUser();
 
@@ -94,7 +94,7 @@ export default class LeftRightLayout extends Component {
                     //权限属性名集合
                     d.RightPropertyNames = rightNameList;
                     //参与权限设置属性名集合
-                    d.PropertyNames = propertyNameList;
+                    d.propertyNames = propertyNameList;
                 }
             })
         }
@@ -117,7 +117,7 @@ export default class LeftRightLayout extends Component {
         var pageName = keys.length > 0 ? keys[0] : "";
 
         this.QueryString = Common.getQueryString();
-        this.PageData = Common.getPageData();
+        this.pageData = Common.getPageData();
 
         this.getNavMenuList();
 
@@ -231,7 +231,7 @@ export default class LeftRightLayout extends Component {
         let href = pageName;
         if (queryString) {
             queryString = Common.replaceDataContent(this.QueryString, queryString);
-            queryString = Common.replaceDataContent(this.PageData, queryString);
+            queryString = Common.replaceDataContent(this.pageData, queryString);
             href += queryString
         }
         return href;
@@ -334,7 +334,7 @@ export default class LeftRightLayout extends Component {
 
         const loginName = this.LoginUser.UserName;
 
-        this.props.location.PageData = this.PageData;
+        this.props.location.pageData = this.pageData;
 
         return (
             <Layout style={{ minWidth: 1200 }}>

@@ -1,5 +1,5 @@
 module.exports= {
-    name: "adminUser",
+    name: "AdminUser",
     primaryKey: "AdminUserId",
     properties: getProperties()
 }

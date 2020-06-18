@@ -39,7 +39,7 @@ export default class DataGridView extends BaseIndex {
         DataGridView.PageSize = pageSize;
         SearchButton && SearchButton.setDisabled(true);
 
-        const data = { EntitySearchQuery, Entity: DataGridView.Entity, isData, PageIndex: pageIndex, PageSize: pageSize, QueryInfo: queryInfo, PageData: pageAxis.PageData }
+        const data = { EntitySearchQuery, Entity: DataGridView.Entity, isData, PageIndex: pageIndex, PageSize: pageSize, QueryInfo: queryInfo, pageData: pageAxis.pageData }
 
         Invoke(SearchQuery, data);
     }
@@ -78,7 +78,7 @@ export default class DataGridView extends BaseIndex {
         if (!SearchView) return {};
 
         const conditionList = [];
-        SearchView.Properties.forEach(p => {
+        SearchView.properties.forEach(p => {
             const name = p.propertyName || p.name;
             if (p.isCondition && p.getValue) conditionList.push({ name: name, label: p.label, OperateLogic: p.OperateLogic || "=", DataType: p.DataType || "string", Value: this.getPropertyValues(p, isClearQuery) });
         });
@@ -113,8 +113,8 @@ export default class DataGridView extends BaseIndex {
         var property = null, isGroupBy = false, hasPrimaryKey = false, name = "";
         var queryInfo = {}, orderByList = [], groupByFieldList = [], groupByList = [], selectFieldList = [];
         var firstFieldOrderBy = "";
-        for (var i = 0; i < dataGridView.Properties.length; i++) {
-            property = dataGridView.Properties[i];
+        for (var i = 0; i < dataGridView.properties.length; i++) {
+            property = dataGridView.properties[i];
             if (dataGridView.isGroupByQuery && property.isVisible === false) continue;
 
             name = property.propertyName || property.name;
@@ -159,7 +159,7 @@ export default class DataGridView extends BaseIndex {
         if (!SearchView) return {};
 
         const condition = {};
-        SearchView.Properties.forEach(p => {
+        SearchView.properties.forEach(p => {
             const name = p.propertyName || p.name;
             if (p.isCondition && p.getValue) condition[name] = p.getValue();
         });
@@ -202,7 +202,7 @@ export default class DataGridView extends BaseIndex {
             url = setPageUrl({ data, props, action });
             if (url === false) return false;
         }
-        else url = Common.replaceDataContent(data, action.PageUrl, true);
+        else url = Common.replaceDataContent(data, action.pageUrl, true);
 
         const expandsetPageUrl = pageAxis.getFunction(action.expandsetPageUrl);
         if (expandsetPageUrl) url = expandsetPageUrl(url);
@@ -234,7 +234,7 @@ export default class DataGridView extends BaseIndex {
         }
 
         const msg = Common.replaceDataContent(data, action.TipMessage);
-        pageAxis.Alert(msg, action.Title)
+        pageAxis.Alert(msg, action.title)
     }
 
     SelectRowToPageAction(props, action) {
@@ -272,7 +272,7 @@ export default class DataGridView extends BaseIndex {
         const { ActionTypes, Invoke, EntityExcelExport } = DataGridView;
         const { ExcelExport } = ActionTypes;
 
-        const Title = DataGridView.Title || DataGridView.Entity.name;
+        const title = DataGridView.title || DataGridView.Entity.name;
 
         const properties = DataGridView.getExcelExportProperties();
         var headerList = [];
@@ -297,7 +297,7 @@ export default class DataGridView extends BaseIndex {
         property && property.setDisabled(true);
         DataGridView.ExcelExportButton = property;
 
-        const data = { EntityExcelExport, Title, Entity: DataGridView.Entity, PageIndex: 1, PageSize: DataGridView.PageSize, QueryInfo: queryInfo, PageData: pageAxis.PageData }
+        const data = { EntityExcelExport, title, Entity: DataGridView.Entity, PageIndex: 1, PageSize: DataGridView.PageSize, QueryInfo: queryInfo, pageData: pageAxis.pageData }
 
         Invoke(ExcelExport, data);
     }
@@ -322,7 +322,7 @@ export default class DataGridView extends BaseIndex {
             return;
         }
 
-        this.DownLoad(property.ExcelExportButton.Title, data.fileName)
+        this.DownLoad(property.ExcelExportButton.title, data.fileName)
     }
 
     DownLoad(title, fileName) {

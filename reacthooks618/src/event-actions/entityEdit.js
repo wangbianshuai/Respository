@@ -20,7 +20,7 @@ export default class EntityEdit extends BaseIndex {
 
         const entityData = selectDataList[0];
 
-        this.setPropertiesValue(DialogView.Properties, entityData)
+        this.setPropertiesValue(DialogView.properties, entityData)
 
         if (DialogView.expandDataLoad) pageAxis.getFunction(DialogView.expandDataLoad)({ entityData, props, action });
 
@@ -38,7 +38,7 @@ export default class EntityEdit extends BaseIndex {
 
         action.OkProperty = p;
 
-        const editProperties = DialogView.Properties.filter(f => f.isEdit);
+        const editProperties = DialogView.properties.filter(f => f.isEdit);
 
         let entityData = this.getPropertyValues(editProperties, pageAxis);
         if (DialogView.expandsetEntityData) entityData = DialogView.expandsetEntityData(entityData);
@@ -92,7 +92,7 @@ export default class EntityEdit extends BaseIndex {
         pageAxis.Receives[actionType] = (d) => this.ReceiveSaveEntityDataActionType(d, props, action);
 
         //获取编辑值
-        const data = { OldEntityData: EditView.EntityData, Entity: EditView.Entity, EntityData: entityData, PageData: pageAxis.PageData }
+        const data = { OldEntityData: EditView.EntityData, Entity: EditView.Entity, EntityData: entityData, pageData: pageAxis.pageData }
 
         //禁用确定按钮
         property.setLoading && property.setLoading(true);
@@ -127,7 +127,7 @@ export default class EntityEdit extends BaseIndex {
         const { pageAxis } = props;
         const { DefaultEditData } = view;
 
-        let entityData = this.getViewPropertiesValue(view.Properties, pageAxis);
+        let entityData = this.getViewPropertiesValue(view.properties, pageAxis);
 
         if (view.expandsetEntityData) entityData = view.expandsetEntityData(entityData);
 
@@ -156,16 +156,16 @@ export default class EntityEdit extends BaseIndex {
             else if (EditPropertiyViewList) {
                 //新增，清空属性值
                 EditPropertiyViewList.forEach(v => {
-                    if (v.isClear) this.setViewPropertiesValue(v.Properties, null);
+                    if (v.isClear) this.setViewPropertiesValue(v.properties, null);
                 });
             }
-            else if (EditView.isClear) this.setViewPropertiesValue(EditView.Properties, null); //新增，清空属性值
+            else if (EditView.isClear) this.setViewPropertiesValue(EditView.properties, null); //新增，清空属性值
 
             //保存之后禁用控件
             if (setDisabledViewList) {
                 //新增，清空属性值
                 setDisabledViewList.forEach(v => {
-                    this.setViewPropertiesDisabled(v.Properties);
+                    this.setViewPropertiesDisabled(v.properties);
                 });
             }
 
@@ -222,7 +222,7 @@ export default class EntityEdit extends BaseIndex {
         if (EditView.Entity) {
             const { PropertyPrimaryKey, PrimaryKey } = EditView.Entity;
 
-            var id = pageAxis.PageData[PrimaryKey];
+            var id = pageAxis.pageData[PrimaryKey];
             if (EditView.PrimaryKey) id = EditView.PrimaryKey;
             if (!id) return;
 
@@ -258,13 +258,13 @@ export default class EntityEdit extends BaseIndex {
                 EditPropertiyViewList.forEach(v => {
                     const name = v.propertyName || v.name;
                     v.EntityData = data[name] || data;
-                    this.setViewPropertiesValue(v.Properties, v.EntityData, true);
+                    this.setViewPropertiesValue(v.properties, v.EntityData, true);
 
                     //扩展实体数据加载
                     v.expandEntityDataLoad && v.expandEntityDataLoad();
                 });
             }
-            else this.setViewPropertiesValue(EditView.Properties, data, true);
+            else this.setViewPropertiesValue(EditView.properties, data, true);
 
             //扩展实体数据加载
             EditView.expandEntityDataLoad && EditView.expandEntityDataLoad();
@@ -295,7 +295,7 @@ export default class EntityEdit extends BaseIndex {
         const { pageAxis, property } = props;
         const { EditView } = action.Parameters;
 
-        const properties = EditView.Properties.filter(f => f.isClear);
+        const properties = EditView.properties.filter(f => f.isClear);
 
         if (property.ConfirmTip) pageAxis.Confirm(property.ConfirmTip, () => this.setPropertiesValue(properties));
         else this.setPropertiesValue(properties)

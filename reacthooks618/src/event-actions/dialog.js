@@ -54,7 +54,7 @@ export default class Dialog extends BaseIndex {
 
         const selectDataList = DataGridView.getSelectDataList();
 
-        const data = { SelectRowKeys: selectRowKeys, SelectValues: selectValues, SelectData: selectData, RowDataList: selectDataList, PageData: pageAxis.PageData }
+        const data = { SelectRowKeys: selectRowKeys, SelectValues: selectValues, SelectData: selectData, RowDataList: selectDataList, pageData: pageAxis.pageData }
 
         //禁用确定按钮
         p.setDisabled(true);
@@ -72,11 +72,11 @@ export default class Dialog extends BaseIndex {
         //DataComponent存在，则取DataComponent，不存在取DataProperties属性名集合
         let DataComponent = null, DataProperties = null;
         if (action.DataComponent) {
-            DataComponent = Common.arrayFirst(DialogView.Properties, (f) => f.name === action.DataComponent);
+            DataComponent = Common.arrayFirst(DialogView.properties, (f) => f.name === action.DataComponent);
             action.setValue = () => DataComponent.setValue(null)
         }
         else {
-            DataProperties = this.getSelectToList(DialogView.Properties, action.DataProperties);
+            DataProperties = this.getSelectToList(DialogView.properties, action.DataProperties);
             action.setValue = () => this.setPropertiesValue(DataProperties, null)
         }
 
@@ -107,7 +107,7 @@ export default class Dialog extends BaseIndex {
 
         TosetView.SelectData = selectDataList[0];
 
-        this.setViewPropertiesValue(TosetView.Properties, TosetView.SelectData);
+        this.setViewPropertiesValue(TosetView.properties, TosetView.SelectData);
 
         action.ModalDialog.setVisible(false);
     }
@@ -132,10 +132,10 @@ export default class Dialog extends BaseIndex {
 
         if (data) LookView.PrimaryKey = data[LookView.Entity.PrimaryKey];
 
-        const properties = LookView.Properties.filter(f => f.isClear);
+        const properties = LookView.properties.filter(f => f.isClear);
         this.setPropertiesValue(properties);
 
-        if(LookView.ReLoad) LookView.ReLoad();
+        if(LookView.reLoad) LookView.reLoad();
 
         this.ShowDialog(action, pageAxis, DialogView);
     }
