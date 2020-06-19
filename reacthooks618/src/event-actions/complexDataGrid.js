@@ -7,7 +7,7 @@ export default class ComplexDataGrid extends BaseIndex {
 
         const { ComplexDataGridView } = action.Parameters;
 
-        ComplexDataGridView.remove(props.property.DataId);
+        ComplexDataGridView.remove(props.property.dataId);
     }
 
     InitremoveAction(props, action) {

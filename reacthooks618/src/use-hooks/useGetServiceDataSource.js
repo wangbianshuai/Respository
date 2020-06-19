@@ -1,8 +1,9 @@
-import React, { useState, useEffect, useCallback } from 'react';
-import { PageAxis } from "UseHooks";
+import { useState, useEffect, useCallback } from 'react';
+import usePageAxis from './usePageAxis';
 
 export default (props) => {
   const { property, pageId, view } = props;
+  const pageAxis = usePageAxis.getPageAxis(pageId);
   const [dataList, setDataList] = useState([]);
 
   const receiveDataSource = useCallback((res, pageAxis) => {
@@ -22,7 +23,6 @@ export default (props) => {
       return;
     }
 
-    const pageAxis = PageAxis.getPageAxis(pageId);
     const { serviceDataSource } = property;
     if (pageAxis && serviceDataSource) {
       const state = pageAxis.getStateValue(serviceDataSource.stateName);
@@ -33,7 +33,7 @@ export default (props) => {
         pageAxis.dispatchAction(serviceDataSource.serviceName, serviceDataSource.actionName, payload).then(res => receiveDataSource(res, pageAxis));
       }
     }
-  }, [property, pageId, view, receiveDataSource]);
+  }, [property, pageAxis, view, receiveDataSource]);
 
   return dataList;
 };

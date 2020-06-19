@@ -1,12 +1,12 @@
 import React, { useEffect, useMemo } from "react";
-import { PageAxis, useRootPage, useConnectAction, useGetPageConfig } from "UseHooks";
+import { PageAxis, useRootPage, useConnectDataAction, useGetPageConfig } from "UseHooks";
 import { Common } from "UtilsCommon";
 import { PropertyItem } from 'Components';
 
 const EntityPage = (props) => {
   const { name, config, params, page } = props;
 
-  const [invoke, actionTypes, actionData] = useConnectAction(name, config.actionOptions);
+  const [invoke, actionTypes, actionData] = useConnectDataAction(name, config.actionOptions);
   const pageId = useMemo(() => Common.createGuid(), []);
   const pageAxis = PageAxis.getPageAxis(pageId);
   const pageConfig = useGetPageConfig(config.pageName);

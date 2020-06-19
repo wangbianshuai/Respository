@@ -1,33 +1,30 @@
-import React from "react"
-import BaseIndex from "./BaseIndex";
-import styles from "../styles/view.css"
-import { Common } from "UtilsCommon";
+import React, { useState } from 'react';
+import { Common } from 'UtilsCommon';
+import Base from './base';
+import styles from '../styles/view.css';
 
-export default class SpanText extends BaseIndex {
-    constructor(props) {
-        super(props)
+export default (props) => {
+    const { property, pageAxis } = Base.getProps(props);
+    const [isVisible, setIsVisible] = useState(property.isVisible !== false);
+    const [value, setValue] = useState(Base.getInitValue(property));
 
-        this.name = "SpanText";
-    }
+    if (!property.setVisible) property.setVisible = (v) => setIsVisible(v);
+    if (!property.setValue) property.setValue = (v) => setValue(v);
 
-    render() {
-        if (!this.state.isVisible) return null;
+    if (!isVisible) return null;
 
-        const { pageAxis } = this;
-        const { Value, text, label, style, className } = this.props.property;
-        let text2 = Value || text;
+    const { text, label, style } = property;
+    let text2 = value || text;
 
-        text2 = Common.replaceDataContent(pageAxis.pageData, text);
+    text2 = Common.replaceDataContent(pageAxis.pageData, text);
 
-        if (!Common.isNullOrEmpty(this.state.Value)) text2 = this.state.Value;
+    if (!Common.isNullOrEmpty(value)) text2 = value;
 
-        let className = className;
-        if (className && styles[className]) className = styles[className];
+    const className = Base.getClassName(property, styles);
 
-        let label2 = null;
+    let label2 = null;
 
-        if (label) label2 = <label>{label}</label>
+    if (label) label2 = <label>{label}</label>
 
-        return (<span className={className} style={style}>{text2}{label2}</span>)
-    }
-}
+    return (<span className={className} style={style}>{text2}{label2}</span>)
+};

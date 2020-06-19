@@ -1,177 +1,170 @@
 import React from "react"
 import { Common } from "UtilsCommon";
-import PropertyItem from "./PropertyItem";
-import BaseIndex from "./BaseIndex";
+import PropertyItem from "./propertyItem";
 import { List } from "antd";
+import Base from './base';
 
-export default class DataListView extends BaseIndex {
-    constructor(props) {
-        super(props);
+const judgeNullable = (value, property, itemsetDisabledProperties) => {
+    const { nullTipMessage } = property;
+    if (value.length === 0) return nullTipMessage;
 
-        this.property.Add = this.Add.bind(this);
-        this.property.Update = this.Update.bind(this);
-        this.property.remove = this.remove.bind(this);
-        this.property.setValue = this.setValue.bind(this);
-        this.property.getValue = () => this.state.DataList;
-        const dataList = this.property.Value || this.property.DefaultValue || [];
-        this.state = Object.assign({ DataList: dataList }, this.state);
-        this.pageAxis.Components.push(this.property);
-        this.property.setDisabled = this.setDisabled.bind(this);
-        this.property.JudgeNullable = this.JudgeNullable.bind(this);
-        this.ControlProperties = {}
-    }
+    const list = itemsetDisabledProperties.filter(f => f.isEdit && f.isVisible !== false);
 
-    JudgeNullable(value) {
-        const { NullTipMessage } = this.property;
-        if (value.length === 0) return NullTipMessage;
+    let msg = "", v = null, p = null;
 
-        const list = this.ItemsetDisabledProperties.filter(f => f.isEdit && f.isVisible !== false);
-
-        let msg = "", v = null, p = null;
-
-        for (let i = 0; i < list.length; i++) {
-            p = list[i];
-            v = p.getValue();
-            if (!p.isNullable && p.type === "Select" && Common.isNullOrEmpty(v)) {
-                msg = p.NullTipMessage || "请选择" + p.label + "！"
-                break;
-            }
-            else if (!p.isNullable && Common.isNullOrEmpty(v)) {
-                msg = p.NullTipMessage || p.label + "不能为空！"
-                break;
-            }
+    for (let i = 0; i < list.length; i++) {
+        p = list[i];
+        v = p.getValue();
+        if (!p.isNullable && p.type === "Select" && Common.isNullOrEmpty(v)) {
+            msg = p.nullTipMessage || "请选择" + p.label + "！"
+            break;
         }
-
-        return msg;
-    }
-
-    Add(data) {
-        const { PrimaryKey } = this.property;
-        const { DataList } = this.state;
-
-        const id = data[PrimaryKey];
-        let blExists = false;
-        const list = [];
-
-        for (let i = 0; i < DataList.length; i++) {
-            if (DataList[i][PrimaryKey] === id) blExists = true;
-            else list.push(DataList[i])
+        else if (!p.isNullable && Common.isNullOrEmpty(v)) {
+            msg = p.nullTipMessage || p.label + "不能为空！"
+            break;
         }
-
-        if (blExists) return;
-        else list.push(data);
-
-        this.setValue(list);
     }
 
-    Update(data) {
-        const primaryKey = this.property.PrimaryKey;
-        const id = data[primaryKey];
-        const dataList = this.state.DataList
-        const editData = Common.arrayFirst(dataList, (f) => Common.isEquals(f[primaryKey], id, true));
-        if (editData !== null) {
-            for (let key in data) editData[key] = data[key];
+    return msg;
+};
 
-            const itemProperties = this.ControlProperties[id];
-            if (itemProperties) {
-                let p = null, name = null;
-                for (var key2 in itemProperties) {
-                    p = itemProperties[key2];
-                    name = p.propertyName || p.name;
+const setValue = (dataList, setDataList) => {
+    dataList = dataList || [];
+    setDataList(dataList);
+};
 
-                    if (data[name] !== undefined) {
-                        p.Value = data[name];
-                        p.setValue && p.setValue(p.Value);
-                    }
+const add = (data, property, dataList, setDataList) => {
+    const { primaryKey } = property;
+
+    const id = data[primaryKey];
+    let blExists = false;
+    const list = [];
+
+    for (let i = 0; i < dataList.length; i++) {
+        if (dataList[i][primaryKey] === id) blExists = true;
+        else list.push(dataList[i])
+    }
+
+    if (blExists) return;
+    else list.push(data);
+
+    setValue(list, setDataList);
+};
+
+const update = (data, property, dataList, controlProperties) => {
+    const { primaryKey } = property;
+    const id = data[primaryKey];
+    const editData = Common.arrayFirst(dataList, (f) => Common.isEquals(f[primaryKey], id, true));
+    if (editData !== null) {
+        for (let key in data) editData[key] = data[key];
+
+        const itemProperties = controlProperties[id];
+        if (itemProperties) {
+            let p = null, name = null;
+            for (var key2 in itemProperties) {
+                p = itemProperties[key2];
+                name = p.propertyName || p.name;
+
+                if (data[name] !== undefined) {
+                    p.value = data[name];
+                    p.setValue && p.setValue(p.value);
                 }
             }
         }
     }
+};
 
-    remove(id) {
-        const primaryKey = this.property.PrimaryKey;
-        this.setValue(this.state.DataList.filter(f => !Common.isEquals(f[primaryKey], id, true)));
-    }
+const remove = (id, property, dataList, setDataList) => {
+    const { primaryKey } = property;
+    setValue(dataList.filter(f => !Common.isEquals(f[primaryKey], id, true)), setDataList);
+};
 
-    setValue(dataList) {
-        dataList = dataList || [];
-        this.setState({ DataList: dataList });
-    }
+const setDisabled = (disabled, itemsetDisabledProperties) => {
+    itemsetDisabledProperties.forEach(p => p.setDisabled && p.setDisabled(disabled));
+};
 
-    setDisabled(disabled) {
-        this.ItemsetDisabledProperties.forEach(p => p.setDisabled && p.setDisabled(disabled));
-    }
+const assingProperties = (properties, id, data, index, property, dataList, controlProperties, itemsetDisabledProperties) => {
+    return properties.map(p => assignProperty(p, id, data, index, property, dataList, controlProperties, itemsetDisabledProperties));
+};
 
-    RenderListItem(data, index) {
-        const { PrimaryKey, properties, ItemProps } = this.property;
-        const id = data[PrimaryKey];
+const assignProperty = (p, id, data, index, property, dataList, controlProperties, itemsetDisabledProperties) => {
+    const id2 = p.id + id;
 
-        if (this.property.isComplexEdit) return properties.map(p => this.RenderItemProperty(p, id, data, index));
+    if (!controlProperties[id]) controlProperties[id] = {};
+    const itemProperties = controlProperties[id];
 
-        const itemProps = ItemProps || {}
-        return (
-            <List.Item key={id} {...itemProps}>
-                {properties.map(p => this.RenderItemProperty(p, id, data, index))}
-            </List.Item>
-        )
-    }
+    const propertyName = p.propertyName || p.name;
 
-    RenderItemProperty(p, id, data, index) {
-        p = this.AssignProperty(p, id, data, index);
+    if (itemProperties[id2]) p = itemProperties[id2];
+    else { p = Object.assign({}, p, { value: data[propertyName] }); itemProperties[id2] = p; }
+    p.id = p.id + id;
+    p.dataId = id;
+    p.data = data;
+    p.isBind = true;
 
-        const { pageAxis, property } = this;
+    if (p.isEdit || p.isDisabled) itemsetDisabledProperties.push(p);
 
-        return <PropertyItem property={p} key={p.id} view={property} pageAxis={pageAxis} />
-    }
+    const visibleName = `${p.name}Visible`
+    if (data[visibleName] !== undefined) p.isVisible = data[visibleName];
 
-    AssignProperty(p, id, data, index) {
-        const id2 = p.id + id;
+    const { deletePropertyName, isFirstDelete } = property;
+    if (isFirstDelete === false && p.name === deletePropertyName && index === 0) p.isVisible = false;
 
-        if (!this.ControlProperties[id]) this.ControlProperties[id] = {};
-        const itemProperties = this.ControlProperties[id];
+    if (p.isLastNoVisible && index === dataList.length - 1) p.isVisible = false;
 
-        const propertyName = p.propertyName || p.name;
+    if (p.properties) p.properties = assingProperties(p.properties, id, data, index, property, dataList, controlProperties, itemsetDisabledProperties);
 
-        if (itemProperties[id2]) p = itemProperties[id2];
-        else { p = Object.assign({}, p, { Value: data[propertyName] }); itemProperties[id2] = p; }
-        p.id = p.id + id;
-        p.DataId = id;
-        p.data = data;
-        p.isBind = true;
+    return p;
+};
 
-        if (p.isEdit || p.isDisabled) this.ItemsetDisabledProperties.push(p);
+const renderItemProperty = (p, id, data, index, property, pageId, dataList, controlProperties, itemsetDisabledProperties) => {
+    p = assignProperty(p, id, data, index, property, dataList, controlProperties, itemsetDisabledProperties);
 
-        const visibleName = `${p.name}Visible`
-        if (data[visibleName] !== undefined) p.isVisible = data[visibleName];
+    return <PropertyItem property={p} key={p.id} view={property} pageId={pageId} />
+};
 
-        const { DeletePropertyName, isFirstDelete } = this.property;
-        if (isFirstDelete === false && p.name === DeletePropertyName && index === 0) p.isVisible = false;
+const renderListItem = (data, index, property, pageId, dataList, controlProperties, itemsetDisabledProperties) => {
+    const { primaryKey, properties, itemProps } = property;
+    const id = data[primaryKey];
 
-        if (p.isLastNoVisible && index === this.state.DataList.length - 1) p.isVisible = false;
+    if (property.isComplexEdit) return properties.map(p => renderItemProperty(p, id, data, index, property, pageId, dataList, controlProperties, itemsetDisabledProperties));
 
-        if (p.properties) p.properties = this.AssingProperties(p.properties, id, data, index);
+    const itemProps = itemProps || {}
+    return (
+        <List.Item key={id} {...itemProps}>
+            {properties.map(p => renderItemProperty(p, id, data, index, property, pageId, dataList, controlProperties, itemsetDisabledProperties))}
+        </List.Item>
+    )
+};
 
-        return p;
-    }
+export default (props) => {
+    const { property, pageId } = Base.getProps(props);
+    const [isVisible, setIsVisible] = useState(property.isVisible !== false);
+    const [dataList, setDataList] = useState(property.value || property.defaultValue || []);
 
-    AssingProperties(properties, id, data, index) {
-        return properties.map(p => this.AssignProperty(p, id, data, index));
-    }
+    const controlProperties = useMemo(() => ({}), []);
+    const itemsetDisabledProperties = [];
 
-    render() {
-        if (!this.state.isVisible) return null;
+    if (!property.setVisible) property.setVisible = (v) => setIsVisible(v);
+    if (!property.add) property.add = (v) => add(v, property, dataList, setDataList);
+    if (!property.update) property.update = (v) => update(v, property, dataList, controlProperties);
+    if (!property.remove) property.remove = (v) => remove(v, property, dataList, setDataList);
+    if (!property.setValue) property.setValue = (v) => setValue(v, setDataList);
+    if (!property.getValue) property.getValue = () => dataList;
+    if (!property.setDisabled) property.setDisabled = (v) => setDisabled(v, itemsetDisabledProperties);
+    if (!property.judgeNullable) property.judgeNullable = (v) => judgeNullable(v, property, itemsetDisabledProperties);
 
-        if (this.state.DataList.length === 0) return null;
+    if (isVisible) return null;
 
-        this.ItemsetDisabledProperties = [];
+    if (dataList.length === 0) return null;
 
-        if (this.property.isComplexEdit) return this.state.DataList.map((m, i) => this.RenderListItem(m, i))
 
-        const listProps = this.property.ListProps || {}
-        return (
-            <List {...listProps}>
-                {this.state.DataList.map((m, i) => this.RenderListItem(m, i))}
-            </List>
-        )
-    }
-}
+    if (property.isComplexEdit) return dataList.map((m, i) => renderListItem(m, i, property, pageId, dataList, controlProperties, itemsetDisabledProperties))
+
+    const listProps = this.property.listProps || {}
+    return (
+        <List {...listProps}>
+            {dataList.map((m, i) => renderListItem(m, i, property, pageId, dataList, controlProperties, itemsetDisabledProperties))}
+        </List>
+    )
+};

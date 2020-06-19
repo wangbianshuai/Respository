@@ -9,7 +9,7 @@ const dataActionTypes = {
     saveEntityData: 4401
 }
 
-const entity = { name: adminUser.name, primaryKey: adminUser.PropertyPrimaryKey || adminUser.primaryKey }
+const entity = { name: adminUser.name, primaryKey: adminUser.primaryKey }
 
 module.exports = {
     name: "AdminUserEdit",

@@ -3,7 +3,7 @@ var through = require('through2');
 var fs = require("fs");
 var path = require("path");
 
-function BuildConfig(name) {
+function buildConfig(name) {
     const pathUrl = name.replace(".js", "").replace("\\", "/")
 
     const pageConfig = require(`./page-configs/pages/${pathUrl}`);
@@ -14,17 +14,17 @@ function BuildConfig(name) {
     const fileUrl = "./dist/configs/" + pathUrl + ".json";
 
     fs.exists(dirUrl, function (exists) {
-        if (exists) SaveContent(fileUrl, content);
+        if (exists) saveContent(fileUrl, content);
         else {
             fs.mkdir(dirUrl, function (err) {
                 if (err) console.log(err);
-                else SaveContent(fileUrl, content);
+                else saveContent(fileUrl, content);
             })
         }
     });
 }
 
-function SaveContent(fileUrl, content) {
+function saveContent(fileUrl, content) {
     console.log(fileUrl);
     fs.writeFile(fileUrl, content, function () { })
 }
@@ -36,7 +36,7 @@ var copyList = [
 gulp.task('default', (done) => {
     gulp.src("./configs/pages/**/*.js")
         .pipe(through.obj(function (file, enc, cb) {
-            BuildConfig(file.relative);
+            buildConfig(file.relative);
             cb();
         }));
 

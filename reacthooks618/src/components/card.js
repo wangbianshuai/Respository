@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import { Card } from "antd";
-import PropertyItem from "./PropertyItem";
-import base from './base';
+import PropertyItem from "./propertyItem";
+import Base from './base';
 
 export default (props) => {
-    const { property, pageId } = base.getProps;
-    const [isVisible, setIsVisible] = useState(props.property.isVisible !== false);
+    const { property, pageId } = Base.getProps(props);
+    const [isVisible, setIsVisible] = useState(property.isVisible !== false);
 
     if (!property.setVisible) property.setVisible = (v) => setIsVisible(v);
 

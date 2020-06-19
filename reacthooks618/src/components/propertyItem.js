@@ -4,7 +4,7 @@ import Components from 'Components';
 import PageControls from 'PageControls';
 import { Common } from 'UtilsCommon';
 import { Form, Col } from 'antd';
-import base from './base';
+import Base from './base';
 
 const getPageComponent = (type, props) => {
     if (!type) return null;
@@ -15,7 +15,7 @@ const getPageComponent = (type, props) => {
         return null;
     }
     catch (err) {
-        console.warn('components/PropertyItem/getPageComponent', err);
+        console.warn('components/propertyItem/getPageComponent', err);
         return null
     }
 };
@@ -100,7 +100,7 @@ const renderItem = (property, view, pageId, isVisible, label) => {
 }
 
 export default (props) => {
-    const { property, view, pageId, pageAxis } = base.getProps(props);
+    const { property, view, pageId, pageAxis } = Base.getProps(props);
     const [isVisible, setIsVisible] = useState(getIsVisible(property, pageAxis));
     const [label, setLabel] = useState(property.label);
 

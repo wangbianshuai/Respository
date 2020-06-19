@@ -1,5 +1,5 @@
 /*
-    * Add integers, wrapping at 2^32. This uses 16-bit operations internally
+    * add integers, wrapping at 2^32. This uses 16-bit operations internally
     * to work around bugs in some JS interpreters.
     */
 function safeAdd(x, y) {

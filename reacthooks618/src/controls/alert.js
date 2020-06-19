@@ -1,20 +1,19 @@
-import React from "react"
-import BaseIndex from "./BaseIndex"
+import React, { useState } from "react"
 import { Alert } from "antd"
 import { Common } from "UtilsCommon";
+import Base from './base';
 
-export default class Alert2 extends BaseIndex {
-    constructor(props) {
-        super(props);
+export default (props) => {
+    const { property } = Base.getProps(props);
+    const [isVisible, setIsVisible] = useState(property.isVisible !== false);
+    const [value, setValue] = useState(Base.getInitValue(property));
 
-        this.name = "Alert2";
-    }
+    if (!property.setVisible) property.setVisible = (v) => setIsVisible(v);
+    if (!property.setValue) property.setValue = (v) => setValue(v);
 
-    render() {
-        if (!this.state.isVisible) return null;
-        
-        const showIcon = !Common.isNullOrEmpty(this.state.Value);
+    if (!isVisible) return null;
 
-        return <Alert message={this.state.Value} type="info" showIcon={showIcon} style={{ marginBottom: 8, marginTop: 8, height: 40 }} />
-    }
+    const showIcon = !Common.isNullOrEmpty(value);
+
+    return <Alert message={value} type="info" showIcon={showIcon} style={{ marginBottom: 8, marginTop: 8, height: 40 }} />
 }

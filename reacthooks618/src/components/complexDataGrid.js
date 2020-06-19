@@ -1,166 +1,155 @@
-import React from "react";
+import React, { useState, useMemo, useCallback } from "react";
 import { Card, Button, Row, Col } from "antd";
 import { Common } from "UtilsCommon";
-import PropertyItem from "./PropertyItem";
-import BaseIndex from "./BaseIndex";
+import PropertyItem from "./propertyItem";
+import Base from './base';
 
-export default class ComplexDataGrid extends BaseIndex {
-    constructor(props) {
-        super(props)
+const setValue = (dataList, setDataList) => {
+    dataList = dataList || [];
+    setDataList(dataList);
+};
 
-        this.property.Add = this.Add.bind(this);
-        this.property.Update = this.Update.bind(this);
-        this.property.remove = this.remove.bind(this);
-        this.property.setValue = this.setValue.bind(this);
-        this.property.getValue = this.getValue.bind(this);
-        const dataList = this.property.Value || this.property.DefaultValue || [];
-        this.state = Object.assign({ DataList: dataList }, this.state);
-        this.pageAxis.Components.push(this.property);
-        this.property.JudgeNullable = this.JudgeNullable.bind(this);
+const add = (data, dataList, setDataList) => {
+    data.id = data.id || Common.createGuid();
 
-        this.ControlProperties = {}
+    let blExists = false;
+    const list = [];
+
+    for (let i = 0; i < dataList.length; i++) {
+        if (dataList[i].id === data.id) blExists = true;
+        else list.push(dataList[i])
     }
 
-    setValue(dataList) {
-        dataList = dataList || [];
-        this.setState({ DataList: dataList });
+    if (blExists) return;
+    else list.push(data);
+
+    setValue(list, setDataList);
+};
+
+const update = (data, dataList, setDataList) => {
+    const id = data.id;
+    const editData = Common.arrayFirst(dataList, (f) => Common.isEquals(f.id, id, true));
+    if (editData !== null) {
+        for (let key in data) editData[key] = data[key];
+
+        setValue(dataList.map(m => m), setDataList);
     }
+};
 
-    getValue() {
-        return this.state.DataList;
-    }
+const remove = (id, dataList, setDataList) => {
+    setValue(dataList.filter(f => !Common.isEquals(f.id, id, true)), setDataList);
+};
 
-    JudgeNullable(value) {
-        const { NullTipMessage } = this.property;
-        if (value.length === 0) return NullTipMessage;
+const judgeNullable = (value, property, rowsColsProperties) => {
+    const { nullTipMessage } = property;
+    if (value.length === 0) return nullTipMessage;
 
-        let msg = "", v = null, p = null;
+    let msg = "", v = null, p = null;
 
-        for (let i = 0; i < this.RowsColsProperties.length; i++) {
-            p = this.RowsColsProperties[i];
-            v = p.getValue();
-            if (!p.isNullable && p.type === "Select" && Common.isNullOrEmpty(v)) {
-                msg = p.NullTipMessage || "请选择" + p.label + "！"
-                break;
-            }
-            else if (!p.isNullable && Common.isNullOrEmpty(v)) {
-                msg = p.NullTipMessage || p.label + "不能为空！"
-                break;
-            }
+    for (let i = 0; i < rowsColsProperties.length; i++) {
+        p = rowsColsProperties[i];
+        v = p.getValue();
+        if (!p.isNullable && p.type === "Select" && Common.isNullOrEmpty(v)) {
+            msg = p.nullTipMessage || "请选择" + p.label + "！"
+            break;
         }
-
-        return msg;
-    }
-
-    Add(data) {
-        const { DataList } = this.state;
-
-        data.id = data.id || Common.createGuid();
-
-        let blExists = false;
-        const list = [];
-
-        for (let i = 0; i < DataList.length; i++) {
-            if (DataList[i].id === data.id) blExists = true;
-            else list.push(DataList[i])
-        }
-
-        if (blExists) return;
-        else list.push(data);
-
-        this.setValue(list);
-    }
-
-    Update(data) {
-        const id = data.id;
-        const dataList = this.state.DataList
-        const editData = Common.arrayFirst(dataList, (f) => Common.isEquals(f.id, id, true));
-        if (editData !== null) {
-            for (let key in data) editData[key] = data[key];
-
-            this.setValue(dataList.map(m => m));
+        else if (!p.isNullable && Common.isNullOrEmpty(v)) {
+            msg = p.nullTipMessage || p.label + "不能为空！"
+            break;
         }
     }
 
-    remove(id) {
-        this.setValue(this.state.DataList.filter(f => !Common.isEquals(f.id, id, true)));
-    }
+    return msg;
+};
 
-    RenderHeaderRowsCols() {
-        return (
-            <Row gutter={6} className={"RowHeader"}>
-                {this.RenderHeaderCols()}
-            </Row>
-        )
-    }
+const assignProperty = (p, data, controlProperties, rowsColsProperties) => {
+    const id = data.id;
+    const id2 = p.id + data.id;
 
-    RendDataItemList() {
-        this.RowsColsProperties = [];
-        return this.state.DataList.map((m) => this.RendDataItem(m));
-    }
+    if (!controlProperties[id]) controlProperties[id] = {};
+    const itemProperties = controlProperties[id];
 
-    RendDataItem(data) {
-        data.id = data.id || Common.createGuid();
-        return (
-            <Row gutter={6} key={data.id} style={{ padding: "8px 8px", borderBottom: "1px solid #e8e8e8" }}>
-                {this.RenderRowCols(data)}
-            </Row>
-        )
-    }
+    const propertyName = p.propertyName || p.name;
 
-    AssignProperty(p, data) {
-        const id = data.id;
-        const id2 = p.id + data.id;
+    if (itemProperties[id2]) p = itemProperties[id2];
+    else { p = Object.assign({}, p, { value: data[propertyName] }); itemProperties[id2] = p; }
+    p.id = id2;
+    p.dataId = id;
+    p.data = data;
+    p.isBind = true;
 
-        if (!this.ControlProperties[id]) this.ControlProperties[id] = {};
-        const itemProperties = this.ControlProperties[id];
+    rowsColsProperties.push(p);
 
-        const propertyName = p.propertyName || p.name;
+    return p;
+};
 
-        if (itemProperties[id2]) p = itemProperties[id2];
-        else { p = Object.assign({}, p, { Value: data[propertyName] }); itemProperties[id2] = p; }
-        p.id = id2;
-        p.DataId = id;
-        p.data = data;
-        p.isBind = true;
+const renderItemProperty = (p, data, property, pageId, controlProperties, rowsColsProperties) => {
+    p = assignProperty(p, data, controlProperties, rowsColsProperties);
 
-        this.RowsColsProperties.push(p);
+    return <PropertyItem property={p} key={p.id} view={property} pageId={pageId} />
+};
 
-        return p;
-    }
+const renderRowCols = (data, property, pageId, controlProperties, rowsColsProperties) => {
+    return this.property.properties.map(m => <Col span={m.span} key={m.id}>{renderItemProperty(m, data, property, pageId, controlProperties, rowsColsProperties)}</Col>)
+};
 
-    RenderItemProperty(p, data) {
-        p = this.AssignProperty(p, data);
+const rendDataItem = (data, property, pageId, controlProperties, rowsColsProperties) => {
+    data.id = data.id || Common.createGuid();
+    return (
+        <Row gutter={6} key={data.id} style={{ padding: "8px 8px", borderBottom: "1px solid #e8e8e8" }}>
+            {renderRowCols(data, property, pageId, controlProperties, rowsColsProperties)}
+        </Row>
+    )
+};
 
-        const { pageAxis, property } = this;
+const renderHeaderCols = (property) => {
+    return property.properties.map(m => <Col span={m.span} key={m.name}>{m.header || m.label}</Col>)
+};
 
-        return <PropertyItem property={p} key={p.id} view={property} pageAxis={pageAxis} />
-    }
+const renderHeaderRowsCols = (property) => {
+    return (
+        <Row gutter={6} className={"rowHeader"}>
+            {renderHeaderCols(property)}
+        </Row>
+    )
+};
 
-    RenderRowCols(data) {
-        return this.property.properties.map(m => <Col span={m.Span} key={m.id}>{this.RenderItemProperty(m, data)}</Col>)
-    }
+const renderAddButton = (property, addRow) => {
+    if (property.isAdd === false) return null;
+    return <Button onClick={addRow} icon="plus" type="primary">添加</Button>
+};
 
-    RenderHeaderCols() {
-        return this.property.properties.map(m => <Col span={m.Span} key={m.name}>{m.Header || m.label}</Col>)
-    }
+const rendDataItemList = (dataList, property, pageId, controlProperties, rowsColsProperties) => {
+    return dataList.map((m) => rendDataItem(m, property, pageId, controlProperties, rowsColsProperties));
+};
 
-    AddRow() {
-        return () => this.Add({})
-    }
+export default (props) => {
+    const { property, pageId } = Base.getProps(props);
+    const [isVisible, setIsVisible] = useState(property.isVisible !== false);
+    const [dataList, setDataList] = useState(property.value || property.defaultValue || []);
 
-    RenderAddButton() {
-        if (this.property.isAdd === false) return null;
-        return <Button onClick={this.AddRow()} icon="plus" type="primary">添加</Button>
-    }
+    const controlProperties = useMemo(() => ({}), []);
+    const rowsColsProperties = [];
 
-    render() {
-        return (
-            <Card title={this.property.title} headStyle={{ fontWeight: 700 }} extra={this.RenderAddButton()}
-                bordered={false} style={{ marginBottom: 16 }} bodyStyle={{ padding: 0, paddingTop: 4 }}>
-                {this.RenderHeaderRowsCols()}
-                {this.RendDataItemList()}
-            </Card>
-        );
-    }
+    const addRow = useCallback(() => {
+        add({}, dataList, setDataList);
+    }, [dataList, setDataList]);
+
+    if (!property.setVisible) property.setVisible = (v) => setIsVisible(v);
+    if (!property.add) property.add = (v) => add(v, dataList, setDataList);
+    if (!property.update) property.update = (v) => update(v, dataList, setDataList);
+    if (!property.remove) property.remove = (v) => remove(v, dataList, setDataList);
+    if (!property.setValue) property.setValue = (v) => setValue(v, setDataList);
+    if (!property.getValue) property.getValue = () => dataList;
+    if (!property.judgeNullable) property.judgeNullable = (v) => judgeNullable(v, property, rowsColsProperties);
+
+    if (isVisible) return null;
+
+    return (
+        <Card title={property.title} headStyle={{ fontWeight: 700 }} extra={renderAddButton(property, addRow)}
+            bordered={false} style={{ marginBottom: 16 }} bodyStyle={{ padding: 0, paddingTop: 4 }}>
+            {renderHeaderRowsCols(property)}
+            {rendDataItemList(dataList, property, pageId, controlProperties, rowsColsProperties)}
+        </Card>
+    );
 }

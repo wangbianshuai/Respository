@@ -1,7 +1,7 @@
 import View from "./view";
 import PropertyItem from "./propertyItem";
 import RowsColsView from "./rowsColsView";
-// import DataGridView from "./DataGridView";
+// import dataGridView from "./dataGridView";
 // import Card from "./Card";
 // import DataListView from "./DataListView";
 import WhiteSpace from "./whiteSpace";
@@ -12,7 +12,7 @@ export default {
     View,
     RowsColsView,
     PropertyItem,
-    // DataGridView,
+    // dataGridView,
     // Card,
     // DataListView,
     WhiteSpace,

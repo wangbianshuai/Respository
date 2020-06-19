@@ -1,4 +1,4 @@
-import fetch from 'dva/fetch';
+import { fetch } from 'dva';
 import { Common, AjaxRequest, HttpResponse } from 'UtilsCommon';
 
 export function get(url, resKey, serviceName, headers, callback) {

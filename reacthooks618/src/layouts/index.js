@@ -2,7 +2,6 @@ import React from "react";
 import LeftRightLayout from './leftRightLayout/index';
 import { ConfigProvider } from 'antd';
 import zh_CN from 'antd/lib/locale/zh_CN';
-import { Provider } from "react-redux";
 
 const isLogin = (props) => {
   const { location: { pathname } } = props;
@@ -19,9 +18,7 @@ const renderPage = (props) => {
 export default (props) => {
   return (
     <ConfigProvider locale={zh_CN}>
-      <Provider store={window.g_app._store}>
-        {renderPage(props)}
-      </Provider>
+      {renderPage(props)}
     </ConfigProvider>
   )
 }

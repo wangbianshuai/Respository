@@ -9,10 +9,10 @@ export default class EntityEdit extends BaseIndex {
         if (!action.Parameters) this.InitSelectRowUpdateAction(props, action);
         const { pageAxis } = props;
 
-        const { DataGridView, DialogView, AlertMessage } = action.Parameters;
+        const { dataGridView, DialogView, AlertMessage } = action.Parameters;
         const { UdpateEntityOkActionType } = DialogView;
 
-        const selectDataList = DataGridView.getSelectDataList();
+        const selectDataList = dataGridView.getSelectDataList();
         if (selectDataList.length === 0) {
             this.Alert("请选择记录再操作！", pageAxis.ShowMessage, AlertMessage)
             return;
@@ -57,11 +57,11 @@ export default class EntityEdit extends BaseIndex {
 
     InitSelectRowUpdateAction(props, action) {
         const { pageAxis } = props;
-        const DataGridView = pageAxis.getComponent(action.DataGridView);
+        const dataGridView = pageAxis.getComponent(action.dataGridView);
         const DialogView = Common.arrayFirst(pageAxis.PageConfig.DialogViews, (f) => f.name === action.DialogView);
         const AlertMessage = pageAxis.getControl(action.AlertMessage);
 
-        action.Parameters = { DataGridView, DialogView, AlertMessage }
+        action.Parameters = { dataGridView, DialogView, AlertMessage }
     }
 
     //保存实体数据，包含增加与更新
@@ -92,7 +92,7 @@ export default class EntityEdit extends BaseIndex {
         pageAxis.Receives[actionType] = (d) => this.ReceiveSaveEntityDataActionType(d, props, action);
 
         //获取编辑值
-        const data = { OldEntityData: EditView.EntityData, Entity: EditView.Entity, EntityData: entityData, pageData: pageAxis.pageData }
+        const data = { OldEntityData: EditView.EntityData, entity: EditView.entity, EntityData: entityData, pageData: pageAxis.pageData }
 
         //禁用确定按钮
         property.setLoading && property.setLoading(true);
@@ -219,15 +219,14 @@ export default class EntityEdit extends BaseIndex {
 
         let entityData = {}
 
-        if (EditView.Entity) {
-            const { PropertyPrimaryKey, PrimaryKey } = EditView.Entity;
+        if (EditView.entity) {
+            const { primaryKey } = EditView.entity;
 
-            var id = pageAxis.pageData[PrimaryKey];
-            if (EditView.PrimaryKey) id = EditView.PrimaryKey;
+            var id = pageAxis.pageData[primaryKey];
+            if (EditView.primaryKey) id = EditView.primaryKey;
             if (!id) return;
 
-            const name = PropertyPrimaryKey || PrimaryKey;
-            entityData[name] = id;
+            entityData[primaryKey] = id;
         }
 
         if (EditView.expandgetEntityDataParameter) entityData = EditView.expandgetEntityDataParameter(entityData);
@@ -239,7 +238,7 @@ export default class EntityEdit extends BaseIndex {
         pageAxis.Receives[EditView.getEntityDataActionType] = (d) => this.ReceivegetEntityDataActionType(d, props, action)
 
         //获取编辑值
-        const data = { EntityData: entityData, Entity: EditView.Entity }
+        const data = { EntityData: entityData, entity: EditView.entity }
 
         if (action.AsyncRequest) data.AsyncRequest = action.AsyncRequest;
 

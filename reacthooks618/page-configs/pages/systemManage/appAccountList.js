@@ -106,8 +106,8 @@ function getOperation() {
 function getUpdateAppAccountStatusAction(status) {
     return {
         name: "UpdateAppAccountStatus",
-        ValueName: "Status",
-        DataValue: status,
+        valueName: "Status",
+        dataValue: status,
         label: status === 1 ? "关闭" : "启用",
         eventActionName: "UpdateAppAccountStatus",
         type: "Popconfirm",

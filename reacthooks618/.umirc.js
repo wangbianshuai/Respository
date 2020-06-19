@@ -42,7 +42,7 @@ export default {
     UseHooks: path.resolve(__dirname, './src/use-hooks/index.js'),
     Components: path.resolve(__dirname, './src/components/index.js'),
     Controls: path.resolve(__dirname, './src/controls/index.js'),
-    Actions: path.resolve(__dirname, './src/actions/index.js'),
+    DataActions: path.resolve(__dirname, './src/data-actions/index.js'),
     EventActions: path.resolve(__dirname, './src/event-actions/index.js'),
     PageControls: path.resolve(__dirname, './src/page-controls/index.js'),
     PageTemplates: path.resolve(__dirname, './src/page-templates/index.js'),

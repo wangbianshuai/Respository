@@ -1,9 +1,9 @@
 import React, { useState } from "react"
 import { Common } from "UtilsCommon";
-import PropertyItem from "./PropertyItem";
+import PropertyItem from "./propertyItem";
 import { Tabs, Icon } from "antd";
 import styles from "../styles/view.css";
-import base from './base';
+import Base from './base';
 
 const getReactComponent = (p, property, pageId) => {
     p.tabPaneId = p.tabPaneId || Common.createGuid();
@@ -20,14 +20,14 @@ const renderProperties = (property, pageId) => {
 }
 
 export default (props) => {
-    const { property, pageId } = base.getProps;
-    const [isVisible, setIsVisible] = useState(props.property.isVisible !== false);
+    const { property, pageId } = Base.getProps(props);
+    const [isVisible, setIsVisible] = useState(property.isVisible !== false);
 
     if (!property.setVisible) property.setVisible = (v) => setIsVisible(v);
 
     if (!isVisible) return null;
 
-    const className = base.getClassName(property, styles);
+    const className = Base.getClassName(property, styles);
 
     return (
         <Tabs className={className} style={property.style} tabBarStyle={property.tabBarStyle}>

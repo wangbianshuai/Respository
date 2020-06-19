@@ -33,15 +33,15 @@ function getTextBox2(name, label, x, y, contorlType, placeHolder, maxLength, isN
         isEdit: true,
         pressEnterEventActionName: "Login",
         pressEnterEventPropertyName: "Login",
-        PrefixIcon: { type: icon },
+        prefixIcon: { type: icon },
         isNullable,
-        NullTipMessage: placeHolder
+        nullTipMessage: placeHolder
     }
 }
 
-function getButton2(name, label, ButtonType, x, y) {
+function getButton2(name, label, buttonType, x, y) {
     return {
-        ...getButton(name, label, ButtonType, x, y),
+        ...getButton(name, label, buttonType, x, y),
         isFormItem: true,
         size: "large",
         eventActionName: "Login",

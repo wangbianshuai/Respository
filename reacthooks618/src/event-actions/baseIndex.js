@@ -55,19 +55,19 @@ export default class BaseIndex {
                 v = p.getValue();
                 let isNullable = p.isJudgeNullable === false || p.isNullable;
                 if (!isNullable && p.DataType === "Array" && (Common.isNullOrEmpty(v) || v.length === 0)) {
-                    msg = p.NullTipMessage || "请选择" + p.label + "！"
+                    msg = p.nullTipMessage || "请选择" + p.label + "！"
                     break;
                 }
                 else if (!isNullable && p.type === "Select" && Common.isNullOrEmpty(v)) {
-                    msg = p.NullTipMessage || "请选择" + p.label + "！"
+                    msg = p.nullTipMessage || "请选择" + p.label + "！"
                     break;
                 }
                 else if (!isNullable && Common.isNullOrEmpty(v)) {
-                    msg = p.NullTipMessage || p.label + "不能为空！"
+                    msg = p.nullTipMessage || p.label + "不能为空！"
                     break;
                 }
-                else if (!isNullable && p.JudgeNullable) {
-                    msg = p.JudgeNullable(v);
+                else if (!isNullable && p.judgeNullable) {
+                    msg = p.judgeNullable(v);
                     if (!Common.isNullOrEmpty(msg)) break;
                 }
                 else if (!Common.isNullOrEmpty(v) && p.ValidateNames) {
@@ -107,7 +107,7 @@ export default class BaseIndex {
         properties.forEach(p => {
             if (p.isEdit || p.isDisabled) {
                 if (p.setDisabled) p.setDisabled(true);
-                else p.Disabled = true;
+                else p.disabled = true;
             }
         });
     }
@@ -137,9 +137,9 @@ export default class BaseIndex {
             else {
                 name = p.propertyName || p.name;
                 v = data[name];
-                if ((v === null || v === undefined) && p.DefaultValue && (isDefault || p.isDefault)) v = p.DefaultValue;
+                if ((v === null || v === undefined) && p.defaultValue && (isDefault || p.isDefault)) v = p.defaultValue;
                 if (p.setValue) p.setValue(v);
-                else p.Value = v;
+                else p.value = v;
 
                 //目前主要是文本框带单位选择
                 if (p.PropertyName2) {
@@ -178,12 +178,12 @@ export default class BaseIndex {
 
     ReceiveDialogOkActionType(data, props, action) {
         action.OkProperty.setDisabled(false);
-        const { AlertMessage, DataGridView, DialogView } = action.Parameters;
+        const { AlertMessage, dataGridView, DialogView } = action.Parameters;
         const { pageAxis } = props;
         if (this.isSuccessNextsProps(data, pageAxis.Alert, null)) {
             AlertMessage.setValue(DialogView.SuccessTip);
             //刷新查询
-            DataGridView.Refresh();
+            dataGridView.refresh();
             action.ModalDialog.setVisible(false);
         }
 

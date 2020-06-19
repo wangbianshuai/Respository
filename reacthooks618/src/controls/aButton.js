@@ -1,16 +1,15 @@
 import React, { useCallback } from "react"
-import { usePageAxis } from "UseHooks";
+import Base from './base';
 
 export default (props) => {
-    const { property, view, pageId } = props;
-    const pageAxis = usePageAxis.getPageAxis(pageId);
+    const { property, view, pageAxis } = Base.getProps(props);
 
     const clickAction = useCallback(() => {
-        pageAxis.invokeEventAction(property.EventActionName, { property, view, pageAxis });
+        pageAxis.invokeEventAction(property.eventActionName, { property, view, pageAxis });
     }, [property, view, pageAxis]);
 
 
-    const { label, text, dataText, href, style } = property
+    const { label, text, dataText, href, style } = property;
     let text2 = dataText;
     text2 = text || (label || text)
 

@@ -24,8 +24,8 @@ function getProperty(name, label) { return { name, label } }
 
 function getServiceInterfaceDataSource() {
     return {
-        ValueName: "ServiceInterfaceId",
-        TextName: "name",
+        valueName: "ServiceInterfaceId",
+        textName: "name",
         StateName: "ServiceInterfaces",
         ServiceName: "RequestServiceLogService",
         ActionName: "getServiceInterfaces",

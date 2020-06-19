@@ -1,41 +1,35 @@
-import React from "react"
-import BaseIndex from "./BaseIndex"
+import React, { useState,useCallback } from "react"
 import { Button } from "antd"
+import Base from './base';
 
-export default class Button2 extends BaseIndex {
-    constructor(props) {
-        super(props)
+export default (props) => {
+    const { property, view, pageAxis } = Base.getProps(props);
 
-        this.state = {
-            Disabled: this.property.Disabled === undefined ? false : this.property.Disabled,
-            isVisible: this.property.isVisible !== false && this.property.isDataRight !== false,
-            Loading: false,
-            text: this.property.text,
-            BututonType: this.property.ButtonType
-        };
+    const [isVisible, setIsVisible] = useState(property.isVisible !== false && property.isDataRight !== false);
+    const [loading, setLoading] = useState(false);
+    const [textType, setTextType] = useState({ text: property.text, buttonType: property.buttonType });
+    const [disabled, setDisabled] = useState(property.disabled);
 
-        this.property.setLoading = (loading) => this.setState({ Loading: loading });
-        this.property.setTextType = (text, type) => this.setState({ text: text, BututonType: type || this.property.ButtonType });
-    }
+    const clickAction = useCallback(() => {
+        pageAxis.invokeEventAction(property.eventActionName, { property, view, pageAxis });
+    }, [property, view, pageAxis]);
 
-    ClickAction() {
-        this.pageAxis.invokeEventAction(this.property.EventActionName, this.props);
-    }
+    if (!property.setIsVisible) property.setIsVisible = (v) => setIsVisible(v);
+    if (!property.setDisabled) property.setDisabled = (v) => setDisabled(v);
+    if (!property.setLoading) property.setLoading = (l) => setLoading(l);
+    if (!property.setTextType) property.setTextType = (text, type) => setTextType({ text: text, bututonType: type || property.buttonType });
 
-    render() {
-        if (!this.state.isVisible) return null;
+    if (!isVisible) return null;
 
-        const { Loading, text, BututonType } = this.state;
-        const { property } = this.props
+    const { text, bututonType } = textType;
 
-        return (<Button onClick={this.ClickAction.bind(this)}
-            icon={property.Icon}
-            disabled={this.state.Disabled}
-            style={property.style}
-            shape={property.Shape}
-            loading={Loading}
-            size={property.size}
-            prefix={this.RenderPrefix()}
-            type={BututonType}>{text}</Button>)
-    }
-}
+    return (<Button onClick={clickAction}
+        icon={property.Icon}
+        disabled={disabled}
+        style={property.style}
+        shape={property.Shape}
+        loading={loading}
+        size={property.size}
+        prefix={Base.renderPrefix(property)}
+        type={bututonType}>{text}</Button>)
+};

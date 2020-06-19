@@ -1,12 +1,14 @@
 import React from 'react';
 import { Row, Col, Form, Divider } from 'antd';
-import { Link } from "dva/router";
+import { router } from "dva";
 import { Common } from 'UtilsCommon';
 import { usePageAxis } from 'UseHooks'
-import PropertyItem from './PropertyItem';
+import PropertyItem from './propertyItem';
+
+const { Link } = router;
 
 const load = (property, view, pageAxis) => {
-  if (property.EventActionName) pageAxis.invokeEventAction(property.EventActionName, { property, view, pageAxis });
+  if (property.eventActionName) pageAxis.invokeEventAction(property.eventActionName, { property, view, pageAxis });
 };
 
 const getPropertyItem = (p, property, pageId) => {
@@ -105,12 +107,6 @@ const renderActions = (actionList, record, property, pageId) => {
   return (<span>{list.map(m => m)}</span>)
 };
 
-const setVisible = (property, setIsVisible) => (v) => {
-  property.isVisible = v;
-  if (property.isFormItem && property.setFormItemVisible) property.setFormItemVisible(v);
-  else setIsVisible(v);
-};
-
 export default {
   getProps,
   load,
@@ -121,6 +117,5 @@ export default {
   renderFormView,
   getClassName,
   getLinkAction,
-  renderActions,
-  setVisible
+  renderActions
 }

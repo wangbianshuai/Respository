@@ -15,7 +15,7 @@ export default class LeftRightLayout extends Component {
             collapsed: false,
             MenuList: [],
             OpenKeys: null,
-            Loading: false
+            loading: false
         };
 
         this.NavSelectedKeys = [];
@@ -324,9 +324,9 @@ export default class LeftRightLayout extends Component {
     render() {
         if (!this.Token) return null;
 
-        if (this.state.Loading) return <div className="SpinDiv"><Spin tip="加载中……" /></div>
+        if (this.state.loading) return <div className="SpinDiv"><Spin tip="加载中……" /></div>
 
-        const { Header, Sider, Content } = Layout;
+        const { header, Sider, Content } = Layout;
 
         const selectedKeys = this.getCurrentMenuSelectedKeys();
 
@@ -338,7 +338,7 @@ export default class LeftRightLayout extends Component {
 
         return (
             <Layout style={{ minWidth: 1200 }}>
-                <Header style={{ background: '#fff', padding: 0, margin: 0 }}>
+                <header style={{ background: '#fff', padding: 0, margin: 0 }}>
                     <div className={styles.logo} >
                         <img src={this.getImageUrl("logo-3_01.png")} width={140} alt="" />
                         <span>A2 Digital Solution</span>
@@ -357,7 +357,7 @@ export default class LeftRightLayout extends Component {
                         </Menu>
                     </div>
 
-                </Header>
+                </header>
                 <Layout theme="light">
                     <Sider trigger={null} collapsible={true} theme="light" style={{ margin: '16px 0px 16px 16px' }} collapsed={this.state.collapsed}>
                         <Menu theme="light" mode="inline" selectedKeys={selectedKeys} openKeys={this.OpenKeys} onOpenChange={this.OnOpenChange.bind(this)}>
@@ -373,12 +373,12 @@ export default class LeftRightLayout extends Component {
                     </Sider>
                     <Layout>
                         {this.isRight ?
-                            <Header style={{ margin: '16px 16px 0 16px', height: 50, background: '#fff', padding: 0 }}>
+                            <header style={{ margin: '16px 16px 0 16px', height: 50, background: '#fff', padding: 0 }}>
                                 <Icon className={styles.trigger} type={this.state.collapsed ? 'menu-unfold' : 'menu-fold'} onClick={this.toggle} />
                                 <Breadcrumb className={styles.Breadcrumb} >
                                     {this.BreadcrumbList.map(m => m.href ? <Breadcrumb.Item key={m.name}><Link to={m.href} style={{ color: "#1890ff" }}>{m.name}</Link></Breadcrumb.Item> : <Breadcrumb.Item key={m.name} >{m.name}</Breadcrumb.Item>)}
                                 </Breadcrumb>
-                            </Header> : null}
+                            </header> : null}
                         <Content style={{ margin: '0 16px 16px 16px', padding: 0, minHeight: 500 }}>
                             {this.isRight ? this.props.children : <div style={{ background: '#fff', marginTop: 16, height: 484 }}></div>}
                         </Content>

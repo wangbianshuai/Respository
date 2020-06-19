@@ -9,10 +9,10 @@ export default class Dialog extends BaseIndex {
         if (!action.Parameters) this.InitSelectViewDataToListAction(props, action);
         const { pageAxis } = props;
 
-        const { DataGridView, DialogView, AlertMessage } = action.Parameters;
+        const { dataGridView, DialogView, AlertMessage } = action.Parameters;
         const { setSelectValuesOkActionType } = DialogView;
 
-        const selectRowKeys = DataGridView.getSelectedRowKeys();
+        const selectRowKeys = dataGridView.getSelectedRowKeys();
         if (selectRowKeys.length === 0) {
             this.Alert("请选择记录再操作！", pageAxis.ShowMessage, AlertMessage)
             return;
@@ -34,7 +34,7 @@ export default class Dialog extends BaseIndex {
 
     //弹出层确定事件行为
     setSelectViewDataToList(e, p, props, action, selectRowKeys) {
-        const { DialogView, DataComponent, DataProperties, DataGridView } = action.Parameters;
+        const { DialogView, DataComponent, dataProperties, dataGridView } = action.Parameters;
         const { pageAxis } = props;
 
         action.OkProperty = p;
@@ -48,11 +48,11 @@ export default class Dialog extends BaseIndex {
                 return;
             }
         }
-        else selectData = this.getPropertyValues(DataProperties, pageAxis);
+        else selectData = this.getPropertyValues(dataProperties, pageAxis);
 
         if (selectData === false) return;
 
-        const selectDataList = DataGridView.getSelectDataList();
+        const selectDataList = dataGridView.getSelectDataList();
 
         const data = { SelectRowKeys: selectRowKeys, SelectValues: selectValues, SelectData: selectData, RowDataList: selectDataList, pageData: pageAxis.pageData }
 
@@ -66,23 +66,23 @@ export default class Dialog extends BaseIndex {
 
     InitSelectViewDataToListAction(props, action) {
         const { pageAxis } = props;
-        const DataGridView = pageAxis.getComponent(action.DataGridView);
+        const dataGridView = pageAxis.getComponent(action.dataGridView);
         const DialogView = Common.arrayFirst(pageAxis.PageConfig.DialogViews, (f) => f.name === action.DialogView);
 
         //DataComponent存在，则取DataComponent，不存在取DataProperties属性名集合
-        let DataComponent = null, DataProperties = null;
+        let DataComponent = null, dataProperties = null;
         if (action.DataComponent) {
             DataComponent = Common.arrayFirst(DialogView.properties, (f) => f.name === action.DataComponent);
             action.setValue = () => DataComponent.setValue(null)
         }
         else {
-            DataProperties = this.getSelectToList(DialogView.properties, action.DataProperties);
-            action.setValue = () => this.setPropertiesValue(DataProperties, null)
+            dataProperties = this.getSelectToList(DialogView.properties, action.dataProperties);
+            action.setValue = () => this.setPropertiesValue(dataProperties, null)
         }
 
         const AlertMessage = pageAxis.getControl(action.AlertMessage);
 
-        action.Parameters = { DataGridView, DialogView, DataComponent, DataProperties, AlertMessage }
+        action.Parameters = { dataGridView, DialogView, DataComponent, dataProperties, AlertMessage }
     }
 
     //弹出层搜索查询选择行数据
@@ -96,10 +96,10 @@ export default class Dialog extends BaseIndex {
     }
 
     setSelectValueDialogOk(e, p, props, action) {
-        const { DataGridView, TosetView } = action.Parameters;
+        const { dataGridView, TosetView } = action.Parameters;
         const { pageAxis } = props;
 
-        const selectDataList = DataGridView.getSelectDataList();
+        const selectDataList = dataGridView.getSelectDataList();
         if (selectDataList.length === 0) {
             pageAxis.Alert("请选择记录再操作！");
             return;
@@ -117,9 +117,9 @@ export default class Dialog extends BaseIndex {
         //设置数据视图
         const TosetView = pageAxis.getView(action.TosetView);
         const DialogView = Common.arrayFirst(pageAxis.PageConfig.DialogViews, (f) => f.name === action.DialogView);
-        const DataGridView = pageAxis.getViewProperty(DialogView, action.DataGridView)
+        const dataGridView = pageAxis.getViewProperty(DialogView, action.dataGridView)
 
-        action.Parameters = { DataGridView, DialogView, TosetView }
+        action.Parameters = { dataGridView, DialogView, TosetView }
     }
 
     //弹出层查看
@@ -130,7 +130,7 @@ export default class Dialog extends BaseIndex {
 
         const data = property.Params ? property.Params : null;
 
-        if (data) LookView.PrimaryKey = data[LookView.Entity.PrimaryKey];
+        if (data) LookView.primaryKey = data[LookView.entity.primaryKey];
 
         const properties = LookView.properties.filter(f => f.isClear);
         this.setPropertiesValue(properties);

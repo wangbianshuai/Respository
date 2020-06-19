@@ -6,8 +6,8 @@ function getProperty(name, label, dataType, isNullable, maxLength, Scale) {
     return { name, label, dataType, isNullable, maxLength, Scale }
 }
 
-function getButton(name, text, ButtonType, x, y) {
-    return { name, text, type: "Button", ButtonType, x, y, isDisabled: true }
+function getButton(name, text, buttonType, x, y) {
+    return { name, text, type: "Button", buttonType, x, y, isDisabled: true }
 }
 
 var guidId = 100000000;
@@ -85,16 +85,16 @@ function getTextBox(name, label, controlType, x, y, placeHolder, maxLength) {
     return { name, label, type: "TextBox", controlType, placeHolder, x, y, maxLength }
 }
 
-function getRowTextBox(name, label, Span, placeHolder, maxLength, isNullable, isEdit) {
-    return { name, label, type: "TextBox", Span, placeHolder, maxLength, isNullable, isEdit };
+function getRowTextBox(name, label, span, placeHolder, maxLength, isNullable, isEdit) {
+    return { name, label, type: "TextBox", span, placeHolder, maxLength, isNullable, isEdit };
 }
 
-function getRowSelect(name, label, Span, dataSource, defaultValue, isNullable, isEdit) {
-    return { name, label, type: "Select", Span, dataSource, defaultValue, isNullable, isEdit }
+function getRowSelect(name, label, span, dataSource, defaultValue, isNullable, isEdit) {
+    return { name, label, type: "Select", span, dataSource, defaultValue, isNullable, isEdit }
 }
 
-function getRowSelect2(name, label, Span, serviceDataSource, defaultValue, isNullable, isEdit) {
-    return { name, label, type: "Select", Span, serviceDataSource, defaultValue, isNullable, isEdit }
+function getRowSelect2(name, label, span, serviceDataSource, defaultValue, isNullable, isEdit) {
+    return { name, label, type: "Select", span, serviceDataSource, defaultValue, isNullable, isEdit }
 }
 
 function getSelect(name, label, dataSource, x, y, defaultValue) {

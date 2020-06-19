@@ -1,6 +1,6 @@
-import { useMemo } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { Common } from "UtilsCommon";
+import { useMemo } from 'react';
+import { useSelector, useDispatch } from 'dva';
+import { Common } from 'UtilsCommon';
 
 export default (mapStateToProps) => {
   const props = useSelector((state) => setMapStateToProps(state, mapStateToProps(state)));
@@ -17,7 +17,7 @@ export default (mapStateToProps) => {
 function init(obj, dispatch) {
   if (!obj.isInit) obj.isInit = true; else return;
 
-  const token = Common.getStorage("Token");
+  const token = Common.getStorage('Token');
 
   obj.dispatch = getDispatch(dispatch, token);
   obj.dispatchAction = dispatchAction(dispatch, token);
@@ -48,7 +48,7 @@ function getDispatch(dispatch, token) {
 
     if (action.isToken && !payload.token) payload.token = token;
     if (action.isLoading === false) isloading = false;
-    return dispatch({ type: name + "/" + actionName, payload, isloading });
+    return dispatch({ type: name + '/' + actionName, payload, isloading });
   }
 }
 
@@ -60,7 +60,7 @@ function dispatchAction(dispatch, token) {
 
 function setActionState(dispatch) {
   return (name, actionName, payload) => {
-    return dispatch({ type: name + "/set_" + actionName, payload })
+    return dispatch({ type: name + '/set_' + actionName, payload })
   }
 }
 

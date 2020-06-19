@@ -1,21 +1,22 @@
 import { useMemo, useEffect } from "react";
+import DataActions from "DataActions";
 import { Common, PageCommon } from "UtilsCommon";
 import { EnvConfig } from "Configs";
 
-export default (state, dispatchActionData) => {
+export default (state) => {
   const obj = useMemo(() => ({}), []);
 
   if (!obj.getStateValue) obj.getStateValue = (name) => state[name];
 
   useEffect(() => {
     let blChanged = false;
-    if (obj.state === undefined) { initState(state, dispatchActionData); blChanged = true; }
-    else blChanged = shouldComponentUpdate(state, obj.state, dispatchActionData);
+    if (obj.state === undefined) { initState(state); blChanged = true; }
+    else blChanged = shouldComponentUpdate(state, obj.state);
 
     blChanged && !EnvConfig.isProd && console.log(state);
 
     obj.state = state;
-  }, [state, obj, dispatchActionData])
+  }, [state, obj])
 
   return [obj.getStateValue]
 }
@@ -57,15 +58,21 @@ function setResponseMessage(d) {
   return false
 }
 
-function receiveState(nextState, state, dispatchActionData) {
+//分发行为数据
+function dispatchActionData(data) {
+  if (!data) return;
+  if (data.action && data.action.actionType > 0) DataActions.dispatch(data.action.actionType, data);
+}
+
+function receiveState(nextState, state) {
   for (let key in nextState) {
-    if (nextState[key] !== state[key]) dispatchActionData(key, nextState[key]);
+    if (nextState[key] !== state[key]) dispatchActionData(nextState[key]);
   }
 }
 
-function initState(state, dispatchActionData) {
+function initState(state) {
   for (let key in state) {
-    dispatchActionData(key, state[key]);
+    dispatchActionData(state[key]);
   }
 }
 
