@@ -5,7 +5,6 @@ import styles from "../../styles/leftRightLayout.css"
 import MenuConfig from "./menu";
 import Link from 'umi/link';
 import router from 'umi/router';
-import RightConfig from "./rightConfig";
 
 export default class LeftRightLayout extends Component {
     constructor(props) {
@@ -25,13 +24,12 @@ export default class LeftRightLayout extends Component {
         this.token = Common.getCookie("token");
         this.judgeLogin();
         this.pageData = {};
-        this.id = Common.getStorage("loginUserId");
         this.loginUser = this.getLoginUser();
 
         this.init();
     }
 
-    Init() {
+    init() {
         const menuConfig = MenuConfig();
         this.navMenuList = menuConfig.navMenuList;
         this.menus = menuConfig.menus;
@@ -39,7 +37,7 @@ export default class LeftRightLayout extends Component {
     }
 
     getLoginUser() {
-        var info = Common.getStorage("LoginUserInfo");
+        var info = Common.getStorage("loginUserInfo");
         if (!info) return {};
 
         return JSON.parse(info);
@@ -60,7 +58,7 @@ export default class LeftRightLayout extends Component {
         return true;
     }
 
-    toggle = () => {
+    toggle() {
         this.setState({ collapsed: !this.state.collapsed });
     }
 

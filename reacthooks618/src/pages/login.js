@@ -27,7 +27,7 @@ function init() {
 }
 
 function loginSuccess({ data }) {
-    Common.setStorage("LoginUserInfo", JSON.stringify(data));
+    Common.setStorage("loginUserInfo", JSON.stringify(data));
     Common.setStorage("loginUserId", data.AdminUserId);
     Common.setStorage("AppAccountId", data.AppAccountId);
     const url = "/personCenter/appAccountInfo";
