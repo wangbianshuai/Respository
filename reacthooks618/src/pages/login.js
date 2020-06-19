@@ -2,11 +2,11 @@ import React from "react";
 import { usePage } from "UseHooks";
 import { Common, PageCommon } from "UtilsCommon";
 import Components from "Components";
-import styles from "../styles/Login.css"
+import styles from "../styles/login.css"
 
 const _Name = "login";
 
-const Login = (props) => {
+export default (props) => {
     const pageAxis = usePage(_Name, props, mapStateToProps, init);
 
     if (pageAxis === null) return null;
@@ -22,7 +22,7 @@ const Login = (props) => {
 
 function init() {
     Common.removeStorage("Token");
-    this.setActionState("AdminUserService", "Login");
+    this.setActionState("AdminUserService", "login");
     this.loginSuccess = loginSuccess;
 }
 
@@ -39,5 +39,3 @@ function mapStateToProps(state) {
         login: state.AdminUserService.login
     }
 }
-
-export default Login;

@@ -136,7 +136,7 @@ export default class DataGrid extends BaseIndex {
             name: name + "ColumnsView",
             type: "View",
             isDiv: true,
-            className: "DivColumsView",
+            className: "divColumsView",
             id: Common.createGuid(),
             DialogId: Common.createGuid(),
             DialogWidth: 500,

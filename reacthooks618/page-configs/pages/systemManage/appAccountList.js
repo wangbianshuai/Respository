@@ -27,7 +27,7 @@ function getSearchOperationView() {
         name: "SearchOperationView1",
         entity: entity,
         type: "RowsColsView",
-        className: "DivSerachView",
+        className: "divSerachView",
         properties: assignProporties({ name: "AppAccountList" }, [
             getEditSelect("Status", "状态", AppAccount.StatusDataSource, 1, 1),
             {
@@ -86,7 +86,7 @@ function getDataGridView() {
         EntityExcelExport: dataActionTypes.excelExport,
         eventActionName: "searchQuery",
         isDiv: true,
-        className: "DivInfoView3",
+        className: "divInfoView3",
         isRowSelection: true,
         isSingleSelection: true,
         properties: assignProporties(AppAccount, ["CompanyName", "PathName", "Address", "Linkman", "Phone", "StatusName",

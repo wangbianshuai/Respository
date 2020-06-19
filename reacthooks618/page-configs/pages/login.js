@@ -3,25 +3,25 @@ const { assignProporties, getTextBox, getButton } =require("../Common");
 //登录 4000-4099
 const dataActionTypes = {
     //获取实体数据
-    Login: 4000
+    login: 4000
 }
 
 module.exports= {
     name: "LoginView",
     type: "View",
     eventActions: getEventActions(),
-    saveEntityDataActionType: dataActionTypes.Login,
+    saveEntityDataActionType: dataActionTypes.login,
     properties: assignProporties({name:"LoginView"}, getProperties())
 }
 
 function getProperties() {
     return [
         {
-            name: "LoginTitle", type: "SpanText", x: 1, y: 1, text: "账户登录", className: "LoginHeader"
+            name: "LoginTitle", type: "SpanText", x: 1, y: 1, text: "账户登录", className: "loginHeader"
         },
         getTextBox2("LoginName", "", 1, 1, "", "请输入登录名", 50, false, "user"),
         getTextBox2("LoginPassword", "", 2, 1, "Password", "请输入登录密码", 50, false, "lock"),
-        getButton2("Login", "登录", "primary", 3, 1)
+        getButton2("login", "登录", "primary", 3, 1)
     ]
 }
 
@@ -31,8 +31,8 @@ function getTextBox2(name, label, x, y, contorlType, placeHolder, maxLength, isN
         isFormItem: true,
         size: "large",
         isEdit: true,
-        pressEnterEventActionName: "Login",
-        pressEnterEventPropertyName: "Login",
+        pressEnterEventActionName: "login",
+        pressEnterEventPropertyName: "login",
         prefixIcon: { type: icon },
         isNullable,
         nullTipMessage: placeHolder
@@ -44,14 +44,14 @@ function getButton2(name, label, buttonType, x, y) {
         ...getButton(name, label, buttonType, x, y),
         isFormItem: true,
         size: "large",
-        eventActionName: "Login",
+        eventActionName: "login",
         style: { width: "100%" }
     }
 }
 
 function getEventActions() {
     return [{
-        name: "Login",
+        name: "login",
         type: "EntityEdit/saveEntityData",
         editView: "LoginView",
         successCallback: "LoginSuccess"

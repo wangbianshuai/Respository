@@ -4,7 +4,7 @@ import { EntityModelConfig } from 'Configs';
 const config = EntityModelConfig('AdminUser');
 
 config.actionList.push(get("getUsers", "ViewUser?$select=UserId,UserName&$orderby CreateDate", "getUsers", "ViewUser"));
-config.actionList.push(post("login", "User/Login", "login", "login"));
+config.actionList.push(post("login", "User/login", "login", "login"));
 config.actionList.push(post("changePassword", "User/changePassword", "changePassword", "changePassword", true));
 
 function get(actionName, url, stateName, dataKey, isToken, hasToken) {

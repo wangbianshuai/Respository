@@ -1,7 +1,7 @@
 import { Common, Md5 } from "UtilsCommon";
 import BaseIndex from "../baseIndex";
 
-export default class Login extends BaseIndex {
+export default class login extends BaseIndex {
   constructor(props) {
     super(props);
 

@@ -25,7 +25,7 @@ function getSearchOperationView() {
         name: "SearchOperationView1",
         entity: entity,
         type: "RowsColsView",
-        className: "DivLeftRightView",
+        className: "divLeftRightView",
         properties: assignProporties({ name: "AdminUserList" }, [{ eventActionName: "ToEditPage", ...getButton("ToEditPage", "新增", "primary", 1, 1) },
         { eventActionName: "EditAdminUser", colStyle: { paddingLeft: 0 }, ...getButton("EditAdminUser", "修改", "default", 1, 2) },
         {
@@ -68,7 +68,7 @@ function getDataGridView() {
         entitySearchQuery: dataActionTypes.searchQuery,
         eventActionName: "searchQuery",
         isDiv: true,
-        className: "DivInfoView3",
+        className: "divInfoView3",
         isRowSelection: true,
         isSingleSelection: true,
         properties: assignProporties(adminUser, ["LoginName", "UserName", "LastLoginDate", { name: "CreateDate", OrderByType: "desc" }, { name: "RowVersion", isVisible: false }])

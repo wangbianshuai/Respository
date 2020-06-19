@@ -27,7 +27,7 @@ function getSearchOperationView() {
         name: "SearchOperationView1",
         entity: entity,
         type: "RowsColsView",
-        className: "DivSerachView",
+        className: "divSerachView",
         properties: assignProporties({ name: "requestServiceLog" }, [
             getEditSelect("LogType", "类型", getLoyTypeDataSource(), 1, 1),
             getEditSelect("isReSend", "是否重发记录", requestServiceLog.isReSendDataSource, 1, 2),
@@ -101,7 +101,7 @@ function getDataGridView() {
         eventActionName: "searchQuery",
         isDiv: true,
         isRowSelection: true,
-        className: "DivInfoView3",
+        className: "divInfoView3",
         properties: assignProporties(requestServiceLog, ["LogTypeName", "ServiceInterfaceName", "ReSendCount", "isReSendName", "StartTime", "EndTime", "ElapsedMilliseconds",
             { name: "CreateDate", OrderByType: "desc" }, getOperation()])
     }

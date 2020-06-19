@@ -21,7 +21,7 @@ function getSearchOperationView() {
         name: "SearchOperationView1",
         entity: entity,
         type: "RowsColsView",
-        className: "DivSerachView",
+        className: "divSerachView",
         properties: assignProporties({ name: "OperationLog" }, [
             getEditSelect("LogType", "类型", getLoyTypeDataSource(), 1, 1),
             getEditSelect("RequestType", "请求类型", getRequestDataSource(), 1, 2),
@@ -93,7 +93,7 @@ function getDataGridView() {
         entitySearchQuery: dataActionTypes.searchQuery,
         eventActionName: "searchQuery",
         isDiv: true,
-        className: "DivInfoView3",
+        className: "divInfoView3",
         properties: assignProporties(OperationLog, ["LogType", "RequestType", "EntityName", "MethodName", "IPAddress", "StartTime", "EndTime", "ElapsedMilliseconds", "UserName",
             { name: "CreateDate", OrderByType: "desc" }, getLookDetail(), { name: "LogPath", isVisible: false }])
     }

@@ -47,7 +47,7 @@ function getButtonView() {
     return {
         name: "ButtonView",
         type: "View",
-        className: "DivCenterButton",
+        className: "divCenterButton",
         isDiv: true,
         isFormItem: true,
         colSpan: 24,
