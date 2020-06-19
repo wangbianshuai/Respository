@@ -32,8 +32,8 @@ function getSearchOperationView() {
             eventActionName: "DeleteAdminUser",
             colStyle: { paddingLeft: 0 },
             dataActionType: dataActionTypes.deleteEntityData,
-            SuccessTip: "删除成功！",
-            ConfirmTip: "请确认是否删除当前用户？",
+            successTip: "删除成功！",
+            confirmTip: "请确认是否删除当前用户？",
             ...getButton("DeleteAdminUser", "删除", "default", 1, 4)
         },
         getKeyword()
@@ -56,7 +56,7 @@ function getKeyword() {
 function getAlert() {
     return {
         name: "alertMessage",
-        type: "Alert"
+        type: "alert"
     }
 }
 
@@ -87,19 +87,19 @@ function getEventActions() {
     },
     {
         name: "ToEditPage",
-        type: "Page/ToPage",
+        type: "Page/toPage",
         pageUrl: "/systemManage/AdminUserEdit"
     },
     {
         name: "EditAdminUser",
-        type: "dataGridView/SelectRowToPage",
+        type: "dataGridView/selectRowToPage",
         dataGridView: "DataGridView1",
         alertMessage: "alertMessage",
-        pageUrl: "/systemManage/AdminUserEdit?AdminUserId=#{AdminUserId}&MenuName=" + escape("修改")
+        pageUrl: "/systemManage/AdminUserEdit?AdminUserId=#{AdminUserId}&menuName=" + escape("修改")
     },
     {
         name: "DeleteAdminUser",
-        type: "DataGrid/BatchUpdateRowDataList",
+        type: "DataGrid/batchUpdateRowDataList",
         dataGridView: "DataGridView1",
         alertMessage: "alertMessage"
     }]

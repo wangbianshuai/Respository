@@ -8,8 +8,8 @@ const { TextArea } = Input;
 const setMinMaxValue = (value, property) => {
     if (Common.isNullOrEmpty(value)) return value;
 
-    const { MinValue, MaxValue, DataType } = property;
-    if (DataType !== 'int' && DataType !== 'float') return value;
+    const { MinValue, MaxValue, dataType } = property;
+    if (dataType !== 'int' && dataType !== 'float') return value;
 
     if (Common.isNullOrEmpty(MinValue) && Common.isNullOrEmpty(MaxValue)) return value;
 
@@ -36,8 +36,8 @@ const change = (e, property, setValue) => {
     let value = e.target.value;
 
     if (value && property.RegExp) value = value.replace(property.RegExp, '')
-    if (value && property.DataType === 'float' && !judgeMinusDot(value)) value = Common.getNumber(value, property.Scale);
-    if (value && property.DataType === 'int') value = Common.getIntValue(value);
+    if (value && property.dataType === 'float' && !judgeMinusDot(value)) value = Common.getNumber(value, property.Scale);
+    if (value && property.dataType === 'int') value = Common.getIntValue(value);
 
     if (value === 0 && e.target.value !== '0') value = '';
 

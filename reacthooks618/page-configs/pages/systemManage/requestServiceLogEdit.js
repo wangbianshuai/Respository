@@ -104,13 +104,13 @@ function getTextArea(name, label, x, y, placeHolder) {
 function getEventActions() {
     return [{
         name: "BackToLast",
-        type: "Page/ToPage",
+        type: "Page/toPage",
         pageUrl: "/systemManage/RequestServiceLogList",
-        expandsetPageUrl: "expandsetPageUrl"
+        expandSetPageUrl: "expandSetPageUrl"
     },
     {
         name: "getEntityData",
-        type: "EntityEdit/getEntityData",
+        type: "entityEdit/getEntityData",
         editView: "RequestServiceLogEdit2"
     }]
 }

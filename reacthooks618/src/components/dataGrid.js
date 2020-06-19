@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from "react"
-import { Table, Alert, Pagination, Button } from "antd";
+import { Table, alert, Pagination, Button } from "antd";
 import { Common } from "UtilsCommon";
 const { Column } = Table;
 
@@ -43,7 +43,7 @@ const renderGroupByInfo = (groupByInfo, groupByInfoHtml) => {
 const renderGroupByInfoAlert = (groupByInfo, groupByInfoHtml) => {
     if (Common.isEmptyObject(groupByInfo) || !groupByInfoHtml) return null;
 
-    return <Alert message={renderGroupByInfo(groupByInfo, groupByInfoHtml)} type="info" showIcon={true} />
+    return <alert message={renderGroupByInfo(groupByInfo, groupByInfoHtml)} type="info" showIcon={true} />
 };
 
 const selectChanged = (selectedRowKeys, setSelectedRowKeys, isSingleSelection, dataList) => {

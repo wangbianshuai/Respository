@@ -17,11 +17,11 @@ export default (props) => {
     if (!property.setIsVisible) property.setIsVisible = (v) => setIsVisible(v);
     if (!property.setDisabled) property.setDisabled = (v) => setDisabled(v);
     if (!property.setLoading) property.setLoading = (l) => setLoading(l);
-    if (!property.setTextType) property.setTextType = (text, type) => setTextType({ text: text, bututonType: type || property.buttonType });
+    if (!property.setTextType) property.setTextType = (text, type) => setTextType({ text: text, buttonType: type || property.buttonType });
 
     if (!isVisible) return null;
 
-    const { text, bututonType } = textType;
+    const { text, buttonType } = textType;
 
     return (<Button onClick={clickAction}
         icon={property.Icon}
@@ -31,5 +31,5 @@ export default (props) => {
         loading={loading}
         size={property.size}
         prefix={Base.renderPrefix(property)}
-        type={bututonType}>{text}</Button>)
+        type={buttonType}>{text}</Button>)
 };

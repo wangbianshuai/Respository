@@ -83,18 +83,18 @@ function getTextBox2(name, label, x, y, contorlType, placeHolder, maxLength, isN
 function getEventActions() {
     return [{
         name: "BackToLast",
-        type: "Page/ToPage",
+        type: "Page/toPage",
         pageUrl: "/systemManage/AdminUserList"
     },
     {
         name: "saveEntityData",
-        type: "EntityEdit/saveEntityData",
+        type: "entityEdit/saveEntityData",
         editView: "AdminUserEdit2",
-        expandsetEntityData: "expandsetAdminUserData"
+        expandSetEntityData: "expandsetAdminUserData"
     },
     {
         name: "getEntityData",
-        type: "EntityEdit/getEntityData",
+        type: "entityEdit/getEntityData",
         editView: "AdminUserEdit2"
     }]
 }

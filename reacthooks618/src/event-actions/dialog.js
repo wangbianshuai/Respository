@@ -1,50 +1,50 @@
 import { Common } from "UtilsCommon";
 import BaseIndex from "./BaseIndex";
 
-export default class Dialog extends BaseIndex {
+export default class dialog extends BaseIndex {
 
     //弹出选择视图选择数据列表，可多选或单选，弹出层之前对DataGridView进行验证是否选择行。
-    //行为参数，DataGridView，弹出层视图 DialogView，选择数据绑定组件DataComponent
-    SelectViewDataToList(props, action) {
-        if (!action.Parameters) this.InitSelectViewDataToListAction(props, action);
+    //行为参数，DataGridView，弹出层视图 dialogView，选择数据绑定组件DataComponent
+    selectViewDataToList(props, action) {
+        if (!action.parameters) this.initSelectViewDataToListAction(props, action);
         const { pageAxis } = props;
 
-        const { dataGridView, DialogView, AlertMessage } = action.Parameters;
-        const { setSelectValuesOkActionType } = DialogView;
+        const { dataGridView, dialogView, alertMessage } = action.parameters;
+        const { setSelectValuesOkActionType } = dialogView;
 
         const selectRowKeys = dataGridView.getSelectedRowKeys();
         if (selectRowKeys.length === 0) {
-            this.Alert("请选择记录再操作！", pageAxis.ShowMessage, AlertMessage)
+            this.alert("请选择记录再操作！", pageAxis.showMessage, alertMessage)
             return;
         }
 
-        if (selectRowKeys.length > 0) if (AlertMessage) AlertMessage.setValue("")
+        if (selectRowKeys.length > 0) if (alertMessage) alertMessage.setValue("")
 
-        DialogView.SelectRowKeys = selectRowKeys;
+        dialogView.selectRowKeys = selectRowKeys;
 
         //设置接收数据行数返回数据
-        pageAxis.Receives[setSelectValuesOkActionType] = (d) => this.ReceiveDialogOkActionType(d, props, action)
+        pageAxis.receives[setSelectValuesOkActionType] = (d) => this.receiveDialogOkActionType(d, props, action)
 
         //扩展数据加载
-        if (DialogView.expandDataLoad) DialogView.expandDataLoad(props, action);
+        if (dialogView.expandDataLoad) dialogView.expandDataLoad(props, action);
 
         const onOk = (e, p) => this.setSelectViewDataToList(e, p, props, action, selectRowKeys);
-        this.ShowDialog(action, pageAxis, DialogView, onOk, action.setValue);
+        this.showdialog(action, pageAxis, dialogView, onOk, action.setValue);
     }
 
     //弹出层确定事件行为
     setSelectViewDataToList(e, p, props, action, selectRowKeys) {
-        const { DialogView, DataComponent, dataProperties, dataGridView } = action.Parameters;
+        const { dialogView, dataComponent, dataProperties, dataGridView } = action.parameters;
         const { pageAxis } = props;
 
         action.OkProperty = p;
 
         //获取选择值
         let selectValues = null, selectData = null;
-        if (DataComponent) {
-            selectValues = DataComponent.getValue();
+        if (dataComponent) {
+            selectValues = dataComponent.getValue();
             if (!(selectValues && selectValues.length > 0)) {
-                pageAxis.Alert("请选择记录再操作！")
+                pageAxis.alert("请选择记录再操作！")
                 return;
             }
         }
@@ -54,54 +54,54 @@ export default class Dialog extends BaseIndex {
 
         const selectDataList = dataGridView.getSelectDataList();
 
-        const data = { SelectRowKeys: selectRowKeys, SelectValues: selectValues, SelectData: selectData, RowDataList: selectDataList, pageData: pageAxis.pageData }
+        const data = { selectRowKeys: selectRowKeys, SelectValues: selectValues, SelectData: selectData, RowDataList: selectDataList, pageData: pageAxis.pageData }
 
         //禁用确定按钮
         p.setDisabled(true);
 
         //数据行为跟页面调用数据行为走
         //setSelectValuesOkActionType:设置选择值集合确认数据行为类型
-        pageAxis.Invoke(DialogView.setSelectValuesOkActionType, data);
+        pageAxis.invokeDataAction(dialogView.setSelectValuesOkActionType, data);
     }
 
-    InitSelectViewDataToListAction(props, action) {
+    initSelectViewDataToListAction(props, action) {
         const { pageAxis } = props;
-        const dataGridView = pageAxis.getComponent(action.dataGridView);
-        const DialogView = Common.arrayFirst(pageAxis.PageConfig.DialogViews, (f) => f.name === action.DialogView);
+        const dataGridView = pageAxis.getProperty(action.dataGridView);
+        const dialogView = Common.arrayFirst(pageAxis.pageConfig.dialogViews, (f) => f.name === action.dialogView);
 
         //DataComponent存在，则取DataComponent，不存在取DataProperties属性名集合
-        let DataComponent = null, dataProperties = null;
-        if (action.DataComponent) {
-            DataComponent = Common.arrayFirst(DialogView.properties, (f) => f.name === action.DataComponent);
-            action.setValue = () => DataComponent.setValue(null)
+        let dataComponent = null, dataProperties = null;
+        if (action.dataComponent) {
+            dataComponent = Common.arrayFirst(dialogView.properties, (f) => f.name === action.dataComponent);
+            action.setValue = () => dataComponent.setValue(null)
         }
         else {
-            dataProperties = this.getSelectToList(DialogView.properties, action.dataProperties);
+            dataProperties = this.getSelectToList(dialogView.properties, action.dataProperties);
             action.setValue = () => this.setPropertiesValue(dataProperties, null)
         }
 
-        const AlertMessage = pageAxis.getControl(action.AlertMessage);
+        const alertMessage = pageAxis.getProperty(action.alertMessage);
 
-        action.Parameters = { dataGridView, DialogView, DataComponent, dataProperties, AlertMessage }
+        action.parameters = { dataGridView, dialogView, dataComponent, dataProperties, alertMessage }
     }
 
     //弹出层搜索查询选择行数据
-    SearchQueryDataSelectRowData(props, action) {
-        if (!action.Parameters) this.InitSearchQueryDataSelectRowDataAction(props, action);
+    searchQueryDataSelectRowData(props, action) {
+        if (!action.parameters) this.initSearchQueryDataSelectRowDataAction(props, action);
         const { pageAxis } = props;
-        const { DialogView } = action.Parameters;
+        const { dialogView } = action.parameters;
 
-        const onOk = (e, p) => this.setSelectValueDialogOk(e, p, props, action);
-        this.ShowDialog(action, pageAxis, DialogView, onOk);
+        const onOk = (e, p) => this.setSelectValuedialogOk(e, p, props, action);
+        this.showdialog(action, pageAxis, dialogView, onOk);
     }
 
-    setSelectValueDialogOk(e, p, props, action) {
-        const { dataGridView, TosetView } = action.Parameters;
+    setSelectValuedialogOk(e, p, props, action) {
+        const { dataGridView, TosetView } = action.parameters;
         const { pageAxis } = props;
 
         const selectDataList = dataGridView.getSelectDataList();
         if (selectDataList.length === 0) {
-            pageAxis.Alert("请选择记录再操作！");
+            pageAxis.alert("请选择记录再操作！");
             return;
         }
 
@@ -109,43 +109,43 @@ export default class Dialog extends BaseIndex {
 
         this.setViewPropertiesValue(TosetView.properties, TosetView.SelectData);
 
-        action.ModalDialog.setVisible(false);
+        action.modalDialog.setVisible(false);
     }
 
-    InitSearchQueryDataSelectRowDataAction(props, action) {
+    initSearchQueryDataSelectRowDataAction(props, action) {
         const { pageAxis } = props;
         //设置数据视图
-        const TosetView = pageAxis.getView(action.TosetView);
-        const DialogView = Common.arrayFirst(pageAxis.PageConfig.DialogViews, (f) => f.name === action.DialogView);
-        const dataGridView = pageAxis.getViewProperty(DialogView, action.dataGridView)
+        const TosetView = pageAxis.getProperty(action.TosetView);
+        const dialogView = Common.arrayFirst(pageAxis.pageConfig.dialogViews, (f) => f.name === action.dialogView);
+        const dataGridView = pageAxis.getPropertyProperty(dialogView, action.dataGridView)
 
-        action.Parameters = { dataGridView, DialogView, TosetView }
+        action.parameters = { dataGridView, dialogView, TosetView }
     }
 
     //弹出层查看
-    ShowDialogLookData(props, action) {
-        if (!action.Parameters) this.InitShowDialogLookDataAction(props, action);
+    showdialogLookData(props, action) {
+        if (!action.parameters) this.initShowdialogLookDataAction(props, action);
         const { pageAxis, property } = props;
-        const { DialogView, LookView } = action.Parameters;
+        const { dialogView, lookView } = action.parameters;
 
-        const data = property.Params ? property.Params : null;
+        const data = property.params ? property.params : null;
 
-        if (data) LookView.primaryKey = data[LookView.entity.primaryKey];
+        if (data) lookView.primaryKey = data[lookView.entity.primaryKey];
 
-        const properties = LookView.properties.filter(f => f.isClear);
+        const properties = lookView.properties.filter(f => f.isClear);
         this.setPropertiesValue(properties);
 
-        if(LookView.reLoad) LookView.reLoad();
+        if(lookView.reLoad) lookView.reLoad();
 
-        this.ShowDialog(action, pageAxis, DialogView);
+        this.showdialog(action, pageAxis, dialogView);
     }
 
-    InitShowDialogLookDataAction(props, action) {
+    initShowdialogLookDataAction(props, action) {
         const { pageAxis } = props;
         //设置数据视图
-        const DialogView = Common.arrayFirst(pageAxis.PageConfig.DialogViews, (f) => f.name === action.DialogView);
-        const LookView = pageAxis.getViewProperty(DialogView, action.LookView);
+        const dialogView = Common.arrayFirst(pageAxis.pageConfig.dialogViews, (f) => f.name === action.dialogView);
+        const lookView = pageAxis.getPropertyProperty(dialogView, action.lookView);
 
-        action.Parameters = { DialogView, LookView }
+        action.parameters = { dialogView, lookView }
     }
 }

@@ -3,17 +3,17 @@ import BaseIndex from "./BaseIndex";
 export default class ComplexDataGrid extends BaseIndex {
 
     remove(props, action) {
-        if (!action.Parameters) this.InitremoveAction(props, action);
+        if (!action.parameters) this.initRemoveAction(props, action);
 
-        const { ComplexDataGridView } = action.Parameters;
+        const { complexDataGridView } = action.parameters;
 
-        ComplexDataGridView.remove(props.property.dataId);
+        complexDataGridView.remove(props.property.dataId);
     }
 
-    InitremoveAction(props, action) {
+    initRemoveAction(props, action) {
         const { pageAxis } = props;
-        const ComplexDataGridView = pageAxis.getComponent(action.ComplexDataGridView);
+        const complexDataGridView = pageAxis.getProperty(action.complexDataGridView);
 
-        action.Parameters = { ComplexDataGridView }
+        action.parameters = { complexDataGridView }
     }
 }

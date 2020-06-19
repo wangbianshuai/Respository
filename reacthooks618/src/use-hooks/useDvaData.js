@@ -17,7 +17,7 @@ export default (mapStateToProps) => {
 function init(obj, dispatch) {
   if (!obj.isInit) obj.isInit = true; else return;
 
-  const token = Common.getStorage('Token');
+  const token = Common.getStorage('token');
 
   obj.dispatch = getDispatch(dispatch, token);
   obj.dispatchAction = dispatchAction(dispatch, token);
@@ -46,7 +46,7 @@ function getDispatch(dispatch, token) {
     }
     else return Promise.reject({ isSuccess: false, message: `${name}/${actionName} the method doesn't exist!` });
 
-    if (action.isToken && !payload.token) payload.token = token;
+    if (action.istoken && !payload.token) payload.token = token;
     if (action.isLoading === false) isloading = false;
     return dispatch({ type: name + '/' + actionName, payload, isloading });
   }

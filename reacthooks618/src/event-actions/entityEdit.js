@@ -1,165 +1,165 @@
 import BaseIndex from "./BaseIndex";
 import { Common } from "UtilsCommon";
 
-export default class EntityEdit extends BaseIndex {
+export default class entityEdit extends BaseIndex {
 
     //弹出选择视图选择数据列表，单选，弹出层之前对DataGridView进行验证是否选择行。
-    //行为参数，DataGridView，弹出层视图 DialogView
-    SelectRowUpdate(props, action) {
-        if (!action.Parameters) this.InitSelectRowUpdateAction(props, action);
+    //行为参数，DataGridView，弹出层视图 dialogView
+    selectRowUpdate(props, action) {
+        if (!action.parameters) this.initSelectRowUpdateAction(props, action);
         const { pageAxis } = props;
 
-        const { dataGridView, DialogView, AlertMessage } = action.Parameters;
-        const { UdpateEntityOkActionType } = DialogView;
+        const { dataGridView, dialogView, alertMessage } = action.parameters;
+        const { udpateEntityOkActionType } = dialogView;
 
         const selectDataList = dataGridView.getSelectDataList();
         if (selectDataList.length === 0) {
-            this.Alert("请选择记录再操作！", pageAxis.ShowMessage, AlertMessage)
+            this.alert("请选择记录再操作！", pageAxis.showMessage, alertMessage)
             return;
         }
 
         const entityData = selectDataList[0];
 
-        this.setPropertiesValue(DialogView.properties, entityData)
+        this.setPropertiesValue(dialogView.properties, entityData)
 
-        if (DialogView.expandDataLoad) pageAxis.getFunction(DialogView.expandDataLoad)({ entityData, props, action });
+        if (dialogView.expandDataLoad) pageAxis.getFunction(dialogView.expandDataLoad)({ entityData, props, action });
 
         //设置接收数据行数返回数据
-        pageAxis.Receives[UdpateEntityOkActionType] = (d) => this.ReceiveDialogOkActionType(d, props, action)
+        pageAxis.receives[udpateEntityOkActionType] = (d) => this.receiveDialogOkActionType(d, props, action)
 
         const onOk = (e, p) => this.setSelectRowUpdate(e, p, props, action, entityData);
-        this.ShowDialog(action, pageAxis, DialogView, onOk);
+        this.showdialog(action, pageAxis, dialogView, onOk);
     }
 
     //弹出层确定事件行为
     setSelectRowUpdate(e, p, props, action, selectData) {
-        const { DialogView } = action.Parameters;
+        const { dialogView } = action.parameters;
         const { pageAxis } = props;
 
         action.OkProperty = p;
 
-        const editProperties = DialogView.properties.filter(f => f.isEdit);
+        const editProperties = dialogView.properties.filter(f => f.isEdit);
 
         let entityData = this.getPropertyValues(editProperties, pageAxis);
-        if (DialogView.expandsetEntityData) entityData = DialogView.expandsetEntityData(entityData);
+        if (dialogView.expandSetEntityData) entityData = dialogView.expandSetEntityData(entityData);
 
         if (entityData === false) return;
 
         //获取编辑值
-        const data = { OldEntityData: selectData, EntityData: entityData }
+        const data = { oldEntityData: selectData, entityData }
 
         //禁用确定按钮
         p.setDisabled(true);
 
         //数据行为跟页面调用数据行为走
-        pageAxis.Invoke(DialogView.UdpateEntityOkActionType, data);
+        pageAxis.invokeDataAction(dialogView.udpateEntityOkActionType, data);
     }
 
-    InitSelectRowUpdateAction(props, action) {
+    initSelectRowUpdateAction(props, action) {
         const { pageAxis } = props;
-        const dataGridView = pageAxis.getComponent(action.dataGridView);
-        const DialogView = Common.arrayFirst(pageAxis.PageConfig.DialogViews, (f) => f.name === action.DialogView);
-        const AlertMessage = pageAxis.getControl(action.AlertMessage);
+        const dataGridView = pageAxis.getProperty(action.dataGridView);
+        const dialogView = Common.arrayFirst(pageAxis.pageConfig.dialogViews, (f) => f.name === action.dialogView);
+        const alertMessage = pageAxis.getProperty(action.alertMessage);
 
-        action.Parameters = { dataGridView, DialogView, AlertMessage }
+        action.parameters = { dataGridView, dialogView, alertMessage }
     }
 
     //保存实体数据，包含增加与更新
-    SaveEntityData(props, action) {
-        if (!action.Parameters) this.InitSaveEntityData(props, action);
+    saveEntityData(props, action) {
+        if (!action.parameters) this.initSaveEntityData(props, action);
 
-        const { EditView, expandsetEntityData } = action.Parameters;
+        const { editView, expandSetEntityData } = action.parameters;
         const { pageAxis, property } = props;
 
-        let entityData = this.getViewEntityData(props, EditView, expandsetEntityData);
+        let entityData = this.getPropertyEntityData(props, editView, expandSetEntityData);
         if (entityData === false) return;
 
-        if (property.ConfirmTip) pageAxis.Confirm(property.ConfirmTip, () => this.SaveEditEntityData(props, action, EditView, entityData));
-        else this.SaveEditEntityData(props, action, EditView, entityData);
+        if (property.confirmTip) pageAxis.confirm(property.confirmTip, () => this.saveEditEntityData(props, action, editView, entityData));
+        else this.saveEditEntityData(props, action, editView, entityData);
     }
 
-    SaveEditEntityData(props, action, EditView, entityData) {
-        const { pageAxis, property, EditData } = props;
+    saveEditEntityData(props, action, editView, entityData) {
+        const { pageAxis, property, editData } = props;
 
         //设置传入的编辑数据
-        if (EditData) for (let key in EditData) entityData[key] = EditData[key];
+        if (editData) for (let key in editData) entityData[key] = editData[key];
 
-        EditView.EditData = entityData;
+        editView.editData = entityData;
 
-        const actionType = EditView.SaveEntityDataActionType || property.SaveEntityDataActionType;
+        const actionType = editView.saveEntityDataActionType || property.saveEntityDataActionType;
 
         //设置接收数据行数返回数据
-        pageAxis.Receives[actionType] = (d) => this.ReceiveSaveEntityDataActionType(d, props, action);
+        pageAxis.receives[actionType] = (d) => this.receiveSaveEntityDataActionType(d, props, action);
 
         //获取编辑值
-        const data = { OldEntityData: EditView.EntityData, entity: EditView.entity, EntityData: entityData, pageData: pageAxis.pageData }
+        const data = { oldEntityData: editView.entityData, entity: editView.entity, entityData: entityData, pageData: pageAxis.pageData }
 
         //禁用确定按钮
         property.setLoading && property.setLoading(true);
 
         //数据行为跟页面调用数据行为走
-        pageAxis.Invoke(actionType, data);
+        pageAxis.invokeDataAction(actionType, data);
     }
 
-    SaveEntityDataViews(props, action) {
-        if (!action.Parameters) this.InitSaveEntityDataViews(props, action);
+    saveEntityDataViews(props, action) {
+        if (!action.parameters) this.initSaveEntityDataViews(props, action);
 
-        const { EditPropertiyViewList, expandsetEntityData } = action.Parameters;
+        const { editPropertiyViewList, expandSetEntityData } = action.parameters;
         const { pageAxis, property } = props;
 
         let entityData = {}, viewEntityData = null;
 
-        for (let i = 0; i < EditPropertiyViewList.length; i++) {
-            viewEntityData = this.getViewEntityData(props, EditPropertiyViewList[i], expandsetEntityData);
+        for (let i = 0; i < editPropertiyViewList.length; i++) {
+            viewEntityData = this.getPropertyEntityData(props, editPropertiyViewList[i], expandSetEntityData);
             if (viewEntityData === false) { entityData = false; break; }
             else for (let key in viewEntityData) entityData[key] = viewEntityData[key];
         }
 
         if (entityData === false) return;
 
-        const EditView = EditPropertiyViewList[0];
+        const editView = editPropertiyViewList[0];
 
-        if (property.ConfirmTip) pageAxis.Confirm(property.ConfirmTip, () => this.SaveEditEntityData(props, action, EditView, entityData));
-        else this.SaveEditEntityData(props, action, EditView, entityData);
+        if (property.confirmTip) pageAxis.confirm(property.confirmTip, () => this.saveEditEntityData(props, action, editView, entityData));
+        else this.saveEditEntityData(props, action, editView, entityData);
     }
 
-    getViewEntityData(props, view, expandsetEntityData) {
+    getPropertyEntityData(props, view, expandSetEntityData) {
         const { pageAxis } = props;
-        const { DefaultEditData } = view;
+        const { defaultEditData } = view;
 
-        let entityData = this.getViewPropertiesValue(view.properties, pageAxis);
+        let entityData = this.getPropertyPropertiesValue(view.properties, pageAxis);
 
-        if (view.expandsetEntityData) entityData = view.expandsetEntityData(entityData);
+        if (view.expandSetEntityData) entityData = view.expandSetEntityData(entityData);
 
         if (entityData === false) return false;
 
-        if (expandsetEntityData) entityData = expandsetEntityData({ entityData, props, view });
+        if (expandSetEntityData) entityData = expandSetEntityData({ entityData, props, view });
 
         if (entityData === false) return false;
 
         //设置默认编辑数据
-        if (DefaultEditData) for (let key in DefaultEditData) entityData[key] = DefaultEditData[key];
+        if (defaultEditData) for (let key in defaultEditData) entityData[key] = defaultEditData[key];
 
         return entityData;
     }
 
-    ReceiveSaveEntityDataActionType(data, props, action) {
-        const { EditPropertiyViewList, setDisabledViewList, successCallback } = action.Parameters;
-        let EditView = action.Parameters.EditView
-        if (EditPropertiyViewList) EditView = EditPropertiyViewList[0];
+    receiveSaveEntityDataActionType(data, props, action) {
+        const { editPropertiyViewList, setDisabledViewList, successCallback } = action.parameters;
+        let editView = action.parameters.editView
+        if (editPropertiyViewList) editView = editPropertiyViewList[0];
 
         const { pageAxis, property } = props;
         if (property.isComplexEntity) setTimeout(() => property.setLoading && property.setLoading(false), 200);
         else property.setLoading && property.setLoading(false);
-        if (this.isSuccessNextsProps(data, pageAxis.Alert, null)) {
-            if (EditView.EntityData) EditView.EntityData = { ...EditView.EntityData, ...EditView.EditData }; //更新
-            else if (EditPropertiyViewList) {
+        if (this.isSuccessNextsProps(data, pageAxis.alert, null)) {
+            if (editView.entityData) editView.entityData = { ...editView.entityData, ...editView.editData }; //更新
+            else if (editPropertiyViewList) {
                 //新增，清空属性值
-                EditPropertiyViewList.forEach(v => {
+                editPropertiyViewList.forEach(v => {
                     if (v.isClear) this.setViewPropertiesValue(v.properties, null);
                 });
             }
-            else if (EditView.isClear) this.setViewPropertiesValue(EditView.properties, null); //新增，清空属性值
+            else if (editView.isClear) this.setViewPropertiesValue(editView.properties, null); //新增，清空属性值
 
             //保存之后禁用控件
             if (setDisabledViewList) {
@@ -170,140 +170,140 @@ export default class EntityEdit extends BaseIndex {
             }
 
             const onOk = () => {
-                if (action.ToPageUrl) pageAxis.ToPage(action.ToPageUrl);
+                if (action.toPageUrl) pageAxis.toPage(action.toPageUrl);
             };
 
             if (successCallback) successCallback({ data, props, action });
-            else pageAxis.AlertSuccess(EditView.SuccessTip || "保存成功", onOk);
+            else pageAxis.AlertSuccess(editView.successTip || "保存成功", onOk);
 
-            if (property.setTextType && property.Text2) property.setTextType(property.Text2, "default");
+            if (property.setTextType && property.text2) property.setTextType(property.text2, "default");
         }
 
         return false;
     }
 
-    InitSaveEntityData(props, action) {
+    initSaveEntityData(props, action) {
         const { pageAxis } = props;
-        const EditView = pageAxis.getView(action.EditView);
+        const editView = pageAxis.getProperty(action.editView);
         const successCallback = pageAxis.getFunction(action.successCallback);
-        const expandsetEntityData = pageAxis.getFunction(action.expandsetEntityData);
+        const expandSetEntityData = pageAxis.getFunction(action.expandSetEntityData);
 
-        let EditPropertiyViewList = null;
-        if (action.EditPropertiyViewList) {
-            EditPropertiyViewList = action.EditPropertiyViewList.map(m => pageAxis.getView(m));
+        let editPropertiyViewList = null;
+        if (action.editPropertiyViewList) {
+            editPropertiyViewList = action.editPropertiyViewList.map(m => pageAxis.getProperty(m));
         }
 
         let setDisabledViewList = null;
-        if (action.setDisabledViewList) setDisabledViewList = action.setDisabledViewList.map(m => pageAxis.getView(m));
+        if (action.setDisabledViewList) setDisabledViewList = action.setDisabledViewList.map(m => pageAxis.getProperty(m));
 
-        action.Parameters = { EditView, EditPropertiyViewList, setDisabledViewList, successCallback, expandsetEntityData };
+        action.parameters = { editView, editPropertiyViewList, setDisabledViewList, successCallback, expandSetEntityData };
     }
 
-    InitSaveEntityDataViews(props, action) {
+    initSaveEntityDataViews(props, action) {
         const { pageAxis } = props;
         const successCallback = pageAxis.getFunction(action.successCallback);
 
-        const EditPropertiyViewList = action.EditPropertiyViewList.map(m => pageAxis.getView(m));
+        const editPropertiyViewList = action.editPropertiyViewList.map(m => pageAxis.getProperty(m));
 
         let setDisabledViewList = null;
-        if (action.setDisabledViewList) setDisabledViewList = action.setDisabledViewList.map(m => pageAxis.getView(m));
+        if (action.setDisabledViewList) setDisabledViewList = action.setDisabledViewList.map(m => pageAxis.getProperty(m));
 
-        action.Parameters = { EditPropertiyViewList, setDisabledViewList, successCallback };
+        action.parameters = { editPropertiyViewList, setDisabledViewList, successCallback };
     }
 
     getEntityData(props, action) {
-        if (!action.Parameters) this.InitgetEntityData(props, action);
+        if (!action.parameters) this.initgetEntityData(props, action);
 
-        const { EditView, setRequestEntityData } = action.Parameters;
+        const { editView, setRequestEntityData } = action.parameters;
         const { pageAxis } = props;
 
         let entityData = {}
 
-        if (EditView.entity) {
-            const { primaryKey } = EditView.entity;
+        if (editView.entity) {
+            const { primaryKey } = editView.entity;
 
             var id = pageAxis.pageData[primaryKey];
-            if (EditView.primaryKey) id = EditView.primaryKey;
+            if (editView.primaryKey) id = editView.primaryKey;
             if (!id) return;
 
             entityData[primaryKey] = id;
         }
 
-        if (EditView.expandgetEntityDataParameter) entityData = EditView.expandgetEntityDataParameter(entityData);
+        if (editView.expandgetEntityDataParameter) entityData = editView.expandgetEntityDataParameter(entityData);
 
         //设置请求实体数据
         if (setRequestEntityData) entityData = setRequestEntityData({ entityData, props, action });
 
         //设置接收数据行数返回数据
-        pageAxis.Receives[EditView.getEntityDataActionType] = (d) => this.ReceivegetEntityDataActionType(d, props, action)
+        pageAxis.receives[editView.getEntityDataActionType] = (d) => this.receivegetEntityDataActionType(d, props, action)
 
         //获取编辑值
-        const data = { EntityData: entityData, entity: EditView.entity }
+        const data = { entityData: entityData, entity: editView.entity }
 
-        if (action.AsyncRequest) data.AsyncRequest = action.AsyncRequest;
+        if (action.asyncRequest) data.asyncRequest = action.asyncRequest;
 
         //数据行为跟页面调用数据行为走
-        pageAxis.Invoke(EditView.getEntityDataActionType, data);
+        pageAxis.invokeDataAction(editView.getEntityDataActionType, data);
     }
 
-    ReceivegetEntityDataActionType(data, props, action) {
-        const { EditView, EditPropertiyViewList, setgetEntityDataLoad } = action.Parameters;
+    receivegetEntityDataActionType(data, props, action) {
+        const { editView, editPropertiyViewList, setGetEntityDataLoad } = action.parameters;
 
         const { pageAxis } = props;
-        if (this.isSuccessNextsProps(data, pageAxis.Alert, null)) {
-            EditView.EntityData = data || {};
+        if (this.isSuccessNextsProps(data, pageAxis.alert, null)) {
+            editView.entityData = data || {};
             //多个编辑视图
-            if (EditPropertiyViewList) {
-                EditPropertiyViewList.forEach(v => {
+            if (editPropertiyViewList) {
+                editPropertiyViewList.forEach(v => {
                     const name = v.propertyName || v.name;
-                    v.EntityData = data[name] || data;
-                    this.setViewPropertiesValue(v.properties, v.EntityData, true);
+                    v.entityData = data[name] || data;
+                    this.setViewPropertiesValue(v.properties, v.entityData, true);
 
                     //扩展实体数据加载
                     v.expandEntityDataLoad && v.expandEntityDataLoad();
                 });
             }
-            else this.setViewPropertiesValue(EditView.properties, data, true);
+            else this.setViewPropertiesValue(editView.properties, data, true);
 
             //扩展实体数据加载
-            EditView.expandEntityDataLoad && EditView.expandEntityDataLoad();
+            editView.expandEntityDataLoad && editView.expandEntityDataLoad();
 
-            if (setgetEntityDataLoad) setgetEntityDataLoad({ data, props, action })
+            if (setGetEntityDataLoad) setGetEntityDataLoad({ data, props, action })
         }
 
         return false;
     }
 
-    InitgetEntityData(props, action) {
+    initGetEntityData(props, action) {
         const { pageAxis } = props;
-        const EditView = pageAxis.getView(action.EditView);
-        const setgetEntityDataLoad = pageAxis.getFunction(action.setgetEntityDataLoad);
+        const editView = pageAxis.getProperty(action.editView);
+        const setGetEntityDataLoad = pageAxis.getFunction(action.setGetEntityDataLoad);
         const setRequestEntityData = pageAxis.getFunction(action.setRequestEntityData);
 
-        let EditPropertiyViewList = null;
-        if (action.EditPropertiyViewList) {
-            EditPropertiyViewList = action.EditPropertiyViewList.map(m => pageAxis.getView(m));
+        let editPropertiyViewList = null;
+        if (action.editPropertiyViewList) {
+            editPropertiyViewList = action.editPropertiyViewList.map(m => pageAxis.getProperty(m));
         }
 
-        action.Parameters = { EditView, EditPropertiyViewList, setRequestEntityData, setgetEntityDataLoad };
+        action.parameters = { editView, editPropertiyViewList, setRequestEntityData, setGetEntityDataLoad };
     }
 
-    ClearPropertyValue(props, action) {
-        if (!action.Parameters) this.InitClearPropertyValue(props, action);
+    clearPropertyValue(props, action) {
+        if (!action.parameters) this.initClearPropertyValue(props, action);
 
         const { pageAxis, property } = props;
-        const { EditView } = action.Parameters;
+        const { editView } = action.parameters;
 
-        const properties = EditView.properties.filter(f => f.isClear);
+        const properties = editView.properties.filter(f => f.isClear);
 
-        if (property.ConfirmTip) pageAxis.Confirm(property.ConfirmTip, () => this.setPropertiesValue(properties));
+        if (property.confirmTip) pageAxis.confirm(property.confirmTip, () => this.setPropertiesValue(properties));
         else this.setPropertiesValue(properties)
     }
 
-    InitClearPropertyValue(props, action) {
+    initClearPropertyValue(props, action) {
         const { pageAxis } = props;
-        const EditView = pageAxis.getView(action.EditView);
+        const editView = pageAxis.getProperty(action.editView);
 
-        action.Parameters = { EditView };
+        action.parameters = { editView };
     }
 }

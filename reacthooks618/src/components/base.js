@@ -98,7 +98,7 @@ const renderActions = (actionList, record, property, pageId) => {
   const list = []
 
   for (let i = 0; i < actionList.length; i++) {
-    actionList[i].Params = record;
+    actionList[i].params = record;
     if (i > 0) list.push(<Divider type="vertical" key={i} />)
     if (actionList[i].isToPage) list.push(getLinkAction(actionList[i], record));
     else list.push(<PropertyItem property={actionList[i]} pageId={pageId} view={property} key={actionList[i].name} />)

@@ -52,8 +52,8 @@ function getButton2(name, label, buttonType, x, y) {
 function getEventActions() {
     return [{
         name: "login",
-        type: "EntityEdit/saveEntityData",
+        type: "entityEdit/saveEntityData",
         editView: "LoginView",
-        successCallback: "LoginSuccess"
+        successCallback: "loginSuccess"
     }]
 }

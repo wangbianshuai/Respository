@@ -28,7 +28,7 @@ function getEditView() {
         type: "RowsColsView",
         isForm: true,
         isClear: true,
-        SuccessTip: "修改成功",
+        successTip: "修改成功",
         saveEntityDataActionType: dataActionTypes.changePassword,
         properties: assignProporties({ name: "changePassword" }, getProperties())
     }
@@ -74,7 +74,7 @@ function getTextBox2(name, label, x, y, contorlType, placeHolder, maxLength, isN
 function getEventActions() {
     return [{
         name: "saveEntityData",
-        type: "EntityEdit/saveEntityData",
+        type: "entityEdit/saveEntityData",
         editView: "ChangePasswordView2"
     }]
 }

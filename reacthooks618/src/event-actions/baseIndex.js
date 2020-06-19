@@ -2,7 +2,7 @@ import { Common, Validate } from "UtilsCommon";
 
 export default class BaseIndex {
 
-    isSuccessNextsProps(obj, Alert, AlertMessage) {
+    isSuccessNextsProps(obj, alert, alertMessage) {
         let isSuccess = obj && obj.isSuccess !== false;
         let msg = "";
         if (!isSuccess) msg = obj.message;
@@ -10,12 +10,12 @@ export default class BaseIndex {
             isSuccess = Common.getIntValue(obj.code) === 0;
             if (!isSuccess) msg = obj.message;
         }
-        if (!isSuccess && msg) this.Alert(msg, Alert, AlertMessage);
+        if (!isSuccess && msg) this.alert(msg, alert, alertMessage);
 
         return isSuccess;
     }
 
-    Alert(msg, alert2, alertMessage) {
+    alert(msg, alert2, alertMessage) {
         if (alertMessage) alertMessage.setValue(msg);
         else if (alert2) alert2(msg);
         else alert(msg);
@@ -31,7 +31,7 @@ export default class BaseIndex {
         return selectList;
     }
 
-    getPropertyValues(properties, eventActions) {
+    getPropertyValues(properties, pageAxis) {
         const data = {};
         let name = "", p = null, v = null, msg = "";
 
@@ -54,7 +54,7 @@ export default class BaseIndex {
             else if (p.getValue) {
                 v = p.getValue();
                 let isNullable = p.isJudgeNullable === false || p.isNullable;
-                if (!isNullable && p.DataType === "Array" && (Common.isNullOrEmpty(v) || v.length === 0)) {
+                if (!isNullable && p.dataType === "Array" && (Common.isNullOrEmpty(v) || v.length === 0)) {
                     msg = p.nullTipMessage || "请选择" + p.label + "！"
                     break;
                 }
@@ -70,9 +70,9 @@ export default class BaseIndex {
                     msg = p.judgeNullable(v);
                     if (!Common.isNullOrEmpty(msg)) break;
                 }
-                else if (!Common.isNullOrEmpty(v) && p.ValidateNames) {
-                    for (let i = 0; i < p.ValidateNames.length; i++) {
-                        msg = this.ValidateValue(p.ValidateNames[i], v, p);
+                else if (!Common.isNullOrEmpty(v) && p.validateNames) {
+                    for (let i = 0; i < p.validateNames.length; i++) {
+                        msg = this.validateValue(p.validateNames[i], v, p);
                         if (Common.isNullOrEmpty(msg)) break;
                     };
 
@@ -82,23 +82,23 @@ export default class BaseIndex {
                 data[name] = v;
 
                 //目前主要是文本框带单位选择
-                if (p.PropertyName2 && p.getValue2) {
-                    data[p.PropertyName2] = p.getValue2();
+                if (p.propertyName2 && p.getValue2) {
+                    data[p.propertyName2] = p.getValue2();
                 }
             }
         }
 
-        if (!Common.isNullOrEmpty(msg)) { eventActions.Alert(msg); return false; }
+        if (!Common.isNullOrEmpty(msg)) { pageAxis.alert(msg); return false; }
 
         return data;
     }
 
-    ValidateValue(validateName, v, p) {
+    validateValue(validateName, v, p) {
         if (!Validate[validateName]) return "";
 
         var msg = Validate[validateName](v);
         if (msg === true) msg = ""
-        else if (p.ValidateTipMessage) msg = p.ValidateTipMessage;
+        else if (p.validateTipMessage) msg = p.validateTipMessage;
 
         return msg;
     }
@@ -119,10 +119,10 @@ export default class BaseIndex {
         });
     }
 
-    setViewPropertiesexpanded(properties, isexpanded) {
+    setViewPropertiesexpanded(properties, isExpanded) {
         properties.forEach(p => {
-            if (p.setexpanded) p.setexpanded(isexpanded);
-            else p.isexpanded = isexpanded;
+            if (p.setExpanded) p.setExpanded(isExpanded);
+            else p.isExpanded = isExpanded;
         });
     }
 
@@ -142,8 +142,8 @@ export default class BaseIndex {
                 else p.value = v;
 
                 //目前主要是文本框带单位选择
-                if (p.PropertyName2) {
-                    v = data[p.PropertyName2];
+                if (p.propertyName2) {
+                    v = data[p.propertyName2];
                     if ((v === null || v === undefined) && p.DefaultValue2) v = p.DefaultValue2;
                     if (p.setValue2) p.setValue2(v);
                     else p.Value2 = v;
@@ -157,43 +157,43 @@ export default class BaseIndex {
         })
     }
 
-    ShowDialog(action, pageAxis, dialogView, onOk, setValue) {
-        if (!action.ModalDialog) {
-            action.ModalDialog = {
-                id: dialogView.DialogId, title: dialogView.DialogTitle, Visible: true,
-                Width: dialogView.DialogWidth,
-                style: dialogView.DialogStyle,
+    showdialog(action, pageAxis, dialogView, onOk, setValue) {
+        if (!action.modalDialog) {
+            action.modalDialog = {
+                id: dialogView.dialogId, title: dialogView.dialogTitle, Visible: true,
+                Width: dialogView.dialogWidth,
+                style: dialogView.dialogStyle,
                 bodyStyle: dialogView.bodyStyle,
                 Component: pageAxis.getReactComponent(dialogView),
                 isOk: !!onOk,
                 OnOk: onOk
             };
-            pageAxis.setModalDialog(action.ModalDialog);
+            pageAxis.setModalDialog(action.modalDialog);
         }
         else {
             setValue && setValue();
-            action.ModalDialog.setVisible(true);
+            action.modalDialog.setVisible(true);
         }
     }
 
-    ReceiveDialogOkActionType(data, props, action) {
+    receiveDialogOkActionType(data, props, action) {
         action.OkProperty.setDisabled(false);
-        const { AlertMessage, dataGridView, DialogView } = action.Parameters;
+        const { alertMessage, dataGridView, dialogView } = action.parameters;
         const { pageAxis } = props;
-        if (this.isSuccessNextsProps(data, pageAxis.Alert, null)) {
-            AlertMessage.setValue(DialogView.SuccessTip);
+        if (this.isSuccessNextsProps(data, pageAxis.alert, null)) {
+            alertMessage.setValue(dialogView.successTip);
             //刷新查询
             dataGridView.refresh();
-            action.ModalDialog.setVisible(false);
+            action.modalDialog.setVisible(false);
         }
 
         return false;
     }
 
-    getViewPropertiesValue(properties, eventActions) {
+    getPropertyPropertiesValue(properties, pageAxis) {
         const editProperties = properties.filter(f => f.isEdit && !f.isView && f.isVisible !== false);
 
-        let entityData = this.getPropertyValues(editProperties, eventActions);
+        let entityData = this.getPropertyValues(editProperties, pageAxis);
 
         if (entityData === false) return entityData;
 
@@ -202,7 +202,7 @@ export default class BaseIndex {
 
         let viewPropertyData = null;
         for (let i = 0; i < viewProperties.length; i++) {
-            viewPropertyData = this.getViewPropertiesValue(viewProperties[i].properties, eventActions);
+            viewPropertyData = this.getPropertyPropertiesValue(viewProperties[i].properties, pageAxis);
             if (viewPropertyData === false) { entityData = viewPropertyData; break; }
             else for (let key in viewPropertyData) entityData[key] = viewPropertyData[key];
         }

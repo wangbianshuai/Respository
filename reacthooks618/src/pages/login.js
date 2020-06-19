@@ -21,14 +21,14 @@ export default (props) => {
 }
 
 function init() {
-    Common.removeStorage("Token");
+    Common.removeStorage("token");
     this.setActionState("AdminUserService", "login");
     this.loginSuccess = loginSuccess;
 }
 
 function loginSuccess({ data }) {
     Common.setStorage("LoginUserInfo", JSON.stringify(data));
-    Common.setStorage("LoginUserId", data.AdminUserId);
+    Common.setStorage("loginUserId", data.AdminUserId);
     Common.setStorage("AppAccountId", data.AppAccountId);
     const url = "/personCenter/appAccountInfo";
     PageCommon.toPage(url);

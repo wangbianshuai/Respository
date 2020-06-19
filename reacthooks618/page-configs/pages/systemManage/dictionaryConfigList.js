@@ -32,8 +32,8 @@ function getSearchOperationView() {
             eventActionName: "DeleteDictionaryConfig",
             colStyle: { paddingLeft: 0 },
             dataActionType: dataActionTypes.deleteEntityData,
-            SuccessTip: "删除成功！",
-            ConfirmTip: "请确认是否删除当前键值配置？",
+            successTip: "删除成功！",
+            confirmTip: "请确认是否删除当前键值配置？",
             ...getButton("DeleteDictionaryConfig", "删除", "default", 1, 4)
         },
         getKeyword()
@@ -56,7 +56,7 @@ function getKeyword() {
 function getAlert() {
     return {
         name: "alertMessage",
-        type: "Alert"
+        type: "alert"
     }
 }
 
@@ -86,19 +86,19 @@ function getEventActions() {
     },
     {
         name: "ToEditPage",
-        type: "Page/ToPage",
+        type: "Page/toPage",
         pageUrl: "/systemManage/DictionaryConfigEdit"
     },
     {
         name: "EditDictionaryConfig",
-        type: "dataGridView/SelectRowToPage",
+        type: "dataGridView/selectRowToPage",
         dataGridView: "DataGridView1",
         alertMessage: "alertMessage",
-        pageUrl: "/systemManage/DictionaryConfigEdit?DictionaryConfigId=#{DictionaryConfigId}&MenuName=" + escape("修改")
+        pageUrl: "/systemManage/DictionaryConfigEdit?DictionaryConfigId=#{DictionaryConfigId}&menuName=" + escape("修改")
     },
     {
         name: "DeleteDictionaryConfig",
-        type: "DataGrid/BatchUpdateRowDataList",
+        type: "DataGrid/batchUpdateRowDataList",
         dataGridView: "DataGridView1",
         alertMessage: "alertMessage"
     }]

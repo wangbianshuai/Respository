@@ -4,53 +4,53 @@ import { Common } from "UtilsCommon";
 export default class dataGridView extends BaseIndex {
 
     searchQuery(props, action) {
-        if (!action.Parameters) this.initSearchQueryAction(props, action);
+        if (!action.parameters) this.initSearchQueryAction(props, action);
 
         else action.isSearch = props.property.type !== "dataGridView";
-        this.SearchData(props, action.Parameters, props.pageIndex || 1, props.pageSize || 10, action.isClearQuery);
+        this.searchData(props, action.parameters, props.pageIndex || 1, props.pageSize || 10, action.isClearQuery);
     }
 
     initSearchQueryAction(props, action) {
         const { property, pageAxis } = props;
         //判断props.property 是 查询按钮或搜索框 还是DataGridView
-        const dataGridView = property.type === "dataGridView" ? property : pageAxis.getComponent(action.dataGridView);
-        const SearchButton = property.type === "dataGridView" ? pageAxis.getControl(action.SearchButton) : property;
-        const SearchView = pageAxis.getComponent(action.SearchView);
-        const AlertMessage = pageAxis.getControl(action.AlertMessage);
+        const dataGridView = property.type === "dataGridView" ? property : pageAxis.getProperty(action.dataGridView);
+        const searchButton = property.type === "dataGridView" ? pageAxis.getProperty(action.searchButton) : property;
+        const searchView = pageAxis.getProperty(action.searchView);
+        const alertMessage = pageAxis.getProperty(action.alertMessage);
         const expandSearchQueryLoad = pageAxis.getFunction(action.expandSearchQueryLoad)
-        action.Parameters = { dataGridView, SearchButton, SearchView, AlertMessage, expandSearchQueryLoad }
+        action.parameters = { dataGridView, searchButton, searchView, alertMessage, expandSearchQueryLoad }
     }
 
-    SearchData(props, parameters, pageIndex, pageSize, isClearQuery) {
-        const { dataGridView, SearchButton } = parameters;
-        const { actionTypes, Invoke, EntitySearchQuery } = dataGridView;
+    searchData(props, parameters, pageIndex, pageSize, isClearQuery) {
+        const { dataGridView, searchButton } = parameters;
+        const { actionTypes, invokeDataAction, entitySearchQuery } = dataGridView;
         const { searchQuery } = actionTypes;
         const { pageAxis, isData } = props;
 
-        const ConditionList = this.getConditionList(parameters, isClearQuery);
-        if (ConditionList === false) return;
+        const conditionList = this.getConditionList(parameters, isClearQuery);
+        if (conditionList === false) return;
 
         const queryInfo = this.getQueryInfo(dataGridView);
-        queryInfo.WhereFields = ConditionList;
+        queryInfo.WhereFields = conditionList;
 
-        dataGridView.SearchButton = SearchButton;
+        dataGridView.searchButton = searchButton;
         dataGridView.setDataLoading(true);
-        dataGridView.QueryInfo = queryInfo;
+        dataGridView.queryInfo = queryInfo;
         dataGridView.pageSize = pageSize;
-        SearchButton && SearchButton.setDisabled(true);
+        searchButton && searchButton.setDisabled(true);
 
-        const data = { EntitySearchQuery, entity: dataGridView.entity, isData, pageIndex: pageIndex, pageSize: pageSize, QueryInfo: queryInfo, pageData: pageAxis.pageData }
+        const data = { entitySearchQuery, entity: dataGridView.entity, isData, pageIndex, pageSize, queryInfo, pageData: pageAxis.pageData }
 
-        Invoke(searchQuery, data);
+        invokeDataAction(searchQuery, data);
     }
 
     receiveSearchQuery(data, props) {
         const { pageAxis, property, isData } = props;
         const action = pageAxis.getAction(property.eventActionName);
-        if (!action.Parameters) this.initSearchQueryAction(props, action);
-        const { AlertMessage, expandSearchQueryLoad } = action.Parameters;
+        if (!action.parameters) this.initSearchQueryAction(props, action);
+        const { alertMessage, expandSearchQueryLoad } = action.parameters;
 
-        const SearchButton = property.SearchButton || action.Parameters.SearchButton;
+        const searchButton = property.searchButton || action.parameters.searchButton;
 
         let pageRecord = data.pageRecord || 0;
         if (data.pageInfo) pageRecord = data.pageInfo.pageRecord;
@@ -59,40 +59,41 @@ export default class dataGridView extends BaseIndex {
         let msg = ""
         if (data.isSuccess === false) {
             msg = data.message;
-            if (!AlertMessage) this.Alert(msg, pageAxis.ShowMessage);
+            if (!alertMessage) this.alert(msg, pageAxis.showMessage);
         }
         else if ((action.isSearch || !action.isQuery) && !isData) msg = `符合当前查询条件的结果总计${pageRecord}条！`;
 
         action.isQuery = true;
 
-        if (msg && AlertMessage) AlertMessage.setValue(msg);
+        if (msg && alertMessage) alertMessage.setValue(msg);
 
         //设置搜索按钮
-        SearchButton && SearchButton.setDisabled(false);
+        searchButton && searchButton.setDisabled(false);
 
         if (expandSearchQueryLoad) expandSearchQueryLoad({ data, props })
     }
 
     getConditionList(parameters, isClearQuery) {
-        const { SearchView } = parameters;
-        if (!SearchView) return {};
+        const { searchView } = parameters;
+        if (!searchView) return {};
 
         const conditionList = [];
-        SearchView.properties.forEach(p => {
+        searchView.properties.forEach(p => {
             const name = p.propertyName || p.name;
-            if (p.isCondition && p.getValue) conditionList.push({ name: name, label: p.label, OperateLogic: p.OperateLogic || "=", DataType: p.DataType || "string", value: this.getPropertyValues(p, isClearQuery) });
+            if (p.isCondition && p.getValue) conditionList.push({ Name: name, Label: p.label, OperateLogic: p.operateLogic || "=",
+             DataType: p.dataType || "string", Value: this.getPropertyValues(p, isClearQuery) });
         });
 
-        if (Common.isArray(SearchView.DefaultConditions)) {
-            SearchView.DefaultConditions.forEach(p => {
+        if (Common.isArray(searchView.DefaultConditions)) {
+            searchView.DefaultConditions.forEach(p => {
                 var condition = {
-                    name: p.name,
-                    label: p.label,
+                    Name: p.name,
+                    Label: p.label,
                     OperateLogic: p.OperateLogic || "=",
-                    DataType: p.DataType || "string",
-                    value: p.defaultValue
+                    DataType: p.dataType || "string",
+                    Value: p.defaultValue
                 }
-                if (p.isCurrentUser) condition.value = Common.getStorage("LoginUserId");
+                if (p.isCurrentUser) condition.value = Common.getStorage("loginUserId");
 
                 if (!Common.isNullOrEmpty(condition.value)) conditionList.push(condition)
             });
@@ -155,11 +156,11 @@ export default class dataGridView extends BaseIndex {
     }
 
     getConditions(parameters) {
-        const { SearchView } = parameters;
-        if (!SearchView) return {};
+        const { searchView } = parameters;
+        if (!searchView) return {};
 
         const condition = {};
-        SearchView.properties.forEach(p => {
+        searchView.properties.forEach(p => {
             const name = p.propertyName || p.name;
             if (p.isCondition && p.getValue) condition[name] = p.getValue();
         });
@@ -171,22 +172,22 @@ export default class dataGridView extends BaseIndex {
 
     }
 
-    SelectRowToPage(props, action) {
-        if (!action.Parameters) this.SelectRowToPageAction(props, action);
+    selectRowToPage(props, action) {
+        if (!action.parameters) this.selectRowToPageAction(props, action);
 
-        const { dataGridView, AlertMessage, setPageUrl } = action.Parameters;
+        const { dataGridView, alertMessage, setPageUrl } = action.parameters;
         const { pageAxis, property } = props;
 
         var data = null;
-        if (property.Params) data = property.Params;
+        if (property.params) data = property.params;
         else {
             const selectDataList = dataGridView.getSelectDataList();
             if (selectDataList.length === 0) {
-                this.Alert("请选择记录再操作！", pageAxis.ShowMessage, AlertMessage)
+                this.alert("请选择记录再操作！", pageAxis.showMessage, alertMessage)
                 return;
             }
 
-            if (selectDataList.length > 0 && AlertMessage) AlertMessage.setValue("")
+            if (selectDataList.length > 0 && alertMessage) alertMessage.setValue("")
 
             data = selectDataList[0];
         }
@@ -204,73 +205,73 @@ export default class dataGridView extends BaseIndex {
         }
         else url = Common.replaceDataContent(data, action.pageUrl, true);
 
-        const expandsetPageUrl = pageAxis.getFunction(action.expandsetPageUrl);
-        if (expandsetPageUrl) url = expandsetPageUrl(url);
+        const expandSetPageUrl = pageAxis.getFunction(action.expandSetPageUrl);
+        if (expandSetPageUrl) url = expandSetPageUrl(url);
 
-        if (action.isOpenUrl) pageAxis.OpenPage(url)
-        else pageAxis.ToPage(url)
+        if (action.isOpenUrl) pageAxis.openPage(url)
+        else pageAxis.toPage(url)
     }
 
-    AlertByRowData(props, action) {
-        if (!action.Parameters) this.AlertByRowDataAction(props, action);
+    alertByRowData(props, action) {
+        if (!action.parameters) this.alertByRowDataAction(props, action);
 
-        const { dataGridView, AlertMessage } = action.Parameters;
+        const { dataGridView, alertMessage } = action.parameters;
         const { pageAxis } = props;
 
         const selectDataList = dataGridView.getSelectDataList();
         if (selectDataList.length === 0) {
-            this.Alert("请选择记录再操作！", pageAxis.ShowMessage, AlertMessage)
+            this.alert("请选择记录再操作！", pageAxis.showMessage, alertMessage)
             return;
         }
 
         const data = selectDataList[0];
 
-        const { StatusName, StatusValue, nullTipMessage } = action;
-        if (StatusName && StatusValue) {
-            if (!Common.isEquals(data[StatusName], StatusValue)) {
-                pageAxis.Alert(nullTipMessage);
+        const { statusName, statusValue, nullTipMessage } = action;
+        if (statusName && statusValue) {
+            if (!Common.isEquals(data[statusName], statusValue)) {
+                pageAxis.alert(nullTipMessage);
                 return;
             }
         }
 
         const msg = Common.replaceDataContent(data, action.TipMessage);
-        pageAxis.Alert(msg, action.title)
+        pageAxis.alert(msg, action.title)
     }
 
-    SelectRowToPageAction(props, action) {
+    selectRowToPageAction(props, action) {
         const { pageAxis } = props;
-        const dataGridView = pageAxis.getComponent(action.dataGridView);
-        const AlertMessage = pageAxis.getControl(action.AlertMessage);
+        const dataGridView = pageAxis.getProperty(action.dataGridView);
+        const alertMessage = pageAxis.getProperty(action.alertMessage);
         const setPageUrl = pageAxis.getFunction(action.setPageUrl);
 
-        action.Parameters = { dataGridView, AlertMessage, setPageUrl }
+        action.parameters = { dataGridView, alertMessage, setPageUrl }
     }
 
-    AlertByRowDataAction(props, action) {
+    alertByRowDataAction(props, action) {
         const { pageAxis } = props;
-        const dataGridView = pageAxis.getComponent(action.dataGridView);
-        const AlertMessage = pageAxis.getControl(action.AlertMessage);
+        const dataGridView = pageAxis.getProperty(action.dataGridView);
+        const alertMessage = pageAxis.getProperty(action.alertMessage);
 
-        action.Parameters = { dataGridView, AlertMessage }
+        action.parameters = { dataGridView, alertMessage }
     }
 
-    ExcelExport(props, action) {
-        if (!action.Parameters) this.InitExcelExportActoin(props, action);
+    excelExport(props, action) {
+        if (!action.parameters) this.initExcelExportActoin(props, action);
 
-        const { dataGridView } = action.Parameters;
+        const { dataGridView } = action.parameters;
         const { pageAxis } = props;
 
-        if (dataGridView.getPageRecord() > 30000) { pageAxis.Alert("对不起，您要导出的数据量超过3万条，请先进行相应的数据筛选！"); return; }
+        if (dataGridView.getPageRecord() > 30000) { pageAxis.alert("对不起，您要导出的数据量超过3万条，请先进行相应的数据筛选！"); return; }
 
-        pageAxis.Confirm("确定将数据Excel导出吗？", () => this.ExecExcelExport(props, action));
+        pageAxis.confirm("确定将数据Excel导出吗？", () => this.execExcelExport(props, action));
     }
 
-    ExecExcelExport(props, action) {
-        const { dataGridView, expandsetExcelExportQueryInfo } = action.Parameters;
+    execExcelExport(props, action) {
+        const { dataGridView, expandSetExcelExportQueryInfo } = action.parameters;
         const { pageAxis, property } = props;
 
-        const { actionTypes, Invoke, EntityExcelExport } = dataGridView;
-        const { ExcelExport } = actionTypes;
+        const { actionTypes, invokeDataAction, entityExcelExport } = dataGridView;
+        const { excelExport } = actionTypes;
 
         const title = dataGridView.title || dataGridView.entity.name;
 
@@ -281,51 +282,51 @@ export default class dataGridView extends BaseIndex {
             p = properties[i];
             if (p.isData !== false) {
                 header = {};
-                header.label = p.label;
-                header.name = p.name;
+                header.Label = p.label;
+                header.Name = p.name;
                 header.Width = p.columnWidth || 0;
                 headerList.push(header);
             }
         }
 
-        let queryInfo = Common.clone(dataGridView.QueryInfo);
+        let queryInfo = Common.clone(dataGridView.queryInfo);
         queryInfo.HeaderInfos = headerList;
 
-        if (expandsetExcelExportQueryInfo) queryInfo = expandsetExcelExportQueryInfo(queryInfo);
+        if (expandSetExcelExportQueryInfo) queryInfo = expandSetExcelExportQueryInfo(queryInfo);
         if (queryInfo === false) return;
 
         property && property.setDisabled(true);
-        dataGridView.ExcelExportButton = property;
+        dataGridView.excelExportButton = property;
 
-        const data = { EntityExcelExport, title, entity: dataGridView.entity, pageIndex: 1, pageSize: dataGridView.pageSize, QueryInfo: queryInfo, pageData: pageAxis.pageData }
+        const data = { entityExcelExport, title, entity: dataGridView.entity, pageIndex: 1, pageSize: dataGridView.pageSize, queryInfo, pageData: pageAxis.pageData }
 
-        Invoke(ExcelExport, data);
+        invokeDataAction(excelExport, data);
     }
 
     InitExcelExportActoin(props, action) {
         const { pageAxis } = props;
-        const dataGridView = pageAxis.getComponent(action.dataGridView);
+        const dataGridView = pageAxis.getProperty(action.dataGridView);
 
-        const expandsetExcelExportQueryInfo = pageAxis.getFunction(action.expandsetExcelExportQueryInfo);
+        const expandSetExcelExportQueryInfo = pageAxis.getFunction(action.expandSetExcelExportQueryInfo);
 
-        action.Parameters = { dataGridView, expandsetExcelExportQueryInfo }
+        action.parameters = { dataGridView, expandSetExcelExportQueryInfo }
     }
 
     receiveExcelExport(data, props) {
         const { pageAxis, property } = props;
 
         //设置导出按钮
-        property.ExcelExportButton.setDisabled(false);
+        property.excelExportButton.setDisabled(false);
 
         if (data.isSuccess === false || !data.fileName) {
-            this.Alert(data.message || "导出失败！", pageAxis.ShowMessage);
+            this.alert(data.message || "导出失败！", pageAxis.showMessage);
             return;
         }
 
-        this.DownLoad(property.ExcelExportButton.title, data.fileName)
+        this.downLoad(property.excelExportButton.title, data.fileName)
     }
 
-    DownLoad(title, fileName) {
+    downLoad(title, fileName) {
         title += "_" + Common.createGuid().substr(0, 8).toUpperCase();
         var url = window.routerBase + `download/${title}.xlsx?fn=${fileName}`;
         window.open(url, "_self");

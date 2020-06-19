@@ -39,8 +39,8 @@ function getSearchOperationView() {
             {
                 eventActionName: "reSend", ...getButton("reSend", "重发", "primary", 3, 1), style: { marginLeft: 16, marginBottom: 16 },
                 dataActionType: dataActionTypes.reSend,
-                SuccessTip: "重发成功！",
-                ConfirmTip: "请确认是否重发选择请求服务？",
+                successTip: "重发成功！",
+                confirmTip: "请确认是否重发选择请求服务？",
             },
         ])
     }
@@ -135,13 +135,13 @@ function getEventActions() {
     },
     {
         name: "LookDetail",
-        type: "dataGridView/SelectRowToPage",
+        type: "dataGridView/selectRowToPage",
         dataGridView: "DataGridView1",
-        pageUrl: "/systemManage/requestServiceLogEdit?LogId=#{LogId}&MenuName=" + escape("查看")
+        pageUrl: "/systemManage/requestServiceLogEdit?LogId=#{LogId}&menuName=" + escape("查看")
     },
     {
         name: "reSend",
-        type: "DataGrid/BatchUpdateRowDataList",
+        type: "DataGrid/batchUpdateRowDataList",
         dataGridView: "DataGridView1"
     },
     {

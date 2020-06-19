@@ -10,12 +10,12 @@
 
 //         this.name = "PersonCenter_ChangePassword";
 
-//         this.InitEventAction();
+//         this.initEventAction();
 //     }
 
 //     render() {
 //         return (
-//             <Components.PropertyItem property={this.PageConfig} pageAxis={this.pageAxis} />
+//             <Components.PropertyItem property={this.pageConfig} pageAxis={this.pageAxis} />
 //         )
 //     }
 // }

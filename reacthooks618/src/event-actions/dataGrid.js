@@ -4,86 +4,86 @@ import { Common } from "UtilsCommon";
 export default class DataGrid extends BaseIndex {
 
     //批量更新行数据列表
-    BatchUpdateRowDataList(props, action) {
-        if (!action.Parameters) this.InitBatchUpdateRowDataListAction(props, action);
+    batchUpdateRowDataList(props, action) {
+        if (!action.parameters) this.initBatchUpdateRowDataListAction(props, action);
         const { pageAxis, property } = props;
 
-        const { dataGridView, AlertMessage, EntityProperties } = action.Parameters;
+        const { dataGridView, alertMessage, entityProperties } = action.parameters;
         const { DataActionType } = property;
 
         var selectDataList = null, selectRowKeys = null;
-        if (property.Params) {
-            selectDataList = [property.Params];
-            selectRowKeys = [property.Params[dataGridView.entity.primaryKey]];
+        if (property.params) {
+            selectDataList = [property.params];
+            selectRowKeys = [property.params[dataGridView.entity.primaryKey]];
         }
         else {
             selectRowKeys = dataGridView.getSelectedRowKeys();
             if (selectRowKeys.length === 0 && !property.isNoRowsSelected) {
-                this.Alert("请选择记录再操作！", pageAxis.ShowMessage, AlertMessage)
+                this.alert("请选择记录再操作！", pageAxis.showMessage, alertMessage)
                 return;
             }
 
             selectDataList = dataGridView.getSelectDataList();
 
-            if (selectRowKeys.length > 0 && AlertMessage) AlertMessage.setValue("")
+            if (selectRowKeys.length > 0 && alertMessage) alertMessage.setValue("")
         }
 
         //设置接收数据行数返回数据
-        pageAxis.Receives[DataActionType] = (d) => this.ReceiveBatchUpdateRowDataList(d, props, action)
+        pageAxis.receives[DataActionType] = (d) => this.receiveBatchUpdateRowDataList(d, props, action)
 
         let entityData = null;
-        if (EntityProperties) {
-            entityData = this.getPropertyValues(EntityProperties, pageAxis)
+        if (entityProperties) {
+            entityData = this.getPropertyValues(entityProperties, pageAxis)
         }
 
         const onOk = () => {
             property.setDisabled && property.setDisabled(true);
 
-            pageAxis.Invoke(DataActionType, { SelectRowKeys: selectRowKeys, entity: dataGridView.entity, EntityData: entityData, SelectDataList: selectDataList })
+            pageAxis.invokeDataAction(DataActionType, { selectRowKeys, entity: dataGridView.entity, entityData, selectDataList })
         };
 
-        if (property.ConfirmTip) pageAxis.Confirm(property.ConfirmTip, onOk);
+        if (property.confirmTip) pageAxis.confirm(property.confirmTip, onOk);
         else onOk();
     }
 
-    ReceiveBatchUpdateRowDataList(data, props, action) {
-        const { AlertMessage, dataGridView } = action.Parameters;
+    receiveBatchUpdateRowDataList(data, props, action) {
+        const { alertMessage, dataGridView } = action.parameters;
         const { pageAxis, property } = props;
 
         property.setDisabled && property.setDisabled(false);
 
-        if (this.isSuccessNextsProps(data, pageAxis.Alert, AlertMessage)) {
-            this.Alert(property.SuccessTip, pageAxis.ShowMessage, AlertMessage)
+        if (this.isSuccessNextsProps(data, pageAxis.alert, alertMessage)) {
+            this.alert(property.successTip, pageAxis.showMessage, alertMessage)
             //刷新查询
             dataGridView.refresh();
         }
         return false;
     }
 
-    InitBatchUpdateRowDataListAction(props, action) {
+    initBatchUpdateRowDataListAction(props, action) {
         const { pageAxis } = props;
-        const dataGridView = pageAxis.getComponent(action.dataGridView);
-        const AlertMessage = pageAxis.getControl(action.AlertMessage);
+        const dataGridView = pageAxis.getProperty(action.dataGridView);
+        const alertMessage = pageAxis.getProperty(action.alertMessage);
 
-        let EntityProperties = null;
-        if (action.EntityProperties) EntityProperties = action.EntityProperties.map(m => pageAxis.getProperty(m));
+        let entityProperties = null;
+        if (action.entityProperties) entityProperties = action.entityProperties.map(m => pageAxis.getProperty(m));
 
-        action.Parameters = { dataGridView, AlertMessage, EntityProperties }
+        action.parameters = { dataGridView, alertMessage, entityProperties }
     }
 
     setDataGridShowColumns(props, action) {
-        if (!action.Parameters) this.InitsetDataGridShowColumnsAction(props, action);
+        if (!action.parameters) this.initSetDataGridShowColumnsAction(props, action);
         const { pageAxis } = props;
 
-        const { dataGridView } = action.Parameters;
+        const { dataGridView } = action.parameters;
 
-        if (!action.Parameters.ColumnsView) action.Parameters.ColumnsView = this.InitColumnsView(dataGridView.name, dataGridView.properties);
+        if (!action.parameters.columnsView) action.parameters.columnsView = this.initColumnsView(dataGridView.name, dataGridView.properties);
 
-        const { ColumnsView } = action.Parameters;
+        const { columnsView } = action.parameters;
 
         const value = props.dataProperties.map(m => m.name);
-        const allSelect = ColumnsView.properties[0];
-        const colPropertery = ColumnsView.properties[1];
+        const allSelect = columnsView.properties[0];
+        const colPropertery = columnsView.properties[1];
         if (!colPropertery.setValue) colPropertery.value = value;
         else colPropertery.setValue(value);
 
@@ -108,47 +108,47 @@ export default class DataGrid extends BaseIndex {
         };
 
         const onOk = (e, p) => this.setSelectShowColumns(e, p, props, action);
-        this.ShowDialog(action, pageAxis, ColumnsView, onOk);
+        this.showdialog(action, pageAxis, columnsView, onOk);
     }
 
     setSelectShowColumns(e, p, props, action) {
         const { pageAxis } = props;
-        const { ColumnsView, dataGridView } = action.Parameters;
-        const colPropertery = ColumnsView.properties[1];
+        const { columnsView, dataGridView } = action.parameters;
+        const colPropertery = columnsView.properties[1];
         const value = colPropertery.getValue();
 
-        if (value.length === 0) { this.Alert("最少需选择一列！", pageAxis.Alert); return; }
+        if (value.length === 0) { this.alert("最少需选择一列！", pageAxis.alert); return; }
         dataGridView.setColumnsVisible2(value);
 
-        action.ModalDialog.setVisible(false);
+        action.modalDialog.setVisible(false);
     }
 
-    InitsetDataGridShowColumnsAction(props, action) {
+    initSetDataGridShowColumnsAction(props, action) {
         const { pageAxis } = props;
-        const dataGridView = pageAxis.getComponent(action.dataGridView);
+        const dataGridView = pageAxis.getProperty(action.dataGridView);
 
-        action.Parameters = { dataGridView }
+        action.parameters = { dataGridView }
     }
 
-    InitColumnsView(name, properties) {
-        const dataDataSource = properties.map(m => { return { value: m.name, text: m.label } })
+    initColumnsView(name, properties) {
+        const dataSource = properties.map(m => { return { value: m.name, text: m.label } })
         return {
-            name: name + "ColumnsView",
+            name: name + "columnsView",
             type: "View",
             isDiv: true,
             className: "divColumsView",
             id: Common.createGuid(),
-            DialogId: Common.createGuid(),
-            DialogWidth: 500,
-            DialogTitle: "自定义显示列",
-            DialogStyle: { maxHeight: 500, overflow: "auto" },
+            dialogId: Common.createGuid(),
+            dialogWidth: 500,
+            dialogTitle: "自定义显示列",
+            dialogStyle: { maxHeight: 500, overflow: "auto" },
             bodyStyle: { padding: "16px 32px", margin: 0 },
             properties: [{
                 id: Common.createGuid(),
                 name: name + "AllSelect",
                 type: "CheckBox",
-                CheckedValue: true,
-                UnCheckedValue: false,
+                checkedValue: true,
+                unCheckedValue: false,
                 text: "全选",
                 style: { width: "100%", borderTop: "1px solid #e8e8e8", color: "#1890ff", paddingTop: 8, paddingBottom: 10, background: "#fafafa" }
             }, {
@@ -156,7 +156,7 @@ export default class DataGrid extends BaseIndex {
                 name: name + "Columns",
                 type: "CheckBoxGroup",
                 isFlexColumn: true,
-                dataSource: dataDataSource
+                dataSource
             }]
         }
     }

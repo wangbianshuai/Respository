@@ -42,8 +42,8 @@ function getSearchOperationView() {
                 eventActionName: "DeleteAppAccount",
                 colStyle: { paddingLeft: 0 },
                 dataActionType: dataActionTypes.deleteEntityData,
-                SuccessTip: "删除成功！",
-                ConfirmTip: "请确认是否删除当前App账号？",
+                successTip: "删除成功！",
+                confirmTip: "请确认是否删除当前App账号？",
                 ...getButton("DeleteAppAccount", "删除", "default", 2, 4)
             },
             { eventActionName: "excelExport", title: "App账号", ...getButton("excelExport", "Excel导出", "default", 2, 5), Icon: "download", colStyle: { paddingLeft: 0 } }
@@ -83,13 +83,13 @@ function getDataGridView() {
         entity: entity,
         type: "dataGridView",
         entitySearchQuery: dataActionTypes.searchQuery,
-        EntityExcelExport: dataActionTypes.excelExport,
+        entityExcelExport: dataActionTypes.excelExport,
         eventActionName: "searchQuery",
         isDiv: true,
         className: "divInfoView3",
         isRowSelection: true,
         isSingleSelection: true,
-        properties: assignProporties(AppAccount, ["CompanyName", "PathName", "Address", "Linkman", "Phone", "StatusName",
+        properties: assignProporties(AppAccount, ["CompanyName", "PathName", "Address", "Linkman", "Phone", "statusName",
             { name: "CreateDate", OrderByType: "desc" }, getOperation(), { name: "RowVersion", isVisible: false }, { name: "Status", isVisible: false }])
     }
 }
@@ -112,7 +112,7 @@ function getUpdateAppAccountStatusAction(status) {
         eventActionName: "UpdateAppAccountStatus",
         type: "Popconfirm",
         dataActionType: dataActionTypes.UpdateAppAccountStatus,
-        SuccessTip: "操作成功！",
+        successTip: "操作成功！",
         title: "请确认是否" + (status === 1 ? "关闭" : "启用") + "当前App账号？"
     }
 }
@@ -140,23 +140,23 @@ function getEventActions() {
     },
     {
         name: "ToEditPage",
-        type: "Page/ToPage",
+        type: "Page/toPage",
         pageUrl: "/systemManage/AppAccountEdit"
     },
     {
         name: "EditAppAccount",
-        type: "dataGridView/SelectRowToPage",
+        type: "dataGridView/selectRowToPage",
         dataGridView: "DataGridView1",
-        pageUrl: "/systemManage/AppAccountEdit?AppAccountId=#{AppAccountId}&MenuName=" + escape("修改")
+        pageUrl: "/systemManage/AppAccountEdit?AppAccountId=#{AppAccountId}&menuName=" + escape("修改")
     },
     {
         name: "UpdateAppAccountStatus",
-        type: "DataGrid/BatchUpdateRowDataList",
+        type: "DataGrid/batchUpdateRowDataList",
         dataGridView: "DataGridView1"
     },
     {
         name: "DeleteAppAccount",
-        type: "DataGrid/BatchUpdateRowDataList",
+        type: "DataGrid/batchUpdateRowDataList",
         dataGridView: "DataGridView1"
     }]
 }

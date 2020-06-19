@@ -72,8 +72,8 @@ class PageAxis {
     initSet() {
         this.pageConfig = Common.clone(this.pageConfig);
 
-        this.token = Common.getStorage("Token");
-        this.loginUserId = Common.getStorage("LoginUserId");
+        this.token = Common.getStorage("token");
+        this.loginUserId = Common.getStorage("loginUserId");
 
         this.receives = {};
         this.controls = [];
@@ -92,7 +92,7 @@ class PageAxis {
     }
 
     getProperty(name) {
-        return this.getViewProperty(this.pageConfig, name);
+        return this.getPropertyProperty(this.pageConfig, name);
     }
 
     getRight(name) {
@@ -104,14 +104,14 @@ class PageAxis {
         return (params) => this[name](params);
     }
 
-    getViewProperty(view, name) {
+    getPropertyProperty(view, name) {
         if (!name) return null;
         if (view.name === name) return view;
 
         if (view.properties) {
             let v = null;
             for (let i = 0; i < view.properties.length; i++) {
-                v = this.getViewProperty2(view.properties[i], name);
+                v = this.getPropertyProperty2(view.properties[i], name);
                 if (v !== null) break;
             }
             if (v != null) return v;
@@ -119,7 +119,7 @@ class PageAxis {
         if (this.pageConfig.dialogViews) {
             let v = null;
             for (let i = 0; i < this.pageConfig.dialogViews.length; i++) {
-                v = this.getViewProperty2(this.pageConfig.dialogViews[i], name);
+                v = this.getPropertyProperty2(this.pageConfig.dialogViews[i], name);
                 if (v !== null) break;
             }
             if (v != null) return v;
@@ -127,13 +127,13 @@ class PageAxis {
         return null;
     }
 
-    getViewProperty2(view, name) {
+    getPropertyProperty2(view, name) {
         if (view.name === name) return view;
 
         if (view.properties) {
             let v = null;
             for (let i = 0; i < view.properties.length; i++) {
-                v = this.getViewProperty2(view.properties[i], name);
+                v = this.getPropertyProperty2(view.properties[i], name);
                 if (v !== null) break;
             }
             return v;

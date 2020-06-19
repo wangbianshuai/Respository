@@ -13,33 +13,29 @@ export default class LeftRightLayout extends Component {
 
         this.state = {
             collapsed: false,
-            MenuList: [],
-            OpenKeys: null,
+            menuList: [],
+            openKeys: null,
             loading: false
         };
 
-        this.NavSelectedKeys = [];
-        this.OpenKeys = [];
-        this.MenuList = [];
-        this.DefaultPageName = "/MessageManage/MessageConfigInput";
-        this.Token = Common.getCookie("Token");
-        this.JudgeLogin();
+        this.navSelectedKeys = [];
+        this.openKeys = [];
+        this.menuList = [];
+        this.defaultPageName = "/personCenter/appAccountInfo";
+        this.token = Common.getCookie("token");
+        this.judgeLogin();
         this.pageData = {};
-        this.id = Common.getStorage("LoginUserId");
-        this.LoginUser = this.getLoginUser();
+        this.id = Common.getStorage("loginUserId");
+        this.loginUser = this.getLoginUser();
 
-        this.Init();
+        this.init();
     }
 
     Init() {
         const menuConfig = MenuConfig();
-        this.NavMenuList = menuConfig.NavMenuList;
-        this.Menus = menuConfig.Menus;
-        this.UserMenuRight = null;
-
-        this.Menus2 = {};
-        this.RightConfig2 = {};
-        for (var key in this.Menus) this.Menus2[this.Menus[key].MenuName] = key;
+        this.navMenuList = menuConfig.navMenuList;
+        this.menus = menuConfig.menus;
+        this.userMenuRight = null;
     }
 
     getLoginUser() {
@@ -49,7 +45,7 @@ export default class LeftRightLayout extends Component {
         return JSON.parse(info);
     }
 
-    Alert(msg, title) {
+    alert(msg, title) {
         Modal.info({
             title: title || "提示",
             content: msg
@@ -58,51 +54,10 @@ export default class LeftRightLayout extends Component {
 
     shouldComponentUpdate(nextProps, nextState) {
         if (this.isDestory) return false;
-        const isLogin = this.JudgeLogin();
+        const isLogin = this.judgeLogin();
         if (!isLogin) return false;
 
         return true;
-    }
-
-    MapMenu(data) {
-        if (!data || data.isSuccess === false) return;
-
-        const { MenuKeys, PagePropertyNames } = RightConfig;
-
-        if (Common.isArray(data)) {
-            data.forEach(d => {
-                const RightPropertyNames = d.RightPropertyNames;
-
-                //获取对应的菜单名
-                let menuName = "";
-                for (let key in MenuKeys) { if (MenuKeys[key] === d.Key) { menuName = key; break; } }
-                d.Key = menuName;
-
-                //获取属性权限
-                const names = PagePropertyNames[d.Key];
-                if (names) {
-                    //有权限属性名集合
-                    const rightNameList = [], propertyNameList = [];
-                    const hasItem = Common.isArray(RightPropertyNames) && RightPropertyNames.length > 0;
-
-                    for (let key in names) {
-                        propertyNameList.push(key);
-                        if (this.RightConfig2[key]) rightNameList.push(key);
-                        else if (hasItem && RightPropertyNames.indexOf(names[key]) >= 0) rightNameList.push(key);
-                    }
-
-                    //权限属性名集合
-                    d.RightPropertyNames = rightNameList;
-                    //参与权限设置属性名集合
-                    d.propertyNames = propertyNameList;
-                }
-            })
-        }
-    }
-
-    getPropsValue(key, defaultValue) {
-        const value = this[key]
-        return value && value.isSuccess !== false ? value : defaultValue;
     }
 
     toggle = () => {
@@ -112,32 +67,32 @@ export default class LeftRightLayout extends Component {
     getCurrentMenuSelectedKeys() {
         let pathname = this.props.location.pathname;
         pathname = pathname.replace(".html", "");
-        let keys = pathname === "/" || pathname === "/index" ? [this.DefaultPageName] : [pathname];
+        let keys = pathname === "/" || pathname === "/index" ? [this.defaultPageName] : [pathname];
 
         var pageName = keys.length > 0 ? keys[0] : "";
 
-        this.QueryString = Common.getQueryString();
+        this.queryString = Common.getQueryString();
         this.pageData = Common.getPageData();
 
-        this.getNavMenuList();
+        this.getnavMenuList();
 
         let nav = null, menu = null, childMenu = null;
         let blExists = false;
-        for (let i = 0; i < this.NavMenuList.length; i++) {
-            nav = this.NavMenuList[i];
-            if (!nav.isRight || !this.JudgeVisible(nav)) continue;
-            for (let j = 0; j < nav.MenuList.length; j++) {
-                menu = nav.MenuList[j];
-                if (menu.Children) {
+        for (let i = 0; i < this.navMenuList.length; i++) {
+            nav = this.navMenuList[i];
+            if (!nav.isRight || !this.judgeVisible(nav)) continue;
+            for (let j = 0; j < nav.menuList.length; j++) {
+                menu = nav.menuList[j];
+                if (menu.children) {
                     if (!menu.isRight) continue;
-                    for (let n = 0; n < menu.Children.length; n++) {
-                        if (Common.isEquals(menu.Children[n].PageName, pageName, true) && menu.Children[n].isRight) {
-                            childMenu = menu.Children[n];
+                    for (let n = 0; n < menu.children.length; n++) {
+                        if (Common.isEquals(menu.children[n].pageName, pageName, true) && menu.children[n].isRight) {
+                            childMenu = menu.children[n];
                             blExists = true;
                         }
                     }
                 }
-                else if (Common.isEquals(menu.PageName, pageName, true) && menu.isRight) blExists = true;
+                else if (Common.isEquals(menu.pageName, pageName, true) && menu.isRight) blExists = true;
 
                 if (blExists) break;
             }
@@ -145,76 +100,76 @@ export default class LeftRightLayout extends Component {
             if (blExists) break;
         }
 
-        this.BreadcrumbList = [];
+        this.breadcrumbList = [];
 
         if (!blExists) nav = null;
 
         var nav2 = nav;
-        if (this.SelectNav === nav2) this.SelectNav = null;
-        else if (this.SelectNav) {
-            nav2 = this.SelectNav;
+        if (this.selectNav === nav2) this.selectNav = null;
+        else if (this.selectNav) {
+            nav2 = this.selectNav;
             blExists = false;
         }
 
         this.isRight = blExists;
 
-        this.MenuList = nav2 != null ? nav2.MenuList : [];
-        this.NavSelectedKeys = nav2 != null ? [nav2.MenuName] : [];
+        this.menuList = nav2 != null ? nav2.menuList : [];
+        this.navSelectedKeys = nav2 != null ? [nav2.menuName] : [];
 
         if (blExists) {
-            if (childMenu != null) this.OpenKeys = [menu.MenuName];
-            else if (menu.OpenKey) this.OpenKeys = [menu.OpenKey];
-            else this.OpenKeys = [];
+            if (childMenu != null) this.openKeys = [menu.menuName];
+            else if (menu.openKey) this.openKeys = [menu.openKey];
+            else this.openKeys = [];
 
-            this.AddBreadcrumb(nav.MenuName);
-            if (menu.ParentMenuName) {
-                this.isRight = this.getParentMenuRight(menu.ParentMenuName);
-                this.AddBreadcrumb(menu.ParentMenuName, menu.ParentPageName, menu.ParentQueryString);
+            this.addBreadcrumb(nav.menuName);
+            if (menu.parentMenuName) {
+                this.isRight = this.getParentMenuRight(menu.parentMenuName);
+                this.addBreadcrumb(menu.parentMenuName, menu.parentPageName, menu.parentQueryString);
             }
-            this.AddBreadcrumb(menu.MenuName, null, null, menu.isgetMenuName);
+            this.addBreadcrumb(menu.menuName, null, null, menu.isGetMenuName);
             if (childMenu != null) {
-                if (childMenu.ParentMenuName) {
-                    this.AddBreadcrumb(childMenu.ParentMenuName, childMenu.ParentPageName, childMenu.ParentQueryString);
-                    this.isRight = this.getParentMenuRight(menu.ParentMenuName);
+                if (childMenu.parentMenuName) {
+                    this.addBreadcrumb(childMenu.parentMenuName, childMenu.parentPageName, childMenu.parentQueryString);
+                    this.isRight = this.getParentMenuRight(menu.parentMenuName);
                 }
-                this.AddBreadcrumb(childMenu.MenuName, null, null, childMenu.isgetMenuName);
+                this.addBreadcrumb(childMenu.menuName, null, null, childMenu.isGetMenuName);
             }
         }
 
         if (blExists && !this.isRight) {
-            this.MenuList = [];
-            this.NavSelectedKeys = [];
-            this.BreadcrumbList = [];
-            this.OpenKeys = [];
+            this.menuList = [];
+            this.navSelectedKeys = [];
+            this.breadcrumbList = [];
+            this.openKeys = [];
             blExists = false;
         }
 
         if (this.isOnOpenChange) this.setOpenChange();
 
         if (blExists) {
-            if (childMenu != null) return [childMenu.ParentPageName || childMenu.PageName];
-            else if (menu != null) return [menu.ParentPageName || menu.PageName];
+            if (childMenu != null) return [childMenu.parentPageName || childMenu.pageName];
+            else if (menu != null) return [menu.parentPageName || menu.pageName];
         }
 
         return keys;
     }
 
-    getNavMenuList() {
-        if (this.issetRight) return;
+    getnavMenuList() {
+        if (this.isSetRight) return;
 
-        for (var key in this.Menus) this.Menus[key].isRight = true;
+        for (var key in this.menus) this.menus[key].isRight = true;
 
-        this.issetRight = true;
+        this.isSetRight = true;
     }
 
     getParentMenuRight(menuName) {
         let menu = null;
-        for (let j = 0; j < this.MenuList.length; j++) {
-            menu = this.MenuList[j];
-            if (Common.isEquals(menu.MenuName, menuName, true)) return menu.isRight;
-            else if (menu.Children) {
-                for (let n = 0; n < menu.Children.length; n++) {
-                    if (Common.isEquals(menu.Children[n].MenuName, menuName, true)) return menu.Children[n].isRight;
+        for (let j = 0; j < this.menuList.length; j++) {
+            menu = this.menuList[j];
+            if (Common.isEquals(menu.menuName, menuName, true)) return menu.isRight;
+            else if (menu.children) {
+                for (let n = 0; n < menu.children.length; n++) {
+                    if (Common.isEquals(menu.children[n].menuName, menuName, true)) return menu.children[n].isRight;
                 }
             }
         }
@@ -222,15 +177,15 @@ export default class LeftRightLayout extends Component {
         return true;
     }
 
-    AddBreadcrumb(name, pageName, queryString, isgetMenuName) {
-        if (isgetMenuName && this.QueryString.MenuName) name = this.QueryString.MenuName
-        this.BreadcrumbList.push({ name: name, href: this.getHref(pageName, queryString) });
+    addBreadcrumb(name, pageName, queryString, isGetMenuName) {
+        if (isGetMenuName && this.queryString.menuName) name = this.queryString.menuName
+        this.breadcrumbList.push({ name: name, href: this.getHref(pageName, queryString) });
     }
 
     getHref(pageName, queryString) {
         let href = pageName;
         if (queryString) {
-            queryString = Common.replaceDataContent(this.QueryString, queryString);
+            queryString = Common.replaceDataContent(this.queryString, queryString);
             queryString = Common.replaceDataContent(this.pageData, queryString);
             href += queryString
         }
@@ -238,32 +193,32 @@ export default class LeftRightLayout extends Component {
     }
 
     setOpenChange() {
-        const { OpenKeys } = this.state;
-        const selectOpenKey = OpenKeys && OpenKeys.length > 0 ? OpenKeys[0] : "";
-        const openKey = this.OpenKeys && this.OpenKeys.length > 0 ? this.OpenKeys[0] : ""
-        if (selectOpenKey !== openKey) this.OpenKeys = OpenKeys;
+        const { openKeys } = this.state;
+        const selectOpenKey = openKeys && openKeys.length > 0 ? openKeys[0] : "";
+        const openKey = this.openKeys && this.openKeys.length > 0 ? this.openKeys[0] : ""
+        if (selectOpenKey !== openKey) this.openKeys = openKeys;
         this.isOnOpenChange = false;
     }
 
-    SelectMenuClick(item) {
+    selectMenuClick(item) {
         if (item.key === "ChangePassword") router.push("/personCenter/ChangePassword");
-        else if (item.key === "Logout") router.push("/login")
+        else if (item.key === "logout") router.push("/login")
     }
 
-    RenderUserRightMenuList() {
-        return (<Menu selectedKeys={[]} className={styles.UserRightMenu} onClick={this.SelectMenuClick.bind(this)}>
+    renderUserRightMenuList() {
+        return (<Menu selectedKeys={[]} className={styles.UserRightMenu} onClick={this.selectMenuClick.bind(this)}>
             <Menu.Item key="ChangePassword" className={styles.UserRightMenuItem} ><Icon type="setting" /><span>修改密码</span></Menu.Item>
             <Menu.Divider />
-            <Menu.Item key="Logout" className={styles.UserRightMenuItem}><Icon type="logout" /><span>退出登录</span></Menu.Item>
+            <Menu.Item key="logout" className={styles.UserRightMenuItem}><Icon type="logout" /><span>退出登录</span></Menu.Item>
         </Menu>)
     }
 
-    JudgeLogin() {
-        if (!this.Token) router.push("/login");
-        return !!this.Token
+    judgeLogin() {
+        if (!this.token) router.push("/login");
+        return !!this.token
     }
 
-    JudgeVisible(m) {
+    judgeVisible(m) {
         return true;
     }
 
@@ -273,16 +228,16 @@ export default class LeftRightLayout extends Component {
 
     getMenuItem(m, pageName) {
         if (!m.isVisible || !m.isRight || !this.isMenuVisible(m)) return null;
-        return <Menu.Item key={m.PageName} className={styles.MenuItem}>
+        return <Menu.Item key={m.pageName} className={styles.MenuItem}>
             {
-                Common.isEquals(m.PageName, pageName, true) ?
+                Common.isEquals(m.pageName, pageName, true) ?
                     <div>
-                        <Icon type={m.IconType} />
-                        <span>{m.MenuName}</span>
+                        <Icon type={m.iconType} />
+                        <span>{m.menuName}</span>
                     </div> :
-                    <Link to={this.getHref(m.PageName, m.QueryString)}>
-                        <Icon type={m.IconType} />
-                        <span>{m.MenuName}</span>
+                    <Link to={this.getHref(m.pageName, m.queryString)}>
+                        <Icon type={m.iconType} />
+                        <span>{m.menuName}</span>
                     </Link>
             }
         </Menu.Item>
@@ -292,59 +247,55 @@ export default class LeftRightLayout extends Component {
         return require(`../../assets/${name}`);
     }
 
-    SelectNavMenu(nav) {
-        this.SelectNav = Common.arrayFirst(this.NavMenuList, (f) => f.MenuName === nav.key);
-        if (this.SelectNav) {
+    selectNavMenu(nav) {
+        this.selectNav = Common.arrayFirst(this.navMenuList, (f) => f.menuName === nav.key);
+        if (this.selectNav) {
             let menu = null, key = null;
-            for (var i = 0; i < this.SelectNav.MenuKeys.length; i++) {
-                key = this.SelectNav.MenuKeys[i];
-                if (this.Menus[key] && this.Menus[key].isRight) {
-                    menu = this.Menus[key];
+            for (var i = 0; i < this.selectNav.menuKeys.length; i++) {
+                key = this.selectNav.menuKeys[i];
+                if (this.menus[key] && this.menus[key].isRight) {
+                    menu = this.menus[key];
                     break;
                 }
             }
-            if (menu !== null) router.push(this.getHref(menu.PageName, menu.QueryString));
+            if (menu !== null) router.push(this.getHref(menu.pageName, menu.queryString));
         }
     }
 
-    OnOpenChange(value) {
+    onOpenChange(value) {
         this.isOnOpenChange = true;
         if (value && value.length > 1) value = [value[value.length - 1]];
-        this.setState({ OpenKeys: value });
+        this.setState({ openKeys: value });
     }
 
     componentWillUnmount() {
         this.isDestory = true;
     }
 
-    Logout() {
-
-    }
-
     render() {
-        if (!this.Token) return null;
+        if (!this.token) return null;
 
         if (this.state.loading) return <div className="SpinDiv"><Spin tip="加载中……" /></div>
 
-        const { header, Sider, Content } = Layout;
+        const { Header, Sider, Content } = Layout;
 
         const selectedKeys = this.getCurrentMenuSelectedKeys();
 
         const pageName = selectedKeys.length > 0 ? selectedKeys[0] : "";
 
-        const loginName = this.LoginUser.UserName;
+        const loginName = this.loginUser.UserName;
 
         this.props.location.pageData = this.pageData;
 
         return (
             <Layout style={{ minWidth: 1200 }}>
-                <header style={{ background: '#fff', padding: 0, margin: 0 }}>
+                <Header style={{ background: '#fff', padding: 0, margin: 0 }}>
                     <div className={styles.logo} >
                         <img src={this.getImageUrl("logo-3_01.png")} width={140} alt="" />
                         <span>A2 Digital Solution</span>
                     </div>
                     {loginName ? (
-                        <Dropdown overlay={this.RenderUserRightMenuList()} >
+                        <Dropdown overlay={this.renderUserRightMenuList()} >
                             <span className={styles.Dropdown}>
                                 <Avatar size="small" src={this.getImageUrl("UserAvatar.png")} className={styles.avatar} />
                                 {loginName}
@@ -352,19 +303,19 @@ export default class LeftRightLayout extends Component {
                         </Dropdown>
                     ) : null}
                     <div className={styles.RightMenu}>
-                        <Menu theme="light" mode="horizontal" selectedKeys={this.NavSelectedKeys} onSelect={this.SelectNavMenu.bind(this)} style={{ lineHeight: '64px' }} >
-                            {this.NavMenuList.map(m => m.isRight && m.isVisible && this.JudgeVisible(m) ? <Menu.Item key={m.MenuName}>{m.MenuName}</Menu.Item> : null)}
+                        <Menu theme="light" mode="horizontal" selectedKeys={this.navSelectedKeys} onSelect={this.selectNavMenu.bind(this)} style={{ lineHeight: '64px' }} >
+                            {this.navMenuList.map(m => m.isRight && m.isVisible && this.judgeVisible(m) ? <Menu.Item key={m.menuName}>{m.menuName}</Menu.Item> : null)}
                         </Menu>
                     </div>
 
-                </header>
+                </Header>
                 <Layout theme="light">
                     <Sider trigger={null} collapsible={true} theme="light" style={{ margin: '16px 0px 16px 16px' }} collapsed={this.state.collapsed}>
-                        <Menu theme="light" mode="inline" selectedKeys={selectedKeys} openKeys={this.OpenKeys} onOpenChange={this.OnOpenChange.bind(this)}>
+                        <Menu theme="light" mode="inline" selectedKeys={selectedKeys} openKeys={this.openKeys} onOpenChange={this.onOpenChange.bind(this)}>
                             {
-                                this.MenuList.map(m => m.isRight && m.Children ? this.isMenuVisible(m) ?
-                                    <Menu.SubMenu key={m.MenuName} title={<span><Icon type={m.IconType} /><span>{m.MenuName}</span></span>}>
-                                        {m.Children.map(c => this.getMenuItem(c, pageName))}
+                                this.menuList.map(m => m.isRight && m.children ? this.isMenuVisible(m) ?
+                                    <Menu.SubMenu key={m.menuName} title={<span><Icon type={m.iconType} /><span>{m.menuName}</span></span>}>
+                                        {m.children.map(c => this.getMenuItem(c, pageName))}
                                     </Menu.SubMenu> : null
                                     : this.getMenuItem(m, pageName))
                             }
@@ -373,12 +324,12 @@ export default class LeftRightLayout extends Component {
                     </Sider>
                     <Layout>
                         {this.isRight ?
-                            <header style={{ margin: '16px 16px 0 16px', height: 50, background: '#fff', padding: 0 }}>
+                            <Header style={{ margin: '16px 16px 0 16px', height: 50, background: '#fff', padding: 0 }}>
                                 <Icon className={styles.trigger} type={this.state.collapsed ? 'menu-unfold' : 'menu-fold'} onClick={this.toggle} />
                                 <Breadcrumb className={styles.Breadcrumb} >
-                                    {this.BreadcrumbList.map(m => m.href ? <Breadcrumb.Item key={m.name}><Link to={m.href} style={{ color: "#1890ff" }}>{m.name}</Link></Breadcrumb.Item> : <Breadcrumb.Item key={m.name} >{m.name}</Breadcrumb.Item>)}
+                                    {this.breadcrumbList.map(m => m.href ? <Breadcrumb.Item key={m.name}><Link to={m.href} style={{ color: "#1890ff" }}>{m.name}</Link></Breadcrumb.Item> : <Breadcrumb.Item key={m.name} >{m.name}</Breadcrumb.Item>)}
                                 </Breadcrumb>
-                            </header> : null}
+                            </Header> : null}
                         <Content style={{ margin: '0 16px 16px 16px', padding: 0, minHeight: 500 }}>
                             {this.isRight ? this.props.children : <div style={{ background: '#fff', marginTop: 16, height: 484 }}></div>}
                         </Content>

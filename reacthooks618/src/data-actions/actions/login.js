@@ -24,12 +24,12 @@ export default class login extends BaseIndex {
     data = this.setApiResponse(data);
 
     if (data.isSuccess === false || !data.User) {
-      Common.removeStorage("Token");
+      Common.removeStorage("token");
 
       return { isSuccess: false, message: "wrong username or password!" }
     }
 
-    Common.setStorage("Token", data.User.Token);
+    Common.setStorage("token", data.User.token);
 
     return data.User;
   }

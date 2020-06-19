@@ -8,7 +8,7 @@ export default class Index {
                 url: request.Url,
                 type: request.type === undefined ? "GET" : request.type,
                 headers: request.headers === undefined ? {} : request.headers,
-                dataType: request.DataType === undefined ? "json" : request.DataType,
+                dataType: request.dataType === undefined ? "json" : request.dataType,
                 contentType: request.ContentType === undefined ? "application/x-www-form-urlencoded" : request.ContentType,
                 data: request.data === undefined ? "" : request.data,
                 async: request.Async === undefined ? true : request.Async,

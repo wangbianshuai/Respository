@@ -26,8 +26,8 @@ export default class dataGridView extends BaseIndex {
 
     const requestList = [];
 
-    requestList.push({ url: dataUrl, data: { QueryInfo: queryInfo } });
-    if (!isData) requestList.push({ url: pageUrl, data: { QueryInfo: queryInfo } });
+    requestList.push({ url: dataUrl, data: { queryInfo: queryInfo } });
+    if (!isData) requestList.push({ url: pageUrl, data: { queryInfo: queryInfo } });
 
     data.requestList = requestList;
 
@@ -51,7 +51,7 @@ export default class dataGridView extends BaseIndex {
     var dataUrl = `?$query=true&Action=Excel&title=${escape(title)}&EntityName=${entityName}`;
 
     if (data.entityExcelExport) {
-      this.invokeAction(id, data.entityExcelExport, { pathQuery: dataUrl, dataGridViewExcelExport: actionType, QueryInfo: queryInfo });
+      this.invokeAction(id, data.entityExcelExport, { pathQuery: dataUrl, dataGridViewExcelExport: actionType, queryInfo: queryInfo });
     }
   }
 

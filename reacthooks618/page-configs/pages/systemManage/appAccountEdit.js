@@ -101,19 +101,19 @@ function getTextArea(name, label, x, y, placeHolder, maxLength) {
 function getEventActions() {
     return [{
         name: "BackToLast",
-        type: "Page/ToPage",
+        type: "Page/toPage",
         pageUrl: "/systemManage/AppAccountList",
-        expandsetPageUrl: "expandsetPageUrl"
+        expandSetPageUrl: "expandSetPageUrl"
     },
     {
         name: "saveEntityData",
-        type: "EntityEdit/saveEntityData",
+        type: "entityEdit/saveEntityData",
         editView: "AppAccountEdit2",
-        expandsetEntityData: "expandsetEntityData"
+        expandSetEntityData: "expandSetEntityData"
     },
     {
         name: "getEntityData",
-        type: "EntityEdit/getEntityData",
+        type: "entityEdit/getEntityData",
         editView: "AppAccountEdit2"
     }]
 }

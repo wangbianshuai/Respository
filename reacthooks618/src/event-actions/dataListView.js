@@ -3,49 +3,49 @@ import BaseIndex from "./BaseIndex";
 export default class DataListView extends BaseIndex {
 
     add(props, action) {
-        if (!action.Parameters) this.InitAddAction(props, action);
+        if (!action.parameters) this.initAddAction(props, action);
 
-        const { DataListView, SelectDataProperty } = action.Parameters;
+        const { dataListView, selectDataProperty } = action.parameters;
 
         let data = {};
-        if (SelectDataProperty) {
-            data = SelectDataProperty.getSelectData();
+        if (selectDataProperty) {
+            data = selectDataProperty.getSelectData();
             if (!data) return;
 
-            SelectDataProperty.setValue(null);
+            selectDataProperty.setValue(null);
         }
 
         //自定义扩展添加数据
         if (action.expandAdd) action.expandAdd(props, action)
-        else DataListView.add(data);
+        else dataListView.add(data);
     }
 
     remove(props, action) {
-        if (!action.Parameters) this.InitremoveAction(props, action);
+        if (!action.parameters) this.initRemoveAction(props, action);
 
-        const { DataListView } = action.Parameters;
+        const { dataListView } = action.parameters;
         
         var id = props.property.dataId;
-        if (props.property.Params) id = props.property.Params[DataListView.entity.primaryKey]
+        if (props.property.params) id = props.property.params[dataListView.entity.primaryKey]
 
         //自定义扩展移除数据
-        if (action.expandremove) action.expandremove(props, action)
-        else DataListView.remove(id);
+        if (action.expandRemove) action.expandRemove(props, action)
+        else dataListView.remove(id);
     }
 
-    InitremoveAction(props, action) {
+    initRemoveAction(props, action) {
         const { pageAxis } = props;
-        const DataListView = pageAxis.getComponent(action.DataListView);
+        const dataListView = pageAxis.getProperty(action.dataListView);
 
-        action.Parameters = { DataListView }
+        action.parameters = { dataListView }
     }
 
-    InitAddAction(props, action) {
+    initAddAction(props, action) {
         const { pageAxis } = props;
-        const DataListView = pageAxis.getComponent(action.DataListView);
-        const SelectDataProperty = pageAxis.getControl(action.SelectDataProperty);
+        const dataListView = pageAxis.getProperty(action.dataListView);
+        const selectDataProperty = pageAxis.getProperty(action.selectDataProperty);
 
-        action.Parameters = { DataListView, SelectDataProperty }
+        action.parameters = { dataListView, selectDataProperty }
     }
 
 }
