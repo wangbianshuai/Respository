@@ -178,7 +178,7 @@ const receivesearchQuery = (property, pageAxis) => data => {
 };
 
 const receiveexcelExport = (property, pageAxis) => data => {
-    pageAxis.eventActions.dataGridView.receivesearchQuery(data, { property, pageAxis });
+    pageAxis.eventActions.dataGridView.receiveexcelExport(data, { property, pageAxis });
 };
 
 const init = (property, pageAxis) => {

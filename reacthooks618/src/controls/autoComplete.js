@@ -50,8 +50,8 @@ export default (props) => {
 
     const onChange = useCallback((v) => {
         setValue(v);
-        Base.bindDataValue(v);
-    }, [setValue]);
+        Base.bindDataValue(property, v);
+    }, [property, setValue]);
 
     const onSearch = useCallback((v) => {
         setInputValue(v);

@@ -45,14 +45,14 @@ export default (props) => {
 
     const onChange = useCallback((v) => {
         setValue(v);
-        Base.bindDataValue(property, () => getValue(v))
+        Base.bindDataValue(property, getValue(v))
     }, [property, setValue]);
 
     property.setValue = (v) => setValue(v);
     property.setDisabled = (v) => setDisabled(v);
     property.setIsReadOnly = (v) => setIsReadOnly(v);
 
-    const width = property.Width || "100%"
+    const width = property.width || "100%"
 
     const mv = getMomentValue(value, property);
 

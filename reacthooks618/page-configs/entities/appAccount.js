@@ -18,7 +18,7 @@ function getProperties() {
         getProperty("AppId", "微信AppId"),
         getProperty("Secret", "微信Secret"),
         getProperty("DeveloperWeChat", "微信开发者微信号"),
-        getProperty("statusName", "状态"),
+        getProperty("StatusName", "状态"),
         getProperty("CreateDate", "创建时间")
     ]
 }

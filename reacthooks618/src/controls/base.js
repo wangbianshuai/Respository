@@ -49,15 +49,12 @@ const getProperty = (name, view) => {
 }
 
 const judgePush = (d, parentValue, property, view) => {
-  if (this.view && property.parentName && property.parentPropertyName) {
+  if (parentValue === undefined && view && property.parentName && property.parentPropertyName) {
     const parentProperty = getProperty(property.parentName, view);
-    if (parentValue === undefined) {
-      if (parentProperty.getValue === undefined) parentValue = parentProperty.getValue();
-      else parentValue = parentProperty.value || (parentProperty.defaultValue || null);
-    }
-
-    return Common.isEquals(parentValue, d[property.parentPropertyName], true);
+    if (parentProperty.getValue) parentValue = parentProperty.getValue();
+    else parentValue = parentProperty.value || (parentProperty.defaultValue || null);
   }
+  else if (parentValue === undefined) return Common.isEquals(parentValue, d[property.parentPropertyName], true);
 
   return true;
 };
@@ -68,10 +65,10 @@ const renderPrefix = (property) => {
   return null;
 };
 
-const bindDataValue = (property, getValue) => {
+const bindDataValue = (property, value) => {
   const { isBind, data, name, propertyName } = property;
   const name2 = propertyName || name;
-  if (isBind && data) data[name2] = getValue();
+  if (isBind && data) data[name2] = value;
 };
 
 export default {

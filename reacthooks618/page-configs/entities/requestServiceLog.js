@@ -31,7 +31,7 @@ function getServiceInterfaceDataSource() {
         ServiceName: "RequestServiceLogService",
         ActionName: "getServiceInterfaces",
         isRefresh: true,
-        Payload: {}
+        payload: {}
     }
 }
 

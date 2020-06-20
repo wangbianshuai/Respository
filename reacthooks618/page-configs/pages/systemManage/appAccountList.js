@@ -10,7 +10,7 @@ const dataActionTypes = {
     //Excel导出
     excelExport: 102,
     //更新状态
-    updateAppAccountStatus: 103
+    updateStatus: 103
 };
 
 const { name, primaryKey, viewName } = appAccount;
@@ -30,10 +30,10 @@ function getSearchOperationView() {
         type: "RowsColsView",
         className: "divSerachView",
         properties: assignProporties({ name: "appAccountList" }, [
-            getEditSelect("Status", "状态", appAccount.StatusDataSource, 1, 1),
+            getEditSelect("Status", "状态", appAccount.statusDataSource, 1, 1),
             {
-                ...getTextBox2("keyword", "关键字", 1, 3, "", "访问路径/公司名/联系人/手机"), propertyName: "PathName,CompanyName,Linkman,Phone",
-                operateLogic: "like", pressEnterEventActionName: "searchQuery"
+                ...getTextBox2("keyword", "关键字", 1, 3, "", "访问路径/公司名/联系人/手机"), propertyName: "AccessPathName,CompanyName,Linkman,Phone",
+                operateLogic: "like", pressEnterEventActionName: "searchQuery", pressEnterEventPropertyName: "search",
             },
             { ...getButton("search", "搜索", "primary", 1, 4), isFormItem: true, Icon: "search", eventActionName: "searchQuery", pressEnterEventActionName: "searchQuery" },
             { ...getButton("clearQuery", "清空", "default", 1, 5), isFormItem: true, eventActionName: "clearQuery" },
@@ -90,7 +90,7 @@ function getDataGridView() {
         className: "divInfoView3",
         isRowSelection: true,
         isSingleSelection: true,
-        properties: assignProporties(appAccount, ["CompanyName", "PathName", "Address", "Linkman", "Phone", "statusName",
+        properties: assignProporties(appAccount, ["CompanyName", "AccessPathName", "Address", "Linkman", "Phone", "StatusName",
             { name: "CreateDate", OrderByType: "desc" }, getOperation(), { name: "RowVersion", isVisible: false }, { name: "Status", isVisible: false }])
     }
 }
@@ -106,13 +106,13 @@ function getOperation() {
 
 function getUpdateAppAccountStatusAction(status) {
     return {
-        name: "updateAppAccountStatus",
+        name: "updateStatus",
         valueName: "Status",
         dataValue: status,
         label: status === 1 ? "关闭" : "启用",
-        eventActionName: "updateAppAccountStatus",
+        eventActionName: "updateStatus",
         type: "Popconfirm",
-        dataActionType: dataActionTypes.updateAppAccountStatus,
+        dataActionType: dataActionTypes.updateStatus,
         successTip: "操作成功！",
         title: "请确认是否" + (status === 1 ? "关闭" : "启用") + "当前App账号？"
     }
@@ -151,7 +151,7 @@ function getEventActions() {
         pageUrl: "/systemManage/appAccountEdit?AppAccountId=#{AppAccountId}&menuName=" + escape("修改")
     },
     {
-        name: "updateAppAccountStatus",
+        name: "updateStatus",
         type: "dataGrid/batchUpdateRowDataList",
         dataGridView: "dataGridView1"
     },

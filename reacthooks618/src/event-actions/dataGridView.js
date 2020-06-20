@@ -7,6 +7,7 @@ export default class DataGridView extends BaseIndex {
         if (!action.parameters) this.initSearchQueryAction(props, action);
 
         else action.isSearch = props.property.type !== "DataGridView";
+   
         this.searchData(props, action.parameters, props.pageIndex || 1, props.pageSize || 10, action.isClearQuery);
     }
 
@@ -285,7 +286,7 @@ export default class DataGridView extends BaseIndex {
                 header = {};
                 header.Label = p.label;
                 header.Name = p.name;
-                header.Width = p.columnWidth || 0;
+                header.width = p.columnWidth || 0;
                 headerList.push(header);
             }
         }
@@ -319,12 +320,12 @@ export default class DataGridView extends BaseIndex {
         //设置导出按钮
         property.excelExportButton.setDisabled(false);
 
-        if (data.isSuccess === false || !data.fileName) {
+        if (data.isSuccess === false || !data.FileName) {
             this.alert(data.message || "导出失败！", pageAxis.showMessage);
             return;
         }
 
-        this.downLoad(property.excelExportButton.title, data.fileName)
+        this.downLoad(property.excelExportButton.title, data.FileName)
     }
 
     downLoad(title, fileName) {

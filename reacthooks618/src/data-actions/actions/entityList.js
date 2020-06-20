@@ -1,6 +1,6 @@
-import BaseIndex from "../baseIndex";
-import DataGriViewActionType from "../actionTypes/components/dataGridView";
-import Expand from "./expand"
+import BaseIndex from '../baseIndex';
+import DataGriViewActionType from '../actionTypes/components/dataGridView';
+import Expand from './expand'
 
 export default class EntityList extends BaseIndex {
     constructor(props) {
@@ -26,11 +26,11 @@ export default class EntityList extends BaseIndex {
 
         payload.requestList = requestList;
 
-        this.dvaActions.dispatch(this.serviceName, "searchQuery", payload);
+        this.dvaActions.dispatch(this.serviceName, 'searchQuery', payload);
     }
 
     setsearchQuery(id, actionType, data) {
-        const dataName = data.action ? data.action.dataName : "";
+        const dataName = data.action ? data.action.dataName : '';
         data = this.setSearchQueryResponse(data, dataName);
         actionType = DataGriViewActionType.searchQuery;
         this.dispatchAction(id, actionType, data);
@@ -38,11 +38,10 @@ export default class EntityList extends BaseIndex {
     }
 
     deleteEntityData(id, actionType, data) {
-        const { entityData, entity } = data;
-        const primaryKey = entityData[entity.primaryKey];
-        const { RowVersion } = entityData;
-        const pathQuery = `/Delete2(${primaryKey})?RowVersion=` + RowVersion;
-        this.dvaActions.dispatch(this.serviceName, "delete", { pathQuery, action: this.getAction(id, actionType) });
+        const primaryKey = data.selectRowKeys[0];
+        const { RowVersion } = data.selectDataList[0];
+        const pathQuery = `/Delete2(${primaryKey})?RowVersion=${RowVersion}`;
+        this.dvaActions.dispatch(this.serviceName, 'delete', { pathQuery, action: this.getAction(id, actionType) });
     }
 
     excelExport(id, actionType, data) {
@@ -51,7 +50,7 @@ export default class EntityList extends BaseIndex {
 
         delete data.dataGridViewExcelExport;
 
-        this.dvaActions.dispatch(this.serviceName, "excelExport", data);
+        this.dvaActions.dispatch(this.serviceName, 'excelExport', data);
     }
 
     setexcelExport(id, actionType, data) {

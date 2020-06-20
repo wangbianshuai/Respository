@@ -123,7 +123,7 @@ export default (props) => {
         setShowColumns(property, pageAxis, props)
     }, [property, pageAxis, props]);
 
-    if (isRowSelection && !property.getSelectedRowKeys) property.getSelectedRowKeys = () => selectedRowKeys;
+    if (isRowSelection) property.getSelectedRowKeys = () => selectedRowKeys;
 
     property.getDataList = () => dataList;
     property.getSelectDataList = () => getSelectDataList(dataList, selectedRowKeys, primaryKey);

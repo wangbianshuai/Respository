@@ -1,51 +1,67 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import { Select } from 'antd';
-//import { Common } from 'UtilsCommon';
+import { Common } from 'UtilsCommon';
+import { useGetServiceDataSource } from 'UseHooks';
 import Base from './base';
-//const Option = Select.Option;
+const Option = Select.Option;
 
-// const getOptions = (parentValue, inputValue, property) => {
-//     const options = [];
-//     const valueList = [];
-//     const { textName, valueName } = property;
+const getOptions = (property, view, dataList, parentValue) => {
+    const { serviceDataSource } = property;
+    let valueName = 'value';
+    let textName = 'text';
 
-//     const { emptyOption, IsNullable } = property;
-//     if (emptyOption) {
-//         const disabled = !IsNullable && !emptyOption.IsNullable;
-//         options.push(<Option value={emptyOption.Value} disabled={disabled} key={Common.createGuid()}>{emptyOption.text}</Option>);
-//         valueList.push(emptyOption.Value);
-//     }
+    if (serviceDataSource && serviceDataSource.valueName) valueName = serviceDataSource.valueName;
+    else if (property.valueName) valueName = property.valueName;
+    if (serviceDataSource && serviceDataSource.textName) textName = serviceDataSource.textName;
+    else if (property.textName) textName = property.textName;
 
-//     let value = null, text = null;
-//     Common.IsArray(property.dataSource) && property.dataSource.forEach(d => {
-//         text = d[textName];
-//         value = d[valueName];
+    const options = [];
 
-//         options.push(<Option value={value} key={value}>{text}</Option>)
-//         valueList.push(value);
-//     });
+    const { emptyOption, isNullable } = property;
+    if (emptyOption) {
+        const disabled = !isNullable && !emptyOption.isNullable;
+        options.push(<Option value={emptyOption.Value} disabled={disabled} key={Common.createGuid()}>{emptyOption.text}</Option>);
+    }
 
-//     return options;
-// }
+    let value = null, text = null;
+    Common.isArray(dataList) && dataList.forEach(d => {
+        text = d[textName];
+        value = d[valueName];
+
+        if (Base.judgePush(d, parentValue, property, view)) options.push(<Option value={value} key={value}>{text}</Option>)
+    });
+    
+    return options;
+}
 
 export default (props) => {
-    const { property } = Base.getProps(props);
+    const { property, view, pageAxis } = Base.getProps(props);
+
     const [value, setValue] = useState(Base.getInitValue(property));
     const [isVisible, setIsVisible] = useState(property.isVisible !== false);
     const [disabled, setDisabled] = useState(false);
-    const [options] = useState([]);
+    const [options, setOptions] = useState([]);
 
-    const onChange = useCallback((e) => {
-        //change(e, property, setValue);
-    }, []);
+    const dataList = useGetServiceDataSource(property, view, pageAxis);
+
+    useEffect(() => {
+        setOptions(getOptions(property, view, dataList));
+    }, [property, view, dataList]);
+
+    const onChange = useCallback((v) => {
+        setValue(v);
+        Base.bindDataValue(property, v);
+    }, [property, setValue]);
 
     property.setIsVisible = (v) => setIsVisible(v);
     property.setValue = (v) => setValue(v);
+    property.getValue = () => value;
     property.setDisabled = (v) => setDisabled(v);
+    property.setParentValue = (v) => setOptions(getOptions(property, view, dataList, v));
 
     if (!isVisible) return null;
 
-    const width = property.Width || '100%'
+    const width = property.width || '100%'
 
     return (<Select disabled={disabled}
         style={{ width }}

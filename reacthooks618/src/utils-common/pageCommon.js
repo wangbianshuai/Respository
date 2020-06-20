@@ -56,7 +56,7 @@ export function alertSuccess(msg, onOk) {
   });
 }
 
-export function Confirm(msg, onOk) {
+export function confirm(msg, onOk) {
   Modal.confirm({
     title: msg,
     onOk: onOk

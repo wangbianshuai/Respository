@@ -44,7 +44,7 @@ const change = (e, property, setValue) => {
     value = setMinMaxValue(value, property);
 
     setValue(value);
-    Base.bindDataValue(property, () => value);
+    Base.bindDataValue(property, value);
 }
 
 const pressEnter = (property, pageAxis) => {
@@ -52,6 +52,7 @@ const pressEnter = (property, pageAxis) => {
     if (pressEnterEventActionName) {
         const props = { pageAxis };
         if (pressEnterEventPropertyName) props.property = pageAxis.getProperty(pressEnterEventPropertyName);
+        else props.property = property;
 
         pageAxis.invokeEventAction(pressEnterEventActionName, props);
     }

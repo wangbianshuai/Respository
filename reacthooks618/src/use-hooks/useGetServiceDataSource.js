@@ -1,39 +1,36 @@
-import { useState, useEffect, useCallback } from 'react';
-import usePageAxis from './usePageAxis';
+import { useState, useEffect } from 'react';
 
-export default (props) => {
-  const { property, pageId, view } = props;
-  const pageAxis = usePageAxis.getPageAxis(pageId);
+const receiveDataSource = (res, property, pageAxis, setDataList) => {
+  let list = []
+  if (pageAxis.isSuccessProps(res)) {
+    if (res.action && res.data) res = res.data;
+    if (property.listName) list = res[property.listName];
+    else list = res;
+  }
+  if (property.isOnlyInit) property.initDataList = list;
+  else setDataList(list);
+};
+
+export default (property, view, pageAxis) => {
   const [dataList, setDataList] = useState([]);
-
-  const receiveDataSource = useCallback((res, pageAxis) => {
-    let list = []
-    if (pageAxis.isSuccessProps(res)) {
-      if (res.action && res.data) res = res.data;
-      if (property.listName) list = res[property.listName];
-      else list = res;
-    }
-    if (property.isOnlyInit) property.initDataList = list;
-    else setDataList(list);
-  }, [property]);
+  const { dataSource, serviceDataSource } = property;
 
   useEffect(() => {
-    if (property.dataSource) {
-      setDataList(property.dataSource);
+    if (dataSource) {
+      setDataList(dataSource);
       return;
     }
 
-    const { serviceDataSource } = property;
-    if (pageAxis && serviceDataSource) {
+    if (serviceDataSource) {
       const state = pageAxis.getStateValue(serviceDataSource.stateName);
-      if (pageAxis.isSuccessProps(state) && !serviceDataSource.isRefresh) receiveDataSource(state, pageAxis);
+      if (pageAxis.isSuccessProps(state) && !serviceDataSource.isRefresh) receiveDataSource(state, property, pageAxis, setDataList);
       else {
-        var payload = serviceDataSource.Payload || {};
+        var payload = serviceDataSource.payload || {};
         if (serviceDataSource.getPayload) payload = pageAxis.getFunction(serviceDataSource.getPayload)({ property, view })
-        pageAxis.dispatchAction(serviceDataSource.serviceName, serviceDataSource.actionName, payload).then(res => receiveDataSource(res, pageAxis));
+        pageAxis.dispatchAction(serviceDataSource.serviceName, serviceDataSource.actionName, payload).then(res => receiveDataSource(res, pageAxis, pageAxis, setDataList));
       }
     }
-  }, [property, pageAxis, view, receiveDataSource]);
+  }, [property, dataSource, serviceDataSource, pageAxis, view, setDataList]);
 
   return dataList;
 };

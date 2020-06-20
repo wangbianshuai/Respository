@@ -161,7 +161,7 @@ export default class BaseIndex {
         if (!action.modalDialog) {
             action.modalDialog = {
                 id: dialogView.dialogId, title: dialogView.dialogTitle, Visible: true,
-                Width: dialogView.dialogWidth,
+                width: dialogView.dialogWidth,
                 style: dialogView.dialogStyle,
                 bodyStyle: dialogView.bodyStyle,
                 Component: pageAxis.getReactComponent(dialogView),

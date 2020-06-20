@@ -9,7 +9,7 @@ export default class DataGrid extends BaseIndex {
         const { pageAxis, property } = props;
 
         const { dataGridView, alertMessage, entityProperties } = action.parameters;
-        const { DataActionType } = property;
+        const { dataActionType } = property;
 
         var selectDataList = null, selectRowKeys = null;
         if (property.params) {
@@ -29,7 +29,7 @@ export default class DataGrid extends BaseIndex {
         }
 
         //设置接收数据行数返回数据
-        pageAxis.receives[DataActionType] = (d) => this.receiveBatchUpdateRowDataList(d, props, action)
+        pageAxis.receives[dataActionType] = (d) => this.receiveBatchUpdateRowDataList(d, props, action)
 
         let entityData = null;
         if (entityProperties) {
@@ -39,7 +39,7 @@ export default class DataGrid extends BaseIndex {
         const onOk = () => {
             property.setDisabled && property.setDisabled(true);
 
-            pageAxis.invokeDataAction(DataActionType, { selectRowKeys, entity: dataGridView.entity, entityData, selectDataList })
+            pageAxis.invokeDataAction(dataActionType, { selectRowKeys, entity: dataGridView.entity, entityData, selectDataList })
         };
 
         if (property.confirmTip) pageAxis.confirm(property.confirmTip, onOk);
