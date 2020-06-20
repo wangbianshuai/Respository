@@ -1,10 +1,10 @@
 import { Common } from "UtilsCommon";
-import BaseIndex from "./BaseIndex";
+import BaseIndex from './baseIndex';
 
-export default class dialog extends BaseIndex {
+export default class Dialog extends BaseIndex {
 
     //弹出选择视图选择数据列表，可多选或单选，弹出层之前对DataGridView进行验证是否选择行。
-    //行为参数，DataGridView，弹出层视图 dialogView，选择数据绑定组件DataComponent
+    //行为参数，dataGridView，弹出层视图 dialogView，选择数据绑定组件DataComponent
     selectViewDataToList(props, action) {
         if (!action.parameters) this.initSelectViewDataToListAction(props, action);
         const { pageAxis } = props;

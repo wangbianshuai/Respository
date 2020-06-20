@@ -1,4 +1,4 @@
-import BaseIndex from "./BaseIndex";
+import BaseIndex from './baseIndex';
 import { Common } from "UtilsCommon";
 
 export default class Page extends BaseIndex {

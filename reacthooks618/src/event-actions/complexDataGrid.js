@@ -1,4 +1,4 @@
-import BaseIndex from "./BaseIndex";
+import BaseIndex from './baseIndex';
 
 export default class ComplexDataGrid extends BaseIndex {
 

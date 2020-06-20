@@ -23,7 +23,7 @@ export default (state) => {
 
 function shouldComponentUpdate(nextState, state, stateActionTypes) {
   //Show while loading
-  if (nextState.loading !== state.loading) PageCommon.setLoading(nextState);
+  if (nextState.loading !== state.loading) PageCommon.setLoading(nextState.loading);
 
   let blChangedState = false;
 

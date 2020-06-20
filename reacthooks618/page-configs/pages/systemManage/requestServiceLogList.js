@@ -13,7 +13,8 @@ const dataActionTypes = {
     reSend: 403
 };
 
-const entity = { name: requestServiceLog.name, primaryKey: requestServiceLog.primaryKey, viewName: "ViewRequestServiceLog" }
+const { name, primaryKey, viewName } = requestServiceLog;
+const entity = { name, primaryKey, viewName };
 
 module.exports = {
     name: "requestServiceLog",
@@ -24,7 +25,7 @@ module.exports = {
 
 function getSearchOperationView() {
     return {
-        name: "SearchOperationView1",
+        name: "searchOperationView1",
         entity: entity,
         type: "RowsColsView",
         className: "divSerachView",
@@ -34,8 +35,8 @@ function getSearchOperationView() {
             getEditSelect2("ServiceInterfaceId", "服务接口", requestServiceLog.serviceInterfaceDataSource, 1, 3),
             { ...getDatePicker2("StartDate", "开始日期", 2, 1, "大于或等于其值"), isMonthFirst: true, propertyName: "CreateDate", operateLogic: ">=" },
             { ...getDatePicker2("EndDate", "至", 2, 2, "小于其值"), isCurrentDay: true, propertyName: "CreateDate", operateLogic: "<" },
-            { ...getButton("Search", "搜索", "primary", 2, 3), isFormItem: true, Icon: "search", eventActionName: "searchQuery", pressEnterEventActionName: "searchQuery" },
-            { ...getButton("ClearQuery", "清空", "default", 2, 4), isFormItem: true, eventActionName: "ClearQuery" },
+            { ...getButton("search", "搜索", "primary", 2, 3), isFormItem: true, Icon: "search", eventActionName: "searchQuery", pressEnterEventActionName: "searchQuery" },
+            { ...getButton("clearQuery", "清空", "default", 2, 4), isFormItem: true, eventActionName: "clearQuery" },
             {
                 eventActionName: "reSend", ...getButton("reSend", "重发", "primary", 3, 1), style: { marginLeft: 16, marginBottom: 16 },
                 dataActionType: dataActionTypes.reSend,
@@ -94,9 +95,9 @@ function getDatePicker2(name, label, x, y, placeHolder, defaultValue) {
 
 function getDataGridView() {
     return {
-        name: "DataGridView1",
+        name: "dataGridView1",
         entity: entity,
-        type: "dataGridView",
+        type: "DataGridView",
         entitySearchQuery: dataActionTypes.searchQuery,
         eventActionName: "searchQuery",
         isDiv: true,
@@ -109,18 +110,18 @@ function getDataGridView() {
 
 function getOperation() {
     return {
-        name: "Operation",
+        name: "operation",
         label: "操作",
         isData: false,
-        actionList: assignProporties(requestServiceLog, [LookDetail()])
+        actionList: assignProporties(requestServiceLog, [lookDetail()])
     }
 }
 
-function LookDetail() {
+function lookDetail() {
     return {
-        name: "LookDetail",
+        name: "lookDetail",
         label: "查看",
-        eventActionName: "LookDetail",
+        eventActionName: "lookDetail",
         type: "AButton"
     }
 }
@@ -129,27 +130,27 @@ function getEventActions() {
     return [{
         name: "searchQuery",
         type: "dataGridView/searchQuery",
-        searchView: "SearchOperationView1",
-        searchButton: "Search",
-        dataGridView: "DataGridView1"
+        searchView: "searchOperationView1",
+        searchButton: "search",
+        dataGridView: "dataGridView1"
     },
     {
-        name: "LookDetail",
+        name: "lookDetail",
         type: "dataGridView/selectRowToPage",
-        dataGridView: "DataGridView1",
+        dataGridView: "dataGridView1",
         pageUrl: "/systemManage/requestServiceLogEdit?LogId=#{LogId}&menuName=" + escape("查看")
     },
     {
         name: "reSend",
-        type: "DataGrid/batchUpdateRowDataList",
-        dataGridView: "DataGridView1"
+        type: "dataGrid/batchUpdateRowDataList",
+        dataGridView: "dataGridView1"
     },
     {
-        name: "ClearQuery",
+        name: "clearQuery",
         type: "dataGridView/searchQuery",
-        searchView: "SearchOperationView1",
-        searchButton: "ClearQuery",
-        dataGridView: "DataGridView1",
+        searchView: "searchOperationView1",
+        searchButton: "clearQuery",
+        dataGridView: "dataGridView1",
         isClearQuery: true
     }]
 }

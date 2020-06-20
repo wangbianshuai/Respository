@@ -34,6 +34,7 @@ function loginSuccess({ data }) {
 
 function mapStateToProps(state) {
     return {
+        loading: state.AdminUserService.loading,
         login: state.AdminUserService.login
     }
 }

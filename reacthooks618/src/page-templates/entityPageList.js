@@ -1,24 +1,19 @@
-import React, { useMemo } from "react";
-import EntityPage from "./entityPage";
+import EntityPage from './entityPage';
 
-const EntityPageList = (props) => {
-  const config = useMemo(() => {
-    const { name, entityName, minActionType, pageexpand, expandActionNames } = props;
+export default (name, entityName, minActionType, pageExpand, expandActionNames, stateNames) => {
+  const config = {
+    name,
+    entityName,
+    actionNames: ['searchQuery', 'deleteEntityData', 'excelExport'].concat(expandActionNames || []),
+    stateNames: stateNames || {},
+    dataActionOptions: getDataActionOptions(name, entityName, minActionType, expandActionNames),
+    pageExpand,
+  };
 
-    return {
-      pageName: name,
-      entityName,
-      actionNames: ["searchQuery", "deleteEntityData", "excelExport"].concat(expandActionNames || []),
-      stateNames: {},
-      actionOptions: getActionOptions(name, entityName, minActionType, expandActionNames),
-      pageexpand,
-    };
-  }, [props]);
-
-  return <EntityPage name='entityList' config={config} page={props.page} />
+  return EntityPage('entityList', config);
 };
 
-function getActionOptions(name, entityName, minActionType, expandActionNames) {
+function getDataActionOptions(name, entityName, minActionType, expandActionNames) {
   var actionType = minActionType;
 
   const actionTypes = {
@@ -44,7 +39,5 @@ function getActionOptions(name, entityName, minActionType, expandActionNames) {
     return actionName;
   }
 
-  return { name, serviceName: entityName + "Service", minActionType, maxActionType: minActionType + 99, actionTypes }
+  return { name, serviceName: entityName + 'Service', minActionType, maxActionType: minActionType + 99, actionTypes }
 }
-
-export default EntityPageList;

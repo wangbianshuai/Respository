@@ -1,7 +1,7 @@
-import React from "react"
-import { Common } from "UtilsCommon";
-import PropertyItem from "./propertyItem";
-import { List } from "antd";
+import React, { useState, useMemo } from 'react';
+import { Common } from 'UtilsCommon';
+import PropertyItem from './propertyItem';
+import { List } from 'antd';
 import Base from './base';
 
 const judgeNullable = (value, property, itemsetDisabledProperties) => {
@@ -10,17 +10,17 @@ const judgeNullable = (value, property, itemsetDisabledProperties) => {
 
     const list = itemsetDisabledProperties.filter(f => f.isEdit && f.isVisible !== false);
 
-    let msg = "", v = null, p = null;
+    let msg = '', v = null, p = null;
 
     for (let i = 0; i < list.length; i++) {
         p = list[i];
         v = p.getValue();
-        if (!p.isNullable && p.type === "Select" && Common.isNullOrEmpty(v)) {
-            msg = p.nullTipMessage || "请选择" + p.label + "！"
+        if (!p.isNullable && p.type === 'Select' && Common.isNullOrEmpty(v)) {
+            msg = p.nullTipMessage || '请选择' + p.label + '！'
             break;
         }
         else if (!p.isNullable && Common.isNullOrEmpty(v)) {
-            msg = p.nullTipMessage || p.label + "不能为空！"
+            msg = p.nullTipMessage || p.label + '不能为空！'
             break;
         }
     }
@@ -129,9 +129,9 @@ const renderListItem = (data, index, property, pageId, dataList, controlProperti
 
     if (property.isComplexEdit) return properties.map(p => renderItemProperty(p, id, data, index, property, pageId, dataList, controlProperties, itemsetDisabledProperties));
 
-    const itemProps = itemProps || {}
+    const itemProps2 = itemProps || {}
     return (
-        <List.Item key={id} {...itemProps}>
+        <List.Item key={id} {...itemProps2}>
             {properties.map(p => renderItemProperty(p, id, data, index, property, pageId, dataList, controlProperties, itemsetDisabledProperties))}
         </List.Item>
     )

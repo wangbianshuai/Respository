@@ -6,6 +6,7 @@ import usePageAxis from './usePageAxis';
 import useGetPageConfig from './useGetPageConfig';
 
 export default (name, props, mapStateToProps, init, dataActionOptions) => {
+  const pageName = dataActionOptions && dataActionOptions.name ? dataActionOptions.name : name;
   //1、 使用dva数据
   const [dispatch, dispatchAction, setActionState, state] = useDvaData(mapStateToProps);
 
@@ -16,11 +17,11 @@ export default (name, props, mapStateToProps, init, dataActionOptions) => {
   const [getStateValue] = useProcessData(state);
 
   //4、 使用获取页面配置
-  const pageConfig = useGetPageConfig(name, dispatchAction);
+  const pageConfig = useGetPageConfig(pageName, dispatchAction);
 
   //5、 使用页线，作用贯穿整个流程
   const pageAxis = usePageAxis(
-    name, pageConfig, invokeDataAction, actionTypes, dispatch, props,
+    pageName, pageConfig, invokeDataAction, actionTypes, dispatch, props,
     dispatchAction, setActionState, getStateValue, init
   );
 

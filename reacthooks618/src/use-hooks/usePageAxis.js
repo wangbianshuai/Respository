@@ -168,6 +168,10 @@ class PageAxis {
         if (e != null) e.invoke(obj, e);
     }
 
+    getLoginUserId(){
+        return Common.getStorage('loginUserId');
+    }
+
     getEventAction(name) {
         if (this[name]) return { invoke: (a, b) => this[name](a, b) };
 

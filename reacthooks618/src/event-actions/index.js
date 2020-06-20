@@ -1,17 +1,17 @@
 import entityEdit from "./entityEdit";
-import DataGrid from "./DataGrid";
+import dataGrid from "./dataGrid";
 import dataGridView from "./dataGridView";
 import dialog from "./dialog";
 import dataListView from "./dataListView";
-import Page from "./Page";
-import ComplexDataGrid from "./ComplexDataGrid";
+import page from "./page";
+import complexDataGrid from "./complexDataGrid";
 
 export default {
     entityEdit,
-    DataGrid,
+    dataGrid,
     dataGridView,
     dialog,
     dataListView,
-    Page,
-    ComplexDataGrid
+    page,
+    complexDataGrid
 }

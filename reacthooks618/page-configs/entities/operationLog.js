@@ -1,5 +1,6 @@
 module.exports = {
     name: "OperationLog",
+    viewName: 'ViewOperationLog',
     primaryKey: "LogId",
     properties: getProperties()
 }

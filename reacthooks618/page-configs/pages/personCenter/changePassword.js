@@ -7,7 +7,7 @@ const dataActionTypes = {
 }
 
 module.exports = {
-    name: "ChangePasswordView",
+    name: "changePasswordView",
     type: "View",
     eventActions: getEventActions(),
     properties: assignProporties({ name: "changePassword" }, [getEditView()])
@@ -15,7 +15,7 @@ module.exports = {
 
 function getButtonProperties() {
     return [{
-        name: "LeftSpace1",
+        name: "leftSpace1",
         type: "WhiteSpace",
         className: "ant-col ant-col-8 ant-form-item-label"
     },
@@ -24,7 +24,7 @@ function getButtonProperties() {
 
 function getEditView() {
     return {
-        name: "ChangePasswordView2",
+        name: "changePasswordView2",
         type: "RowsColsView",
         isForm: true,
         isClear: true,
@@ -45,7 +45,7 @@ function getProperties() {
 
 function getButtonView() {
     return {
-        name: "ButtonView",
+        name: "buttonView",
         type: "View",
         className: "divCenterButton",
         isDiv: true,
@@ -75,6 +75,6 @@ function getEventActions() {
     return [{
         name: "saveEntityData",
         type: "entityEdit/saveEntityData",
-        editView: "ChangePasswordView2"
+        editView: "changePasswordView2"
     }]
 }

@@ -1,20 +1,21 @@
-import BaseIndex from "./BaseIndex";
+import BaseIndex from './baseIndex';
 import { Common } from "UtilsCommon";
 
-export default class dataGridView extends BaseIndex {
+export default class DataGridView extends BaseIndex {
 
     searchQuery(props, action) {
         if (!action.parameters) this.initSearchQueryAction(props, action);
 
-        else action.isSearch = props.property.type !== "dataGridView";
+        else action.isSearch = props.property.type !== "DataGridView";
         this.searchData(props, action.parameters, props.pageIndex || 1, props.pageSize || 10, action.isClearQuery);
     }
 
     initSearchQueryAction(props, action) {
         const { property, pageAxis } = props;
+ 
         //判断props.property 是 查询按钮或搜索框 还是DataGridView
-        const dataGridView = property.type === "dataGridView" ? property : pageAxis.getProperty(action.dataGridView);
-        const searchButton = property.type === "dataGridView" ? pageAxis.getProperty(action.searchButton) : property;
+        const dataGridView = property.type === "DataGridView" ? property : pageAxis.getProperty(action.dataGridView);
+        const searchButton = property.type === "DataGridView" ? pageAxis.getProperty(action.searchButton) : property;
         const searchView = pageAxis.getProperty(action.searchView);
         const alertMessage = pageAxis.getProperty(action.alertMessage);
         const expandSearchQueryLoad = pageAxis.getFunction(action.expandSearchQueryLoad)
@@ -44,9 +45,9 @@ export default class dataGridView extends BaseIndex {
         invokeDataAction(searchQuery, data);
     }
 
-    receiveSearchQuery(data, props) {
+    receivesearchQuery(data, props) {
         const { pageAxis, property, isData } = props;
-        const action = pageAxis.getAction(property.eventActionName);
+        const action = pageAxis.getEventAction(property.eventActionName);
         if (!action.parameters) this.initSearchQueryAction(props, action);
         const { alertMessage, expandSearchQueryLoad } = action.parameters;
 
@@ -303,7 +304,7 @@ export default class dataGridView extends BaseIndex {
         invokeDataAction(excelExport, data);
     }
 
-    InitExcelExportActoin(props, action) {
+    initExcelExportActoin(props, action) {
         const { pageAxis } = props;
         const dataGridView = pageAxis.getProperty(action.dataGridView);
 
@@ -312,7 +313,7 @@ export default class dataGridView extends BaseIndex {
         action.parameters = { dataGridView, expandSetExcelExportQueryInfo }
     }
 
-    receiveExcelExport(data, props) {
+    receiveexcelExport(data, props) {
         const { pageAxis, property } = props;
 
         //设置导出按钮

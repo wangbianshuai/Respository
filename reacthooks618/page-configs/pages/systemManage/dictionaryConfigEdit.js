@@ -1,7 +1,7 @@
-const DictionaryConfig = require("../../entities/DictionaryConfig");
+const dictionaryConfig = require("../../entities/dictionaryConfig");
 const { assignProporties, getTextBox, getButton } = require("../../Common");
 
-//systemManage/DictionaryConfigEdit 700-799
+//systemManage/dictionaryConfigEdit 700-799
 const dataActionTypes = {
   //get entity data
   getEntityData: 700,
@@ -9,18 +9,20 @@ const dataActionTypes = {
   saveEntityData: 701
 }
 
-const entity = { name: DictionaryConfig.name, primaryKey: DictionaryConfig.primaryKey }
+const { name, primaryKey } = dictionaryConfig;
+const entity = { name, primaryKey };
+
 
 module.exports = {
-  name: "DictionaryConfigEdit",
+  name: "dictionaryConfigEdit",
   type: "View",
   eventActions: getEventActions(),
-  properties: assignProporties({ name: "DictionaryConfigEdit" }, [getEditView()])
+  properties: assignProporties({ name: "dictionaryConfigEdit" }, [getEditView()])
 }
 
 function getEditView() {
   return {
-    name: "DictionaryConfigEdit2",
+    name: "dictionaryConfigEdit2",
     type: "RowsColsView",
     entity: entity,
     isForm: true,
@@ -28,18 +30,18 @@ function getEditView() {
     isClear: true,
     saveEntityDataActionType: dataActionTypes.saveEntityData,
     getEntityDataActionType: dataActionTypes.getEntityData,
-    properties: assignProporties(DictionaryConfig, getProperties())
+    properties: assignProporties(dictionaryConfig, getProperties())
   }
 }
 
 function getButtonProperties() {
   return [{
-    name: "LeftSpace1",
+    name: "leftSpace1",
     type: "WhiteSpace",
     className: "ant-col ant-col-8 ant-form-item-label"
   },
   { ...getButton("saveEntityData", "保存", "primary"), eventActionName: "saveEntityData", style: { width: 84 } },
-  { ...getButton("BackToLast", "返回", ""), eventActionName: "BackToLast", style: { marginLeft: 10 } }]
+  { ...getButton("backToLast", "返回", ""), eventActionName: "backToLast", style: { marginLeft: 10 } }]
 }
 
 function getProperties() {
@@ -67,7 +69,7 @@ function getTextBox2(name, label, x, y, contorlType, placeHolder, maxLength, isN
 
 function getButtonView() {
   return {
-    name: "ButtonView",
+    name: "buttonView",
     type: "View",
     className: "divCenterButton",
     isDiv: true,
@@ -75,7 +77,7 @@ function getButtonView() {
     colSpan: 24,
     x: 5,
     y: 1,
-    properties: assignProporties({ name: "DictionaryConfigEdit" }, getButtonProperties())
+    properties: assignProporties({ name: "dictionaryConfigEdit" }, getButtonProperties())
   }
 }
 
@@ -95,20 +97,20 @@ function getTextArea(name, label, x, y, placeHolder) {
 
 function getEventActions() {
   return [{
-    name: "BackToLast",
-    type: "Page/toPage",
-    pageUrl: "/systemManage/DictionaryConfigList",
+    name: "backToLast",
+    type: "page/toPage",
+    pageUrl: "/systemManage/dictionaryConfigList",
     expandSetPageUrl: "expandSetPageUrl"
   },
   {
     name: "saveEntityData",
     type: "entityEdit/saveEntityData",
-    editView: "DictionaryConfigEdit2",
+    editView: "dictionaryConfigEdit2",
     expandSetEntityData: "expandSetEntityData"
   },
   {
     name: "getEntityData",
     type: "entityEdit/getEntityData",
-    editView: "DictionaryConfigEdit2"
+    editView: "dictionaryConfigEdit2"
   }]
 }

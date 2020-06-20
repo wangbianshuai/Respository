@@ -1,7 +1,7 @@
-const DictionaryConfig = require("../../entities/DictionaryConfig");
+const dictionaryConfig = require("../../entities/dictionaryConfig");
 const { getButton, assignProporties, getTextBox } = require("../../Common");
 
-//systemManage/DictionaryConfig 600-699
+//systemManage/dictionaryConfig 600-699
 const dataActionTypes = {
     //搜索查询
     searchQuery: 600,
@@ -11,30 +11,31 @@ const dataActionTypes = {
     excelExport: 602
 };
 
-const entity = { name: DictionaryConfig.name, primaryKey: DictionaryConfig.primaryKey, viewName: "ViewDictionaryConfig" }
+const { name, primaryKey, viewName } = dictionaryConfig;
+const entity = { name, primaryKey, viewName };
 
 module.exports = {
-    name: "DictionaryConfigList",
+    name: "dictionaryConfigList",
     type: "View",
     eventActions: getEventActions(),
-    properties: assignProporties({ name: "DictionaryConfigList" }, [getSearchOperationView(), getAlert(), getDataGridView()])
+    properties: assignProporties({ name: "dictionaryConfigList" }, [getSearchOperationView(), getAlert(), getDataGridView()])
 }
 
 function getSearchOperationView() {
     return {
-        name: "SearchOperationView1",
+        name: "searchOperationView1",
         entity: entity,
         type: "RowsColsView",
         className: "divLeftRightView",
-        properties: assignProporties({ name: "DictionaryConfigList" }, [{ eventActionName: "ToEditPage", ...getButton("ToEditPage", "新增", "primary", 1, 1) },
-        { eventActionName: "EditDictionaryConfig", colStyle: { paddingLeft: 0 }, ...getButton("EditDictionaryConfig", "修改", "default", 1, 2) },
+        properties: assignProporties({ name: "dictionaryConfigList" }, [{ eventActionName: "toEditPage", ...getButton("toEditPage", "新增", "primary", 1, 1) },
+        { eventActionName: "editEntityData", colStyle: { paddingLeft: 0 }, ...getButton("editEntityData", "修改", "default", 1, 2) },
         {
-            eventActionName: "DeleteDictionaryConfig",
+            eventActionName: "deleteEntityData",
             colStyle: { paddingLeft: 0 },
             dataActionType: dataActionTypes.deleteEntityData,
             successTip: "删除成功！",
             confirmTip: "请确认是否删除当前键值配置？",
-            ...getButton("DeleteDictionaryConfig", "删除", "default", 1, 4)
+            ...getButton("deleteEntityData", "删除", "default", 1, 4)
         },
         getKeyword()
         ])
@@ -42,7 +43,7 @@ function getSearchOperationView() {
 }
 
 function getKeyword() {
-    const p = getTextBox("Keyword", "", "Search", 2, 3, "请输入关键字")
+    const p = getTextBox("keyword", "", "search", 2, 3, "请输入关键字")
     p.colStyle = { paddingRight: 8, paddingLeft: 2 };
     p.isCondition = true;
     p.propertyName = "name,value";
@@ -62,16 +63,16 @@ function getAlert() {
 
 function getDataGridView() {
     return {
-        name: "DataGridView1",
+        name: "dataGridView1",
         entity: entity,
-        type: "dataGridView",
+        type: "DataGridView",
         entitySearchQuery: dataActionTypes.searchQuery,
         eventActionName: "searchQuery",
         isDiv: true,
         className: "divInfoView3",
         isRowSelection: true,
         isSingleSelection: true,
-        properties: assignProporties(DictionaryConfig, ["name", "value", "TypeName", "Remark", { name: "CreateDate", OrderByType: "desc" }, { name: "RowVersion", isVisible: false }])
+        properties: assignProporties(dictionaryConfig, ["name", "value", "TypeName", "Remark", { name: "CreateDate", OrderByType: "desc" }, { name: "RowVersion", isVisible: false }])
     }
 }
 
@@ -79,27 +80,27 @@ function getEventActions() {
     return [{
         name: "searchQuery",
         type: "dataGridView/searchQuery",
-        searchView: "SearchOperationView1",
-        searchButton: "Keyword",
-        dataGridView: "DataGridView1",
+        searchView: "searchOperationView1",
+        searchButton: "keyword",
+        dataGridView: "dataGridView1",
         alertMessage: "alertMessage"
     },
     {
-        name: "ToEditPage",
-        type: "Page/toPage",
-        pageUrl: "/systemManage/DictionaryConfigEdit"
+        name: "toEditPage",
+        type: "page/toPage",
+        pageUrl: "/systemManage/dictionaryConfigEdit"
     },
     {
-        name: "EditDictionaryConfig",
+        name: "editEntityData",
         type: "dataGridView/selectRowToPage",
-        dataGridView: "DataGridView1",
+        dataGridView: "dataGridView1",
         alertMessage: "alertMessage",
-        pageUrl: "/systemManage/DictionaryConfigEdit?DictionaryConfigId=#{DictionaryConfigId}&menuName=" + escape("修改")
+        pageUrl: "/systemManage/dictionaryConfigEdit?dictionaryConfigId=#{dictionaryConfigId}&menuName=" + escape("修改")
     },
     {
-        name: "DeleteDictionaryConfig",
-        type: "DataGrid/batchUpdateRowDataList",
-        dataGridView: "DataGridView1",
+        name: "deleteEntityData",
+        type: "dataGrid/batchUpdateRowDataList",
+        dataGridView: "dataGridView1",
         alertMessage: "alertMessage"
     }]
 }

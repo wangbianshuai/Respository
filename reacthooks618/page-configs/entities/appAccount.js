@@ -1,5 +1,6 @@
 module.exports = {
     name: "AppAccount",
+    viewName: 'ViewAppAccount',
     primaryKey: "AppAccountId",
     properties: getProperties(),
     statusDataSource: getStatusDataSource()

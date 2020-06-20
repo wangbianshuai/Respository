@@ -1,4 +1,4 @@
-const OperationLog = require("../../entities/OperationLog");
+const operationLog = require("../../entities/operationLog");
 const { getButton, assignProporties, getTextBox, getSelect, getDatePicker } = require("../../Common");
 
 //系统管理/操作日志 4200-4299
@@ -7,30 +7,31 @@ const dataActionTypes = {
     searchQuery: 4200,
 };
 
-const entity = { name: OperationLog.name, primaryKey: OperationLog.primaryKey, viewName: "ViewOperationLog" }
+const { name, primaryKey, viewName } = operationLog;
+const entity = { name, primaryKey, viewName };
 
 module.exports = {
-    name: "OperationLog",
+    name: "operationLog",
     type: "View",
     eventActions: getEventActions(),
-    properties: assignProporties({ name: "OperationLog" }, [getSearchOperationView(), getDataGridView()])
+    properties: assignProporties({ name: "operationLog" }, [getSearchOperationView(), getDataGridView()])
 }
 
 function getSearchOperationView() {
     return {
-        name: "SearchOperationView1",
+        name: "searchOperationView1",
         entity: entity,
         type: "RowsColsView",
         className: "divSerachView",
-        properties: assignProporties({ name: "OperationLog" }, [
+        properties: assignProporties({ name: "operationLog" }, [
             getEditSelect("LogType", "类型", getLoyTypeDataSource(), 1, 1),
             getEditSelect("RequestType", "请求类型", getRequestDataSource(), 1, 2),
             getTextBox2("EntityName", "实体名", 1, 3),
             getTextBox2("MethodName", "方法名", 1, 4),
             { ...getDatePicker2("StartDate", "开始日期", 2, 1, "大于或等于其值"), isMonthFirst: true, propertyName: "CreateDate", operateLogic: ">=" },
             { ...getDatePicker2("EndDate", "至", 2, 2, "小于其值"), isCurrentDay: true, propertyName: "CreateDate", operateLogic: "<" },
-            { ...getButton("Search", "搜索", "primary", 2, 3), isFormItem: true, Icon: "search", eventActionName: "searchQuery", pressEnterEventActionName: "searchQuery" },
-            { ...getButton("ClearQuery", "清空", "default", 2, 4), isFormItem: true, eventActionName: "ClearQuery" }
+            { ...getButton("search", "搜索", "primary", 2, 3), isFormItem: true, Icon: "search", eventActionName: "searchQuery", pressEnterEventActionName: "searchQuery" },
+            { ...getButton("clearQuery", "清空", "default", 2, 4), isFormItem: true, eventActionName: "clearQuery" }
         ])
     }
 }
@@ -87,24 +88,24 @@ function getDatePicker2(name, label, x, y, placeHolder, defaultValue) {
 
 function getDataGridView() {
     return {
-        name: "DataGridView1",
+        name: "dataGridView1",
         entity: entity,
-        type: "dataGridView",
+        type: "DataGridView",
         entitySearchQuery: dataActionTypes.searchQuery,
         eventActionName: "searchQuery",
         isDiv: true,
         className: "divInfoView3",
-        properties: assignProporties(OperationLog, ["LogType", "RequestType", "EntityName", "MethodName", "IPAddress", "StartTime", "EndTime", "ElapsedMilliseconds", "UserName",
+        properties: assignProporties(operationLog, ["LogType", "RequestType", "EntityName", "MethodName", "IPAddress", "StartTime", "EndTime", "ElapsedMilliseconds", "UserName",
             { name: "CreateDate", OrderByType: "desc" }, getLookDetail(), { name: "LogPath", isVisible: false }])
     }
 }
 
 function getLookDetail() {
     return {
-        name: "LookDetail",
+        name: "lookDetail",
         isOpenPage: true,
         isAddBasePath: true,
-        pageUrl: "OperationLog.html?Path=#{LogPath}"
+        pageUrl: "operationLog.html?Path=#{LogPath}"
     }
 }
 
@@ -112,16 +113,16 @@ function getEventActions() {
     return [{
         name: "searchQuery",
         type: "dataGridView/searchQuery",
-        searchView: "SearchOperationView1",
-        searchButton: "Search",
-        dataGridView: "DataGridView1"
+        searchView: "searchOperationView1",
+        searchButton: "search",
+        dataGridView: "dataGridView1"
     },
     {
-        name: "ClearQuery",
+        name: "clearQuery",
         type: "dataGridView/searchQuery",
-        searchView: "SearchOperationView1",
-        searchButton: "ClearQuery",
-        dataGridView: "DataGridView1",
+        searchView: "searchOperationView1",
+        searchButton: "clearQuery",
+        dataGridView: "dataGridView1",
         isClearQuery: true
     }]
 }

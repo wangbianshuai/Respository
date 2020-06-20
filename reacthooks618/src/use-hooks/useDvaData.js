@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'dva';
 import { Common } from 'UtilsCommon';
 
 export default (mapStateToProps) => {
-  const props = useSelector((state) => setMapStateToProps(state, mapStateToProps(state)));
+  const props = useSelector((state) => mapStateToProps(state));
 
   const dispatch = useDispatch();
 
@@ -22,17 +22,6 @@ function init(obj, dispatch) {
   obj.dispatch = getDispatch(dispatch, token);
   obj.dispatchAction = dispatchAction(dispatch, token);
   obj.setActionState = setActionState(dispatch);
-}
-
-function setMapStateToProps(state, props) {
-  let loading = false;
-  //取props上dva服务命名空间
-  for (let key in props) {
-    if (state[key] && state[key].loading) { loading = true; break; }
-  }
-  props.loading = loading;
-
-  return props;
 }
 
 function getDispatch(dispatch, token) {

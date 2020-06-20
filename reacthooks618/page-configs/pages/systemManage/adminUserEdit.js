@@ -9,18 +9,19 @@ const dataActionTypes = {
     saveEntityData: 4401
 }
 
-const entity = { name: adminUser.name, primaryKey: adminUser.primaryKey }
+const { name, primaryKey } = adminUser;
+const entity = { name, primaryKey };
 
 module.exports = {
-    name: "AdminUserEdit",
+    name: "adminUserEdit",
     type: "View",
     eventActions: getEventActions(),
-    properties: assignProporties({ name: "AdminUserEdit" }, [getEditView()])
+    properties: assignProporties({ name: "adminUserEdit" }, [getEditView()])
 }
 
 function getEditView() {
     return {
-        name: "AdminUserEdit2",
+        name: "adminUserEdit2",
         type: "RowsColsView",
         entity: entity,
         isForm: true,
@@ -34,12 +35,12 @@ function getEditView() {
 
 function getButtonProperties() {
     return [{
-        name: "LeftSpace1",
+        name: "leftSpace1",
         type: "WhiteSpace",
         className: "ant-col ant-col-8 ant-form-item-label"
     },
     { ...getButton("saveEntityData", "保存", "primary"), eventActionName: "saveEntityData", style: { width: 84 } },
-    { ...getButton("BackToLast", "返回", ""), eventActionName: "BackToLast", style: { marginLeft: 10 } }]
+    { ...getButton("backToLast", "返回", ""), eventActionName: "backToLast", style: { marginLeft: 10 } }]
 }
 
 function getProperties() {
@@ -54,7 +55,7 @@ function getProperties() {
 
 function getButtonView() {
     return {
-        name: "ButtonView",
+        name: "buttonView",
         type: "View",
         className: "divCenterButton",
         isDiv: true,
@@ -62,7 +63,7 @@ function getButtonView() {
         colSpan: 24,
         x: 6,
         y: 1,
-        properties: assignProporties({ name: "AdminUserEdit" }, getButtonProperties())
+        properties: assignProporties({ name: "adminUserEdit" }, getButtonProperties())
     }
 }
 
@@ -82,19 +83,19 @@ function getTextBox2(name, label, x, y, contorlType, placeHolder, maxLength, isN
 
 function getEventActions() {
     return [{
-        name: "BackToLast",
-        type: "Page/toPage",
-        pageUrl: "/systemManage/AdminUserList"
+        name: "backToLast",
+        type: "page/toPage",
+        pageUrl: "/systemManage/adminUserList"
     },
     {
         name: "saveEntityData",
         type: "entityEdit/saveEntityData",
-        editView: "AdminUserEdit2",
-        expandSetEntityData: "expandsetAdminUserData"
+        editView: "adminUserEdit2",
+        expandSetEntityData: "expandSetAdminUserData"
     },
     {
         name: "getEntityData",
         type: "entityEdit/getEntityData",
-        editView: "AdminUserEdit2"
+        editView: "adminUserEdit2"
     }]
 }

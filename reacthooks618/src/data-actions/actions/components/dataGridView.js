@@ -1,7 +1,7 @@
 import { Common } from 'UtilsCommon';
 import BaseIndex from "../../baseIndex";
 
-export default class dataGridView extends BaseIndex {
+export default class DataGridView extends BaseIndex {
   constructor(props) {
     super(props);
 
@@ -26,8 +26,8 @@ export default class dataGridView extends BaseIndex {
 
     const requestList = [];
 
-    requestList.push({ url: dataUrl, data: { queryInfo: queryInfo } });
-    if (!isData) requestList.push({ url: pageUrl, data: { queryInfo: queryInfo } });
+    requestList.push({ url: dataUrl, data: { QueryInfo: queryInfo } });
+    if (!isData) requestList.push({ url: pageUrl, data: { QueryInfo: queryInfo } });
 
     data.requestList = requestList;
 
@@ -48,10 +48,10 @@ export default class dataGridView extends BaseIndex {
 
     const entityName = entity.viewName || entity.name;
 
-    var dataUrl = `?$query=true&Action=Excel&title=${escape(title)}&EntityName=${entityName}`;
+    var dataUrl = `?$query=true&Action=Excel&Title=${escape(title)}&EntityName=${entityName}`;
 
     if (data.entityExcelExport) {
-      this.invokeAction(id, data.entityExcelExport, { pathQuery: dataUrl, dataGridViewExcelExport: actionType, queryInfo: queryInfo });
+      this.invokeAction(id, data.entityExcelExport, { pathQuery: dataUrl, dataGridViewExcelExport: actionType, QueryInfo: queryInfo });
     }
   }
 

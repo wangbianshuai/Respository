@@ -1,5 +1,6 @@
 module.exports = {
-    name: "requestServiceLog",
+    name: "RequestServiceLog",
+    viewName: 'ViewRequestServiceLog',
     primaryKey: "LogId",
     properties: getProperties(),
     serviceInterfaceDataSource: getServiceInterfaceDataSource(),

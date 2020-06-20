@@ -1,5 +1,6 @@
 module.exports = {
     name: "DictionaryConfig",
+    viewName: 'ViewDictionaryConfig',
     primaryKey: "DictionaryConfigId",
     properties: getProperties()
   }

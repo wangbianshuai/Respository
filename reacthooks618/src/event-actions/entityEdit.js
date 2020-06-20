@@ -1,7 +1,7 @@
-import BaseIndex from "./BaseIndex";
+import BaseIndex from './baseIndex';
 import { Common } from "UtilsCommon";
 
-export default class entityEdit extends BaseIndex {
+export default class EntityEdit extends BaseIndex {
 
     //弹出选择视图选择数据列表，单选，弹出层之前对DataGridView进行验证是否选择行。
     //行为参数，DataGridView，弹出层视图 dialogView

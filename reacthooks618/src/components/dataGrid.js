@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { Table, Alert, Pagination, Button } from 'antd';
 import { Common } from 'UtilsCommon';
-import {usePageAxis} from 'UtilsCommon';
+import { usePageAxis } from 'UseHooks';
 const { Column } = Table;
 
 const getSelectDataList = (dataList, selectedRowKeys, primaryKey) => {
@@ -98,7 +98,7 @@ const setShowColumns = (property, pageAxis, props) => {
 
 export default (props) => {
     const { property, isRowSelection, dataList, primaryKey, isSingleSelection,
-        isLoading,isPartPaging, pageId, dataProperties,
+        isLoading, isPartPaging, pageId, dataProperties,
         pageInfo, isPaging, pageIndexChange, groupByInfo, groupByInfoHtml, setOrderBy } = props;
     const pageAxis = usePageAxis.getPageAxis(pageId);
 

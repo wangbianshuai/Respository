@@ -1,7 +1,7 @@
 import BaseIndex from "../baseIndex";
 import Expand from "./expand";
 
-export default class entityEdit extends BaseIndex {
+export default class EntityEdit extends BaseIndex {
     constructor(props) {
         super(props);
 

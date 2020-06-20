@@ -14,6 +14,7 @@ export default (props) => {
 
 function mapStateToProps(state) {
     return {
+        loading: state.AdminUserService.loading,
         changePassword: state.AdminUserService.changePassword
     }
 }

@@ -1,7 +1,7 @@
-const AppAccount = require("../../entities/AppAccount");
+const appAccount = require("../../entities/appAccount");
 const { getButton, assignProporties, getTextBox, getSelect } = require("../../Common");
 
-//systemManage/AppAccountList 100-199
+//systemManage/appAccountList 100-199
 const dataActionTypes = {
     //搜索查询
     searchQuery: 100,
@@ -10,41 +10,42 @@ const dataActionTypes = {
     //Excel导出
     excelExport: 102,
     //更新状态
-    UpdateAppAccountStatus: 103
+    updateAppAccountStatus: 103
 };
 
-const entity = { name: AppAccount.name, primaryKey: AppAccount.primaryKey, viewName: "ViewAppAccount" }
+const { name, primaryKey, viewName } = appAccount;
+const entity = { name, primaryKey, viewName };
 
 module.exports = {
-    name: "AppAccountList",
+    name: "appAccountList",
     type: "View",
     eventActions: getEventActions(),
-    properties: assignProporties({ name: "AppAccountList" }, [getSearchOperationView(), getDataGridView()])
+    properties: assignProporties({ name: "appAccountList" }, [getSearchOperationView(), getDataGridView()])
 }
 
 function getSearchOperationView() {
     return {
-        name: "SearchOperationView1",
+        name: "searchOperationView1",
         entity: entity,
         type: "RowsColsView",
         className: "divSerachView",
-        properties: assignProporties({ name: "AppAccountList" }, [
-            getEditSelect("Status", "状态", AppAccount.StatusDataSource, 1, 1),
+        properties: assignProporties({ name: "appAccountList" }, [
+            getEditSelect("Status", "状态", appAccount.StatusDataSource, 1, 1),
             {
-                ...getTextBox2("Keyword", "关键字", 1, 3, "", "访问路径/公司名/联系人/手机"), propertyName: "PathName,CompanyName,Linkman,Phone",
+                ...getTextBox2("keyword", "关键字", 1, 3, "", "访问路径/公司名/联系人/手机"), propertyName: "PathName,CompanyName,Linkman,Phone",
                 operateLogic: "like", pressEnterEventActionName: "searchQuery"
             },
-            { ...getButton("Search", "搜索", "primary", 1, 4), isFormItem: true, Icon: "search", eventActionName: "searchQuery", pressEnterEventActionName: "searchQuery" },
-            { ...getButton("ClearQuery", "清空", "default", 1, 5), isFormItem: true, eventActionName: "ClearQuery" },
-            { eventActionName: "ToEditPage", ...getButton("ToEditPage", "新增", "primary", 2, 1), style: { marginLeft: 16, marginBottom: 16 } },
-            { eventActionName: "EditAppAccount", colStyle: { paddingLeft: 0 }, ...getButton("EditAppAccount", "修改", "default", 2, 2) },
+            { ...getButton("search", "搜索", "primary", 1, 4), isFormItem: true, Icon: "search", eventActionName: "searchQuery", pressEnterEventActionName: "searchQuery" },
+            { ...getButton("clearQuery", "清空", "default", 1, 5), isFormItem: true, eventActionName: "clearQuery" },
+            { eventActionName: "toEditPage", ...getButton("toEditPage", "新增", "primary", 2, 1), style: { marginLeft: 16, marginBottom: 16 } },
+            { eventActionName: "editAppAccount", colStyle: { paddingLeft: 0 }, ...getButton("editAppAccount", "修改", "default", 2, 2) },
             {
-                eventActionName: "DeleteAppAccount",
+                eventActionName: "deleteAppAccount",
                 colStyle: { paddingLeft: 0 },
                 dataActionType: dataActionTypes.deleteEntityData,
                 successTip: "删除成功！",
                 confirmTip: "请确认是否删除当前App账号？",
-                ...getButton("DeleteAppAccount", "删除", "default", 2, 4)
+                ...getButton("deleteAppAccount", "删除", "default", 2, 4)
             },
             { eventActionName: "excelExport", title: "App账号", ...getButton("excelExport", "Excel导出", "default", 2, 5), Icon: "download", colStyle: { paddingLeft: 0 } }
         ])
@@ -79,9 +80,9 @@ function getTextBox2(name, label, x, y, contorlType, placeHolder, maxLength) {
 
 function getDataGridView() {
     return {
-        name: "DataGridView1",
+        name: "dataGridView1",
         entity: entity,
-        type: "dataGridView",
+        type: "DataGridView",
         entitySearchQuery: dataActionTypes.searchQuery,
         entityExcelExport: dataActionTypes.excelExport,
         eventActionName: "searchQuery",
@@ -89,29 +90,29 @@ function getDataGridView() {
         className: "divInfoView3",
         isRowSelection: true,
         isSingleSelection: true,
-        properties: assignProporties(AppAccount, ["CompanyName", "PathName", "Address", "Linkman", "Phone", "statusName",
+        properties: assignProporties(appAccount, ["CompanyName", "PathName", "Address", "Linkman", "Phone", "statusName",
             { name: "CreateDate", OrderByType: "desc" }, getOperation(), { name: "RowVersion", isVisible: false }, { name: "Status", isVisible: false }])
     }
 }
 
 function getOperation() {
     return {
-        name: "Operation",
+        name: "operation",
         label: "操作",
         isData: false,
-        actionList: assignProporties(AppAccount, [getUpdateAppAccountStatusAction(1), getUpdateAppAccountStatusAction(2)])
+        actionList: assignProporties(appAccount, [getUpdateAppAccountStatusAction(1), getUpdateAppAccountStatusAction(2)])
     }
 }
 
 function getUpdateAppAccountStatusAction(status) {
     return {
-        name: "UpdateAppAccountStatus",
+        name: "updateAppAccountStatus",
         valueName: "Status",
         dataValue: status,
         label: status === 1 ? "关闭" : "启用",
-        eventActionName: "UpdateAppAccountStatus",
+        eventActionName: "updateAppAccountStatus",
         type: "Popconfirm",
-        dataActionType: dataActionTypes.UpdateAppAccountStatus,
+        dataActionType: dataActionTypes.updateAppAccountStatus,
         successTip: "操作成功！",
         title: "请确认是否" + (status === 1 ? "关闭" : "启用") + "当前App账号？"
     }
@@ -121,42 +122,42 @@ function getEventActions() {
     return [{
         name: "searchQuery",
         type: "dataGridView/searchQuery",
-        searchView: "SearchOperationView1",
-        searchButton: "Search",
-        dataGridView: "DataGridView1"
+        searchView: "searchOperationView1",
+        searchButton: "search",
+        dataGridView: "dataGridView1"
     },
     {
-        name: "ClearQuery",
+        name: "clearQuery",
         type: "dataGridView/searchQuery",
-        searchView: "SearchOperationView1",
-        searchButton: "ClearQuery",
-        dataGridView: "DataGridView1",
+        searchView: "searchOperationView1",
+        searchButton: "clearQuery",
+        dataGridView: "dataGridView1",
         isClearQuery: true
     },
     {
         name: "excelExport",
         type: "dataGridView/excelExport",
-        dataGridView: "DataGridView1"
+        dataGridView: "dataGridView1"
     },
     {
-        name: "ToEditPage",
-        type: "Page/toPage",
-        pageUrl: "/systemManage/AppAccountEdit"
+        name: "toEditPage",
+        type: "page/toPage",
+        pageUrl: "/systemManage/appAccountEdit"
     },
     {
-        name: "EditAppAccount",
+        name: "editAppAccount",
         type: "dataGridView/selectRowToPage",
-        dataGridView: "DataGridView1",
-        pageUrl: "/systemManage/AppAccountEdit?AppAccountId=#{AppAccountId}&menuName=" + escape("修改")
+        dataGridView: "dataGridView1",
+        pageUrl: "/systemManage/appAccountEdit?AppAccountId=#{AppAccountId}&menuName=" + escape("修改")
     },
     {
-        name: "UpdateAppAccountStatus",
-        type: "DataGrid/batchUpdateRowDataList",
-        dataGridView: "DataGridView1"
+        name: "updateAppAccountStatus",
+        type: "dataGrid/batchUpdateRowDataList",
+        dataGridView: "dataGridView1"
     },
     {
-        name: "DeleteAppAccount",
-        type: "DataGrid/batchUpdateRowDataList",
-        dataGridView: "DataGridView1"
+        name: "deleteAppAccount",
+        type: "dataGrid/batchUpdateRowDataList",
+        dataGridView: "dataGridView1"
     }]
 }

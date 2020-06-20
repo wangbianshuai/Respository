@@ -7,11 +7,12 @@ const dataActionTypes = {
     getEntityData: 500,
 }
 
+const { name, primaryKey } = requestServiceLog;
 const entity = {
-    name: requestServiceLog.name, primaryKey: requestServiceLog.primaryKey, expandMethods: {
+    name, primaryKey, expandMethods: {
         getEntityData: "getEntityData"
     }
-}
+};
 
 module.exports = {
     name: "requestServiceLogEdit",
@@ -36,11 +37,11 @@ function getEditView() {
 
 function getButtonProperties() {
     return [{
-        name: "LeftSpace1",
+        name: "leftSpace1",
         type: "WhiteSpace",
         className: "ant-col ant-col-8 ant-form-item-label"
     },
-    { ...getButton("BackToLast", "返回", ""), eventActionName: "BackToLast", style: { marginLeft: 10 } }]
+    { ...getButton("backToLast", "返回", ""), eventActionName: "backToLast", style: { marginLeft: 10 } }]
 }
 
 function getProperties() {
@@ -74,7 +75,7 @@ function getTextBox2(name, label, x, y, contorlType, placeHolder, maxLength, isN
 
 function getButtonView() {
     return {
-        name: "ButtonView",
+        name: "buttonView",
         type: "View",
         className: "divCenterButton",
         isDiv: true,
@@ -103,9 +104,9 @@ function getTextArea(name, label, x, y, placeHolder) {
 
 function getEventActions() {
     return [{
-        name: "BackToLast",
-        type: "Page/toPage",
-        pageUrl: "/systemManage/RequestServiceLogList",
+        name: "backToLast",
+        type: "page/toPage",
+        pageUrl: "/systemManage/requestServiceLogList",
         expandSetPageUrl: "expandSetPageUrl"
     },
     {
