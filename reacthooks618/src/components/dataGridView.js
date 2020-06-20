@@ -66,7 +66,7 @@ const refresh = (pageInfo, property, pageAxis, setRefreshId) => {
     pageIndexChange(pageInfo.pageIndex, pageInfo.pageSize, false, pageInfo, property, pageAxis, setRefreshId);
 }
 
-const setColumnsVisible2 = (visibleColNames, dataProperties, property, setRefreshId, pageInfo) => {
+const setColumnsVisible2 = (visibleColNames, dataProperties, dataProperties2, property, setRefreshId, pageInfo) => {
     dataProperties.forEach(p => p.isVisible = (visibleColNames.indexOf(p.name) >= 0));
     dataProperties2 = dataProperties.filter(f => f.isVisible !== false);
     if (property.isGroupByQuery) {
@@ -214,7 +214,7 @@ const getPageInfo = (pageRecord, pageInfo) => {
     return { pageIndex, pageSize, pageCount, pageRecord };
 };
 
-const setDataList = (actionData, actionTypes, property, dataList, pageInfo) => {
+const setBindDataList = (actionData, actionTypes, property, dataList, pageInfo, groupByInfo, primaryKey) => {
     const { searchQuery } = actionTypes;
     let data = actionData[searchQuery];
 
@@ -244,13 +244,13 @@ const setDataList = (actionData, actionTypes, property, dataList, pageInfo) => {
     return [dataList, pageInfo];
 }
 
-const renderDataView = (property, pageInfo, dataList, dataProperties2, isDataLoading) => {
+const renderDataView = (property, pageInfo, dataList, dataProperties2, isDataLoading, primaryKey, actionData, actionTypes, pageAxis, groupByInfo) => {
     if (property.isComplexEntity) {
         dataList.forEach(d => d.key = d[primaryKey] || Common.createGuid());
         if (property.setChangeDataList) setTimeout(() => property.setChangeDataList(dataList), 100);
     }
     else {
-        [dataList, pageInfo] = setDataList(actionData, actionTypes, property, dataList, pageInfo);
+        [dataList, pageInfo] = setBindDataList(actionData, actionTypes, property, dataList, pageInfo, groupByInfo, primaryKey);
     }
     const isPartPaging = !!property.isPartPaging
 
@@ -265,14 +265,12 @@ export default (props) => {
     const { property, pageAxis } = Base.getProps(props);
     const { dispatch, dispatchAction, setActionState } = pageAxis;
     //使用链接数据行为
-    const [invoke, actionTypes, actionData] = useConnectDataAction(dispatch, dispatchAction, setActionState, 'Components_DataGridView');
+    const [invokeDataAction, actionTypes, actionData] = useConnectDataAction(dispatch, dispatchAction, setActionState, 'Components_DataGridView');
 
     const [isVisible, setIsVisible] = useState(property.isVisible !== false);
     const [isDataLoading, setIsDataLoading] = useState(false);
-    const [dataList, setDataList] = useState(false);
-    const [refreshId, setRefreshId] = useState(false);
-    const [isDataLoading, setIsDataLoading] = useState(property.value || property.defaultValue || []);
-
+    const [dataList, setDataList] = useState(property.value || property.defaultValue || []);
+    const setRefreshId = useState(false)[1];
     const primaryKey = property.entity.primaryKey;
 
     const { dataProperties, dataProperties2, pageInfo, receiveFunctions } = useMemo(() => init(property, pageAxis), [property, pageAxis])
@@ -286,7 +284,7 @@ export default (props) => {
     }, [receiveFunctions, pageAxis, actionTypes, actionData]);
 
     if (!property.setVisible) property.setVisible = (v) => setIsVisible(v);
-    if (!property.invokeDataAction) property.invokeDataAction = invoke;
+    if (!property.invokeDataAction) property.invokeDataAction = invokeDataAction;
     if (!property.actionTypes) property.actionTypes = actionTypes;
     if (!property.setDataLoading) property.setDataLoading = (v) => setIsDataLoading(v);
     if (!property.add) property.add = (d) => add(d, dataList, setDataList, primaryKey);
@@ -295,7 +293,7 @@ export default (props) => {
     if (!property.add) property.setValue = (v) => setValue(v, setDataList);
     if (!property.add) property.getValue = () => dataList;
     if (!property.add) property.setColumnsVisible = (hideColNames) => setColumnsVisible(hideColNames, dataProperties, setRefreshId)
-    if (!property.add) property.setColumnsVisible2 = (visibleColNames) => setColumnsVisible2(visibleColNames, dataProperties, property, setRefreshId, pageInfo);
+    if (!property.add) property.setColumnsVisible2 = (visibleColNames) => setColumnsVisible2(visibleColNames, dataProperties, dataProperties2, property, setRefreshId, pageInfo);
     if (!property.add) property.getPageRecord = () => pageInfo.pageRecord;
     if (!property.add) property.getDataProperties2 = () => dataProperties2;
     if (!property.add) property.getExcelExportProperties = () => getExcelExportProperties(dataProperties)

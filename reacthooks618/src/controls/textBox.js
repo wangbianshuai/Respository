@@ -47,8 +47,18 @@ const change = (e, property, setValue) => {
     Base.bindDataValue(property, () => value);
 }
 
+const pressEnter = (property, pageAxis) => {
+    const { pressEnterEventActionName, pressEnterEventPropertyName } = property;
+    if (pressEnterEventActionName) {
+        const props = { pageAxis };
+        if (pressEnterEventPropertyName) props.property = pageAxis.getProperty(pressEnterEventPropertyName);
+
+        pageAxis.invokeEventAction(pressEnterEventActionName, props);
+    }
+}
+
 export default (props) => {
-    const { property } = Base.getProps(props);
+    const { property, pageAxis } = Base.getProps(props);
     const [value, setValue] = useState(Base.getInitValue(property));
     const [isVisible, setIsVisible] = useState(property.isVisible !== false);
     const [disabled, setDisabled] = useState(false);
@@ -58,15 +68,20 @@ export default (props) => {
         change(e, property, setValue);
     }, [property, setValue]);
 
+    const onPressEnter = useCallback(() => {
+        pressEnter(property, pageAxis)
+    }, [property, pageAxis]);
+
     if (!property.setIsVisible) property.setIsVisible = (v) => setIsVisible(v);
     if (!property.setValue) property.setValue = (v) => setValue(v);
+    if (!property.getValue) property.getValue = () => value;
     if (!property.setDisabled) property.setDisabled = (v) => setDisabled(v);
     if (!property.setIsReadOnly) property.setIsReadOnly = (v) => setIsReadOnly(v);
 
     if (!isVisible) return null;
 
     const rows = property.Rows || 4;
-    
+
     if (property.controlType === 'TextArea') {
         const maxLength = isReadOnly ? undefined : property.maxLength || 500;
         return (<TextArea rows={rows}
@@ -89,6 +104,7 @@ export default (props) => {
             type={type}
             prefix={Base.renderPrefix(property)}
             size={property.size}
+            onPressEnter={onPressEnter}
             value={value} />
     );
 };

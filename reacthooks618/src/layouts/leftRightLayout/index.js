@@ -230,7 +230,10 @@ export default (props) => {
 
     const onSelectMenuClick = useCallback((item) => {
         if (item.key === "changePassword") router.push("/personCenter/changePassword");
-        else if (item.key === "logout") router.push("/login");
+        else if (item.key === "logout") {
+            Common.removeStorage("token");
+            router.push("/login");
+        }
     }, []);
 
     const onSelectNavMenu = useCallback((nav) => {

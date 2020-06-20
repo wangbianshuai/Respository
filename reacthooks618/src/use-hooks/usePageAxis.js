@@ -11,7 +11,7 @@ props:父级页面props
 */
 
 import { useMemo, useEffect } from "react";
-import { Common } from 'UtilsCommon';
+import { Common, PageCommon } from 'UtilsCommon';
 import EventActions from 'EventActions';
 
 class PageAxis {
@@ -62,11 +62,7 @@ class PageAxis {
     }
 
     toLogin() {
-
-    }
-
-    showMessage(msg) {
-
+        PageCommon.toLogin();
     }
 
     initSet() {
@@ -76,8 +72,6 @@ class PageAxis {
         this.loginUserId = Common.getStorage("loginUserId");
 
         this.receives = {};
-        this.controls = [];
-        this.components = [];
         this.eventActionsConfig = Common.clone(this.pageConfig.eventActions);
         if (this.pageConfig.actionOptions) this.actionTypes = this.pageConfig.actionOptions.actionTypes;
 
@@ -88,11 +82,12 @@ class PageAxis {
         for (let key in EventActions) this.eventActions[key] = new EventActions[key]();
     }
 
-    setModalDialog() {
+    showMessage(msg) {
+        PageCommon.showMessage(msg);
     }
 
     getProperty(name) {
-        return this.getPropertyProperty(this.pageConfig, name);
+        return this.getViewProperty(this.pageConfig, name);
     }
 
     getRight(name) {
@@ -104,14 +99,14 @@ class PageAxis {
         return (params) => this[name](params);
     }
 
-    getPropertyProperty(view, name) {
+    getViewProperty(view, name) {
         if (!name) return null;
         if (view.name === name) return view;
 
         if (view.properties) {
             let v = null;
             for (let i = 0; i < view.properties.length; i++) {
-                v = this.getPropertyProperty2(view.properties[i], name);
+                v = this.getViewProperty2(view.properties[i], name);
                 if (v !== null) break;
             }
             if (v != null) return v;
@@ -119,7 +114,7 @@ class PageAxis {
         if (this.pageConfig.dialogViews) {
             let v = null;
             for (let i = 0; i < this.pageConfig.dialogViews.length; i++) {
-                v = this.getPropertyProperty2(this.pageConfig.dialogViews[i], name);
+                v = this.getViewProperty2(this.pageConfig.dialogViews[i], name);
                 if (v !== null) break;
             }
             if (v != null) return v;
@@ -127,13 +122,13 @@ class PageAxis {
         return null;
     }
 
-    getPropertyProperty2(view, name) {
+    getViewProperty2(view, name) {
         if (view.name === name) return view;
 
         if (view.properties) {
             let v = null;
             for (let i = 0; i < view.properties.length; i++) {
-                v = this.getPropertyProperty2(view.properties[i], name);
+                v = this.getViewProperty2(view.properties[i], name);
                 if (v !== null) break;
             }
             return v;
@@ -143,30 +138,34 @@ class PageAxis {
     }
 
     toPage(url) {
-    }
-
-    toBack() {
-
+        PageCommon.toPage(url);
     }
 
     openPage(url) {
+        let index = url.indexOf("?");
+        if (index > 0) {
+            url = url.substring(0, index) + ".html" + url.substring(index)
+        }
+        else url = ".html";
+
+        window.open(url);
     }
 
     alert(msg, title) {
-
+        PageCommon.alert(msg, title);
     }
 
     alertSuccess(msg, onOk) {
-
+        PageCommon.alertSuccess(msg, onOk);
     }
 
-    confirm(msg, onOk, title) {
-
+    confirm(msg, onOk) {
+        PageCommon.confirm(msg, onOk);
     }
 
-    invokeEventAction(name, props) {
+    invokeEventAction(name, obj) {
         const e = this.getEventAction(name);
-        if (e != null) e.invoke(props, e);
+        if (e != null) e.invoke(obj, e);
     }
 
     getEventAction(name) {
@@ -194,7 +193,7 @@ class PageAxis {
 
 const _PageAxises = {};
 
-const usePageAxis = (name, pageConfig, invoke, actionTypes, dispatch, props,
+const usePageAxis = (name, pageConfig, invokeDataAction, actionTypes, dispatch, props,
     dispatchAction, setActionState, getStateValue, init) => {
     const id = useMemo(() => Common.createGuid(), []);
     useEffect(() => {
@@ -206,7 +205,7 @@ const usePageAxis = (name, pageConfig, invoke, actionTypes, dispatch, props,
     if (!pageConfig) return null;
 
     if (!_PageAxises[id]) _PageAxises[id] = new PageAxis(id, {
-        name, pageConfig, invoke, actionTypes, dispatch, props,
+        name, pageConfig, invokeDataAction, actionTypes, dispatch, props,
         dispatchAction, setActionState, getStateValue, init
     });
 

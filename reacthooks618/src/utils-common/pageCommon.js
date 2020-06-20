@@ -1,4 +1,4 @@
-import { message } from 'antd';
+import { message, Modal } from 'antd';
 import router from 'umi/router';
 
 let _Loading = false;
@@ -35,4 +35,30 @@ export function isLoginPage() {
   const ns = pathname.split('/');
   let name = ns[ns.length - 1].toLowerCase().replace(".html", "");
   return name === 'login';
+}
+
+export function alert(msg, title) {
+  if (window.isModalInfo) return;
+  window.isModalInfo = true;
+  Modal.info({
+    title: title || "提示",
+    content: msg,
+    onOk: () => {
+      window.isModalInfo = false;
+    }
+  });
+}
+
+export function alertSuccess(msg, onOk) {
+  Modal.success({
+    title: msg,
+    onOk: onOk
+  });
+}
+
+export function Confirm(msg, onOk) {
+  Modal.confirm({
+    title: msg,
+    onOk: onOk
+  });
 }

@@ -10,7 +10,7 @@ export default (name, props, mapStateToProps, init, dataActionOptions) => {
   const [dispatch, dispatchAction, setActionState, state] = useDvaData(mapStateToProps);
 
   //2、 使用链接数据行为
-  const [invoke, actionTypes, actionData] = useConnectDataAction(dispatch, dispatchAction, setActionState, name, dataActionOptions);
+  const [invokeDataAction, actionTypes, actionData] = useConnectDataAction(dispatch, dispatchAction, setActionState, name, dataActionOptions);
 
   //3、 使用处理数据
   const [getStateValue, addDispatchActionData] = useProcessData(state);
@@ -20,7 +20,7 @@ export default (name, props, mapStateToProps, init, dataActionOptions) => {
 
   //5、 使用页线，作用贯穿整个流程
   const pageAxis = usePageAxis(
-    name, pageConfig, invoke, actionTypes, dispatch, props, addDispatchActionData,
+    name, pageConfig, invokeDataAction, actionTypes, dispatch, props, addDispatchActionData,
     dispatchAction, setActionState, getStateValue, init
   );
 
