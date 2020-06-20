@@ -4,14 +4,14 @@ export function getResponseData(d, resKey) {
     if (!blSuccess) return d;
 
     let obj = null
-    if (d.Exception || d.message) {
-        const msg = d.Exception || d.message;
+    if (d.Exception || d.Message) {
+        const msg = d.Exception || d.Message;
         obj = { isSuccess: false, message: msg }
         if (d.isReLogin) obj.isReLogin = true;
     }
     else if (d.Ack) {
-        if (d.Ack.isSuccess) obj = d;
-        else obj = { isSuccess: false, message: d.Ack.message || '请求异常' };
+        if (d.Ack.IsSuccess) obj = d;
+        else obj = { isSuccess: false, message: d.Ack.Message || '请求异常' };
     }
     else if (resKey) {
         if (d && d[resKey]) obj = d[resKey];

@@ -80,8 +80,8 @@ const renderLabel = (property, label) => {
 }
 
 const renderItem = (property, view, pageId, isVisible, label) => {
-    const labelCol = property.LabelCol || 6;
-    const wrapperCol = property.WrapperCol || 18;
+    const labelCol = property.labelCol || 6;
+    const wrapperCol = property.wrapperCol || 18;
 
     if (property.isFormItem && !property.isFormView) {
         var style = property.style || {};
@@ -120,5 +120,5 @@ export default (props) => {
     var style = property.ColStyle || {};
     if (!isVisible) { style = { ...style }; style.display = 'none'; }
 
-    return <Col key={property.ColId} span={property.ColSpan} style={style}>{renderItem(property, view, pageId, isVisible, label)}</Col>
+    return <Col key={property.ColId} span={property.colSpan} style={style}>{renderItem(property, view, pageId, isVisible, label)}</Col>
 }

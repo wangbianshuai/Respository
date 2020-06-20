@@ -1,37 +1,19 @@
-// import React from "react";
-// import { connect } from "dva";
-// import { BaseIndex, RootPage, ConnectAction, StaticIndex } from "UseHooks";
-// import { EnvConfig} from "UtilsCommon";
-// import Components from "Components";
+import React from "react";
+import { usePage } from "UseHooks";
+import Components from "Components";
 
-// class changePassword extends BaseIndex {
-//     constructor(props) {
-//         super(props);
+export default (props) => {
+    const pageAxis = usePage('personCenter_changePassword', props, mapStateToProps);
 
-//         this.name = "PersonCenter_ChangePassword";
+    if (pageAxis === null) return null;
 
-//         this.initEventAction();
-//     }
+    return (
+        <Components.PropertyItem property={pageAxis.pageConfig} pageId={pageAxis.id} />
+    )
+}
 
-//     render() {
-//         return (
-//             <Components.PropertyItem property={this.pageConfig} pageAxis={this.pageAxis} />
-//         )
-//     }
-// }
-
-// function mapStateToProps(state, ownProps) {
-//     const props = StaticIndex.MapStateToProps(state, ownProps, {
-//         changePassword: state.ApiService.changePassword
-//     });
-
-//     !EnvConfig.isProd && console.log(props);
-//     return props;
-// }
-
-// export default connect(mapStateToProps, StaticIndex.MapDispatchToProps)(RootPage(ConnectAction("PersonCenter_ChangePassword", changePassword)));
-
-export default ()=>{
-
-    return <div></div>
-};
+function mapStateToProps(state) {
+    return {
+        changePassword: state.AdminUserService.changePassword
+    }
+}

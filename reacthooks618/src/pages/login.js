@@ -4,10 +4,8 @@ import { Common, PageCommon } from "UtilsCommon";
 import Components from "Components";
 import styles from "../styles/login.css"
 
-const _Name = "login";
-
 export default (props) => {
-    const pageAxis = usePage(_Name, props, mapStateToProps, init);
+    const pageAxis = usePage('login', props, mapStateToProps, init);
 
     if (pageAxis === null) return null;
 

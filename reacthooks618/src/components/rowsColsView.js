@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { Card } from 'antd';
 import { Common } from 'UtilsCommon';
 import Base from './base';
@@ -11,8 +11,11 @@ export default (props) => {
     property.setVisible = (v) => setIsVisible(v);
     property.reLoad = () => Base.load(property, view, pageAxis);
 
-    useEffect(() => {
+    useMemo(() => {
         Base.initSetView(property);
+    }, [property]);
+
+    useEffect(() => {
         Base.load(property, view, pageAxis);
     }, [property, view, pageAxis]);
 

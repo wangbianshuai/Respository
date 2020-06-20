@@ -41,13 +41,13 @@ const initSetView = (property) => {
 
   for (let key in rowDict) rowDict[key] = rowDict[key].sort((a, b) => a.y > b.y ? 1 : -1);
 
-  property.rowsCols = { XList: xList, rowDictionary: rowDict };
+  property.rowsCols = { xList, rowDictionary: rowDict };
 };
 
 const renderColumn = (col, property, pageId) => {
   col.key = col.key || 'pt_' + col.id;
   if (col.isColVisible) return getPropertyItem(col);
-  else return (<Col key={col.ColId} span={col.ColSpan} style={col.ColStyle}>{getPropertyItem(col, property, pageId)}</Col>);
+  else return (<Col key={col.ColId} span={col.colSpan} style={col.ColStyle}>{getPropertyItem(col, property, pageId)}</Col>);
 };
 
 const rendRowCols = (row, colList, property, pageId) => {
@@ -58,10 +58,10 @@ const rendRowCols = (row, colList, property, pageId) => {
 };
 
 const renderView = (property, pageId) => {
-  const { XList, rowDictionary } = property.rowsCols;
+  const { xList, rowDictionary } = property.rowsCols;
   return (
     <React.Fragment>
-      {XList.map(m => rendRowCols(m, rowDictionary[m.x], property, pageId))}
+      {xList.map(m => rendRowCols(m, rowDictionary[m.x], property, pageId))}
     </React.Fragment>
   )
 };
