@@ -454,16 +454,6 @@ export function replaceDataContent(data, content, blUrl) {
     return content;
 }
 
-export function getPageData() {
-    const str = getStorage("pageData");
-    if (isNullOrEmpty(str)) return {};
-
-    return JSON.parse(str);
-}
-
-export function setPageData(data) {
-    setStorage("pageData", JSON.stringify(data));
-}
 
 export function assign(a, b, c) {
     if (!isObject(a)) return a
