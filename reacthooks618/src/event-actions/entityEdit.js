@@ -174,7 +174,7 @@ export default class entityEdit extends BaseIndex {
             };
 
             if (successCallback) successCallback({ data, props, action });
-            else pageAxis.AlertSuccess(editView.successTip || "保存成功", onOk);
+            else pageAxis.alertSuccess(editView.successTip || "保存成功", onOk);
 
             if (property.setTextType && property.text2) property.setTextType(property.text2, "default");
         }

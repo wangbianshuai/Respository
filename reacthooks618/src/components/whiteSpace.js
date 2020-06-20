@@ -6,7 +6,7 @@ export default (props) => {
     const { property } = Base.getProps(props);
     const [isVisible, setIsVisible] = useState(property.isVisible !== false);
 
-    if (!property.setVisible) property.setVisible = (v) => setIsVisible(v);
+   property.setVisible = (v) => setIsVisible(v);
 
     if (!isVisible) return null;
 

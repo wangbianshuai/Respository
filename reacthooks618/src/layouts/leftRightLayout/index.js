@@ -66,6 +66,8 @@ const addBreadcrumb = (name, parenPageName, parentQueryString, isGetMenuName, br
 
 const renderUserRightMenuList = (onSelectMenuClick) => {
     return (<Menu selectedKeys={[]} className={styles.userRightMenu} onClick={onSelectMenuClick}>
+        <Menu.Item key="appAccountInfo" className={styles.userRightMenuItem} ><Icon type="info-circle" /><span>App账户信息</span></Menu.Item>
+        <Menu.Divider />
         <Menu.Item key="changePassword" className={styles.userRightMenuItem} ><Icon type="setting" /><span>修改密码</span></Menu.Item>
         <Menu.Divider />
         <Menu.Item key="logout" className={styles.userRightMenuItem}><Icon type="logout" /><span>退出登录</span></Menu.Item>
@@ -109,6 +111,14 @@ const selectNavMenu = (nav, menus, navMenuList, queryString) => {
     return selectNav;
 }
 
+const setMenusRight = (obj) => {
+    if (obj.isSetRight) return;
+
+    for (var key in obj.menus) obj.menus[key].isRight = true;
+
+    obj.isSetRight = true;
+};
+
 const getCurrentMenuSelectedKeys = (props, obj, stateOpenKeys, queryString) => {
     const { navMenuList, defaultPageName } = obj;
     let pathname = props.location.pathname;
@@ -116,6 +126,8 @@ const getCurrentMenuSelectedKeys = (props, obj, stateOpenKeys, queryString) => {
     let keys = pathname === "/" || pathname === "/index" ? [defaultPageName] : [pathname];
 
     var pageName = keys.length > 0 ? keys[0] : "";
+
+    setMenusRight(obj);
 
     let nav = null, menu = null, childMenu = null;
     let blExists = false;
@@ -203,7 +215,7 @@ const init = () => {
 
     return {
         isOnOpenChange: false,
-        token: Common.getCookie("token"),
+        token: Common.getStorage("token"),
         loginUser: getLoginUser(),
         defaultPageName: "/personCenter/appAccountInfo",
         navMenuList,
@@ -229,15 +241,13 @@ export default (props) => {
     }, [obj, setStateOpenKeys]);
 
     const onSelectMenuClick = useCallback((item) => {
+        if (item.key === "appAccountInfo") router.push("/personCenter/appAccountInfo");
         if (item.key === "changePassword") router.push("/personCenter/changePassword");
-        else if (item.key === "logout") {
-            Common.removeStorage("token");
-            router.push("/login");
-        }
+        else if (item.key === "logout") router.push("/login");
     }, []);
 
     const onSelectNavMenu = useCallback((nav) => {
-        selectNavMenu(nav, obj.menus, obj.navMenuList, queryString);
+        obj.selectNav = selectNavMenu(nav, obj.menus, obj.navMenuList, queryString);
     }, [obj, queryString])
 
     if (!judgeLogin(obj.token)) return null;
@@ -258,7 +268,7 @@ export default (props) => {
                 {loginName ? (
                     <Dropdown overlay={renderUserRightMenuList(onSelectMenuClick)} >
                         <span className={styles.dropdown}>
-                            <Avatar size="small" src={getImageUrl("UserAvatar.png")} className={styles.avatar} />
+                            <Avatar size="small" src={getImageUrl("userAvatar.png")} className={styles.avatar} />
                             {loginName}
                         </span>
                     </Dropdown>

@@ -1,4 +1,4 @@
-import React, { useState,useCallback } from "react"
+import React, { useState, useCallback } from "react"
 import { Button } from "antd"
 import Base from './base';
 
@@ -14,10 +14,10 @@ export default (props) => {
         pageAxis.invokeEventAction(property.eventActionName, { property, view, pageAxis });
     }, [property, view, pageAxis]);
 
-    if (!property.setIsVisible) property.setIsVisible = (v) => setIsVisible(v);
-    if (!property.setDisabled) property.setDisabled = (v) => setDisabled(v);
-    if (!property.setLoading) property.setLoading = (l) => setLoading(l);
-    if (!property.setTextType) property.setTextType = (text, type) => setTextType({ text: text, buttonType: type || property.buttonType });
+    property.setIsVisible = (v) => setIsVisible(v);
+    property.setDisabled = (v) => setDisabled(v);
+    property.setLoading = (l) => setLoading(l);
+    property.setTextType = (text, type) => setTextType({ text: text, buttonType: type || property.buttonType });
 
     if (!isVisible) return null;
 

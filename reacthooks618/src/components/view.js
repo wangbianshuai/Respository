@@ -12,8 +12,8 @@ export default (props) => {
         Base.load(property, view, pageAxis);
     }, [property, view, pageAxis]);
 
-    if (!property.setVisible) property.setVisible = (v) => setIsVisible(v);
-    if (!property.reLoad) property.reLoad = () => Base.load(property, view, pageAxis);
+    property.setVisible = (v) => setIsVisible(v);
+    property.reLoad = () => Base.load(property, view, pageAxis);
 
     if (!isVisible) return null;
 

@@ -8,8 +8,8 @@ export default (props) => {
     const [isVisible, setIsVisible] = useState(property.isVisible !== false);
     const [value, setValue] = useState(Base.getInitValue(property));
 
-    if (!property.setVisible) property.setVisible = (v) => setIsVisible(v);
-    if (!property.setValue) property.setValue = (v) => setValue(v);
+    property.setVisible = (v) => setIsVisible(v);
+    property.setValue = (v) => setValue(v);
 
     if (!isVisible) return null;
 

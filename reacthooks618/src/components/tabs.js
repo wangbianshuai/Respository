@@ -23,7 +23,7 @@ export default (props) => {
     const { property, pageId } = Base.getProps(props);
     const [isVisible, setIsVisible] = useState(property.isVisible !== false);
 
-    if (!property.setVisible) property.setVisible = (v) => setIsVisible(v);
+   property.setVisible = (v) => setIsVisible(v);
 
     if (!isVisible) return null;
 

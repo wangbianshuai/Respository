@@ -48,9 +48,9 @@ export default (props) => {
         Base.bindDataValue(property, () => getValue(v))
     }, [property, setValue]);
 
-    if (!property.setValue) property.setValue = (v) => setValue(v);
-    if (!property.setDisabled) property.setDisabled = (v) => setDisabled(v);
-    if (!property.setIsReadOnly) property.setIsReadOnly = (v) => setIsReadOnly(v);
+    property.setValue = (v) => setValue(v);
+    property.setDisabled = (v) => setDisabled(v);
+    property.setIsReadOnly = (v) => setIsReadOnly(v);
 
     const width = property.Width || "100%"
 

@@ -1,6 +1,7 @@
-import React, { useState, useEffect, useCallback } from "react"
-import { Table, alert, Pagination, Button } from "antd";
-import { Common } from "UtilsCommon";
+import React, { useState, useEffect, useCallback } from 'react';
+import { Table, Alert, Pagination, Button } from 'antd';
+import { Common } from 'UtilsCommon';
+import {usePageAxis} from 'UtilsCommon';
 const { Column } = Table;
 
 const getSelectDataList = (dataList, selectedRowKeys, primaryKey) => {
@@ -34,7 +35,7 @@ const getPagination = (isPaging, pageInfo, pageIndexChange) => {
 const renderGroupByInfo = (groupByInfo, groupByInfoHtml) => {
     let html = groupByInfoHtml;
     for (let key in groupByInfo) {
-        html = html.replace(new RegExp("{" + key + "}", "g"), groupByInfo[key]);
+        html = html.replace(new RegExp('{' + key + '}', 'g'), groupByInfo[key]);
     }
 
     return <div dangerouslysetInnerHTML={{ __html: html }}></div>
@@ -43,7 +44,7 @@ const renderGroupByInfo = (groupByInfo, groupByInfoHtml) => {
 const renderGroupByInfoAlert = (groupByInfo, groupByInfoHtml) => {
     if (Common.isEmptyObject(groupByInfo) || !groupByInfoHtml) return null;
 
-    return <alert message={renderGroupByInfo(groupByInfo, groupByInfoHtml)} type="info" showIcon={true} />
+    return <Alert message={renderGroupByInfo(groupByInfo, groupByInfoHtml)} type='info' showIcon={true} />
 };
 
 const selectChanged = (selectedRowKeys, setSelectedRowKeys, isSingleSelection, dataList) => {
@@ -56,7 +57,7 @@ const selectChanged = (selectedRowKeys, setSelectedRowKeys, isSingleSelection, d
 };
 
 const rowClick = (record, index, e, isRowSelection, isSingleSelection, stateSelectedRowKeys, setSelectedRowKeys, setSelectedRowKey, dataList) => {
-    if (isRowSelection && e.target && e.target.nodeName === "TD" && !record.isCheckedDisabled) {
+    if (isRowSelection && e.target && e.target.nodeName === 'TD' && !record.isCheckedDisabled) {
         let selectedRowKeys = [];
         if (isSingleSelection) selectedRowKeys.push(record.key)
         else {
@@ -71,10 +72,10 @@ const rowClick = (record, index, e, isRowSelection, isSingleSelection, stateSele
 };
 
 const getRowClassName = (key, selectedRowKey) => {
-    const list = ["ant-table-row", "ant-table-row-level-0"]
+    const list = ['ant-table-row', 'ant-table-row-level-0']
 
-    if (key !== undefined && selectedRowKey === key) list.push("rowSelected")
-    return list.join(" ")
+    if (key !== undefined && selectedRowKey === key) list.push('rowSelected')
+    return list.join(' ')
 }
 
 const onRow = (onRowClick, selectedRowKey) => (record, index) => {
@@ -96,7 +97,8 @@ const setShowColumns = (property, pageAxis, props) => {
 };
 
 export default (props) => {
-    const { property, isRowSelection, dataList, primaryKey, isSingleSelection, pageId, dataProperties,
+    const { property, isRowSelection, dataList, primaryKey, isSingleSelection,
+        isLoading,isPartPaging, pageId, dataProperties,
         pageInfo, isPaging, pageIndexChange, groupByInfo, groupByInfoHtml, setOrderBy } = props;
     const pageAxis = usePageAxis.getPageAxis(pageId);
 
@@ -110,7 +112,7 @@ export default (props) => {
 
     const onChange = useCallback((pagination, filters, sorter2) => {
         setSorter(sorter2);
-        setOrderBy(pagination, filters, sorter);
+        setOrderBy(pagination, filters, sorter2);
     }, [setSorter, setOrderBy]);
 
     const onRowClick = useCallback((record, index, e) => {
@@ -119,13 +121,13 @@ export default (props) => {
 
     const onSetShowColumns = useCallback(() => {
         setShowColumns(property, pageAxis, props)
-    }, [property, pageAxis, prop]);
+    }, [property, pageAxis, props]);
 
     if (isRowSelection && !property.getSelectedRowKeys) property.getSelectedRowKeys = () => selectedRowKeys;
 
-    if (!property.getDataList) property.getDataList = () => dataList;
-    if (!property.getSelectDataList) property.getSelectDataList = () => getSelectDataList(dataList, selectedRowKeys, primaryKey);
-    if (!property.setSelectedRowKey) property.setSelectedRowKey = (key) => setSelectedRowKey(key);
+    property.getDataList = () => dataList;
+    property.getSelectDataList = () => getSelectDataList(dataList, selectedRowKeys, primaryKey);
+    property.setSelectedRowKey = (key) => setSelectedRowKey(key);
 
     const rowSelection = isRowSelection ? {
         selectedRowKeys: selectedRowKeys,
@@ -133,9 +135,9 @@ export default (props) => {
         getCheckboxProps: (d) => getCheckboxProps(d, primaryKey)
     } : undefined;
 
-    var justifyContent = "flex-end";
+    var justifyContent = 'flex-end';
     const { setColumnsEventActionName } = property;
-    if (setColumnsEventActionName) justifyContent = "space-between";
+    if (setColumnsEventActionName) justifyContent = 'space-between';
 
     return (
         <React.Fragment>
@@ -145,7 +147,7 @@ export default (props) => {
                 pagination={isPartPaging ? false : getPagination(isPaging, pageInfo, pageIndexChange)} >
                 {dataProperties.map(p => getColumn(p, sorter))}
             </Table>
-            {isPartPaging ? <div style={{ width: "100%", height: "60px", display: "flex", alignItems: "center", justifyContent: justifyContent }}>
+            {isPartPaging ? <div style={{ width: '100%', height: '60px', display: 'flex', alignItems: 'center', justifyContent: justifyContent }}>
                 {setColumnsEventActionName && <Button onClick={onSetShowColumns} style={{ marginLeft: 16 }}>自定义显示列</Button>}
                 <Pagination {...getPagination(isPaging, pageInfo, pageIndexChange)} />
             </div> : null}

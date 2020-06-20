@@ -9,48 +9,49 @@ export default () => {
             getSystemManageNavNenu(),
             getPersonCenterNavMenu()
         ],
-        _Menus
+        menus: _Menus
     }
 };
 
 function getWeChatManageNavMenu() {
     var menuList = [];
     if (Common.isAdmin()) {
-        menuList.push(addMenu("ActionTypeList", "行为类型", false, "table", "/weChatManage/ActionTypeList"));
-        menuList.push(addMenu("ActionTypeEdit", "新增", true, "form", "/weChatManage/ActionTypeEdit", "", null, false, "行为类型", "/weChatManage/ActionTypeList", null, true));
-    
-        menuList.push(addMenu("ServiceInterfaceList", "服务接口", false, "table", "/weChatManage/ServiceInterfaceList"));
-        menuList.push(addMenu("ServiceInterfaceEdit", "新增", true, "form", "/weChatManage/ServiceInterfaceEdit", "", null, false, "服务接口", "/weChatManage/ServiceInterfaceList", null, true));
+        menuList.push(addMenu("actionTypeList", "行为类型", false, "table", "/weChatManage/actionTypeList"));
+        menuList.push(addMenu("actionTypeEdit", "新增", true, "form", "/weChatManage/actionTypeEdit", "", null, false, "行为类型", "/weChatManage/actionTypeList", null, true));
+
+        menuList.push(addMenu("serviceInterfaceList", "服务接口", false, "table", "/weChatManage/serviceInterfaceList"));
+        menuList.push(addMenu("serviceInterfaceEdit", "新增", true, "form", "/weChatManage/serviceInterfaceEdit", "", null, false, "服务接口", "/weChatManage/serviceInterfaceList", null, true));
     }
 
-    return addNavMenu("weChatManage", "微信管理", false, menuList, true, ["AppAccountList"]);
+    return addNavMenu("weChatManage", "微信管理", false, menuList, true, ["actionTypeList"]);
 }
 
 function getPersonCenterNavMenu() {
     var menuList = [];
-    menuList.push(addMenu("ChangePassword", "修改密码", true, "idcard", "/personCenter/ChangePassword"));
-
-    return addNavMenu("personCenter", "个人中心", true, menuList, false);
+    menuList.push(addMenu("appAccountInfo", "App账户信息", true, "idcard", "/personCenter/appAccountInfo"));
+    menuList.push(addMenu("changePassword", "修改密码", true, "idcard", "/personCenter/changePassword"));
+  
+    return addNavMenu("personCenter", "账户中心", true, menuList, false);
 }
 
 function getSystemManageNavNenu() {
     var menuList = [];
     if (Common.isAdmin()) {
-        menuList.push(addMenu("AppAccountList", "App账户", false, "table", "/systemManage/AppAccountList"));
-        menuList.push(addMenu("AppAccountEdit", "新增", true, "form", "/systemManage/AppAccountEdit", "", null, false, "App账户", "/systemManage/AppAccountList", null, true));
+        menuList.push(addMenu("appAccountList", "App账户", false, "table", "/systemManage/appAccountList"));
+        menuList.push(addMenu("appAccountEdit", "新增", true, "form", "/systemManage/appAccountEdit", "", null, false, "App账户", "/systemManage/appAccountList", null, true));
 
-        menuList.push(addMenu("DictionaryConfigList", "键值配置", false, "table", "/systemManage/DictionaryConfigList"));
-        menuList.push(addMenu("DictionaryConfigEdit", "新增", true, "form", "/systemManage/DictionaryConfigEdit", "", null, false, "键值配置", "/systemManage/DictionaryConfigEdit", null, true));
+        menuList.push(addMenu("dictionaryConfigList", "键值配置", false, "table", "/systemManage/dictionaryConfigList"));
+        menuList.push(addMenu("dictionaryConfigEdit", "新增", true, "form", "/systemManage/dictionaryConfigEdit", "", null, false, "键值配置", "/systemManage/dictionaryConfigEdit", null, true));
     }
 
-    menuList.push(addMenu("AdminUserList", "用户", false, "table", "/systemManage/AdminUserList"));
-    menuList.push(addMenu("AdminUserEdit", "新增", true, "form", "/systemManage/AdminUserEdit", "", null, false, "用户", "/systemManage/AdminUserList", null, true));
+    menuList.push(addMenu("adminUserList", "用户", false, "table", "/systemManage/adminUserList"));
+    menuList.push(addMenu("adminUserEdit", "新增", true, "form", "/systemManage/adminUserEdit", "", null, false, "用户", "/systemManage/adminUserList", null, true));
 
-    menuList.push(addMenu("OperationLog", "操作日志", false, "table", "/systemManage/OperationLog"));
-    menuList.push(addMenu("RequestServiceLogList", "请求服务日志", false, "table", "/systemManage/RequestServiceLogList"));
-    menuList.push(addMenu("RequestServiceLogEdit", "新增", true, "form", "/systemManage/RequestServiceLogEdit", "", null, false, "请求服务日志", "/systemManage/RequestServiceLogList", null, true));
+    menuList.push(addMenu("operationLog", "操作日志", false, "table", "/systemManage/operationLog"));
+    menuList.push(addMenu("requestServiceLogList", "请求服务日志", false, "table", "/systemManage/requestServiceLogList"));
+    menuList.push(addMenu("requestServiceLogEdit", "新增", true, "form", "/systemManage/requestServiceLogEdit", "", null, false, "请求服务日志", "/systemManage/requestServiceLogList", null, true));
 
-    return addNavMenu("systemManage", "系统管理", false, menuList, true, ["AppAccountList", "DictionaryConfigList", "AdminUserList", "OperationLog", "RequestServiceLogList"]);
+    return addNavMenu("systemManage", "系统管理", false, menuList, true, ["appAccountList", "dictionaryConfigList", "adminUserList", "operationLog", "requestServiceLogList"]);
 }
 
 function addNavMenu(key, menuName, isRight, menuList, isVisible, menuKeys) {

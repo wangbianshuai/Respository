@@ -283,21 +283,21 @@ export default (props) => {
         pageAxis.receiveActionDataToObject(receiveFunctions, actionTypes, actionData)
     }, [receiveFunctions, pageAxis, actionTypes, actionData]);
 
-    if (!property.setVisible) property.setVisible = (v) => setIsVisible(v);
-    if (!property.invokeDataAction) property.invokeDataAction = invokeDataAction;
-    if (!property.actionTypes) property.actionTypes = actionTypes;
-    if (!property.setDataLoading) property.setDataLoading = (v) => setIsDataLoading(v);
-    if (!property.add) property.add = (d) => add(d, dataList, setDataList, primaryKey);
-    if (!property.update) property.update = (d) => update(d, dataList, setDataList, primaryKey);
-    if (!property.add) property.remove = (id) => remove(id, dataList, setDataList, primaryKey);
-    if (!property.add) property.setValue = (v) => setValue(v, setDataList);
-    if (!property.add) property.getValue = () => dataList;
-    if (!property.add) property.setColumnsVisible = (hideColNames) => setColumnsVisible(hideColNames, dataProperties, setRefreshId)
-    if (!property.add) property.setColumnsVisible2 = (visibleColNames) => setColumnsVisible2(visibleColNames, dataProperties, dataProperties2, property, setRefreshId, pageInfo);
-    if (!property.add) property.getPageRecord = () => pageInfo.pageRecord;
-    if (!property.add) property.getDataProperties2 = () => dataProperties2;
-    if (!property.add) property.getExcelExportProperties = () => getExcelExportProperties(dataProperties)
-    if (!property.add) property.refresh = () => refresh(pageInfo, property, pageAxis, setRefreshId)
+    property.setVisible = (v) => setIsVisible(v);
+    property.invokeDataAction = invokeDataAction;
+    property.actionTypes = actionTypes;
+    property.setDataLoading = (v) => setIsDataLoading(v);
+    property.add = (d) => add(d, dataList, setDataList, primaryKey);
+    property.update = (d) => update(d, dataList, setDataList, primaryKey);
+    property.remove = (id) => remove(id, dataList, setDataList, primaryKey);
+    property.setValue = (v) => setValue(v, setDataList);
+    property.getValue = () => dataList;
+    property.setColumnsVisible = (hideColNames) => setColumnsVisible(hideColNames, dataProperties, setRefreshId)
+    property.setColumnsVisible2 = (visibleColNames) => setColumnsVisible2(visibleColNames, dataProperties, dataProperties2, property, setRefreshId, pageInfo);
+    property.getPageRecord = () => pageInfo.pageRecord;
+    property.getDataProperties2 = () => dataProperties2;
+    property.getExcelExportProperties = () => getExcelExportProperties(dataProperties)
+    property.refresh = () => refresh(pageInfo, property, pageAxis, setRefreshId)
 
     if (isVisible) return null;
 

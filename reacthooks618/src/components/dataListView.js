@@ -145,14 +145,14 @@ export default (props) => {
     const controlProperties = useMemo(() => ({}), []);
     const itemsetDisabledProperties = [];
 
-    if (!property.setVisible) property.setVisible = (v) => setIsVisible(v);
-    if (!property.add) property.add = (v) => add(v, property, dataList, setDataList);
-    if (!property.update) property.update = (v) => update(v, property, dataList, controlProperties);
-    if (!property.remove) property.remove = (v) => remove(v, property, dataList, setDataList);
-    if (!property.setValue) property.setValue = (v) => setValue(v, setDataList);
-    if (!property.getValue) property.getValue = () => dataList;
-    if (!property.setDisabled) property.setDisabled = (v) => setDisabled(v, itemsetDisabledProperties);
-    if (!property.judgeNullable) property.judgeNullable = (v) => judgeNullable(v, property, itemsetDisabledProperties);
+    property.setVisible = (v) => setIsVisible(v);
+    property.add = (v) => add(v, property, dataList, setDataList);
+    property.update = (v) => update(v, property, dataList, controlProperties);
+    property.remove = (v) => remove(v, property, dataList, setDataList);
+    property.setValue = (v) => setValue(v, setDataList);
+    property.getValue = () => dataList;
+    property.setDisabled = (v) => setDisabled(v, itemsetDisabledProperties);
+    property.judgeNullable = (v) => judgeNullable(v, property, itemsetDisabledProperties);
 
     if (isVisible) return null;
 

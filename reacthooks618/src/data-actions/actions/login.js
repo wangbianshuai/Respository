@@ -15,7 +15,7 @@ export default class login extends BaseIndex {
   //login
   login(id, actionType, data) {
     data.entityData.LoginPassword = Md5(data.entityData.LoginPassword);
-    this.dvaActions.dispatch("UserService", "login", { action: this.getAction(id, actionType), User: data.entityData });
+    this.dvaActions.dispatch("AdminUserService", "login", { action: this.getAction(id, actionType), AdminUser: data.entityData });
   }
 
   setlogin(id, actionType, data) {
@@ -23,14 +23,14 @@ export default class login extends BaseIndex {
 
     data = this.setApiResponse(data);
 
-    if (data.isSuccess === false || !data.User) {
+    if (data.isSuccess === false) {
       Common.removeStorage("token");
 
-      return { isSuccess: false, message: "wrong username or password!" }
+      return { isSuccess: false, message: "登录名或密码错误！" }
     }
 
-    Common.setStorage("token", data.User.token);
+    Common.setStorage("token", data.Token);
 
-    return data.User;
+    return data;
   }
 }

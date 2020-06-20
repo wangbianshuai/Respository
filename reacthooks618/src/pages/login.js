@@ -29,7 +29,7 @@ function init() {
 function loginSuccess({ data }) {
     Common.setStorage("loginUserInfo", JSON.stringify(data));
     Common.setStorage("loginUserId", data.AdminUserId);
-    Common.setStorage("AppAccountId", data.AppAccountId);
+    Common.setStorage("appAccountId", data.AppAccountId);
     const url = "/personCenter/appAccountInfo";
     PageCommon.toPage(url);
 }

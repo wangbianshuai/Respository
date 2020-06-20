@@ -13,14 +13,14 @@ export default (name, props, mapStateToProps, init, dataActionOptions) => {
   const [invokeDataAction, actionTypes, actionData] = useConnectDataAction(dispatch, dispatchAction, setActionState, name, dataActionOptions);
 
   //3、 使用处理数据
-  const [getStateValue, addDispatchActionData] = useProcessData(state);
+  const [getStateValue] = useProcessData(state);
 
   //4、 使用获取页面配置
   const pageConfig = useGetPageConfig(name, dispatchAction);
 
   //5、 使用页线，作用贯穿整个流程
   const pageAxis = usePageAxis(
-    name, pageConfig, invokeDataAction, actionTypes, dispatch, props, addDispatchActionData,
+    name, pageConfig, invokeDataAction, actionTypes, dispatch, props,
     dispatchAction, setActionState, getStateValue, init
   );
 

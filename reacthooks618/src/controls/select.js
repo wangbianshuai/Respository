@@ -39,9 +39,9 @@ export default (props) => {
         //change(e, property, setValue);
     }, []);
 
-    if (!property.setIsVisible) property.setIsVisible = (v) => setIsVisible(v);
-    if (!property.setValue) property.setValue = (v) => setValue(v);
-    if (!property.setDisabled) property.setDisabled = (v) => setDisabled(v);
+    property.setIsVisible = (v) => setIsVisible(v);
+    property.setValue = (v) => setValue(v);
+    property.setDisabled = (v) => setDisabled(v);
 
     if (!isVisible) return null;
 

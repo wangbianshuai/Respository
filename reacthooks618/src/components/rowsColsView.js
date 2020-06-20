@@ -8,8 +8,8 @@ export default (props) => {
     const { property, view, pageId, pageAxis } = Base.getProps(props);
     const [isVisible, setIsVisible] = useState(property.isVisible !== false);
 
-    if (!property.setVisible) property.setVisible = (v) => setIsVisible(v);
-    if (!property.reLoad) property.reLoad = () => Base.load(property, view, pageAxis);
+    property.setVisible = (v) => setIsVisible(v);
+    property.reLoad = () => Base.load(property, view, pageAxis);
 
     useEffect(() => {
         Base.initSetView(property);

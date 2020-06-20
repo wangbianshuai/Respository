@@ -135,13 +135,13 @@ export default (props) => {
         add({}, dataList, setDataList);
     }, [dataList, setDataList]);
 
-    if (!property.setVisible) property.setVisible = (v) => setIsVisible(v);
-    if (!property.add) property.add = (v) => add(v, dataList, setDataList);
-    if (!property.update) property.update = (v) => update(v, dataList, setDataList);
-    if (!property.remove) property.remove = (v) => remove(v, dataList, setDataList);
-    if (!property.setValue) property.setValue = (v) => setValue(v, setDataList);
-    if (!property.getValue) property.getValue = () => dataList;
-    if (!property.judgeNullable) property.judgeNullable = (v) => judgeNullable(v, property, rowsColsProperties);
+    property.setVisible = (v) => setIsVisible(v);
+    property.add = (v) => add(v, dataList, setDataList);
+    property.update = (v) => update(v, dataList, setDataList);
+    property.remove = (v) => remove(v, dataList, setDataList);
+    property.setValue = (v) => setValue(v, setDataList);
+    property.getValue = () => dataList;
+    property.judgeNullable = (v) => judgeNullable(v, property, rowsColsProperties);
 
     if (isVisible) return null;
 

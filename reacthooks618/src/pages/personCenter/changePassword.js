@@ -4,7 +4,7 @@
 // import { EnvConfig} from "UtilsCommon";
 // import Components from "Components";
 
-// class ChangePassword extends BaseIndex {
+// class changePassword extends BaseIndex {
 //     constructor(props) {
 //         super(props);
 
@@ -22,14 +22,14 @@
 
 // function mapStateToProps(state, ownProps) {
 //     const props = StaticIndex.MapStateToProps(state, ownProps, {
-//         ChangePassword: state.ApiService.ChangePassword
+//         changePassword: state.ApiService.changePassword
 //     });
 
 //     !EnvConfig.isProd && console.log(props);
 //     return props;
 // }
 
-// export default connect(mapStateToProps, StaticIndex.MapDispatchToProps)(RootPage(ConnectAction("PersonCenter_ChangePassword", ChangePassword)));
+// export default connect(mapStateToProps, StaticIndex.MapDispatchToProps)(RootPage(ConnectAction("PersonCenter_ChangePassword", changePassword)));
 
 export default ()=>{
 
