@@ -18,8 +18,8 @@ export function setLoading(loading) {
   }
 }
 
-export function showMessage(msg) {
-  message.warning(msg, 3)
+export function showMessage(msg, onclose) {
+  message.warning(msg, 3, onclose)
 }
 
 export function toPage(url) {

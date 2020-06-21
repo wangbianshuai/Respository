@@ -43,10 +43,10 @@ function getSearchOperationView() {
 }
 
 function getKeyword() {
-    const p = getTextBox("keyword", "", "search", 2, 3, "请输入关键字")
+    const p = getTextBox("keyword", "", "Search", 2, 3, "请输入关键字")
     p.colStyle = { paddingRight: 8, paddingLeft: 2 };
     p.isCondition = true;
-    p.propertyName = "LoginName,adminUserName";
+    p.propertyName = "LoginName,UserName";
     p.operateLogic = "like";
     p.eventActionName = "searchQuery";
     p.pressEnterEventActionName = "searchQuery";
@@ -96,7 +96,7 @@ function getEventActions() {
         type: "dataGridView/selectRowToPage",
         dataGridView: "dataGridView1",
         alertMessage: "alertMessage",
-        pageUrl: "/systemManage/adminUserEdit?adminUserId=#{adminUserId}&menuName=" + escape("修改")
+        pageUrl: "/systemManage/adminUserEdit?AdminUserId=#{AdminUserId}&menuName=" + escape("修改")
     },
     {
         name: "deleteAdminUser",

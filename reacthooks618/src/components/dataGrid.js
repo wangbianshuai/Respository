@@ -99,7 +99,7 @@ const setShowColumns = (property, pageAxis, props) => {
 export default (props) => {
     const { property, isRowSelection, dataList, primaryKey, isSingleSelection,
         isLoading, isPartPaging, pageId, dataProperties,
-        pageInfo, isPaging, pageIndexChange, groupByInfo, groupByInfoHtml, setOrderBy } = props;
+        pageInfo, isPaging, pageIndexChange, groupByInfo, groupByInfoHtml } = props;
     const pageAxis = usePageAxis.getPageAxis(pageId);
 
     const [selectedRowKeys, setSelectedRowKeys] = useState([]);
@@ -112,8 +112,8 @@ export default (props) => {
 
     const onChange = useCallback((pagination, filters, sorter2) => {
         setSorter(sorter2);
-        setOrderBy(pagination, filters, sorter2);
-    }, [setSorter, setOrderBy]);
+        pageAxis.eventActions.dataGridView.setOrderBy(pagination, filters, sorter2);
+    }, [setSorter, pageAxis]);
 
     const onRowClick = useCallback((record, index, e) => {
         rowClick(record, index, e, isRowSelection, isSingleSelection, selectedRowKeys, setSelectedRowKeys, setSelectedRowKey, dataList);

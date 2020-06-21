@@ -1,22 +1,22 @@
-import React, { useState, useCallback } from "react"
-import { Common } from "UtilsCommon";
-import { DatePicker } from "antd"
-import moment from "moment";
+import React, { useState, useCallback, useMemo } from 'react'
+import { Common } from 'UtilsCommon';
+import { DatePicker } from 'antd'
+import moment from 'moment';
 import Base from './base';
 
 const getValue = (value) => {
     if (value === undefined) return null
-    var value2 = ""
-    if (typeof value === "string") value2 = Common.trim(value);
+    var value2 = '';
+    if (typeof value === 'string') value2 = Common.trim(value);
     else value2 = Common.getDateString(value);
-    if (value2 && value2.length === 10) value2 += " 00:00:00";
+    if (value2 && value2.length === 10) value2 += ' 00:00:00';
     return value2;
 };
 
 const getDataTime = (value, property) => {
     if (Common.isNullOrEmpty(value)) return value;
-    if (property.isShowTime) value = moment(value, "YYYY-MM-DD HH:mm:ss")
-    else value = moment(value, "YYYY-MM-DD")
+    if (property.isShowTime) value = moment(value, 'YYYY-MM-DD HH:mm:ss')
+    else value = moment(value, 'YYYY-MM-DD')
 
     return value;
 };
@@ -39,20 +39,26 @@ const getDefaultValue = (property) => {
 
 export default (props) => {
     const { property } = Base.getProps(props);
+    
+    useMemo(() => {
+        Base.setDefaultValue(property);
+    }, [property]);
+
     const [value, setValue] = useState(Base.getInitValue(property));
     const [disabled, setDisabled] = useState(false);
     const [isReadOnly, setIsReadOnly] = useState(false);
 
-    const onChange = useCallback((v) => {
-        setValue(v);
-        Base.bindDataValue(property, getValue(v))
+    const onChange = useCallback((v, valueString) => {
+        setValue(valueString);
+        Base.bindDataValue(property, getValue(valueString))
     }, [property, setValue]);
 
     property.setValue = (v) => setValue(v);
+    property.getValue = () => getValue(value);
     property.setDisabled = (v) => setDisabled(v);
     property.setIsReadOnly = (v) => setIsReadOnly(v);
 
-    const width = property.width || "100%"
+    const width = property.width || '100%'
 
     const mv = getMomentValue(value, property);
 
@@ -64,6 +70,6 @@ export default (props) => {
         disabled={disabled}
         showTime={property.isShowTime}
         defaultValue={getDefaultValue(property)}
-        format={property.isShowTime ? "YYYY-MM-DD HH:mm:ss" : "YYYY-MM-DD"}
+        format={property.isShowTime ? 'YYYY-MM-DD HH:mm:ss' : 'YYYY-MM-DD'}
         value={mv} />)
 };

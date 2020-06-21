@@ -4,7 +4,7 @@ import Components from "Components";
 
 function init(pageExpand) {
   return function () {
-    if (pageExpand) for (var key in pageExpand) this[key] = pageExpand[this];
+    if (pageExpand) for (var key in pageExpand) this[key] = pageExpand[key];
   }
 }
 

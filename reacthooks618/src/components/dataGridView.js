@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from "react";
+import React, { useState, useEffect, useMemo, useCallback } from "react";
 import { Common } from "UtilsCommon";
 import DataGrid from "./dataGrid";
 import { useConnectDataAction } from "UseHooks";
@@ -66,12 +66,12 @@ const refresh = (pageInfo, property, pageAxis, setRefreshId) => {
     pageIndexChange(pageInfo.pageIndex, pageInfo.pageSize, false, pageInfo, property, pageAxis, setRefreshId);
 }
 
-const setColumnsVisible2 = (visibleColNames, dataProperties, dataProperties2, property, setRefreshId, pageInfo) => {
+const setColumnsVisible2 = (visibleColNames, dataProperties, dataProperties2, property, pageAxis, setRefreshId, pageInfo) => {
     dataProperties.forEach(p => p.isVisible = (visibleColNames.indexOf(p.name) >= 0));
     dataProperties2 = dataProperties.filter(f => f.isVisible !== false);
     if (property.isGroupByQuery) {
         pageInfo.pageIndex = 1;
-        refresh();
+        refresh(pageInfo, property, pageAxis, setRefreshId);
     }
     else setRefreshId(Common.createGuid());
 };
@@ -198,7 +198,7 @@ const init = (property, pageAxis) => {
     return { dataProperties, dataProperties2, pageInfo, receiveFunctions };
 };
 
-const getPageInfo = (pageRecord, pageInfo) => {
+const setPageInfo = (pageRecord, pageInfo) => {
     let pageIndex = pageInfo.pageIndex || 1;
     let pageSize = pageInfo.pageSize;
     let pageCount = 0;
@@ -211,7 +211,10 @@ const getPageInfo = (pageRecord, pageInfo) => {
 
     if (pageIndex > pageCount) pageIndex = pageCount;
 
-    return { pageIndex, pageSize, pageCount, pageRecord };
+    pageInfo.pageIndex = pageIndex;
+    pageInfo.pageSize = pageSize;
+    pageInfo.pageCount = pageCount;
+    pageInfo.pageRecord = pageRecord;
 };
 
 const setBindDataList = (actionData, actionTypes, property, dataList, pageInfo, primaryKey) => {
@@ -226,7 +229,7 @@ const setBindDataList = (actionData, actionTypes, property, dataList, pageInfo, 
     if (property.isLocalPage) {
         localDataList = data.dataList;
         if (Common.isArray(localDataList)) {
-            pageInfo = getPageInfo(data.pageRecord, pageInfo);
+            setPageInfo(data.pageRecord, pageInfo);
             const { pageIndex, pageSize } = pageInfo;
             dataList = localDataList.filter((d, i) => {
                 return i >= (pageIndex - 1) * pageSize && i < pageIndex * pageSize;
@@ -236,8 +239,8 @@ const setBindDataList = (actionData, actionTypes, property, dataList, pageInfo, 
     else if (Common.isArray(data.dataList)) {
         dataList = data.dataList;
         if (data.groupByInfo) groupByInfo = data.groupByInfo;
-        if (data.pageRecord !== undefined) pageInfo = getPageInfo(data.pageRecord, pageInfo);
-        else if (data.pageInfo) pageInfo = data.pageInfo;
+        if (data.pageRecord !== undefined) setPageInfo(data.pageRecord, pageInfo);
+        else if (data.pageInfo) for (var key in data.pageInfo) pageInfo[key] = data.pageInfo[key];
     }
 
     dataList.forEach(d => d.key = d[primaryKey] || Common.createGuid());
@@ -245,7 +248,7 @@ const setBindDataList = (actionData, actionTypes, property, dataList, pageInfo, 
     return [dataList, pageInfo, groupByInfo];
 }
 
-const renderDataView = (property, pageInfo, dataList, dataProperties2, isDataLoading, primaryKey, actionData, actionTypes, pageAxis) => {
+const renderDataView = (property, pageInfo, dataList, dataProperties2, isDataLoading, primaryKey, actionData, actionTypes, pageAxis, onPageIndexChange) => {
     let groupByInfo = null;
     if (property.isComplexEntity) {
         dataList.forEach(d => d.key = d[primaryKey] || Common.createGuid());
@@ -259,7 +262,7 @@ const renderDataView = (property, pageInfo, dataList, dataProperties2, isDataLoa
     return (<DataGrid pageAxis={pageAxis} primaryKey={primaryKey} dataList={dataList} isPartPaging={isPartPaging}
         pageInfo={pageInfo} isPaging={property.isPaging} pageId={pageAxis.id}
         isRowSelection={property.isRowSelection} isSingleSelection={property.isSingleSelection} property={property}
-        pageIndexChange={pageIndexChange} groupByInfo={groupByInfo} groupByInfoHtml={property.groupByInfoHtml}
+        pageIndexChange={onPageIndexChange} groupByInfo={groupByInfo} groupByInfoHtml={property.groupByInfoHtml}
         isLoading={isDataLoading} dataProperties={dataProperties2} />)
 }
 
@@ -285,6 +288,10 @@ export default (props) => {
         pageAxis.receiveActionDataToObject(receiveFunctions, actionTypes, actionData)
     }, [receiveFunctions, pageAxis, actionTypes, actionData]);
 
+    const onPageIndexChange = useCallback((index, size) => {
+        pageIndexChange(index, size, true, pageInfo, property, pageAxis, setRefreshId);
+    }, [pageInfo, property, pageAxis, setRefreshId]);
+
     property.setVisible = (v) => setIsVisible(v);
     property.invokeDataAction = invokeDataAction;
     property.actionTypes = actionTypes;
@@ -295,7 +302,7 @@ export default (props) => {
     property.setValue = (v) => setValue(v, setDataList);
     property.getValue = () => dataList;
     property.setColumnsVisible = (hideColNames) => setColumnsVisible(hideColNames, dataProperties, dataProperties2, setRefreshId)
-    property.setColumnsVisible2 = (visibleColNames) => setColumnsVisible2(visibleColNames, dataProperties, dataProperties2, property, setRefreshId, pageInfo);
+    property.setColumnsVisible2 = (visibleColNames) => setColumnsVisible2(visibleColNames, dataProperties, dataProperties2, property, pageAxis, setRefreshId, pageInfo);
     property.getPageRecord = () => pageInfo.pageRecord;
     property.getDataProperties2 = () => dataProperties2;
     property.getExcelExportProperties = () => getExcelExportProperties(dataProperties)
@@ -307,7 +314,7 @@ export default (props) => {
         return (
             <Card title={Common.replaceDataContent(pageAxis.pageData, property.title)} style={property.style}
                 bordered={false} headStyle={{ padding: 0, margin: 0, paddingLeft: 16 }} bodyStyle={{ padding: 16, margin: 0 }}>
-                {renderDataView(property, pageInfo, dataList, dataProperties2, isDataLoading, primaryKey, actionData, actionTypes, pageAxis)}
+                {renderDataView(property, pageInfo, dataList, dataProperties2, isDataLoading, primaryKey, actionData, actionTypes, pageAxis, onPageIndexChange)}
             </Card>
         )
     }
@@ -315,6 +322,6 @@ export default (props) => {
     const className = Base.getClassName(property, styles);
 
     if (property.isDiv) return (<div className={className} style={property.style}>
-        {renderDataView(property, pageInfo, dataList, dataProperties2, isDataLoading, primaryKey, actionData, actionTypes, pageAxis)}</div>)
-    else return renderDataView(property, pageInfo, dataList, dataProperties2, isDataLoading, primaryKey, actionData, actionTypes, pageAxis);
+        {renderDataView(property, pageInfo, dataList, dataProperties2, isDataLoading, primaryKey, actionData, actionTypes, pageAxis, onPageIndexChange)}</div>)
+    else return renderDataView(property, pageInfo, dataList, dataProperties2, isDataLoading, primaryKey, actionData, actionTypes, pageAxis, onPageIndexChange);
 };

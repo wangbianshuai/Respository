@@ -5,11 +5,11 @@ const adminUserEdit = {
     expandSetAdminUserData: function ({ entityData, props, view }) {
         const isUpdate = view.entityData && view.entityData.AdminUserId;
         if (!isUpdate && Common.isNullOrEmpty(entityData.LoginPassword)) {
-            this.Alert("登录密码不能为空！"); return;
+            this.alert("登录密码不能为空！"); return;
         }
 
         if (!Common.isNullOrEmpty(entityData.LoginPassword) && !Common.isEquals(entityData.LoginPassword, entityData.LoginAgainPassword)) {
-            this.Alert("登录密码与确认密码不一致！")
+            this.alert("登录密码与确认密码不一致！")
             return false;
         }
 

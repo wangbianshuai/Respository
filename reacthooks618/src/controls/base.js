@@ -85,6 +85,15 @@ const getValueTextName = (property) => {
   return { valueName, textName };
 }
 
+
+const setDefaultValue = (property) => {
+  if (property.isCurrentDay) property.defaultValue = Common.getCurrentDate().substr(0, 10);
+
+  if (property.isMonthFirst) property.defaultValue = Common.getCurrentDate().substr(0, 8) + "01";
+
+  if (property.isCurrentUser) property.defaultValue = Common.getStorage("loginUserId");
+};
+
 export default {
   setVisible,
   getClassName,
@@ -95,5 +104,6 @@ export default {
   getProperty,
   renderPrefix,
   bindDataValue,
-  getValueTextName
+  getValueTextName,
+  setDefaultValue
 }

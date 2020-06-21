@@ -22,6 +22,7 @@ export default (property, view, pageAxis, getOptions) => {
     }
 
     if (serviceDataSource) {
+      debugger
       const state = pageAxis.getStateValue(serviceDataSource.stateName);
       if (pageAxis.isSuccessProps(state) && !serviceDataSource.isRefresh) receiveDataSource(state, property, view, pageAxis, setOptions, getOptions);
       else {

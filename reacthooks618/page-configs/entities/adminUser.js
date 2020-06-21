@@ -1,5 +1,6 @@
 module.exports= {
     name: "AdminUser",
+    viewName: 'ViewAdminUser',
     primaryKey: "AdminUserId",
     properties: getProperties()
 }

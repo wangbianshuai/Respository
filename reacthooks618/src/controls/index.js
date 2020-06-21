@@ -1,5 +1,5 @@
 import Button from "./button";
-import alert from "./alert";
+import Alert from "./alert";
 import TextBox from "./textBox";
 import Select from "./select";
 import AutoComplete from "./autoComplete";
@@ -10,7 +10,7 @@ import SpanText from "./spanText";
 
 export default {
     Button,
-    alert,
+    Alert,
     TextBox,
     Select,
     AutoComplete,

@@ -44,8 +44,9 @@ export default class Index {
       const dataList = res1[dataName] || (res1 || []);
       var pageInfo = null, groupByInfo = null;
       if (data.length === 2) {
-        pageInfo = data[1].pageInfo;
-        groupByInfo = data[1].groupByInfo;
+        const { PageIndex, PageSize, PageCount, PageRecord } = data[1].PageInfo
+        pageInfo = { pageIndex: PageIndex, pageSize: PageSize, pageCount: PageCount, pageRecord: PageRecord };
+        groupByInfo = data[1].GroupByInfo;
       }
       return { dataList, pageInfo, groupByInfo };
     }

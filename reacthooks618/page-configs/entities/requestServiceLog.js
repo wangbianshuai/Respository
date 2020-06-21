@@ -27,9 +27,9 @@ function getServiceInterfaceDataSource() {
     return {
         valueName: "ServiceInterfaceId",
         textName: "Name",
-        StateName: "ServiceInterfaces",
-        ServiceName: "RequestServiceLogService",
-        ActionName: "getServiceInterfaces",
+        stateName: "getServiceInterfaces",
+        serviceName: "ServiceInterfaceService",
+        actionName: "getServiceInterfaces",
         isRefresh: true,
         payload: {}
     }

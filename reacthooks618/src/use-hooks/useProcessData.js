@@ -46,7 +46,7 @@ function setResponseMessage(d) {
   var data = d.data ? d.data : d;
   if (Common.isArray(data) && data.length > 0) data = data[0];
   if (data && data.isReLogin && data.isSuccess === false && !PageCommon.isLoginPage()) {
-    PageCommon.toLogin();
+    PageCommon.showMessage(data.message, () => PageCommon.toLogin());
     return true;
   }
 
