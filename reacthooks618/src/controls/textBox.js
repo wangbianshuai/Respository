@@ -80,7 +80,7 @@ export default (props) => {
 
     property.setIsVisible = (v) => setIsVisible(v);
     property.setValue = (v) => setValue(v);
-    property.getValue = () => value;
+    property.getValue = () => Base.getValue(property, value);
     property.setDisabled = (v) => setDisabled(v);
     property.setIsReadOnly = (v) => setIsReadOnly(v);
 

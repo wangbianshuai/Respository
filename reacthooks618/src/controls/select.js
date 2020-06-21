@@ -45,7 +45,7 @@ export default (props) => {
 
     property.setIsVisible = (v) => setIsVisible(v);
     property.setValue = (v) => setValue(v);
-    property.getValue = () => value;
+    property.getValue = () => Base.getValue(property, value);
     property.setDisabled = (v) => setDisabled(v);
     property.setParentValue = (v) => setOptions(getOptions(property, view, pageAxis, v));
     property.refreshOptions = (v) => setOptions(getOptions(property, view, pageAxis));

@@ -57,7 +57,7 @@ function getKeyword() {
 function getAlert() {
     return {
         name: "alertMessage",
-        type: "alert"
+        type: "Alert"
     }
 }
 

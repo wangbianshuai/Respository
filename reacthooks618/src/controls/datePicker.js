@@ -39,7 +39,7 @@ const getDefaultValue = (property) => {
 
 export default (props) => {
     const { property } = Base.getProps(props);
-    
+
     useMemo(() => {
         Base.setDefaultValue(property);
     }, [property]);

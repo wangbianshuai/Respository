@@ -65,12 +65,18 @@ const renderPrefix = (property) => {
   return null;
 };
 
+const getValue = (property, value) => {
+  if (value === undefined) return null
+  if (typeof value === "string") return Common.trim(value);
+  if (Common.isArray(value) && property.isString) return value.join(",");
+  return value;
+};
+
 const bindDataValue = (property, value) => {
   const { isBind, data, name, propertyName } = property;
   const name2 = propertyName || name;
-  if (isBind && data) data[name2] = value;
+  if (isBind && data) data[name2] = getValue(property, value);
 };
-
 
 const getValueTextName = (property) => {
   const { serviceDataSource } = property;
@@ -84,7 +90,6 @@ const getValueTextName = (property) => {
 
   return { valueName, textName };
 }
-
 
 const setDefaultValue = (property) => {
   if (property.isCurrentDay) property.defaultValue = Common.getCurrentDate().substr(0, 10);
@@ -105,5 +110,6 @@ export default {
   renderPrefix,
   bindDataValue,
   getValueTextName,
-  setDefaultValue
+  setDefaultValue,
+  getValue
 }

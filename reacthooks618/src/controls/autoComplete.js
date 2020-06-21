@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react'
+import React, { useCallback, useState, useEffect } from 'react'
 import { Common } from 'UtilsCommon';
 import { useGetDataSourceOptions } from 'UseHooks';
 import { AutoComplete } from 'antd'
@@ -20,17 +20,17 @@ const getOptions = (property, view, pageAxis, parentValue) => {
     return options;
 };
 
-// const getSelectData = (value, dataSource, textName) => {
-//     if (Common.isNullOrEmpty(value)) return null;
+const getSelectData = (property, value) => {
+    if (Common.isNullOrEmpty(value)) return null;
 
-//     return Common.arrayFirst(dataSource, f => Common.isEquals(f[textName], value));
-// }
+    const { textName } = Base.getValueTextName(property);
 
-// const valueChange = (value, property, dataSource, textName) => {
-//     if (property.valueChange) property.valueChange(value);
+    return Common.arrayFirst(property.dataSource, f => Common.isEquals(f[textName], value));
+}
 
-//     if (property.SelectDataToProperties) property.SelectDataToProperties(getSelectData(value, dataSource, textName));
-// };
+const valueChange = (property, value) => {
+    if (property.valueChange) property.valueChange(value, getSelectData(property, value));
+};
 
 export default (props) => {
     const { property, view, pageAxis } = Base.getProps(props);
@@ -45,10 +45,15 @@ export default (props) => {
 
     property.setIsVisible = (v) => setIsVisible(v);
     property.setValue = (v) => setValue(v);
+    property.getValue = () => Base.getValue(property, value);
     property.setDisabled = (v) => setDisabled(v);
     property.setIsReadOnly = (v) => setIsReadOnly(v);
     property.setParentValue = (v) => setOptions(getOptions(property, view, pageAxis, v));
     property.refreshOptions = (v) => setOptions(getOptions(property, view, pageAxis));
+
+    useEffect(() => {
+        valueChange(property, value);
+    }, [property, value]);
 
     const onChange = useCallback((v) => {
         setValue(v);
