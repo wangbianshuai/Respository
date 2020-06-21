@@ -6,7 +6,7 @@ export default () => {
     return {
         navMenuList: [
             getWeChatManageNavMenu(),
-            getSystemManageNavNenu(),
+            getsystemManageNavNenu(),
             getPersonCenterNavMenu()
         ],
         menus: _Menus
@@ -34,14 +34,14 @@ function getPersonCenterNavMenu() {
     return addNavMenu("personCenter", "账户中心", true, menuList, false);
 }
 
-function getSystemManageNavNenu() {
+function getsystemManageNavNenu() {
     var menuList = [];
     if (Common.isAdmin()) {
         menuList.push(addMenu("appAccountList", "App账户", false, "table", "/systemManage/appAccountList"));
         menuList.push(addMenu("appAccountEdit", "新增", true, "form", "/systemManage/appAccountEdit", "", null, false, "App账户", "/systemManage/appAccountList", null, true));
 
         menuList.push(addMenu("dictionaryConfigList", "键值配置", false, "table", "/systemManage/dictionaryConfigList"));
-        menuList.push(addMenu("dictionaryConfigEdit", "新增", true, "form", "/systemManage/dictionaryConfigEdit", "", null, false, "键值配置", "/systemManage/dictionaryConfigEdit", null, true));
+        menuList.push(addMenu("dictionaryConfigEdit", "新增", true, "form", "/systemManage/dictionaryConfigEdit", "", null, false, "键值配置", "/systemManage/dictionaryConfigList", null, true));
     }
 
     menuList.push(addMenu("adminUserList", "用户", false, "table", "/systemManage/adminUserList"));

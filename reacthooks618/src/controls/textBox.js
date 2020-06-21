@@ -3,7 +3,8 @@ import { Common } from 'UtilsCommon';
 import { Input } from 'antd';
 import Base from './base';
 
-const { TextArea } = Input;
+const { TextArea, Search } = Input;
+
 
 const setMinMaxValue = (value, property) => {
     if (Common.isNullOrEmpty(value)) return value;
@@ -59,7 +60,7 @@ const pressEnter = (property, pageAxis) => {
 }
 
 export default (props) => {
-    const { property, pageAxis } = Base.getProps(props);
+    const { property, view, pageAxis } = Base.getProps(props);
     const [value, setValue] = useState(Base.getInitValue(property));
     const [isVisible, setIsVisible] = useState(property.isVisible !== false);
     const [disabled, setDisabled] = useState(false);
@@ -72,6 +73,10 @@ export default (props) => {
     const onPressEnter = useCallback(() => {
         pressEnter(property, pageAxis)
     }, [property, pageAxis]);
+
+    const onSearch = useCallback((searchValue) => {
+        pageAxis.invokeEventAction(property.eventActionName, { property, view, pageAxis, searchValue });
+    }, [property, view, pageAxis]);
 
     property.setIsVisible = (v) => setIsVisible(v);
     property.setValue = (v) => setValue(v);
@@ -90,6 +95,17 @@ export default (props) => {
             onChange={onChange}
             maxLength={maxLength}
             readOnly={isReadOnly}
+            disabled={disabled}
+            value={value} />)
+    }
+
+    if (property.controlType === "Search") {
+        return (<Search placeholder={property.placeHolder}
+            onChange={onChange}
+            maxLength={property.maxLength}
+            onSearch={onSearch}
+            readOnly={isReadOnly}
+            enterButton={property.isEnterButton}
             disabled={disabled}
             value={value} />)
     }

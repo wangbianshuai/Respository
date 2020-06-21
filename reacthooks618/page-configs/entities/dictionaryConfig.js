@@ -8,8 +8,8 @@ module.exports = {
   function getProperties() {
     return [
         getProperty("DictionaryConfigId", "DictionaryConfigId"),
-        getProperty("name", "键名"),
-        getProperty("value", "值"),
+        getProperty("Name", "键名"),
+        getProperty("Value", "值"),
         getProperty("TypeName", "类型名"),
         getProperty("Remark", "备注"),
         getProperty("CreateDate", "创建时间")

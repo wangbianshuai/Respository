@@ -1,5 +1,5 @@
 import React, { useState } from "react"
-import { alert } from "antd"
+import { Alert } from "antd"
 import { Common } from "UtilsCommon";
 import Base from './base';
 
@@ -15,5 +15,5 @@ export default (props) => {
 
     const showIcon = !Common.isNullOrEmpty(value);
 
-    return <alert message={value} type="info" showIcon={showIcon} style={{ marginBottom: 8, marginTop: 8, height: 40 }} />
+    return <Alert message={value} type="info" showIcon={showIcon} style={{ marginBottom: 8, marginTop: 8, height: 40 }} />
 }

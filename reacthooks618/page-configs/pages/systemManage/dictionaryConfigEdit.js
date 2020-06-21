@@ -46,8 +46,8 @@ function getButtonProperties() {
 
 function getProperties() {
   return [
-    getTextBox2("name", "键名", 1, 1, "", "请输入键名", 50, false),
-    { ...getTextArea("value", "值", 2, 1, ''), maxLength: 500 },
+    getTextBox2("Name", "键名", 1, 1, "", "请输入键名", 50, false),
+    { ...getTextArea("Value", "值", 2, 1, ''), maxLength: 500 },
     getTextBox2("TypeName", "类型名", 3, 1, "", "", 50, true),
     getTextArea("Remark", "备注", 4, 1),
     getButtonView()

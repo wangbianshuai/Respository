@@ -43,10 +43,10 @@ function getSearchOperationView() {
 }
 
 function getKeyword() {
-    const p = getTextBox("keyword", "", "search", 2, 3, "请输入关键字")
+    const p = getTextBox("keyword", "", "Search", 2, 3, "请输入关键字")
     p.colStyle = { paddingRight: 8, paddingLeft: 2 };
     p.isCondition = true;
-    p.propertyName = "name,value";
+    p.propertyName = "Name,Value,TypeName";
     p.operateLogic = "like";
     p.eventActionName = "searchQuery";
     p.pressEnterEventActionName = "searchQuery";
@@ -72,7 +72,7 @@ function getDataGridView() {
         className: "divInfoView3",
         isRowSelection: true,
         isSingleSelection: true,
-        properties: assignProporties(dictionaryConfig, ["name", "value", "TypeName", "Remark", { name: "CreateDate", OrderByType: "desc" }, { name: "RowVersion", isVisible: false }])
+        properties: assignProporties(dictionaryConfig, ["Name", "Value", "TypeName", "Remark", { name: "CreateDate", OrderByType: "desc" }, { name: "RowVersion", isVisible: false }])
     }
 }
 
@@ -95,7 +95,7 @@ function getEventActions() {
         type: "dataGridView/selectRowToPage",
         dataGridView: "dataGridView1",
         alertMessage: "alertMessage",
-        pageUrl: "/systemManage/dictionaryConfigEdit?dictionaryConfigId=#{dictionaryConfigId}&menuName=" + escape("修改")
+        pageUrl: "/systemManage/dictionaryConfigEdit?DictionaryConfigId=#{DictionaryConfigId}&menuName=" + escape("修改")
     },
     {
         name: "deleteEntityData",
