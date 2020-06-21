@@ -71,6 +71,20 @@ const bindDataValue = (property, value) => {
   if (isBind && data) data[name2] = value;
 };
 
+
+const getValueTextName = (property) => {
+  const { serviceDataSource } = property;
+  let valueName = 'value';
+  let textName = 'text';
+
+  if (serviceDataSource && serviceDataSource.valueName) valueName = serviceDataSource.valueName;
+  else if (property.valueName) valueName = property.valueName;
+  if (serviceDataSource && serviceDataSource.textName) textName = serviceDataSource.textName;
+  else if (property.textName) textName = property.textName;
+
+  return { valueName, textName };
+}
+
 export default {
   setVisible,
   getClassName,
@@ -80,5 +94,6 @@ export default {
   judgePush,
   getProperty,
   renderPrefix,
-  bindDataValue
+  bindDataValue,
+  getValueTextName
 }

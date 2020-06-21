@@ -1,52 +1,54 @@
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useCallback, useState } from 'react'
 import { Common } from 'UtilsCommon';
-import { useGetServiceDataSource } from 'UseHooks';
+import { useGetDataSourceOptions } from 'UseHooks';
 import { AutoComplete } from 'antd'
 import Base from './base';
 
-const getOptions = (parentValue, dataList, property, view, textName) => {
+const getOptions = (property, view, pageAxis, parentValue) => {
+    parentValue = parentValue || property.parentValue;
+
+    const { dataSource } = property;
+
+    const { textName } = Base.getValueTextName(property);
+
     const options = [];
 
-    Common.isArray(dataList) && dataList.forEach(d => {
+    Common.isArray(dataSource) && dataSource.forEach(d => {
         Base.judgePush(d, parentValue, property, view) && options.push(d[textName])
     });
 
     return options;
 };
 
-// const getSelectData = (value, dataList, textName) => {
+// const getSelectData = (value, dataSource, textName) => {
 //     if (Common.isNullOrEmpty(value)) return null;
 
-//     return Common.arrayFirst(dataList, f => Common.isEquals(f[textName], value));
+//     return Common.arrayFirst(dataSource, f => Common.isEquals(f[textName], value));
 // }
 
-// const valueChange = (value, property, dataList, textName) => {
+// const valueChange = (value, property, dataSource, textName) => {
 //     if (property.valueChange) property.valueChange(value);
 
-//     if (property.SelectDataToProperties) property.SelectDataToProperties(getSelectData(value, dataList, textName));
+//     if (property.SelectDataToProperties) property.SelectDataToProperties(getSelectData(value, dataSource, textName));
 // };
 
 export default (props) => {
-    const { property, view } = Base.getProps(props);
+    const { property, view, pageAxis } = Base.getProps(props);
 
     const [isVisible, setIsVisible] = useState(property.isVisible !== false);
     const [value, setValue] = useState(Base.getInitValue(property));
-    const [options, setOptions] = useState([]);
     const [inputValue, setInputValue] = useState('');
     const [disabled, setDisabled] = useState(false);
     const [isReadOnly, setIsReadOnly] = useState(false);
+
+    const [options, setOptions] = useGetDataSourceOptions(property, view, pageAxis, getOptions);
 
     property.setIsVisible = (v) => setIsVisible(v);
     property.setValue = (v) => setValue(v);
     property.setDisabled = (v) => setDisabled(v);
     property.setIsReadOnly = (v) => setIsReadOnly(v);
-
-    const dataList = useGetServiceDataSource(props);
-    const textName = property.textName;
-
-    useEffect(() => {
-        setOptions(getOptions(null, dataList, property, view, textName))
-    }, [dataList, property, view, textName])
+    property.setParentValue = (v) => setOptions(getOptions(property, view, pageAxis, v));
+    property.refreshOptions = (v) => setOptions(getOptions(property, view, pageAxis));
 
     const onChange = useCallback((v) => {
         setValue(v);

@@ -1,36 +1,31 @@
-import React, { useState, useCallback, useEffect } from 'react';
+import React, { useState, useCallback } from 'react';
 import { Select } from 'antd';
 import { Common } from 'UtilsCommon';
-import { useGetServiceDataSource } from 'UseHooks';
+import { useGetDataSourceOptions } from 'UseHooks';
 import Base from './base';
 const Option = Select.Option;
 
-const getOptions = (property, view, dataList, parentValue) => {
-    const { serviceDataSource } = property;
-    let valueName = 'value';
-    let textName = 'text';
+const getOptions = (property, view, pageAxis, parentValue) => {
+    parentValue = parentValue || property.parentValue;
 
-    if (serviceDataSource && serviceDataSource.valueName) valueName = serviceDataSource.valueName;
-    else if (property.valueName) valueName = property.valueName;
-    if (serviceDataSource && serviceDataSource.textName) textName = serviceDataSource.textName;
-    else if (property.textName) textName = property.textName;
+    const { valueName, textName } = Base.getValueTextName(property);
 
     const options = [];
 
-    const { emptyOption, isNullable } = property;
+    const { emptyOption, isNullable, dataSource } = property;
     if (emptyOption) {
         const disabled = !isNullable && !emptyOption.isNullable;
         options.push(<Option value={emptyOption.Value} disabled={disabled} key={Common.createGuid()}>{emptyOption.text}</Option>);
     }
 
     let value = null, text = null;
-    Common.isArray(dataList) && dataList.forEach(d => {
+    Common.isArray(dataSource) && dataSource.forEach(d => {
         text = d[textName];
         value = d[valueName];
 
         if (Base.judgePush(d, parentValue, property, view)) options.push(<Option value={value} key={value}>{text}</Option>)
     });
-    
+
     return options;
 }
 
@@ -40,13 +35,8 @@ export default (props) => {
     const [value, setValue] = useState(Base.getInitValue(property));
     const [isVisible, setIsVisible] = useState(property.isVisible !== false);
     const [disabled, setDisabled] = useState(false);
-    const [options, setOptions] = useState([]);
 
-    const dataList = useGetServiceDataSource(property, view, pageAxis);
-
-    useEffect(() => {
-        setOptions(getOptions(property, view, dataList));
-    }, [property, view, dataList]);
+    const [options, setOptions] = useGetDataSourceOptions(property, view, pageAxis, getOptions);
 
     const onChange = useCallback((v) => {
         setValue(v);
@@ -57,7 +47,8 @@ export default (props) => {
     property.setValue = (v) => setValue(v);
     property.getValue = () => value;
     property.setDisabled = (v) => setDisabled(v);
-    property.setParentValue = (v) => setOptions(getOptions(property, view, dataList, v));
+    property.setParentValue = (v) => setOptions(getOptions(property, view, pageAxis, v));
+    property.refreshOptions = (v) => setOptions(getOptions(property, view, pageAxis));
 
     if (!isVisible) return null;
 

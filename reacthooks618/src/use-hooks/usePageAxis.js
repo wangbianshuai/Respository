@@ -75,7 +75,7 @@ class PageAxis {
         this.eventActionsConfig = Common.clone(this.pageConfig.eventActions);
         if (this.pageConfig.actionOptions) this.actionTypes = this.pageConfig.actionOptions.actionTypes;
 
-        this.pageData = {};
+        this.pageData = Common.getQueryString();
         this.pageData.token = this.token;
 
         this.eventActions = {};

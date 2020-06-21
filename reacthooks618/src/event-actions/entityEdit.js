@@ -212,7 +212,7 @@ export default class EntityEdit extends BaseIndex {
     }
 
     getEntityData(props, action) {
-        if (!action.parameters) this.initgetEntityData(props, action);
+        if (!action.parameters) this.initGetEntityData(props, action);
 
         const { editView, setRequestEntityData } = action.parameters;
         const { pageAxis } = props;
