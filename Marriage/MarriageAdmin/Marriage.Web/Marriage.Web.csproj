@@ -1,0 +1,44 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup Label="Globals">
+    <SccProjectName>SAK</SccProjectName>
+    <SccProvider>SAK</SccProvider>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccLocalPath>SAK</SccLocalPath>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <WarningLevel>2</WarningLevel>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="logs\**" />
+    <Compile Remove="wwwroot\Logs\**" />
+    <Content Remove="logs\**" />
+    <Content Remove="wwwroot\Logs\**" />
+    <EmbeddedResource Remove="logs\**" />
+    <EmbeddedResource Remove="wwwroot\Logs\**" />
+    <None Remove="logs\**" />
+    <None Remove="wwwroot\Logs\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\OpenDataAccessCore\OpenDataAccessCore.Entity\OpenDataAccessCore.Entity.csproj" />
+    <ProjectReference Include="..\..\OpenDataAccessCore\OpenDataAccessCore.Service\OpenDataAccessCore.Service.csproj" />
+    <ProjectReference Include="..\Marriage.Component\Marriage.Component.csproj" />
+    <ProjectReference Include="..\Marriage.Entity\Marriage.Entity.csproj" />
+    <ProjectReference Include="..\Marriage.Utility\Marriage.Utility.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\" />
+  </ItemGroup>
+
+  <ProjectExtensions><VisualStudio><UserProperties properties_4launchsettings_1json__JsonSchema="" /></VisualStudio></ProjectExtensions>
+
+
+</Project>

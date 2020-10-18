@@ -1,0 +1,59 @@
+﻿using OpenDataAccessCore.Utility;
+using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace Marriage.Utility
+{
+    public class UserToken
+    {
+        private const String _DesKey = "userlogintokedeskey12345";
+
+        public static int Exprie { get; set; }
+
+        static UserToken()
+        {
+            Exprie = 2;
+        }
+
+        public static string CreateToken(string userId, string sign)
+        {
+            Dictionary<string, object> dict = new Dictionary<string, object>();
+            dict.Add("UserId", userId);
+            dict.Add("Sign", sign);
+            dict.Add("LoginDate", DateTime.Now);
+
+            return DESEncryptor.Encrypt(Common.ToJson(dict), _DesKey);
+        }
+
+        public static string ParseToken(string token, string sign)
+        {
+            if (string.IsNullOrEmpty(token)) return string.Empty;
+            string content = string.Empty;
+            try
+            {
+                content = DESEncryptor.Decrypt(token, _DesKey);
+            }
+            catch
+            {
+                throw new TokenException("Token解析异常！");
+            }
+
+            Dictionary<string, object> dict = Common.JsonToDictionary(content);
+            DateTime loginDate = dict.GetValue<DateTime>("LoginDate");
+
+            if (sign != dict.GetStringValue("Sign")) throw new Exception("Token无效！");
+
+            if (loginDate.AddHours(Exprie) > DateTime.Now) return dict.GetStringValue("UserId");
+
+
+            throw new TokenException("Token过期！");
+        }
+    }
+    public class TokenException : Exception
+    {
+        public TokenException(string message) : base(message)
+        {
+        }
+    }
+}

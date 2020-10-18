@@ -1,0 +1,303 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Resources.Entity</name>
+    </assembly>
+    <members>
+        <member name="T:Resources.Entity.Application.File.DeleteFileRequest">
+            <summary>
+            删除文件请求
+            </summary>
+        </member>
+        <member name="P:Resources.Entity.Application.File.DeleteFileRequest.FileId">
+            <summary>
+            文件ID
+            </summary>
+        </member>
+        <member name="T:Resources.Entity.Application.File.DeleteFileResponse">
+            <summary>
+            删除文件响应
+            </summary>
+        </member>
+        <member name="T:Resources.Entity.Application.File.GetFileRequest">
+            <summary>
+            获取文件请求
+            </summary>
+        </member>
+        <member name="P:Resources.Entity.Application.File.GetFileRequest.FileId">
+            <summary>
+            文件ID
+            </summary>
+        </member>
+        <member name="T:Resources.Entity.Application.File.GetFileResponse">
+            <summary>
+            删除文件响应
+            </summary>
+        </member>
+        <member name="P:Resources.Entity.Application.File.GetFileResponse.FileId">
+            <summary> 
+            主键
+            </summary> 
+        </member>
+        <member name="P:Resources.Entity.Application.File.GetFileResponse.FileUrl">
+            <summary> 
+            文件URL
+            </summary> 
+        </member>
+        <member name="P:Resources.Entity.Application.File.GetFileResponse.FileName">
+            <summary> 
+            文件名
+            </summary> 
+        </member>
+        <member name="P:Resources.Entity.Application.File.GetFileResponse.FileType">
+            <summary> 
+            文件类型
+            </summary> 
+        </member>
+        <member name="P:Resources.Entity.Application.File.GetFileResponse.FileSize">
+            <summary> 
+            文件大小(MB/KB)
+            </summary> 
+        </member>
+        <member name="T:Resources.Entity.Application.File.UploadFileRequest">
+            <summary>
+            上传文件请求
+            </summary>
+        </member>
+        <member name="P:Resources.Entity.Application.File.UploadFileRequest.Stream">
+            <summary>
+            文件流
+            </summary>
+        </member>
+        <member name="P:Resources.Entity.Application.File.UploadFileRequest.FileName">
+            <summary> 
+            文件名
+            </summary> 
+        </member>
+        <member name="P:Resources.Entity.Application.File.UploadFileRequest.FileType">
+            <summary> 
+            文件类型
+            </summary> 
+        </member>
+        <member name="P:Resources.Entity.Application.File.UploadFileRequest.FileExt">
+            <summary>
+            文件后缀名
+            </summary>
+        </member>
+        <member name="P:Resources.Entity.Application.File.UploadFileRequest.FileSize">
+            <summary> 
+            文件大小(B)
+            </summary> 
+        </member>
+        <member name="P:Resources.Entity.Application.File.UploadFileRequest.WebRootPath">
+            <summary>
+            根路径
+            </summary>
+        </member>
+        <member name="P:Resources.Entity.Application.File.UploadFileRequest.HttpHost">
+            <summary>
+            Http Host
+            </summary>
+        </member>
+        <member name="T:Resources.Entity.Application.File.UploadFileResponse">
+            <summary>
+            上传文件响应
+            </summary>
+        </member>
+        <member name="P:Resources.Entity.Application.File.UploadFileResponse.FileId">
+            <summary> 
+            主键
+            </summary> 
+        </member>
+        <member name="P:Resources.Entity.Application.File.UploadFileResponse.FileUrl">
+            <summary> 
+            文件URL
+            </summary> 
+        </member>
+        <member name="P:Resources.Entity.Application.File.UploadFileResponse.FileName">
+            <summary> 
+            文件名
+            </summary> 
+        </member>
+        <member name="P:Resources.Entity.Application.File.UploadFileResponse.FileType">
+            <summary> 
+            文件类型
+            </summary> 
+        </member>
+        <member name="P:Resources.Entity.Application.File.UploadFileResponse.FileSize">
+            <summary> 
+            文件大小(MB/KB)
+            </summary> 
+        </member>
+        <member name="T:Resources.Entity.Application.IRequest">
+            <summary>
+            请求接口
+            </summary>
+        </member>
+        <member name="P:Resources.Entity.Application.IRequest.IpAddress">
+            <summary>
+            IP地址
+            </summary>
+        </member>
+        <member name="P:Resources.Entity.Application.IRequest.AppId">
+            <summary>
+            AppId
+            </summary>
+        </member>
+        <member name="T:Resources.Entity.Application.Request">
+            <summary>
+            请求基类
+            </summary>
+        </member>
+        <member name="P:Resources.Entity.Application.Request.IpAddress">
+            <summary>
+            IP地址
+            </summary>
+        </member>
+        <member name="P:Resources.Entity.Application.Request.AppId">
+            <summary>
+            AppId
+            </summary>
+        </member>
+        <member name="T:Resources.Entity.Application.IResponse">
+            <summary>
+            响应接口
+            </summary>
+        </member>
+        <member name="P:Resources.Entity.Application.IResponse.Ack">
+            <summary>
+            应答
+            </summary>
+        </member>
+        <member name="T:Resources.Entity.Application.Response">
+            <summary>
+            响应基类
+            </summary>
+        </member>
+        <member name="P:Resources.Entity.Application.Response.Ack">
+            <summary>
+            应答
+            </summary>
+        </member>
+        <member name="M:Resources.Entity.Application.Response.#ctor">
+            <summary>
+            构造函数
+            </summary>
+        </member>
+        <member name="T:Resources.Entity.Application.Ack">
+            <summary>
+            应答
+            </summary>
+        </member>
+        <member name="P:Resources.Entity.Application.Ack.IsSuccess">
+            <summary>
+            是否成功
+            </summary>
+        </member>
+        <member name="P:Resources.Entity.Application.Ack.Code">
+            <summary>
+            编号
+            </summary>
+        </member>
+        <member name="P:Resources.Entity.Application.Ack.Message">
+            <summary>
+            信息
+            </summary>
+        </member>
+        <member name="M:Resources.Entity.Application.Ack.#ctor">
+            <summary>
+            构造函数
+            </summary>
+        </member>
+        <member name="T:Resources.Entity.Data.FileRecord">
+            <summary>
+            文件记录
+            </summary>
+        </member>
+        <member name="P:Resources.Entity.Data.FileRecord.FileId">
+            <summary> 
+            主键
+            </summary> 
+        </member>
+        <member name="P:Resources.Entity.Data.FileRecord.AppId">
+            <summary> 
+            AppId
+            </summary> 
+        </member>
+        <member name="P:Resources.Entity.Data.FileRecord.FilePath">
+            <summary> 
+            文件路径
+            </summary> 
+        </member>
+        <member name="P:Resources.Entity.Data.FileRecord.FileName">
+            <summary> 
+            文件名
+            </summary> 
+        </member>
+        <member name="P:Resources.Entity.Data.FileRecord.FileType">
+            <summary> 
+            文件类型
+            </summary> 
+        </member>
+        <member name="P:Resources.Entity.Data.FileRecord.FileSize">
+            <summary> 
+            文件大小(字节B)
+            </summary> 
+        </member>
+        <member name="P:Resources.Entity.Data.FileRecord.IpAddress">
+            <summary>
+            IP地址
+            </summary>
+        </member>
+        <member name="P:Resources.Entity.Data.FileRecord.CreateDate">
+            <summary> 
+            创建时间
+            </summary> 
+        </member>
+        <member name="P:Resources.Entity.Data.FileRecord.RowVersion">
+            <summary> 
+            行版本
+            </summary> 
+        </member>
+        <member name="T:Resources.Entity.Domain.FileRecord">
+            <summary>
+            文件记录
+            </summary>
+        </member>
+        <member name="P:Resources.Entity.Domain.FileRecord.FileId">
+            <summary> 
+            主键
+            </summary> 
+        </member>
+        <member name="P:Resources.Entity.Domain.FileRecord.AppId">
+            <summary> 
+            AppId
+            </summary> 
+        </member>
+        <member name="P:Resources.Entity.Domain.FileRecord.FilePath">
+            <summary> 
+            文件路径
+            </summary> 
+        </member>
+        <member name="P:Resources.Entity.Domain.FileRecord.FileName">
+            <summary> 
+            文件名
+            </summary> 
+        </member>
+        <member name="P:Resources.Entity.Domain.FileRecord.FileType">
+            <summary> 
+            文件类型
+            </summary> 
+        </member>
+        <member name="P:Resources.Entity.Domain.FileRecord.FileSize">
+            <summary> 
+            文件大小(字节B)
+            </summary> 
+        </member>
+        <member name="P:Resources.Entity.Domain.FileRecord.IpAddress">
+            <summary>
+            IP地址
+            </summary>
+        </member>
+    </members>
+</doc>

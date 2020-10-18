@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta name="msapplication-tap-highlight" content="no" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta content="telephone=no" name="format-detection" />
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
+    <link rel="icon" type="image/x-icon" href="${require('./assets/favicon.ico')}">
+    <title>WIKISPECTRA</title>
+</head>
+
+<body>
+    <div id="root" style="width:100%;height:100%;margin:0;padding:0">
+        <style>
+            .am-toast.am-toast-mask {
+                height: 100%;
+                display: -webkit-box;
+                display: -webkit-flex;
+                display: -ms-flexbox;
+                display: flex;
+                -webkit-box-pack: center;
+                -webkit-justify-content: center;
+                -ms-flex-pack: center;
+                justify-content: center;
+                -webkit-box-align: center;
+                -webkit-align-items: center;
+                -ms-flex-align: center;
+                align-items: center;
+                left: 0;
+                top: 0;
+                -webkit-transform: translateZ(1px);
+                transform: translateZ(1px);
+            }
+
+            .am-toast {
+                position: fixed;
+                width: 100%;
+                z-index: 1999;
+                font-size: 14px;
+                text-align: center;
+            }
+
+            .am-toast>span {
+                max-width: 50%;
+            }
+
+            .am-toast-notice-content .am-toast-text.am-toast-text-icon {
+                border-radius: 5px;
+                padding: 15px 15px;
+            }
+
+            .am-toast-notice-content .am-toast-text {
+                min-width: 60px;
+                border-radius: 3px;
+                color: #fff;
+                background-color: rgba(58, 58, 58, 0.9);
+                line-height: 1.5;
+                padding: 9px 15px;
+            }
+
+            svg:not(:root) {
+                overflow: hidden;
+            }
+
+            .am-icon-loading {
+                -webkit-animation: cirle-anim 1s linear infinite;
+                animation: cirle-anim 1s linear infinite;
+            }
+
+            @-webkit-keyframes cirle-anim {
+                100% {
+                    -webkit-transform: rotate(360deg);
+                    transform: rotate(360deg);
+                }
+            }
+
+            @keyframes cirle-anim {
+                100% {
+                    -webkit-transform: rotate(360deg);
+                    transform: rotate(360deg);
+                }
+            }
+
+
+            .am-icon {
+                fill: currentColor;
+                background-size: cover;
+                width: 22px;
+                height: 22px;
+            }
+
+            .am-icon-lg {
+                width: 36px;
+                height: 36px;
+            }
+
+
+            .am-toast-notice-content .am-toast-text.am-toast-text-icon .am-toast-text-info {
+                margin-top: 6px;
+            }
+
+
+            .am-toast.am-toast-nomask {
+                position: fixed;
+                max-width: 50%;
+                width: auto;
+                left: 50%;
+                top: 50%;
+                -webkit-transform: translateZ(1px);
+                transform: translateZ(1px);
+            }
+
+            .am-toast.am-toast-nomask .am-toast-notice {
+                -webkit-transform: translateX(-50%) translateY(-50%);
+                -ms-transform: translateX(-50%) translateY(-50%);
+                transform: translateX(-50%) translateY(-50%);
+            }
+        </style>
+        <div class="am-toast am-toast-mask"><span>
+                <div class="am-toast-notice am-toast-notice-closable">
+                    <div class="am-toast-notice-content">
+                        <div class="am-toast-text am-toast-text-icon" role="alert" aria-live="assertive"><svg
+                                class="am-icon am-icon-loading am-icon-lg">
+                                <use xlink:href="#loading"><svg id="loading" viewBox="0 -2 59.75 60.25">
+                                        <path fill="#ccc"
+                                            d="M29.69-.527C14.044-.527 1.36 12.158 1.36 27.806S14.043 56.14 29.69 56.14c15.65 0 28.334-12.686 28.334-28.334S45.34-.527 29.69-.527zm.185 53.75c-14.037 0-25.417-11.38-25.417-25.417S15.838 2.39 29.875 2.39s25.417 11.38 25.417 25.417-11.38 25.416-25.417 25.416z">
+                                        </path>
+                                        <path fill="none" stroke="#108ee9" stroke-width="3" stroke-linecap="round"
+                                            stroke-miterlimit="10" d="M56.587 29.766c.37-7.438-1.658-14.7-6.393-19.552">
+                                        </path>
+                                    </svg></use>
+                            </svg>
+                            <div class="am-toast-text-info">加载中……</div>
+                        </div>
+                    </div><a tabindex="0" class="am-toast-notice-close"><span
+                            class="am-toast-notice-close-x"></span></a>
+                </div>
+            </span></div>
+    </div>
+</body>
+
+</html>

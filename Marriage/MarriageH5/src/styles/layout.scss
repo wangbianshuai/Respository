@@ -1,0 +1,127 @@
+@function toRem($px){
+    @return $px/32*1rem;
+}
+
+.divTabBar{
+    width: 100%;
+    height: toRem(100);
+    position: absolute;
+    left: 0;
+    bottom: 0;
+
+    :global {
+        .am-tab-bar-bar{
+       height: toRem(100) !important;
+
+       .am-tab-bar-tab-title{
+           font-size: toRem(20) !important;
+       }
+    }
+}
+}
+
+.navImage{
+    width: toRem(50);
+    height: toRem(50);
+}
+
+.divSearchBar{
+    background-color: #187FC4;
+    width: 100%;
+    height: toRem(100);
+    position: absolute;
+    left: 0;
+    top: 0;
+
+    :global {
+        .am-search{
+       background-color: transparent !important;
+       height: toRem(100) !important;
+       padding: 0 toRem(33) !important;
+
+       .am-search-input{
+           height: toRem(63) !important;
+
+           input{
+            height: toRem(63) !important;
+           }
+           
+       }
+
+       .am-search-synthetic-ph{
+        height: toRem(63) !important;
+        line-height: toRem(63) !important;
+        padding-top: toRem(4) !important;
+        box-sizing: border-box;
+    }
+
+       .am-search-cancel{
+          display: none !important;
+       }
+        }
+    }
+}
+
+.divPage{
+    width: 100%;
+    overflow: auto;
+    position: absolute;
+    left: 0;
+    top: toRem(100);
+    bottom: toRem(100);
+    background-color: #ffffff;
+  }
+
+  .divPage2{
+    width: 100%;
+    overflow: auto;
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: toRem(100);
+    background-color: #ffffff;
+  }
+
+  .divPage3{
+    width: 100%;
+    overflow: auto;
+    position: absolute;
+    left: 0;
+    top: toRem(100);
+    bottom: 0;
+    background-color: #ffffff;
+  }
+ 
+ 
+.divBottomButton{
+    width: 100%;
+    height: toRem(100);
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    background-color: #187FC4;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+
+    .divButton{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: toRem(120);
+        margin-left: toRem(20);
+        margin-right: toRem(20);
+
+        img{
+            width: toRem(52);
+            height: toRem(52);
+        }
+
+        span{
+            color: #ffffff;
+            font-size: toRem(20);
+            line-height: toRem(32);
+        }
+    }
+}

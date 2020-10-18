@@ -1,0 +1,24 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup Label="Globals">
+    <SccProjectName>SAK</SccProjectName>
+    <SccProvider>SAK</SccProvider>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccLocalPath>SAK</SccLocalPath>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <AssemblyName>Marriage.Component</AssemblyName>
+    <RootNamespace>Marriage.Component</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\OpenDataAccessCore\OpenDataAccessCore.Data\OpenDataAccessCore.Data.csproj" />
+    <ProjectReference Include="..\..\OpenDataAccessCore\OpenDataAccessCore.Entity\OpenDataAccessCore.Entity.csproj" />
+    <ProjectReference Include="..\..\OpenDataAccessCore\OpenDataAccessCore.Service\OpenDataAccessCore.Service.csproj" />
+    <ProjectReference Include="..\..\OpenDataAccessCore\OpenDataAccessCore.Utility\OpenDataAccessCore.Utility.csproj" />
+    <ProjectReference Include="..\Marriage.Entity\Marriage.Entity.csproj" />
+  </ItemGroup>
+
+</Project>

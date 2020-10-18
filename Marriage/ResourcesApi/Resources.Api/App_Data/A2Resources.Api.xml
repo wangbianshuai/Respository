@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Resources.Api</name>
+    </assembly>
+    <members>
+        <member name="T:Resources.Api.Code.ApiExceptionFilterAttribute">
+            <summary>
+            异常
+            </summary>
+        </member>
+        <member name="T:Resources.Api.Code.TokenFilterAttribute">
+            <summary>
+            Token过滤
+            </summary>
+        </member>
+        <member name="T:Resources.Api.Controllers.ResourcesController">
+            <summary>
+            资源
+            </summary>
+        </member>
+        <member name="M:Resources.Api.Controllers.ResourcesController.GetFile(Resources.Entity.Application.File.GetFileRequest)">
+            <summary>
+            查询文件
+            </summary>
+            <param name="request"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Resources.Api.Controllers.ResourcesController.DeleteFile(Resources.Entity.Application.File.DeleteFileRequest)">
+            <summary>
+            删除文件
+            </summary>
+            <param name="request"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Resources.Api.Controllers.UploadController">
+            <summary>
+            上传
+            </summary>
+        </member>
+        <member name="M:Resources.Api.Controllers.UploadController.Post(System.String)">
+            <summary>
+            上传文件
+            </summary>
+            <returns></returns>
+        </member>
+    </members>
+</doc>

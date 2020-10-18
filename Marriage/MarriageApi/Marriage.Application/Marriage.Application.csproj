@@ -1,0 +1,21 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup Label="Globals">
+    <SccProjectName>SAK</SccProjectName>
+    <SccProvider>SAK</SccProvider>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccLocalPath>SAK</SccLocalPath>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <AssemblyName>Marriage.Application</AssemblyName>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Marriage.Domain\Marriage.Domain.csproj" />
+    <ProjectReference Include="..\Marriage.Entity\Marriage.Entity.csproj" />
+    <ProjectReference Include="..\Marriage.Utility\Marriage.Utility.csproj" />
+  </ItemGroup>
+
+</Project>

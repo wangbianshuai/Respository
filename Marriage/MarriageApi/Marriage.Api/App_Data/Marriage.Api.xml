@@ -1,0 +1,89 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Marriage.Api</name>
+    </assembly>
+    <members>
+        <member name="T:Marriage.Api.Code.ApiExceptionFilterAttribute">
+            <summary>
+            异常
+            </summary>
+        </member>
+        <member name="T:Marriage.Api.Code.TokenFilterAttribute">
+            <summary>
+            Token过滤
+            </summary>
+        </member>
+        <member name="T:Marriage.Api.Controllers.LiveController">
+            <summary>
+            直播
+            </summary>
+        </member>
+        <member name="M:Marriage.Api.Controllers.LiveController.CreateLive(Marriage.Entity.Application.Live.CreateLiveRequest)">
+            <summary>
+            创建直播
+            </summary>
+            <param name="request"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Marriage.Api.Controllers.LiveController.UpdateLive(Marriage.Entity.Application.Live.UpdateLiveRequest)">
+            <summary>
+            更新直播
+            </summary>
+            <param name="request"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Marriage.Api.Controllers.LiveController.DeleteLive(Marriage.Entity.Application.Live.DeleteLiveRequest)">
+            <summary>
+            删除直播
+            </summary>
+            <param name="request"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Marriage.Api.Controllers.LiveController.QueryLiveByCustomer(Marriage.Entity.Application.Live.QueryLiveByCustomerRequest)">
+            <summary>
+            以客户ID查询直播
+            </summary>
+            <param name="request"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Marriage.Api.Controllers.LiveController.GetLiveData(Marriage.Entity.Application.Live.GetLiveDataRequest)">
+            <summary>
+            查询直播
+            </summary>
+            <param name="request"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Marriage.Api.Controllers.LiveController.SyncPlayStreamData(Marriage.Entity.Application.Live.SyncPlayStreamDataRequest)">
+            <summary>
+            同步播放流数据
+            </summary>
+            <param name="request"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Marriage.Api.Controllers.MessageController">
+            <summary>
+            消息
+            </summary>
+        </member>
+        <member name="M:Marriage.Api.Controllers.MessageController.SyncWeChatTemplate(Marriage.Entity.Application.Message.SyncWeChatTemplateRequest)">
+            <summary>
+            同步微信消息模板
+            </summary>
+            <param name="request"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Marriage.Api.Controllers.UserController">
+            <summary>
+            用户
+            </summary>
+        </member>
+        <member name="M:Marriage.Api.Controllers.UserController.SyncWeChatUser(Marriage.Entity.Application.User.SyncWeChatUserRequest)">
+            <summary>
+            同步微信用户
+            </summary>
+            <param name="request"></param>
+            <returns></returns>
+        </member>
+    </members>
+</doc>
