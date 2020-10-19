@@ -33,38 +33,14 @@ namespace Marriage.Web.Code
             EntityType.SetEntityType<Entity.ViewAdminUser>();
             EntityType.SetEntityType<Entity.DictionaryConfig>();
             EntityType.SetEntityType<Entity.ViewDictionaryConfig>();
-            EntityType.SetEntityType<Entity.AppAccount>();
-            EntityType.SetEntityType<Entity.ViewAppAccount>();
             EntityType.SetEntityType<Entity.OperationLog>();
             EntityType.SetEntityType<Entity.ViewOperationLog>();
-            EntityType.SetEntityType<Entity.RequestServiceLog>();
-            EntityType.SetEntityType<Entity.ViewRequestServiceLog>();
-            EntityType.SetEntityType<Entity.ServiceInterface>();
-            EntityType.SetEntityType<Entity.ViewServiceInterface>();
-            EntityType.SetEntityType<Entity.ActionType>();
-            EntityType.SetEntityType<Entity.ViewActionType>();
-            EntityType.SetEntityType<Entity.UserTag>();
-            EntityType.SetEntityType<Entity.ViewUserTag>();
             EntityType.SetEntityType<Entity.User>();
             EntityType.SetEntityType<Entity.ViewUser>();
-            EntityType.SetEntityType<Entity.WeChatTemplate>();
-            EntityType.SetEntityType<Entity.SendTemplateMessage>();
-            EntityType.SetEntityType<Entity.ViewSendTemplateMessage>();
-            EntityType.SetEntityType<Entity.LiveVodPlayInfo>();
-            EntityType.SetEntityType<Entity.ViewLiveVodPlayInfo>();
-            EntityType.SetEntityType<Entity.ViewLiveVodPlaySyncRecord>();
 
             OpenDataAccessCore.Service.ComponentType.SetComponentType<Component.DictionaryConfig>();
             OpenDataAccessCore.Service.ComponentType.SetComponentType<Component.AdminUser>();
-            OpenDataAccessCore.Service.ComponentType.SetComponentType<Component.RequestServiceLog>();
-            OpenDataAccessCore.Service.ComponentType.SetComponentType<Component.AppAccount>();
-            OpenDataAccessCore.Service.ComponentType.SetComponentType<Component.ServiceInterface>();
-            OpenDataAccessCore.Service.ComponentType.SetComponentType<Component.ActionType>();
-            OpenDataAccessCore.Service.ComponentType.SetComponentType<Component.UserTag>();
             OpenDataAccessCore.Service.ComponentType.SetComponentType<Component.User>();
-            OpenDataAccessCore.Service.ComponentType.SetComponentType<Component.ViewUser>();
-            OpenDataAccessCore.Service.ComponentType.SetComponentType<Component.SendTemplateMessage>();
-            OpenDataAccessCore.Service.ComponentType.SetComponentType<Component.LiveVodPlayInfo>();
 
             _DirectRequestList = new List<string>()
             {
@@ -74,7 +50,7 @@ namespace Marriage.Web.Code
                 "index"
             };
         }
-        public static OpenDataAccessCore.Service.Request GetRequest(ControllerBase controller, string requestType, string entityName, string methodName, string useId, Guid appAccountId, IWebHostEnvironment webHostEnvironment)
+        public static OpenDataAccessCore.Service.Request GetRequest(ControllerBase controller, string requestType, string entityName, string methodName, string useId, Guid appAccountId, IWebHostEnvironment webHostEnvironment, string sign, string appId)
         {
             OpenDataAccessCore.Service.Request request = new OpenDataAccessCore.Service.Request();
 
@@ -88,6 +64,8 @@ namespace Marriage.Web.Code
             request.RequestType = requestType;
             request.OperationUser = useId;
             request.AppAccountId = appAccountId;
+            request.Sign = sign;
+            request.AppId = appId;
             request.IsDirectRequest = () => JudgeDirectRequest(entityName, string.IsNullOrEmpty(methodName) ? string.Empty : methodName);
 
             int index = request.PathAndQuery.IndexOf("api/");
@@ -103,7 +81,7 @@ namespace Marriage.Web.Code
             return request;
         }
 
-        private static string GetClientIp(HttpRequest request)
+        public static string GetClientIp(HttpRequest request)
         {
             return request.HttpContext.Connection.RemoteIpAddress.ToString();
         }
@@ -170,36 +148,7 @@ namespace Marriage.Web.Code
         public static string GetHeadersValue(HttpRequest request, string name)
         {
             if (!request.Headers.ContainsKey(name)) return string.Empty;
-            var values = request.Headers.GetCommaSeparatedValues(name);
-            if (values != null) return values.FirstOrDefault();
-            return string.Empty;
-        }
-
-        public static string GetAppAccountPathName(HttpRequest request)
-        {
-            string referer = GetHeadersValue(request, "Referer");
-
-            if (string.IsNullOrEmpty(referer)) return string.Empty;
-
-            var uri = new Uri(referer);
-            return uri.Segments[1].TrimEnd('/');
-        }
-
-        public static Guid GetAppAccountId(HttpRequest request)
-        {
-            string pathName = GetAppAccountPathName(request);
-            var appAccountInfo = Code.Cache.GetAppAccountInfo(pathName);
-            if (appAccountInfo != null) return appAccountInfo.AppAccountId;
-            else
-            {
-                appAccountInfo = new Component.AppAccount().GetAppAccountId(pathName);
-                if (appAccountInfo != null)
-                {
-                    Code.Cache.AddAppAccountInfo(pathName, appAccountInfo);
-                    return appAccountInfo.AppAccountId;
-                }
-            }
-            throw new Exception(string.Format("{0}：无效访问！", pathName));
+            return request.Headers[name].ToString();
         }
     }
 }

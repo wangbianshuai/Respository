@@ -216,6 +216,17 @@ namespace Marriage.Utility
             return BytesToHexString(bytes);
         }
 
+        public static long GetDateTotalMilliseconds(DateTime dateTime)
+        {
+            return (long)(dateTime.ToUniversalTime() - new DateTime(1970, 1, 1)).TotalMilliseconds;
+        }
+
+        public static DateTime MillisecondsToDateTime(long milliseconds)
+        {
+            return new DateTime(1970, 1, 1).AddMilliseconds(milliseconds).ToLocalTime();
+        }
+
+
         public static string ComputeStringSHA1(string str)
         {
             Stream stream = new MemoryStream(System.Text.Encoding.UTF8.GetBytes(str));

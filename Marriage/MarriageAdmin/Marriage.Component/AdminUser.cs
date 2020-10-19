@@ -81,7 +81,7 @@ namespace Marriage.Component
 
             Task.Run(() => UpdateLoginDate(entityData));
 
-            entityData.SetValue("Token", UserToken.CreateToken(entityData.GetValue<Guid>("AdminUserId"), this._Request.AppAccountId));
+            _Request.OperationUser = entityData.GetValue<Guid>("AdminUserId").ToString();
 
             //获取接收消息API地址
             IEntityData receiveMessage = GetReceiveMessasgeApiUrl();

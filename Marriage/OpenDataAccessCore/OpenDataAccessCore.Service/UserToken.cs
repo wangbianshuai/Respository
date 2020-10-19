@@ -7,47 +7,49 @@ namespace OpenDataAccessCore.Service
 {
     public class UserToken
     {
-        private const String _DesKey = "userlogintokedeskey12345";
-
         public static int Exprie { get; set; }
 
         static UserToken()
         {
-            Exprie = 1;
+            Exprie = 2;
         }
 
-        public static string CreateToken(Guid adminUserId, Guid appAccountId)
+        public static string CreateToken(Guid userId, Guid appAccountId, string sign)
         {
             Dictionary<string, object> dict = new Dictionary<string, object>();
-            dict.Add("AdminUserId", adminUserId);
+            dict.Add("UserId", userId);
             dict.Add("AppAccountId", appAccountId);
             dict.Add("LoginDate", DateTime.Now);
 
-            return DESEncryptor.Encrypt(Common.ToJson(dict), _DesKey);
+            return DESEncryptor.Encrypt(Common.ToJson(dict), sign);
         }
 
-        public static string ParseToken(string token, Guid appAccountId)
+        public static string ParseToken(string token, string sign)
         {
             if (string.IsNullOrEmpty(token)) return string.Empty;
             string content = string.Empty;
             try
             {
-                content = DESEncryptor.Decrypt(token, _DesKey);
+                content = DESEncryptor.Decrypt(token, sign);
             }
             catch
             {
-                throw new Exception("Token解析异常！");
+                throw new TokenException("Token解析异常！");
             }
 
             Dictionary<string, object> dict = Common.JsonToDictionary(content);
             DateTime loginDate = dict.GetValue<DateTime>("LoginDate");
 
-            if (appAccountId != dict.GetValue<Guid>("AppAccountId")) throw new Exception("Token无效！");
-
-            if (loginDate.AddDays(Exprie) > DateTime.Now) return dict.GetStringValue("AdminUserId");
+            if (loginDate.AddHours(Exprie) > DateTime.Now) return dict.GetStringValue("UserId");
 
 
-            throw new Exception("Token过期！");
+            throw new TokenException("Token过期！");
+        }
+    }
+    public class TokenException : Exception
+    {
+        public TokenException(string message) : base(message)
+        {
         }
     }
 }

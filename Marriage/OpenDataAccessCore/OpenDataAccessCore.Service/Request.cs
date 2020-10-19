@@ -36,6 +36,12 @@ namespace OpenDataAccessCore.Service
         public string RawUrl { get; set; }
         public string PathInfo { get; set; }
 
+        public string Sign { get; set; }
+
+        public string AppId { get; set; }
+
+        public string Token { get; set; }
+
         public Func<bool> IsDirectRequest { get; set; }
 
         public Request()

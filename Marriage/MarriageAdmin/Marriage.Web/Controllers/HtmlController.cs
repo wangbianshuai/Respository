@@ -10,7 +10,7 @@ using System.Text;
 
 namespace Marriage.Web.Controllers
 {
-    [Route("{pathName}")]
+    [Route("")]
     public class HtmlController : Controller
     {
         readonly IWebHostEnvironment _WebHostEnvironment;
@@ -21,20 +21,20 @@ namespace Marriage.Web.Controllers
         }
 
         [HttpGet("{name}.html")]
-        public void Get(string pathName, string name)
+        public void Get(string name)
         {
-            Get(pathName, name, string.Empty);
+            Get(name, string.Empty);
         }
 
         [HttpGet("{name}/{name2}.html")]
-        public void Get(string pathName, string name, string name2)
+        public void Get(string name, string name2)
         {
             this.Response.ContentType = "text/html;charset=utf-8";
 
             try
             {
                 if (name.ToLower().Equals("operationlog")) GetOperationLog();
-                else GetHtml(pathName, name, name2);
+                else GetHtml(name, name2);
             }
             catch (Exception ex)
             {
@@ -74,20 +74,9 @@ namespace Marriage.Web.Controllers
             }
         }
 
-        private void GetHtml(string pathName, string name, string name2)
+        private void GetHtml(string name, string name2)
         {
-            Entity.AppAcountInfo appAccountInfo = Code.Cache.GetAppAccountInfo(pathName);
-            if (appAccountInfo == null)
-            {
-                appAccountInfo = new Component.AppAccount().GetAppAccountId(pathName);
-                if (appAccountInfo == null)
-                {
-                    this.Response.WriteAsync("无效访问地址!");
-                    return;
-                }
-                Code.Cache.AddAppAccountInfo(pathName, appAccountInfo);
-            }
-            string cacheName = pathName + name + name2;
+            string cacheName =  name + name2;
             object obj = Code.Cache.GetCache(cacheName);
             if (obj != null) { this.Response.WriteAsync((string)obj); return; }
 
@@ -101,8 +90,6 @@ namespace Marriage.Web.Controllers
             }
 
             html = html.Replace("${PageVersion}", Code.Cache.PageVersion);
-            html = html.Replace("${pathName}", pathName);
-            html = html.Replace("${title}", appAccountInfo.SiteTitle);
 
             Code.Cache.AddCache(cacheName, html);
 

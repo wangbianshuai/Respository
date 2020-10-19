@@ -54,6 +54,9 @@ namespace OpenDataAccessCore.Service
                 this.SetEntityAndMethodName(request, request.EntityName, request.MethodName);
 
                 obj = this.InvokeMethod(request);
+
+                request.Token = UserToken.CreateToken(Guid.Parse(request.OperationUser), request.AppAccountId, request.Sign);
+
                 responseContent = Parse.ToJson(obj);
             }
             catch (Exception ex)
@@ -65,6 +68,9 @@ namespace OpenDataAccessCore.Service
                 dict.Add("Exception", ex.Message);
 
                 obj = dict;
+
+                request.Token = UserToken.CreateToken(Guid.Parse(request.OperationUser), request.AppAccountId, request.Sign);
+
                 responseContent = Parse.DictionaryToJson(dict);
             }
 
