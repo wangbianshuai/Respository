@@ -21,10 +21,8 @@ namespace Marriage.Api.Code
             response.Ack.Code = -1;
             response.Ack.Message = context.Exception.Message;
 
-            if (!(context.Exception is TokenException))
-            {
-                LoggerProxy.Exception("ApiExceptionFilterAttribute", "OnException", context.Exception);
-            }
+            if (context.Exception is TokenException) response.Ack.Code = -100;
+            else LoggerProxy.Exception("ApiExceptionFilterAttribute", "OnException", context.Exception);
 
             context.HttpContext.Response.WriteAsync(Common.ToJson(response));
 

@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
+using Microsoft.OpenApi.Models;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -13,9 +14,7 @@ namespace Marriage.Api.Code
         public static string GetHeadersValue(HttpRequest request, string name)
         {
             if (!request.Headers.ContainsKey(name)) return string.Empty;
-            var values = request.Headers.GetCommaSeparatedValues(name);
-            if (values != null) return values.FirstOrDefault();
-            return string.Empty;
+            return request.Headers[name].ToString();
         }
 
         public static string GetRequetContent(HttpRequest request)

@@ -908,5 +908,15 @@ namespace Marriage.Utility
 
             return batchList;
         }
+
+        public static long GetDateTotalMilliseconds(DateTime dateTime)
+        {
+            return (long)(dateTime.ToUniversalTime() - new DateTime(1970, 1, 1)).TotalMilliseconds;
+        }
+
+        public static DateTime MillisecondsToDateTime(long milliseconds)
+        {
+            return new DateTime(1970, 1, 1).AddMilliseconds(milliseconds).ToLocalTime();
+        }
     }
 }

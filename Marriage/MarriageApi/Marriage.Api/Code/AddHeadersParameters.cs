@@ -28,10 +28,50 @@ namespace Marriage.Api.Code
                     Required = parameter.Required,
                 });
             }
+
+            var list2 = context.MethodInfo.GetCustomAttributes(typeof(SwaggerOpenApiTokenParameterAttribute), false);
+            foreach (var p in list2)
+            {
+                var parameter = p as SwaggerOpenApiTokenParameterAttribute;
+                parameter.TokenList.ForEach(t =>
+                {
+                    operation.Parameters.Add(new OpenApiParameter()
+                    {
+                        Name = t.Name,
+                        Description = t.Description,
+                        Schema = new OpenApiSchema() { Type = t.Type },
+                        In = t.In,
+                        Required = t.Required,
+                    });
+                });
+            }
         }
     }
 
-    public class SwaggerOpenApiParameterAttribute: Attribute
+    public class SwaggerOpenApiParameterAttribute : Attribute
+    {
+        public string Name { get; set; }
+        public string Description { get; set; }
+        public string Type { get; set; }
+        public ParameterLocation In { get; set; }
+        public bool Required { get; set; }
+    }
+
+    public class SwaggerOpenApiTokenParameterAttribute : Attribute
+    {
+        public List<SwaggerOpenApiToken> TokenList { get; set; }
+
+        public SwaggerOpenApiTokenParameterAttribute()
+        {
+            TokenList = new List<SwaggerOpenApiToken>()
+            {
+                new SwaggerOpenApiToken(){Description = "访问Token", In = ParameterLocation.Header, Name = "access_token", Required = true, Type = "string"},
+                new SwaggerOpenApiToken(){Description = "请求Token", In = ParameterLocation.Header, Name = "token", Required = true, Type = "string"}
+            };
+        }
+    }
+
+    public class SwaggerOpenApiToken
     {
         public string Name { get; set; }
         public string Description { get; set; }
