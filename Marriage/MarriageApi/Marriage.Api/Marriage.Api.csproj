@@ -36,6 +36,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\OpenDataAccessCore\OpenDataAccessCore.Utility\OpenDataAccessCore.Utility.csproj" />
     <ProjectReference Include="..\Marriage.Application\Marriage.Application.csproj" />
+    <ProjectReference Include="..\Marriage.Entity\Marriage.Entity.csproj" />
     <ProjectReference Include="..\Marriage.Utility\Marriage.Utility.csproj" />
   </ItemGroup>
 

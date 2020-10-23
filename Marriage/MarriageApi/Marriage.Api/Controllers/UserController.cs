@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel;
 using System.Threading.Tasks;
 using Marriage.Api.Code;
-using Marriage.Entity.Application.User;
+using Marriage.Entity.Application.File;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.OpenApi.Models;
 
@@ -18,7 +18,7 @@ namespace Marriage.Api.Controllers
     [Description("用户")]
     public class UserController : ControllerBase
     {
-        public Application.IUser _User { get; set; }
+        public Application.IFile _User { get; set; }
 
         /// <summary>
         /// 同步微信用户
@@ -27,9 +27,9 @@ namespace Marriage.Api.Controllers
         /// <returns></returns>
         [HttpPost]
         [SwaggerOpenApiParameter(Description = "请求Token", In = ParameterLocation.Header, Name = "token", Required = true, Type = "string")]
-        public async Task<SyncWeChatUserResponse> SyncWeChatUser(SyncWeChatUserRequest request)
+        public async Task<GetFileResponse> SyncWeChatUser(GetFileRequest request)
         {
-            return await Task.Run(() => _User.SyncWeChatUser(request, Code.Request.GetHeadersValue(this.Request, "token")));
+            return await Task.Run(() => _User.GetFile(request, Code.Request.GetHeadersValue(this.Request, "token")));
         }
     }
 }

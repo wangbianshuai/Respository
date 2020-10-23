@@ -443,6 +443,16 @@ namespace Marriage.Utility
             return Encoding.UTF8.GetString(utf8Bytes);
         }
 
+        public static long GetDateTotalMilliseconds(DateTime dateTime)
+        {
+            return (long)(dateTime.ToUniversalTime() - new DateTime(1970, 1, 1)).TotalMilliseconds;
+        }
+
+        public static DateTime MillisecondsToDateTime(long milliseconds)
+        {
+            return new DateTime(1970, 1, 1).AddMilliseconds(milliseconds).ToLocalTime();
+        }
+        
         private static List<Dictionary<string, object>> ParseJsonContentList(object obj)
         {
             List<Dictionary<string, object>> dictList = new List<Dictionary<string, object>>();
@@ -907,16 +917,6 @@ namespace Marriage.Utility
             }
 
             return batchList;
-        }
-
-        public static long GetDateTotalMilliseconds(DateTime dateTime)
-        {
-            return (long)(dateTime.ToUniversalTime() - new DateTime(1970, 1, 1)).TotalMilliseconds;
-        }
-
-        public static DateTime MillisecondsToDateTime(long milliseconds)
-        {
-            return new DateTime(1970, 1, 1).AddMilliseconds(milliseconds).ToLocalTime();
         }
     }
 }

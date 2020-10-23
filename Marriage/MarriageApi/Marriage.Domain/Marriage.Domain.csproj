@@ -14,7 +14,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\OpenDataAccessCore\OpenDataAccessCore.Entity\OpenDataAccessCore.Entity.csproj" />
     <ProjectReference Include="..\Marriage.Data\Marriage.Data.csproj" />
-    <ProjectReference Include="..\Marriage.Service\Marriage.Service.csproj" />
+    <ProjectReference Include="..\Marriage.Entity\Marriage.Entity.csproj" />
   </ItemGroup>
 
 </Project>

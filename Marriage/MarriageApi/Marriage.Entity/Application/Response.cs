@@ -29,7 +29,7 @@ namespace Marriage.Entity.Application
         /// 应答
         /// </summary>
         public Ack Ack { get; set; }
-        
+
         /// <summary>
         /// Token
         /// </summary>

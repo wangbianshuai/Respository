@@ -7,8 +7,6 @@ namespace Marriage.Utility
 {
     public class UserToken
     {
-        private const String _DesKey = "userlogintokedeskey12345";
-
         public static int Exprie { get; set; }
 
         static UserToken()
@@ -20,10 +18,9 @@ namespace Marriage.Utility
         {
             Dictionary<string, object> dict = new Dictionary<string, object>();
             dict.Add("UserId", userId);
-            dict.Add("Sign", sign);
             dict.Add("LoginDate", DateTime.Now);
 
-            return DESEncryptor.Encrypt(Common.ToJson(dict), _DesKey);
+            return DESEncryptor.Encrypt(Common.ToJson(dict), sign);
         }
 
         public static string ParseToken(string token, string sign)
@@ -32,7 +29,7 @@ namespace Marriage.Utility
             string content = string.Empty;
             try
             {
-                content = DESEncryptor.Decrypt(token, _DesKey);
+                content = DESEncryptor.Decrypt(token, sign);
             }
             catch
             {
@@ -41,8 +38,6 @@ namespace Marriage.Utility
 
             Dictionary<string, object> dict = Common.JsonToDictionary(content);
             DateTime loginDate = dict.GetValue<DateTime>("LoginDate");
-
-            if (sign != dict.GetStringValue("Sign")) throw new Exception("Token无效！");
 
             if (loginDate.AddHours(Exprie) > DateTime.Now) return dict.GetStringValue("UserId");
 

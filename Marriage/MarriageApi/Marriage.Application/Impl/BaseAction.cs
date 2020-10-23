@@ -181,6 +181,43 @@ namespace Marriage.Application.Impl
         }
 
         /// <summary>
+        /// 执行
+        /// </summary>
+        /// <param name="stepNo"></param>
+        /// <param name="stepName"></param>
+        /// <param name="methodName"></param>
+        /// <param name="response"></param>
+        /// <param name="execStep"></param>
+        /// <returns></returns>
+        protected bool Exce(int stepNo, string stepName, string methodName, IResponse response, Func<bool> execStep)
+        {
+            Action<bool> setStepMessage = (blSucceed) =>
+            {
+                this.SetExceMessageRepsonse(stepName, blSucceed, response);
+            };
+
+            return this.ExecuteStep<bool>(string.Format("{0}、{1}。", stepNo, stepName), methodName, response, execStep, setStepMessage);
+        }
+
+        /// <summary>
+        /// 设置执行响应
+        /// </summary>
+        /// <param name="stepName"></param>
+        /// <param name="blSucceed"></param>
+        /// <param name="response"></param>
+        protected void SetExceMessageRepsonse(string stepName, bool blSucceed, IResponse response)
+        {
+            if (response.Ack.IsSuccess && !blSucceed)
+            {
+                response.Ack.IsSuccess = false;
+                response.Ack.Code = (int)ResponseStatusEnum.RequestSeviceFail;
+                response.Ack.Message = string.Format("{0}失败！", stepName);
+            }
+
+            this.MessageList.Add(string.Format("执行状态：{0}。", blSucceed ? "成功" : "失败"));
+        }
+
+        /// <summary>
         /// 获取请求对象
         /// </summary>
         /// <typeparam name="T"></typeparam>
@@ -282,27 +319,6 @@ namespace Marriage.Application.Impl
             }
 
             return response.Ack.IsSuccess;
-        }
-
-        public string ParseToken(string token, Guid appAccountId, IResponse response)
-        {
-            string message = string.Empty;
-            try
-            {
-                string adminUserId = UserToken.ParseToken(token, appAccountId);
-                if (string.IsNullOrEmpty(adminUserId)) message = "请求headers中token是必要参数！";
-                else return adminUserId;
-            }
-            catch (Exception ex)
-            {
-                message = ex.Message;
-            }
-
-            response.Ack.IsSuccess = false;
-            response.Ack.Code = (int)ResponseStatusEnum.ValidateDataFail;
-            response.Ack.Message = message;
-
-            return string.Empty;
         }
 
         /// <summary>
@@ -418,28 +434,6 @@ namespace Marriage.Application.Impl
             response.Ack.IsSuccess = false;
             response.Ack.Code = (int)ResponseStatusEnum.ValidateDataFail;
             response.Ack.Message = message;
-        }
-
-        /// <summary>
-        /// 设置服务失败响应
-        /// </summary>
-        /// <param name="serviceResponse"></param>
-        /// <param name="response"></param>
-        protected void SetServiceFailedResponse(Entity.Service.IResponse serviceResponse, IResponse response)
-        {
-            if (serviceResponse.ErrCode != 0)
-            {
-                response.Ack.IsSuccess = false;
-                response.Ack.Code = (int)ResponseStatusEnum.RequestSeviceFail;
-                if (serviceResponse.ErrCode == -2) response.Ack.Message = serviceResponse.ErrMsg;
-                else response.Ack.Message = string.Format("请求服务失败，{0}:{1}", serviceResponse.ErrCode, serviceResponse.ErrMsg);
-            }
-            else if (!serviceResponse.result)
-            {
-                response.Ack.IsSuccess = false;
-                response.Ack.Code = (int)ResponseStatusEnum.RequestSeviceFail;
-                response.Ack.Message = serviceResponse.errMessage;
-            }
         }
 
         /// <summary>
