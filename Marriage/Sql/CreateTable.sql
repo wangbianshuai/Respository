@@ -101,6 +101,7 @@ Address nvarchar(100) not null,                                --地址
 Features nvarchar(500),                                        --特点说明
 IsAppMatchmaker tinyint not null default(0),                   --是否平台红娘
 Status tinyint not null default(0),                            --状态：0：待审核，1：审核通过，2：审核不通过，3：关闭
+NoPassReason nvarchar(500),                                    --审核不通过原因
 LastLoginDate datetime,                                        --最近登录时间
 LoginIp varchar(30),                                           --登录Ip
 Remark nvarchar(200),                                          --备注 
@@ -128,6 +129,7 @@ exec proc_AddCellExplanation '特点说明','t_Matchmaker','Features'
 exec proc_AddCellExplanation '是否平台红娘','t_Matchmaker','IsAppMatchmaker'
 exec proc_AddCellExplanation '状态：0：待审核，1：审核通过，2：审核不通过，3：关闭','t_Matchmaker','Status'
 exec proc_AddCellExplanation '最近登录时间','t_Matchmaker','LastLoginDate'
+exec proc_AddCellExplanation '审核不通过原因','t_Matchmaker','NoPassReason'
 exec proc_AddCellExplanation '登录Ip','t_Matchmaker','LoginIp'
 exec proc_AddCellExplanation '备注','t_Matchmaker','Remark'
 exec proc_AddCellExplanation '是否删除','t_Matchmaker','IsDelete'
@@ -180,6 +182,7 @@ FamilyRemark nvarchar(500),                                    --家庭情况
 NowAddress nvarchar(100),                                      --现居住地
 MatchmakerId uniqueidentifier not null,                        --所属红娘
 Status tinyint not null default(0),                            --状态：0：待审核，1：审核通过，2：审核不通过，3：关闭
+NoPassReason nvarchar(500),                                    --审核不通过原因
 LastLoginDate datetime,                                        --最近登录时间
 LoginIp varchar(30),                                           --登录Ip
 Remark nvarchar(200),                                          --备注 
@@ -214,6 +217,7 @@ exec proc_AddCellExplanation '现居住地','t_MarriageUser','NowAddress'
 exec proc_AddCellExplanation '所属红娘','t_MarriageUser','MatchmakerId'
 exec proc_AddCellExplanation '状态：0：待审核，1：审核通过，2：审核不通过，3：关闭','t_MarriageUser','Status'
 exec proc_AddCellExplanation '最近登录时间','t_MarriageUser','LastLoginDate'
+exec proc_AddCellExplanation '审核不通过原因','t_MarriageUser','NoPassReason'
 exec proc_AddCellExplanation '登录Ip','t_MarriageUser','LoginIp'
 exec proc_AddCellExplanation '备注','t_MarriageUser','Remark'
 exec proc_AddCellExplanation '是否删除','t_MarriageUser','IsDelete'
@@ -251,6 +255,7 @@ WomanUserId uniqueidentifier not null,                         --女生ID
 ManMatchmakerId uniqueidentifier not null,                     --男生红娘
 WomanMatchmakerId uniqueidentifier not null,                   --女生红娘
 AppMatchmakerId uniqueidentifier not null,                     --平台红娘
+ArrangeMarriageId uniqueidentifier not null,                   --安装相亲Id
 MarriageDate datetime not null,                                --相亲时间
 MarriageContent nvarchar(2000) not null,                       --相亲情况
 ManScore int not null,                                         --男生得分
@@ -276,6 +281,7 @@ exec proc_AddCellExplanation '女生ID','t_MarriageRecord','WomanUserId'
 exec proc_AddCellExplanation '男生红娘','t_MarriageRecord','ManMatchmakerId'
 exec proc_AddCellExplanation '女生红娘','t_MarriageRecord','WomanMatchmakerId'
 exec proc_AddCellExplanation '平台红娘','t_MarriageRecord','AppMatchmakerId'
+exec proc_AddCellExplanation '安装相亲Id','t_MarriageRecord','ArrangeMarriageId'
 exec proc_AddCellExplanation '相亲时间','t_MarriageRecord','MarriageDate'
 exec proc_AddCellExplanation '相亲情况','t_MarriageRecord','MarriageContent'
 exec proc_AddCellExplanation '男生得分','t_MarriageRecord','ManScore'
@@ -692,7 +698,110 @@ exec proc_AddCellExplanation '匹配度（%）','t_MarriageMakePairRecord','PercentVa
 go
 
 
---16、键值配置（t_DictionaryConfig）
+--16、安排相亲信息表（t_ArrangeMarriage）
+if exists(select * from sysobjects where name='t_ArrangeMarriage')
+drop table t_ArrangeMarriage
+go
+
+create table t_ArrangeMarriage
+(
+ArrangeMarriageId uniqueidentifier not null primary key,       --主键
+ManUserId uniqueidentifier not null,                           --男生ID
+WomanUserId uniqueidentifier not null,                         --女生ID
+ManMatchmakerId uniqueidentifier not null,                     --男生红娘
+WomanMatchmakerId uniqueidentifier not null,                   --女生红娘
+AppMatchmakerId uniqueidentifier not null,                     --平台红娘
+MarriageDate datetime not null,                                --相亲时间
+IsManAgree tinyint not null default(0),                        --男生是否同意
+NoManAgreeRemark nvarchar(500),                                --男生不同意原因
+IsWomanAgree tinyint not null default(0),                      --女生是否同意
+NoWomanAgreeRemark nvarchar(500),                              --女生不同意因
+Remark nvarchar(200),                                          --备注 
+IsDelete tinyint not null default(0),                          --是否删除
+CreateUser uniqueidentifier not null,                          --创建人
+CreateDate datetime default(getdate()) not null,               --创建时间
+UpdateUser uniqueidentifier,                                   --更新人
+UpdateDate datetime,                                           --更新时间
+RowVersion timestamp not null                                  --行版本
+)
+go
+
+exec proc_AddCellExplanation '主键','t_ArrangeMarriage','ArrangeMarriageId'
+exec proc_AddCellExplanation '男生ID','t_ArrangeMarriage','ManUserId'
+exec proc_AddCellExplanation '女生ID','t_ArrangeMarriage','WomanUserId'
+exec proc_AddCellExplanation '男生红娘','t_ArrangeMarriage','ManMatchmakerId'
+exec proc_AddCellExplanation '女生红娘','t_ArrangeMarriage','WomanMatchmakerId'
+exec proc_AddCellExplanation '平台红娘','t_ArrangeMarriage','AppMatchmakerId'
+exec proc_AddCellExplanation '相亲时间','t_ArrangeMarriage','MarriageDate'
+exec proc_AddCellExplanation '男生是否同意','t_ArrangeMarriage','IsManAgree'
+exec proc_AddCellExplanation '男生不同意原因','t_ArrangeMarriage','NoManAgreeRemark'
+exec proc_AddCellExplanation '女生是否同意','t_ArrangeMarriage','IsWomanAgree'
+exec proc_AddCellExplanation '女生不同意因','t_ArrangeMarriage','NoWomanAgreeRemark'
+exec proc_AddCellExplanation '备注','t_ArrangeMarriage','Remark'
+exec proc_AddCellExplanation '是否删除','t_ArrangeMarriage','IsDelete'
+exec proc_AddCellExplanation '创建人','t_ArrangeMarriage','CreateUser'
+exec proc_AddCellExplanation '创建时间','t_ArrangeMarriage','CreateDate'
+exec proc_AddCellExplanation '更新人','t_ArrangeMarriage','UpdateUser'
+exec proc_AddCellExplanation '更新时间','t_ArrangeMarriage','UpdateDate'
+exec proc_AddCellExplanation '行版本','t_ArrangeMarriage','RowVersion'
+go
+
+if exists(select * from sysobjects where name='v_ArrangeMarriage')
+drop view v_ArrangeMarriage
+go
+
+create view v_ArrangeMarriage
+as
+select a.*
+from t_ArrangeMarriage a where IsDelete=0
+go
+
+--18、生辰八字匹配结果（t_BirthEightResult）
+if exists(select * from sysobjects where name='t_BirthEightResult')
+drop table t_BirthEightResult
+go
+
+create table t_BirthEightResult
+(
+ResultId uniqueidentifier not null primary key,                --主键
+ManUserId uniqueidentifier not null,                           --男生ID
+WomanUserId uniqueidentifier not null,                         --女生ID
+Content nvarchar(max),                                         --匹配结果
+Remark nvarchar(200),                                          --备注 
+IsDelete tinyint not null default(0),                          --是否删除
+CreateUser uniqueidentifier not null,                          --创建人
+CreateDate datetime default(getdate()) not null,               --创建时间
+UpdateUser uniqueidentifier,                                   --更新人
+UpdateDate datetime,                                           --更新时间
+RowVersion timestamp not null                                  --行版本
+)
+go
+
+exec proc_AddCellExplanation '主键','t_BirthEightResult','ResultId'
+exec proc_AddCellExplanation '男生ID','t_BirthEightResult','ManUserId'
+exec proc_AddCellExplanation '女生ID','t_BirthEightResult','WomanUserId'
+exec proc_AddCellExplanation '匹配结果','t_BirthEightResult','Content'
+exec proc_AddCellExplanation '备注','t_BirthEightResult','Remark'
+exec proc_AddCellExplanation '是否删除','t_BirthEightResult','IsDelete'
+exec proc_AddCellExplanation '创建人','t_BirthEightResult','CreateUser'
+exec proc_AddCellExplanation '创建时间','t_BirthEightResult','CreateDate'
+exec proc_AddCellExplanation '更新人','t_BirthEightResult','UpdateUser'
+exec proc_AddCellExplanation '更新时间','t_BirthEightResult','UpdateDate'
+exec proc_AddCellExplanation '行版本','t_BirthEightResult','RowVersion'
+go
+
+if exists(select * from sysobjects where name='v_BirthEightResult')
+drop view v_BirthEightResult
+go
+
+create view v_BirthEightResult
+as
+select a.*
+from t_BirthEightResult a where IsDelete=0
+go
+
+
+--18、键值配置（t_DictionaryConfig）
 if exists(select * from sysobjects where name='t_DictionaryConfig')
 drop table t_DictionaryConfig
 go
@@ -736,7 +845,7 @@ select a.*
 from t_DictionaryConfig a where IsDelete=0
 go
 
---17、操作日志
+--19、操作日志
 if exists(select * from sysobjects where name='t_OperationLog')
 drop table t_OperationLog 
 go
