@@ -10,23 +10,21 @@ using System.Threading.Tasks;
 
 namespace Marriage.Component
 {
-    public class AdminUser : EntityRequest
+    public class AppUser : EntityRequest
     {
-        EntityType _DictionaryConfigEntity { get; set; }
-        public AdminUser()
+        public AppUser()
         {
         }
 
-        public AdminUser(Request request)
+        public AppUser(Request request)
             : base(request)
         {
-            _DictionaryConfigEntity = EntityType.GetEntityType<Entity.DictionaryConfig>();
         }
 
         [Log]
         public object Delete2()
         {
-            return CommonOperation.DeleteByLogic<AdminUser>(this);
+            return CommonOperation.DeleteByLogic<AppUser>(this);
         }
 
         [Log]
@@ -43,29 +41,14 @@ namespace Marriage.Component
             return GetBoolDict(this.UpdateEntityByPrimaryKey(adminUserId, updateEntityData));
         }
 
-        /// <summary>
-        /// 获取接收消息API地址
-        /// </summary>
-        /// <returns></returns>
-        IEntityData GetReceiveMessasgeApiUrl()
-        {
-            List<IDbDataParameter> parameterList = new List<IDbDataParameter>();
-            parameterList.Add(this.InParameter("@Name", "ReceiveMessasgeApiUrl"));
-
-            IQuery query = new Query(_DictionaryConfigEntity.TableName);
-            query.Where("where IsDelete=0 and Name=@Name", parameterList);
-
-            return this.SelectEntity(query);
-        }
-
         IEntityData GetUserByIdPassword(Guid adminUserId, string loginPassword)
         {
             List<IDbDataParameter> parameterList = new List<IDbDataParameter>();
-            parameterList.Add(this.CurrentDataBase.InParameter("@AdminUserId", adminUserId));
+            parameterList.Add(this.CurrentDataBase.InParameter("@UserId", adminUserId));
             parameterList.Add(this.CurrentDataBase.InParameter("@LoginPassword", loginPassword));
 
             IQuery query = new Query(this.EntityType.TableName, this.EntityType.Name);
-            query.Where("where AdminUserId=@AdminUserId and LoginPassword=@LoginPassword", parameterList);
+            query.Where("where UserId=@UserId and LoginPassword=@LoginPassword", parameterList);
 
             return this.SelectEntity(query);
         }
@@ -75,17 +58,13 @@ namespace Marriage.Component
         {
             IEntityData entityData = this._Request.Entities[this.EntityType.Name].FirstOrDefault();
 
-            entityData = GetUser(entityData.GetStringValue("LoginName"), entityData.GetStringValue("LoginPassword"), this._Request.AppAccountId);
+            entityData = GetUser(entityData.GetStringValue("LoginName"), entityData.GetStringValue("LoginPassword"));
 
             if (entityData == null) return GetMessageDict("登录名或密码不正确！");
 
             Task.Run(() => UpdateLoginDate(entityData));
 
-            _Request.OperationUser = entityData.GetValue<Guid>("AdminUserId").ToString();
-
-            //获取接收消息API地址
-            IEntityData receiveMessage = GetReceiveMessasgeApiUrl();
-            if (receiveMessage != null) entityData.SetValue("ReceiveMessageApiUrl", receiveMessage.GetStringValue("Value"));
+            _Request.OperationUser = entityData.GetValue<Guid>("UserId").ToString();
 
             return entityData;
         }
@@ -96,23 +75,22 @@ namespace Marriage.Component
             {
                 IEntityData updateEntityData = new EntityData(this.EntityType);
                 updateEntityData.SetValue("LastLoginDate", DateTime.Now);
-                this.UpdateEntityByPrimaryKey(entityData.GetValue("AdminUserId"), updateEntityData);
+                this.UpdateEntityByPrimaryKey(entityData.GetValue("UserId"), updateEntityData);
             }
             catch
             {
             }
         }
 
-        IEntityData GetUser(string loginName, string loginPassword, Guid appAccountId)
+        IEntityData GetUser(string loginName, string loginPassword)
         {
             List<IDbDataParameter> parameterList = new List<IDbDataParameter>();
             parameterList.Add(this.InParameter("@LoginName", loginName));
             parameterList.Add(this.InParameter("@LoginPassword", loginPassword));
-            parameterList.Add(this.InParameter("@AppAccountId", appAccountId));
 
             IQuery query = new Query(this.EntityType.TableName, this.EntityType.Name);
-            query.Select("LoginName,UserName,AdminUserId,LastLoginDate,AppAccountId");
-            query.Where("where AppAccountId=@AppAccountId and LoginName=@LoginName and LoginPassword=@LoginPassword", parameterList);
+            query.Select("LoginName,Name,UserId,LastLoginDate");
+            query.Where("where IsDelete=0 and LoginName=@LoginName and LoginPassword=@LoginPassword", parameterList);
 
             return this.SelectEntity(query);
         }

@@ -55,7 +55,7 @@ namespace OpenDataAccessCore.Service
 
                 obj = this.InvokeMethod(request);
 
-                request.Token = UserToken.CreateToken(Guid.Parse(request.OperationUser), request.AppAccountId, request.Sign);
+                request.Token = UserToken.CreateToken(Guid.Parse(request.OperationUser), request.Sign);
 
                 responseContent = Parse.ToJson(obj);
             }
@@ -69,7 +69,7 @@ namespace OpenDataAccessCore.Service
 
                 obj = dict;
 
-                request.Token = UserToken.CreateToken(Guid.Parse(request.OperationUser), request.AppAccountId, request.Sign);
+                request.Token = UserToken.CreateToken(Guid.Parse(request.OperationUser), request.Sign);
 
                 responseContent = Parse.DictionaryToJson(dict);
             }

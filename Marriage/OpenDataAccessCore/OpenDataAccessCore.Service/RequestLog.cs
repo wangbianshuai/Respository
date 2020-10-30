@@ -162,7 +162,6 @@ namespace OpenDataAccessCore.Service
             try
             {
                 IEntityData entityData = new EntityData(request.OperationLogEntity);
-                entityData.SetValue("AppAccountId", request.AppAccountId);
                 entityData.SetValue("LogType", logType);
                 entityData.SetValue("LogPath", logPath);
                 entityData.SetValue("EntityName", request.EntityName);

@@ -29,18 +29,15 @@ namespace Marriage.Web.Code
 
         static Request()
         {
-            EntityType.SetEntityType<Entity.AdminUser>();
-            EntityType.SetEntityType<Entity.ViewAdminUser>();
+            EntityType.SetEntityType<Entity.AppUser>();
+            EntityType.SetEntityType<Entity.ViewAppUser>();
             EntityType.SetEntityType<Entity.DictionaryConfig>();
             EntityType.SetEntityType<Entity.ViewDictionaryConfig>();
             EntityType.SetEntityType<Entity.OperationLog>();
             EntityType.SetEntityType<Entity.ViewOperationLog>();
-            EntityType.SetEntityType<Entity.User>();
-            EntityType.SetEntityType<Entity.ViewUser>();
 
             OpenDataAccessCore.Service.ComponentType.SetComponentType<Component.DictionaryConfig>();
-            OpenDataAccessCore.Service.ComponentType.SetComponentType<Component.AdminUser>();
-            OpenDataAccessCore.Service.ComponentType.SetComponentType<Component.User>();
+            OpenDataAccessCore.Service.ComponentType.SetComponentType<Component.AppUser>();
 
             _DirectRequestList = new List<string>()
             {
@@ -50,7 +47,7 @@ namespace Marriage.Web.Code
                 "index"
             };
         }
-        public static OpenDataAccessCore.Service.Request GetRequest(ControllerBase controller, string requestType, string entityName, string methodName, string useId, Guid appAccountId, IWebHostEnvironment webHostEnvironment, string sign, string appId)
+        public static OpenDataAccessCore.Service.Request GetRequest(ControllerBase controller, string requestType, string entityName, string methodName, string useId, IWebHostEnvironment webHostEnvironment, string sign, string appId)
         {
             OpenDataAccessCore.Service.Request request = new OpenDataAccessCore.Service.Request();
 
@@ -63,7 +60,6 @@ namespace Marriage.Web.Code
             request.RootPath = webHostEnvironment.WebRootPath + "\\";
             request.RequestType = requestType;
             request.OperationUser = useId;
-            request.AppAccountId = appAccountId;
             request.Sign = sign;
             request.AppId = appId;
             request.IsDirectRequest = () => JudgeDirectRequest(entityName, string.IsNullOrEmpty(methodName) ? string.Empty : methodName);

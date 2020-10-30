@@ -119,7 +119,6 @@ namespace OpenDataAccessCore.Service
                     if (string.IsNullOrEmpty(this._QueryRequest.QueryInfo.ProcName))
                     {
                         query = this._QueryRequest.QueryInfo.ToQuery(this._Request.Entity);
-                        if (_Request.Entity.HasAppAccountId) query.AddAppAccounId(this._Request.AppAccountId);
                     }
                 }
                 else
@@ -424,12 +423,6 @@ namespace OpenDataAccessCore.Service
         {
             var p = this.EntityType.Properties.Where(w => w.Name.Equals("CreateUser")).FirstOrDefault();
             if (p != null) entityData.SetValue(p.Name, this._Request.OperationUser);
-
-            if (this.EntityType.HasAppAccountId)
-            {
-                p = this.EntityType.Properties.Where(w => w.Name.Equals("AppAccountId")).FirstOrDefault();
-                if (p != null) entityData.SetValue(p.Name, this._Request.AppAccountId);
-            }
         }
 
         public void AddUpdateUser(IEntityData entityData)

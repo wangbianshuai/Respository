@@ -14,11 +14,10 @@ namespace OpenDataAccessCore.Service
             Exprie = 2;
         }
 
-        public static string CreateToken(Guid userId, Guid appAccountId, string sign)
+        public static string CreateToken(Guid userId, string sign)
         {
             Dictionary<string, object> dict = new Dictionary<string, object>();
             dict.Add("UserId", userId);
-            dict.Add("AppAccountId", appAccountId);
             dict.Add("LoginDate", DateTime.Now);
 
             return DESEncryptor.Encrypt(Common.ToJson(dict), sign);

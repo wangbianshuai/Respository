@@ -57,7 +57,6 @@ namespace OpenDataAccessCore.Service
             }
             else
             {
-                if (this._Request.Entity.HasAppAccountId) query.AddAppAccounId(_Request.AppAccountId);
                 if (!string.IsNullOrEmpty(Filter))
                 {
                     query.Where(string.Concat(" where ", Filter), this.FilterParamterList);
@@ -218,7 +217,6 @@ namespace OpenDataAccessCore.Service
                     property.ParameterName = propertyValue;
 
                     this.FilterParamterList = this.FilterParamterList ?? new List<IDbDataParameter>();
-                    if (property.ParameterName == "@AppAccountId") this.FilterParamterList.Add(this._EntityAccess.InParameter("@AppAccountId", this._Request.AppAccountId));
                 }
 
                 if (andOrIndex > 0)
@@ -364,8 +362,7 @@ namespace OpenDataAccessCore.Service
                     List<Property> propertyList = _Request.Entity.GetPropertyList(propertyNameList);
                     propertyList.ForEach(property =>
                     {
-                        if (property.Name == "AppAccountId") property.Value = this._Request.AppAccountId;
-                        else property.Value = Common.ChangeType(this.GetParameterValue("@" + property.Name), property.Type);
+                        property.Value = Common.ChangeType(this.GetParameterValue("@" + property.Name), property.Type);
                        
                         parameterList.Add(this._EntityAccess.GetInParameter(property));
                     });
@@ -381,11 +378,6 @@ namespace OpenDataAccessCore.Service
         {
             StringBuilder sb = new StringBuilder();
             this.QueryInfo.ParameterList = new List<IDbDataParameter>();
-            if (this._Request.Entity.HasAppAccountId)
-            {
-                sb.AppendFormat("and AppAccountId=@AppAccountId");
-                this.QueryInfo.ParameterList.Add(this._EntityAccess.InParameter("@AppAccountId", this._Request.AppAccountId));
-            }
             this.QueryInfo.WhereFields.ForEach(whereField =>
             {
                 whereField.ParameterName = "@" + Guid.NewGuid().ToString().ToUpper().Substring(0, 8);

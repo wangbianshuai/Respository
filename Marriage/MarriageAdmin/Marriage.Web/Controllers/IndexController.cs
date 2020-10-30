@@ -42,9 +42,9 @@ namespace Marriage.Web.Controllers
         /// <returns></returns>
         [HttpGet("{entityName}")]
         [ApiTokenParameter]
-        public async Task<ContentResult> Get(string entityName, string loginUserId, string appAccountId, string sign, string appId)
+        public async Task<ContentResult> Get(string entityName, string loginUserId, string sign, string appId)
         {
-            return await Get(entityName, string.Empty, loginUserId, appAccountId, sign, appId);
+            return await Get(entityName, string.Empty, loginUserId, sign, appId);
         }
 
         /// <summary>
@@ -53,9 +53,9 @@ namespace Marriage.Web.Controllers
         /// <returns></returns>
         [HttpGet("{entityName}/{methodName}")]
         [ApiTokenParameter]
-        public async Task<ContentResult> Get(string entityName, string methodName, string loginUserId, string appAccountId, string sign, string appId)
+        public async Task<ContentResult> Get(string entityName, string methodName, string loginUserId, string sign, string appId)
         {
-            return await Invoke("GET", entityName, methodName, loginUserId, appAccountId, sign, appId);
+            return await Invoke("GET", entityName, methodName, loginUserId, sign, appId);
         }
 
         /// <summary>
@@ -64,9 +64,9 @@ namespace Marriage.Web.Controllers
         /// <returns></returns>
         [HttpPut("{entityName}")]
         [ApiTokenParameter]
-        public async Task<ContentResult> Put(string entityName, string loginUserId, string appAccountId, string sign, string appId)
+        public async Task<ContentResult> Put(string entityName, string loginUserId, string sign, string appId)
         {
-            return await Put(entityName, string.Empty, loginUserId, appAccountId, sign, appId);
+            return await Put(entityName, string.Empty, loginUserId, sign, appId);
         }
 
         /// <summary>
@@ -75,9 +75,9 @@ namespace Marriage.Web.Controllers
         /// <returns></returns>
         [HttpPut("{entityName}/{methodName}")]
         [ApiTokenParameter]
-        public async Task<ContentResult> Put(string entityName, string methodName, string loginUserId, string appAccountId, string sign, string appId)
+        public async Task<ContentResult> Put(string entityName, string methodName, string loginUserId, string sign, string appId)
         {
-            return await Invoke("PUT", entityName, methodName, loginUserId, appAccountId, sign, appId);
+            return await Invoke("PUT", entityName, methodName, loginUserId, sign, appId);
         }
 
         /// <summary>
@@ -86,9 +86,9 @@ namespace Marriage.Web.Controllers
         /// <returns></returns>
         [HttpDelete("{entityName}")]
         [ApiTokenParameter]
-        public async Task<ContentResult> Delete(string entityName, string loginUserId, string appAccountId, string sign, string appId)
+        public async Task<ContentResult> Delete(string entityName, string loginUserId, string sign, string appId)
         {
-            return await Delete(entityName, string.Empty, loginUserId, appAccountId, sign, appId);
+            return await Delete(entityName, string.Empty, loginUserId, sign, appId);
         }
 
         /// <summary>
@@ -97,9 +97,9 @@ namespace Marriage.Web.Controllers
         /// <returns></returns>
         [HttpDelete("{entityName}/{methodName}")]
         [ApiTokenParameter]
-        public async Task<ContentResult> Delete(string entityName, string methodName, string loginUserId, string appAccountId, string sign, string appId)
+        public async Task<ContentResult> Delete(string entityName, string methodName, string loginUserId, string sign, string appId)
         {
-            return await Invoke("DELETE", entityName, methodName, loginUserId, appAccountId, sign, appId);
+            return await Invoke("DELETE", entityName, methodName, loginUserId, sign, appId);
         }
 
         /// <summary>
@@ -110,9 +110,9 @@ namespace Marriage.Web.Controllers
         /// <returns></returns>
         [HttpPost("{entityName}")]
         [ApiTokenParameter]
-        public async Task<ContentResult> Post(string entityName, string loginUserId, string appAccountId, string sign, string appId)
+        public async Task<ContentResult> Post(string entityName, string loginUserId, string sign, string appId)
         {
-            return await Post(entityName, string.Empty, loginUserId, appAccountId, sign, appId);
+            return await Post(entityName, string.Empty, loginUserId, sign, appId);
         }
 
         /// <summary>
@@ -123,14 +123,14 @@ namespace Marriage.Web.Controllers
         /// <returns></returns>
         [HttpPost("{entityName}/{methodName}")]
         [ApiTokenParameter]
-        public async Task<ContentResult> Post(string entityName, string methodName, string loginUserId, string appAccountId, string sign, string appId)
+        public async Task<ContentResult> Post(string entityName, string methodName, string loginUserId, string sign, string appId)
         {
-            return await Invoke("POST", entityName, methodName, loginUserId, appAccountId, sign, appId);
+            return await Invoke("POST", entityName, methodName, loginUserId, sign, appId);
         }
 
-        public async Task<ContentResult> Invoke(string requestType, string entityName, string methodName, string loginUserId, string appAccountId, string sign, string appId)
+        public async Task<ContentResult> Invoke(string requestType, string entityName, string methodName, string loginUserId, string sign, string appId)
         {
-            return await Task<ContentResult>.Run(() => { return this.RequestAction(requestType, entityName, methodName, loginUserId, appAccountId, sign, appId); });
+            return await Task<ContentResult>.Run(() => { return this.RequestAction(requestType, entityName, methodName, loginUserId, sign, appId); });
         }
 
         /// <summary>
@@ -139,9 +139,9 @@ namespace Marriage.Web.Controllers
         /// <param name="entityName"></param>
         /// <param name="methodName"></param>
         /// <returns></returns>
-        ContentResult RequestAction(string requestType, string entityName, string methodName, string loginUserId, string appAccountId, string sign, string appId)
+        ContentResult RequestAction(string requestType, string entityName, string methodName, string loginUserId, string sign, string appId)
         {
-           var request = Code.Request.GetRequest(this, requestType, entityName, methodName, loginUserId, Guid.Parse(appAccountId), _WebHostEnvironment, sign, appId);
+           var request = Code.Request.GetRequest(this, requestType, entityName, methodName, loginUserId, _WebHostEnvironment, sign, appId);
             string content = new OpenDataAccessCore.Service.RequestHandler().ProcessRequest(request, entityName, methodName);
 
             this.Response.Cookies.Append("token", request.Token);

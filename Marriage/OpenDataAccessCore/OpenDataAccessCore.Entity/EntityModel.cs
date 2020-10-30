@@ -61,8 +61,6 @@ namespace OpenDataAccessCore.Entity
                     Type = propertyInfo.PropertyType,
                     IsSelect = !entityType.NoSelectNameList.Contains(propertyInfo.Name)
                 });
-
-                if (entityType.Name != "AppAccount" && entityType.Name != "ViewAppAccount" && propertyInfo.Name == "AppAccountId") entityType.HasAppAccountId = true;
             });
             this.InsertValidate(entityType.InsertValidateList);
             this.UpdateValidate(entityType.UpdateValidateList);

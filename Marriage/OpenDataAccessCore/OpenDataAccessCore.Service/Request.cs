@@ -22,7 +22,6 @@ namespace OpenDataAccessCore.Service
         public NameValueCollection QueryString { get; set; }
         public string EntityName { get; set; }
         public string OperationUser { get; set; }
-        public Guid AppAccountId { get; set; }
         public DateTime StartTime { get; set; }
         public DateTime EndTime { get; set; }
         public long ElapsedMilliseconds { get; set; }

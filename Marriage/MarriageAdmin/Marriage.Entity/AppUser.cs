@@ -6,22 +6,18 @@ using OpenDataAccessCore.Entity;
 
 namespace Marriage.Entity
 {
-    [TableProperty(Name = "t_AdminUser", PrimaryKey = "AdminUserId", NoSelectNames = "IsDelete,LoginPassword")]
+    [TableProperty(Name = "t_AppUser", PrimaryKey = "UserId")]
     [RequestMethod(IsDelete = false)]
-    public class AdminUser : EntityModel, IEntity
+    public class AppUser : EntityModel, IEntity
     {
         /// <summary> 
         /// 主键
         /// </summary> 
-        public Guid AdminUserId { get; set; }
+        public Guid UserId { get; set; }
         /// <summary> 
-        /// App账号ID
+        /// 名称
         /// </summary> 
-        public Guid AppAccountId { get; set; }
-        /// <summary> 
-        /// 用户名
-        /// </summary> 
-        public string UserName { get; set; }
+        public string Name { get; set; }
         /// <summary> 
         /// 登录名
         /// </summary> 
@@ -31,9 +27,21 @@ namespace Marriage.Entity
         /// </summary> 
         public string LoginPassword { get; set; }
         /// <summary> 
+        /// 状态：1：正常，2：关闭
+        /// </summary> 
+        public byte Status { get; set; }
+        /// <summary> 
         /// 最近登录时间
         /// </summary> 
         public DateTime LastLoginDate { get; set; }
+        /// <summary> 
+        /// 登录Ip
+        /// </summary> 
+        public string LoginIp { get; set; }
+        /// <summary> 
+        /// 备注
+        /// </summary> 
+        public string Remark { get; set; }
         /// <summary> 
         /// 是否删除
         /// </summary> 
@@ -54,30 +62,27 @@ namespace Marriage.Entity
         /// 更新时间
         /// </summary> 
         public DateTime UpdateDate { get; set; }
-        /// <summary>
+        /// <summary> 
         /// 行版本
-        /// </summary>
+        /// </summary> 
         public string RowVersion { get; set; }
 
         public override void InsertValidate(List<Func<IValidate, IEntityData, string>> validateList)
         {
-            validateList.Add(this.ValidateExists<AdminUser>("IsDelete=0 and LoginName=@LoginName and AppAccountId=@AppAccountId", "对不起，该登录名已存在！"));
-            validateList.Add(this.ValidateExists<AdminUser>("IsDelete=0 and UserName=@UserName and AppAccountId=@AppAccountId", "对不起，该用户名已存在！"));
+            validateList.Add(this.ValidateExists<AppUser>("IsDelete=0 and LoginName=@LoginName", "对不起，该登录名已存在！"));
         }
 
         public override void UpdateValidate(List<Func<IValidate, IEntityData, string>> validateList)
         {
-            validateList.Add(this.ValidateExists<AdminUser>("AdminUserId=@AdminUserId and LoginName=@LoginName", "true"));
-            validateList.Add(this.ValidateExists<AdminUser>("IsDelete=0 and LoginName=@LoginName and AppAccountId=@AppAccountId", "对不起，该登录名已存在！"));
-
-            validateList.Add(this.ValidateExists<AdminUser>("AdminUserId=@AdminUserId and UserName=@UserName", "true"));
-            validateList.Add(this.ValidateExists<AdminUser>("IsDelete=0 and UserName=@UserName and AppAccountId=@AppAccountId", "对不起，该用户名已存在！"));
+            validateList.Add(this.ValidateExists<AppUser>("UserId=@UserId and LoginName=@LoginName", "true"));
+            validateList.Add(this.ValidateExists<AppUser>("IsDelete=0 and LoginName=@LoginName", "对不起，该登录名已存在！"));
         }
     }
 
-    [TableProperty(Name = "v_AdminUser", PrimaryKey = "AdminUserId", NoSelectNames = "IsDelete,LoginPassword")]
+    [TableProperty(Name = "v_AppUser", PrimaryKey = "UserId", NoSelectNames = "IsDelete")]
     [RequestMethod(IsDelete = false, IsPost = false, IsPut = false)]
-    public class ViewAdminUser : AdminUser
+    public class ViewAppUser : AppUser
     {
+        public string StatusName { get; set; }
     }
 }

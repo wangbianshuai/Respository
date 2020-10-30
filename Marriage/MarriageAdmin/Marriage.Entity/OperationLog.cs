@@ -14,10 +14,6 @@ namespace Marriage.Entity
         /// </summary> 
         public Guid LogId { get; set; }
         /// <summary> 
-        /// App账号ID
-        /// </summary> 
-        public Guid AppAccountId { get; set; }
-        /// <summary> 
         /// 日志类型
         /// </summary> 
         public string LogType { get; set; }
@@ -74,7 +70,7 @@ namespace Marriage.Entity
         /// <summary>
         /// 用户名
         /// </summary>
-        public string UserName { get; set; }
+        public string Name { get; set; }
         /// <summary>
         /// 查看详细
         /// </summary>

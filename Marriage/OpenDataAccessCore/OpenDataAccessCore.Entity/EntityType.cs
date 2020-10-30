@@ -23,12 +23,6 @@ namespace OpenDataAccessCore.Entity
         public List<Func<IValidate, IEntityData, string>> UpdateValidateList { get; set; }
         public List<Func<IValidate, IEntityData, string>> DeleteValidateList { get; set; }
 
-
-        /// <summary>
-        /// 是否有AppAccountId
-        /// </summary>
-        public bool HasAppAccountId { get; set; }
-
         public EntityType()
         {
             this.InsertValidateList = new List<Func<IValidate, IEntityData, string>>();

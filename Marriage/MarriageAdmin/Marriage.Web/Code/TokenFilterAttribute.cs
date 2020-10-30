@@ -77,7 +77,7 @@ namespace Marriage.Web.Code
 
             string loginUserId = string.Empty;
 
-            if (entityName == "AdminUser" && methodName == "Login")
+            if (entityName == "AppUser" && methodName == "Login")
             {
                 string loginmd5 = "d56b699830e77ba53855679cb1d252da";
                 if (token.StartsWith(loginmd5))
