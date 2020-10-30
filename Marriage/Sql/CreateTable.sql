@@ -348,7 +348,7 @@ go
 
 exec proc_AddCellExplanation '主键','t_MarriageSccuess','SccuessId'
 exec proc_AddCellExplanation '男生ID','t_MarriageSccuess','ManUserId'
-exec proc_AddCellExplanation '女生ID','t_MarriageRecord','WomanUserId'
+exec proc_AddCellExplanation '女生ID','t_MarriageSccuess','WomanUserId'
 exec proc_AddCellExplanation '男生红娘','t_MarriageSccuess','ManMatchmakerId'
 exec proc_AddCellExplanation '女生红娘','t_MarriageSccuess','WomanMatchmakerId'
 exec proc_AddCellExplanation '平台红娘','t_MarriageSccuess','AppMatchmakerId'

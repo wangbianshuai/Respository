@@ -12,7 +12,7 @@ namespace Marriage.Data.Impl
     {
         public FileRecord()
         {
-            this.EntityType = EntityType.GetEntityType<Entity.Data.FileRecord>();
+            this.EntityType = EntityType.GetEntityType<Entity.Data.BirthEightResult>();
         }
 
         /// <summary>

@@ -7,43 +7,43 @@ using OpenDataAccessCore.Entity;
 namespace Marriage.Entity.Data
 {
     /// <summary>
-    /// 文件记录
+    /// 数据源
     /// </summary>
-    [TableProperty(Name = "t_FileRecord", PrimaryKey = "FileId")]
-    public class FileRecord : EntityModel, IEntity
+    [TableProperty(Name = "t_DataSource", PrimaryKey = "DataSourceId")]
+    public class DataSource : EntityModel, IEntity
     {
         /// <summary> 
         /// 主键
         /// </summary> 
-        public Guid FileId { get; set; }
+        public Guid DataSourceId { get; set; }
         /// <summary> 
-        /// AppId
+        /// 名称
         /// </summary> 
-        public string AppId { get; set; }
+        public string Name { get; set; }
         /// <summary> 
-        /// 文件路径
+        /// 备注
         /// </summary> 
-        public string FilePath { get; set; }
+        public string Remark { get; set; }
         /// <summary> 
-        /// 文件名
+        /// 是否删除
         /// </summary> 
-        public string FileName { get; set; }
+        public byte IsDelete { get; set; }
         /// <summary> 
-        /// 文件类型
+        /// 创建人
         /// </summary> 
-        public string FileType { get; set; }
-        /// <summary> 
-        /// 文件大小(字节B)
-        /// </summary> 
-        public long FileSize { get; set; }
-        /// <summary>
-        /// IP地址
-        /// </summary>
-        public string IpAddress { get; set; }
+        public Guid CreateUser { get; set; }
         /// <summary> 
         /// 创建时间
         /// </summary> 
         public DateTime CreateDate { get; set; }
+        /// <summary> 
+        /// 更新人
+        /// </summary> 
+        public Guid UpdateUser { get; set; }
+        /// <summary> 
+        /// 更新时间
+        /// </summary> 
+        public DateTime UpdateDate { get; set; }
         /// <summary> 
         /// 行版本
         /// </summary> 
