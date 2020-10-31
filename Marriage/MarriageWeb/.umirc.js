@@ -22,16 +22,15 @@ export default {
       },
     }],
   ],
-  publicPath: "/admin/",
-  //base: "/admin/${pathName}/",
-  base: "/admin/admin/",
+  publicPath: "/",
+  base: "/",
   hash: true,
   runtimePublicPath: true,
   exportStatic: {
     htmlSuffix: true,
   },
   proxy: {
-    '/admin/api/': {
+    '/api/': {
       target: 'http://localhost/',
       changeOrigin: true
     }
