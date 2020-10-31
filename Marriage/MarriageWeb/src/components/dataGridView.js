@@ -172,7 +172,7 @@ const setDataProperty = (p, property, pageAxis) => {
     else if (p.isImage) {
         p.render = (text, record, index) => {
             if (!Common.isNullOrEmpty(text)) {
-                return <a href={text} target='_blank' rel="noreferrer"><img src={text} width={p.imageWidth} alt="" /></a>
+                return <a href={text} target='_blank' rel="noopener noreferrer"><img src={text} width={p.imageWidth} alt="" /></a>
             }
             return text;
         };

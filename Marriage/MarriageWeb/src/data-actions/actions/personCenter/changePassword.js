@@ -23,6 +23,6 @@ export default class ChangePassword extends BaseIndex {
         entityData.OldPassword = Md5(entityData.OldPassword);
         entityData.NewPassword = Md5(entityData.NewPassword);
         
-        this.dvaActions.dispatch('AdminUserService', 'changePassword', { action: this.getAction(id, actionType), AdminUser: entityData });
+        this.dvaActions.dispatch('AppUserService', 'changePassword', { action: this.getAction(id, actionType), AppUser: entityData });
     }
 }

@@ -256,7 +256,7 @@ export default (props) => {
 
     const pageName = selectedKeys.length > 0 ? selectedKeys[0] : "";
 
-    const loginName = obj.loginUser.UserName;
+    const loginName = obj.loginUser.Name;
 
     return (
         <Layout style={{ minWidth: 1200 }}>

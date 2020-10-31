@@ -1,9 +1,9 @@
 import { EntityPageEdit } from "PageTemplates";
 import { Common, Md5 } from "UtilsCommon";
 
-const adminUserEdit = {
-    expandSetAdminUserData: function ({ entityData, props, view }) {
-        const isUpdate = view.entityData && view.entityData.AdminUserId;
+const appUserEdit = {
+    expandSetAppUserData: function ({ entityData, props, view }) {
+        const isUpdate = view.entityData && view.entityData.AppUserId;
         if (!isUpdate && Common.isNullOrEmpty(entityData.LoginPassword)) {
             this.alert("登录密码不能为空！"); return;
         }
@@ -20,4 +20,4 @@ const adminUserEdit = {
     }
 };
 
-export default EntityPageEdit("systemManage_adminUserEdit", "AdminUser", 4400, adminUserEdit);
+export default EntityPageEdit("systemManage_appUserEdit", "AppUser", 4400, appUserEdit);

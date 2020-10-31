@@ -13,7 +13,7 @@ function getProperties() {
         getProperty("EntityName", "实体名"),
         getProperty("MethodName", "方法名"),
         getProperty("CreateDate", "操作时间"),
-        getProperty("UserName", "操作人"),
+        getProperty("Name", "操作人"),
         getProperty("StartTime", "开始时间"),
         getProperty("EndTime", "结束时间"),
         getProperty("ElapsedMilliseconds", "耗时(毫秒)"),

@@ -522,8 +522,3 @@ export function inherit(obj1, obj2) {
 
     for (var key in obj2) if (obj1[key] === undefined) obj1[key] = obj2[key];
 }
-
-export function isAdmin() {
-    const { pathname } = window.location;
-    return pathname.toLowerCase().indexOf("/admin") === 0;
-}

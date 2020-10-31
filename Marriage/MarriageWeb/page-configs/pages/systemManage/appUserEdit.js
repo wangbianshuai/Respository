@@ -1,4 +1,4 @@
-const adminUser = require("../../entities/adminUser");
+const appUser = require("../../entities/appUser");
 const { assignProporties, getTextBox, getButton } = require("../../Common");
 
 //配置管理/用户编辑 4400-4499
@@ -9,19 +9,19 @@ const dataActionTypes = {
     saveEntityData: 4401
 }
 
-const { name, primaryKey } = adminUser;
+const { name, primaryKey } = appUser;
 const entity = { name, primaryKey };
 
 module.exports = {
-    name: "adminUserEdit",
+    name: "appUserEdit",
     type: "View",
     eventActions: getEventActions(),
-    properties: assignProporties({ name: "adminUserEdit" }, [getEditView()])
+    properties: assignProporties({ name: "appUserEdit" }, [getEditView()])
 }
 
 function getEditView() {
     return {
-        name: "adminUserEdit2",
+        name: "appUserEdit2",
         type: "RowsColsView",
         entity: entity,
         isForm: true,
@@ -29,7 +29,7 @@ function getEditView() {
         isClear: true,
         saveEntityDataActionType: dataActionTypes.saveEntityData,
         getEntityDataActionType: dataActionTypes.getEntityData,
-        properties: assignProporties(adminUser, getProperties())
+        properties: assignProporties(appUser, getProperties())
     }
 }
 
@@ -46,7 +46,7 @@ function getButtonProperties() {
 function getProperties() {
     return [
         getTextBox2("LoginName", "登录名", 1, 1, "", "请输入登录名", 50, false),
-        getTextBox2("UserName", "用户名", 2, 1, "", "请输入用户名", 50, false),
+        getTextBox2("Name", "用户名", 2, 1, "", "请输入用户名", 50, false),
         { ...getTextBox2("LoginPassword", "登录密码", 3, 1, "", "请输入登录密码", 50, true), isJudgeNullable: false, controlType: "password" },
         { ...getTextBox2("LoginAgainPassword", "确认确认", 4, 1, "", "请输入确认确认", 50, true), isJudgeNullable: false, controlType: "password" },
         getButtonView()
@@ -63,7 +63,7 @@ function getButtonView() {
         colSpan: 24,
         x: 6,
         y: 1,
-        properties: assignProporties({ name: "adminUserEdit" }, getButtonProperties())
+        properties: assignProporties({ name: "appUserEdit" }, getButtonProperties())
     }
 }
 
@@ -85,17 +85,17 @@ function getEventActions() {
     return [{
         name: "backToLast",
         type: "page/toPage",
-        pageUrl: "/systemManage/adminUserList"
+        pageUrl: "/systemManage/appUserList"
     },
     {
         name: "saveEntityData",
         type: "entityEdit/saveEntityData",
-        editView: "adminUserEdit2",
-        expandSetEntityData: "expandSetAdminUserData"
+        editView: "appUserEdit2",
+        expandSetEntityData: "expandSetAppUserData"
     },
     {
         name: "getEntityData",
         type: "entityEdit/getEntityData",
-        editView: "adminUserEdit2"
+        editView: "appUserEdit2"
     }]
 }

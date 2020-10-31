@@ -25,19 +25,19 @@ function init() {
 
 function componentDidMount() {
     Common.removeStorage("token");
-    this.setActionState("AdminUserService", "login");
+    this.setActionState("AppUserService", "login");
 }
 
 function loginSuccess({ data }) {
     Common.setStorage("loginUserInfo", JSON.stringify(data));
-    Common.setStorage("loginUserId", data.AdminUserId);
+    Common.setStorage("loginUserId", data.AppUserId);
     const url = "/personCenter/appAccountInfo";
     PageCommon.toPage(url);
 }
 
 function mapStateToProps(state) {
     return {
-        loading: state.AdminUserService.login_loading,
-        login: state.AdminUserService.login
+        loading: state.AppUserService.login_loading,
+        login: state.AppUserService.login
     }
 }

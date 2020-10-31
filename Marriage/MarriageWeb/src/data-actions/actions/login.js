@@ -15,7 +15,7 @@ export default class login extends BaseIndex {
   //login
   login(id, actionType, data) {
     data.entityData.LoginPassword = Md5(data.entityData.LoginPassword);
-    this.dvaActions.dispatch("AdminUserService", "login", { action: this.getAction(id, actionType), AdminUser: data.entityData });
+    this.dvaActions.dispatch("AppUserService", "login", { action: this.getAction(id, actionType), AppUser: data.entityData });
   }
 
   setlogin(id, actionType, data) {

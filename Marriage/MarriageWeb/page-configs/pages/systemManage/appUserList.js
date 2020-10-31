@@ -1,4 +1,4 @@
-const adminUser = require("../../entities/adminUser");
+const appUser = require("../../entities/appUser");
 const { getButton, assignProporties, getTextBox } = require("../../Common");
 
 //配置管理/用户 4300-4399
@@ -11,14 +11,14 @@ const dataActionTypes = {
     excelExport: 4302
 };
 
-const { name, primaryKey, viewName } = adminUser;
+const { name, primaryKey, viewName } = appUser;
 const entity = { name, primaryKey, viewName };
 
 module.exports = {
-    name: "adminUserList",
+    name: "appUserList",
     type: "View",
     eventActions: getEventActions(),
-    properties: assignProporties({ name: "adminUserList" }, [getSearchOperationView(), getAlert(), getDataGridView()])
+    properties: assignProporties({ name: "appUserList" }, [getSearchOperationView(), getAlert(), getDataGridView()])
 }
 
 function getSearchOperationView() {
@@ -27,15 +27,15 @@ function getSearchOperationView() {
         entity: entity,
         type: "RowsColsView",
         className: "divLeftRightView",
-        properties: assignProporties({ name: "adminUserList" }, [{ eventActionName: "toEditPage", ...getButton("toEditPage", "新增", "primary", 1, 1) },
-        { eventActionName: "editAdminUser", colStyle: { paddingLeft: 0 }, ...getButton("editAdminUser", "修改", "default", 1, 2) },
+        properties: assignProporties({ name: "appUserList" }, [{ eventActionName: "toEditPage", ...getButton("toEditPage", "新增", "primary", 1, 1) },
+        { eventActionName: "editAppUser", colStyle: { paddingLeft: 0 }, ...getButton("editAppUser", "修改", "default", 1, 2) },
         {
-            eventActionName: "deleteAdminUser",
+            eventActionName: "deleteAppUser",
             colStyle: { paddingLeft: 0 },
             dataActionType: dataActionTypes.deleteEntityData,
             successTip: "删除成功！",
             confirmTip: "请确认是否删除当前用户？",
-            ...getButton("deleteAdminUser", "删除", "default", 1, 4)
+            ...getButton("deleteAppUser", "删除", "default", 1, 4)
         },
         getKeyword()
         ])
@@ -46,7 +46,7 @@ function getKeyword() {
     const p = getTextBox("keyword", "", "Search", 2, 3, "请输入关键字")
     p.colStyle = { paddingRight: 8, paddingLeft: 2 };
     p.isCondition = true;
-    p.propertyName = "LoginName,UserName";
+    p.propertyName = "LoginName,Name";
     p.operateLogic = "like";
     p.eventActionName = "searchQuery";
     p.pressEnterEventActionName = "searchQuery";
@@ -72,7 +72,7 @@ function getDataGridView() {
         className: "divInfoView3",
         isRowSelection: true,
         isSingleSelection: true,
-        properties: assignProporties(adminUser, ["LoginName", "UserName", "LastLoginDate", { name: "CreateDate", OrderByType: "desc" }, { name: "RowVersion", isVisible: false }])
+        properties: assignProporties(appUser, ["LoginName", "Name", "LastLoginDate", { name: "CreateDate", OrderByType: "desc" }, { name: "RowVersion", isVisible: false }])
     }
 }
 
@@ -89,17 +89,17 @@ function getEventActions() {
     {
         name: "toEditPage",
         type: "page/toPage",
-        pageUrl: "/systemManage/adminUserEdit"
+        pageUrl: "/systemManage/appUserEdit"
     },
     {
-        name: "editAdminUser",
+        name: "editAppUser",
         type: "dataGridView/selectRowToPage",
         dataGridView: "dataGridView1",
         alertMessage: "alertMessage",
-        pageUrl: "/systemManage/adminUserEdit?AdminUserId=#{AdminUserId}&menuName=" + escape("修改")
+        pageUrl: "/systemManage/appUserEdit?AppUserId=#{AppUserId}&menuName=" + escape("修改")
     },
     {
-        name: "deleteAdminUser",
+        name: "deleteAppUser",
         type: "dataGrid/batchUpdateRowDataList",
         dataGridView: "dataGridView1",
         alertMessage: "alertMessage"

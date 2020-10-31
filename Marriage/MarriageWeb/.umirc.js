@@ -8,7 +8,7 @@ export default {
       antd: true,
       dva: true,
       dynamicImport: false,
-      title: '${title}',
+      title: '连理缘',
       dll: false,
 
       routes: {

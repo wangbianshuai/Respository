@@ -187,7 +187,7 @@ class PageAxis {
     }
 
     getLoginUserId() {
-        return this.loginUser.AdminUserId;
+        return this.loginUser.AppUserId;
     }
 
     getEventAction(name) {
