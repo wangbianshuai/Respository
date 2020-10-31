@@ -434,11 +434,11 @@ where a.IsDelete=0
 go
 
 --7、相亲用户生活照信息表
-if exists(select * from sysobjects where name='t_MarriagePhoto')
-drop table t_MarriagePhoto
+if exists(select * from sysobjects where name='t_MarriageUserPhoto')
+drop table t_MarriageUserPhoto
 go
 
-create table t_MarriagePhoto
+create table t_MarriageUserPhoto
 (
 PhotoId uniqueidentifier not null primary key,                 --主键
 MarriageUserId uniqueidentifier not null,                      --相亲用户ID
@@ -449,12 +449,12 @@ CreateDate datetime default(getdate()) not null,               --创建时间
 )
 go
 
-exec proc_AddCellExplanation '主键','t_MarriagePhoto','PhotoId'
-exec proc_AddCellExplanation '相亲用户ID','t_MarriagePhoto','MarriageUserId'
-exec proc_AddCellExplanation '照片地址','t_MarriagePhoto','PhoteUrl'
-exec proc_AddCellExplanation '是否删除','t_MarriagePhoto','IsDelete'
-exec proc_AddCellExplanation '创建人','t_MarriagePhoto','CreateUser'
-exec proc_AddCellExplanation '创建时间','t_MarriagePhoto','CreateDate'
+exec proc_AddCellExplanation '主键','t_MarriageUserPhoto','PhotoId'
+exec proc_AddCellExplanation '相亲用户ID','t_MarriageUserPhoto','MarriageUserId'
+exec proc_AddCellExplanation '照片地址','t_MarriageUserPhoto','PhoteUrl'
+exec proc_AddCellExplanation '是否删除','t_MarriageUserPhoto','IsDelete'
+exec proc_AddCellExplanation '创建人','t_MarriageUserPhoto','CreateUser'
+exec proc_AddCellExplanation '创建时间','t_MarriageUserPhoto','CreateDate'
 go
 
 
@@ -587,11 +587,11 @@ exec proc_AddCellExplanation '显示顺序','t_ConditionItem','DisplayIndex'
 go
 
 --12、相亲用户条件选项值信息表
-if exists(select * from sysobjects where name='t_UserConditionSelectValue')
-drop table t_UserConditionSelectValue
+if exists(select * from sysobjects where name='t_ConditionSelectValue')
+drop table t_ConditionSelectValue
 go
 
-create table t_UserConditionSelectValue
+create table t_ConditionSelectValue
 (
 ItemId uniqueidentifier not null primary key,                  --主键
 UserId uniqueidentifier,                                       --相亲用户Id
@@ -607,17 +607,17 @@ RowVersion timestamp not null                                  --行版本
 )
 go
 
-exec proc_AddCellExplanation '主键','t_UserConditionSelectValue','ItemId'
-exec proc_AddCellExplanation '相亲用户Id','t_UserConditionSelectValue','UserId'
-exec proc_AddCellExplanation '选择类型，1：条件值，2：择偶标准值','t_UserConditionSelectValue','SelectType'
-exec proc_AddCellExplanation '条件类型Id','t_UserConditionSelectValue','ConditionTypeId'
-exec proc_AddCellExplanation '条件项Id','t_UserConditionSelectValue','ConditionItemId'
-exec proc_AddCellExplanation '值','t_UserConditionSelectValue','Value'
-exec proc_AddCellExplanation '创建人','t_UserConditionSelectValue','CreateUser'
-exec proc_AddCellExplanation '创建时间','t_UserConditionSelectValue','CreateDate'
-exec proc_AddCellExplanation '更新人','t_UserConditionSelectValue','UpdateUser'
-exec proc_AddCellExplanation '更新时间','t_UserConditionSelectValue','UpdateDate'
-exec proc_AddCellExplanation '行版本','t_UserConditionSelectValue','RowVersion'
+exec proc_AddCellExplanation '主键','t_ConditionSelectValue','ItemId'
+exec proc_AddCellExplanation '相亲用户Id','t_ConditionSelectValue','UserId'
+exec proc_AddCellExplanation '选择类型，1：条件值，2：择偶标准值','t_ConditionSelectValue','SelectType'
+exec proc_AddCellExplanation '条件类型Id','t_ConditionSelectValue','ConditionTypeId'
+exec proc_AddCellExplanation '条件项Id','t_ConditionSelectValue','ConditionItemId'
+exec proc_AddCellExplanation '值','t_ConditionSelectValue','Value'
+exec proc_AddCellExplanation '创建人','t_ConditionSelectValue','CreateUser'
+exec proc_AddCellExplanation '创建时间','t_ConditionSelectValue','CreateDate'
+exec proc_AddCellExplanation '更新人','t_ConditionSelectValue','UpdateUser'
+exec proc_AddCellExplanation '更新时间','t_ConditionSelectValue','UpdateDate'
+exec proc_AddCellExplanation '行版本','t_ConditionSelectValue','RowVersion'
 go
 
 --13、相亲配对计算信息表
@@ -698,12 +698,12 @@ exec proc_AddCellExplanation '匹配度（%）','t_MarriageMakePairRecord','PercentVa
 go
 
 
---16、安排相亲信息表（t_ArrangeMarriage）
-if exists(select * from sysobjects where name='t_ArrangeMarriage')
-drop table t_ArrangeMarriage
+--16、相亲安排信息表（t_ArrangeMarriage）
+if exists(select * from sysobjects where name='t_MarriageArrange')
+drop table t_MarriageArrange
 go
 
-create table t_ArrangeMarriage
+create table t_MarriageArrange
 (
 ArrangeMarriageId uniqueidentifier not null primary key,       --主键
 ManUserId uniqueidentifier not null,                           --男生ID
@@ -712,6 +712,7 @@ ManMatchmakerId uniqueidentifier not null,                     --男生红娘
 WomanMatchmakerId uniqueidentifier not null,                   --女生红娘
 AppMatchmakerId uniqueidentifier not null,                     --平台红娘
 MarriageDate datetime not null,                                --相亲时间
+MarriageAddress nvarchar(100),                                 --相亲地址
 IsManAgree tinyint not null default(0),                        --男生是否同意
 NoManAgreeRemark nvarchar(500),                                --男生不同意原因
 IsWomanAgree tinyint not null default(0),                      --女生是否同意
@@ -726,34 +727,34 @@ RowVersion timestamp not null                                  --行版本
 )
 go
 
-exec proc_AddCellExplanation '主键','t_ArrangeMarriage','ArrangeMarriageId'
-exec proc_AddCellExplanation '男生ID','t_ArrangeMarriage','ManUserId'
-exec proc_AddCellExplanation '女生ID','t_ArrangeMarriage','WomanUserId'
-exec proc_AddCellExplanation '男生红娘','t_ArrangeMarriage','ManMatchmakerId'
-exec proc_AddCellExplanation '女生红娘','t_ArrangeMarriage','WomanMatchmakerId'
-exec proc_AddCellExplanation '平台红娘','t_ArrangeMarriage','AppMatchmakerId'
-exec proc_AddCellExplanation '相亲时间','t_ArrangeMarriage','MarriageDate'
-exec proc_AddCellExplanation '男生是否同意','t_ArrangeMarriage','IsManAgree'
-exec proc_AddCellExplanation '男生不同意原因','t_ArrangeMarriage','NoManAgreeRemark'
-exec proc_AddCellExplanation '女生是否同意','t_ArrangeMarriage','IsWomanAgree'
-exec proc_AddCellExplanation '女生不同意因','t_ArrangeMarriage','NoWomanAgreeRemark'
-exec proc_AddCellExplanation '备注','t_ArrangeMarriage','Remark'
-exec proc_AddCellExplanation '是否删除','t_ArrangeMarriage','IsDelete'
-exec proc_AddCellExplanation '创建人','t_ArrangeMarriage','CreateUser'
-exec proc_AddCellExplanation '创建时间','t_ArrangeMarriage','CreateDate'
-exec proc_AddCellExplanation '更新人','t_ArrangeMarriage','UpdateUser'
-exec proc_AddCellExplanation '更新时间','t_ArrangeMarriage','UpdateDate'
-exec proc_AddCellExplanation '行版本','t_ArrangeMarriage','RowVersion'
+exec proc_AddCellExplanation '主键','t_MarriageArrange','ArrangeMarriageId'
+exec proc_AddCellExplanation '男生ID','t_MarriageArrange','ManUserId'
+exec proc_AddCellExplanation '女生ID','t_MarriageArrange','WomanUserId'
+exec proc_AddCellExplanation '男生红娘','t_MarriageArrange','ManMatchmakerId'
+exec proc_AddCellExplanation '女生红娘','t_MarriageArrange','WomanMatchmakerId'
+exec proc_AddCellExplanation '平台红娘','t_MarriageArrange','AppMatchmakerId'
+exec proc_AddCellExplanation '相亲时间','t_MarriageArrange','MarriageDate'
+exec proc_AddCellExplanation '男生是否同意','t_MarriageArrange','IsManAgree'
+exec proc_AddCellExplanation '男生不同意原因','t_MarriageArrange','NoManAgreeRemark'
+exec proc_AddCellExplanation '女生是否同意','t_MarriageArrange','IsWomanAgree'
+exec proc_AddCellExplanation '女生不同意因','t_MarriageArrange','NoWomanAgreeRemark'
+exec proc_AddCellExplanation '备注','t_MarriageArrange','Remark'
+exec proc_AddCellExplanation '是否删除','t_MarriageArrange','IsDelete'
+exec proc_AddCellExplanation '创建人','t_MarriageArrange','CreateUser'
+exec proc_AddCellExplanation '创建时间','t_MarriageArrange','CreateDate'
+exec proc_AddCellExplanation '更新人','t_MarriageArrange','UpdateUser'
+exec proc_AddCellExplanation '更新时间','t_MarriageArrange','UpdateDate'
+exec proc_AddCellExplanation '行版本','t_MarriageArrange','RowVersion'
 go
 
-if exists(select * from sysobjects where name='v_ArrangeMarriage')
-drop view v_ArrangeMarriage
+if exists(select * from sysobjects where name='v_MarriageArrange')
+drop view v_MarriageArrange
 go
 
-create view v_ArrangeMarriage
+create view v_MarriageArrange
 as
 select a.*
-from t_ArrangeMarriage a where IsDelete=0
+from t_MarriageArrange a where IsDelete=0
 go
 
 --18、生辰八字匹配结果（t_BirthEightResult）
