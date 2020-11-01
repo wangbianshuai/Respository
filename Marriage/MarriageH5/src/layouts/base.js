@@ -20,24 +20,18 @@ const getItem = (pathName, pageName, title, styles, isLogin) => {
 }
 
 const getMarriageUserTabBarProperty = (styles) => ({
-    barTintColor: '#187FC4',
-    unselectedTintColor: '#ffffff',
-    tintColor: '#17B8D8',
     items: [
-        getItem('home', 'index', '相亲', styles),
-        getItem('footmark', 'index', '广场', styles, true),
+        getItem('marriage', 'index', '相亲', styles),
+        getItem('square', 'index', '广场', styles, true),
         getItem('mine', 'index', '我的', styles, true)
     ]
 });
 
 const getMatchmakerTabBarProperty = (styles) => ({
-    barTintColor: '#187FC4',
-    unselectedTintColor: '#ffffff',
-    tintColor: '#17B8D8',
     items: [
-        getItem('home', 'index', '男&女', styles),
-        getItem('footmark', 'index', '相亲', styles, true),
-        getItem('gift', 'index', '广场', styles, true),
+        getItem('boygirl', 'index', '男&女', styles),
+        getItem('marriage', 'index', '相亲', styles, true),
+        getItem('square', 'index', '广场', styles, true),
         getItem('mine', 'index', '我的', styles, true)
     ]
 });
