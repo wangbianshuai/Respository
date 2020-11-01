@@ -19,14 +19,25 @@ const getItem = (pathName, pageName, title, styles, isLogin) => {
     return { pathName, pageName, title, isLogin, imageClassName: styles.navImage, imageUrl: `${pathName}.png`, selectedImageUrl: `${pathName}_selected.png` };
 }
 
-const getTabBarProperty = (styles) => ({
+const getMarriageUserTabBarProperty = (styles) => ({
     barTintColor: '#187FC4',
     unselectedTintColor: '#ffffff',
     tintColor: '#17B8D8',
     items: [
-        getItem('home', 'index', '首页', styles),
-        getItem('footmark', 'index', '足迹', styles, true),
-        getItem('gift', 'index', '商城', styles, true),
+        getItem('home', 'index', '相亲', styles),
+        getItem('footmark', 'index', '广场', styles, true),
+        getItem('mine', 'index', '我的', styles, true)
+    ]
+});
+
+const getMatchmakerTabBarProperty = (styles) => ({
+    barTintColor: '#187FC4',
+    unselectedTintColor: '#ffffff',
+    tintColor: '#17B8D8',
+    items: [
+        getItem('home', 'index', '男&女', styles),
+        getItem('footmark', 'index', '相亲', styles, true),
+        getItem('gift', 'index', '广场', styles, true),
         getItem('mine', 'index', '我的', styles, true)
     ]
 });
@@ -40,6 +51,7 @@ const getPathName = (location) => {
 export default {
     getPageComponent,
     getItem,
-    getTabBarProperty,
+    getMarriageUserTabBarProperty,
+    getMatchmakerTabBarProperty,
     getPathName
 }

@@ -262,7 +262,7 @@ export default (props) => {
         <Layout style={{ minWidth: 1200 }}>
             <Header style={{ background: '#fff', padding: 0, margin: 0 }}>
                 <div className={styles.logo} >
-                    <img src={getImageUrl("logo-3_01.png")} width={140} alt="" />
+                    <img src={getImageUrl("logo.png")} width={140} alt="" />
                     <span>A2 Digital Solution</span>
                 </div>
                 {loginName ? (

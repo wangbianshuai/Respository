@@ -9,6 +9,7 @@ export default {
       dva: true,
       dynamicImport: false,
       title: '连理缘',
+      links: [{ rel: 'icon', type: "image/x-icon", href: '/favicon.ico' }],
       dll: false,
 
       routes: {

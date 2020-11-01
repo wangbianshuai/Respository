@@ -5,12 +5,12 @@ import { Common } from 'UtilsCommon';
 import Base from './base';
 import styles from '../styles/layout.scss';
 
-const _tabBarProperty = Base.getTabBarProperty(styles);
+const _tabBarProperty = Base.getMarriageUserTabBarProperty(styles);
 
 export default (props) => {
     const { history, location } = props;
     const pathName = Base.getPathName(location);
-    const path = location.pathname || '/home/index';
+    const path = location.pathname || 'index';
 
     const [pageKey] = useMemo(() => {
         return [Common.createGuid()];
