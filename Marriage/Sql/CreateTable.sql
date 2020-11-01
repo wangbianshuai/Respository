@@ -442,7 +442,7 @@ create table t_MarriageUserPhoto
 (
 PhotoId uniqueidentifier not null primary key,                 --主键
 MarriageUserId uniqueidentifier not null,                      --相亲用户ID
-PhoteUrl varchar(500) not null,                                --照片地址
+PhotoUrl varchar(500) not null,                                --照片地址
 IsDelete tinyint not null default(0),                          --是否删除
 CreateUser uniqueidentifier not null,                          --创建人
 CreateDate datetime default(getdate()) not null,               --创建时间
@@ -451,7 +451,7 @@ go
 
 exec proc_AddCellExplanation '主键','t_MarriageUserPhoto','PhotoId'
 exec proc_AddCellExplanation '相亲用户ID','t_MarriageUserPhoto','MarriageUserId'
-exec proc_AddCellExplanation '照片地址','t_MarriageUserPhoto','PhoteUrl'
+exec proc_AddCellExplanation '照片地址','t_MarriageUserPhoto','PhotoUrl'
 exec proc_AddCellExplanation '是否删除','t_MarriageUserPhoto','IsDelete'
 exec proc_AddCellExplanation '创建人','t_MarriageUserPhoto','CreateUser'
 exec proc_AddCellExplanation '创建时间','t_MarriageUserPhoto','CreateDate'
