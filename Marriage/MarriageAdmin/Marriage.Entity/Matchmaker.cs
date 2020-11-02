@@ -113,5 +113,8 @@ namespace Marriage.Entity
     public class ViewMatchmaker : Matchmaker
     {
         public string StatusName { get; set; }
+
+        public string SexName { get; set; }
+        public string IsAppMatchmakerName { get; set; }
     }
 }

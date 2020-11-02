@@ -39,11 +39,14 @@ namespace Marriage.Web.Code
             EntityType.SetEntityType<Entity.ViewDataSource>();
             EntityType.SetEntityType<Entity.ConditionType>();
             EntityType.SetEntityType<Entity.ViewConditionType>();
+            EntityType.SetEntityType<Entity.Matchmaker>();
+            EntityType.SetEntityType<Entity.ViewMatchmaker>();
 
             OpenDataAccessCore.Service.ComponentType.SetComponentType<Component.DictionaryConfig>();
             OpenDataAccessCore.Service.ComponentType.SetComponentType<Component.AppUser>();
             OpenDataAccessCore.Service.ComponentType.SetComponentType<Component.DataSource>();
             OpenDataAccessCore.Service.ComponentType.SetComponentType<Component.ConditionType>();
+            OpenDataAccessCore.Service.ComponentType.SetComponentType<Component.Matchmaker>();
 
             _DirectRequestList = new List<string>()
             {
