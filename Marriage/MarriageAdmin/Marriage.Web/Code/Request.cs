@@ -37,10 +37,13 @@ namespace Marriage.Web.Code
             EntityType.SetEntityType<Entity.ViewOperationLog>();
             EntityType.SetEntityType<Entity.DataSource>();
             EntityType.SetEntityType<Entity.ViewDataSource>();
+            EntityType.SetEntityType<Entity.ConditionType>();
+            EntityType.SetEntityType<Entity.ViewConditionType>();
 
             OpenDataAccessCore.Service.ComponentType.SetComponentType<Component.DictionaryConfig>();
             OpenDataAccessCore.Service.ComponentType.SetComponentType<Component.AppUser>();
             OpenDataAccessCore.Service.ComponentType.SetComponentType<Component.DataSource>();
+            OpenDataAccessCore.Service.ComponentType.SetComponentType<Component.ConditionType>();
 
             _DirectRequestList = new List<string>()
             {

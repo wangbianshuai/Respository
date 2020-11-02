@@ -566,8 +566,9 @@ go
 create table t_ConditionItem
 (
 ItemId uniqueidentifier not null primary key,                  --主键
+ConditionTypeId uniqueidentifier not null,                     --条件类型Id
 Title nvarchar(100) not null,                                  --标题
-Sex tinyint not null,                                          --性别，1：男生，2：女生
+Sex tinyint not null default(0),                               --性别，1：男生，2：女生
 DataType varchar(10) not null,                                 --数据类型
 DataSourceId uniqueidentifier,                                 --数据源Id
 IsSingle tinyint not null default(0),                          --是否单选，1：是
@@ -577,6 +578,7 @@ DisplayIndex int not null default(0),                          --显示顺序
 go
 
 exec proc_AddCellExplanation '主键','t_ConditionItem','ItemId'
+exec proc_AddCellExplanation '条件类型Id','t_ConditionItem','ConditionTypeId'
 exec proc_AddCellExplanation '标题','t_ConditionItem','Title'
 exec proc_AddCellExplanation '性别，1：男生，2：女生','t_ConditionItem','Sex'
 exec proc_AddCellExplanation '数据类型','t_ConditionItem','DataType'

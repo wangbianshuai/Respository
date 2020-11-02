@@ -74,6 +74,10 @@ namespace Marriage.Entity
         /// </summary> 
         public Guid ItemId { get; set; }
         /// <summary> 
+        /// 条件类型Id
+        /// </summary> 
+        public Guid ConditionTypeId { get; set; }
+        /// <summary> 
         /// 标题
         /// </summary> 
         public string Title { get; set; }
