@@ -21,7 +21,7 @@ namespace Marriage.Entity
         /// <summary> 
         /// 照片地址
         /// </summary> 
-        public string PhoteUrl { get; set; }
+        public string PhotoUrl { get; set; }
         /// <summary> 
         /// 是否删除
         /// </summary> 

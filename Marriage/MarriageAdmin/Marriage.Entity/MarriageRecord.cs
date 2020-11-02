@@ -37,7 +37,7 @@ namespace Marriage.Entity
         /// <summary> 
         /// 安装相亲Id
         /// </summary> 
-        public Guid ArrangeMarriageId { get; set; }
+        public Guid MarriageArrangeId { get; set; }
         /// <summary> 
         /// 相亲时间
         /// </summary> 

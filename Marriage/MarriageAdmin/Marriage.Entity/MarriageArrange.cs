@@ -8,12 +8,12 @@ namespace Marriage.Entity
 {
     [TableProperty(Name = "t_ArrangeMarriage", PrimaryKey = "ArrangeMarriageId")]
     [RequestMethod(IsDelete = false)]
-    public class ArrangeMarriage : EntityModel, IEntity
+    public class MarriageArrange : EntityModel, IEntity
     {
         /// <summary> 
         /// 主键
         /// </summary> 
-        public Guid ArrangeMarriageId { get; set; }
+        public Guid MarriageArrangeId { get; set; }
         /// <summary> 
         /// 男生ID
         /// </summary> 
@@ -38,6 +38,10 @@ namespace Marriage.Entity
         /// 相亲时间
         /// </summary> 
         public DateTime MarriageDate { get; set; }
+        /// <summary>
+        /// 相亲地点
+        /// </summary>
+        public string MarriageAddress { get; set; }
         /// <summary> 
         /// 男生是否同意
         /// </summary> 
@@ -51,7 +55,7 @@ namespace Marriage.Entity
         /// </summary> 
         public byte IsWomanAgree { get; set; }
         /// <summary> 
-        /// 女生不同意因
+        /// 女生不同意原因
         /// </summary> 
         public string NoWomanAgreeRemark { get; set; }
         /// <summary> 
@@ -84,9 +88,9 @@ namespace Marriage.Entity
         public string RowVersion { get; set; }
     }
 
-    [TableProperty(Name = "v_ArrangeMarriage", PrimaryKey = "ArrangeMarriageId", NoSelectNames = "IsDelete")]
+    [TableProperty(Name = "v_MarriageArrange", PrimaryKey = "MarriageArrangeId", NoSelectNames = "IsDelete")]
     [RequestMethod(IsDelete = false, IsPost = false, IsPut = false)]
-    public class ViewArrangeMarriage : ArrangeMarriage
+    public class ViewMarriageArrange : MarriageArrange
     {
     }
 }

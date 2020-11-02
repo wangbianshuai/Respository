@@ -255,7 +255,7 @@ WomanUserId uniqueidentifier not null,                         --女生ID
 ManMatchmakerId uniqueidentifier not null,                     --男生红娘
 WomanMatchmakerId uniqueidentifier not null,                   --女生红娘
 AppMatchmakerId uniqueidentifier not null,                     --平台红娘
-ArrangeMarriageId uniqueidentifier not null,                   --安装相亲Id
+MarriageArrangeId uniqueidentifier not null,                   --安装相亲Id
 MarriageDate datetime not null,                                --相亲时间
 MarriageContent nvarchar(2000) not null,                       --相亲情况
 ManScore int not null,                                         --男生得分
@@ -281,7 +281,7 @@ exec proc_AddCellExplanation '女生ID','t_MarriageRecord','WomanUserId'
 exec proc_AddCellExplanation '男生红娘','t_MarriageRecord','ManMatchmakerId'
 exec proc_AddCellExplanation '女生红娘','t_MarriageRecord','WomanMatchmakerId'
 exec proc_AddCellExplanation '平台红娘','t_MarriageRecord','AppMatchmakerId'
-exec proc_AddCellExplanation '安装相亲Id','t_MarriageRecord','ArrangeMarriageId'
+exec proc_AddCellExplanation '安装相亲Id','t_MarriageRecord','MarriageArrangeId'
 exec proc_AddCellExplanation '相亲时间','t_MarriageRecord','MarriageDate'
 exec proc_AddCellExplanation '相亲情况','t_MarriageRecord','MarriageContent'
 exec proc_AddCellExplanation '男生得分','t_MarriageRecord','ManScore'
@@ -705,7 +705,7 @@ go
 
 create table t_MarriageArrange
 (
-ArrangeMarriageId uniqueidentifier not null primary key,       --主键
+MarriageArrangeId uniqueidentifier not null primary key,       --主键
 ManUserId uniqueidentifier not null,                           --男生ID
 WomanUserId uniqueidentifier not null,                         --女生ID
 ManMatchmakerId uniqueidentifier not null,                     --男生红娘
@@ -716,7 +716,7 @@ MarriageAddress nvarchar(100),                                 --相亲地址
 IsManAgree tinyint not null default(0),                        --男生是否同意
 NoManAgreeRemark nvarchar(500),                                --男生不同意原因
 IsWomanAgree tinyint not null default(0),                      --女生是否同意
-NoWomanAgreeRemark nvarchar(500),                              --女生不同意因
+NoWomanAgreeRemark nvarchar(500),                              --女生不同意原因
 Remark nvarchar(200),                                          --备注 
 IsDelete tinyint not null default(0),                          --是否删除
 CreateUser uniqueidentifier not null,                          --创建人
@@ -727,7 +727,7 @@ RowVersion timestamp not null                                  --行版本
 )
 go
 
-exec proc_AddCellExplanation '主键','t_MarriageArrange','ArrangeMarriageId'
+exec proc_AddCellExplanation '主键','t_MarriageArrange','MarriageArrangeId'
 exec proc_AddCellExplanation '男生ID','t_MarriageArrange','ManUserId'
 exec proc_AddCellExplanation '女生ID','t_MarriageArrange','WomanUserId'
 exec proc_AddCellExplanation '男生红娘','t_MarriageArrange','ManMatchmakerId'
@@ -737,7 +737,7 @@ exec proc_AddCellExplanation '相亲时间','t_MarriageArrange','MarriageDate'
 exec proc_AddCellExplanation '男生是否同意','t_MarriageArrange','IsManAgree'
 exec proc_AddCellExplanation '男生不同意原因','t_MarriageArrange','NoManAgreeRemark'
 exec proc_AddCellExplanation '女生是否同意','t_MarriageArrange','IsWomanAgree'
-exec proc_AddCellExplanation '女生不同意因','t_MarriageArrange','NoWomanAgreeRemark'
+exec proc_AddCellExplanation '女生不同意原因','t_MarriageArrange','NoWomanAgreeRemark'
 exec proc_AddCellExplanation '备注','t_MarriageArrange','Remark'
 exec proc_AddCellExplanation '是否删除','t_MarriageArrange','IsDelete'
 exec proc_AddCellExplanation '创建人','t_MarriageArrange','CreateUser'

@@ -6,9 +6,9 @@ using OpenDataAccessCore.Entity;
 
 namespace Marriage.Entity
 {
-    [TableProperty(Name = "t_UserConditionSelectValue", PrimaryKey = "ItemId")]
+    [TableProperty(Name = "t_ConditionSelectValue", PrimaryKey = "ItemId")]
     [RequestMethod(IsDelete = false)]
-    public class UserConditionSelectValue : EntityModel, IEntity
+    public class ConditionSelectValue : EntityModel, IEntity
     {
         /// <summary> 
         /// 主键
