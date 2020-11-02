@@ -1,8 +1,8 @@
 import React from "react";
-import AppAccountInfo from './personCenter/appAccountInfo';
+import MarriageMakePairList from './marriageManage/marriageMakePairList';
 
 export default (props) => {
   return (
-    <AppAccountInfo {...props} />
+    <MarriageMakePairList {...props} />
   )
 }

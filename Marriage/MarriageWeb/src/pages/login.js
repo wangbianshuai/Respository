@@ -31,7 +31,7 @@ function componentDidMount() {
 function loginSuccess({ data }) {
     Common.setStorage("loginUserInfo", JSON.stringify(data));
     Common.setStorage("loginUserId", data.AppUserId);
-    const url = "/personCenter/appAccountInfo";
+    const url = "/marriageManage/marriageMakePairList";
     PageCommon.toPage(url);
 }
 

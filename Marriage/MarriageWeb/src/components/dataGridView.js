@@ -138,7 +138,8 @@ const setDataProperty = (p, property, pageAxis) => {
             if (p.isRender && !p.isRender(text, record, index)) return emptyRender();
             if (!Common.isNullOrEmpty(text)) {
                 let url = p.pageUrl;
-                if (p.isAddBasePath) url = window.publicPath + url;
+                if (p.isAddPublicPath) url = window.publicPath + url;
+                else if (p.isAddRouterBase) url = window.routerBase + url;
                 url = Common.replaceDataContent(record, url, !p.isHttp)
                 if (Common.isNullOrEmpty(url)) return text;
                 else return <a href={url} target="_blank" rel="noopener noreferrer">{text}</a>

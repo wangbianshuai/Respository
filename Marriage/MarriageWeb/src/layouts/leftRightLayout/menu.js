@@ -42,10 +42,9 @@ function getMarriageManage() {
 
 function getPersonCenterNavMenu() {
     var menuList = [];
-    menuList.push(addMenu("appAccountInfo", "App账户信息", true, "idcard", "/personCenter/appAccountInfo"));
     menuList.push(addMenu("changePassword", "修改密码", true, "idcard", "/personCenter/changePassword"));
 
-    return addNavMenu("personCenter", "账户中心", true, menuList, false, ["appAccountInfo", "changePassword"]);
+    return addNavMenu("personCenter", "个人中心", true, menuList, false, ["changePassword"]);
 }
 
 function getsystemManageNavNenu() {

@@ -102,10 +102,10 @@ function getDataGridView() {
 
 function getLookDetail() {
     return {
-        name: "lookDetail",
+        name: "LookDetail",
         isOpenPage: true,
-        isAddBasePath: true,
-        pageUrl: "/admin/operationLog.html?Path=#{LogPath}"
+        isAddRouterBase: true,
+        pageUrl: "operationLog.html?Path=#{LogPath}"
     }
 }
 

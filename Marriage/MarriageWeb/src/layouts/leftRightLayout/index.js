@@ -66,8 +66,6 @@ const addBreadcrumb = (name, parenPageName, parentQueryString, isGetMenuName, br
 
 const renderUserRightMenuList = (onSelectMenuClick) => {
     return (<Menu selectedKeys={[]} className={styles.userRightMenu} onClick={onSelectMenuClick}>
-        <Menu.Item key="appAccountInfo" className={styles.userRightMenuItem} ><Icon type="info-circle" /><span>App账户信息</span></Menu.Item>
-        <Menu.Divider />
         <Menu.Item key="changePassword" className={styles.userRightMenuItem} ><Icon type="setting" /><span>修改密码</span></Menu.Item>
         <Menu.Divider />
         <Menu.Item key="logout" className={styles.userRightMenuItem}><Icon type="logout" /><span>退出登录</span></Menu.Item>
@@ -217,7 +215,7 @@ const init = () => {
         isOnOpenChange: false,
         token: Common.getStorage("token"),
         loginUser: getLoginUser(),
-        defaultPageName: "/personCenter/appAccountInfo",
+        defaultPageName: "/marriageManage/marriageMakePairList",
         navMenuList,
         menus
     }
@@ -241,7 +239,6 @@ export default (props) => {
     }, [obj, setStateOpenKeys]);
 
     const onSelectMenuClick = useCallback((item) => {
-        if (item.key === "appAccountInfo") router.push("/personCenter/appAccountInfo");
         if (item.key === "changePassword") router.push("/personCenter/changePassword");
         else if (item.key === "logout") router.push("/login");
     }, []);
@@ -262,8 +259,8 @@ export default (props) => {
         <Layout style={{ minWidth: 1200 }}>
             <Header style={{ background: '#fff', padding: 0, margin: 0 }}>
                 <div className={styles.logo} >
-                    <img src={getImageUrl("logo.png")} width={140} alt="" />
-                    <span>A2 Digital Solution</span>
+                    <img src={getImageUrl("logo.png")} height={42} alt="" />
+                    <span>连理缘</span>
                 </div>
                 {loginName ? (
                     <Dropdown overlay={renderUserRightMenuList(onSelectMenuClick)} >

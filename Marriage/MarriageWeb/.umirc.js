@@ -8,7 +8,7 @@ export default {
       antd: true,
       dva: true,
       dynamicImport: false,
-      title: '连理缘',
+      title: '连理缘-在天愿做比翼鸟，在地愿为连理枝',
       links: [{ rel: 'icon', type: "image/x-icon", href: '/favicon.ico' }],
       dll: false,
 

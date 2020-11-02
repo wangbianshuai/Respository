@@ -14,7 +14,8 @@ export default class Page extends BaseIndex {
     openUrl(props, action) {
         const { pageAxis } = props;
         let url = Common.replaceDataContent(pageAxis.pageData, action.pageUrl, true);
-        if (action.isAddBasePath) url = window.publicPath + url;
+        if (action.isAddPublicPath) url = window.publicPath + url;
+        else if (action.isAddRouterBase) url = window.routerBase + url;
         pageAxis.openPage(url);
     }
 
