@@ -27,11 +27,18 @@ namespace Marriage.Component
         [Log]
         public object Insert2()
         {
+            SetDisplayIndex();
             return EntityByComplexTypeOperation.Insert<ConditionType>(this, _ConditionTypePropertyEntity, "Properties");
         }
 
         [Log]
         public object Update2()
+        {
+            SetDisplayIndex();
+            return EntityByComplexTypeOperation.Update<ConditionType>(this, _ConditionTypePropertyEntity, "Properties");
+        }
+
+        void SetDisplayIndex()
         {
             IEntityData entityData = this._Request.Entities[this.EntityType.Name].FirstOrDefault();
             var list = entityData.GetValue<List<Dictionary<string, object>>>("Properties");
@@ -40,7 +47,6 @@ namespace Marriage.Component
                 int displayIndex = list[i].GetValue<int>("DisplayIndex");
                 if (displayIndex == 0) list[i]["DisplayIndex"] = i + 1;
             }
-            return EntityByComplexTypeOperation.Update<ConditionType>(this, _ConditionTypePropertyEntity, "Properties");
         }
 
         public object GetEntityData()
