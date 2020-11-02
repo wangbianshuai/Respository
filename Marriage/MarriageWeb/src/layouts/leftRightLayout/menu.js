@@ -37,7 +37,7 @@ function getMarriageManage() {
     menuList.push(addMenu("dataSourceList", "数据源", false, "table", "/marriageManage/dataSourceList"));
     menuList.push(addMenu("dataSourceEdit", "新增", true, "form", "/marriageManage/dataSourceEdit", "", null, false, "数据源", "/marriageManage/dataSourceList", null, true));
 
-    return addNavMenu("marriageManage", "相亲管理", false, menuList, true, ["dataSourceList"]);
+    return addNavMenu("marriageManage", "相亲管理", false, menuList, true, ["marriageMakePairList"]);
 }
 
 function getPersonCenterNavMenu() {

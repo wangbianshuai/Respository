@@ -48,6 +48,7 @@ const judgeNullable = (value, property, rowsColsProperties) => {
 
     for (let i = 0; i < rowsColsProperties.length; i++) {
         p = rowsColsProperties[i];
+        if (!p.getValue || !p.isEdit) continue;
         v = p.getValue();
         if (!p.isNullable && p.type === "Select" && Common.isNullOrEmpty(v)) {
             msg = p.nullTipMessage || "请选择" + p.label + "！"

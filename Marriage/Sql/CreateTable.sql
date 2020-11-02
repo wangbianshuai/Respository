@@ -507,8 +507,8 @@ create table t_DataSourceItem
 (
 ItemId uniqueidentifier not null primary key,                  --主键
 DataSourceId uniqueidentifier not null,                        --数据源Id
-Name nvarchar(50) not null,                                    --名称
-Value nvarchar(1000) not null,                                 --值
+Name nvarchar(100) not null,                                   --名称
+Value nvarchar(100) not null,                                  --值
 )
 go
 
