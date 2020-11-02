@@ -96,7 +96,7 @@ function getEventActions() {
         type: "dataGridView/selectRowToPage",
         dataGridView: "dataGridView1",
         alertMessage: "alertMessage",
-        pageUrl: "/systemManage/appUserEdit?AppUserId=#{AppUserId}&menuName=" + escape("修改")
+        pageUrl: "/systemManage/appUserEdit?AppUserId=#{AppUserId}&menuName=" + encodeURIComponent("修改")
     },
     {
         name: "deleteAppUser",

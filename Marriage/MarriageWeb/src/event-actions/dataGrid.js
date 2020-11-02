@@ -11,6 +11,8 @@ export default class DataGrid extends BaseIndex {
         const { dataGridView, alertMessage, entityProperties } = action.parameters;
         const { dataActionType } = property;
 
+        if (!dataGridView.getSelectedRowKeys) return;
+
         var selectDataList = null, selectRowKeys = null;
         if (property.params) {
             selectDataList = [property.params];

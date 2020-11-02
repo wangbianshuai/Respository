@@ -41,7 +41,7 @@ export function getQueryString(query) {
         if (pos === -1) continue
         let argname = pairs[i].substring(0, pos)
         let value = pairs[i].substring(pos + 1)
-        args[argname] = unescape(value)
+        args[argname] = decodeURIComponent(value)
     }
     return args
 }
@@ -56,11 +56,11 @@ export function addUrlRandom(url) {
     return url
 }
 
-export function AddUrlParams(url, name, value, blUrl) {
+export function AddUrlParams(url, name, value) {
     if (isNullOrEmpty(url)) return ""
     if (value === undefined || value === null) return url;
     url += url.indexOf("?") >= 0 ? "&" : "?"
-    value = blUrl ? encodeURIComponent(value) : escape(value);
+    value = encodeURIComponent(value);
     url += `${name}=${value}`
     return url
 }
@@ -364,7 +364,7 @@ export function dateFormat(date, format) {
 export function getCookie(name) {
     var arr, reg = new RegExp("(^| )" + name + "=([^;]*)(;|$)");
     arr = document.cookie.match(reg)
-    if (arr) return unescape(arr[2]);
+    if (arr) return decodeURIComponent(arr[2]);
     else return null;
 }
 
@@ -373,7 +373,7 @@ export function setCookie(name, value, days, path) {
     path = path || "/";
     var exp = new Date();
     exp.setTime(exp.getTime() + days * 24 * 60 * 60 * 1000);
-    document.cookie = name + "=" + escape(value) + "; expires=" + exp.toGMTString() + "; path=" + path;
+    document.cookie = name + "=" + encodeURIComponent(value) + "; expires=" + exp.toGMTString() + "; path=" + path;
 }
 
 export function removeCookie(name, path) {
@@ -401,7 +401,7 @@ export function isDecimal2(value) {
 export function toQueryString(obj) {
     const list = [];
     let v = null;
-    for (let key in obj) { v = escape(obj[key]); list.push(`${key}=${v}`); }
+    for (let key in obj) { v = encodeURIComponent(obj[key]); list.push(`${key}=${v}`); }
     return list.join("&")
 }
 
@@ -453,8 +453,8 @@ export function replaceDataContent(data, content, blUrl) {
         keyValue = "#{" + key + "}";
         v = data[key];
         v = isNullOrEmpty(v) ? "" : v.toString();
-        v = unescape(v);
-        content = content.replace(new RegExp(keyValue, "g"), blUrl ? escape(v) : v);
+        v = decodeURIComponent(v);
+        content = content.replace(new RegExp(keyValue, "g"), blUrl ? encodeURIComponent(v) : v);
         if (content.indexOf("#{") < 0) break;
     }
     return content;

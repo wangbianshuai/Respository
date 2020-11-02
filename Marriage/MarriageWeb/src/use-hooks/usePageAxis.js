@@ -71,7 +71,7 @@ class PageAxis {
         this.modalDialog = {};
 
         this.loginUser = this.getLoginUser();
-        this.token = this.loginUser.Token;
+        this.token = this.loginUser.token;
 
         this.receives = {};
         this.eventActionsConfig = Common.clone(this.pageConfig.eventActions);

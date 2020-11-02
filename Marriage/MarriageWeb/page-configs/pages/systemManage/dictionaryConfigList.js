@@ -95,7 +95,7 @@ function getEventActions() {
         type: "dataGridView/selectRowToPage",
         dataGridView: "dataGridView1",
         alertMessage: "alertMessage",
-        pageUrl: "/systemManage/dictionaryConfigEdit?DictionaryConfigId=#{DictionaryConfigId}&menuName=" + escape("修改")
+        pageUrl: "/systemManage/dictionaryConfigEdit?DictionaryConfigId=#{DictionaryConfigId}&menuName=" + encodeURIComponent("修改")
     },
     {
         name: "deleteEntityData",

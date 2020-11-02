@@ -10,10 +10,10 @@ export default (serviceName, getServiceUrl) => (action) => async (payload) => {
 
     if (!Common.isNullOrEmpty(payload.url)) url = payload.url;
 
-    //istoken:The request must have a token, Hastoken: the request has a token plus。
+    //isToken:The request must have a token, Hastoken: the request has a token plus。
     let headers = {};
-    if (action.istoken && !payload.token) return Promise.resolve({ isSuccess: false, isReLogin: true, message: 'the token is null' });
-    if ((action.istoken || action.hastoken) && payload.token) headers = { token: payload.token };
+    if (action.isToken && !payload.token) return Promise.resolve({ isSuccess: false, isReLogin: true, message: 'the token is null' });
+    if ((action.isToken || action.hastoken) && payload.token) headers = { token: payload.token };
 
     if (payload.userAgent) { headers = headers || {}; headers["User-Agent"] = payload.userAgent; }
 

@@ -1,3 +1,5 @@
+import { Common } from 'UtilsCommon';
+
 export function getResponseData(d, resKey) {
     const blSuccess = d && d.isSuccess === false ? false : true;
 
@@ -11,7 +13,13 @@ export function getResponseData(d, resKey) {
     }
     else if (d.Ack) {
         if (d.Ack.IsSuccess) obj = d;
-        else obj = { isSuccess: false, message: d.Ack.Message || '请求异常' };
+        else {
+            obj = { isSuccess: false, message: d.Ack.Message || '请求异常' };
+            if (d.Ack.Code === -100) {
+                Common.removeStorage("token");
+                obj.isReLogin = true;
+            }
+        }
     }
     else if (resKey) {
         if (d && d[resKey]) obj = d[resKey];
@@ -19,6 +27,12 @@ export function getResponseData(d, resKey) {
     }
     else if (d) obj = d
     else obj = { isSuccess: false, message: "请求异常！" }
+
+    const token = Common.getCookie("token");
+    if (token) {
+        Common.setStorage("token", token);
+        obj.token = token;
+    }
 
     return obj;
 }

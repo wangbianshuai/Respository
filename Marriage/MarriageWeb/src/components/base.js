@@ -84,7 +84,7 @@ const getLinkAction = (p, record) => {
 
     p.propertyNames.forEach(n => {
       v = record[n];
-      url = url.replace("#{" + n + "}", escape(v));
+      url = url.replace("#{" + n + "}", encodeURIComponent(v));
     })
 
     url = Common.addUrlRandom(url);

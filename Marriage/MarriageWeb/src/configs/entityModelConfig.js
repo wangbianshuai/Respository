@@ -13,18 +13,18 @@ export default (name, serviceName) => {
   }
 }
 
-function get(actionName, url, stateName, dataKey, istoken, hastoken) {
-  return { actionName, url, method: 'GET', stateName, dataKey, istoken, hastoken };
+function get(actionName, url, stateName, dataKey, isToken, hastoken) {
+  return { actionName, url, method: 'GET', stateName, dataKey, isToken, hastoken };
 }
 
-function post(actionName, url, stateName, dataKey, istoken, isOperation) {
-  return { actionName, url, stateName, dataKey, istoken, isOperation };
+function post(actionName, url, stateName, dataKey, isToken, isOperation) {
+  return { actionName, url, stateName, dataKey, isToken, isOperation };
 }
 
-function put(actionName, url, stateName, dataKey, istoken, isOperation) {
-  return { actionName, url, stateName, method: 'PUT', dataKey, istoken, isOperation };
+function put(actionName, url, stateName, dataKey, isToken, isOperation) {
+  return { actionName, url, stateName, method: 'PUT', dataKey, isToken, isOperation };
 }
 
-function delete2(actionName, url, stateName, dataKey, istoken, isOperation) {
-  return { actionName, url, stateName, method: 'DELETE', dataKey, istoken, isOperation };
+function delete2(actionName, url, stateName, dataKey, isToken, isOperation) {
+  return { actionName, url, stateName, method: 'DELETE', dataKey, isToken, isOperation };
 }

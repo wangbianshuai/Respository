@@ -1,5 +1,5 @@
 import { fetch } from 'dva';
-import { Common, AjaxRequest, HttpResponse } from 'UtilsCommon';
+import { Common, AjaxRequest, HttpResponse, Md5 } from 'UtilsCommon';
 
 export function get(url, resKey, serviceName, headers, callback) {
     return fetchRequest(url, null, resKey, serviceName, headers, callback)
@@ -70,8 +70,12 @@ function setParamsHeader(data, headers) {
         data = data || {};
         data.headers = data.headers || {};
         for (let key in headers) data.headers[key] = headers[key];
-        return data;
     }
+
+    data.headers.token = Common.getStorage("token");
+    if (!data.headers.token) data.headers.token = "d56b699830e77ba53855679cb1d252da" + window.btoa(Common.createGuid());
+
+    data.headers.access_token = getAccessToken(data.headers.token);
 
     return data;
 }
@@ -97,6 +101,13 @@ function setApiServiceHeader(data, serviceName) {
     data.headers.requestId = Common.createGuid().replace(/-/g, "").toLowerCase();
 
     return data;
+}
+
+function getAccessToken(token) {
+    const appId = 'D5ADDC90-5AB2-4B3D-8C38-5025E4068CFA';
+    const time = new Date().getTime()
+    const md5str = Md5(appId + time + token);
+    return window.btoa(appId + '@' + time + "@" + md5str);
 }
 
 function getFullUrl(url) {

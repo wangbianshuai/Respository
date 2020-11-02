@@ -52,7 +52,7 @@ export default class DataGridView extends BaseIndex {
 
     const entityName = entity.viewName || entity.name;
 
-    var dataUrl = `?$query=true&Action=Excel&Title=${escape(title)}&EntityName=${entityName}`;
+    var dataUrl = `?$query=true&Action=Excel&Title=${encodeURIComponent(title)}&EntityName=${entityName}`;
 
     let url = null;
     const { expandMethods } = entity;

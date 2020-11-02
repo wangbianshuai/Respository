@@ -35,7 +35,7 @@ function getDispatch(dispatch, token) {
     }
     else return Promise.reject({ isSuccess: false, message: `${name}/${actionName} the method doesn't exist!` });
 
-    if (action.istoken && !payload.token) payload.token = token;
+    if (action.isToken && !payload.token) payload.token = token;
     if (action.isLoading === false) isloading = false;
     return dispatch({ type: name + '/' + actionName, payload, isloading });
   }
