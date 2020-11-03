@@ -9,13 +9,13 @@ namespace Marriage.Entity.Data
     /// <summary>
     /// 安排相亲信息表
     /// </summary>
-    [TableProperty(Name = "t_ArrangeMarriage", PrimaryKey = "ArrangeMarriageId")]
-    public class ArrangeMarriage : EntityModel, IEntity
+    [TableProperty(Name = "t_MarriageArrange", PrimaryKey = "MarriageArrangeId")]
+    public class MarriageArrange : EntityModel, IEntity
     {
         /// <summary> 
         /// 主键
         /// </summary> 
-        public Guid ArrangeMarriageId { get; set; }
+        public Guid MarriageArrangeId { get; set; }
         /// <summary> 
         /// 男生ID
         /// </summary> 
@@ -53,7 +53,7 @@ namespace Marriage.Entity.Data
         /// </summary> 
         public byte IsWomanAgree { get; set; }
         /// <summary> 
-        /// 女生不同意因
+        /// 女生不同意愿因
         /// </summary> 
         public string NoWomanAgreeRemark { get; set; }
         /// <summary> 

@@ -277,97 +277,97 @@
             <param name="pageSize"></param>
             <param name="totalCount"></param>
         </member>
-        <member name="T:Marriage.Entity.Data.ArrangeMarriage">
+        <member name="T:Marriage.Entity.Data.MarriageArrange">
             <summary>
             安排相亲信息表
             </summary>
         </member>
-        <member name="P:Marriage.Entity.Data.ArrangeMarriage.ArrangeMarriageId">
+        <member name="P:Marriage.Entity.Data.MarriageArrange.MarriageArrangeId">
             <summary> 
             主键
             </summary> 
         </member>
-        <member name="P:Marriage.Entity.Data.ArrangeMarriage.ManUserId">
+        <member name="P:Marriage.Entity.Data.MarriageArrange.ManUserId">
             <summary> 
             男生ID
             </summary> 
         </member>
-        <member name="P:Marriage.Entity.Data.ArrangeMarriage.WomanUserId">
+        <member name="P:Marriage.Entity.Data.MarriageArrange.WomanUserId">
             <summary> 
             女生ID
             </summary> 
         </member>
-        <member name="P:Marriage.Entity.Data.ArrangeMarriage.ManMatchmakerId">
+        <member name="P:Marriage.Entity.Data.MarriageArrange.ManMatchmakerId">
             <summary> 
             男生红娘
             </summary> 
         </member>
-        <member name="P:Marriage.Entity.Data.ArrangeMarriage.WomanMatchmakerId">
+        <member name="P:Marriage.Entity.Data.MarriageArrange.WomanMatchmakerId">
             <summary> 
             女生红娘
             </summary> 
         </member>
-        <member name="P:Marriage.Entity.Data.ArrangeMarriage.AppMatchmakerId">
+        <member name="P:Marriage.Entity.Data.MarriageArrange.AppMatchmakerId">
             <summary> 
             平台红娘
             </summary> 
         </member>
-        <member name="P:Marriage.Entity.Data.ArrangeMarriage.MarriageDate">
+        <member name="P:Marriage.Entity.Data.MarriageArrange.MarriageDate">
             <summary> 
             相亲时间
             </summary> 
         </member>
-        <member name="P:Marriage.Entity.Data.ArrangeMarriage.IsManAgree">
+        <member name="P:Marriage.Entity.Data.MarriageArrange.IsManAgree">
             <summary> 
             男生是否同意
             </summary> 
         </member>
-        <member name="P:Marriage.Entity.Data.ArrangeMarriage.NoManAgreeRemark">
+        <member name="P:Marriage.Entity.Data.MarriageArrange.NoManAgreeRemark">
             <summary> 
             男生不同意原因
             </summary> 
         </member>
-        <member name="P:Marriage.Entity.Data.ArrangeMarriage.IsWomanAgree">
+        <member name="P:Marriage.Entity.Data.MarriageArrange.IsWomanAgree">
             <summary> 
             女生是否同意
             </summary> 
         </member>
-        <member name="P:Marriage.Entity.Data.ArrangeMarriage.NoWomanAgreeRemark">
+        <member name="P:Marriage.Entity.Data.MarriageArrange.NoWomanAgreeRemark">
             <summary> 
             女生不同意因
             </summary> 
         </member>
-        <member name="P:Marriage.Entity.Data.ArrangeMarriage.Remark">
+        <member name="P:Marriage.Entity.Data.MarriageArrange.Remark">
             <summary> 
             备注
             </summary> 
         </member>
-        <member name="P:Marriage.Entity.Data.ArrangeMarriage.IsDelete">
+        <member name="P:Marriage.Entity.Data.MarriageArrange.IsDelete">
             <summary> 
             是否删除
             </summary> 
         </member>
-        <member name="P:Marriage.Entity.Data.ArrangeMarriage.CreateUser">
+        <member name="P:Marriage.Entity.Data.MarriageArrange.CreateUser">
             <summary> 
             创建人
             </summary> 
         </member>
-        <member name="P:Marriage.Entity.Data.ArrangeMarriage.CreateDate">
+        <member name="P:Marriage.Entity.Data.MarriageArrange.CreateDate">
             <summary> 
             创建时间
             </summary> 
         </member>
-        <member name="P:Marriage.Entity.Data.ArrangeMarriage.UpdateUser">
+        <member name="P:Marriage.Entity.Data.MarriageArrange.UpdateUser">
             <summary> 
             更新人
             </summary> 
         </member>
-        <member name="P:Marriage.Entity.Data.ArrangeMarriage.UpdateDate">
+        <member name="P:Marriage.Entity.Data.MarriageArrange.UpdateDate">
             <summary> 
             更新时间
             </summary> 
         </member>
-        <member name="P:Marriage.Entity.Data.ArrangeMarriage.RowVersion">
+        <member name="P:Marriage.Entity.Data.MarriageArrange.RowVersion">
             <summary> 
             行版本
             </summary> 
@@ -842,7 +842,7 @@
             平台红娘
             </summary> 
         </member>
-        <member name="P:Marriage.Entity.Data.MarriageRecord.ArrangeMarriageId">
+        <member name="P:Marriage.Entity.Data.MarriageRecord.MarriageArrangeId">
             <summary> 
             安装相亲Id
             </summary> 

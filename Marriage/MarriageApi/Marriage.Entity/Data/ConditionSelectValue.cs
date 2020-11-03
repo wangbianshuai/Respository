@@ -9,8 +9,8 @@ namespace Marriage.Entity.Data
     /// <summary>
     /// 相亲用户条件选项值信息表
     /// </summary>
-    [TableProperty(Name = "t_UserConditionSelectValue", PrimaryKey = "ItemId")]
-    public class UserConditionSelectValue : EntityModel, IEntity
+    [TableProperty(Name = "t_ConditionSelectValue", PrimaryKey = "ItemId")]
+    public class ConditionSelectValue : EntityModel, IEntity
     {
         /// <summary> 
         /// 主键
