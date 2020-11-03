@@ -219,7 +219,7 @@ function getAddUserTagView() {
 
 function getTextArea2(name, label, x, y) {
   return {
-    ...getTextBox(name, label, 'TextArea', x, y, '', 500),
+    ...getTextBox(name, label, 'TextArea', x, y, '当审核不通过时，需输入不通过原因，其他状态无需输入', 500),
     isFormItem: true,
     colSpan: 22,
     labelCol: 6,
