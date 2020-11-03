@@ -1,4 +1,10 @@
+import { isH5 } from './common';
+
 (function (doc, win, fontSize) {
+    if (!isH5()) {
+        doc.documentElement.style.fontSize = "18px";
+        return;
+    }
     var docEl = doc.documentElement,
         resizeEvt = 'orientationchange' in window ? 'orientationchange' : 'resize',
         recalc = function () {

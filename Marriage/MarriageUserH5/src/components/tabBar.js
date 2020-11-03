@@ -15,11 +15,11 @@ const press = (item, pathName, history) => {
 
     let url = `/${item.pathName}/${item.pageName}`;
 
-    const token = Common.getStorage('token');
-    if (item.isLogin && !token) {
-        url = `/user/login?url=${url}`;
-        url = Common.addUrlRandom(url);
-    }
+    // const token = Common.getStorage('token');
+    // if (item.isLogin && !token) {
+    //     url = `/user/login?url=${url}`;
+    //     url = Common.addUrlRandom(url);
+    // }
     history.push(url);
 };
 

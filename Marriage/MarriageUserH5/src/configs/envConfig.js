@@ -1,8 +1,7 @@
 const _ServiceConfig = {
     ApiService: getApiSericeUrl,
     WebService: getWebServiceUrl,
-    ImageService: getImageServiceUrl,
-    A2ApiService: getA2ApiServiceUrl
+    ImageService: getImageServiceUrl
 };
 
 const EnvConfig = {
@@ -24,24 +23,20 @@ function getWebEnv() {
 }
 
 function getEnv(h) {
-    if (h.indexOf("localhost") >= 0 || h.indexOf('192.168.1.154') >= 0) return "local"
+    if (h.indexOf("localhost") >= 0 || h.indexOf('192.168.1.157') >= 0) return "local"
     else return "prd";
 }
 
 function getWebServiceUrl() {
-    return EnvConfig.isProd ? "/miniSite/" : '/';
+    return EnvConfig.isProd ? "/" : '/';
 }
 
 function getApiSericeUrl() {
-    return "/zzl/";
+    return "/api/";
 }
 
 function getImageServiceUrl() {
-    return EnvConfig.isProd ? 'http://www.wikispectra.com/' : 'http://192.168.1.10:1088/';
-}
-
-function getA2ApiServiceUrl(){
-    return '//digital.a2china.cn/';
+    return EnvConfig.isProd ? 'http://www.lianliyuan.site/' : 'http://localhost/res';
 }
 
 function getServiceUrl(serverName) {

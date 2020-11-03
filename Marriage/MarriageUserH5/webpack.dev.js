@@ -14,8 +14,8 @@ module.exports = merge(common, {
 		contentBase: './dist',
 		hot: true,
 		proxy: {
-			'/zzl/': {
-				target: 'http://192.168.1.10:1088/',
+			'/api/': {
+				target: 'http://localhost/me',
 				changeOrigin: true
 			}
 		}

@@ -1,7 +1,7 @@
 import React from 'react';
 
 const getPageComponent = (path, props, key) => {
-    if (path === "/") path = "/home/index";
+    if (path === "/") path = "/marriage/index";
     if (key) props = { ...props, key }
 
     try {
@@ -27,25 +27,15 @@ const getMarriageUserTabBarProperty = (styles) => ({
     ]
 });
 
-const getMatchmakerTabBarProperty = (styles) => ({
-    items: [
-        getItem('boygirl', 'index', '男&女', styles),
-        getItem('marriage', 'index', '相亲', styles, true),
-        getItem('square', 'index', '广场', styles, true),
-        getItem('mine', 'index', '我的', styles, true)
-    ]
-});
-
 const getPathName = (location) => {
     const { pathname } = location;
     const keys = pathname.split('/').slice(1);
-    return keys[0] || 'home';
+    return keys[0] || 'marriage';
 };
 
 export default {
     getPageComponent,
     getItem,
     getMarriageUserTabBarProperty,
-    getMatchmakerTabBarProperty,
     getPathName
 }

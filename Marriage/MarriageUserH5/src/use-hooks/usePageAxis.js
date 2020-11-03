@@ -85,6 +85,9 @@ class PageAxis {
 
         this.modalDialog = {};
 
+        Common.setStorage("token", "abcdeoagjrogjorqejgoqergrqegqergqreg");
+        Common.setStorage("loginUserInfo", JSON.stringify({ nickName: 'abc', userId: 'asgregreg' }))
+
         this.loginUser = this.getLoginUser();
         this.token = Common.getStorage("token");
 
@@ -100,7 +103,7 @@ class PageAxis {
         this.eventActions = {};
         for (let key in EventActions) this.eventActions[key] = new EventActions[key]();
 
-        this.getOpenId();
+        //this.getOpenId();
     }
 
     getLoginUser = () => {
@@ -264,7 +267,7 @@ class PageAxis {
 
     loginByOpenId() {
         if (!this.pageData.openId) return false;
-        
+
         const url = EnvConfig.getServiceUrl('ApiService')() + 'Handler.ashx';
 
         const formData = new FormData();
