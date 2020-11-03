@@ -4,13 +4,14 @@ module.exports = {
   primaryKey: "MatchmakerId",
   properties: getProperties(),
   sexDataSource: getSexDataSource(),
-  isAppMatchmakerDataSource: getIsAppMatchmakerDataSource()
+  isAppMatchmakerDataSource: getIsAppMatchmakerDataSource(),
+  statusDataSource:getStatusDataSource()
 }
 
 function getProperties() {
   return [
     getProperty("MatchmakerId", "MatchmakerId"),
-    getProperty("Name", "名称"),
+    getProperty("Name", "姓名"),
     getProperty("NickName", "昵称"),
     getProperty("SexName", "性别"),
     getProperty("Province", "省份"),
@@ -33,4 +34,8 @@ function getSexDataSource() {
 
 function getIsAppMatchmakerDataSource() {
   return [{ value: 1, text: "是" }, { value: 0, text: "否" }]
+}
+
+function getStatusDataSource(){
+  return [{ value: 0, text: "待审核" }, { value: 1, text: "审核通过" }, { value: 2, text: "审核不通过" }, { value: 3, text: "关闭" }]
 }

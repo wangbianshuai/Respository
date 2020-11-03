@@ -1,5 +1,5 @@
-import systemManage_appAccountList from "./systemManage/appAccountList";
+import marriageManage_matchmakerList from "./marriageManage/matchmakerList";
 
 export default {
-  systemManage_appAccountList
+  marriageManage_matchmakerList
 }

@@ -22,5 +22,15 @@ namespace Marriage.Component
         {
             return CommonOperation.DeleteByLogic<Matchmaker>(this);
         }
+
+        /// <summary>
+        /// 更新状态
+        /// </summary>
+        /// <returns></returns>
+        [Log]
+        public object UpdateStatus()
+        {
+            return this.Update();
+        }
     }
 }

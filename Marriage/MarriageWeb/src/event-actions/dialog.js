@@ -22,11 +22,13 @@ export default class Dialog extends BaseIndex {
 
         dialogView.selectRowKeys = selectRowKeys;
 
+        const selectDataList = dataGridView.getSelectDataList();
+
         //设置接收数据行数返回数据
         pageAxis.receives[setSelectValuesOkActionType] = (d) => this.receiveDialogOkActionType(d, props, action)
 
         //扩展数据加载
-        if (dialogView.expandDataLoad) dialogView.expandDataLoad(props, action);
+        if (dialogView.expandDataLoad) dialogView.expandDataLoad(props, action, selectDataList);
 
         const onOk = (e, p) => this.setSelectViewDataToList(e, p, props, action, selectRowKeys);
         this.showdialog(action, pageAxis, dialogView, onOk, action.setValue);
@@ -71,13 +73,14 @@ export default class Dialog extends BaseIndex {
 
         //DataComponent存在，则取DataComponent，不存在取DataProperties属性名集合
         let dataComponent = null, dataProperties = null;
+        action.currentValue = null;
         if (action.dataComponent) {
             dataComponent = Common.arrayFirst(dialogView.properties, (f) => f.name === action.dataComponent);
-            action.setValue = () => dataComponent.setValue(null)
+            action.setValue = () => dataComponent.setValue(action.currentValue);
         }
         else {
             dataProperties = this.getSelectToList(dialogView.properties, action.dataProperties);
-            action.setValue = () => this.setPropertiesValue(dataProperties, null)
+            action.setValue = () => this.setPropertiesValue(dataProperties, action.currentValue);
         }
 
         const alertMessage = pageAxis.getProperty(action.alertMessage);

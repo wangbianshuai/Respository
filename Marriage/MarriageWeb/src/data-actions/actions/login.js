@@ -29,8 +29,6 @@ export default class login extends BaseIndex {
       return { isSuccess: false, message: "登录名或密码错误！" }
     }
 
-    Common.setStorage("token", data.Token);
-
     return data;
   }
 }

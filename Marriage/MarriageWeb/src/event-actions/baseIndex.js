@@ -169,6 +169,7 @@ export default class BaseIndex {
                 onOk: onOk
             };
             pageAxis.setModalDialog(action.modalDialog);
+            setValue && setValue();
         }
         else {
             setValue && setValue();
