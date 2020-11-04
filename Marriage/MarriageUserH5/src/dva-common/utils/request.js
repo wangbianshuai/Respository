@@ -1,5 +1,6 @@
 import { fetch } from 'dva';
-import { Common, HttpResponse } from 'UtilsCommon';
+import { Common, HttpResponse,Md5 } from 'UtilsCommon';
+import { EnvConfig } from 'Configs';
 
 export function get(url, resKey, serviceName, headers) {
     return fetchRequest(url, null, resKey, serviceName, headers)
@@ -62,7 +63,7 @@ function fetchRequest(url, data, resKey, serviceName, headers) {
     try {
         data = setServiceHeader(data, serviceName);
         data = setParamsHeader(data, headers);
-        
+
         url = getFullUrl(url);
         return fetch(url, data).then(res => setResult(res)).then(d => HttpResponse.getResponse(d, resKey), res => HttpResponse.getErrorResponse(res));
     }
@@ -80,6 +81,11 @@ function setParamsHeader(data, headers) {
         for (let key in headers) data.headers[key] = headers[key];
         return data;
     }
+
+    data.headers.token = Common.getStorage(EnvConfig.tokenKey);
+    if (!data.headers.token) data.headers.token = "d56b699830e77ba53855679cb1d252da" + window.btoa(Common.createGuid());
+
+    data.headers.access_token = getAccessToken(data.headers.token);
 
     return data;
 }
@@ -106,6 +112,13 @@ function setApiServiceHeader(data, serviceName) {
     data.headers.requestId = Common.createGuid().replace(/-/g, "").toLowerCase();
 
     return data;
+}
+
+function getAccessToken(token) {
+    const appId = '781F60E1-429F-41E5-A93D-B8DA6F836182';
+    const time = new Date().getTime()
+    const md5str = Md5(appId + time + token);
+    return window.btoa(appId + '@' + time + "@" + md5str);
 }
 
 function getFullUrl(url) {

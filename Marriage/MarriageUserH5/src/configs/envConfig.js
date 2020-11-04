@@ -8,7 +8,8 @@ const EnvConfig = {
     getServiceUrl,
     setEnv,
     env: null,
-    isProd: false
+    isProd: false,
+    tokenKey: 'D69BE2A5-591E-4173-A4BC-4420EFA20AF1'
 }
 
 //ctx koa对象，ctx不为空表示是服务器

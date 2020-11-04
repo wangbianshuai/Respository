@@ -1,4 +1,4 @@
-import errorCommonMessage from './errorCommonMessage';
+import { EnvConfig } from 'Configs';
 
 export function getResponseData(d, resKey) {
     const blSuccess = d && d.isSuccess === false ? false : true;
@@ -12,19 +12,11 @@ export function getResponseData(d, resKey) {
         if (d.IsReLogin) obj.isReLogin = true;
     }
     else if (d.Ack) {
-        if (d.Ack.IsSuccess) obj = d;
-        else obj = { isSuccess: false, message: d.Ack.Message || '请求异常' };
-    }
-    else if (d.Result === false) {
-        const isReLogin = d.Code === 'User000103' || d.Code === 'User000101' || d.Code === 'User000102';
-        if (d.Code) {
-            const errorMessage = errorCommonMessage.filter(f => f.ID === d.Code);
-            if (errorMessage.length > 0) d.Msg = errorMessage[0].Cn;
+        if (d.Ack.IsSuccess) {
+            if (resKey && d[resKey]) obj = d[resKey];
+            else obj = d;
         }
-        obj = { isSuccess: false, isReLogin, message: d.Msg };
-    }
-    else if (d.result === false) {
-        obj = { isSuccess: false, message: d.msg };
+        else obj = { isSuccess: false, message: d.Ack.Message || '请求异常' };
     }
     else if (resKey) {
         if (d && d[resKey]) obj = d[resKey];
@@ -32,6 +24,10 @@ export function getResponseData(d, resKey) {
     }
     else if (d) obj = d
     else obj = { isSuccess: false, message: "请求异常！" }
+
+    if (obj && d.Token) {
+        Common.setStorage(EnvConfig.token, d.Token, 120);
+    }
 
     return obj;
 }

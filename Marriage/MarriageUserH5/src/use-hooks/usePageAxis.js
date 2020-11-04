@@ -11,8 +11,7 @@ props:父级页面props
 */
 
 import { useEffect } from "react";
-import { Common, PageCommon, Md5 } from 'UtilsCommon';
-import { EnvConfig } from 'Configs';
+import { Common, PageCommon } from 'UtilsCommon';
 import EventActions from 'EventActions';
 
 class PageAxis {
@@ -230,78 +229,6 @@ class PageAxis {
 
     isSuccessProps(res) {
         return res && res.isSuccess !== false;
-    }
-
-    getOpenId() {
-        this.isWeixin = Common.isWeiXin();
-        if (!this.isWeixin) return;
-
-        const wXAppID = 'wxaa64304b24432ce5';
-        const companID = 9;
-        this.openIdKey = Md5(wXAppID);
-
-        this.pageData.openId = Common.getStorage(this.openIdKey);
-        if (this.pageData.openId && !this.isLoginPage() && !this.token) {
-            this.loginByOpenId();
-            return;
-        }
-
-        let code = this.pageData.code;
-        const code2 = Common.getStorage("code");
-        if (code && code !== code2) {
-            Common.setStorage("code", code);
-            this.getOpenIdByCode(code, companID);
-            return;
-        }
-        else if (code === code2) code = '';
-
-        if (!this.pageData.openId && !code) {
-            const wXUrl = 'https://open.weixin.qq.com/connect/oauth2/authorize';
-            const scope = 'snsapi_base';
-
-            const redirect_uri = 'http://digital.a2china.cn/scrm/events/page/redirect.html?backurl=' + escape(window.location.href);
-
-            window.location.href = `${wXUrl}?appid=${wXAppID}&redirect_uri=${encodeURIComponent(redirect_uri)}&response_type=code&scope=${scope}&state=test#wechat_redirect`;
-        }
-    }
-
-    loginByOpenId() {
-        if (!this.pageData.openId) return false;
-
-        const url = EnvConfig.getServiceUrl('ApiService')() + 'Handler.ashx';
-
-        const formData = new FormData();
-        formData.append('Param', JSON.stringify({ OpenID: this.pageData.openId }));
-        formData.append('Act', 'User_LoginByOpenID');
-
-        Common.postFormData(url, formData, (data) => {
-            if (data.Result && data.Data) {
-                data = data.Data;
-                Common.setStorage("loginUserInfo", JSON.stringify(data));
-                Common.setStorage("loginUserId", data.UID);
-                Common.setStorage("token", data.Token, 120);
-                this.token = data.Token;
-                this.loginUser = data;
-            }
-        }, (msg) => this.alert(msg), false);
-
-        return true;
-    }
-
-    getOpenIdByCode(code, companID) {
-        const url = EnvConfig.getServiceUrl('A2ApiService')() + 'Handlers/CommonHandler.ashx';
-
-        var formData = new FormData();
-        formData.append('param', JSON.stringify({ code, WxIdentificationType: 2, companID }));
-        formData.append('act', 'GetWxFanOpenId');
-
-        Common.postFormData(url, formData, (data) => {
-            if (!data.result) { this.alert(data.msg); return; }
-
-            data = data.data;
-            this.pageData.openId = data.openid;
-            Common.setStorage(this.openIdKey, data.openid);
-        }, (msg) => this.alert(msg), false);
     }
 }
 

@@ -8,6 +8,7 @@ import Tabs from './tabs';
 import DataGridView from './dataGridView';
 import WhiteSpace from './whiteSpace';
 import RowsColsView from './rowsColsView';
+import WxAuthQrCode from './wxAuthQrCode';
 
 export default {
     Base,
@@ -19,5 +20,6 @@ export default {
     Tabs,
     DataGridView,
     WhiteSpace,
-    RowsColsView
+    RowsColsView,
+    WxAuthQrCode
 }

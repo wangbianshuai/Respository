@@ -4,7 +4,7 @@ import useConnectDataAction from './useConnectDataAction'
 import useDvaData from './useDvaData';
 import usePageAxis from './usePageAxis';
 import useGetPageConfig from './useGetPageConfig';
-import {Common} from 'UtilsCommon';
+import { Common } from 'UtilsCommon';
 
 export default (name, props, mapStateToProps, init, dataActionOptions) => {
   const id = useMemo(() => Common.createGuid(), []);
