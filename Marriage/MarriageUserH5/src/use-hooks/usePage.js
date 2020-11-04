@@ -6,7 +6,7 @@ import usePageAxis from './usePageAxis';
 import useGetPageConfig from './useGetPageConfig';
 import { Common } from 'UtilsCommon';
 
-export default (name, props, mapStateToProps, init, dataActionOptions) => {
+export default (name, props, mapStateToProps, init, dataActionOptions, wxUser) => {
   const id = useMemo(() => Common.createGuid(), []);
 
   const pageName = dataActionOptions && dataActionOptions.name ? dataActionOptions.name : name;
@@ -24,7 +24,7 @@ export default (name, props, mapStateToProps, init, dataActionOptions) => {
 
   //5、 使用页线，作用贯穿整个流程
   const pageAxis = usePageAxis(id, pageName, pageConfig, invokeDataAction, actionTypes, dispatch, props,
-    dispatchAction, setActionState, getStateValue, init
+    dispatchAction, setActionState, getStateValue, init, wxUser
   );
 
   //6、 接收行为数据

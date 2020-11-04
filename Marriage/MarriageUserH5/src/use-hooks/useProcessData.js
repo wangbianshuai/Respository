@@ -13,7 +13,7 @@ export default (pageId, state, props) => {
   if (!obj.toLogin) obj.toLogin = () => {
     const url = props.location.pathname + props.location.search;
     if (props.location.pathname.toLowerCase() === '/user/login') return;
-    props.history.push('/user/login?url=' + escape(url));
+    props.history.push('/user/login?url=' + encodeURIComponent(url));
   }
 
   useEffect(() => {

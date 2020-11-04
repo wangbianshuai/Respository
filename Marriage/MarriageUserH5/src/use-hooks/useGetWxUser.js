@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { Common, PageCommon } from 'UtilsCommon';
 import { useDispatch } from 'dva';
 import { EnvConfig } from 'Configs';
@@ -15,16 +15,15 @@ const getStorageWxUser = () => {
         return null;
     }
 
-    str = window.btoa(str)
+    str = window.atob(decodeURIComponent(str))
     return JSON.parse(str);
 }
 
 const setStorageWxUser = (wxUser) => {
-    const str = window.atob(JSON.stringify(wxUser));
+    const str = window.btoa(encodeURIComponent(JSON.stringify(wxUser)));
     Common.setStorage(wxUserKey, str);
 };
 
-const initWxStr = getStorageWxUser();
 const isH5 = Common.isH5();
 
 const getCode = () => {
@@ -37,8 +36,14 @@ const getCode = () => {
     window.location.href = `${wXUrl}?appid=${wxAppID}&redirect_uri=${encodeURIComponent(redirect_uri)}&response_type=code&scope=${scope}&state=test#wechat_redirect`;
 }
 
-const getWxUser = (dispatchAction, code, setWxUser) => {
-    dispatchAction("WxUserService", "getWxUser", { code }).then(res => {
+function dispatchAction(dispatch) {
+    return (name, actionName, payload) => {
+        return dispatch({ type: name + '/' + actionName, payload, isloading: true }).then(res => Promise.resolve(res), res => Promise.resolve(res));
+    }
+}
+
+const getWxUser = (dispatch, code, setWxUser) => {
+    dispatchAction(dispatch)("WxUserService", "getWxUser", { code }).then(res => {
         if (res.isSuccess === false) PageCommon.alert(res.message);
         else {
             setStorageWxUser(res);
@@ -47,17 +52,21 @@ const getWxUser = (dispatchAction, code, setWxUser) => {
     });
 }
 
-export default (dispatchAction) => {
-    const [wxUser, setWxUser] = useState(initWxStr);
+export default () => {
+    const initWxUser = useMemo(() => getStorageWxUser(), [getStorageWxUser]);
+    const [wxUser, setWxUser] = useState(initWxUser);
+
+    const dispatch = useDispatch();
 
     useEffect(() => {
         const queryString = Common.getQueryString();
         if (!wxUser) {
-            if (queryString.code) getWxUser(dispatchAction, queryString.code, setWxUser);
+            if (queryString.code) getWxUser(dispatch, queryString.code, setWxUser);
             else if (isH5) getCode()
             else setWxUser({ isAuthQrCode: true })
         }
-    }, [wxUser, dispatchAction, getCode, setWxUser]);
+        else if (!wxUser.isAuthQrCode) setStorageWxUser(wxUser);
+    }, [wxUser, dispatch, getCode, setWxUser]);
 
-    return wxUser;
+    return [wxUser, setWxUser];
 }

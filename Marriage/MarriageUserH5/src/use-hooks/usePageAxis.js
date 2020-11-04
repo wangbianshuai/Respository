@@ -64,7 +64,7 @@ class PageAxis {
 
     toLogin(url) {
         if (!url) url = this.props.location.pathname + this.props.location.search;
-        url = `/user/login?url=${escape(url)}`;
+        url = `/user/login?url=${encodeURIComponent(url)}`;
         url = Common.addUrlRandom(url);
         this.toPage(url);
     }
@@ -101,8 +101,6 @@ class PageAxis {
 
         this.eventActions = {};
         for (let key in EventActions) this.eventActions[key] = new EventActions[key]();
-
-        //this.getOpenId();
     }
 
     getLoginUser = () => {
@@ -235,19 +233,19 @@ class PageAxis {
 const _PageAxises = {};
 
 const usePageAxis = (id, name, pageConfig, invokeDataAction, actionTypes, dispatch, props,
-    dispatchAction, setActionState, getStateValue, init) => {
+    dispatchAction, setActionState, getStateValue, init, wxUser) => {
     useEffect(() => {
         return () => {
             if (_PageAxises[id]) delete _PageAxises[id];
         }
     }, [id]);
 
-    if (!pageConfig) return null;
+    if (!pageConfig || wxUser == null || wxUser.isAuthQrCode) return null;
 
     if (!_PageAxises[id]) {
         _PageAxises[id] = new PageAxis(id, {
             name, pageConfig, invokeDataAction, actionTypes, dispatch, props,
-            dispatchAction, setActionState, getStateValue, init
+            dispatchAction, setActionState, getStateValue, init, wxUser
         });
     }
 
