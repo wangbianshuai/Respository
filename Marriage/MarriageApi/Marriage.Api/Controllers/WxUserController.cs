@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel;
 using System.Threading.Tasks;
 using Marriage.Api.Code;
-using Marriage.Entity.Application.File;
+using Marriage.Entity.Application.WxUser;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.OpenApi.Models;
 
@@ -10,26 +10,28 @@ using Microsoft.OpenApi.Models;
 namespace Marriage.Api.Controllers
 {
     /// <summary>
-    /// 用户
+    /// 微信用户
     /// </summary>
     [Route("api/[controller]/[action]")]
     [Produces("application/json")]
     [ApiController]
-    [Description("用户")]
-    public class UserController : ControllerBase
+    [TokenFilter]
+    [ApiExceptionFilter]
+    [Description("微信用户")]
+    public class LiveController : ControllerBase
     {
-        public Application.IFile _User { get; set; }
+        public Application.IWxUser _WxUser { get; set; }
 
         /// <summary>
-        /// 同步微信用户
+        /// 获取微信用户
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
         [HttpPost]
-        [SwaggerOpenApiParameter(Description = "请求Token", In = ParameterLocation.Header, Name = "token", Required = true, Type = "string")]
-        public async Task<GetFileResponse> SyncWeChatUser(GetFileRequest request)
+        [SwaggerOpenApiTokenParameter]
+        public async Task<GetWxUserResponse> GetWxUser(GetWxUserRequest request)
         {
-            return await Task.Run(() => _User.GetFile(request, Code.Request.GetHeadersValue(this.Request, "token")));
+            return await Task.Run(() => _WxUser.GetWxUser(request));
         }
     }
 }

@@ -70,11 +70,7 @@ class PageAxis {
         url = Common.addUrlRandom(url);
         this.toPage(url);
     }
-
-    isLoginPage() {
-        return this.props.location.pathname.toLowerCase() === '/user/login';
-    }
-
+    
     initSet() {
         this.pageConfig = Common.clone(this.pageConfig);
 

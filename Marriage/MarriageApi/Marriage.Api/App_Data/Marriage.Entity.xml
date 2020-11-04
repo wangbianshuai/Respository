@@ -4,131 +4,6 @@
         <name>Marriage.Entity</name>
     </assembly>
     <members>
-        <member name="T:Marriage.Entity.Application.File.DeleteFileRequest">
-            <summary>
-            删除文件请求
-            </summary>
-        </member>
-        <member name="P:Marriage.Entity.Application.File.DeleteFileRequest.FileId">
-            <summary>
-            文件ID
-            </summary>
-        </member>
-        <member name="T:Marriage.Entity.Application.File.DeleteFileResponse">
-            <summary>
-            删除文件响应
-            </summary>
-        </member>
-        <member name="T:Marriage.Entity.Application.File.GetFileRequest">
-            <summary>
-            获取文件请求
-            </summary>
-        </member>
-        <member name="P:Marriage.Entity.Application.File.GetFileRequest.FileId">
-            <summary>
-            文件ID
-            </summary>
-        </member>
-        <member name="T:Marriage.Entity.Application.File.GetFileResponse">
-            <summary>
-            删除文件响应
-            </summary>
-        </member>
-        <member name="P:Marriage.Entity.Application.File.GetFileResponse.FileId">
-            <summary> 
-            主键
-            </summary> 
-        </member>
-        <member name="P:Marriage.Entity.Application.File.GetFileResponse.FileUrl">
-            <summary> 
-            文件URL
-            </summary> 
-        </member>
-        <member name="P:Marriage.Entity.Application.File.GetFileResponse.FileName">
-            <summary> 
-            文件名
-            </summary> 
-        </member>
-        <member name="P:Marriage.Entity.Application.File.GetFileResponse.FileType">
-            <summary> 
-            文件类型
-            </summary> 
-        </member>
-        <member name="P:Marriage.Entity.Application.File.GetFileResponse.FileSize">
-            <summary> 
-            文件大小(MB/KB)
-            </summary> 
-        </member>
-        <member name="T:Marriage.Entity.Application.File.UploadFileRequest">
-            <summary>
-            上传文件请求
-            </summary>
-        </member>
-        <member name="P:Marriage.Entity.Application.File.UploadFileRequest.Stream">
-            <summary>
-            文件流
-            </summary>
-        </member>
-        <member name="P:Marriage.Entity.Application.File.UploadFileRequest.FileName">
-            <summary> 
-            文件名
-            </summary> 
-        </member>
-        <member name="P:Marriage.Entity.Application.File.UploadFileRequest.FileType">
-            <summary> 
-            文件类型
-            </summary> 
-        </member>
-        <member name="P:Marriage.Entity.Application.File.UploadFileRequest.FileExt">
-            <summary>
-            文件后缀名
-            </summary>
-        </member>
-        <member name="P:Marriage.Entity.Application.File.UploadFileRequest.FileSize">
-            <summary> 
-            文件大小(B)
-            </summary> 
-        </member>
-        <member name="P:Marriage.Entity.Application.File.UploadFileRequest.WebRootPath">
-            <summary>
-            根路径
-            </summary>
-        </member>
-        <member name="P:Marriage.Entity.Application.File.UploadFileRequest.HttpHost">
-            <summary>
-            Http Host
-            </summary>
-        </member>
-        <member name="T:Marriage.Entity.Application.File.UploadFileResponse">
-            <summary>
-            上传文件响应
-            </summary>
-        </member>
-        <member name="P:Marriage.Entity.Application.File.UploadFileResponse.FileId">
-            <summary> 
-            主键
-            </summary> 
-        </member>
-        <member name="P:Marriage.Entity.Application.File.UploadFileResponse.FileUrl">
-            <summary> 
-            文件URL
-            </summary> 
-        </member>
-        <member name="P:Marriage.Entity.Application.File.UploadFileResponse.FileName">
-            <summary> 
-            文件名
-            </summary> 
-        </member>
-        <member name="P:Marriage.Entity.Application.File.UploadFileResponse.FileType">
-            <summary> 
-            文件类型
-            </summary> 
-        </member>
-        <member name="P:Marriage.Entity.Application.File.UploadFileResponse.FileSize">
-            <summary> 
-            文件大小(MB/KB)
-            </summary> 
-        </member>
         <member name="T:Marriage.Entity.Application.IRequest">
             <summary>
             请求接口
@@ -277,100 +152,40 @@
             <param name="pageSize"></param>
             <param name="totalCount"></param>
         </member>
-        <member name="T:Marriage.Entity.Data.MarriageArrange">
+        <member name="T:Marriage.Entity.Application.WxUser.GetWxUserRequest">
             <summary>
-            安排相亲信息表
+            获取微信用户请求
             </summary>
         </member>
-        <member name="P:Marriage.Entity.Data.MarriageArrange.MarriageArrangeId">
-            <summary> 
-            主键
-            </summary> 
+        <member name="P:Marriage.Entity.Application.WxUser.GetWxUserRequest.Code">
+            <summary>
+            Code
+            </summary>
         </member>
-        <member name="P:Marriage.Entity.Data.MarriageArrange.ManUserId">
-            <summary> 
-            男生ID
-            </summary> 
+        <member name="T:Marriage.Entity.Application.WxUser.GetWxUserResponse">
+            <summary>
+            获取微信用户响应
+            </summary>
         </member>
-        <member name="P:Marriage.Entity.Data.MarriageArrange.WomanUserId">
-            <summary> 
-            女生ID
-            </summary> 
+        <member name="P:Marriage.Entity.Application.WxUser.GetWxUserResponse.Data">
+            <summary>
+            用户数据
+            </summary>
         </member>
-        <member name="P:Marriage.Entity.Data.MarriageArrange.ManMatchmakerId">
-            <summary> 
-            男生红娘
-            </summary> 
+        <member name="T:Marriage.Entity.Application.WxUser.WxUser">
+            <summary>
+            微信用户
+            </summary>
         </member>
-        <member name="P:Marriage.Entity.Data.MarriageArrange.WomanMatchmakerId">
-            <summary> 
-            女生红娘
-            </summary> 
+        <member name="P:Marriage.Entity.Application.WxUser.WxUser.openid">
+            <summary>
+            OpenID
+            </summary>
         </member>
-        <member name="P:Marriage.Entity.Data.MarriageArrange.AppMatchmakerId">
-            <summary> 
-            平台红娘
-            </summary> 
-        </member>
-        <member name="P:Marriage.Entity.Data.MarriageArrange.MarriageDate">
-            <summary> 
-            相亲时间
-            </summary> 
-        </member>
-        <member name="P:Marriage.Entity.Data.MarriageArrange.IsManAgree">
-            <summary> 
-            男生是否同意
-            </summary> 
-        </member>
-        <member name="P:Marriage.Entity.Data.MarriageArrange.NoManAgreeRemark">
-            <summary> 
-            男生不同意原因
-            </summary> 
-        </member>
-        <member name="P:Marriage.Entity.Data.MarriageArrange.IsWomanAgree">
-            <summary> 
-            女生是否同意
-            </summary> 
-        </member>
-        <member name="P:Marriage.Entity.Data.MarriageArrange.NoWomanAgreeRemark">
-            <summary> 
-            女生不同意因
-            </summary> 
-        </member>
-        <member name="P:Marriage.Entity.Data.MarriageArrange.Remark">
-            <summary> 
-            备注
-            </summary> 
-        </member>
-        <member name="P:Marriage.Entity.Data.MarriageArrange.IsDelete">
-            <summary> 
-            是否删除
-            </summary> 
-        </member>
-        <member name="P:Marriage.Entity.Data.MarriageArrange.CreateUser">
-            <summary> 
-            创建人
-            </summary> 
-        </member>
-        <member name="P:Marriage.Entity.Data.MarriageArrange.CreateDate">
-            <summary> 
-            创建时间
-            </summary> 
-        </member>
-        <member name="P:Marriage.Entity.Data.MarriageArrange.UpdateUser">
-            <summary> 
-            更新人
-            </summary> 
-        </member>
-        <member name="P:Marriage.Entity.Data.MarriageArrange.UpdateDate">
-            <summary> 
-            更新时间
-            </summary> 
-        </member>
-        <member name="P:Marriage.Entity.Data.MarriageArrange.RowVersion">
-            <summary> 
-            行版本
-            </summary> 
+        <member name="P:Marriage.Entity.Application.WxUser.WxUser.nickname">
+            <summary>
+            昵称
+            </summary>
         </member>
         <member name="T:Marriage.Entity.Data.BirthEightResult">
             <summary>
@@ -475,6 +290,66 @@
         <member name="P:Marriage.Entity.Data.ConditionItem.DisplayIndex">
             <summary> 
             显示顺序
+            </summary> 
+        </member>
+        <member name="T:Marriage.Entity.Data.ConditionSelectValue">
+            <summary>
+            相亲用户条件选项值信息表
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Data.ConditionSelectValue.ItemId">
+            <summary> 
+            主键
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Data.ConditionSelectValue.UserId">
+            <summary> 
+            相亲用户Id
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Data.ConditionSelectValue.SelectType">
+            <summary> 
+            选择类型，1：条件值，2：择偶标准值
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Data.ConditionSelectValue.ConditionTypeId">
+            <summary> 
+            条件类型Id
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Data.ConditionSelectValue.ConditionItemId">
+            <summary> 
+            条件项Id
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Data.ConditionSelectValue.Value">
+            <summary> 
+            值
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Data.ConditionSelectValue.CreateUser">
+            <summary> 
+            创建人
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Data.ConditionSelectValue.CreateDate">
+            <summary> 
+            创建时间
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Data.ConditionSelectValue.UpdateUser">
+            <summary> 
+            更新人
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Data.ConditionSelectValue.UpdateDate">
+            <summary> 
+            更新时间
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Data.ConditionSelectValue.RowVersion">
+            <summary> 
+            行版本
             </summary> 
         </member>
         <member name="T:Marriage.Entity.Data.ConditionType">
@@ -662,6 +537,101 @@
             行版本
             </summary> 
         </member>
+        <member name="T:Marriage.Entity.Data.MarriageArrange">
+            <summary>
+            安排相亲信息表
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Data.MarriageArrange.MarriageArrangeId">
+            <summary> 
+            主键
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Data.MarriageArrange.ManUserId">
+            <summary> 
+            男生ID
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Data.MarriageArrange.WomanUserId">
+            <summary> 
+            女生ID
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Data.MarriageArrange.ManMatchmakerId">
+            <summary> 
+            男生红娘
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Data.MarriageArrange.WomanMatchmakerId">
+            <summary> 
+            女生红娘
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Data.MarriageArrange.AppMatchmakerId">
+            <summary> 
+            平台红娘
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Data.MarriageArrange.MarriageDate">
+            <summary> 
+            相亲时间
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Data.MarriageArrange.IsManAgree">
+            <summary> 
+            男生是否同意
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Data.MarriageArrange.NoManAgreeRemark">
+            <summary> 
+            男生不同意原因
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Data.MarriageArrange.IsWomanAgree">
+            <summary> 
+            女生是否同意
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Data.MarriageArrange.NoWomanAgreeRemark">
+            <summary> 
+            女生不同意愿因
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Data.MarriageArrange.Remark">
+            <summary> 
+            备注
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Data.MarriageArrange.IsDelete">
+            <summary> 
+            是否删除
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Data.MarriageArrange.CreateUser">
+            <summary> 
+            创建人
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Data.MarriageArrange.CreateDate">
+            <summary> 
+            创建时间
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Data.MarriageArrange.UpdateUser">
+            <summary> 
+            更新人
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Data.MarriageArrange.UpdateDate">
+            <summary> 
+            更新时间
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Data.MarriageArrange.RowVersion">
+            <summary> 
+            行版本
+            </summary> 
+        </member>
         <member name="T:Marriage.Entity.Data.MarriageMakePair">
             <summary>
             相亲配对计算信息表
@@ -787,7 +757,7 @@
             相亲用户ID
             </summary> 
         </member>
-        <member name="P:Marriage.Entity.Data.MarriagePhoto.PhoteUrl">
+        <member name="P:Marriage.Entity.Data.MarriagePhoto.PhotoUrl">
             <summary> 
             照片地址
             </summary> 
@@ -1397,104 +1367,544 @@
             行版本
             </summary> 
         </member>
-        <member name="T:Marriage.Entity.Data.UserConditionSelectValue">
+        <member name="T:Marriage.Entity.Domain.MarriageUser">
             <summary>
-            相亲用户条件选项值信息表
+            相亲人员
             </summary>
         </member>
-        <member name="P:Marriage.Entity.Data.UserConditionSelectValue.ItemId">
+        <member name="P:Marriage.Entity.Domain.MarriageUser.UserId">
             <summary> 
             主键
             </summary> 
         </member>
-        <member name="P:Marriage.Entity.Data.UserConditionSelectValue.UserId">
+        <member name="P:Marriage.Entity.Domain.MarriageUser.Name">
             <summary> 
-            相亲用户Id
+            名称
             </summary> 
         </member>
-        <member name="P:Marriage.Entity.Data.UserConditionSelectValue.SelectType">
+        <member name="P:Marriage.Entity.Domain.MarriageUser.OpenId">
             <summary> 
-            选择类型，1：条件值，2：择偶标准值
+            微信OpenId
             </summary> 
         </member>
-        <member name="P:Marriage.Entity.Data.UserConditionSelectValue.ConditionTypeId">
+        <member name="P:Marriage.Entity.Domain.MarriageUser.NickName">
             <summary> 
-            条件类型Id
+            微信昵称
             </summary> 
         </member>
-        <member name="P:Marriage.Entity.Data.UserConditionSelectValue.ConditionItemId">
+        <member name="P:Marriage.Entity.Domain.MarriageUser.Sex">
             <summary> 
-            条件项Id
+            微信用户的性别，值为1时是男性，值为2时是女性，值为0时是未知
             </summary> 
         </member>
-        <member name="P:Marriage.Entity.Data.UserConditionSelectValue.Value">
+        <member name="P:Marriage.Entity.Domain.MarriageUser.City">
             <summary> 
-            值
+            微信用户所在城市
             </summary> 
         </member>
-        <member name="P:Marriage.Entity.Data.UserConditionSelectValue.CreateUser">
+        <member name="P:Marriage.Entity.Domain.MarriageUser.Province">
             <summary> 
-            创建人
+            微信用户所在省份
             </summary> 
         </member>
-        <member name="P:Marriage.Entity.Data.UserConditionSelectValue.CreateDate">
+        <member name="P:Marriage.Entity.Domain.MarriageUser.HeadImgUrl">
             <summary> 
-            创建时间
+            微信用户头像，最后一个数值代表正方形头像大小（有0、46、64、96、132数值可选，0代表640*640正方形头像），用户没有头像时该项为空。若用户更换头像，原有头像URL将失效。
             </summary> 
         </member>
-        <member name="P:Marriage.Entity.Data.UserConditionSelectValue.UpdateUser">
+        <member name="P:Marriage.Entity.Domain.MarriageUser.IdCard">
             <summary> 
-            更新人
+            身份证号码
             </summary> 
         </member>
-        <member name="P:Marriage.Entity.Data.UserConditionSelectValue.UpdateDate">
+        <member name="P:Marriage.Entity.Domain.MarriageUser.Phone">
             <summary> 
-            更新时间
+            手机
             </summary> 
         </member>
-        <member name="P:Marriage.Entity.Data.UserConditionSelectValue.RowVersion">
+        <member name="P:Marriage.Entity.Domain.MarriageUser.Address">
             <summary> 
-            行版本
+            地址
             </summary> 
         </member>
-        <member name="T:Marriage.Entity.Domain.FileRecord">
+        <member name="P:Marriage.Entity.Domain.MarriageUser.BirthEight">
+            <summary> 
+            生辰八字
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Domain.MarriageUser.BirthAnimal">
+            <summary> 
+            生肖
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Domain.MarriageUser.Educational">
+            <summary> 
+            学历
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Domain.MarriageUser.JobName">
+            <summary> 
+            职业
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Domain.MarriageUser.YearIncome">
+            <summary> 
+            上年收入
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Domain.MarriageUser.MonthIncome">
+            <summary> 
+            当前月收入
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Domain.MarriageUser.FamilyRemark">
+            <summary> 
+            家庭情况
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Domain.MarriageUser.NowAddress">
+            <summary> 
+            现居住地
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Domain.MarriageUser.MatchmakerId">
+            <summary> 
+            所属红娘
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Domain.MarriageUser.Status">
+            <summary> 
+            状态：0：待审核，1：审核通过，2：审核不通过，3：关闭
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Domain.MarriageUser.NoPassReason">
+            <summary> 
+            审核不通过原因
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Domain.MarriageUser.LastLoginDate">
+            <summary> 
+            最近登录时间
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Domain.MarriageUser.LoginIp">
+            <summary> 
+            登录Ip
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Domain.MarriageUser.Remark">
+            <summary> 
+            备注
+            </summary> 
+        </member>
+        <member name="T:Marriage.Entity.Service.BasicSupport.GetAccessTokenRequest">
             <summary>
-            文件记录
+            获取access_token请求
             </summary>
         </member>
-        <member name="P:Marriage.Entity.Domain.FileRecord.FileId">
-            <summary> 
-            主键
-            </summary> 
-        </member>
-        <member name="P:Marriage.Entity.Domain.FileRecord.AppId">
-            <summary> 
-            AppId
-            </summary> 
-        </member>
-        <member name="P:Marriage.Entity.Domain.FileRecord.FilePath">
-            <summary> 
-            文件路径
-            </summary> 
-        </member>
-        <member name="P:Marriage.Entity.Domain.FileRecord.FileName">
-            <summary> 
-            文件名
-            </summary> 
-        </member>
-        <member name="P:Marriage.Entity.Domain.FileRecord.FileType">
-            <summary> 
-            文件类型
-            </summary> 
-        </member>
-        <member name="P:Marriage.Entity.Domain.FileRecord.FileSize">
-            <summary> 
-            文件大小(字节B)
-            </summary> 
-        </member>
-        <member name="P:Marriage.Entity.Domain.FileRecord.IpAddress">
+        <member name="P:Marriage.Entity.Service.BasicSupport.GetAccessTokenRequest.AppId">
             <summary>
-            IP地址
+            第三方用户唯一凭证
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Service.BasicSupport.GetAccessTokenRequest.Secret">
+            <summary>
+            第三方用户唯一凭证密钥，即appsecret
+            </summary>
+        </member>
+        <member name="T:Marriage.Entity.Service.BasicSupport.GetAccessTokenResponse">
+            <summary>
+            获取access_token响应
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Service.BasicSupport.GetAccessTokenResponse.Access_Token">
+            <summary>
+            获取到的凭证
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Service.BasicSupport.GetAccessTokenResponse.Expires_In">
+            <summary>
+            凭证有效时间，单位：秒
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Service.BasicSupport.GetAccessTokenResponse.ResponseTime">
+            <summary>
+            响应时间
+            </summary>
+        </member>
+        <member name="M:Marriage.Entity.Service.BasicSupport.GetAccessTokenResponse.#ctor">
+            <summary>
+            构造函数
+            </summary>
+        </member>
+        <member name="T:Marriage.Entity.Service.BasicSupport.GetWebAccessTokenRequest">
+            <summary>
+            获取web access_token请求
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Service.BasicSupport.GetWebAccessTokenRequest.AppId">
+            <summary>
+            公众号的唯一标识
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Service.BasicSupport.GetWebAccessTokenRequest.Secret">
+            <summary>
+            公众号的appsecret
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Service.BasicSupport.GetWebAccessTokenRequest.Code">
+            <summary>
+            填写第一步获取的code参数
+            </summary>
+        </member>
+        <member name="T:Marriage.Entity.Service.BasicSupport.GetWebAccessTokenResponse">
+            <summary>
+            获取web access_token响应
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Service.BasicSupport.GetWebAccessTokenResponse.Access_Token">
+            <summary>
+            获取到的凭证
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Service.BasicSupport.GetWebAccessTokenResponse.Expires_In">
+            <summary>
+            凭证有效时间，单位：秒
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Service.BasicSupport.GetWebAccessTokenResponse.Refresh_Token">
+            <summary>
+            用户刷新access_token
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Service.BasicSupport.GetWebAccessTokenResponse.OpenId">
+            <summary>
+            用户唯一标识，请注意，在未关注公众号时，用户访问公众号的网页，也会产生一个用户和公众号唯一的OpenID
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Service.BasicSupport.GetWebAccessTokenResponse.Scope">
+            <summary>
+            用户授权的作用域，使用逗号（,）分隔
+            </summary>
+        </member>
+        <member name="T:Marriage.Entity.Service.MessageManage.GetTemplateListRequest">
+            <summary>
+            获取模板列表请求
+            </summary>
+        </member>
+        <member name="T:Marriage.Entity.Service.MessageManage.GetTemplateListResponse">
+            <summary>
+            获取模板列表响应
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Service.MessageManage.GetTemplateListResponse.Template_List">
+            <summary>
+            模板列表
+            </summary>
+        </member>
+        <member name="T:Marriage.Entity.Service.MessageManage.TemplateInfo">
+            <summary>
+            模板信息
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Service.MessageManage.TemplateInfo.Template_Id">
+            <summary>
+            模板ID
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Service.MessageManage.TemplateInfo.Title">
+            <summary>
+            模板标题
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Service.MessageManage.TemplateInfo.Primary_Industry">
+            <summary>
+            模板所属行业的一级行业
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Service.MessageManage.TemplateInfo.Deputy_Industry">
+            <summary>
+            模板所属行业的二级行业
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Service.MessageManage.TemplateInfo.Content">
+            <summary>
+            模板内容
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Service.MessageManage.TemplateInfo.Example">
+            <summary>
+            模板示例
+            </summary>
+        </member>
+        <member name="T:Marriage.Entity.Service.IRequest">
+            <summary>
+            请求接口
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Service.IRequest.AccessToken">
+            <summary>
+            获取到的凭证
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Service.IRequest.Url">
+            <summary>
+            服务地址
+            </summary>
+        </member>
+        <member name="T:Marriage.Entity.Service.Request">
+            <summary>
+            请求基类
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Service.Request.AccessToken">
+            <summary>
+            获取到的凭证
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Service.Request.Url">
+            <summary>
+            服务地址
+            </summary>
+        </member>
+        <member name="T:Marriage.Entity.Service.IResponse">
+            <summary>
+            响应接口
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Service.IResponse.ErrCode">
+            <summary>
+            返回码
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Service.IResponse.ErrMsg">
+            <summary>
+            错误信息
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Service.IResponse.result">
+            <summary>
+            结果
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Service.IResponse.errMessage">
+            <summary>
+            错误信息
+            </summary>
+        </member>
+        <member name="T:Marriage.Entity.Service.Response">
+            <summary>
+            响应基类
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Service.Response.ErrCode">
+            <summary>
+            返回码
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Service.Response.ErrMsg">
+            <summary>
+            错误信息
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Service.Response.result">
+            <summary>
+            结果
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Service.Response.errMessage">
+            <summary>
+            错误信息
+            </summary>
+        </member>
+        <member name="M:Marriage.Entity.Service.Response.#ctor">
+            <summary>
+            构造函数
+            </summary>
+        </member>
+        <member name="T:Marriage.Entity.Service.UserManage.BatchGetUserInfoRequest">
+            <summary>
+            批量获取用户基本信息请求
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Service.UserManage.BatchGetUserInfoRequest.user_list">
+            <summary>
+            用户列表
+            </summary>
+        </member>
+        <member name="T:Marriage.Entity.Service.UserManage.BatchGetUserInfoResponse">
+            <summary>
+            批量获取用户基本信息响应
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Service.UserManage.BatchGetUserInfoResponse.User_Info_List">
+            <summary>
+            用户信息列表
+            </summary>
+        </member>
+        <member name="T:Marriage.Entity.Service.UserManage.UserInfo">
+            <summary>
+            用户信息
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Service.UserManage.UserInfo.OpenId">
+            <summary>
+            微信OpenId
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Service.UserManage.UserInfo.UnionId">
+            <summary> 
+            微信UnionId
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Service.UserManage.UserInfo.NickName">
+            <summary> 
+            微信昵称
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Service.UserManage.UserInfo.Sex">
+            <summary> 
+            微信用户的性别，值为1时是男性，值为2时是女性，值为0时是未知
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Service.UserManage.UserInfo.City">
+            <summary> 
+            微信用户所在城市
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Service.UserManage.UserInfo.Province">
+            <summary> 
+            微信用户所在省份
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Service.UserManage.UserInfo.HeadImgUrl">
+            <summary> 
+            微信用户头像，最后一个数值代表正方形头像大小（有0、46、64、96、132数值可选，0代表640*640正方形头像），用户没有头像时该项为空。若用户更换头像，原有头像URL将失效。
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Service.UserManage.UserInfo.Remark">
+            <summary> 
+            备注
+            </summary> 
+        </member>
+        <member name="T:Marriage.Entity.Service.UserManage.UserList">
+            <summary>
+            用户列表
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Service.UserManage.UserList.openid">
+            <summary>
+            用户的标识，对当前公众号唯一
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Service.UserManage.UserList.lang">
+            <summary>
+            国家地区语言版本，zh_CN 简体，zh_TW 繁体，en 英语，默认为zh-CN
+            </summary>
+        </member>
+        <member name="M:Marriage.Entity.Service.UserManage.UserList.#ctor">
+            <summary>
+            构造函数
+            </summary>
+        </member>
+        <member name="T:Marriage.Entity.Service.UserManage.GetUserInfoRequest">
+            <summary>
+            获取用户基本信息请求
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Service.UserManage.GetUserInfoRequest.openId">
+            <summary>
+            OpenId
+            </summary>
+        </member>
+        <member name="T:Marriage.Entity.Service.UserManage.GetUserInfoResponse">
+            <summary>
+            获取用户基本信息响应
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Service.UserManage.GetUserInfoResponse.OpenId">
+            <summary>
+            微信OpenId
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Service.UserManage.GetUserInfoResponse.UnionId">
+            <summary> 
+            微信UnionId
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Service.UserManage.GetUserInfoResponse.NickName">
+            <summary> 
+            微信昵称
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Service.UserManage.GetUserInfoResponse.Sex">
+            <summary> 
+            微信用户的性别，值为1时是男性，值为2时是女性，值为0时是未知
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Service.UserManage.GetUserInfoResponse.City">
+            <summary> 
+            微信用户所在城市
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Service.UserManage.GetUserInfoResponse.Province">
+            <summary> 
+            微信用户所在省份
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Service.UserManage.GetUserInfoResponse.HeadImgUrl">
+            <summary> 
+            微信用户头像，最后一个数值代表正方形头像大小（有0、46、64、96、132数值可选，0代表640*640正方形头像），用户没有头像时该项为空。若用户更换头像，原有头像URL将失效。
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Service.UserManage.GetUserInfoResponse.Remark">
+            <summary> 
+            备注
+            </summary> 
+        </member>
+        <member name="T:Marriage.Entity.Service.UserManage.GetUserListRequest">
+            <summary>
+            获取用户列表请求
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Service.UserManage.GetUserListRequest.NextOpenId">
+            <summary>
+            第一个拉取的OPENID，不填默认从头开始拉取
+            </summary>
+        </member>
+        <member name="T:Marriage.Entity.Service.UserManage.GetUserListResponse">
+            <summary>
+            获取用户列表响应
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Service.UserManage.GetUserListResponse.Total">
+            <summary>
+            关注该公众账号的总用户数
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Service.UserManage.GetUserListResponse.Count">
+            <summary>
+            拉取的OPENID个数，最大值为10000
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Service.UserManage.GetUserListResponse.Data">
+            <summary>
+            列表数据，OPENID的列表
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Service.UserManage.GetUserListResponse.Next_OpenId">
+            <summary>
+            拉取列表的最后一个用户的OPENID
+            </summary>
+        </member>
+        <member name="T:Marriage.Entity.Service.UserManage.UserListData">
+            <summary>
+            用户列表数据
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Service.UserManage.UserListData.OpenId">
+            <summary>
+            OPENID的列表
             </summary>
         </member>
     </members>

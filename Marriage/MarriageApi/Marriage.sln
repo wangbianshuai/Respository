@@ -21,6 +21,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Marriage.Entity", "Marriage
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Marriage.Utility", "Marriage.Utility\Marriage.Utility.csproj", "{2F4B1837-8553-4A98-B3F4-8D68E7ADC32B}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Marriage.Service", "Marriage.Service\Marriage.Service.csproj", "{D0F46207-9480-4A0A-BBB3-DD79EC13BD67}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -63,6 +65,10 @@ Global
 		{2F4B1837-8553-4A98-B3F4-8D68E7ADC32B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2F4B1837-8553-4A98-B3F4-8D68E7ADC32B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2F4B1837-8553-4A98-B3F4-8D68E7ADC32B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D0F46207-9480-4A0A-BBB3-DD79EC13BD67}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D0F46207-9480-4A0A-BBB3-DD79EC13BD67}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D0F46207-9480-4A0A-BBB3-DD79EC13BD67}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D0F46207-9480-4A0A-BBB3-DD79EC13BD67}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

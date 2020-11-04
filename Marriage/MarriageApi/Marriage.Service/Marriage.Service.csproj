@@ -12,10 +12,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\OpenDataAccessCore\OpenDataAccessCore.Entity\OpenDataAccessCore.Entity.csproj" />
-    <ProjectReference Include="..\Marriage.Data\Marriage.Data.csproj" />
+    <PackageReference Include="TencentCloudSDK" Version="3.0.130" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Marriage.Entity\Marriage.Entity.csproj" />
-    <ProjectReference Include="..\Marriage.Service\Marriage.Service.csproj" />
+    <ProjectReference Include="..\Marriage.Utility\Marriage.Utility.csproj" />
   </ItemGroup>
 
 </Project>

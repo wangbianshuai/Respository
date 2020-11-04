@@ -82,7 +82,8 @@ namespace Marriage.Api.Code
 
             string loginUserId = string.Empty;
 
-            if (controllerActionDescriptor.ControllerName == "Live" && controllerActionDescriptor.ActionName == "GetLive")
+            if ((controllerActionDescriptor.ControllerName == "MarriageUser" && controllerActionDescriptor.ActionName == "GetUserByOpenId")
+                || (controllerActionDescriptor.ControllerName == "WxUser" && controllerActionDescriptor.ActionName == "GetWxUser"))
             {
                 string loginmd5 = "d56b699830e77ba53855679cb1d252da";
                 if (token.StartsWith(loginmd5))
@@ -91,7 +92,8 @@ namespace Marriage.Api.Code
                     loginUserId = OpenDataAccessCore.Utility.Common.FromBase64String(token);
                 }
                 else loginUserId = UserToken.ParseToken(token, sign);
-            }else loginUserId = UserToken.ParseToken(token, sign);
+            }
+            else loginUserId = UserToken.ParseToken(token, sign);
 
             Entity.Application.IRequest request = null;
             string requestKey = string.Empty;
@@ -118,6 +120,7 @@ namespace Marriage.Api.Code
 
             return true;
         }
+
         bool ParseAccessToken(ActionExecutingContext context, string access_token, string token)
         {
             Entity.Application.IRequest request = null;

@@ -11,9 +11,7 @@ export default (pageId, state, props) => {
 
   if (!obj.getStateValue) obj.getStateValue = (name) => state[name];
   if (!obj.toLogin) obj.toLogin = () => {
-    const url = props.location.pathname + props.location.search;
-    if (props.location.pathname.toLowerCase() === '/user/login') return;
-    props.history.push('/user/login?url=' + encodeURIComponent(url));
+    window.location.reload();
   }
 
   useEffect(() => {
@@ -24,7 +22,7 @@ export default (pageId, state, props) => {
     blChanged && !EnvConfig.isProd && console.log(state);
 
     obj.state = state;
-  }, [state, obj])
+  }, [state, obj, pageAxis])
 
   return [obj.getStateValue]
 }
@@ -54,10 +52,7 @@ function setResponseMessage(d, toLogin, pageAxis) {
   var data = d.data ? d.data : d;
   if (Common.isArray(data) && data.length > 0) data = data[0];
   if (data && data.isReLogin && data.isSuccess === false) {
-    if (pageAxis) {
-      if (pageAxis.loginByOpenId()) pageAxis.refreshPage();
-      else PageCommon.showMessage(data.message, () => toLogin());
-    }
+    if (pageAxis) pageAxis.refreshPage();
     else PageCommon.showMessage(data.message, () => toLogin());
     return true;
   }
