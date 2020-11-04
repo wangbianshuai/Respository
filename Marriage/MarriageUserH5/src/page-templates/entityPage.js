@@ -16,7 +16,7 @@ export default (name, config) => (props) => {
 
   useEffect(() => {
     if (config.title) document.title = config.title;
-  }, [config.title]);
+  }, []);
 
   useEffect(() => {
     if (pageAxis && pageAxis.pageData.title) document.title = pageAxis.pageData.title;

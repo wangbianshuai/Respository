@@ -2,6 +2,7 @@ import React from 'react';
 import { Common } from 'UtilsCommon';
 import { usePageAxis } from 'UseHooks';
 import { Icon } from "antd-mobile";
+import { EnvConfig } from 'Configs'
 
 const setVisible = (property, setIsVisible) => (v) => {
   property.isVisible = v;
@@ -104,7 +105,7 @@ const setDefaultValue = (property) => {
 
   if (property.isMonthFirst) property.defaultValue = Common.getCurrentDate().substr(0, 8) + "01";
 
-  if (property.isCurrentUser) property.defaultValue = Common.getStorage("loginUserId");
+  if (property.isCurrentUser) property.defaultValue = Common.getStorage(EnvConfig.loginUserIdKey);
 };
 
 const getSelectData = (property, value) => {

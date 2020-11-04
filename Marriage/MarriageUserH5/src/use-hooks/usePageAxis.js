@@ -13,6 +13,7 @@ props:父级页面props
 import { useEffect } from "react";
 import { Common, PageCommon } from 'UtilsCommon';
 import EventActions from 'EventActions';
+import { EnvConfig } from 'Configs';
 
 class PageAxis {
     constructor(id, parames) {
@@ -57,20 +58,15 @@ class PageAxis {
         obj.state = nextState;
     }
 
-    judgeLogin(url) {
-        if (!this.token) this.toLogin(url);
-        return !!this.token
-    }
-
-    toLogin(url) {
+    toRegister(url) {
         if (!url) url = this.props.location.pathname + this.props.location.search;
-        url = `/user/login?url=${encodeURIComponent(url)}`;
+        url = `/?url=${encodeURIComponent(url)}`;
         url = Common.addUrlRandom(url);
         this.toPage(url);
     }
 
     refreshPage() {
-        const url = this.props.location.pathname + this.props.location.search;
+        let url = this.props.location.pathname + this.props.location.search;
         url = Common.addUrlRandom(url);
         this.toPage(url);
     }
@@ -84,18 +80,15 @@ class PageAxis {
 
         this.modalDialog = {};
 
-        Common.setStorage("token", "abcdeoagjrogjorqejgoqergrqegqergqreg");
-        Common.setStorage("loginUserInfo", JSON.stringify({ nickName: 'abc', userId: 'asgregreg' }))
-
         this.loginUser = this.getLoginUser();
-        this.token = Common.getStorage("token");
+        this.token = Common.getStorage(EnvConfig.tokenKey);
 
         this.receives = {};
         this.eventActionsConfig = Common.clone(this.pageConfig.eventActions);
         if (this.pageConfig.actionOptions) this.actionTypes = this.pageConfig.actionOptions.actionTypes;
 
         this.pageData = Common.getQueryString();
-        this.pageData.token = this.token;
+
         //将pageAxis id赋值到location pageData上
         if (this.props.location && this.props.location.pageData) this.props.location.pageData.pageId = this.id;
 
@@ -104,9 +97,10 @@ class PageAxis {
     }
 
     getLoginUser = () => {
-        var info = Common.getStorage("loginUserInfo");
+        var info = Common.getStorage(EnvConfig.loginUserKey);
         if (!info) return {};
 
+        info = window.atob(decodeURIComponent(info))
         return JSON.parse(info);
     };
 
@@ -204,7 +198,7 @@ class PageAxis {
     }
 
     getLoginUserId() {
-        return this.loginUser.AdminUserId;
+        return this.loginUser.UserId;
     }
 
     getEventAction(name) {

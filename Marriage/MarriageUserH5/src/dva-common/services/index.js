@@ -15,17 +15,6 @@ export default (serviceName, getServiceUrl) => (action) => async (payload) => {
     if (action.isToken && !payload.token) return Promise.resolve({ isSuccess: false, isReLogin: true, message: 'the token is null' });
     if ((action.isToken || action.hasToken || action.isTokenAccess) && payload.token) {
       headers = { token: payload.token };
-
-      if (action.isFormData && payload.formData) {
-        if (payload.formData instanceof FormData) {
-          payload.formData.set('Valid', JSON.stringify({ UserUID: payload.loginUserId, Token: payload.token }));
-          payload.formData.set('Act', payload.formData.get('Act') + '_NV');
-        }
-        else {
-          payload.formData.Valid = JSON.stringify({ UserUID: payload.loginUserId, Token: payload.token });
-          payload.formData.Act = payload.formData.Act + '_NV';
-        }
-      }
     }
 
     //需token访问
@@ -36,7 +25,7 @@ export default (serviceName, getServiceUrl) => (action) => async (payload) => {
     let data = {};
     if (payload.url !== undefined || payload.token !== undefined || payload.action !== undefined) {
       for (let key in payload) {
-        if (key !== "url" && key !== "pathQuery" && key !== "token" && key !== "action" && key !== 'loginUserId') {
+        if (key !== "url" && key !== "pathQuery" && key !== "token" && key !== "action") {
           data[key] = payload[key];
         }
       }

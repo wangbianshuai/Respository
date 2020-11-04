@@ -1,6 +1,7 @@
 import { useMemo } from 'react';
 import { useSelector, useDispatch, } from 'dva';
 import { Common } from 'UtilsCommon';
+import { EnvConfig } from 'Configs';
 
 export default (app, mapStateToProps) => {
   const props = useSelector((state) => mapStateToProps(state));
@@ -17,7 +18,7 @@ export default (app, mapStateToProps) => {
 function init(obj, dispatch, app) {
   if (!obj.isInit) obj.isInit = true; else return;
 
-  const token = Common.getStorage('token');
+  const token = Common.getStorage(EnvConfig.tokenKey);
 
   obj.dispatch = getDispatch(dispatch, token, app);
   obj.dispatchAction = dispatchAction(dispatch, token, app);

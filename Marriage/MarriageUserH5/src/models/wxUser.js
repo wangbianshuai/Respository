@@ -4,8 +4,6 @@ const config = {
     name: 'WxUserService',
     serviceName: 'ApiService',
     actionList: [
-        //以openId获取Token
-        post('getTokenByOpenId', 'WxUser/GetTokenByOpenId', 'getTokenByOpenId'),
         //获取WxUser
         post('getWxUser', 'WxUser/GetWxUser', 'getWxUser', 'Data')
     ]

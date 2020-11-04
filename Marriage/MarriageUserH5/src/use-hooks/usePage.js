@@ -4,6 +4,7 @@ import useConnectDataAction from './useConnectDataAction'
 import useDvaData from './useDvaData';
 import usePageAxis from './usePageAxis';
 import useGetPageConfig from './useGetPageConfig';
+import useGetLoginUser from './useGetLoginUser';
 import { Common } from 'UtilsCommon';
 
 export default (name, props, mapStateToProps, init, dataActionOptions, wxUser) => {
@@ -27,12 +28,20 @@ export default (name, props, mapStateToProps, init, dataActionOptions, wxUser) =
     dispatchAction, setActionState, getStateValue, init, wxUser
   );
 
-  //6、 接收行为数据
+  //6、 使用获取登录用户
+  const loginUser = useGetLoginUser(wxUser, dispatchAction);
+
+  //没有登录信息，跳转注册页面
+  useEffect(() => {
+    if (pageAxis && !loginUser) pageAxis.toRegister();
+  }, [pageAxis, loginUser]);
+
+  //7、 接收行为数据
   useEffect(() => {
     pageAxis && pageAxis.receiveActionData(actionData)
   }, [pageAxis, actionData]);
 
-  //7、扩展接收数据
+  //8、扩展接收数据
   useEffect(() => {
     pageAxis && pageAxis.receiveState && pageAxis.receiveState(state)
   }, [pageAxis, state]);

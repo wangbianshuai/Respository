@@ -1,19 +1,12 @@
 import { useState, useEffect, useMemo } from "react";
 import { Common, PageCommon } from 'UtilsCommon';
 import { useDispatch } from 'dva';
-import { EnvConfig } from 'Configs';
 
 const wxUserKey = '8A655A4E-4E87-4907-A328-280CF649032A';
 
 const getStorageWxUser = () => {
     let str = Common.getStorage(wxUserKey);
     if (Common.isNullOrEmpty(str)) return null;
-
-    const token = Common.getStorage(EnvConfig.tokenKey);
-    if (Common.isNullOrEmpty(token)) {
-        Common.setStorage(wxUserKey, '');
-        return null;
-    }
 
     str = window.atob(decodeURIComponent(str))
     return JSON.parse(str);
@@ -44,7 +37,7 @@ function dispatchAction(dispatch) {
 
 const getWxUser = (dispatch, code, setWxUser) => {
     dispatchAction(dispatch)("WxUserService", "getWxUser", { code }).then(res => {
-        if (res.isSuccess === false) PageCommon.alert(res.message);
+        if (res && res.isSuccess === false) PageCommon.alert(res.message);
         else {
             setStorageWxUser(res);
             setWxUser(res);
@@ -53,7 +46,7 @@ const getWxUser = (dispatch, code, setWxUser) => {
 }
 
 export default () => {
-    const initWxUser = useMemo(() => getStorageWxUser(), [getStorageWxUser]);
+    const initWxUser = useMemo(() => getStorageWxUser(), []);
     const [wxUser, setWxUser] = useState(initWxUser);
 
     const dispatch = useDispatch();
@@ -66,7 +59,7 @@ export default () => {
             else setWxUser({ isAuthQrCode: true })
         }
         else if (!wxUser.isAuthQrCode) setStorageWxUser(wxUser);
-    }, [wxUser, dispatch, getCode, setWxUser]);
+    }, [wxUser, dispatch, setWxUser]);
 
     return [wxUser, setWxUser];
 }

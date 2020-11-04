@@ -1,5 +1,6 @@
 import BaseIndex from './baseIndex';
 import { Common } from "UtilsCommon";
+import EnvConfig from '../configs/envConfig';
 
 export default class DataGridView extends BaseIndex {
 
@@ -97,7 +98,7 @@ export default class DataGridView extends BaseIndex {
                     DataType: p.dataType || "string",
                     Value: p.defaultValue
                 }
-                if (p.isCurrentUser) condition.value = Common.getStorage("loginUserId");
+                if (p.isCurrentUser) condition.value = Common.getStorage(EnvConfig.loginUserIdKey);
 
                 if (!Common.isNullOrEmpty(condition.value)) conditionList.push(condition)
             });

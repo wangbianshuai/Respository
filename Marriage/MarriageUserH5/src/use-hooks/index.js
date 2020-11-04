@@ -6,6 +6,7 @@ import useGetDataSourceOptions from './useGetDataSourceOptions';
 import useGetPageConfig from './useGetPageConfig';
 import usePage from './usePage';
 import useGetWxUser from './useGetWxUser';
+import useGetLoginUser from './useGetLoginUser';
 
 export {
   useProcessData,
@@ -15,5 +16,6 @@ export {
   usePageAxis,
   useGetPageConfig,
   usePage,
-  useGetWxUser
+  useGetWxUser,
+  useGetLoginUser
 };

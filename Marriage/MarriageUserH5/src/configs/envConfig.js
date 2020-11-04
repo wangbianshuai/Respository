@@ -9,7 +9,9 @@ const EnvConfig = {
     setEnv,
     env: null,
     isProd: false,
-    tokenKey: 'D69BE2A5-591E-4173-A4BC-4420EFA20AF1'
+    tokenKey: 'D69BE2A5-591E-4173-A4BC-4420EFA20AF1',
+    loginUserIdKey: '377D979D-CBA2-417F-A013-05A1E883FFBB',
+    loginUserKey: 'AF695C1B-AA1B-48CF-93D1-A4D0D6C845E9',
 }
 
 //ctx koa对象，ctx不为空表示是服务器
