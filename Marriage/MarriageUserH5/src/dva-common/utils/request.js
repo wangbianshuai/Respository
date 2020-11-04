@@ -17,11 +17,11 @@ export function delete2(url, data, resKey, serviceName, headers) {
     return FetchByMethod(url, data, resKey, serviceName, headers, "DELETE");
 }
 
-export function postFormData(url, data, resKey, serviceName, headers, isCors) {
+export function postFormData(url, data, resKey, serviceName, headers) {
     return fetchRequest(url, {
         method: "POST",
         body: getFormData(data),
-    }, resKey, serviceName, headers, isCors)
+    }, resKey, serviceName, headers)
 }
 
 function getFormData(data) {
@@ -39,7 +39,7 @@ export function postUrlFormData(url, data, resKey, serviceName, headers) {
         method: "POST",
         headers: {},
         body: getUrlFormData(data)
-    }, resKey, serviceName, headers, isCors)
+    }, resKey, serviceName, headers)
 }
 
 function getUrlFormData(data) {
@@ -58,13 +58,11 @@ export function FetchByMethod(url, data, resKey, serviceName, headers, method) {
     }, resKey, serviceName, headers)
 }
 
-function fetchRequest(url, data, resKey, serviceName, headers, isCors) {
+function fetchRequest(url, data, resKey, serviceName, headers) {
     try {
-        if (isCors) data.headers = {};
-        else {
-            data = setServiceHeader(data, serviceName);
-            data = setParamsHeader(data, headers);
-        }
+        data = setServiceHeader(data, serviceName);
+        data = setParamsHeader(data, headers);
+        
         url = getFullUrl(url);
         return fetch(url, data).then(res => setResult(res)).then(d => HttpResponse.getResponse(d, resKey), res => HttpResponse.getErrorResponse(res));
     }
@@ -99,7 +97,7 @@ function setApiServiceHeader(data, serviceName) {
     data = data || { headers: {}, method: "GET" };
     data.headers = data.headers || {};
 
-    let clientId = "Horiba-minisite";
+    let clientId = "marriage-user-h5";
 
     if (_ClientConfig[serviceName]) clientId = _ClientConfig[serviceName];
 

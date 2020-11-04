@@ -65,7 +65,7 @@ function requestData(action, url, data, dataKey, serviceName, headers) {
   if (action.method === "GET") return request.get(url, dataKey, serviceName, headers);
   else if (action.method === "PUT") return request.put(url, data, dataKey, serviceName, headers);
   else if (action.method === "DELETE") return request.delete2(url, data, dataKey, serviceName, headers);
-  else if (action.isFormData) return request.postFormData(url, data.formData, dataKey, serviceName, headers, action.isCors);
+  else if (action.isFormData) return request.postFormData(url, data.formData, dataKey, serviceName, headers);
   else if (action.isUrlFormData) return request.postUrlFormData(url, data.formData, dataKey, serviceName, headers);
   else return request.post(url, data, dataKey, serviceName, headers);
 }
