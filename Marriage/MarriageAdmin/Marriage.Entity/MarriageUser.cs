@@ -63,9 +63,13 @@ namespace Marriage.Entity
         /// </summary> 
         public DateTime Birthday { get; set; }
         /// <summary> 
+        /// 出生时辰
+        /// </summary> 
+        public int BirthTime { get; set; }
+        /// <summary> 
         /// 农历生日
         /// </summary> 
-        public string LunarBirthday { get; set; }
+        public DateTime LunarBirthday { get; set; }
         /// <summary> 
         /// 生辰八字
         /// </summary> 
@@ -74,6 +78,10 @@ namespace Marriage.Entity
         /// 所属红娘
         /// </summary> 
         public Guid MatchmakerId { get; set; }
+        /// <summary> 
+        /// 是否公开
+        /// </summary> 
+        public byte IsPublic { get; set; }
         /// <summary> 
         /// 状态：0：待审核，1：审核通过，2：审核不通过，3：关闭
         /// </summary> 

@@ -1154,7 +1154,7 @@
         </member>
         <member name="P:Marriage.Entity.Data.MarriageUser.HeadImgUrl">
             <summary> 
-            微信用户头像，最后一个数值代表正方形头像大小（有0、46、64、96、132数值可选，0代表640*640正方形头像），用户没有头像时该项为空。若用户更换头像，原有头像URL将失效。
+            微信用户头像
             </summary> 
         </member>
         <member name="P:Marriage.Entity.Data.MarriageUser.IdCard">
@@ -1169,47 +1169,22 @@
         </member>
         <member name="P:Marriage.Entity.Data.MarriageUser.Address">
             <summary> 
-            地址
-            </summary> 
-        </member>
-        <member name="P:Marriage.Entity.Data.MarriageUser.BirthEight">
-            <summary> 
-            生辰八字
-            </summary> 
-        </member>
-        <member name="P:Marriage.Entity.Data.MarriageUser.BirthAnimal">
-            <summary> 
-            生肖
-            </summary> 
-        </member>
-        <member name="P:Marriage.Entity.Data.MarriageUser.Educational">
-            <summary> 
-            学历
-            </summary> 
-        </member>
-        <member name="P:Marriage.Entity.Data.MarriageUser.JobName">
-            <summary> 
-            职业
-            </summary> 
-        </member>
-        <member name="P:Marriage.Entity.Data.MarriageUser.YearIncome">
-            <summary> 
-            上年收入
-            </summary> 
-        </member>
-        <member name="P:Marriage.Entity.Data.MarriageUser.MonthIncome">
-            <summary> 
-            当前月收入
-            </summary> 
-        </member>
-        <member name="P:Marriage.Entity.Data.MarriageUser.FamilyRemark">
-            <summary> 
-            家庭情况
+            家庭地址
             </summary> 
         </member>
         <member name="P:Marriage.Entity.Data.MarriageUser.NowAddress">
             <summary> 
             现居住地
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Data.MarriageUser.LunarBirthday">
+            <summary> 
+            农历生日
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Data.MarriageUser.BirthEight">
+            <summary> 
+            生辰八字
             </summary> 
         </member>
         <member name="P:Marriage.Entity.Data.MarriageUser.MatchmakerId">
@@ -1534,7 +1509,7 @@
         </member>
         <member name="P:Marriage.Entity.Domain.MarriageUser.HeadImgUrl">
             <summary> 
-            微信用户头像，最后一个数值代表正方形头像大小（有0、46、64、96、132数值可选，0代表640*640正方形头像），用户没有头像时该项为空。若用户更换头像，原有头像URL将失效。
+            微信用户头像
             </summary> 
         </member>
         <member name="P:Marriage.Entity.Domain.MarriageUser.IdCard">
@@ -1549,47 +1524,27 @@
         </member>
         <member name="P:Marriage.Entity.Domain.MarriageUser.Address">
             <summary> 
-            地址
-            </summary> 
-        </member>
-        <member name="P:Marriage.Entity.Domain.MarriageUser.BirthEight">
-            <summary> 
-            生辰八字
-            </summary> 
-        </member>
-        <member name="P:Marriage.Entity.Domain.MarriageUser.BirthAnimal">
-            <summary> 
-            生肖
-            </summary> 
-        </member>
-        <member name="P:Marriage.Entity.Domain.MarriageUser.Educational">
-            <summary> 
-            学历
-            </summary> 
-        </member>
-        <member name="P:Marriage.Entity.Domain.MarriageUser.JobName">
-            <summary> 
-            职业
-            </summary> 
-        </member>
-        <member name="P:Marriage.Entity.Domain.MarriageUser.YearIncome">
-            <summary> 
-            上年收入
-            </summary> 
-        </member>
-        <member name="P:Marriage.Entity.Domain.MarriageUser.MonthIncome">
-            <summary> 
-            当前月收入
-            </summary> 
-        </member>
-        <member name="P:Marriage.Entity.Domain.MarriageUser.FamilyRemark">
-            <summary> 
-            家庭情况
+            家庭地址
             </summary> 
         </member>
         <member name="P:Marriage.Entity.Domain.MarriageUser.NowAddress">
             <summary> 
             现居住地
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Domain.MarriageUser.Birthday">
+            <summary> 
+            公历生日
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Domain.MarriageUser.LunarBirthday">
+            <summary> 
+            农历生日
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Domain.MarriageUser.BirthEight">
+            <summary> 
+            生辰八字
             </summary> 
         </member>
         <member name="P:Marriage.Entity.Domain.MarriageUser.MatchmakerId">

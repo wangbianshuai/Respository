@@ -6,7 +6,6 @@
 .divRegister{
     width: 100%;
     min-height: 100%;
-    background-color: #f5f5f9;
     display: flex;
     justify-content: center;
 
@@ -14,6 +13,7 @@
         width: 100%;
         display: flex;
         flex-direction: column;
+        margin-bottom: toRem(60);
 
         .divTitle{
             width: 100%;
@@ -28,5 +28,79 @@
                 font-size: toRem(32);
             }
         }
+    }
+}
+
+.divRegister :global{
+    .am-list-body:before{
+        height: 0 !important;
+    }
+    .am-list-body:after{
+       height: 0 !important;
+   }
+
+   .am-input-label, .am-list-content, .am-list-extra, .am-textarea-label, .am-textarea-control textarea, .am-input-control,.am-input-control input{
+       font-size: toRem(28) !important;
+   }
+
+   .am-checkbox{
+       margin-right: toRem(20);
+   }
+
+   .am-checkbox-wrapper{
+       margin-left: 85px;
+       color: #187FC4;
+   }
+}
+
+.divUpdateImage {
+
+    .divLabel{
+   padding-bottom: toRem(10);
+    }
+
+    .divImage3{
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        padding-top: toRem(10);
+        padding-bottom: toRem(10);
+
+        img{
+            width: toRem(200);
+            max-width: 80%;
+            height: toRem(200);
+            border-radius: toRem(16);
+        }
+    }
+   
+}
+
+.divPickerDate{
+    :global{
+         .am-list-content{
+         flex: 2 !important;
+         }
+        }
+}
+
+.divButtonView{
+    width: 100%;
+    height: toRem(140);
+    padding:toRem(30);
+    box-sizing: border-box;
+  
+    .divRow4{
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .button{
+      flex: 1;
+      margin-left: toRem(20);
+      margin-right: toRem(20);
+      overflow: unset !important;
     }
 }

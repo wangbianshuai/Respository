@@ -1,4 +1,4 @@
-const { getTextBox, getSelect, getButton } = require('../common');
+const { getTextBox, getSelect, getButton, getDatePicker } = require('../common');
 
 //index 100-199
 const dataActionTypes = {
@@ -62,15 +62,29 @@ function getProperties() {
             className: 'divUpdateImage',
             isListItem: true,
             isEdit: true,
+            isNullable: false,
             nullTipMessage: "请选择图片",
             x: 2,
             y: 1
         },
-        { ...getSpanText2('Status', '状态'), dataSource: getStatusDataSource(), isListItem: true, isVisible: false },
-        getTextBox2('Title', '标题', '', 1, 1, '请输入标题', 50, false),
-        getSelectPicker('Type', '分类', getTypeDataSource(), 6, 1, false),
-        { ...getSpanText2('Points', '分数'), isListItem: true, isVisible: false },
-        getTextBox2('Description', '描述', 'textarea', 1, 1, '请输入描述', 500, false),
+        getTextBox2('NickName', '昵称', '', 1, 1, '请输入昵称', 20, false),
+        getTextBox2('Name', '姓名', '', 1, 1, '请输入姓名', 20, false),
+        getTextBox2('IdCard', '身份证号', '', 1, 1, '请输入身份证号', 20, false),
+        getTextBox2('Phone', '手机号码', '', 1, 1, '请输入手机号码', 20, false),
+        getTextBox2('Address', '家庭地址', '', 1, 1, '请输入家庭地址', 100, false),
+        getTextBox2('NowAddress', '现居住地', '', 1, 1, '', 100, true),
+        { ...getDatePicker2('Birthday', '公历生日', '请选择公历生日', false), className: 'divPickerDate' },
+        getSelectPicker('BirthTime', '出生时辰', getShiChenDataSource(), 6, 1, false),
+        { ...getTextBox2('LunarBirthday', '农历生日', '', 1, 1, '', 100, true), isReadOnly: true },
+        { ...getTextBox2('BirthEight', '生辰八字', '', 1, 1, '', 100, true), isReadOnly: true },
+        getTextBox2('Remark', '个性签名', 'textarea', 1, 1, '请输入个性签名', 500, true),
+        {
+            name: 'IsPublic',
+            label: '信息是否公开（公开广场中可见）',
+            type: 'Switch',
+            isEdit: true,
+            defaultValue: 0
+        },
         getButtonView()
     ]
 }
@@ -88,28 +102,8 @@ function getButtonView() {
     }
 }
 
-function getSpanText2(name, label) {
-    return { name, label, type: 'SpanText' }
-}
-
-function getStatusDataSource() {
-    return [
-        { value: 0, text: '审核中' },
-        { value: 10, text: '审核不通过' },
-        { value: 100, text: '审核通过' }
-    ]
-}
-
-function getTypeDataSource() {
-    return [
-        { value: 1, text: 'Attend User meeting' },
-        { value: 2, text: 'Give Talk on user meeting/FEST' },
-        { value: 3, text: 'Support HORIBA seminar by place and arrangement' },
-        { value: 4, text: 'Support HORIBA sample running and service' },
-        { value: 5, text: 'Contribution to HORIBA magazine' },
-        { value: 6, text: 'Technology transfer' },
-        { value: 7, text: 'Others' }
-    ]
+function getDatePicker2(name, label, placeHorder, isNullable) {
+    return { ...getDatePicker(name, label), placeHorder, isEdit: true, isNullable, isRed: !isNullable }
 }
 
 function getTextBox2(name, label, controlType, x, y, placeHorder, maxLength, isNullable) {

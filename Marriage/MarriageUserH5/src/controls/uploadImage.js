@@ -5,7 +5,7 @@ import Base from './base';
 import styles from '../styles/view.scss';
 
 const uploadImage = (e, pageAxis, setImage) => {
-    if (e.target.files.length == 0) return;
+    if (e.target.files.length === 0) return;
     const file = e.target.files[0];
     if (!/image/.test(file.type)) { pageAxis.alert("请选择图片"); return; }
 
@@ -46,14 +46,14 @@ export default (props) => {
 
     if (!isVisible) return null;
 
-    const { label, style, pathName, isNullable } = property;
+    const { label, style, isNullable } = property;
 
     const className = Base.getClassName(property, styles);
 
-    const src = EnvConfig.getServiceUrl('ImageService')() + pathName + '/' + value;
+    const src = EnvConfig.getServiceUrl('ImageService')()  + '/' + value;
 
     const render = <React.Fragment>
-        {label && <div className={styles.divLabel}><span>{label}{isNullable === false ? <span style={{ color: 'red' }}>*</span> : ''}{image ? <span style={{ color: 'red' }}>(更新图片需保存)</span> : ''}</span></div>}
+        {label && <div className={styles.divLabel}><span>{label}{isNullable === false ? <span style={{ color: 'red' }}>*</span> : ''}</span></div>}
         {image && <div className={styles.divImage3}><img src={image} alt='' onClick={onClick} /></div>}
         {!image && value && <div className={styles.divImage3}><img src={src} alt='' onClick={onClick} /></div>}
         <Button size='small' type='ghost' onClick={onClick}>选择图片</Button>

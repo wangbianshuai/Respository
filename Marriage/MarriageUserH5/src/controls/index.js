@@ -12,6 +12,7 @@ import CheckBox from './checkbox';
 import CheckBoxGroup from './checkboxGroup';
 import UploadImage from './uploadImage';
 import DatePicker from './datePicker';
+import Switch from './switch';
 
 export default {
     SearchBar,
@@ -27,5 +28,6 @@ export default {
     CheckBox,
     CheckBoxGroup,
     UploadImage,
-    DatePicker
+    DatePicker,
+    Switch
 }

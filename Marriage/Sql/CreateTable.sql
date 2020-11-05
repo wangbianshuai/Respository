@@ -175,8 +175,10 @@ Phone varchar(20) not null,                                    --手机号码
 Address nvarchar(100) not null,                                --家庭地址
 NowAddress nvarchar(100),                                      --现居住地
 Birthday datetime,                                             --公历生日
+BirthTime int not null,                                        --时辰
 LunarBirthday nvarchar(30),                                    --农历生日
 BirthEight nvarchar(30),                                       --生辰八字
+IsPublic tinyint not null default(0),                          --是否公开
 MatchmakerId uniqueidentifier not null,                        --所属红娘
 Status tinyint not null default(0),                            --状态：0：待审核，1：审核通过，2：审核不通过，3：关闭
 NoPassReason nvarchar(500),                                    --审核不通过原因
@@ -205,8 +207,10 @@ exec proc_AddCellExplanation '手机','t_MarriageUser','Phone'
 exec proc_AddCellExplanation '家庭地址','t_MarriageUser','Address'
 exec proc_AddCellExplanation '现居住地','t_MarriageUser','NowAddress'
 exec proc_AddCellExplanation '公历生日','t_MarriageUser','Birthday'
+exec proc_AddCellExplanation '时辰','t_MarriageUser','BirthTime'
 exec proc_AddCellExplanation '农历生日','t_MarriageUser','LunarBirthday'
 exec proc_AddCellExplanation '生辰八字','t_MarriageUser','BirthEight'
+exec proc_AddCellExplanation '是否公开','t_MarriageUser','IsPublic'
 exec proc_AddCellExplanation '所属红娘','t_MarriageUser','MatchmakerId'
 exec proc_AddCellExplanation '状态：0：待审核，1：审核通过，2：审核不通过，3：关闭','t_MarriageUser','Status'
 exec proc_AddCellExplanation '最近登录时间','t_MarriageUser','LastLoginDate'
