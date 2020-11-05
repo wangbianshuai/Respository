@@ -17,28 +17,17 @@ module.exports = {
     type: "View",
     entity,
     eventActions: getEventActions(),
-    properties: [getTabs(), marriageUserEditView()]
+    properties: [marriageUserEditView()]
 }
 
-function getTabs() {
-    return {
-        name: 'tabs1',
-        type: 'Tabs',
-        isDiv: true,
-        className: 'tabDetail',
-        tabs: [{ title: '文献', url: "/marriageUser/get?tabPage=0" },
-        { title: '科研经验', url: "/marriageUser/get?tabPage=1" },
-        { title: '调查问卷', url: "/marriageUser/get?tabPage=2" },
-        { title: '其它', url: "/marriageUser/get?tabPage=3" }]
-    }
-}
 
 function marriageUserEditView() {
     return {
         name: "editView",
         type: "View",
         isDiv: true,
-        className: 'divDetail',
+        isRootDiv: true,
+        className: 'divRegister',
         properties: [marriageUserEditView2()]
     }
 }
@@ -49,13 +38,34 @@ function marriageUserEditView2() {
         type: "View",
         entity,
         isList: true,
-        className: 'divLogin',
+        className: 'divDetail',
         properties: getProperties()
     }
 }
 
 function getProperties() {
     return [
+        {
+            name: "title",
+            type: 'SpanText',
+            isDiv: true,
+            x: 1,
+            y: 1,
+            className: 'divTitle',
+            label: "缘份从这里开始"
+        },
+        {
+            name: 'HeadImgUrl',
+            label: '头像',
+            type: 'UploadImage',
+            pathName: 'CollaborationImages',
+            className: 'divUpdateImage',
+            isListItem: true,
+            isEdit: true,
+            nullTipMessage: "请选择图片",
+            x: 2,
+            y: 1
+        },
         { ...getSpanText2('Status', '状态'), dataSource: getStatusDataSource(), isListItem: true, isVisible: false },
         getTextBox2('Title', '标题', '', 1, 1, '请输入标题', 50, false),
         getSelectPicker('Type', '分类', getTypeDataSource(), 6, 1, false),
@@ -118,4 +128,35 @@ function getEventActions() {
         editView: "marriageUserEditEdit",
         successCallback: 'saveEntityDataCallback'
     }]
+}
+
+function getItem(value, text) { return { value, text } }
+
+function getShiChenDataSource() {
+    return [
+        getItem(0, '子 00:00-00:59'),
+        getItem(1, '丑 01:00-01:59'),
+        getItem(2, '丑 02:00-02:59'),
+        getItem(3, '寅 03:00-03:59'),
+        getItem(4, '寅 04:00-04:59'),
+        getItem(5, '卯 05:00-05:59'),
+        getItem(6, '卯 06:00-06:59'),
+        getItem(7, '辰 07:00-07:59'),
+        getItem(8, '辰 08:00-08:59'),
+        getItem(9, '巳 09:00-09:59'),
+        getItem(10, '巳 10:00-10:59'),
+        getItem(11, '午 11:00-11:59'),
+        getItem(12, '午 12:00-12:59'),
+        getItem(13, '未 13:00-13:59'),
+        getItem(14, '未 14:00-14:59'),
+        getItem(15, '申 15:00-15:59'),
+        getItem(16, '申 16:00-16:59'),
+        getItem(17, '酉 17:00-17:59'),
+        getItem(18, '酉 18:00-18:59'),
+        getItem(19, '戌 19:00-19:59'),
+        getItem(20, '戌 20:00-20:59'),
+        getItem(21, '亥 21:00-21:59'),
+        getItem(22, '亥 22:00-22:59'),
+        getItem(23, '子 23:00-23:59'),
+    ]
 }

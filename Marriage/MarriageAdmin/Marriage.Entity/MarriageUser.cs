@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
+using OpenDataAccessCore.Entity;
 
-namespace Marriage.Entity.Domain
+namespace Marriage.Entity
 {
-    /// <summary>
-    /// 相亲人员
-    /// </summary>
-    public class MarriageUser
+    [TableProperty(Name = "t_MarriageUser", PrimaryKey = "UserId")]
+    [RequestMethod(IsDelete = false)]
+    public class MarriageUser : EntityModel, IEntity
     {
         /// <summary> 
         /// 主键
@@ -93,5 +94,38 @@ namespace Marriage.Entity.Domain
         /// 备注
         /// </summary> 
         public string Remark { get; set; }
+        /// <summary> 
+        /// 是否删除
+        /// </summary> 
+        public byte IsDelete { get; set; }
+        /// <summary> 
+        /// 创建人
+        /// </summary> 
+        public Guid CreateUser { get; set; }
+        /// <summary> 
+        /// 创建时间
+        /// </summary> 
+        public DateTime CreateDate { get; set; }
+        /// <summary> 
+        /// 更新人
+        /// </summary> 
+        public Guid UpdateUser { get; set; }
+        /// <summary> 
+        /// 更新时间
+        /// </summary> 
+        public DateTime UpdateDate { get; set; }
+        /// <summary> 
+        /// 行版本
+        /// </summary> 
+        public string RowVersion { get; set; }
+    }
+
+    [TableProperty(Name = "v_MarriageUser", PrimaryKey = "UserId", NoSelectNames = "IsDelete")]
+    [RequestMethod(IsDelete = false, IsPost = false, IsPut = false)]
+    public class ViewMarriageUser : MarriageUser
+    {
+        public string StatusName { get; set; }
+
+        public string SexName { get; set; }
     }
 }

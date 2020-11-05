@@ -41,7 +41,7 @@ namespace Marriage.Entity.Data
         /// </summary> 
         public string Province { get; set; }
         /// <summary> 
-        /// 微信用户头像，最后一个数值代表正方形头像大小（有0、46、64、96、132数值可选，0代表640*640正方形头像），用户没有头像时该项为空。若用户更换头像，原有头像URL将失效。
+        /// 微信用户头像
         /// </summary> 
         public string HeadImgUrl { get; set; }
         /// <summary> 
@@ -53,41 +53,21 @@ namespace Marriage.Entity.Data
         /// </summary> 
         public string Phone { get; set; }
         /// <summary> 
-        /// 地址
+        /// 家庭地址
         /// </summary> 
         public string Address { get; set; }
-        /// <summary> 
-        /// 生辰八字
-        /// </summary> 
-        public string BirthEight { get; set; }
-        /// <summary> 
-        /// 生肖
-        /// </summary> 
-        public string BirthAnimal { get; set; }
-        /// <summary> 
-        /// 学历
-        /// </summary> 
-        public byte Educational { get; set; }
-        /// <summary> 
-        /// 职业
-        /// </summary> 
-        public string JobName { get; set; }
-        /// <summary> 
-        /// 上年收入
-        /// </summary> 
-        public decimal YearIncome { get; set; }
-        /// <summary> 
-        /// 当前月收入
-        /// </summary> 
-        public decimal MonthIncome { get; set; }
-        /// <summary> 
-        /// 家庭情况
-        /// </summary> 
-        public string FamilyRemark { get; set; }
         /// <summary> 
         /// 现居住地
         /// </summary> 
         public string NowAddress { get; set; }
+        /// <summary> 
+        /// 农历生日
+        /// </summary> 
+        public DateTime LunarBirthday { get; set; }
+        /// <summary> 
+        /// 生辰八字
+        /// </summary> 
+        public string BirthEight { get; set; }
         /// <summary> 
         /// 所属红娘
         /// </summary> 

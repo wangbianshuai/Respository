@@ -172,15 +172,11 @@ Province nvarchar(20),                                         --Î¢ĞÅÓÃ»§ËùÔÚÊ¡·
 HeadImgUrl nvarchar(200),                                      --Î¢ĞÅÓÃ»§Í·Ïñ£¬×îºóÒ»¸öÊıÖµ´ú±íÕı·½ĞÎÍ·Ïñ´óĞ¡£¨ÓĞ0¡¢46¡¢64¡¢96¡¢132ÊıÖµ¿ÉÑ¡£¬0´ú±í640*640Õı·½ĞÎÍ·Ïñ£©£¬ÓÃ»§Ã»ÓĞÍ·ÏñÊ±¸ÃÏîÎª¿Õ¡£ÈôÓÃ»§¸ü»»Í·Ïñ£¬Ô­ÓĞÍ·ÏñURL½«Ê§Ğ§¡£
 IdCard varchar(20) not null,                                   --Éí·İÖ¤ºÅÂë
 Phone varchar(20) not null,                                    --ÊÖ»úºÅÂë
-Address nvarchar(100) not null,                                --µØÖ·
-BirthEight nvarchar(50),                                       --Éú³½°Ë×Ö
-BirthAnimal nvarchar(2),                                       --ÉúĞ¤
-Educational tinyint,                                           --Ñ§Àú
-JobName nvarchar(50),                                          --Ö°Òµ
-YearIncome money,                                              --ÉÏÄêÊÕÈë
-MonthIncome money,                                             --µ±Ç°ÔÂÊÕÈë
-FamilyRemark nvarchar(500),                                    --¼ÒÍ¥Çé¿ö
+Address nvarchar(100) not null,                                --¼ÒÍ¥µØÖ·
 NowAddress nvarchar(100),                                      --ÏÖ¾Ó×¡µØ
+Birthday datetime,                                             --¹«ÀúÉúÈÕ
+LunarBirthday nvarchar(30),                                    --Å©ÀúÉúÈÕ
+BirthEight nvarchar(30),                                       --Éú³½°Ë×Ö
 MatchmakerId uniqueidentifier not null,                        --ËùÊôºìÄï
 Status tinyint not null default(0),                            --×´Ì¬£º0£º´ıÉóºË£¬1£ºÉóºËÍ¨¹ı£¬2£ºÉóºË²»Í¨¹ı£¬3£º¹Ø±Õ
 NoPassReason nvarchar(500),                                    --ÉóºË²»Í¨¹ıÔ­Òò
@@ -203,18 +199,14 @@ exec proc_AddCellExplanation 'Î¢ĞÅêÇ³Æ','t_MarriageUser','NickName'
 exec proc_AddCellExplanation 'Î¢ĞÅÓÃ»§µÄĞÔ±ğ£¬ÖµÎª1Ê±ÊÇÄĞĞÔ£¬ÖµÎª2Ê±ÊÇÅ®ĞÔ£¬ÖµÎª0Ê±ÊÇÎ´Öª','t_MarriageUser','Sex'
 exec proc_AddCellExplanation 'Î¢ĞÅÓÃ»§ËùÔÚ³ÇÊĞ','t_MarriageUser','City'
 exec proc_AddCellExplanation 'Î¢ĞÅÓÃ»§ËùÔÚÊ¡·İ','t_MarriageUser','Province'
-exec proc_AddCellExplanation 'Î¢ĞÅÓÃ»§Í·Ïñ£¬×îºóÒ»¸öÊıÖµ´ú±íÕı·½ĞÎÍ·Ïñ´óĞ¡£¨ÓĞ0¡¢46¡¢64¡¢96¡¢132ÊıÖµ¿ÉÑ¡£¬0´ú±í640*640Õı·½ĞÎÍ·Ïñ£©£¬ÓÃ»§Ã»ÓĞÍ·ÏñÊ±¸ÃÏîÎª¿Õ¡£ÈôÓÃ»§¸ü»»Í·Ïñ£¬Ô­ÓĞÍ·ÏñURL½«Ê§Ğ§¡£','t_MarriageUser','HeadImgUrl'
-exec proc_AddCellExplanation 'µØÖ·','t_MarriageUser','Address'
+exec proc_AddCellExplanation 'Î¢ĞÅÓÃ»§Í·Ïñ','t_MarriageUser','HeadImgUrl'
 exec proc_AddCellExplanation 'Éí·İÖ¤ºÅÂë','t_MarriageUser','IdCard'
 exec proc_AddCellExplanation 'ÊÖ»ú','t_MarriageUser','Phone'
-exec proc_AddCellExplanation 'Éú³½°Ë×Ö','t_MarriageUser','BirthEight'
-exec proc_AddCellExplanation 'ÉúĞ¤','t_MarriageUser','BirthAnimal'
-exec proc_AddCellExplanation 'Ñ§Àú','t_MarriageUser','Educational'
-exec proc_AddCellExplanation 'Ö°Òµ','t_MarriageUser','JobName'
-exec proc_AddCellExplanation 'ÉÏÄêÊÕÈë','t_MarriageUser','YearIncome'
-exec proc_AddCellExplanation 'µ±Ç°ÔÂÊÕÈë','t_MarriageUser','MonthIncome'
-exec proc_AddCellExplanation '¼ÒÍ¥Çé¿ö','t_MarriageUser','FamilyRemark'
+exec proc_AddCellExplanation '¼ÒÍ¥µØÖ·','t_MarriageUser','Address'
 exec proc_AddCellExplanation 'ÏÖ¾Ó×¡µØ','t_MarriageUser','NowAddress'
+exec proc_AddCellExplanation '¹«ÀúÉúÈÕ','t_MarriageUser','Birthday'
+exec proc_AddCellExplanation 'Å©ÀúÉúÈÕ','t_MarriageUser','LunarBirthday'
+exec proc_AddCellExplanation 'Éú³½°Ë×Ö','t_MarriageUser','BirthEight'
 exec proc_AddCellExplanation 'ËùÊôºìÄï','t_MarriageUser','MatchmakerId'
 exec proc_AddCellExplanation '×´Ì¬£º0£º´ıÉóºË£¬1£ºÉóºËÍ¨¹ı£¬2£ºÉóºË²»Í¨¹ı£¬3£º¹Ø±Õ','t_MarriageUser','Status'
 exec proc_AddCellExplanation '×î½üµÇÂ¼Ê±¼ä','t_MarriageUser','LastLoginDate'
