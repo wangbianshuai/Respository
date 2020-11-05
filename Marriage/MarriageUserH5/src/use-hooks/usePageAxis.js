@@ -58,11 +58,9 @@ class PageAxis {
         obj.state = nextState;
     }
 
-    toRegister(url) {
-        if (!url) url = this.props.location.pathname + this.props.location.search;
-        url = `/?url=${encodeURIComponent(url)}`;
-        url = Common.addUrlRandom(url);
-        this.toPage(url);
+    toRegister() {
+        if (this.props.location.pathname === '/') return;
+        this.toPage('/');
     }
 
     refreshPage() {
@@ -70,7 +68,7 @@ class PageAxis {
         url = Common.addUrlRandom(url);
         this.toPage(url);
     }
-    
+
     initSet() {
         this.pageConfig = Common.clone(this.pageConfig);
 
@@ -96,7 +94,7 @@ class PageAxis {
         var info = Common.getStorage(EnvConfig.loginUserKey);
         if (!info) return {};
 
-        info = window.atob(decodeURIComponent(info))
+        info = decodeURIComponent(window.atob(info))
         return JSON.parse(info);
     };
 

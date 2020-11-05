@@ -116,13 +116,11 @@ namespace Marriage.Domain.Impl
         /// </summary>
         /// <param name="accessToken"></param>
         /// <param name="openId"></param>
-        /// <param name="url"></param>
         /// <returns></returns>
-        public Entity.Service.UserManage.GetUserInfoResponse GetUserInfo(string accessToken, string openId, string url)
+        public Entity.Service.UserManage.GetUserInfoResponse GetUserInfo(string accessToken, string openId)
         {
             Entity.Service.UserManage.GetUserInfoRequest entity = new Entity.Service.UserManage.GetUserInfoRequest();
             entity.AccessToken = accessToken;
-            entity.Url = url;
             entity.openId = openId;
 
             return _UserManage.GetUserInfo(entity);

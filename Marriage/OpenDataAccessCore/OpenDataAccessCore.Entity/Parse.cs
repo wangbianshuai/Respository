@@ -308,6 +308,7 @@ namespace OpenDataAccessCore.Entity
 
         public static T IEntityDataTo<T>(IEntityData entityData) where T : class
         {
+            if (entityData == null) return null;
             return DictionaryTo<T>(entityData.ToDictionary());
         }
 

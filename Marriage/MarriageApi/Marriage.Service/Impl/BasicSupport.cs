@@ -36,6 +36,8 @@ namespace Marriage.Service.Impl
             dict.Add("secret", request.Secret);
             dict.Add("code", request.Code);
 
+            request.Url = "https://api.weixin.qq.com/sns/oauth2/access_token";
+
             string url = string.Format("{0}?{1}", request.Url, new FormUrlEncodedContent(dict).ReadAsStringAsync().Result);
             return this.GetRequest2<GetWebAccessTokenResponse>(url);
         }

@@ -55,6 +55,8 @@ namespace Marriage.Service.Impl
             dict.Add("openid", request.openId);
             dict.Add("lang", "zh_CN");
 
+            request.Url = "https://api.weixin.qq.com/sns/userinfo";
+
             string url = string.Format("{0}?{1}", request.Url, new FormUrlEncodedContent(dict).ReadAsStringAsync().Result);
             return this.GetRequest2<GetUserInfoResponse>(url);
         }

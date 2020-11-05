@@ -4,6 +4,86 @@
         <name>Marriage.Entity</name>
     </assembly>
     <members>
+        <member name="T:Marriage.Entity.Application.MarriageUser.GetUserByOpenIdRequest">
+            <summary>
+            以微信OpenId获取用户请求
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageUser.GetUserByOpenIdRequest.OpenId">
+            <summary>
+            OpenId
+            </summary>
+        </member>
+        <member name="T:Marriage.Entity.Application.MarriageUser.GetUserByOpenIdResponse">
+            <summary>
+            以微信OpenId获取用户响应
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageUser.GetUserByOpenIdResponse.Data">
+            <summary>
+            用户数据
+            </summary>
+        </member>
+        <member name="T:Marriage.Entity.Application.MarriageUser.UserInfo">
+            <summary>
+            用户信息
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageUser.UserInfo.UserId">
+            <summary> 
+            主键
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageUser.UserInfo.Name">
+            <summary> 
+            名称
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageUser.UserInfo.OpenId">
+            <summary> 
+            微信OpenId
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageUser.UserInfo.NickName">
+            <summary> 
+            微信昵称
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageUser.UserInfo.Sex">
+            <summary> 
+            微信用户的性别，值为1时是男性，值为2时是女性，值为0时是未知
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageUser.UserInfo.City">
+            <summary> 
+            微信用户所在城市
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageUser.UserInfo.Province">
+            <summary> 
+            微信用户所在省份
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageUser.UserInfo.HeadImgUrl">
+            <summary> 
+            微信用户头像，最后一个数值代表正方形头像大小（有0、46、64、96、132数值可选，0代表640*640正方形头像），用户没有头像时该项为空。若用户更换头像，原有头像URL将失效。
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageUser.UserInfo.IdCard">
+            <summary> 
+            身份证号码
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageUser.UserInfo.Phone">
+            <summary> 
+            手机
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageUser.UserInfo.Address">
+            <summary> 
+            地址
+            </summary> 
+        </member>
         <member name="T:Marriage.Entity.Application.IRequest">
             <summary>
             请求接口
@@ -179,12 +259,32 @@
         </member>
         <member name="P:Marriage.Entity.Application.WxUser.WxUser.openid">
             <summary>
-            OpenID
+            用户的唯一标识
             </summary>
         </member>
         <member name="P:Marriage.Entity.Application.WxUser.WxUser.nickname">
             <summary>
-            昵称
+            用户昵称
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Application.WxUser.WxUser.sex">
+            <summary>
+            用户的性别，值为1时是男性，值为2时是女性，值为0时是未知
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Application.WxUser.WxUser.province">
+            <summary>
+            用户个人资料填写的省份
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Application.WxUser.WxUser.city">
+            <summary>
+            普通用户个人资料填写的城市
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Application.WxUser.WxUser.headimgurl">
+            <summary>
+            用户头像，最后一个数值代表正方形头像大小（有0、46、64、96、132数值可选，0代表640*640正方形头像），用户没有头像时该项为空。若用户更换头像，原有头像URL将失效
             </summary>
         </member>
         <member name="T:Marriage.Entity.Data.BirthEightResult">
@@ -1367,6 +1467,31 @@
             行版本
             </summary> 
         </member>
+        <member name="T:Marriage.Entity.Domain.DictionaryConfig">
+            <summary>
+            键值配置
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Domain.DictionaryConfig.DictionaryConfigId">
+            <summary> 
+            主键
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Domain.DictionaryConfig.Name">
+            <summary> 
+            名称
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Domain.DictionaryConfig.Value">
+            <summary> 
+            值
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Domain.DictionaryConfig.TypeName">
+            <summary> 
+            类型名
+            </summary> 
+        </member>
         <member name="T:Marriage.Entity.Domain.MarriageUser">
             <summary>
             相亲人员
@@ -1855,11 +1980,6 @@
         <member name="P:Marriage.Entity.Service.UserManage.GetUserInfoResponse.HeadImgUrl">
             <summary> 
             微信用户头像，最后一个数值代表正方形头像大小（有0、46、64、96、132数值可选，0代表640*640正方形头像），用户没有头像时该项为空。若用户更换头像，原有头像URL将失效。
-            </summary> 
-        </member>
-        <member name="P:Marriage.Entity.Service.UserManage.GetUserInfoResponse.Remark">
-            <summary> 
-            备注
             </summary> 
         </member>
         <member name="T:Marriage.Entity.Service.UserManage.GetUserListRequest">

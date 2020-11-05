@@ -78,6 +78,18 @@ namespace Marriage.Api.Code
         {
             ControllerActionDescriptor controllerActionDescriptor = context.ActionDescriptor as ControllerActionDescriptor;
 
+            Entity.Application.IRequest request = null;
+            string requestKey = string.Empty;
+
+            foreach (var item in context.ActionArguments)
+            {
+                var requestBase = item.Value as Entity.Application.IRequest;
+                if (requestBase == null) continue;
+                requestKey = item.Key;
+                request = requestBase;
+                break;
+            }
+
             string sign = GetSign(context);
 
             string loginUserId = string.Empty;
@@ -90,22 +102,19 @@ namespace Marriage.Api.Code
                 {
                     token = token.Replace(loginmd5, string.Empty);
                     loginUserId = OpenDataAccessCore.Utility.Common.FromBase64String(token);
+
+                    if ((request != null && request.AppId != loginUserId)
+                    || (request == null && context.ActionArguments["appId"].ToString() != loginUserId))
+                    {
+                        throw new TokenException("解析Token失败");
+                    }
+                    else loginUserId = string.Empty;
                 }
                 else loginUserId = UserToken.ParseToken(token, sign);
             }
             else loginUserId = UserToken.ParseToken(token, sign);
 
-            Entity.Application.IRequest request = null;
-            string requestKey = string.Empty;
 
-            foreach (var item in context.ActionArguments)
-            {
-                var requestBase = item.Value as Entity.Application.IRequest;
-                if (requestBase == null) continue;
-                requestKey = item.Key;
-                request = requestBase;
-                break;
-            }
 
             if (request != null)
             {
@@ -174,8 +183,15 @@ namespace Marriage.Api.Code
                 var obj = context.Result as ObjectResult;
                 if (obj != null)
                 {
-                    var response= obj.Value as Entity.Application.IResponse;
-                    if (response != null) response.Token = UserToken.CreateToken(loginUserId, sign);
+                    var response = obj.Value as Entity.Application.IResponse;
+                    if (response != null)
+                    {
+                        if (string.IsNullOrEmpty(response.Token))
+                        {
+                            if (!string.IsNullOrEmpty(loginUserId)) response.Token = UserToken.CreateToken(loginUserId, sign);
+                        }
+                        else response.Token = UserToken.CreateToken(response.Token, sign);
+                    }
                 }
             }
 

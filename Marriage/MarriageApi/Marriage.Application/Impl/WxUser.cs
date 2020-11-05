@@ -12,6 +12,8 @@ namespace Marriage.Application.Impl
     /// </summary>
     public class WxUser : BaseAction, IWxUser
     {
+        public Domain.IDictionaryConfig _DictionaryConfig { get; set; }
+
         public Domain.IUserManage _UserManage { get; set; }
 
         public Domain.IBasicSupport _BasicSupport { get; set; }
@@ -35,9 +37,20 @@ namespace Marriage.Application.Impl
             int stepNo = 1;
             this.ValidateGetWxUser(stepNo, request, response);
 
+
+            //2、以获取集合获取键值配置集合
+            List<string> nameList = new List<string>() { "Wx_AppId", "Wx_Secret" };
+
+            stepNo += 1;
+            var dictionaryConfigList = GetDictionaryConfigListByNames(stepNo, nameList, response);
+
+            //3、获取Access_Token
+            stepNo += 1;
+            Entity.Service.BasicSupport.GetWebAccessTokenResponse getAccessTokenResponse = GetAccessToken(stepNo, dictionaryConfigList, request.Code, response);
+
             //2、获取微信用户
             stepNo += 1;
-            GetWxUser(stepNo, request, response);
+            GetWxUser(stepNo, getAccessTokenResponse, response);
    
             //3、执行结束
             this.ExecEnd(response);
@@ -50,18 +63,35 @@ namespace Marriage.Application.Impl
         /// 获取微信用户
         /// </summary>
         /// <param name="stepNo"></param>
-        /// <param name="request"></param>
+        /// <param name="getAccessTokenResponse"></param>
         /// <param name="response"></param>
         /// <returns></returns>
-        private Entity.Application.WxUser.WxUser GetWxUser(int stepNo, GetWxUserRequest request, GetWxUserResponse response)
+        private Entity.Service.UserManage.GetUserInfoResponse GetWxUser(int stepNo, Entity.Service.BasicSupport.GetWebAccessTokenResponse getAccessTokenResponse, GetWxUserResponse response)
         {
-            Func<Entity.Application.WxUser.WxUser> execStep = () =>
+            Func<Entity.Service.UserManage.GetUserInfoResponse> execStep = () =>
             {
-                
-                return null;
+
+                var serviceResponse = _UserManage.GetUserInfo(getAccessTokenResponse.Access_Token, getAccessTokenResponse.OpenId);
+
+                this.SetServiceFailedResponse(serviceResponse, response);
+
+                if (response.Ack.IsSuccess)
+                {
+                    response.Data = new Entity.Application.WxUser.WxUser()
+                    {
+                        nickname = serviceResponse.NickName,
+                        openid = serviceResponse.OpenId,
+                        city = serviceResponse.City,
+                        headimgurl = serviceResponse.HeadImgUrl,
+                        province = serviceResponse.Province,
+                        sex = serviceResponse.Sex
+                    };
+                }
+
+                return serviceResponse;
             };
 
-            return this.GetEntityData<Entity.Application.WxUser.WxUser>(stepNo, "获取微信用户", "GetWxUser", response, execStep);
+            return this.GetEntityData<Entity.Service.UserManage.GetUserInfoResponse>(stepNo, "获取微信用户", "GetWxUser", response, execStep);
         }
 
         /// <summary>
@@ -84,6 +114,44 @@ namespace Marriage.Application.Impl
             };
 
             return this.ExecValidate(stepNo, "验证数据", "ValidateGetWxUser", response, execStep);
+        }
+
+        /// <summary>
+        /// 获取类型名称集合键值配置
+        /// </summary>
+        /// <param name="stepNo"></param>
+        /// <param name="nameList"></param>
+        /// <param name="response"></param>
+        /// <returns></returns>
+        private List<Entity.Domain.DictionaryConfig> GetDictionaryConfigListByNames(int stepNo, List<string> nameList, IResponse response)
+        {
+            Func<List<Entity.Domain.DictionaryConfig>> execStep = () =>
+            {
+                return _DictionaryConfig.GetDictionaryConfigListByNames(nameList);
+            };
+
+            return this.GetEntityDataList<Entity.Domain.DictionaryConfig>(stepNo, "获取类型名称集合键值配置", "GetDictionaryConfigListByNames", response, execStep);
+        }
+
+        /// <summary>
+        /// 获取Access Token
+        /// </summary>
+        /// <param name="stepNo"></param>
+        /// <param name="app"></param>
+        /// <param name="serviceInterfaceList"></param>
+        /// <param name="response"></param>
+        /// <returns></returns>
+        private Entity.Service.BasicSupport.GetWebAccessTokenResponse GetAccessToken(int stepNo, List<Entity.Domain.DictionaryConfig> dictionaryConfigs, string code, IResponse response)
+        {
+            Func<Entity.Service.BasicSupport.GetWebAccessTokenResponse> execStep = () =>
+            {
+                var serviceResponse = _BasicSupport.GetWebAccessToken(dictionaryConfigs, code);
+
+                this.SetServiceFailedResponse(serviceResponse, response);
+                return serviceResponse;
+            };
+
+            return this.GetEntityData<Entity.Service.BasicSupport.GetWebAccessTokenResponse>(stepNo, "获取Access Token", "GetAccessToken", response, execStep);
         }
     }
 }

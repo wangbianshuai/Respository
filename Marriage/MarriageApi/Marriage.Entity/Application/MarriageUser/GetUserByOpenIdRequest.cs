@@ -2,32 +2,47 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Marriage.Entity.Service.UserManage
+namespace Marriage.Entity.Application.MarriageUser
 {
     /// <summary>
-    /// 获取用户基本信息请求
+    /// 以微信OpenId获取用户请求
     /// </summary>
-    public class GetUserInfoRequest : Request, IRequest
+    public class GetUserByOpenIdRequest : Request, IRequest
     {
         /// <summary>
         /// OpenId
         /// </summary>
-        public string openId { get; set; }
+        public string OpenId { get; set; }
     }
 
     /// <summary>
-    /// 获取用户基本信息响应
+    /// 以微信OpenId获取用户响应
     /// </summary>
-    public class GetUserInfoResponse : Response, IResponse
+    public class GetUserByOpenIdResponse : Response, IResponse
     {
         /// <summary>
-        /// 微信OpenId
+        /// 用户数据
         /// </summary>
-        public string OpenId { get; set; }
+        public UserInfo Data { get; set; }
+    }
+
+    /// <summary>
+    /// 用户信息
+    /// </summary>
+    public class UserInfo
+    {
         /// <summary> 
-        /// 微信UnionId
+        /// 主键
         /// </summary> 
-        public string UnionId { get; set; }
+        public Guid UserId { get; set; }
+        /// <summary> 
+        /// 名称
+        /// </summary> 
+        public string Name { get; set; }
+        /// <summary> 
+        /// 微信OpenId
+        /// </summary> 
+        public string OpenId { get; set; }
         /// <summary> 
         /// 微信昵称
         /// </summary> 
@@ -48,5 +63,17 @@ namespace Marriage.Entity.Service.UserManage
         /// 微信用户头像，最后一个数值代表正方形头像大小（有0、46、64、96、132数值可选，0代表640*640正方形头像），用户没有头像时该项为空。若用户更换头像，原有头像URL将失效。
         /// </summary> 
         public string HeadImgUrl { get; set; }
+        /// <summary> 
+        /// 身份证号码
+        /// </summary> 
+        public string IdCard { get; set; }
+        /// <summary> 
+        /// 手机
+        /// </summary> 
+        public string Phone { get; set; }
+        /// <summary> 
+        /// 地址
+        /// </summary> 
+        public string Address { get; set; }
     }
 }

@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel;
 using System.Threading.Tasks;
 using Marriage.Api.Code;
-using Marriage.Entity.Application.WxUser;
+using Marriage.Entity.Application.MarriageUser;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.OpenApi.Models;
 
@@ -10,28 +10,28 @@ using Microsoft.OpenApi.Models;
 namespace Marriage.Api.Controllers
 {
     /// <summary>
-    /// 微信用户
+    /// 相亲用户
     /// </summary>
     [Route("api/[controller]/[action]")]
     [Produces("application/json")]
     [ApiController]
     [TokenFilter]
     [ApiExceptionFilter]
-    [Description("微信用户")]
-    public class WxUserController : ControllerBase
+    [Description("相亲用户")]
+    public class MarriageUserController : ControllerBase
     {
-        public Application.IWxUser _WxUser { get; set; }
+        public Application.IMarriageUser _MarriageUser { get; set; }
 
         /// <summary>
-        /// 获取微信用户
+        /// 以微信OpenId获取用户
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
         [HttpPost]
         [SwaggerOpenApiTokenParameter]
-        public async Task<GetWxUserResponse> GetWxUser(GetWxUserRequest request)
+        public async Task<GetUserByOpenIdResponse> GetUserByOpenId(GetUserByOpenIdRequest request)
         {
-            return await Task.Run(() => _WxUser.GetWxUser(request));
+            return await Task.Run(() => _MarriageUser.GetUserByOpenId(request));
         }
     }
 }

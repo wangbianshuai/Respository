@@ -5,11 +5,15 @@ using System.Text;
 
 namespace Marriage.Data
 {
-    /// <summary>
-    /// 文件记录
-    /// </summary>
-    public interface IFileRecord
+    public interface IMarriageUser
     {
+        /// <summary>
+        /// 以openId获取实体数据
+        /// </summary>
+        /// <param name="openId"></param>
+        /// <returns></returns>
+        IEntityData GetEntityDataByOpenId(string openId);
+
         /// <summary>
         /// 插入
         /// </summary>
@@ -25,10 +29,11 @@ namespace Marriage.Data
         IEntityData GetEntityDataById(Guid id);
 
         /// <summary>
-        /// 以主键删除
+        /// 更新
         /// </summary>
-        /// <param name="id"></param>
+        /// <param name="entityData"></param>
         /// <returns></returns>
-        bool DeleteById(Guid id);
+        bool Update(IEntityData entityData);
+
     }
 }

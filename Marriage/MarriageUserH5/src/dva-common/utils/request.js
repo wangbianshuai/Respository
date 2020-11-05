@@ -79,11 +79,10 @@ function setParamsHeader(data, headers) {
         data = data || {};
         data.headers = data.headers || {};
         for (let key in headers) data.headers[key] = headers[key];
-        return data;
     }
 
     data.headers.token = Common.getStorage(EnvConfig.tokenKey);
-    if (!data.headers.token) data.headers.token = "d56b699830e77ba53855679cb1d252da" + window.btoa(Common.createGuid());
+    if (!data.headers.token) data.headers.token = "d56b699830e77ba53855679cb1d252da" + window.btoa('781F60E1-429F-41E5-A93D-B8DA6F836182');
 
     data.headers.access_token = getAccessToken(data.headers.token);
 

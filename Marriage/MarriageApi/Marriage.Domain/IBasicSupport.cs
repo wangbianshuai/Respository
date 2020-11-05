@@ -17,5 +17,13 @@ namespace Marriage.Domain
         /// <param name="url"></param>
         /// <returns></returns>
         Entity.Service.BasicSupport.GetAccessTokenResponse GetAccessToken(string appId,string secret, string url);
+
+        /// <summary>
+        /// 获取web access_token
+        /// </summary>
+        /// <param name="dictionaryConfigs"></param>
+        /// <param name="code"></param>
+        /// <returns></returns>
+        Entity.Service.BasicSupport.GetWebAccessTokenResponse GetWebAccessToken(List<Entity.Domain.DictionaryConfig> dictionaryConfigs, string code);
     }
 }

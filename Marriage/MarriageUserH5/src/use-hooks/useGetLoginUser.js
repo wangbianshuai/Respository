@@ -12,7 +12,7 @@ const getStorageLoginUser = () => {
     return null;
   }
 
-  str = window.atob(decodeURIComponent(str))
+  str = decodeURIComponent(window.atob(str))
   return JSON.parse(str);
 }
 

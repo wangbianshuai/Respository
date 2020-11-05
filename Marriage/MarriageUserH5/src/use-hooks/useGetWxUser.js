@@ -8,7 +8,7 @@ const getStorageWxUser = () => {
     let str = Common.getStorage(wxUserKey);
     if (Common.isNullOrEmpty(str)) return null;
 
-    str = window.atob(decodeURIComponent(str))
+    str = decodeURIComponent(window.atob(str))
     return JSON.parse(str);
 }
 
@@ -20,7 +20,7 @@ const setStorageWxUser = (wxUser) => {
 const isH5 = Common.isH5();
 
 const getCode = () => {
-    const wxAppID = 'wxaa64304b24432ce5';
+    const wxAppID = 'wx2ed629d45a5214f7';
     const wXUrl = 'https://open.weixin.qq.com/connect/oauth2/authorize';
     const scope = 'snsapi_userinfo';
 

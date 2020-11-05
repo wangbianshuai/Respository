@@ -30,8 +30,7 @@ namespace Marriage.Domain
         /// </summary>
         /// <param name="accessToken"></param>
         /// <param name="openId"></param>
-        /// <param name="url"></param>
         /// <returns></returns>
-        Entity.Service.UserManage.GetUserInfoResponse GetUserInfo(string accessToken, string openId, string url);
+        Entity.Service.UserManage.GetUserInfoResponse GetUserInfo(string accessToken, string openId);
     }
 }

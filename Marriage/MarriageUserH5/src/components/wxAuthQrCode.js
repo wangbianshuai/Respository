@@ -15,7 +15,7 @@ export default (props) => {
         const connection = new signalR.HubConnectionBuilder().withUrl("https://live.a2china.cn/signalr/service").build();
 
         connection.on("ReceiveMessage", (type, message) => {
-            console.log(type, message);
+            console.log(type);
             if (type === 'AuthSucceed') {
                 setWxUser(JSON.parse(message));
             }

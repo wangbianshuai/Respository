@@ -405,6 +405,28 @@ namespace Marriage.Application.Impl
         }
 
         /// <summary>
+        /// 设置服务失败响应
+        /// </summary>
+        /// <param name="serviceResponse"></param>
+        /// <param name="response"></param>
+        protected void SetServiceFailedResponse(Entity.Service.IResponse serviceResponse, IResponse response)
+        {
+            if (serviceResponse.ErrCode != 0)
+            {
+                response.Ack.IsSuccess = false;
+                response.Ack.Code = (int)ResponseStatusEnum.RequestSeviceFail;
+                if (serviceResponse.ErrCode == -2) response.Ack.Message = serviceResponse.ErrMsg;
+                else response.Ack.Message = string.Format("请求服务失败，{0}:{1}", serviceResponse.ErrCode, serviceResponse.ErrMsg);
+            }
+            else if (!serviceResponse.result)
+            {
+                response.Ack.IsSuccess = false;
+                response.Ack.Code = (int)ResponseStatusEnum.RequestSeviceFail;
+                response.Ack.Message = serviceResponse.errMessage;
+            }
+        }
+
+        /// <summary>
         /// 设置数据
         /// </summary>
         /// <typeparam name="T"></typeparam>

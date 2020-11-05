@@ -14,12 +14,24 @@
             Token过滤
             </summary>
         </member>
-        <member name="T:Marriage.Api.Controllers.LiveController">
+        <member name="T:Marriage.Api.Controllers.MarriageUserController">
+            <summary>
+            相亲用户
+            </summary>
+        </member>
+        <member name="M:Marriage.Api.Controllers.MarriageUserController.GetUserByOpenId(Marriage.Entity.Application.MarriageUser.GetUserByOpenIdRequest)">
+            <summary>
+            以微信OpenId获取用户
+            </summary>
+            <param name="request"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Marriage.Api.Controllers.WxUserController">
             <summary>
             微信用户
             </summary>
         </member>
-        <member name="M:Marriage.Api.Controllers.LiveController.GetWxUser(Marriage.Entity.Application.WxUser.GetWxUserRequest)">
+        <member name="M:Marriage.Api.Controllers.WxUserController.GetWxUser(Marriage.Entity.Application.WxUser.GetWxUserRequest)">
             <summary>
             获取微信用户
             </summary>
