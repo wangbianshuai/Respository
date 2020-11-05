@@ -36,7 +36,7 @@ const change = (value, property, setValue) => {
     if (value && property.dataType === 'float' && !judgeMinusDot(value)) value = Common.getNumber(value, property.scale);
     if (value && property.dataType === 'int') value = Common.getIntValue(value);
 
-    if (value === 0 && e.target.value !== '0') value = '';
+    if (value === 0 && value !== '0') value = '';
 
     value = setMinMaxValue(value, property);
 
@@ -83,7 +83,7 @@ export default (props) => {
     if (isReadOnly || disabled) clear2 = false;
 
     const isRed2 = property.isRed2 || (isNullable === false && isRed);
-    
+
     if (isLabelItem) {
         if (property.controlType === 'textarea') {
             return (

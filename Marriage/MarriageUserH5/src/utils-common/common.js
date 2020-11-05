@@ -634,8 +634,8 @@ export function postFormData(url, formData, successCallback, errorCallback, asyn
 
     //处理请求响应返回
     xmlHttp.onreadystatechange = function () {
-        if (xmlHttp.readyState == 4) {
-            if (xmlHttp.status == 200) {
+        if (xmlHttp.readyState === 4) {
+            if (xmlHttp.status === 200) {
                 successCallback && successCallback(JSON.parse(xmlHttp.responseText));
             }
             else {
@@ -650,8 +650,7 @@ export function postFormData(url, formData, successCallback, errorCallback, asyn
 
     //创建请求对象
     function createRequest() {
-        if (window.XMLHttpRequest) return new XMLHttpRequest();
-        else if (window.ActiveXObject) return new ActiveXObject("Microsoft.XMLHTTP");
+        return new XMLHttpRequest();
     };
 
     return xmlHttp
