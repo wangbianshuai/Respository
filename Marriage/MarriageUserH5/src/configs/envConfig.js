@@ -31,7 +31,7 @@ function getEnv(h) {
 }
 
 function getWebServiceUrl() {
-    return EnvConfig.isProd ? "/" : '/';
+    return EnvConfig.isProd ? "/user/" : '/';
 }
 
 function getApiSericeUrl() {

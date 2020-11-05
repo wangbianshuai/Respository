@@ -30,7 +30,7 @@ function saveContent(fileUrl, content) {
 }
 
 var copyList = [
-    { src: "./dist/**/*", dest: path.resolve(__dirname, "").replace("frontend\\a2digitalsolution-web", "backend\\a2digitalsolution-admin\\Admin\\A2DigitalSolution.Web\\wwwroot\\") }
+    { src: "./dist/**/*", dest: path.resolve(__dirname, "").replace("MarriageWeb", "MarriageAdmin\\Marriage.Web\\wwwroot\\") }
 ];
 
 gulp.task('default', (done) => {
