@@ -9,4 +9,4 @@ export default EntityPageEdit("index", "MarriageUser", '连理缘-注册', 100, 
             this.toPage('/mine/index');
         });
     }
-});
+}, ['ResourcesService/uploadFile']);

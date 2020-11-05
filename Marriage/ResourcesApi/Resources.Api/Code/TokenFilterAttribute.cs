@@ -16,7 +16,7 @@ namespace Resources.Api.Code
     /// </summary>
     public class TokenFilterAttribute : ActionFilterAttribute
     {
-        const string key = "shanghaia2";
+        const string key = "784253FE-2E15-459F-93F3-26A23E9DE4B2";
 
         public override void OnActionExecuting(ActionExecutingContext context)
         {

@@ -3,7 +3,7 @@
     "windowsAuthentication": false,
     "anonymousAuthentication": true,
     "iis": {
-      "applicationUrl": "http://localhost/ars",
+      "applicationUrl": "http://localhost/res",
       "sslPort": 0
     },
     "iisExpress": {

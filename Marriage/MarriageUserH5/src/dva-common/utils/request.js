@@ -1,5 +1,5 @@
 import { fetch } from 'dva';
-import { Common, HttpResponse,Md5 } from 'UtilsCommon';
+import { Common, HttpResponse, Md5 } from 'UtilsCommon';
 import { EnvConfig } from 'Configs';
 
 export function get(url, resKey, serviceName, headers) {
@@ -81,11 +81,6 @@ function setParamsHeader(data, headers) {
         for (let key in headers) data.headers[key] = headers[key];
     }
 
-    data.headers.token = Common.getStorage(EnvConfig.tokenKey);
-    if (!data.headers.token) data.headers.token = "d56b699830e77ba53855679cb1d252da" + window.btoa('781F60E1-429F-41E5-A93D-B8DA6F836182');
-
-    data.headers.access_token = getAccessToken(data.headers.token);
-
     return data;
 }
 
@@ -110,11 +105,19 @@ function setApiServiceHeader(data, serviceName) {
     data.headers.clientTime = new Date().getTime();
     data.headers.requestId = Common.createGuid().replace(/-/g, "").toLowerCase();
 
+    if (serviceName === "ResourcesService") {
+        data.headers.token = getAccessToken(clientId, '784253FE-2E15-459F-93F3-26A23E9DE4B2');
+    }
+    else {
+        data.headers.token = Common.getStorage(EnvConfig.tokenKey);
+        if (!data.headers.token) data.headers.token = "d56b699830e77ba53855679cb1d252da" + window.btoa('781F60E1-429F-41E5-A93D-B8DA6F836182');
+        const appId = '781F60E1-429F-41E5-A93D-B8DA6F836182';
+        data.headers.access_token = getAccessToken(appId, data.headers.token);
+    }
+
     return data;
 }
-
-function getAccessToken(token) {
-    const appId = '781F60E1-429F-41E5-A93D-B8DA6F836182';
+function getAccessToken(appId, token) {
     const time = new Date().getTime()
     const md5str = Md5(appId + time + token);
     return window.btoa(appId + '@' + time + "@" + md5str);

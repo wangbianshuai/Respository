@@ -1,7 +1,8 @@
 const _ServiceConfig = {
     ApiService: getApiSericeUrl,
     WebService: getWebServiceUrl,
-    ImageService: getImageServiceUrl
+    ImageService: getImageServiceUrl,
+    ResourcesService: getResourcesServiceUrl
 };
 
 const EnvConfig = {
@@ -34,12 +35,16 @@ function getWebServiceUrl() {
     return EnvConfig.isProd ? "/user/" : '/';
 }
 
+function getResourcesServiceUrl(){
+    return EnvConfig.isProd ? "/res/api/" : 'http://localhost/res/api/';
+}
+
 function getApiSericeUrl() {
     return "/api/";
 }
 
 function getImageServiceUrl() {
-    return EnvConfig.isProd ? 'http://www.lianliyuan.site/' : 'http://localhost/res';
+    return EnvConfig.isProd ? '/res/' : 'http://localhost/res/';
 }
 
 function getServiceUrl(serverName) {

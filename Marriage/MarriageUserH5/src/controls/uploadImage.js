@@ -1,37 +1,56 @@
 import React, { useState, useRef, useCallback } from 'react';
 import { Button, List } from 'antd-mobile';
-import { EnvConfig } from 'Configs';
+import { Common } from 'UtilsCommon';
 import Base from './base';
 import styles from '../styles/view.scss';
 
-const uploadImage = (e, pageAxis, setImage) => {
-    if (e.target.files.length === 0) return;
-    const file = e.target.files[0];
+const validateImage = (file, pageAxis) => {
     if (!/image/.test(file.type)) { pageAxis.alert("请选择图片"); return; }
 
     const reg = /\.(jpg|jpeg|png)$/i;
     if (!reg.test(file.name)) { pageAxis.alert("请选择jpg、jpeg、png格式图片"); return; }
 
-    // 大于 2MB
-    if (file && file.size > 1024 * 1024 * 2) { pageAxis.alert('请使用小于2MB的图片'); return }
+    // 大于 10MB
+    if (file && file.size > 1024 * 1024 * 10) { pageAxis.alert('请使用小于10MB的图片'); return }
+    return true;
+}
 
-    const reader = new FileReader();
-    reader.onload = function (evt) {
-        setImage(evt.target.result)
-    }
-    reader.readAsDataURL(file);
+const getImage = (file, property) => {
+    const { width, height, type, quality, maxWidth, maxHeight, maxSize } = property;
+
+    if (maxSize && file.size < maxSize * 1024) return Promise.resolve(file);
+
+    return Common.compressImage(file, width, height, type || 'image/png', quality || 1, maxWidth, maxHeight).then(res => {
+        return Promise.resolve(Common.dataURLtoFile(res, file.name));
+    });
+}
+
+const uploadImage = (e, pageAxis, property, setValue) => {
+    if (e.target.files.length === 0) return;
+    const file = e.target.files[0];
+    if (!validateImage(file, pageAxis)) return;
+
+    getImage(file, property).then(img => {
+        var formData = new FormData();
+        formData.append('file', img, img.name);
+
+        pageAxis.dispatchAction('ResourcesService', 'uploadFile', { formData: formData }).then(res => {
+            if (pageAxis.isSuccessProps(res)) setValue(res.FileUrl)
+            else pageAxis.alert(res.message);
+        })
+    });
 };
 
 export default (props) => {
     const { property, pageAxis } = Base.getProps(props);
     const [isVisible, setIsVisible] = useState(property.isVisible !== false);
     const [value, setValue] = useState(Base.getInitValue(property));
-    const [image, setImage] = useState(null);
+
     const inputFile = useRef(null)
 
     const onChange = useCallback((e) => {
-        uploadImage(e, pageAxis, setImage);
-    }, [pageAxis, setImage]);
+        uploadImage(e, pageAxis, property, setValue);
+    }, [pageAxis, property, setValue]);
 
     const onClick = useCallback(() => {
         inputFile.current.click();
@@ -50,12 +69,9 @@ export default (props) => {
 
     const className = Base.getClassName(property, styles);
 
-    const src = EnvConfig.getServiceUrl('ImageService')()  + '/' + value;
-
     const render = <React.Fragment>
         {label && <div className={styles.divLabel}><span>{label}{isNullable === false ? <span style={{ color: 'red' }}>*</span> : ''}</span></div>}
-        {image && <div className={styles.divImage3}><img src={image} alt='' onClick={onClick} /></div>}
-        {!image && value && <div className={styles.divImage3}><img src={src} alt='' onClick={onClick} /></div>}
+        {value && <div className={styles.divImage3}><img src={value} alt='' onClick={onClick} /></div>}
         <Button size='small' type='ghost' onClick={onClick}>选择图片</Button>
         <input type='file' accept='image/*' onChange={onChange} ref={inputFile} style={{ display: 'none' }} />
     </React.Fragment>

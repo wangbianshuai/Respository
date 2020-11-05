@@ -663,3 +663,119 @@ export function getFileExt(fileName) {
     if (ns.length < 2) return '';
     return ns.pop().toLowerCase();
 }
+
+export function getImageFileWidthHeight(file) {
+    return new Promise((resolve, reject) => {
+        try {
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                var data = e.target.result;
+                var image = new Image();
+                image.onload = function () {
+                    var width = image.width;
+                    var height = image.height;
+                    resolve({ width, height });
+                };
+                image.src = data;
+            };
+            reader.readAsDataURL(file);
+        }
+        catch (err) {
+            reject(err);
+        }
+    });
+}
+
+export function compressImage(file, width, height, type, quality, maxWidth, maxHeight) {
+    return new Promise((resolve, reject) => {
+        try {
+            var ready = new FileReader();
+            ready.readAsDataURL(file);
+            ready.onload = function () {
+                getImage(this.result).then(res => {
+                    resolve(canvasDataURL(res, width, height, type, quality, maxWidth, maxHeight));
+                });
+            }
+        } catch (err) { reject(err); }
+    });
+}
+
+export function getImage(src) {
+    return new Promise((resolve, reject) => {
+        try {
+            const img = new Image();
+            img.src = src;
+            img.onload = function () {
+                resolve(img);
+            };
+            img.onerror = function (err) {
+                reject(err);
+            };
+        }
+        catch (err) { reject(err); }
+    })
+}
+
+export function canvasDataURL(img, width, height, type, quality, maxWidth, maxHeight) {
+    width = width || img.width;
+    height = height || img.height;
+    type = type || 'image/jpeg';
+    quality = quality || 0.5;
+    maxWidth = maxWidth || 1920;
+    maxHeight = maxHeight || 1080;
+
+    if (width > maxWidth) {
+        height = maxWidth * height / width;
+        width = maxWidth;
+    }
+    if (height > maxHeight) {
+        width = maxHeight * width / height;
+        height = maxHeight;
+    }
+
+    const canvas = document.createElement('canvas');
+    canvas.width = width;
+    canvas.height = height;
+    canvas.getContext('2d').drawImage(img, 0, 0, img.width, img.height, 0, 0, width, height);
+    return canvas.toDataURL(type, quality);
+}
+
+export function dataURItoBlob(base64Data) {
+    //console.log(base64Data);//data:image/png;base64,
+    var byteString;
+    if (base64Data.split(',')[0].indexOf('base64') >= 0)
+        byteString = atob(base64Data.split(',')[1]);//base64 解码
+    else {
+        byteString = unescape(base64Data.split(',')[1]);
+    }
+    var mimeString = base64Data.split(',')[0].split(':')[1].split(';')[0];//mime类型 -- image/png
+
+    // var arrayBuffer = new ArrayBuffer(byteString.length); //创建缓冲数组
+    // var ia = new Uint8Array(arrayBuffer);//创建视图
+    var ia = new Uint8Array(byteString.length);//创建视图
+    for (var i = 0; i < byteString.length; i++) {
+        ia[i] = byteString.charCodeAt(i);
+    }
+    var blob = new Blob([ia], {
+        type: mimeString
+    });
+    return blob;
+}
+
+export function blobToDataURI(blob, callback) {
+    var reader = new FileReader();
+    reader.readAsDataURL(blob);
+    reader.onload = function (e) {
+        callback(e.target.result);
+    }
+}
+
+//将base64转换为文件
+export function dataURLtoFile(dataUrl, filename) {
+    var arr = dataUrl.split(','), mime = arr[0].match(/:(.*?);/)[1],
+        bstr = atob(arr[1]), n = bstr.length, u8arr = new Uint8Array(n);
+    while (n--) {
+        u8arr[n] = bstr.charCodeAt(n);
+    }
+    return new File([u8arr], filename, { type: mime });
+}   
