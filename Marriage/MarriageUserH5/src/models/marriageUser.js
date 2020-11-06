@@ -8,6 +8,8 @@ const config = {
         post('saveEntityData', 'MarriageUser/Register', 'saveEntityData', 'Data'),
         //以openId获取用户
         post('getUserByOpenId', 'MarriageUser/GetUserByOpenId', 'getUserByOpenId', 'Data'),
+         //获取用户信息
+         post('getUserInfo', 'MarriageUser/GetUserInfo', 'getUserInfo'),
     ]
 }
 function post(actionName, url, stateName, dataKey) {

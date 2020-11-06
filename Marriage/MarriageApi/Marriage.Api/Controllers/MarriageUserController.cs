@@ -45,5 +45,17 @@ namespace Marriage.Api.Controllers
         {
             return await Task.Run(() => _MarriageUser.Register(request));
         }
+
+        /// <summary>
+        /// 获取用户信息
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        [HttpPost]
+        [SwaggerOpenApiTokenParameter]
+        public async Task<GetUserInfoResponse> GetUserInfo(GetUserInfoRequest request)
+        {
+            return await Task.Run(() => _MarriageUser.GetUserInfo(request));
+        }
     }
 }

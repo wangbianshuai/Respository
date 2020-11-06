@@ -17,7 +17,14 @@ export function getResponseData(d, resKey) {
             if (resKey && d.hasOwnProperty(resKey)) obj = d[resKey];
             else obj = d;
         }
-        else obj = { isSuccess: false, message: d.Ack.Message || '请求异常' };
+        else {
+            if (d.Ack.Code === -100) {
+                Common.removeStorage(EnvConfig.tokenKey);
+                window.location.reload();
+                return;
+            }
+            obj = { isSuccess: false, message: d.Ack.Message || '请求异常' };
+        }
     }
     else if (resKey) {
         if (d && d.hasOwnProperty(resKey)) obj = d[resKey];

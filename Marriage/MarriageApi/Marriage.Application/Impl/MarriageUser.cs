@@ -85,6 +85,72 @@ namespace Marriage.Application.Impl
         }
 
         /// <summary>
+        /// 获取用户信息
+        /// </summary>
+        public GetUserInfoResponse GetUserInfo(GetUserInfoRequest request)
+        {
+            string title = "获取用户信息";
+            string requestContent = Utility.Common.ToJson(request);
+            GetUserInfoResponse response = new GetUserInfoResponse();
+
+            this.InitMessage();
+
+            this.IsNullRequest(request, response);
+
+            //1、以微信OpenId获取用户
+            int stepNo = 1;
+            GetUserInfoById(stepNo, request, response);
+
+            //2、执行结束
+            this.ExecEnd(response);
+
+            //日志记录
+            return this.SetReturnResponse<GetUserInfoResponse>(title, "GetUserInfo", requestContent, response);
+        }
+
+        private Entity.Domain.MarriageUser GetUserInfoById(int stepNo, GetUserInfoRequest request, GetUserInfoResponse response)
+        {
+            Func<Entity.Domain.MarriageUser> execStep = () =>
+            {
+
+                var entity = _MarriageUser.GetUserInfoById(Guid.Parse(request.LoginUserId));
+
+                if (entity != null)
+                {
+                    response.UserInfo = new UserInfo()
+                    {
+                        Address = entity.Address,
+                        Birthday = entity.Birthday.ToString("yyyy-MM-dd"),
+                        BirthEight = entity.BirthEight,
+                        BirthTime = entity.BirthTime,
+                        City = entity.City,
+                        HeadImgUrl = entity.HeadImgUrl,
+                        IdCard = entity.IdCard,
+                        IsPublic = entity.IsPublic,
+                        LunarBirthday = entity.LunarBirthday,
+                        MatchmakerId = entity.MatchmakerId,
+                        Name = entity.Name,
+                        NickName = entity.NickName,
+                        NoPassReason = entity.NoPassReason,
+                        NowAddress = entity.NowAddress,
+                        OpenId = entity.OpenId,
+                        Phone = entity.Phone,
+                        Province = entity.Province,
+                        Remark = entity.Remark,
+                        Sex = entity.Sex,
+                        Status = entity.Status,
+                        UserId = entity.UserId
+                    };
+                }
+                else response.Token = "null";
+
+                return entity;
+            };
+
+            return this.GetEntityData<Entity.Domain.MarriageUser>(stepNo, "获取用户信息", "GetUserInfoById", response, execStep);
+        }
+
+        /// <summary>
         /// 创建相亲用户
         /// </summary>
         /// <param name="stepNo"></param>

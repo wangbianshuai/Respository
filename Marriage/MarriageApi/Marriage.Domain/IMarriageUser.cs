@@ -22,5 +22,12 @@ namespace Marriage.Domain
         /// <param name="entity"></param>
         /// <returns></returns>
         Guid CreateMarriageUser(Entity.Domain.MarriageUser entity);
+
+        /// <summary>
+        /// 以主键获取用户信息
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        Entity.Domain.MarriageUser GetUserInfoById(Guid id);
     }
 }

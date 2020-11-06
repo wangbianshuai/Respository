@@ -54,5 +54,15 @@ namespace Marriage.Domain.Impl
 
             return _MarriageUser.Insert(entityData);
         }
+
+        /// <summary>
+        /// 以主键获取用户信息
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public Entity.Domain.MarriageUser GetUserInfoById(Guid id)
+        {
+            return Parse.IEntityDataTo<Entity.Domain.MarriageUser>(_MarriageUser.GetEntityDataById(id));
+        }
     }
 }

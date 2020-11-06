@@ -50,7 +50,14 @@ namespace Marriage.Data.Impl
         /// <returns></returns>
         public IEntityData GetEntityDataById(Guid id)
         {
-            return this.SelectEntityByPrimaryKey(id);
+            IQuery query = new Query(this.EntityType.TableName);
+
+            List<IDbDataParameter> parameterList = new List<IDbDataParameter>();
+            parameterList.Add(this.InParameter("@UserId", id));
+
+            query.Where("where IsDelete=0 and UserId=@UserId", parameterList);
+
+            return this.SelectEntity(query);
         }
 
         /// <summary>

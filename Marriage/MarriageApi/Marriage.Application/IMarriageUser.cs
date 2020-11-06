@@ -24,5 +24,10 @@ namespace Marriage.Application
         /// <param name="request"></param>
         /// <returns></returns>
         RegisterResponse Register(RegisterRequest request);
+
+        /// <summary>
+        /// 获取用户信息
+        /// </summary>
+        GetUserInfoResponse GetUserInfo(GetUserInfoRequest request);
     }
 }

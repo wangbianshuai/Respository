@@ -33,6 +33,13 @@
             <param name="request"></param>
             <returns></returns>
         </member>
+        <member name="M:Marriage.Api.Controllers.MarriageUserController.GetUserInfo(Marriage.Entity.Application.MarriageUser.GetUserInfoRequest)">
+            <summary>
+            获取用户信息
+            </summary>
+            <param name="request"></param>
+            <returns></returns>
+        </member>
         <member name="T:Marriage.Api.Controllers.WxUserController">
             <summary>
             微信用户
