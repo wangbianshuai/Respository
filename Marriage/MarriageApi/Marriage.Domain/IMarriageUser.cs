@@ -15,5 +15,12 @@ namespace Marriage.Domain
         /// <param name="openId"></param>
         /// <returns></returns>
         Entity.Domain.MarriageUser GetUserByOpenId(string openId);
+
+        /// <summary>
+        /// 创建相亲人员
+        /// </summary>
+        /// <param name="entity"></param>
+        /// <returns></returns>
+        Guid CreateMarriageUser(Entity.Domain.MarriageUser entity);
     }
 }

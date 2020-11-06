@@ -33,5 +33,17 @@ namespace Marriage.Api.Controllers
         {
             return await Task.Run(() => _MarriageUser.GetUserByOpenId(request));
         }
+
+        /// <summary>
+        /// 注册
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        [HttpPost]
+        [SwaggerOpenApiTokenParameter]
+        public async Task<RegisterResponse> Register(RegisterRequest request)
+        {
+            return await Task.Run(() => _MarriageUser.Register(request));
+        }
     }
 }

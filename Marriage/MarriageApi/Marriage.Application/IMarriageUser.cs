@@ -17,5 +17,12 @@ namespace Marriage.Application
         /// <returns></returns>
 
         GetUserByOpenIdResponse GetUserByOpenId(GetUserByOpenIdRequest request);
+
+        /// <summary>
+        /// 注册
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        RegisterResponse Register(RegisterRequest request);
     }
 }

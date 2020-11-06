@@ -14,20 +14,20 @@ export function getResponseData(d, resKey) {
     }
     else if (d.Ack) {
         if (d.Ack.IsSuccess) {
-            if (resKey && d[resKey]) obj = d[resKey];
+            if (resKey && d.hasOwnProperty(resKey)) obj = d[resKey];
             else obj = d;
         }
         else obj = { isSuccess: false, message: d.Ack.Message || '请求异常' };
     }
     else if (resKey) {
-        if (d && d[resKey]) obj = d[resKey];
+        if (d && d.hasOwnProperty(resKey)) obj = d[resKey];
         else obj = d
     }
     else if (d) obj = d
     else obj = { isSuccess: false, message: "请求异常！" }
 
     if (obj && d.Token) {
-        Common.setStorage(EnvConfig.token, d.Token, 120);
+        Common.setStorage(EnvConfig.tokenKey, d.Token, 120);
     }
 
     return obj;

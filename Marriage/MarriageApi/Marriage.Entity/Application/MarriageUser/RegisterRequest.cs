@@ -2,17 +2,13 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Marriage.Entity.Domain
+namespace Marriage.Entity.Application.MarriageUser
 {
     /// <summary>
-    /// 相亲人员
+    /// 注册请求
     /// </summary>
-    public class MarriageUser
+    public class RegisterRequest : Request, IRequest
     {
-        /// <summary> 
-        /// 主键
-        /// </summary> 
-        public Guid UserId { get; set; }
         /// <summary> 
         /// 名称
         /// </summary> 
@@ -25,10 +21,6 @@ namespace Marriage.Entity.Domain
         /// 微信昵称
         /// </summary> 
         public string NickName { get; set; }
-        /// <summary> 
-        /// 微信用户的性别，值为1时是男性，值为2时是女性，值为0时是未知
-        /// </summary> 
-        public byte Sex { get; set; }
         /// <summary> 
         /// 微信用户所在城市
         /// </summary> 
@@ -82,24 +74,19 @@ namespace Marriage.Entity.Domain
         /// </summary> 
         public byte IsPublic { get; set; }
         /// <summary> 
-        /// 状态：0：待审核，1：审核通过，2：审核不通过，3：关闭
-        /// </summary> 
-        public byte Status { get; set; }
-        /// <summary> 
-        /// 审核不通过原因
-        /// </summary> 
-        public string NoPassReason { get; set; }
-        /// <summary> 
-        /// 最近登录时间
-        /// </summary> 
-        public DateTime LastLoginDate { get; set; }
-        /// <summary> 
-        /// 登录Ip
-        /// </summary> 
-        public string LoginIp { get; set; }
-        /// <summary> 
         /// 备注
         /// </summary> 
         public string Remark { get; set; }
+    }
+
+    /// <summary>
+    /// 注册响应
+    /// </summary>
+    public class RegisterResponse : Response, IResponse
+    {
+        /// <summary>
+        /// 用户数据
+        /// </summary>
+        public UserInfo Data { get; set; }
     }
 }

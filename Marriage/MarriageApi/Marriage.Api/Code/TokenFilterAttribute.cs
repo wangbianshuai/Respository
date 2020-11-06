@@ -95,6 +95,7 @@ namespace Marriage.Api.Code
             string loginUserId = string.Empty;
 
             if ((controllerActionDescriptor.ControllerName == "MarriageUser" && controllerActionDescriptor.ActionName == "GetUserByOpenId")
+                || (controllerActionDescriptor.ControllerName == "MarriageUser" && controllerActionDescriptor.ActionName == "Register")
                 || (controllerActionDescriptor.ControllerName == "WxUser" && controllerActionDescriptor.ActionName == "GetWxUser"))
             {
                 string loginmd5 = "d56b699830e77ba53855679cb1d252da";
@@ -178,20 +179,17 @@ namespace Marriage.Api.Code
             if (context.RouteData.Values.ContainsKey("LoginUserId")) loginUserId = (string)context.RouteData.Values["LoginUserId"];
             if (context.RouteData.Values.ContainsKey("Sign")) sign = (string)context.RouteData.Values["Sign"];
 
-            if (!string.IsNullOrEmpty(loginUserId))
+            var obj = context.Result as ObjectResult;
+            if (obj != null)
             {
-                var obj = context.Result as ObjectResult;
-                if (obj != null)
+                var response = obj.Value as Entity.Application.IResponse;
+                if (response != null)
                 {
-                    var response = obj.Value as Entity.Application.IResponse;
-                    if (response != null)
+                    if (string.IsNullOrEmpty(response.Token))
                     {
-                        if (string.IsNullOrEmpty(response.Token))
-                        {
-                            if (!string.IsNullOrEmpty(loginUserId)) response.Token = UserToken.CreateToken(loginUserId, sign);
-                        }
-                        else response.Token = UserToken.CreateToken(response.Token, sign);
+                        if (!string.IsNullOrEmpty(loginUserId)) response.Token = UserToken.CreateToken(loginUserId, sign);
                     }
+                    else response.Token = UserToken.CreateToken(response.Token, sign);
                 }
             }
 

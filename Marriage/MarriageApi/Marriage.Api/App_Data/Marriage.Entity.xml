@@ -84,6 +84,106 @@
             地址
             </summary> 
         </member>
+        <member name="T:Marriage.Entity.Application.MarriageUser.RegisterRequest">
+            <summary>
+            注册请求
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageUser.RegisterRequest.Name">
+            <summary> 
+            名称
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageUser.RegisterRequest.OpenId">
+            <summary> 
+            微信OpenId
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageUser.RegisterRequest.NickName">
+            <summary> 
+            微信昵称
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageUser.RegisterRequest.City">
+            <summary> 
+            微信用户所在城市
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageUser.RegisterRequest.Province">
+            <summary> 
+            微信用户所在省份
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageUser.RegisterRequest.HeadImgUrl">
+            <summary> 
+            微信用户头像
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageUser.RegisterRequest.IdCard">
+            <summary> 
+            身份证号码
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageUser.RegisterRequest.Phone">
+            <summary> 
+            手机
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageUser.RegisterRequest.Address">
+            <summary> 
+            家庭地址
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageUser.RegisterRequest.NowAddress">
+            <summary> 
+            现居住地
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageUser.RegisterRequest.Birthday">
+            <summary> 
+            公历生日
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageUser.RegisterRequest.BirthTime">
+            <summary> 
+            出生时辰
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageUser.RegisterRequest.LunarBirthday">
+            <summary> 
+            农历生日
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageUser.RegisterRequest.BirthEight">
+            <summary> 
+            生辰八字
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageUser.RegisterRequest.MatchmakerId">
+            <summary> 
+            所属红娘
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageUser.RegisterRequest.IsPublic">
+            <summary> 
+            是否公开
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageUser.RegisterRequest.Remark">
+            <summary> 
+            备注
+            </summary> 
+        </member>
+        <member name="T:Marriage.Entity.Application.MarriageUser.RegisterResponse">
+            <summary>
+            注册响应
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageUser.RegisterResponse.Data">
+            <summary>
+            用户数据
+            </summary>
+        </member>
         <member name="T:Marriage.Entity.Application.IRequest">
             <summary>
             请求接口

@@ -26,6 +26,13 @@
             <param name="request"></param>
             <returns></returns>
         </member>
+        <member name="M:Marriage.Api.Controllers.MarriageUserController.Register(Marriage.Entity.Application.MarriageUser.RegisterRequest)">
+            <summary>
+            注册
+            </summary>
+            <param name="request"></param>
+            <returns></returns>
+        </member>
         <member name="T:Marriage.Api.Controllers.WxUserController">
             <summary>
             微信用户

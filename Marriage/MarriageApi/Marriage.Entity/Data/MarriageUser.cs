@@ -71,7 +71,7 @@ namespace Marriage.Entity.Data
         /// <summary> 
         /// 农历生日
         /// </summary> 
-        public DateTime LunarBirthday { get; set; }
+        public string LunarBirthday { get; set; }
         /// <summary> 
         /// 生辰八字
         /// </summary> 

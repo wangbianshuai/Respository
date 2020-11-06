@@ -92,7 +92,7 @@ class PageAxis {
 
     getLoginUser = () => {
         var info = Common.getStorage(EnvConfig.loginUserKey);
-        if (!info) return {};
+        if (!info) return null;
 
         info = decodeURIComponent(window.atob(info))
         return JSON.parse(info);
