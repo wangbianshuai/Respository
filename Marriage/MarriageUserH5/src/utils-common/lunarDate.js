@@ -92,22 +92,22 @@ function U(Y) {
         j = g(k);
         this.isLeap = false;
         for (k = 1; k < 13 && n > 0; k++) {
-            if (j > 0 && k == (j + 1) && this.isLeap == false) {
+            if (j > 0 && k === (j + 1) && this.isLeap === false) {
                 --k;
                 this.isLeap = true;
                 h = b(this.year)
             } else {
                 h = e(this.year, k)
             }
-            if (this.isLeap == true && k == (j + 1)) {
+            if (this.isLeap === true && k === (j + 1)) {
                 this.isLeap = false
             }
             n -= h;
-            if (this.isLeap == false) {
+            if (this.isLeap === false) {
                 this.monCyl++
             }
         }
-        if (n == 0 && j > 0 && k == j + 1) {
+        if (n === 0 && j > 0 && k === j + 1) {
             if (this.isLeap) {
                 this.isLeap = false
             } else {
@@ -183,7 +183,7 @@ function U(Y) {
     this.lunarMonthInChinese = this.lunarIsLeapMonth ? "闰" + H[X.month - 1] : H[X.month - 1];
     this.lunarDate = X.day;
     this.showInLunar = this.lunarDateInChinese = Z(this.lunarMonth, this.lunarDate);
-    if (this.lunarDate == 1) {
+    if (this.lunarDate === 1) {
         this.showInLunar = this.lunarMonthInChinese + "月"
     }
     this.ganzhiYear = a(X.yearCyl);
@@ -191,13 +191,13 @@ function U(Y) {
     this.ganzhiDate = a(X.dayCyl++);
     this.jieqi = "";
     this.restDays = 0;
-    if (c(this.solarYear, (this.solarMonth - 1) * 2) == f(Y, "d")) {
+    if (c(this.solarYear, (this.solarMonth - 1) * 2) === f(Y, "d")) {
         this.showInLunar = this.jieqi = L[(this.solarMonth - 1) * 2]
     }
-    if (c(this.solarYear, (this.solarMonth - 1) * 2 + 1) == f(Y, "d")) {
+    if (c(this.solarYear, (this.solarMonth - 1) * 2 + 1) === f(Y, "d")) {
         this.showInLunar = this.jieqi = L[(this.solarMonth - 1) * 2 + 1]
     }
-    if (this.showInLunar == "清明") {
+    if (this.showInLunar === "清明") {
         this.showInLunar = "清明节";
         this.restDays = 1
     }
@@ -210,7 +210,7 @@ function U(Y) {
             this.solarFestival = this.solarFestival.replace(/\*\d/, "")
         }
     }
-    this.showInLunar = (this.solarFestival == "") ? this.showInLunar : this.solarFestival;
+    this.showInLunar = (this.solarFestival === "") ? this.showInLunar : this.solarFestival;
     this.lunarFestival = T[this.lunarIsLeapMonth ? "00" : G(this.lunarMonth) + G(this.lunarDate)];
     if (typeof this.lunarFestival == "undefined") {
         this.lunarFestival = ""
@@ -220,11 +220,11 @@ function U(Y) {
             this.lunarFestival = this.lunarFestival.replace(/\*\d/, "")
         }
     }
-    if (this.lunarMonth == 12 && this.lunarDate == e(this.lunarYear, 12)) {
+    if (this.lunarMonth === 12 && this.lunarDate === e(this.lunarYear, 12)) {
         this.lunarFestival = T["0100"];
         this.restDays = 1
     }
-    this.showInLunar = (this.lunarFestival == "") ? this.showInLunar : this.lunarFestival;
+    this.showInLunar = (this.lunarFestival === "") ? this.showInLunar : this.lunarFestival;
     this.showInLunar = (this.showInLunar.length > 4) ? this.showInLunar.substr(0, 2) + "..." : this.showInLunar;
 
     this.getHourGanzi = function (index) {
