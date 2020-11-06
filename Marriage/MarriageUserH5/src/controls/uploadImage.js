@@ -58,10 +58,7 @@ export default (props) => {
 
     property.setVisible = (v) => setIsVisible(v);
     property.setValue = (v) => setValue(v);
-    property.getValue = (v) => {
-        if (inputFile.current.files.length > 0) return inputFile.current.files[0];
-        else return null;
-    }
+    property.getValue = () => value;
 
     if (!isVisible) return null;
 

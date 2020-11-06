@@ -237,8 +237,18 @@ function U(Y) {
         return K.charAt(ganIndex) + J.charAt(index);
     };
 
+    this.getLunarDate = function (hourIndex) {
+        var index = Math.ceil(hourIndex / 2);
+        index = index === 12 ? 0 : index;
+        var birthEight = this.ganzhiYear + ' ' + this.ganzhiMonth + ' ' + this.ganzhiDate + ' ' + this.getHourGanzi(index);
+
+        var lunarDate = this.shengxiao + '年' + this.lunarMonthInChinese + '月' + this.lunarDateInChinese + '日';
+
+        return [lunarDate, birthEight];
+    };
+
     //时辰
-    this.ganziHour = getGanziHour.call(this);
+    //this.ganziHour = getGanziHour.call(this);
 
     function getGanziHour() {
         var hh = this.date.getHours();

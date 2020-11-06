@@ -329,6 +329,7 @@ export function getDateString(myDate, isDate) {
 }
 
 export function convertToDate(dateString, format) {
+    if (isNullOrEmpty(dateString)) return null;
     if (typeof (dateString) === "number") return new Date(dateString);
     if (typeof dateString !== "string") return dateString;
 

@@ -1,7 +1,6 @@
 import BaseIndex from '../baseIndex';
 import DataGriViewActionType from '../actionTypes/components/dataGridView';
 import Expand from './expand'
-import { Common } from '../../utils-common';
 
 export default class EntityList extends BaseIndex {
     constructor(props) {
@@ -21,22 +20,14 @@ export default class EntityList extends BaseIndex {
 
     searchQuery(id, actionType, data) {
         const payload = { action: this.getAction(id, actionType, false) };
-        const { pageSize, pageIndex, actionName } = data;
-        const formData = Common.clone(data.formData)
+        const { pageSize, pageIndex } = data;
         const { WhereFields } = data.queryInfo
-        if (formData) {
-            formData.Param.PageSize = pageSize;
-            formData.Param.PageNumber = pageIndex;
-            const hasValues = WhereFields.filter(f => !Common.isNullOrEmpty(f.Value));
-            hasValues.forEach(w => formData.Param[w.Name] = w.Value);
 
-            payload.formData = {
-                Param: JSON.stringify(formData.Param),
-                Act: formData.Act
-            };
-        }
+        payload.WhereFields = WhereFields;
+        payload.pageSize = pageSize;
+        payload.pageIndex = pageIndex
 
-        this.dvaActions.dispatch(this.serviceName, actionName || 'searchQuery', payload);
+        this.dvaActions.dispatch(this.serviceName, 'searchQuery', payload);
     }
 
     setsearchQuery(id, actionType, data) {

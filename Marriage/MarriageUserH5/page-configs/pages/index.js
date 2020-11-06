@@ -80,8 +80,8 @@ function getProperties() {
         getTextBox2('NowAddress', '现居住地', '', 1, 1, '现居住地', 100, true),
         { ...getDatePicker2('Birthday', '公历生日', '请选择公历生日', false), className: 'divPickerDate', minYear: 1949 },
         getSelectPicker('BirthTime', '出生时辰', getShiChenDataSource(), 6, 1, false),
-        { ...getTextBox2('LunarBirthday', '农历生日', '', 1, 1, '', 100, true), isReadOnly: true },
-        { ...getTextBox2('BirthEight', '生辰八字', '', 1, 1, '', 100, true), isReadOnly: true },
+        { ...getTextBox2('LunarBirthday', '农历生日', '', 1, 1, '', 100, true), isReadOnly: true, style: { color: '#108ee9' } },
+        { ...getTextBox2('BirthEight', '生辰八字', '', 1, 1, '', 100, true), isReadOnly: true, style: { color: '#108ee9' } },
         getTextBox2('Remark', '个性签名', 'textarea', 1, 1, '个性签名', 500, true),
         {
             name: 'IsPublic',
@@ -125,6 +125,7 @@ function getEventActions() {
         name: "saveEntityData",
         type: "entityEdit/saveEntityData",
         editView: "marriageUserEditEdit",
+        expandSetEntityData: 'expandSetEntityData',
         successCallback: 'saveEntityDataCallback'
     }]
 }
