@@ -143,7 +143,8 @@ function U(Y) {
                 case "MM":
                     return G((h.getMonth() + 1));
                 case "M":
-                    return h.getMonth() + 1
+                    return h.getMonth() + 1;
+                default: return ''
             }
         })
     }
@@ -242,7 +243,7 @@ function U(Y) {
         index = index === 12 ? 0 : index;
         var birthEight = this.ganzhiYear + ' ' + this.ganzhiMonth + ' ' + this.ganzhiDate + ' ' + this.getHourGanzi(index);
 
-        var lunarDate = this.shengxiao + '年' + this.lunarMonthInChinese + '月' + this.lunarDateInChinese;
+        var lunarDate = this.ganzhiYear + '年' + this.lunarMonthInChinese + '月' + this.lunarDateInChinese;
 
         return [lunarDate, birthEight];
     };
@@ -250,37 +251,37 @@ function U(Y) {
     //时辰
     //this.ganziHour = getGanziHour.call(this);
 
-    function getGanziHour() {
-        var hh = this.date.getHours();
-        var mm = this.date.getMinutes();
+    // function getGanziHour() {
+    //     var hh = this.date.getHours();
+    //     var mm = this.date.getMinutes();
 
-        var index = getHourDizhi(hh, mm);
-        return this.getHourGanzi(index);
-    }
+    //     var index = getHourDizhi(hh, mm);
+    //     return this.getHourGanzi(index);
+    // }
 
     function getHourGanzi(ganIndex) {
-        if (ganIndex == 0 || ganIndex == 5) return 0;
-        else if (ganIndex == 1 || ganIndex == 6) return 2;
-        else if (ganIndex == 2 || ganIndex == 7) return 4;
-        else if (ganIndex == 3 || ganIndex == 8) return 6;
-        else if (ganIndex == 4 || ganIndex == 9) return 8;
+        if (ganIndex === 0 || ganIndex === 5) return 0;
+        else if (ganIndex === 1 || ganIndex === 6) return 2;
+        else if (ganIndex === 2 || ganIndex === 7) return 4;
+        else if (ganIndex === 3 || ganIndex === 8) return 6;
+        else if (ganIndex === 4 || ganIndex === 9) return 8;
     }
 
-    function getHourDizhi(hh, mm) {
-        var h = (hh * 60 + mm) / 60;
-        if (h <= 1 || h > 23) return 0;
-        else if (h > 1 && h <= 3) return 1;
-        else if (h > 3 && h <= 5) return 2;
-        else if (h > 5 && h <= 7) return 3;
-        else if (h > 7 && h <= 9) return 4;
-        else if (h > 9 && h <= 11) return 5;
-        else if (h > 11 && h <= 13) return 6;
-        else if (h > 13 && h <= 15) return 7;
-        else if (h > 15 && h <= 17) return 8;
-        else if (h > 17 && h <= 19) return 9;
-        else if (h > 19 && h <= 21) return 10;
-        else if (h > 21 && h <= 23) return 11;
-    }
+    // function getHourDizhi(hh, mm) {
+    //     var h = (hh * 60 + mm) / 60;
+    //     if (h <= 1 || h > 23) return 0;
+    //     else if (h > 1 && h <= 3) return 1;
+    //     else if (h > 3 && h <= 5) return 2;
+    //     else if (h > 5 && h <= 7) return 3;
+    //     else if (h > 7 && h <= 9) return 4;
+    //     else if (h > 9 && h <= 11) return 5;
+    //     else if (h > 11 && h <= 13) return 6;
+    //     else if (h > 13 && h <= 15) return 7;
+    //     else if (h > 15 && h <= 17) return 8;
+    //     else if (h > 17 && h <= 19) return 9;
+    //     else if (h > 19 && h <= 21) return 10;
+    //     else if (h > 21 && h <= 23) return 11;
+    // }
 }
 
 export default U;

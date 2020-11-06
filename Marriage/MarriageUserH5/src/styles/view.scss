@@ -108,23 +108,84 @@
 .divUserInfo{
     width: 100%;
     min-height: 100%;
-    background-color: #f5f5f9;
+    background-color: #ffffff;
 
     .divTopUserInfo{
         width: 100%;
         display: flex;
         flex-direction: row;
         align-items: center;
-        height: toRem(260);
+        height: toRem(188);
 
         .divLeft{
-            padding: toRem(30);
+            padding: toRem(24);
             
             img{
-                width: toRem(200);
-                height: toRem(200);
+                width: toRem(140);
+                height: toRem(140);
                 border-radius: toRem(16);
             }
+        }
+
+        .divRight{
+            padding: toRem(24);
+            width: 100%;
+            box-sizing: border-box;
+
+            .divTop{
+                height: toRem(76);
+                display: flex;
+                align-items: center;
+
+                span{
+                    font-size: toRem(32);
+                    font-weight: 700;
+                }
+            }
+
+            .divBottom{
+                height: toRem(64);
+                width: 100%;
+                display: flex;
+                align-items: center;
+                flex-direction: row;
+                justify-content: space-between;
+                padding-right: toRem(4);
+                box-sizing: border-box;
+                
+                span{
+                    font-size: toRem(28);
+                }
+            }
+        }
+    }
+
+    a, a:hover,  a:visited{
+        color: #222222;
+    }
+}
+
+.divListMenu,.divExitListMenu{
+    margin-top: toRem(16);
+
+    :global{
+        .am-list-body:before{
+            height: 0 !important;
+        }
+        .am-list-body:after{
+           height: 0 !important;
+       }
+    
+       .am-input-label, .am-list-content, .am-list-extra, .am-textarea-label, .am-textarea-control textarea, .am-input-control,.am-input-control input{
+           font-size: toRem(30) !important;
+       }
+    }
+}
+
+.divExitListMenu{
+    :global{
+        .am-list-content{
+            text-align: center !important;
         }
     }
 }

@@ -33,7 +33,10 @@ export function getResponseData(d, resKey) {
     else if (d) obj = d
     else obj = { isSuccess: false, message: "请求异常！" }
 
-    if (d && d.hasOwnProperty('Token')) Common.setStorage(EnvConfig.tokenKey, d.Token, 120);
+    if (d && d.hasOwnProperty('Token')) {
+        if (d.Token) Common.setStorage(EnvConfig.tokenKey, d.Token, 120);
+        else Common.removeStorage(EnvConfig.tokenKey);
+    }
 
     return obj;
 }

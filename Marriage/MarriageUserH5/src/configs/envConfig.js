@@ -10,7 +10,8 @@ const EnvConfig = {
     setEnv,
     env: null,
     isProd: false,
-    tokenKey: 'D69BE2A5-591E-4173-A4BC-4420EFA20AF1'
+    tokenKey: 'D69BE2A5-591E-4173-A4BC-4420EFA20AF1',
+    wxUserKey: '8A655A4E-4E87-4907-A328-280CF649032A'
 }
 
 //ctx koa对象，ctx不为空表示是服务器
@@ -33,7 +34,7 @@ function getWebServiceUrl() {
     return EnvConfig.isProd ? "/user/" : '/';
 }
 
-function getResourcesServiceUrl(){
+function getResourcesServiceUrl() {
     return EnvConfig.isProd ? "/res/api/" : 'http://localhost/res/api/';
 }
 

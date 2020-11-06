@@ -13,7 +13,10 @@ module.exports = {
 
 function getProperties() {
     return [
-        getUserInfoView()
+        getUserInfoView(),
+        getPhotoListMenu(),
+        getMatchmakerListMenu(),
+        getExitListMenu()
     ]
 }
 
@@ -44,4 +47,30 @@ function getEventActions() {
         type: "entityEdit/getEntityData",
         editView: "userInfoView"
     }]
+}
+
+function getPhotoListMenu() {
+    return {
+        name: 'UserPhoto',
+        type: 'ListMenu',
+        className: 'divListMenu',
+        dataSource: [{ text: '生活照', arrow: 'horizontal', thumb: 'photo.png', url: 'mine/userPhoto' }]
+    }
+}
+
+function getMatchmakerListMenu(){
+    return {
+        name: 'Matchmarker',
+        type: 'ListMenu',
+        className: 'divListMenu',
+        dataSource: [{ text: '专属红娘', arrow: 'horizontal', thumb: 'matchmaker.png', url: 'mine/matchmaker' }]
+    }
+}
+
+function getExitListMenu(){
+    return {
+        name: 'exitListMenu',
+        type: 'ExitListMenu',
+        className: 'divExitListMenu',
+    }
 }

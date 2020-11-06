@@ -1,11 +1,10 @@
 import { useState, useEffect, useMemo } from "react";
 import { Common, PageCommon } from 'UtilsCommon';
 import { useDispatch } from 'dva';
-
-const wxUserKey = '8A655A4E-4E87-4907-A328-280CF649032A';
+import { EnvConfig } from 'Configs';
 
 const getStorageWxUser = () => {
-    let str = Common.getStorage(wxUserKey);
+    let str = Common.getStorage(EnvConfig.wxUserKey);
     if (Common.isNullOrEmpty(str)) return null;
 
     str = decodeURIComponent(window.atob(str))
@@ -14,7 +13,7 @@ const getStorageWxUser = () => {
 
 const setStorageWxUser = (wxUser) => {
     const str = window.btoa(encodeURIComponent(JSON.stringify(wxUser)));
-    Common.setStorage(wxUserKey, str);
+    Common.setStorage(EnvConfig.wxUserKey, str);
 };
 
 const isH5 = Common.isH5();
