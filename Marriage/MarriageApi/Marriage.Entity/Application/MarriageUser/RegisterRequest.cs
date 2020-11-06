@@ -84,9 +84,5 @@ namespace Marriage.Entity.Application.MarriageUser
     /// </summary>
     public class RegisterResponse : Response, IResponse
     {
-        /// <summary>
-        /// 用户数据
-        /// </summary>
-        public UserInfo Data { get; set; }
     }
 }

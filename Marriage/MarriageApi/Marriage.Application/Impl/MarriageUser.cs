@@ -127,12 +127,10 @@ namespace Marriage.Application.Impl
                 var id = _MarriageUser.CreateMarriageUser(entity);
                 if (id != Guid.Empty)
                 {
-                    response.Data = GetUserInfo(entity);
-
                     response.Token = entity.UserId.ToString();
                 }
 
-                return response.Data != null;
+                return id != Guid.Empty;
             };
 
             return this.InsertEntityData(stepNo, "创建相亲用户", "CreateMarriageUser", response, execStep);
@@ -180,8 +178,6 @@ namespace Marriage.Application.Impl
 
                 if (entity != null)
                 {
-                    response.Data = GetUserInfo(entity);
-
                     response.Token = entity.UserId.ToString();
                 }
 
@@ -189,24 +185,6 @@ namespace Marriage.Application.Impl
             };
 
             return this.GetEntityData<Entity.Domain.MarriageUser>(stepNo, "以微信OpenId获取用户", "GetUserByOpenId", response, execStep, false);
-        }
-
-        UserInfo GetUserInfo(Entity.Domain.MarriageUser entity)
-        {
-            return new UserInfo()
-            {
-                Address = entity.Address,
-                City = entity.City,
-                HeadImgUrl = entity.HeadImgUrl,
-                IdCard = entity.IdCard,
-                Name = entity.Name,
-                NickName = entity.NickName,
-                OpenId = entity.OpenId,
-                Phone = entity.Phone,
-                Province = entity.Province,
-                Sex = entity.Sex,
-                UserId = entity.UserId
-            };
         }
 
         /// <summary>

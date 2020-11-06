@@ -242,7 +242,7 @@ function U(Y) {
         index = index === 12 ? 0 : index;
         var birthEight = this.ganzhiYear + ' ' + this.ganzhiMonth + ' ' + this.ganzhiDate + ' ' + this.getHourGanzi(index);
 
-        var lunarDate = this.shengxiao + '年' + this.lunarMonthInChinese + '月' + this.lunarDateInChinese + '日';
+        var lunarDate = this.shengxiao + '年' + this.lunarMonthInChinese + '月' + this.lunarDateInChinese;
 
         return [lunarDate, birthEight];
     };

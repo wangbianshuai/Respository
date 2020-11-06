@@ -38,7 +38,6 @@ function getDispatch(dispatch, token, app) {
 
     if ((action.isToken || action.hasToken || action.isTokenAccess) && !payload.token) {
       payload.token = token;
-      payload.loginUserId = Common.getStorage('loginUserId');
     }
     if (action.isLoading === false) isloading = false;
     return dispatch({ type: name + '/' + actionName, payload, isloading });

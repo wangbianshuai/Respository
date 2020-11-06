@@ -74,9 +74,6 @@ class PageAxis {
 
         this.modalDialog = {};
 
-        this.loginUser = this.getLoginUser();
-        this.token = Common.getStorage(EnvConfig.tokenKey);
-
         this.receives = {};
         this.eventActionsConfig = Common.clone(this.pageConfig.eventActions);
         if (this.pageConfig.actionOptions) this.actionTypes = this.pageConfig.actionOptions.actionTypes;
@@ -90,13 +87,9 @@ class PageAxis {
         for (let key in EventActions) this.eventActions[key] = new EventActions[key]();
     }
 
-    getLoginUser = () => {
-        var info = Common.getStorage(EnvConfig.loginUserKey);
-        if (!info) return null;
-
-        info = decodeURIComponent(window.atob(info))
-        return JSON.parse(info);
-    };
+    getToken(){
+        return Common.getStorage(EnvConfig.tokenKey);
+    }
 
     setModalDialog(p) {
         this.modalDialog.add && this.modalDialog.add(p);
@@ -189,10 +182,6 @@ class PageAxis {
     invokeEventAction(name, obj) {
         const e = this.getEventAction(name);
         if (e != null) e.invoke(obj, e);
-    }
-
-    getLoginUserId() {
-        return this.loginUser.UserId;
     }
 
     getEventAction(name) {

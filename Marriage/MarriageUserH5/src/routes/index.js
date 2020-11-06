@@ -1,10 +1,8 @@
 import { EntityPageEdit } from "PageTemplates";
 import { LunarDate, Common } from 'UtilsCommon';
-import { EnvConfig } from 'Configs';
 
 export default EntityPageEdit("index", "MarriageUser", '连理缘-注册', 100, {
     expandInit() {
-        if (this.loginUser) return;
         this.getProperty('NickName').defaultValue = this.wxUser.nickname;
         this.getProperty('HeadImgUrl').defaultValue = this.wxUser.headimgurl;
         this.getProperty('Province').defaultValue = this.wxUser.province;
@@ -20,11 +18,8 @@ export default EntityPageEdit("index", "MarriageUser", '连理缘-注册', 100, 
         this.lunarBirthdayProperty = this.getProperty('LunarBirthday');
         this.birthEightProperty = this.getProperty('BirthEight');
     },
-    componentDidmount() {
-        if (this.loginUser) {
-            this.toPage('marriage/index');
-            return;
-        }
+    hasTokenCallback() {
+        this.toPage('marriage/index');
     },
     expandSetEntityData({ entityData, props, view }) {
         entityData.OpenId = this.wxUser.openid;
@@ -58,10 +53,7 @@ export default EntityPageEdit("index", "MarriageUser", '连理缘-注册', 100, 
         var date = year + '-' + month + '-' + day;
         this.birthdayProperty.setValue(date);
     },
-    saveEntityDataCallback({ data }) {
-        const str = window.btoa(encodeURIComponent(JSON.stringify(data)));
-        Common.setStorage(EnvConfig.loginUserKey, str);
-        Common.setStorage(EnvConfig.loginUserIdKey, data.UserId);
+    saveEntityDataCallback() {
         this.alertSuccess('注册成功', () => {
             this.toPage('/mine/index');
         });

@@ -29,12 +29,13 @@ export default (name, props, mapStateToProps, init, dataActionOptions, wxUser) =
   );
 
   //6、 使用获取登录用户
-  const loginUser = useGetLoginUser(wxUser, dispatchAction);
+  const token = useGetLoginUser(wxUser, dispatchAction);
 
   //没有登录信息，跳转注册页面
   useEffect(() => {
-    if (pageAxis && !loginUser) pageAxis.toRegister();
-  }, [pageAxis, loginUser]);
+    if (pageAxis && !token) pageAxis.toRegister();
+    else if (pageAxis && token && pageAxis.hasTokenCallback) pageAxis.hasTokenCallback(token);
+  }, [pageAxis, token]);
 
   //7、 接收行为数据
   useEffect(() => {
