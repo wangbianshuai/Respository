@@ -80,6 +80,13 @@
             <param name="request"></param>
             <returns></returns>
         </member>
+        <member name="M:Marriage.Api.Controllers.MarriageUserPhotoController.DeleteUserPhotos(Marriage.Entity.Application.MarriageUserPhoto.DeleteUserPhotosRequest)">
+            <summary>
+            删除用户照片
+            </summary>
+            <param name="request"></param>
+            <returns></returns>
+        </member>
         <member name="T:Marriage.Api.Controllers.WxUserController">
             <summary>
             微信用户

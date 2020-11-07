@@ -38,5 +38,16 @@ namespace Marriage.Domain.Impl
 
             return _MarriageUserPhoto.Insert(entityData);
         }
+
+        /// <summary>
+        /// 删除用户照片
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <param name="photoIds"></param>
+        /// <returns></returns>
+        public bool DeleteUserPhotos(Guid userId, List<Guid> photoIds)
+        {
+            return _MarriageUserPhoto.DeleteUserPhotos(userId, photoIds);
+        }
     }
 }

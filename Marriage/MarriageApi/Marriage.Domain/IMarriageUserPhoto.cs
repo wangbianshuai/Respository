@@ -23,5 +23,13 @@ namespace Marriage.Domain
         /// <param name="photoUrl"></param>
         /// <returns></returns>
         Guid SaveUserPhoto(Guid userId, string photoUrl);
+
+        /// <summary>
+        /// 删除用户照片
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <param name="photoIds"></param>
+        /// <returns></returns>
+        bool DeleteUserPhotos(Guid userId, List<Guid> photoIds);
     }
 }

@@ -141,6 +141,11 @@
                     font-size: toRem(32);
                     font-weight: 700;
                 }
+
+                img{
+                    width: toRem(48);
+                    height: toRem(48);
+                }
             }
 
             .divBottom{
@@ -222,15 +227,39 @@
         width: 100%;
         height: 100%;
         overflow: auto;
+        background-color: #ffffff;
 
         .divItem{
             width: 50%;
+            height: toRem(320);
             float: left;
-            padding: toRem(30);
+            padding: toRem(16);
             box-sizing: border-box;
+            border-bottom: 1px solid #ddd;
+            position: relative;
+          
+            .divImage{
+                width: 100%;
+                height: 100%;
+                display: flex;
+                align-items: center;
+                justify-content: center;    
+            }
 
             img{
-                width: 100%;
+                height: 100%;
+                max-width: 100%;
+            }
+
+            a{
+                z-index: 10000;
+            }
+
+            .iconDelete{
+                position: absolute;
+                top: toRem(8);
+                right: toRem(8);
+                z-index: 1001;
             }
         }
     }

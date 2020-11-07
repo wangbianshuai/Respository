@@ -4,6 +4,21 @@
         <name>Marriage.Entity</name>
     </assembly>
     <members>
+        <member name="T:Marriage.Entity.Application.MarriageUserPhoto.DeleteUserPhotosRequest">
+            <summary>
+            删除用户照片请求
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageUserPhoto.DeleteUserPhotosRequest.PhotoIds">
+            <summary>
+            照片主键集合
+            </summary>
+        </member>
+        <member name="T:Marriage.Entity.Application.MarriageUserPhoto.DeleteUserPhotosResponse">
+            <summary>
+            删除用户照片响应
+            </summary>
+        </member>
         <member name="T:Marriage.Entity.Application.MarriageUserPhoto.GetUserPhotosRequest">
             <summary>
             获取用户生活照列表请求

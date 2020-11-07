@@ -34,7 +34,6 @@ namespace Marriage.Api.Controllers
             return await Task.Run(() => _MarriageUserPhoto.GetUserPhotos(request));
         }
 
-
         /// <summary>
         /// 保存用户照片
         /// </summary>
@@ -45,6 +44,18 @@ namespace Marriage.Api.Controllers
         public async Task<SaveUserPhotoResponse> SaveUserPhoto(SaveUserPhotoRequest request)
         {
             return await Task.Run(() => _MarriageUserPhoto.SaveUserPhoto(request));
+        }
+
+        /// <summary>
+        /// 删除用户照片
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        [HttpPost]
+        [SwaggerOpenApiTokenParameter]
+        public async Task<DeleteUserPhotosResponse> DeleteUserPhotos(DeleteUserPhotosRequest request)
+        {
+            return await Task.Run(() => _MarriageUserPhoto.DeleteUserPhotos(request));
         }
     }
 }

@@ -234,7 +234,8 @@ as
 select a.*,
 case when a.Status=0 then '待审核' when a.Status=1 then '审核通过'
 when a.Status=2 then '审核不通过' when a.Status=3 then '关闭' else '未知' end StatusName,
-case when a.Sex=1 then '男' when a.Sex=2 then '女' else '未知' end SexName
+case when a.Sex=1 then '男' when a.Sex=2 then '女' else '未知' end SexName,
+year(GETDATE())- YEAR(Birthday) as Age
 from t_MarriageUser a 
 where a.IsDelete=0
 go

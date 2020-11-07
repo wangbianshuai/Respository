@@ -1,5 +1,5 @@
 import React, { useState, useRef, useCallback } from 'react';
-import { Button, NavBar, Icon } from 'antd-mobile';
+import { Button, NavBar, Icon, Checkbox } from 'antd-mobile';
 import { Common } from 'UtilsCommon';
 import Components from 'Components';
 import styles from '../styles/view.scss';
@@ -50,14 +50,35 @@ const uploadImage = (e, pageAxis, value, setValue) => {
   });
 };
 
-const renderItem = (data, i) => {
-  return <div className={styles.divItem} key={i}><a href={data.PhotoUrl} rel="noreferrer" target='_blank'><img src={data.PhotoUrl} alt='' /></a></div>
+const renderItem = (data, i, isEdit) => {
+  const style = i / 2 !== 0 ? { borderLeft: '1px solid #ddd' } : undefined;
+  return <div className={styles.divItem} style={style} key={data.PhotoId}>
+    {isEdit && <div className={styles.divImage}><img src={data.PhotoUrl} alt='' /></div>}
+    {!isEdit && <a href={data.PhotoUrl} rel="noreferrer" target='_blank'>
+      <div className={styles.divImage}><img src={data.PhotoUrl} alt='' /></div>
+    </a>}
+    {isEdit && <Checkbox className={styles.iconDelete} onChange={(e) => { data.isDelete = e.target.checked }} />}
+  </div>
 }
+
+const deletePhotos = (value, setValue, pageAxis) => {
+  const ids = value.filter(f => f.isDelete).map(m => m.PhotoId);
+  if (ids.length === 0) return;
+  pageAxis.dispatchAction('MarriageUserPhotoService', 'deletePhotos', { PhotoIds: ids }).then(res => {
+    if (pageAxis.isSuccessProps(res)) {
+      const list = value.filter(f => !f.isDelete)
+      setValue(list);
+    }
+    else pageAxis.alert(res.message);
+  })
+
+};
 
 export default (props) => {
   const { property, pageAxis } = Components.Base.getProps(props);
   const [isVisible, setIsVisible] = useState(property.isVisible !== false);
   const [value, setValue] = useState([]);
+  const [isEdit, setIsEdit] = useState(false);
 
   const inputFile = useRef(null)
 
@@ -66,8 +87,21 @@ export default (props) => {
   }, [pageAxis, value, setValue]);
 
   const onClick = useCallback(() => {
+    if (isEdit) {
+      deletePhotos(value, setValue, pageAxis);
+      return;
+    }
+    if (value.length >= 20) {
+      pageAxis.alert(' 生活照最多上传20张！');
+      return;
+    }
     inputFile.current.click();
-  }, [inputFile]);
+  }, [inputFile, value, setValue, isEdit, pageAxis]);
+
+  const onEdit = useCallback(() => {
+    if (isEdit) value.forEach(v => { v.isDelete = false });
+    setIsEdit(!isEdit);
+  }, [isEdit, setIsEdit, value]);
 
   property.setVisible = (v) => setIsVisible(v);
   property.setValue = (v) => setValue(v);
@@ -79,11 +113,12 @@ export default (props) => {
     <NavBar className={styles.divNavBar}
       mode="mark"
       rightContent={[
-        <Button size='small' key={0} onClick={onClick}>选择照片</Button>
+        <Button size='small' key={0} onClick={onClick} style={{ marginRight: '0.5rem' }}>{isEdit ? '删除' : '上传'}</Button>,
+        <Button size='small' key={1} onClick={onEdit}>{isEdit ? '取消' : '编辑'}</Button>
       ]}
     >生活照</NavBar>
     <div className={styles.divData}>
-      {value.map((m, i) => renderItem(m, i))}
+      {value.map((m, i) => renderItem(m, i, isEdit))}
     </div>
     <input type='file' accept='image/*' onChange={onChange} ref={inputFile} style={{ display: 'none' }} />
   </div>)

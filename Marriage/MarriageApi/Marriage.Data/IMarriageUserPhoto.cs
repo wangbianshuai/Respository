@@ -10,10 +10,10 @@ namespace Marriage.Data
     /// </summary>
     public interface IMarriageUserPhoto
     {/// <summary>
-        /// 以用户Id获取实体数据列表
-        /// </summary>
-        /// <param name="marriageUserId"></param>
-        /// <returns></returns>
+     /// 以用户Id获取实体数据列表
+     /// </summary>
+     /// <param name="marriageUserId"></param>
+     /// <returns></returns>
         List<IEntityData> GetEnityDataListByUserId(Guid marriageUserId);
 
         /// <summary>
@@ -22,5 +22,13 @@ namespace Marriage.Data
         /// <param name="entityData"></param>
         /// <returns></returns>
         Guid Insert(IEntityData entityData);
+
+        /// <summary>
+        /// 删除用户照片
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <param name="photoIds"></param>
+        /// <returns></returns>
+        bool DeleteUserPhotos(Guid userId, List<Guid> photoIds);
     }
 }

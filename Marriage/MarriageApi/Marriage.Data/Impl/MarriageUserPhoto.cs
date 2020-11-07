@@ -46,5 +46,34 @@ namespace Marriage.Data.Impl
             if (this.InsertEntity(entityData, out primaryKey)) return (Guid)primaryKey;
             return Guid.Empty;
         }
+
+        /// <summary>
+        /// 删除用户照片
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <param name="photoIds"></param>
+        /// <returns></returns>
+        public bool DeleteUserPhotos(Guid userId, List<Guid> photoIds)
+        {
+            if (photoIds == null || photoIds.Count == 0) return false;
+
+            List<IDbDataParameter> parameterList = new List<IDbDataParameter>();
+
+            IEntityData entityData = new EntityData("MarriageUserPhoto");
+            entityData.SetValue("IsDelete", 1);
+
+            List<string> inParameterList = new List<string>();
+            parameterList.Add(this.InParameter("@MarriageUserId", userId));
+            photoIds.ForEach(n =>
+            {
+                var parameterName = "@P" + Guid.NewGuid().ToString().Substring(0, 8).ToString();
+                parameterList.Add(this.InParameter(parameterName, n));
+                inParameterList.Add(parameterName);
+            });
+
+            IQuery query = new Query(this.EntityType.TableName);
+            query.Where(string.Format("where MarriageUserId=@MarriageUserId and PhotoId in ({0})", string.Join(",", inParameterList)), parameterList);
+            return this.UpdateEntity(query, entityData);
+        }
     }
 }

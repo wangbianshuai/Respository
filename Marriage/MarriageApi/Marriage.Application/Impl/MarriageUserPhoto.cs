@@ -62,6 +62,48 @@ namespace Marriage.Application.Impl
         }
 
         /// <summary>
+        /// 删除用户照片
+        /// </summary>
+        public DeleteUserPhotosResponse DeleteUserPhotos(DeleteUserPhotosRequest request)
+        {
+            string title = "删除用户照片";
+            string requestContent = Utility.Common.ToJson(request);
+            DeleteUserPhotosResponse response = new DeleteUserPhotosResponse();
+
+            this.InitMessage();
+
+            this.IsNullRequest(request, response);
+
+            //1、删除用户照片
+            int stepNo = 1;
+            DeleteUserPhotos(stepNo, request, response);
+
+            //2、执行结束
+            this.ExecEnd(response);
+
+            //日志记录
+            return this.SetReturnResponse<DeleteUserPhotosResponse>(title, "DeleteUserPhotos", requestContent, response);
+        }
+
+        /// <summary>
+        /// 删除用户照片
+        /// </summary>
+        /// <param name="stepNo"></param>
+        /// <param name="request"></param>
+        /// <param name="response"></param>
+        /// <returns></returns>
+        private bool DeleteUserPhotos(int stepNo, DeleteUserPhotosRequest request, DeleteUserPhotosResponse response)
+        {
+            Func<bool> execStep = () =>
+            {
+
+                return _MarriageUserPhoto.DeleteUserPhotos(Guid.Parse(request.LoginUserId), request.PhotoIds);
+            };
+
+            return this.InsertEntityData(stepNo, "删除用户照片", "DeleteUserPhotos", response, execStep);
+        }
+
+        /// <summary>
         /// 保存用户照片
         /// </summary>
         /// <param name="stepNo"></param>

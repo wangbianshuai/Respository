@@ -9,7 +9,7 @@ const config = {
         //获取用户照片信息
         post('getEntityData', 'MarriageUserPhoto/GetUserPhotos', 'getEntityData'),
         //删除用户照片信息
-        post('deletePhoto', 'MarriageUserPhoto/DeleteUserPhoto', 'deletePhoto')
+        post('deletePhotos', 'MarriageUserPhoto/DeleteUserPhotos', 'deletePhotos')
     ]
 }
 function post(actionName, url, stateName, dataKey) {

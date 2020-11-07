@@ -19,5 +19,10 @@ namespace Marriage.Application
         /// 保存用户照片
         /// </summary>
         SaveUserPhotoResponse SaveUserPhoto(SaveUserPhotoRequest request);
+
+        /// <summary>
+        /// 删除用户照片
+        /// </summary>
+        DeleteUserPhotosResponse DeleteUserPhotos(DeleteUserPhotosRequest request);
     }
 }
