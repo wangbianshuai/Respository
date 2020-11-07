@@ -545,16 +545,6 @@ exec proc_AddCellExplanation '更新时间','t_ConditionType','UpdateDate'
 exec proc_AddCellExplanation '行版本','t_ConditionType','RowVersion'
 go
 
-if exists(select * from sysobjects where name='v_ConditionType')
-drop view v_ConditionType
-go
-
-create view v_ConditionType
-as
-select a.*
-from t_ConditionType a where IsDelete=0
-go
-
 --11、条件选项信息表
 if exists(select * from sysobjects where name='t_ConditionItem')
 drop table t_ConditionItem
@@ -585,19 +575,34 @@ exec proc_AddCellExplanation '是否区间，1：是，一般数据类型为数值','t_ConditionI
 exec proc_AddCellExplanation '显示顺序','t_ConditionItem','DisplayIndex'
 go
 
---12、相亲用户条件选项值信息表
-if exists(select * from sysobjects where name='t_ConditionSelectValue')
-drop table t_ConditionSelectValue
+if exists(select * from sysobjects where name='v_ConditionType')
+drop view v_ConditionType
 go
 
-create table t_ConditionSelectValue
+create view v_ConditionType
+as
+with ConditionItemCount as
 (
-ItemId uniqueidentifier not null primary key,                  --主键
-UserId uniqueidentifier,                                       --相亲用户Id
-SelectType tinyint not null,                                   --选择类型，1：条件值，2：择偶标准值
-ConditionTypeId uniqueidentifier,                              --条件类型Id
-ConditionItemId uniqueidentifier,                              --条件项Id
-Value nvarchar(2000),                                          --值   
+select ConditionTypeId,COUNT(*) ItemCount from t_ConditionItem
+group by ConditionTypeId
+)
+select a.*,b.ItemCount
+from t_ConditionType a, ConditionItemCount b
+where IsDelete=0 and a.ConditionTypeId=b.ConditionTypeId
+go
+
+--12、相亲用户条件类型信息表
+if exists(select * from sysobjects where name='t_UserConditionType')
+drop table t_UserConditionType
+go
+
+create table t_UserConditionType
+(
+UserConditionTypeId uniqueidentifier not null primary key,     --主键
+UserId uniqueidentifier not null,                              --相亲用户Id
+SelectType tinyint not null,                                   --选择类型，1：条件，2：择偶标准
+ConditionTypeId uniqueidentifier not null,                     --条件类型Id
+IsPublic tinyint not null default(0),                          --是否公开
 CreateUser uniqueidentifier not null,                          --创建人
 CreateDate datetime default(getdate()) not null,               --创建时间
 UpdateUser uniqueidentifier,                                   --更新人
@@ -606,17 +611,68 @@ RowVersion timestamp not null                                  --行版本
 )
 go
 
-exec proc_AddCellExplanation '主键','t_ConditionSelectValue','ItemId'
-exec proc_AddCellExplanation '相亲用户Id','t_ConditionSelectValue','UserId'
-exec proc_AddCellExplanation '选择类型，1：条件值，2：择偶标准值','t_ConditionSelectValue','SelectType'
-exec proc_AddCellExplanation '条件类型Id','t_ConditionSelectValue','ConditionTypeId'
-exec proc_AddCellExplanation '条件项Id','t_ConditionSelectValue','ConditionItemId'
-exec proc_AddCellExplanation '值','t_ConditionSelectValue','Value'
-exec proc_AddCellExplanation '创建人','t_ConditionSelectValue','CreateUser'
-exec proc_AddCellExplanation '创建时间','t_ConditionSelectValue','CreateDate'
-exec proc_AddCellExplanation '更新人','t_ConditionSelectValue','UpdateUser'
-exec proc_AddCellExplanation '更新时间','t_ConditionSelectValue','UpdateDate'
-exec proc_AddCellExplanation '行版本','t_ConditionSelectValue','RowVersion'
+exec proc_AddCellExplanation '主键','t_UserConditionType','UserConditionTypeId'
+exec proc_AddCellExplanation '相亲用户Id','t_UserConditionType','UserId'
+exec proc_AddCellExplanation '选择类型，1：条件值，2：择偶标准值','t_UserConditionType','SelectType'
+exec proc_AddCellExplanation '条件类型Id','t_UserConditionType','ConditionTypeId'
+exec proc_AddCellExplanation '是否公开','t_UserConditionType','IsPublic'
+exec proc_AddCellExplanation '创建人','t_UserConditionType','CreateUser'
+exec proc_AddCellExplanation '创建时间','t_UserConditionType','CreateDate'
+exec proc_AddCellExplanation '更新人','t_UserConditionType','UpdateUser'
+exec proc_AddCellExplanation '更新时间','t_UserConditionType','UpdateDate'
+exec proc_AddCellExplanation '行版本','t_UserConditionType','RowVersion'
+go
+
+--12、相亲用户条件选项值信息表
+if exists(select * from sysobjects where name='t_UserConditionSelectValue')
+drop table t_UserConditionSelectValue
+go
+
+create table t_UserConditionSelectValue
+(
+ItemId uniqueidentifier not null primary key,                  --主键
+UserConditionTypeId uniqueidentifier not null,                 --相亲用户条件类型Id
+ConditionItemId uniqueidentifier not null,                     --条件项Id
+Value nvarchar(2000),                                          --值
+)
+go
+
+exec proc_AddCellExplanation '主键','t_UserConditionSelectValue','ItemId'
+exec proc_AddCellExplanation '相亲用户条件类型Id','t_UserConditionSelectValue','UserConditionTypeId'
+exec proc_AddCellExplanation '条件项Id','t_UserConditionSelectValue','ConditionItemId'
+exec proc_AddCellExplanation '值','t_UserConditionSelectValue','Value'
+go
+
+if exists(select * from sysobjects where name='v_UserConditionType')
+drop view v_UserConditionType
+go
+
+create view v_UserConditionType
+as
+with UserConditionItemCount as
+(
+select UserConditionTypeId,COUNT(*) UserItemCount from t_UserConditionSelectValue
+group by UserConditionTypeId
+),
+ConditionItemCount as
+(
+select ConditionTypeId,COUNT(*) ItemCount from t_ConditionItem
+group by ConditionTypeId
+)
+select a.UserConditionTypeId,
+a.ConditionTypeId,
+a.SelectType,
+a.UserId,
+a.IsPublic,
+d.Name as ConditionTypeName,
+b.UserItemCount,
+c.ItemCount,
+convert(int,(b.UserItemCount*100)/c.ItemCount) Percentage 
+from t_UserConditionType a, UserConditionItemCount b,ConditionItemCount c,t_ConditionType d
+where a.UserConditionTypeId=b.UserConditionTypeId
+and a.ConditionTypeId= c.ConditionTypeId
+and a.ConditionTypeId= d.ConditionTypeId
+and d.IsDelete=0
 go
 
 --13、相亲配对计算信息表

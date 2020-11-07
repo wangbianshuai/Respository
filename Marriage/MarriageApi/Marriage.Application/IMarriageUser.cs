@@ -29,5 +29,15 @@ namespace Marriage.Application
         /// 获取用户信息
         /// </summary>
         GetUserInfoResponse GetUserInfo(GetUserInfoRequest request);
+
+        /// <summary>
+        /// 获取用户信息
+        /// </summary>
+        GetUserResponse GetUser(GetUserRequest request);
+
+        /// <summary>
+        /// 获取用户条件类型列表
+        /// </summary>
+        GetUserConditionTypesResponse GetUserConditionTypes(GetUserConditionTypesRequest request);
     }
 }

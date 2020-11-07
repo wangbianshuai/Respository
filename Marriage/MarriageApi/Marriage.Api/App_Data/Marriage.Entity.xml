@@ -19,6 +19,56 @@
             以微信OpenId获取用户响应
             </summary>
         </member>
+        <member name="T:Marriage.Entity.Application.MarriageUser.GetUserConditionTypesRequest">
+            <summary>
+            获取用户条件类型列表请求
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageUser.GetUserConditionTypesRequest.SelectType">
+            <summary>
+            选择类型
+            </summary>
+        </member>
+        <member name="T:Marriage.Entity.Application.MarriageUser.GetUserConditionTypesResponse">
+            <summary>
+            获取用户条件类型列表响应
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageUser.GetUserConditionTypesResponse.DataList">
+            <summary>
+            用户条件类型
+            </summary>
+        </member>
+        <member name="T:Marriage.Entity.Application.MarriageUser.UserConditionType">
+            <summary>
+            状态信息
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageUser.UserConditionType.UserConditionTypeId">
+            <summary> 
+            主键
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageUser.UserConditionType.ConditionTypeId">
+            <summary> 
+            条件类型Id
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageUser.UserConditionType.ConditionTypeName">
+            <summary> 
+            条件类型名称
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageUser.UserConditionType.UserItemCount">
+            <summary> 
+            用户选择值计数
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageUser.UserConditionType.Percentage">
+            <summary> 
+            完成百分比
+            </summary> 
+        </member>
         <member name="T:Marriage.Entity.Application.MarriageUser.GetUserInfoRequest">
             <summary>
             获取用户信息请求
@@ -142,6 +192,61 @@
         <member name="P:Marriage.Entity.Application.MarriageUser.UserInfo.Remark">
             <summary> 
             备注
+            </summary> 
+        </member>
+        <member name="T:Marriage.Entity.Application.MarriageUser.GetUserRequest">
+            <summary>
+            获取用户信息请求
+            </summary>
+        </member>
+        <member name="T:Marriage.Entity.Application.MarriageUser.GetUserResponse">
+            <summary>
+            获取用户信息响应
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageUser.GetUserResponse.UserInfo">
+            <summary>
+            用户信息
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageUser.GetUserResponse.StatusInfo">
+            <summary>
+            状态信息
+            </summary>
+        </member>
+        <member name="T:Marriage.Entity.Application.MarriageUser.StatusInfo">
+            <summary>
+            状态信息
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageUser.StatusInfo.Status">
+            <summary> 
+            状态：0：待审核，1：审核通过，2：审核不通过，3：关闭
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageUser.StatusInfo.NoPassReason">
+            <summary> 
+            审核不通过原因
+            </summary> 
+        </member>
+        <member name="T:Marriage.Entity.Application.MarriageUser.UserInfo2">
+            <summary>
+            用户信息
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageUser.UserInfo2.NickName">
+            <summary> 
+            微信昵称
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageUser.UserInfo2.HeadImgUrl">
+            <summary> 
+            微信用户头像
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageUser.UserInfo2.Phone">
+            <summary> 
+            手机
             </summary> 
         </member>
         <member name="T:Marriage.Entity.Application.MarriageUser.RegisterRequest">
@@ -545,66 +650,6 @@
         <member name="P:Marriage.Entity.Data.ConditionItem.DisplayIndex">
             <summary> 
             显示顺序
-            </summary> 
-        </member>
-        <member name="T:Marriage.Entity.Data.ConditionSelectValue">
-            <summary>
-            相亲用户条件选项值信息表
-            </summary>
-        </member>
-        <member name="P:Marriage.Entity.Data.ConditionSelectValue.ItemId">
-            <summary> 
-            主键
-            </summary> 
-        </member>
-        <member name="P:Marriage.Entity.Data.ConditionSelectValue.UserId">
-            <summary> 
-            相亲用户Id
-            </summary> 
-        </member>
-        <member name="P:Marriage.Entity.Data.ConditionSelectValue.SelectType">
-            <summary> 
-            选择类型，1：条件值，2：择偶标准值
-            </summary> 
-        </member>
-        <member name="P:Marriage.Entity.Data.ConditionSelectValue.ConditionTypeId">
-            <summary> 
-            条件类型Id
-            </summary> 
-        </member>
-        <member name="P:Marriage.Entity.Data.ConditionSelectValue.ConditionItemId">
-            <summary> 
-            条件项Id
-            </summary> 
-        </member>
-        <member name="P:Marriage.Entity.Data.ConditionSelectValue.Value">
-            <summary> 
-            值
-            </summary> 
-        </member>
-        <member name="P:Marriage.Entity.Data.ConditionSelectValue.CreateUser">
-            <summary> 
-            创建人
-            </summary> 
-        </member>
-        <member name="P:Marriage.Entity.Data.ConditionSelectValue.CreateDate">
-            <summary> 
-            创建时间
-            </summary> 
-        </member>
-        <member name="P:Marriage.Entity.Data.ConditionSelectValue.UpdateUser">
-            <summary> 
-            更新人
-            </summary> 
-        </member>
-        <member name="P:Marriage.Entity.Data.ConditionSelectValue.UpdateDate">
-            <summary> 
-            更新时间
-            </summary> 
-        </member>
-        <member name="P:Marriage.Entity.Data.ConditionSelectValue.RowVersion">
-            <summary> 
-            行版本
             </summary> 
         </member>
         <member name="T:Marriage.Entity.Data.ConditionType">
@@ -1612,6 +1657,146 @@
             行版本
             </summary> 
         </member>
+        <member name="T:Marriage.Entity.Data.ConditionSelectValue">
+            <summary>
+            相亲用户条件选项值信息表
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Data.ConditionSelectValue.ItemId">
+            <summary> 
+            主键
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Data.ConditionSelectValue.UserConditionTypeId">
+            <summary> 
+            相亲用户条件类型Id
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Data.ConditionSelectValue.ConditionItemId">
+            <summary> 
+            条件项Id
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Data.ConditionSelectValue.Value">
+            <summary> 
+            值
+            </summary> 
+        </member>
+        <member name="T:Marriage.Entity.Data.UserConditionType">
+            <summary>
+            相亲用户条件类型信息表
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Data.UserConditionType.UserConditionTypeId">
+            <summary> 
+            主键
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Data.UserConditionType.UserId">
+            <summary> 
+            相亲用户Id
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Data.UserConditionType.SelectType">
+            <summary> 
+            选择类型，1：条件值，2：择偶标准值
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Data.UserConditionType.ConditionTypeId">
+            <summary> 
+            条件类型Id
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Data.UserConditionType.IsPublic">
+            <summary>
+            是否公开
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Data.UserConditionType.CreateUser">
+            <summary> 
+            创建人
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Data.UserConditionType.CreateDate">
+            <summary> 
+            创建时间
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Data.UserConditionType.UpdateUser">
+            <summary> 
+            更新人
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Data.UserConditionType.UpdateDate">
+            <summary> 
+            更新时间
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Data.UserConditionType.RowVersion">
+            <summary> 
+            行版本
+            </summary> 
+        </member>
+        <member name="T:Marriage.Entity.Data.ViewConditionType">
+            <summary>
+            条件类型信息视图
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Data.ViewConditionType.ItemCount">
+            <summary>
+            选项计数
+            </summary>
+        </member>
+        <member name="T:Marriage.Entity.Data.ViewUserConditionType">
+            <summary>
+            相亲用户条件类型视图
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Data.ViewUserConditionType.UserConditionTypeId">
+            <summary> 
+            主键
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Data.ViewUserConditionType.UserId">
+            <summary> 
+            相亲用户Id
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Data.ViewUserConditionType.SelectType">
+            <summary> 
+            选择类型，1：条件值，2：择偶标准值
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Data.ViewUserConditionType.ConditionTypeId">
+            <summary> 
+            条件类型Id
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Data.ViewUserConditionType.IsPublic">
+            <summary>
+            是否公开
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Data.ViewUserConditionType.ConditionTypeName">
+            <summary> 
+            条件类型名称
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Data.ViewUserConditionType.UserItemCount">
+            <summary> 
+            用户选择值计数
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Data.ViewUserConditionType.ItemCount">
+            <summary> 
+            总项数
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Data.ViewUserConditionType.Percentage">
+            <summary> 
+            完成百分比
+            </summary> 
+        </member>
         <member name="T:Marriage.Entity.Domain.DictionaryConfig">
             <summary>
             键值配置
@@ -1755,6 +1940,81 @@
         <member name="P:Marriage.Entity.Domain.MarriageUser.Remark">
             <summary> 
             备注
+            </summary> 
+        </member>
+        <member name="T:Marriage.Entity.Domain.ConditionType">
+            <summary>
+            条件类型
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Domain.ConditionType.ConditionTypeId">
+            <summary> 
+            主键
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Domain.ConditionType.Name">
+            <summary> 
+            名称
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Domain.ConditionType.Remark">
+            <summary> 
+            备注
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Domain.ConditionType.ItemCount">
+            <summary>
+            选项计数
+            </summary>
+        </member>
+        <member name="T:Marriage.Entity.Domain.ViewUserConditionType">
+            <summary>
+            相亲用户条件类型视图
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Domain.ViewUserConditionType.UserConditionTypeId">
+            <summary> 
+            主键
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Domain.ViewUserConditionType.UserId">
+            <summary> 
+            相亲用户Id
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Domain.ViewUserConditionType.SelectType">
+            <summary> 
+            选择类型，1：条件值，2：择偶标准值
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Domain.ViewUserConditionType.ConditionTypeId">
+            <summary> 
+            条件类型Id
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Domain.ViewUserConditionType.IsPublic">
+            <summary>
+            是否公开
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Domain.ViewUserConditionType.ConditionTypeName">
+            <summary> 
+            条件类型名称
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Domain.ViewUserConditionType.UserItemCount">
+            <summary> 
+            用户选择值计数
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Domain.ViewUserConditionType.ItemCount">
+            <summary> 
+            总项数
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Domain.ViewUserConditionType.Percentage">
+            <summary> 
+            完成百分比
             </summary> 
         </member>
         <member name="T:Marriage.Entity.Service.BasicSupport.GetAccessTokenRequest">

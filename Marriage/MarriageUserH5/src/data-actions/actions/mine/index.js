@@ -1,6 +1,6 @@
 export default {
-    getUserInfo(id, actionType, data) {
+    getUser(id, actionType, data) {
         const payload = { action: this.getAction(id, actionType) };
-        this.dvaActions.dispatch(this.serviceName, "getUserInfo", payload);
+        this.dvaActions.dispatch(this.serviceName, "getUser", payload);
     }
 }

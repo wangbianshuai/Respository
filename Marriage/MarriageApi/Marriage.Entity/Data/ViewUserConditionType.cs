@@ -7,15 +7,15 @@ using OpenDataAccessCore.Entity;
 namespace Marriage.Entity.Data
 {
     /// <summary>
-    /// 相亲用户条件选项值信息表
+    /// 相亲用户条件类型视图
     /// </summary>
-    [TableProperty(Name = "t_ConditionSelectValue", PrimaryKey = "ItemId")]
-    public class ConditionSelectValue : EntityModel, IEntity
+    [TableProperty(Name = "v_UserConditionType", PrimaryKey = "UserConditionTypeId")]
+    public class ViewUserConditionType : EntityModel, IEntity
     {
         /// <summary> 
         /// 主键
         /// </summary> 
-        public Guid ItemId { get; set; }
+        public Guid UserConditionTypeId { get; set; }
         /// <summary> 
         /// 相亲用户Id
         /// </summary> 
@@ -28,33 +28,25 @@ namespace Marriage.Entity.Data
         /// 条件类型Id
         /// </summary> 
         public Guid ConditionTypeId { get; set; }
+        /// <summary>
+        /// 是否公开
+        /// </summary>
+        public byte IsPublic { get; set; }
         /// <summary> 
-        /// 条件项Id
+        /// 条件类型名称
         /// </summary> 
-        public Guid ConditionItemId { get; set; }
+        public string ConditionTypeName { get; set; }
         /// <summary> 
-        /// 值
+        /// 用户选择值计数
         /// </summary> 
-        public string Value { get; set; }
+        public int UserItemCount { get; set; }
         /// <summary> 
-        /// 创建人
+        /// 总项数
         /// </summary> 
-        public Guid CreateUser { get; set; }
+        public int ItemCount { get; set; }
         /// <summary> 
-        /// 创建时间
+        /// 完成百分比
         /// </summary> 
-        public DateTime CreateDate { get; set; }
-        /// <summary> 
-        /// 更新人
-        /// </summary> 
-        public Guid UpdateUser { get; set; }
-        /// <summary> 
-        /// 更新时间
-        /// </summary> 
-        public DateTime UpdateDate { get; set; }
-        /// <summary> 
-        /// 行版本
-        /// </summary> 
-        public string RowVersion { get; set; }
+        public int Percentage { get; set; }
     }
 }

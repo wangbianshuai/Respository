@@ -10,6 +10,9 @@ const renderItem = (property, data, i, onClick) => {
   const text = data[textName];
   const value = data[valueName];
 
+  if (!data.arrow && property.isRightArraw) data.arrow = 'horizontal';
+  if (!data.url && property.url) data.url = Common.replaceDataContent(data, property.url);
+
   const thumb = data.thumb ? Common.getImageUrl(data.thumb) : undefined;
 
   return <List.Item arrow={data.arrow} thumb={thumb} key={i} extra={value} onClick={() => onClick(data)}>

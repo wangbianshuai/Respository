@@ -14,7 +14,7 @@ export default (props) => {
 
     const { HeadImgUrl, Phone, NickName } = data || {}
 
-    return (<Link to='/mine/userInfo'><div className={styles.divTopUserInfo}>
+    return (<div className={styles.divUserInfo}><Link to='/mine/userInfo'><div className={styles.divTopUserInfo}>
         <div className={styles.divLeft}>{HeadImgUrl && <img src={HeadImgUrl} alt='' />}</div>
         <div className={styles.divRight}>
             <div className={styles.divTop}>
@@ -25,5 +25,5 @@ export default (props) => {
                 <Icon type='right' style={{ color: '#999' }} />
             </div>
         </div>
-    </div></Link>)
+    </div></Link></div>)
 };

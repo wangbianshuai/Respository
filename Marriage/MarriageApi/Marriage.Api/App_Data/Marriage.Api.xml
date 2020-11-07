@@ -40,6 +40,20 @@
             <param name="request"></param>
             <returns></returns>
         </member>
+        <member name="M:Marriage.Api.Controllers.MarriageUserController.GetUser(Marriage.Entity.Application.MarriageUser.GetUserRequest)">
+            <summary>
+            获取用户
+            </summary>
+            <param name="request"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Marriage.Api.Controllers.MarriageUserController.GetUserConditionTypes(Marriage.Entity.Application.MarriageUser.GetUserConditionTypesRequest)">
+            <summary>
+            获取用户条件类型列表
+            </summary>
+            <param name="request"></param>
+            <returns></returns>
+        </member>
         <member name="T:Marriage.Api.Controllers.WxUserController">
             <summary>
             微信用户

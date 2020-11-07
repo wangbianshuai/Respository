@@ -57,5 +57,29 @@ namespace Marriage.Api.Controllers
         {
             return await Task.Run(() => _MarriageUser.GetUserInfo(request));
         }
+
+        /// <summary>
+        /// 获取用户
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        [HttpPost]
+        [SwaggerOpenApiTokenParameter]
+        public async Task<GetUserResponse> GetUser(GetUserRequest request)
+        {
+            return await Task.Run(() => _MarriageUser.GetUser(request));
+        }
+
+        /// <summary>
+        /// 获取用户条件类型列表
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        [HttpPost]
+        [SwaggerOpenApiTokenParameter]
+        public async Task<GetUserConditionTypesResponse> GetUserConditionTypes(GetUserConditionTypesRequest request)
+        {
+            return await Task.Run(() => _MarriageUser.GetUserConditionTypes(request));
+        }
     }
 }

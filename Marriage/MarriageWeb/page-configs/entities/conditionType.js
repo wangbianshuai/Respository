@@ -5,7 +5,7 @@ module.exports = {
     properties: getProperties(),
     sexDataSource: getSexDataSource(),
     dataTypeDataSource: getDataTypeDataSource(),
-    dataSourceDataSource:getDataSourceDataSource()
+    dataSourceDataSource: getDataSourceDataSource()
 }
 
 function getProperties() {
