@@ -197,3 +197,41 @@
         }
     }
 }
+
+.divUserPhoto{
+    width: 100%;
+    height: 100%;
+    padding-top: toRem(90);
+    box-sizing: border-box;
+
+    .divNavBar{
+        height:toRem(90) !important;
+        margin-top:toRem(-90);
+    }
+    :global{
+        .am-navbar-title{
+           font-size: toRem(32) !important;
+        }
+
+        .am-button-small{
+            font-size: toRem(28) !important;
+        }
+    }
+
+    .divData{
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+
+        .divItem{
+            width: 50%;
+            float: left;
+            padding: toRem(30);
+            box-sizing: border-box;
+
+            img{
+                width: 100%;
+            }
+        }
+    }
+}

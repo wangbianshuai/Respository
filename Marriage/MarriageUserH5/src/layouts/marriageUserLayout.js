@@ -21,12 +21,12 @@ export default (props) => {
     let style = { minHeight: "100%", width: "100%" };
     if (!isH5) style = { minHeight: "100%", width: '480px', margin: "0 auto" }
 
-    return (<Flex style={style} direction="column" className={styles.divLayout}>
+    return (<div style={style}><Flex style={style} direction="column" className={styles.divLayout}>
         <Flex.Item className={styles.divPage} >
             {Base.getPageComponent(path, props, pageKey)}
         </Flex.Item>
         <Flex.Item className={styles.divTabBar} style={{ flex: 0 }}>
             <Components.TabBar property={_tabBarProperty} pathName={pathName} history={history} />
         </Flex.Item>
-    </Flex>)
+    </Flex></div>)
 };

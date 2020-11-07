@@ -4,6 +4,56 @@
         <name>Marriage.Entity</name>
     </assembly>
     <members>
+        <member name="T:Marriage.Entity.Application.MarriageUserPhoto.GetUserPhotosRequest">
+            <summary>
+            获取用户生活照列表请求
+            </summary>
+        </member>
+        <member name="T:Marriage.Entity.Application.MarriageUserPhoto.GetUserPhotosResponse">
+            <summary>
+            获取用户生活照列表响应
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageUserPhoto.GetUserPhotosResponse.DataList">
+            <summary>
+            用户照片
+            </summary>
+        </member>
+        <member name="T:Marriage.Entity.Application.MarriageUserPhoto.UserPhoto">
+            <summary>
+            用户照片
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageUserPhoto.UserPhoto.PhotoId">
+            <summary> 
+            主键
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageUserPhoto.UserPhoto.PhotoUrl">
+            <summary> 
+            照片地址
+            </summary> 
+        </member>
+        <member name="T:Marriage.Entity.Application.MarriageUserPhoto.SaveUserPhotoRequest">
+            <summary>
+            保存用户照片请求
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageUserPhoto.SaveUserPhotoRequest.PhotoUrl">
+            <summary>
+            照片地址
+            </summary>
+        </member>
+        <member name="T:Marriage.Entity.Application.MarriageUserPhoto.SaveUserPhotoResponse">
+            <summary>
+            保存用户照片响应
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageUserPhoto.SaveUserPhotoResponse.PhotoId">
+            <summary>
+            主键
+            </summary>
+        </member>
         <member name="T:Marriage.Entity.Application.MarriageUser.GetUserByOpenIdRequest">
             <summary>
             以微信OpenId获取用户请求
@@ -1127,41 +1177,6 @@
             匹配度（%）
             </summary> 
         </member>
-        <member name="T:Marriage.Entity.Data.MarriagePhoto">
-            <summary>
-            相亲用户生活照信息表
-            </summary>
-        </member>
-        <member name="P:Marriage.Entity.Data.MarriagePhoto.PhotoId">
-            <summary> 
-            主键
-            </summary> 
-        </member>
-        <member name="P:Marriage.Entity.Data.MarriagePhoto.MarriageUserId">
-            <summary> 
-            相亲用户ID
-            </summary> 
-        </member>
-        <member name="P:Marriage.Entity.Data.MarriagePhoto.PhotoUrl">
-            <summary> 
-            照片地址
-            </summary> 
-        </member>
-        <member name="P:Marriage.Entity.Data.MarriagePhoto.IsDelete">
-            <summary> 
-            是否删除
-            </summary> 
-        </member>
-        <member name="P:Marriage.Entity.Data.MarriagePhoto.CreateUser">
-            <summary> 
-            创建人
-            </summary> 
-        </member>
-        <member name="P:Marriage.Entity.Data.MarriagePhoto.CreateDate">
-            <summary> 
-            创建时间
-            </summary> 
-        </member>
         <member name="T:Marriage.Entity.Data.MarriageRecord">
             <summary>
             相亲记录信息表
@@ -1545,6 +1560,41 @@
         <member name="P:Marriage.Entity.Data.MarriageUser.RowVersion">
             <summary> 
             行版本
+            </summary> 
+        </member>
+        <member name="T:Marriage.Entity.Data.MarriageUserPhoto">
+            <summary>
+            相亲用户生活照信息表
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Data.MarriageUserPhoto.PhotoId">
+            <summary> 
+            主键
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Data.MarriageUserPhoto.MarriageUserId">
+            <summary> 
+            相亲用户ID
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Data.MarriageUserPhoto.PhotoUrl">
+            <summary> 
+            照片地址
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Data.MarriageUserPhoto.IsDelete">
+            <summary> 
+            是否删除
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Data.MarriageUserPhoto.CreateUser">
+            <summary> 
+            创建人
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Data.MarriageUserPhoto.CreateDate">
+            <summary> 
+            创建时间
             </summary> 
         </member>
         <member name="T:Marriage.Entity.Data.Matchmaker">
@@ -2025,6 +2075,26 @@
         <member name="P:Marriage.Entity.Domain.MarriageUser.Remark">
             <summary> 
             备注
+            </summary> 
+        </member>
+        <member name="T:Marriage.Entity.Domain.MarriageUserPhoto">
+            <summary>
+             相亲用户生活照信息表
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Domain.MarriageUserPhoto.PhotoId">
+            <summary> 
+            主键
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Domain.MarriageUserPhoto.MarriageUserId">
+            <summary> 
+            相亲用户ID
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Domain.MarriageUserPhoto.PhotoUrl">
+            <summary> 
+            照片地址
             </summary> 
         </member>
         <member name="T:Marriage.Entity.Domain.ConditionType">

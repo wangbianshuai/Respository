@@ -61,6 +61,25 @@
             <param name="request"></param>
             <returns></returns>
         </member>
+        <member name="T:Marriage.Api.Controllers.MarriageUserPhotoController">
+            <summary>
+            相亲照片
+            </summary>
+        </member>
+        <member name="M:Marriage.Api.Controllers.MarriageUserPhotoController.GetUserPhotos(Marriage.Entity.Application.MarriageUserPhoto.GetUserPhotosRequest)">
+            <summary>
+            获取用户生活照列表
+            </summary>
+            <param name="request"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Marriage.Api.Controllers.MarriageUserPhotoController.SaveUserPhoto(Marriage.Entity.Application.MarriageUserPhoto.SaveUserPhotoRequest)">
+            <summary>
+            保存用户照片
+            </summary>
+            <param name="request"></param>
+            <returns></returns>
+        </member>
         <member name="T:Marriage.Api.Controllers.WxUserController">
             <summary>
             微信用户

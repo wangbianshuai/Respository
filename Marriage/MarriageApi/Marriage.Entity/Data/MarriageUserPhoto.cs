@@ -9,8 +9,8 @@ namespace Marriage.Entity.Data
     /// <summary>
     /// 相亲用户生活照信息表
     /// </summary>
-    [TableProperty(Name = "t_MarriagePhoto", PrimaryKey = "PhotoId")]
-    public class MarriagePhoto : EntityModel, IEntity
+    [TableProperty(Name = "t_MarriageUserPhoto", PrimaryKey = "PhotoId")]
+    public class MarriageUserPhoto : EntityModel, IEntity
     {
         /// <summary> 
         /// 主键
