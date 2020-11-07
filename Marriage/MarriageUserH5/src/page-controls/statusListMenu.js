@@ -12,7 +12,7 @@ export default (props) => {
 
   const { Status, NoPassReason } = data || {}
 
-  if (Status === 1) return null;
+  if (Status === 1 || Status === undefined) return null;
 
   const statusName = Status === 0 ? '待审核' : Status === 2 ? '审核不通过' : '未知';
 

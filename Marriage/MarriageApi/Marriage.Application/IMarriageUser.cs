@@ -39,5 +39,10 @@ namespace Marriage.Application
         /// 获取用户条件类型列表
         /// </summary>
         GetUserConditionTypesResponse GetUserConditionTypes(GetUserConditionTypesRequest request);
+
+        /// <summary>
+        /// 更新用户信息
+        /// </summary>
+        UpdateUserInfoResponse UpdateUserInfo(UpdateUserInfoRequest request);
     }
 }

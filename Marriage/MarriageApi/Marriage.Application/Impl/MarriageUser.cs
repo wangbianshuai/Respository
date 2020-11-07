@@ -160,6 +160,34 @@ namespace Marriage.Application.Impl
         }
 
         /// <summary>
+        /// 更新用户信息
+        /// </summary>
+        public UpdateUserInfoResponse UpdateUserInfo(UpdateUserInfoRequest request)
+        {
+            string title = "更新用户信息";
+            string requestContent = Utility.Common.ToJson(request);
+            UpdateUserInfoResponse response = new UpdateUserInfoResponse();
+
+            this.InitMessage();
+
+            this.IsNullRequest(request, response);
+
+            //1、验证数据
+            int stepNo = 1;
+            this.ValidateUpdateUserInfo(stepNo, request, response);
+
+            //2、更新用户信息
+            stepNo += 1;
+            UpdateUserInfo(stepNo, request, response);
+
+            //2、执行结束
+            this.ExecEnd(response);
+
+            //日志记录
+            return this.SetReturnResponse<UpdateUserInfoResponse>(title, "Register", requestContent, response);
+        }
+
+        /// <summary>
         /// 获取用户条件类型列表
         /// </summary>
         /// <param name="stepNo"></param>
@@ -328,6 +356,44 @@ namespace Marriage.Application.Impl
         }
 
         /// <summary>
+        /// 更新用户信息
+        /// </summary>
+        /// <param name="stepNo"></param>
+        /// <param name="request"></param>
+        /// <param name="response"></param>
+        /// <returns></returns>
+        private bool UpdateUserInfo(int stepNo, UpdateUserInfoRequest request, UpdateUserInfoResponse response)
+        {
+            Func<bool> execStep = () =>
+            {
+                Entity.Domain.MarriageUser entity = new Entity.Domain.MarriageUser();
+
+                entity.Address = request.Address;
+                entity.Birthday = request.Birthday;
+                entity.BirthEight = request.BirthEight;
+                entity.BirthTime = request.BirthTime;
+                entity.City = request.City;
+                entity.HeadImgUrl = request.HeadImgUrl;
+                entity.IdCard = request.IdCard;
+                entity.IsPublic = request.IsPublic;
+                entity.LunarBirthday = request.LunarBirthday;
+                entity.Name = request.Name;
+                entity.NickName = request.NickName;
+                entity.NowAddress = request.NowAddress;
+                entity.Phone = request.Phone;
+                entity.Province = request.Province;
+                entity.Remark = request.Remark;
+                entity.UserId = Guid.Parse(request.LoginUserId);
+
+                entity.Sex = (byte)(int.Parse(entity.IdCard.Substring(16, 1)) % 2 == 0 ? 2 : 1);
+
+                return _MarriageUser.UpdateMarriageUser(entity);
+            };
+
+            return this.UpdateEntityData(stepNo, "更新用户信息", "UpdateUserInfo", response, execStep);
+        }
+        
+        /// <summary>
         /// 验证数据
         /// </summary>
         /// <param name="stepNo"></param>
@@ -353,6 +419,31 @@ namespace Marriage.Application.Impl
             return this.ExecValidate(stepNo, "验证数据", "ValidateRegister", response, execStep);
         }
 
+        /// <summary>
+        /// 更新用户信息
+        /// </summary>
+        /// <param name="stepNo"></param>
+        /// <param name="request"></param>
+        /// <param name="response"></param>
+        /// <returns></returns>
+        private bool ValidateUpdateUserInfo(int stepNo, UpdateUserInfoRequest request, UpdateUserInfoResponse response)
+        {
+            Func<bool> execStep = () =>
+            {
+                if (string.IsNullOrEmpty(request.Name)) this.SetValidateMessageRepsonse("姓名不能为空", response);
+                else if (string.IsNullOrEmpty(request.NickName)) this.SetValidateMessageRepsonse("昵称不能为空", response);
+                else if (string.IsNullOrEmpty(request.HeadImgUrl)) this.SetValidateMessageRepsonse("头像不能为空", response);
+                else if (string.IsNullOrEmpty(request.IdCard)) this.SetValidateMessageRepsonse("身份证号不能为空", response);
+                else if (string.IsNullOrEmpty(request.Phone)) this.SetValidateMessageRepsonse("手机号码不能为空", response);
+                else if (string.IsNullOrEmpty(request.Address)) this.SetValidateMessageRepsonse("家庭地址不能为空", response);
+                else if (request.Birthday == DateTime.MinValue) this.SetValidateMessageRepsonse("公历生日不能为空", response);
+
+                return response.Ack.IsSuccess;
+            };
+
+            return this.ExecValidate(stepNo, "验证数据", "ValidateUpdateUserInfo", response, execStep);
+        }
+        
         /// <summary>
         /// 以微信OpenId获取用户
         /// </summary>

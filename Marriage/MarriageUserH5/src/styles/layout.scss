@@ -2,6 +2,15 @@
     @return $px/32*1rem;
 }
 
+.divLayout{
+width: 100%;
+min-height: 100%;
+box-sizing: border-box;
+position:absolute;
+bottom: 0;
+top: 0;
+}
+
 .divTabBar{
     width: 100%;
     height: toRem(100);

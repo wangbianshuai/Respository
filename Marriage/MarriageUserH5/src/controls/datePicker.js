@@ -61,7 +61,7 @@ export default (props) => {
     const { style, label, isShowTime, maxLength, placeholder, isNullable, isRed, minYear } = property;
 
     const mv = getMomentValue(property, value);
-
+    
     return (
         <div className={className} style={style}>
             <DatePicker placeholder={placeholder}

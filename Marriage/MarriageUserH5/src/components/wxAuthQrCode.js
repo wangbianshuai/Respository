@@ -33,7 +33,7 @@ export default (props) => {
     if (!url) return null;
 
     let style = { minHeight: "100%", width: "100%" };
-    if (!isH5) style = { minHeight: "100%", width: '480px', margin: "0 auto", boxSizing: 'border-box', borderLeft: '1px solid #ddd', borderRight: '1px solid #ddd' }
+    if (!isH5) style = { minHeight: "100%", width: '480px', margin: "0 auto" }
 
     return (<div className={styles.divWxAuth} style={style}>
         <div className={styles.divCenter}>

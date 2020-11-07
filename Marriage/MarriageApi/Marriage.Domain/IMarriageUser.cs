@@ -29,5 +29,12 @@ namespace Marriage.Domain
         /// <param name="id"></param>
         /// <returns></returns>
         Entity.Domain.MarriageUser GetUserInfoById(Guid id);
+
+        /// <summary>
+        /// 更新用户信息
+        /// </summary>
+        /// <param name="entity"></param>
+        /// <returns></returns>
+        bool UpdateMarriageUser(Entity.Domain.MarriageUser entity);
     }
 }

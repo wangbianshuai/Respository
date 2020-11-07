@@ -10,6 +10,10 @@ const config = {
         post('getUserByOpenId', 'MarriageUser/GetUserByOpenId', 'getUserByOpenId', 'Data'),
         //获取用户信息
         post('getUser', 'MarriageUser/GetUser', 'getUser'),
+        //获取用户信息
+        post('getEntityData', 'MarriageUser/GetUserInfo', 'getEntityData', 'UserInfo'),
+        //更新用户信息
+        post('updateUserInfo', 'MarriageUser/UpdateUserInfo', 'updateUserInfo'),
         //获取用户条件类型列表
         post('getUserConditionTypes', 'MarriageUser/getUserConditionTypes', 'getUserConditionTypes', 'DataList')
     ]

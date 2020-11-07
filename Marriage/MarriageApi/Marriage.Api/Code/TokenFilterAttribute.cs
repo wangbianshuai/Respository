@@ -115,8 +115,6 @@ namespace Marriage.Api.Code
             }
             else loginUserId = UserToken.ParseToken(token, sign);
 
-
-
             if (request != null)
             {
                 request.LoginUserId = loginUserId;

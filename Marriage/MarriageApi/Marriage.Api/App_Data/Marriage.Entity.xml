@@ -344,6 +344,91 @@
             注册响应
             </summary>
         </member>
+        <member name="T:Marriage.Entity.Application.MarriageUser.UpdateUserInfoRequest">
+            <summary>
+            更新用户信息请求
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageUser.UpdateUserInfoRequest.Name">
+            <summary> 
+            名称
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageUser.UpdateUserInfoRequest.NickName">
+            <summary> 
+            微信昵称
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageUser.UpdateUserInfoRequest.City">
+            <summary> 
+            微信用户所在城市
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageUser.UpdateUserInfoRequest.Province">
+            <summary> 
+            微信用户所在省份
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageUser.UpdateUserInfoRequest.HeadImgUrl">
+            <summary> 
+            微信用户头像
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageUser.UpdateUserInfoRequest.IdCard">
+            <summary> 
+            身份证号码
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageUser.UpdateUserInfoRequest.Phone">
+            <summary> 
+            手机
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageUser.UpdateUserInfoRequest.Address">
+            <summary> 
+            家庭地址
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageUser.UpdateUserInfoRequest.NowAddress">
+            <summary> 
+            现居住地
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageUser.UpdateUserInfoRequest.Birthday">
+            <summary> 
+            公历生日
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageUser.UpdateUserInfoRequest.BirthTime">
+            <summary> 
+            出生时辰
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageUser.UpdateUserInfoRequest.LunarBirthday">
+            <summary> 
+            农历生日
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageUser.UpdateUserInfoRequest.BirthEight">
+            <summary> 
+            生辰八字
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageUser.UpdateUserInfoRequest.IsPublic">
+            <summary> 
+            是否公开
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageUser.UpdateUserInfoRequest.Remark">
+            <summary> 
+            备注
+            </summary> 
+        </member>
+        <member name="T:Marriage.Entity.Application.MarriageUser.UpdateUserInfoResponse">
+            <summary>
+            更新用户信息响应
+            </summary>
+        </member>
         <member name="T:Marriage.Entity.Application.IRequest">
             <summary>
             请求接口

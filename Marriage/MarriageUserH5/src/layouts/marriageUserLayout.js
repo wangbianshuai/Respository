@@ -16,12 +16,12 @@ export default (props) => {
 
     const [pageKey] = useMemo(() => {
         return [Common.createGuid()];
-    }, [location]);
+    }, []);
 
     let style = { minHeight: "100%", width: "100%" };
-    if (!isH5) style = { minHeight: "100%", width: '480px', margin: "0 auto", boxSizing: 'border-box', borderLeft: '1px solid #ddd', borderRight: '1px solid #ddd' }
+    if (!isH5) style = { minHeight: "100%", width: '480px', margin: "0 auto" }
 
-    return (<Flex style={style} direction="column">
+    return (<Flex style={style} direction="column" className={styles.divLayout}>
         <Flex.Item className={styles.divPage} >
             {Base.getPageComponent(path, props, pageKey)}
         </Flex.Item>
