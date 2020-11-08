@@ -6,9 +6,9 @@ using System.Text;
 namespace Marriage.Data
 {
     /// <summary>
-    /// 相亲人员
+    /// 红娘
     /// </summary>
-    public interface IMarriageUser
+    public interface IMatchmaker
     {
         /// <summary>
         /// 以openId获取实体数据
@@ -37,6 +37,5 @@ namespace Marriage.Data
         /// <param name="entityData"></param>
         /// <returns></returns>
         bool Update(IEntityData entityData);
-
     }
 }

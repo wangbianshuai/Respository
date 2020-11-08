@@ -3,11 +3,13 @@ import MarriageUser from './marriageUser';
 import WxUser from './wxUser';
 import Resources from './resources';
 import MarriageUserPhoto from './marriageUserPhoto';
+import Matchmaker from './matchmaker';
 
 export default [
     PageConfig,
     MarriageUser,
     WxUser,
     Resources,
-    MarriageUserPhoto
+    MarriageUserPhoto,
+    Matchmaker
 ]

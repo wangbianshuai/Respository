@@ -300,7 +300,7 @@ namespace Marriage.Application.Impl
                 return entity;
             };
 
-            return this.GetEntityData<Entity.Domain.MarriageUser>(stepNo, "获取用户信息", "GetUserInfoById", response, execStep);
+            return this.GetEntityData<Entity.Domain.MarriageUser>(stepNo, "以主键获取用户信息", "GetUserInfoById", response, execStep);
         }
 
         /// <summary>

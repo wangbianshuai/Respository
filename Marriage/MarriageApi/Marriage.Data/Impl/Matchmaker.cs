@@ -8,13 +8,13 @@ using System.Text;
 namespace Marriage.Data.Impl
 {
     /// <summary>
-    /// 相亲人员
+    /// 红娘
     /// </summary>
-    public class MarriageUser : EntityAccess, IMarriageUser
+    public class Matchmaker : EntityAccess, IMatchmaker
     {
-        public MarriageUser()
+        public Matchmaker()
         {
-            this.EntityType = EntityType.GetEntityType<Entity.Data.MarriageUser>();
+            this.EntityType = EntityType.GetEntityType<Entity.Data.Matchmaker>();
         }
 
         /// <summary>
@@ -56,9 +56,9 @@ namespace Marriage.Data.Impl
             IQuery query = new Query(this.EntityType.TableName);
 
             List<IDbDataParameter> parameterList = new List<IDbDataParameter>();
-            parameterList.Add(this.InParameter("@UserId", id));
+            parameterList.Add(this.InParameter("@MatchmakerId", id));
 
-            query.Where("where IsDelete=0 and UserId=@UserId", parameterList);
+            query.Where("where IsDelete=0 and MatchmakerId=@MatchmakerId", parameterList);
 
             return this.SelectEntity(query);
         }

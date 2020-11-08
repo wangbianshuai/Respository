@@ -32,13 +32,6 @@
 }
 
 .divRegister :global{
-    .am-list-body:before{
-        height: 0 !important;
-    }
-    .am-list-body:after{
-       height: 0 !important;
-   }
-
    .am-input-label, .am-list-content, .am-list-extra, .am-textarea-label, .am-textarea-control textarea, .am-input-control,.am-input-control input{
        font-size: toRem(28) !important;
    }
@@ -116,6 +109,8 @@
         align-items: center;
         background-color: #ffffff;
         height: toRem(188);
+        border-bottom: 1px solid #ddd;
+        box-sizing: border-box;
 
         .divLeft{
             padding: toRem(24);
@@ -174,13 +169,6 @@
     margin-top: toRem(16);
 
     :global{
-        .am-list-body:before{
-            height: 0 !important;
-        }
-        .am-list-body:after{
-           height: 0 !important;
-       }
-    
        .am-input-label, .am-list-content, .am-list-extra, .am-textarea-label, .am-textarea-control textarea, .am-input-control,.am-input-control input{
            font-size: toRem(30) !important;
        }
@@ -263,4 +251,10 @@
             }
         }
     }
+}
+
+.whiteSpace16{
+    width: 100%;
+    height: toRem(16);
+    background-color: #f5f5f9;
 }

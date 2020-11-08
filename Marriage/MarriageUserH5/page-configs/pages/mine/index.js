@@ -35,7 +35,8 @@ function getProperties() {
 function getUserInfoView() {
     return {
         name: 'UserInfo',
-        type: 'topUserInfo'
+        type: 'topUserInfo',
+        detailUrl: '/mine/userInfo'
     }
 }
 

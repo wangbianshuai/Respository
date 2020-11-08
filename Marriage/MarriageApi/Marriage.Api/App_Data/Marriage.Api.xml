@@ -87,6 +87,18 @@
             <param name="request"></param>
             <returns></returns>
         </member>
+        <member name="T:Marriage.Api.Controllers.MatchmakerController">
+            <summary>
+            红娘
+            </summary>
+        </member>
+        <member name="M:Marriage.Api.Controllers.MatchmakerController.GetUserMatchmaker(Marriage.Entity.Application.Matchmaker.GetUserMatchmakerRequest)">
+            <summary>
+            获取用户红娘
+            </summary>
+            <param name="request"></param>
+            <returns></returns>
+        </member>
         <member name="T:Marriage.Api.Controllers.WxUserController">
             <summary>
             微信用户

@@ -188,9 +188,12 @@ namespace Marriage.Api.Code
                         if (!string.IsNullOrEmpty(loginUserId)) response.Token = UserToken.CreateToken(loginUserId, sign);
                     }
                     else if (response.Token == "null")
-                    {
-                        response.Ack.Code = -100;
-                        response.Token = null;
+                    { 
+                        if (!string.IsNullOrEmpty(loginUserId))
+                        {
+                            response.Ack.Code = -100;
+                            response.Token = null;
+                        }
                     }
                     else response.Token = UserToken.CreateToken(response.Token, sign);
                 }
