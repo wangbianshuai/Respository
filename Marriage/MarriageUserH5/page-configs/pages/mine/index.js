@@ -97,7 +97,7 @@ function getConditionTypeListMenu() {
         type: 'ListMenu',
         className: 'divConditionListMenu',
         isRightArraw: true,
-        url: '/mine/conditionType?conditionType=#{ConditionTypeId}&userCoditionType=#{UserConditionTypeId}&title='+ encodeURIComponent('条件信息-')+'#{ConditionTypeName}',
+        url: '/mine/conditionType?ConditionTypeId=#{ConditionTypeId}&UserConditionTypeId=#{UserConditionTypeId}&title='+ encodeURIComponent('条件信息-')+'#{ConditionTypeName}',
         serviceDataSource: getConditionTypeDataSource()
     }
 }

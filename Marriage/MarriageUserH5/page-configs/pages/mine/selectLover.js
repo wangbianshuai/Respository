@@ -33,7 +33,7 @@ function getConditionTypeListMenu() {
     type: 'ListMenu',
     className: 'divConditionListMenu',
     isRightArraw: true,
-    url: '/mine/selectConditionType?conditionType=#{ConditionTypeId}&userCoditionType=#{UserConditionTypeId}&title='+ encodeURIComponent('择偶标准-')+'#{ConditionTypeName}',
+    url: '/mine/selectConditionType?ConditionTypeId=#{ConditionTypeId}&UserConditionTypeId=#{UserConditionTypeId}&title='+ encodeURIComponent('择偶标准-')+'#{ConditionTypeName}',
     serviceDataSource: getConditionTypeDataSource()
   }
 }

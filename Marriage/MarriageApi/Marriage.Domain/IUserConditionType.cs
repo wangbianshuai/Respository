@@ -16,5 +16,15 @@ namespace Marriage.Domain
         /// <param name="selectType"></param>
         /// <returns></returns>
         List<Entity.Domain.ViewUserConditionType> GetUserConditionTypeList(Guid userId, byte selectType);
+
+        /// <summary>
+        /// 以用户条件类型Id获取用户条件类型
+        /// </summary>
+        /// <param name="conditionTypeId"></param>
+        /// <param name="userConditionTypeId"></param>
+        /// <param name="sex"></param>
+        /// <param name="selectType"></param>
+        /// <returns></returns>
+        Entity.Domain.UserConditionType GetUserConditionTypeById(Guid conditionTypeId, Guid userConditionTypeId, byte sex, byte selectType);
     }
 }

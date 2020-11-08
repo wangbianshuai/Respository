@@ -243,7 +243,7 @@ export default class EntityEdit extends BaseIndex {
         pageAxis.receives[editView.getEntityDataActionType] = (d) => this.receivegetEntityDataActionType(d, props, action)
 
         //获取编辑值
-        const data = { entityData, entity: editView.entity }
+        const data = { entityData, entity: editView.entity, pageData: pageAxis.pageData }
 
         if (action.asyncRequest) data.asyncRequest = action.asyncRequest;
 

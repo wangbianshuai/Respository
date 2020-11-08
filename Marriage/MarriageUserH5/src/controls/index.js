@@ -14,6 +14,7 @@ import UploadImage from './uploadImage';
 import DatePicker from './datePicker';
 import Switch from './switch';
 import ListMenu from './listMenu';
+import IntervalTextBox from './intervalTextBox';
 
 export default {
     SearchBar,
@@ -31,5 +32,6 @@ export default {
     UploadImage,
     DatePicker,
     Switch,
-    ListMenu
+    ListMenu,
+    IntervalTextBox
 }

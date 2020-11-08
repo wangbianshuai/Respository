@@ -15,7 +15,11 @@ const config = {
         //更新用户信息
         post('updateUserInfo', 'MarriageUser/UpdateUserInfo', 'updateUserInfo'),
         //获取用户条件类型列表
-        post('getUserConditionTypes', 'MarriageUser/getUserConditionTypes', 'getUserConditionTypes', 'DataList')
+        post('getUserConditionTypes', 'MarriageUser/getUserConditionTypes', 'getUserConditionTypes', 'DataList'),
+        //获取用户条件类型
+        post('getUserConditionType', 'MarriageUser/GetUserConditionType', 'getUserConditionType'),
+        //保存用户条件类型
+        post('saveUserConditionType', 'MarriageUser/SaveUserConditionType', 'saveUserConditionType')
     ]
 }
 function post(actionName, url, stateName, dataKey) {

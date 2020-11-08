@@ -1,16 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using OpenDataAccessCore.Entity;
 
-namespace Marriage.Entity.Data
+namespace Marriage.Entity.Domain
 {
     /// <summary>
-    /// 相亲用户条件选项值信息表
+    /// 相亲用户条件选项值
     /// </summary>
-    [TableProperty(Name = "t_UserConditionSelectValue", PrimaryKey = "ItemId")]
-    public class UserConditionSelectValue : EntityModel, IEntity
+    public class ConditionSelectValue
     {
         /// <summary> 
         /// 主键

@@ -5,14 +5,14 @@ using System.Text;
 namespace Marriage.Entity.Domain
 {
     /// <summary>
-    /// 条件类型
+    /// 数据源
     /// </summary>
-    public class ConditionType
+    public class DataSource
     {
         /// <summary> 
         /// 主键
         /// </summary> 
-        public Guid ConditionTypeId { get; set; }
+        public Guid DataSourceId { get; set; }
         /// <summary> 
         /// 名称
         /// </summary> 
@@ -21,13 +21,5 @@ namespace Marriage.Entity.Domain
         /// 备注
         /// </summary> 
         public string Remark { get; set; }
-        /// <summary>
-        /// 选项计数
-        /// </summary>
-        public int ManItemCount { get; set; }
-        /// <summary>
-        /// 选项计数
-        /// </summary>
-        public int WomanItemCount { get; set; }
     }
 }

@@ -584,10 +584,12 @@ create view v_ConditionType
 as
 with ConditionItemCount as
 (
-select ConditionTypeId,COUNT(*) ItemCount from t_ConditionItem
+select ConditionTypeId,COUNT(case when Sex in (0,1) then 1 else 0) ManItemCount,
+COUNT(case when Sex in (0,2) then 1 else 0) WomanItemCount,
+from t_ConditionItem
 group by ConditionTypeId
 )
-select a.*,b.ItemCount
+select a.*,b.ManItemCount,b.WomanItemCount
 from t_ConditionType a, ConditionItemCount b
 where IsDelete=0 and a.ConditionTypeId=b.ConditionTypeId
 go

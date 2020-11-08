@@ -23,5 +23,12 @@ namespace Marriage.Data
         /// </summary>
         /// <returns></returns>
         List<IEntityData> GetViewConditionTypeList();
+
+        /// <summary>
+        /// 以主键获取实体数据
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        IEntityData GetEntityDataById(Guid id);
     }
 }

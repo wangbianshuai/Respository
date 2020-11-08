@@ -61,6 +61,13 @@
             <param name="request"></param>
             <returns></returns>
         </member>
+        <member name="M:Marriage.Api.Controllers.MarriageUserController.GetUserConditionType(Marriage.Entity.Application.MarriageUser.GetUserConditionTypeRequest)">
+            <summary>
+            获取用户条件类型
+            </summary>
+            <param name="request"></param>
+            <returns></returns>
+        </member>
         <member name="T:Marriage.Api.Controllers.MarriageUserPhotoController">
             <summary>
             相亲照片

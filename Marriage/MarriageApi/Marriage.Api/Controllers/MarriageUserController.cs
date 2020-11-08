@@ -93,5 +93,17 @@ namespace Marriage.Api.Controllers
         {
             return await Task.Run(() => _MarriageUser.UpdateUserInfo(request));
         }
+
+        /// <summary>
+        /// 获取用户条件类型
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        [HttpPost]
+        [SwaggerOpenApiTokenParameter]
+        public async Task<GetUserConditionTypeResponse> GetUserConditionType(GetUserConditionTypeRequest request)
+        {
+            return await Task.Run(() => _MarriageUser.GetUserConditionType(request));
+        }
     }
 }

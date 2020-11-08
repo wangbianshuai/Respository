@@ -20,6 +20,8 @@ namespace Marriage.Application.Impl
 
         public Domain.IUserConditionType _UserConditionType { get; set; }
 
+        public Domain.IConditionType _ConditionType { get; set; }
+
         /// <summary>
         /// 以微信OpenId获取用户
         /// </summary>
@@ -148,15 +150,37 @@ namespace Marriage.Application.Impl
 
             this.IsNullRequest(request, response);
 
-            //1、获取用户条件类型列表
+            //1、获取用户信息
             int stepNo = 1;
-            GetUserConditionTypes(stepNo, request, response);
+            var user = GetUserInfoById(stepNo, request.LoginUserId, response);
+
+            //2、获取用户条件类型列表
+            stepNo += 1;
+            GetUserConditionTypes(stepNo, user, request, response);
 
             //2、执行结束
             this.ExecEnd(response);
 
             //日志记录
             return this.SetReturnResponse<GetUserConditionTypesResponse>(title, "GetUserConditionTypes", requestContent, response);
+        }
+
+
+        /// <summary>
+        /// 以主键获取用户信息
+        /// </summary>
+        /// <param name="stepNo"></param>
+        /// <param name="request"></param>
+        /// <param name="response"></param>
+        /// <returns></returns>
+        private Entity.Domain.MarriageUser GetUserInfoById(int stepNo, string userId, IResponse response)
+        {
+            Func<Entity.Domain.MarriageUser> execStep = () =>
+            {
+                return _MarriageUser.GetUserInfoById(Guid.Parse(userId));
+            };
+
+            return this.GetEntityData<Entity.Domain.MarriageUser>(stepNo, "以主键获取用户信息", "GetUserInfoById", response, execStep);
         }
 
         /// <summary>
@@ -187,14 +211,119 @@ namespace Marriage.Application.Impl
             return this.SetReturnResponse<UpdateUserInfoResponse>(title, "Register", requestContent, response);
         }
 
+
+        /// <summary>
+        /// 获取用户条件类型
+        /// </summary>
+        public GetUserConditionTypeResponse GetUserConditionType(GetUserConditionTypeRequest request)
+        {
+            string title = "获取用户条件类型";
+            string requestContent = Utility.Common.ToJson(request);
+            GetUserConditionTypeResponse response = new GetUserConditionTypeResponse();
+
+            this.InitMessage();
+
+            this.IsNullRequest(request, response);
+
+            //1、获取用户信息
+            int stepNo = 1;
+            var user = GetUserInfoById(stepNo, request.LoginUserId, response);
+
+            //2、获取条件类型
+            stepNo += 1;
+            GetConditionType(stepNo, request, response);
+
+            //3、获取用户条件类型
+            stepNo += 1;
+            GetUserConditionType(stepNo, user, request, response);
+
+            //4、执行结束
+            this.ExecEnd(response);
+
+            //日志记录
+            return this.SetReturnResponse<GetUserConditionTypeResponse>(title, "GetUserConditionType", requestContent, response);
+        }
+
+        /// <summary>
+        /// 获取条件类型
+        /// </summary>
+        /// <param name="stepNo"></param>
+        /// <param name="user"></param>
+        /// <param name="request"></param>
+        /// <param name="response"></param>
+        /// <returns></returns>
+        private Entity.Domain.ConditionType GetConditionType(int stepNo, GetUserConditionTypeRequest request, GetUserConditionTypeResponse response)
+        {
+            Func<Entity.Domain.ConditionType> execStep = () =>
+            {
+                return _ConditionType.GetConditionTypeById(request.ConditionTypeId);
+            };
+
+            return this.GetEntityData<Entity.Domain.ConditionType>(stepNo, "获取条件类型", "GetConditionType", response, execStep);
+        }
+
+        /// <summary>
+        /// 获取用户条件类型
+        /// </summary>
+        /// <param name="stepNo"></param>
+        /// <param name="user"></param>
+        /// <param name="request"></param>
+        /// <param name="response"></param>
+        /// <returns></returns>
+        private Entity.Domain.UserConditionType GetUserConditionType(int stepNo, Entity.Domain.MarriageUser user, GetUserConditionTypeRequest request, GetUserConditionTypeResponse response)
+        {
+            Func<Entity.Domain.UserConditionType> execStep = () =>
+            {
+                var entity = _UserConditionType.GetUserConditionTypeById(request.ConditionTypeId, request.UserConditionTypeId, user.Sex, request.SelectType);
+
+                if (entity != null)
+                {
+                    response.ConditionTypeId = entity.ConditionTypeId;
+                    response.IsPublic = entity.IsPublic;
+                    response.UserConditionTypeId = entity.UserConditionTypeId;
+                    if (entity.Items != null)
+                    {
+                        response.Items = (from a in entity.Items
+                                          select new ConditionItem()
+                                          {
+                                              DataSourceItems = GetDataSourceItems(a.DataSourceItems),
+                                              DataType = a.DataType,
+                                              DisplayIndex = a.DisplayIndex,
+                                              IsInterval = a.IsInterval,
+                                              IsSingle = a.IsSingle,
+                                              ItemId = a.ItemId,
+                                              Title = a.Title,
+                                              Value = a.Value
+                                          }).ToList();
+                    }
+                }
+                return entity;
+            };
+
+            return this.GetEntityData<Entity.Domain.UserConditionType>(stepNo, "获取用户条件类型", "GetUserConditionType", response, execStep);
+        }
+
+        List<DataSourceItem> GetDataSourceItems(List<Entity.Domain.DataSourceItem> items)
+        {
+            if (items == null || items.Count == 0) return null;
+
+            return (from a in items
+                    select new DataSourceItem()
+                    {
+                        text = a.Name,
+                        value = a.Value
+                    }).ToList();
+        }
+
         /// <summary>
         /// 获取用户条件类型列表
         /// </summary>
         /// <param name="stepNo"></param>
+        /// <param name="user"></param>
         /// <param name="request"></param>
         /// <param name="response"></param>
         /// <returns></returns>
-        private List<Entity.Domain.ViewUserConditionType> GetUserConditionTypes(int stepNo, GetUserConditionTypesRequest request, GetUserConditionTypesResponse response)
+        private List<Entity.Domain.ViewUserConditionType> GetUserConditionTypes(int stepNo, Entity.Domain.MarriageUser user, GetUserConditionTypesRequest request, GetUserConditionTypesResponse response)
         {
             Func<List<Entity.Domain.ViewUserConditionType>> execStep = () =>
             {
@@ -206,9 +335,9 @@ namespace Marriage.Application.Impl
                                      {
                                          ConditionTypeId = a.ConditionTypeId,
                                          ConditionTypeName = a.ConditionTypeName,
-                                         Percentage = request.SelectType == 1 ? string.Format("完善：{0}%", a.Percentage) : string.Empty,
+                                         Percentage = request.SelectType == 1 ? string.Format("完善：{0}%", user.Sex == 1 ? a.ManPercentage : a.WomanPercentage) : string.Empty,
                                          UserConditionTypeId = a.UserConditionTypeId,
-                                         UserItemCount = request.SelectType == 2 ? string.Format("选择：{0}/{1}", a.UserItemCount, a.ItemCount) : string.Empty
+                                         UserItemCount = request.SelectType == 2 ? string.Format("选择：{0}/{1}", a.UserItemCount, user.Sex == 1 ? a.ManItemCount : a.WomanItemCount) : string.Empty
                                      }).ToList();
 
                 return list;

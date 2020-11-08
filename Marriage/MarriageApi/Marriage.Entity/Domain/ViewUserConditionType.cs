@@ -40,10 +40,18 @@ namespace Marriage.Entity.Domain
         /// <summary> 
         /// 总项数
         /// </summary> 
-        public int ItemCount { get; set; }
+        public int ManItemCount { get; set; }
         /// <summary> 
         /// 完成百分比
         /// </summary> 
-        public int Percentage { get; set; }
+        public int ManPercentage { get; set; }
+        /// <summary> 
+        /// 总项数
+        /// </summary> 
+        public int WomanItemCount { get; set; }
+        /// <summary> 
+        /// 完成百分比
+        /// </summary> 
+        public int WomanPercentage { get; set; }
     }
 }

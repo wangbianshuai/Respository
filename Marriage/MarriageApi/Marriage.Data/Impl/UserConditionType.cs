@@ -42,5 +42,15 @@ namespace Marriage.Data.Impl
             IQuery query = new Query("v_ConditionType");
             return this.SelectEntities(query);
         }
+
+        /// <summary>
+        /// 以主键获取实体数据
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public IEntityData GetEntityDataById(Guid id)
+        {
+            return this.SelectEntityByPrimaryKey(id);
+        }
     }
 }

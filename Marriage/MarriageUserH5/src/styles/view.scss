@@ -31,6 +31,27 @@
     }
 }
 
+.divConditionView{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    padding-bottom: toRem(60);
+    background-color: #ffffff;
+
+    .divTitle{
+        width: 100%;
+        height: toRem(120);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-sizing: border-box;
+
+        span{
+            font-size: toRem(32);
+        }
+    }
+}
+
 .divRegister :global{
    .am-input-label, .am-list-content, .am-list-extra, .am-textarea-label, .am-textarea-control textarea, .am-input-control,.am-input-control input{
        font-size: toRem(28) !important;
@@ -258,3 +279,296 @@
     height: toRem(16);
     background-color: #f5f5f9;
 }
+
+.divConditionForm{
+    width: 100%;
+}
+.divConditionType{
+    :global{
+        .am-input-label, .am-list-content, .am-list-extra, .am-textarea-label, .am-textarea-control textarea, .am-input-control,.am-input-control input{
+            font-size: toRem(30) !important;
+        }
+    
+        .am-list-content{
+            white-space:normal !important;
+            text-overflow:unset !important;
+            overflow:auto !important;
+            padding-top: toRem(10) !important;
+            padding-bottom: toRem(10) !important;
+        }
+    
+        .am-button{
+            line-height: toRem(80) !important;
+            height: toRem(80) !important;
+            font-size: toRem(32) !important;
+        }
+    
+        .am-button-primary:before{
+            border: 0 !important;
+        }
+    
+        .am-list-header{
+            color: #000000 !important;
+            font-size: toRem(30) !important;
+            padding: 0 !important;
+            margin: 0 !important;
+        }
+    
+        .am-list-item{
+            padding-left:  toRem(30) !important;
+            min-height: toRem(88) !important;
+        }
+    
+        .am-list-item.am-input-item  {
+            height:toRem(88) !important;
+            padding-left:  toRem(30) !important;
+            min-height: toRem(88) !important;
+        }
+    
+        .am-list-line{
+            padding-right:  toRem(30) !important;
+        }
+    
+        .am-list .am-list-item.am-checkbox-item .am-list-thumb .am-checkbox-inner {
+            left: toRem(30) !important;
+            top: toRem(24) !important;
+        }
+        .am-checkbox-inner {
+            width: toRem(42) !important;
+            height: toRem(42) !important;
+        }
+    
+        .am-checkbox-inner:after {
+            top: toRem(3) !important;
+            right: toRem(12) !important;
+            width: toRem(10) !important;
+            height: toRem(22) !important;
+        }
+    
+        .am-list .am-list-item.am-radio-item .am-list-line .am-list-extra .am-radio-inner {
+            right: toRem(30) !important;
+            top: toRem(30) !important;
+        }
+        .am-radio-inner {
+            width: toRem(30) !important;
+            height:toRem(30) !important;
+        }
+    
+        .am-list .am-list-item.am-checkbox-item .am-list-thumb {
+            width: toRem(42) !important;
+            height: toRem(42) !important;
+        }
+        .am-list-item .am-list-thumb:first-child {
+            margin-right:toRem(30) !important;
+        }
+    
+        .am-list-item .am-list-line .am-list-arrow {
+            width: toRem(30) !important;
+            height:toRem(30) !important;
+            margin-left: toRem(16) !important;
+        }
+    
+        .am-checkbox-item, .am-checkbox {
+            height: toRem(80) !important;
+        }
+    }
+    
+    .divPicker{
+        :global{
+            .am-list-extra{
+                white-space:normal !important;
+                text-overflow:unset !important;
+                overflow:auto !important;
+                flex-basis: 98% !important;
+            }
+        }
+    }
+    
+    .divContent{
+        width: 100%;
+        padding: toRem(30);
+        font-size: toRem(28);
+        box-sizing: border-box;
+        background-color: #ffffff;
+
+        p,li{
+            font-size: toRem(28) !important;
+            line-height: toRem(56);
+        }    
+    
+        img{
+            max-width: 100% !important;
+            height: auto !important;
+        }
+
+        a {
+            color: #337ab7;
+            text-decoration: none
+        }
+        
+        a:focus,a:hover {
+            color: #23527c;
+            text-decoration: underline
+        }
+        
+        a:focus {
+            outline: 5px auto -webkit-focus-ring-color;
+            outline-offset: -2px
+        }
+    }
+    
+    .divGroupHeader{
+        width: 100%;
+        height: toRem(80);
+        display: flex;
+        flex-direction: row;
+        align-items: flex-end;
+        background-color: #f5f5f9;
+        padding-left: toRem(30) !important;
+        box-sizing: border-box;
+    
+        span{
+            line-height: toRem(60);
+        }
+    
+        :global{
+            .am-button-small{
+                padding: 0 !important;
+    
+                span{
+                    line-height: toRem(50) !important;
+                }    
+            }
+        }
+    
+        .button{
+            width: toRem(160);
+            margin-left: toRem(20);
+            margin-bottom: toRem(6);
+            line-height: toRem(50) !important;
+            height: toRem(50) !important;
+            font-size: toRem(30) !important;
+        }
+    }
+    
+    .divOptionValue{
+        
+        span{
+            display: block;
+            padding: toRem(10);
+            font-size: toRem(28);
+            line-height: toRem(40);
+            background-color: #fafafa;
+            color: #187FC4;
+            border: 1px solid #d9d9d9;
+            float: left;
+            border-radius: toRem(4);
+            margin-right: toRem(16);
+            margin-bottom: toRem(10);
+        }
+    }
+    
+    .divLabelItem{
+        background-color: #f5f5f9;
+        min-height: toRem(80) !important;
+        padding: 0 !important;
+        margin: 0 !important;
+       
+        :global{
+        .am-list-line{
+            padding: 0 !important;
+            padding-left: toRem(30) !important;
+            align-items: flex-end !important;
+        }
+        .am-list-content{
+            padding: 0 !important;
+            line-height:toRem(60) !important
+        }
+        }
+    }
+    
+    .divLabel{
+        width: 100%;
+        height: toRem(80);
+        background-color: #f5f5f9;
+        padding-left: toRem(30) !important;
+        box-sizing: border-box;
+        display: flex;
+        align-items: flex-end;
+    
+        span{
+            line-height: toRem(60);
+        }
+    
+    
+    }
+    
+    .divButton{
+        padding: 0 !important;
+        margin: 0 !important;
+        min-height: toRem(120) !important;
+        margin-top: toRem(16) !important;
+    
+        :global{
+        .am-list-line{
+            padding-left:  toRem(50) !important;
+            padding-right:  toRem(50) !important;
+            border-bottom: 0 !important;
+        }
+    }
+    }
+    
+    textarea{
+        min-height: toRem(80) !important;
+        line-height:toRem(40) !important;
+    }
+    
+    .my-radio{
+        :global{
+            .am-list-item{
+                min-height: toRem(80) !important;
+            }
+    }
+    }
+    
+    .divResult{
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex: 1;
+        align-items: center;
+        justify-content: center;
+        padding: toRem(30);
+        box-sizing: border-box;
+    
+        .divResultContent{
+            line-height: toRem(60);
+            font-size: toRem(32);
+        }
+    }
+    }
+
+
+    .divIntervalTextBox{
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+
+        .divSpan{
+            width: toRem(60);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            span{
+                font-size: toRem(28);
+            }
+        }
+
+        :global{
+        .am-list-item{
+            width: toRem(300) !important;
+        }
+    }
+    }

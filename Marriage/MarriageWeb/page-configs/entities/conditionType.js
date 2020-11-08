@@ -24,7 +24,7 @@ function getSexDataSource() {
 }
 
 function getDataTypeDataSource() {
-    return [{ value: 'string', text: "字符串" }, { value: "number", text: "数值" }, { value: "bool", text: "布尔值" }]
+    return [{ value: 'string', text: "字符串" }, { value: "number", text: "数值" }]
 }
 
 function getDataSourceDataSource() {
