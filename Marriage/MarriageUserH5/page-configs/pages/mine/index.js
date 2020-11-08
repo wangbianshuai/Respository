@@ -71,7 +71,7 @@ function getSelectLoverListMenu() {
         name: 'SelectLover',
         type: 'ListMenu',
         className: 'divListMenu',
-        dataSource: [{ text: '择偶标准', arrow: 'horizontal', thumb: 'select_lover.png', url: '/mine/conditionSelectValue' }]
+        dataSource: [{ text: '择偶标准', arrow: 'horizontal', thumb: 'select_lover.png', url: '/mine/selectLover' }]
     }
 }
 
@@ -97,7 +97,7 @@ function getConditionTypeListMenu() {
         type: 'ListMenu',
         className: 'divConditionListMenu',
         isRightArraw: true,
-        url: '/mine/conditiontype?conditionType=#{ConditionTypeId}&userCoditionType=#{UserConditionTypeId}',
+        url: '/mine/conditionType?conditionType=#{ConditionTypeId}&userCoditionType=#{UserConditionTypeId}&title='+ encodeURIComponent('条件信息-')+'#{ConditionTypeName}',
         serviceDataSource: getConditionTypeDataSource()
     }
 }

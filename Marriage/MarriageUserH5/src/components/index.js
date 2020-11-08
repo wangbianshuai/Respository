@@ -9,6 +9,7 @@ import DataGridView from './dataGridView';
 import WhiteSpace from './whiteSpace';
 import RowsColsView from './rowsColsView';
 import WxAuthQrCode from './wxAuthQrCode';
+import NavBar from './navBar';
 
 export default {
     Base,
@@ -21,5 +22,6 @@ export default {
     DataGridView,
     WhiteSpace,
     RowsColsView,
-    WxAuthQrCode
+    WxAuthQrCode,
+    NavBar
 }
