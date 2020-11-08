@@ -95,6 +95,7 @@ function getComplexView() {
         colSpan: 24,
         isEdit: true,
         isNullable: false,
+        entity: conditionTypeItem,
         nullTipMessage: "选项集合不能为空",
         properties: assignProporties(conditionTypeItem, getComplexProperties())
     }

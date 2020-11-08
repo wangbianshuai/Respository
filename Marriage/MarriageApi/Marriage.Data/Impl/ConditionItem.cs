@@ -20,7 +20,7 @@ namespace Marriage.Data.Impl
         /// <param name="conditionTypeId"></param>
         /// <param name="sex"></param>
         /// <returns></returns>
-        public List<IEntityData> GetEnityDataListByConditionTypeIds(Guid conditionTypeId, byte sex)
+        public List<IEntityData> GetEnityDataListByConditionTypeId(Guid conditionTypeId, byte sex)
         {
             IQuery query = new Query(this.EntityType.TableName);
 

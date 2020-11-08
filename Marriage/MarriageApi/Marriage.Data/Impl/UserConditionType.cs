@@ -52,5 +52,28 @@ namespace Marriage.Data.Impl
         {
             return this.SelectEntityByPrimaryKey(id);
         }
+
+        /// <summary>
+        /// 插入
+        /// </summary>
+        /// <param name="entityData"></param>
+        /// <returns></returns>
+        public Guid Insert(IEntityData entityData)
+        {
+            object primaryKey = null;
+            if (this.InsertEntity(entityData, out primaryKey)) return (Guid)primaryKey;
+            return Guid.Empty;
+        }
+
+        /// <summary>
+        /// 更新
+        /// </summary>
+        /// <param name="entityData"></param>
+        /// <returns></returns>
+        public bool Update(IEntityData entityData)
+        {
+            object primaryKey = entityData.GetValue(this.EntityType.PrimaryKey);
+            return this.UpdateEntityByPrimaryKey(primaryKey, entityData);
+        }
     }
 }

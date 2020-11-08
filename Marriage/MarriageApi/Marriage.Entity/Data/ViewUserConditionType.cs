@@ -39,14 +39,26 @@ namespace Marriage.Entity.Data
         /// <summary> 
         /// 用户选择值计数
         /// </summary> 
-        public int UserItemCount { get; set; }
+        public int ManUserItemCount { get; set; }
+        /// <summary> 
+        /// 用户选择值计数
+        /// </summary> 
+        public int WomanUserItemCount { get; set; }
         /// <summary> 
         /// 总项数
         /// </summary> 
-        public int ItemCount { get; set; }
+        public int ManItemCount { get; set; }
         /// <summary> 
         /// 完成百分比
         /// </summary> 
-        public int Percentage { get; set; }
+        public int ManPercentage { get; set; }
+        /// <summary> 
+        /// 总项数
+        /// </summary> 
+        public int WomanItemCount { get; set; }
+        /// <summary> 
+        /// 完成百分比
+        /// </summary> 
+        public int WomanPercentage { get; set; }
     }
 }

@@ -36,7 +36,11 @@ namespace Marriage.Entity.Domain
         /// <summary> 
         /// 用户选择值计数
         /// </summary> 
-        public int UserItemCount { get; set; }
+        public int ManUserItemCount { get; set; }
+        /// <summary> 
+        /// 用户选择值计数
+        /// </summary> 
+        public int WomanUserItemCount { get; set; }
         /// <summary> 
         /// 总项数
         /// </summary> 

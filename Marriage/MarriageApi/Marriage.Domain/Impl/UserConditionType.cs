@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Linq;
+using System.Transactions;
 
 namespace Marriage.Domain.Impl
 {
@@ -78,7 +79,7 @@ namespace Marriage.Domain.Impl
                 };
             }
 
-            var itemList = Parse.IEntityDataListTo<Entity.Domain.ConditionItem>(_ConditionItem.GetEnityDataListByConditionTypeIds(conditionTypeId, sex));
+            var itemList = Parse.IEntityDataListTo<Entity.Domain.ConditionItem>(_ConditionItem.GetEnityDataListByConditionTypeId(conditionTypeId, selectType == 1 ? sex : (byte)(sex == 1 ? 2 : 1)));
 
             if (itemList.Count == 0) return null;
 
@@ -123,6 +124,97 @@ namespace Marriage.Domain.Impl
             entity.Items = itemList.OrderBy(b => b.DisplayIndex).ToList();
 
             return entity;
+        }
+
+        bool InsertUserConditionType(Entity.Domain.UserConditionType entity)
+        {
+            IEntityData entityData = new EntityData("UserConditionTYpe");
+
+            entityData.SetValue("UserConditionTypeId", entity.UserConditionTypeId);
+            entityData.SetValue("UserId", entity.UserId);
+            entityData.SetValue("SelectType", entity.SelectType);
+            entityData.SetValue("ConditionTypeId", entity.ConditionTypeId);
+            entityData.SetValue("IsPublic", entity.IsPublic);
+            entityData.SetValue("CreateUser", entity.UserId);
+
+            return _UserConditionType.Insert(entityData) != Guid.Empty;
+        }
+
+        bool UpdateUserConditionType(Entity.Domain.UserConditionType entity)
+        {
+            IEntityData entityData = new EntityData("UserConditionTYpe");
+
+            entityData.SetValue("UserConditionTypeId", entity.UserConditionTypeId);
+            entityData.SetValue("IsPublic", entity.IsPublic);
+            entityData.SetValue("UpdateUser", entity.UserId);
+            entityData.SetValue("UpdateDate", DateTime.Now);
+
+            return _UserConditionType.Update(entityData);
+        }
+
+        bool InsertUserConditionSelectValue(Entity.Domain.ConditionItem item, Entity.Domain.UserConditionType entity)
+        {
+            IEntityData entityData = new EntityData("UserConditionSelectValue");
+
+            entityData.SetValue("UserConditionTypeId", entity.UserConditionTypeId);
+            entityData.SetValue("ConditionItemId", item.ItemId);
+            entityData.SetValue("Value", item.Value);
+
+            return _UserConditionSelectValue.Insert(entityData) != Guid.Empty;
+        }
+
+        /// <summary>
+        /// 保存用户条件类型
+        /// </summary>
+        /// <param name="entity"></param>
+        /// <returns></returns>
+        public bool SaveUserConditionType(Entity.Domain.UserConditionType entity)
+        {
+            bool blSucceed = true;
+
+            if (entity.UserConditionTypeId != Guid.Empty)
+            {
+                var entityData = _UserConditionType.GetEntityDataById(entity.UserConditionTypeId);
+                if (entityData == null) return false;
+            }
+
+            using (TransactionScope scope = new TransactionScope())
+            {
+                try
+                {
+                    if (entity.UserConditionTypeId != Guid.Empty)
+                    {
+                        blSucceed = _UserConditionSelectValue.DeleteByUserConditionTypeId(entity.UserConditionTypeId);
+
+                        if (blSucceed) blSucceed = UpdateUserConditionType(entity);
+                    }
+                    else
+                    {
+                        entity.UserConditionTypeId = Guid.NewGuid();
+
+                        blSucceed = InsertUserConditionType(entity);
+                    }
+
+                    foreach (var item in entity.Items)
+                    {
+                        if (!InsertUserConditionSelectValue(item, entity))
+                        {
+                            blSucceed = false;
+                            break;
+                        }
+                    }
+
+                    if (blSucceed) scope.Complete();
+                    else scope.Dispose();
+                }
+                catch (Exception ex)
+                {
+                    scope.Dispose();
+                    throw ex;
+                }
+            }
+
+            return blSucceed;
         }
     }
 }

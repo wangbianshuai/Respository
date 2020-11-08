@@ -16,5 +16,19 @@ namespace Marriage.Data
         /// <param name="userConditionTypeId"></param>
         /// <returns></returns>
         List<IEntityData> GetEntityDataList(Guid userConditionTypeId);
+
+        /// <summary>
+        /// 以用户条件类型Id删除
+        /// </summary>
+        /// <param name="userConditionTypeId"></param>
+        /// <returns></returns>
+        bool DeleteByUserConditionTypeId(Guid userConditionTypeId);
+
+        /// <summary>
+        /// 插入
+        /// </summary>
+        /// <param name="entityData"></param>
+        /// <returns></returns>
+        Guid Insert(IEntityData entityData);
     }
 }

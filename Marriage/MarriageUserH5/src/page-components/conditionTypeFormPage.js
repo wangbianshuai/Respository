@@ -8,22 +8,22 @@ const getTextBox = (item) => {
   const { Value } = item;
   const dataType = item.DataType === 'number' ? 'float' : 'string';
   const maxLength = item.DataType === 'number' ? 10 : 100;
-  return { name: item.ConditionItemId, value: Value, isLabelItem: true, dataType, scale: 2, type: 'TextBox', maxLength, placeHolder: '可选填', label: item.Title, isEdit: true };
+  return { name: item.ItemId, value: Value, isLabelItem: true, dataType, scale: 2, type: 'TextBox', maxLength, placeHolder: '可选填', label: item.Title, isEdit: true };
 }
 
 const getIntervalTextBox = (item) => {
   const { Value } = item;
-  return { name: item.ConditionItemId, dataType: 'float', value: Value, isLabelItem: true, scale: 2, type: 'IntervalTextBox', maxLength: 10, placeHolder: '可选填', label: item.Title, isEdit: true };
+  return { name: item.ItemId, dataType: 'float', value: Value, isLabelItem: true, scale: 2, type: 'IntervalTextBox', maxLength: 10, placeHolder: '可选填', label: item.Title, isEdit: true };
 };
 
 const getCheckBoxGroup = (item) => {
   const { Value } = item;
-  return { name: item.ConditionItemId, value: Value, type: 'CheckBoxGroup', isJson: true, nullTipMessage: '请选择' + item.Title, isList: true, label: item.Title, dataSource: item.DataSourceItems, isEdit: true };
+  return { name: item.ItemId, value: Value, type: 'CheckBoxGroup', isJson: true, nullTipMessage: '请选择' + item.Title, isList: true, label: item.Title, dataSource: item.DataSourceItems, isEdit: true };
 }
 
 const getPicker = (item) => {
   const { Value } = item;
-  return { name: item.ConditionItemId, value: Value, isLabelItem: true, className: 'divPicker', type: 'Picker', label: item.Title, dataSource: item.DataSourceItems, isEdit: true };
+  return { name: item.ItemId, value: Value, isLabelItem: true, className: 'divPicker', type: 'Picker', label: item.Title, dataSource: item.DataSourceItems, isEdit: true };
 }
 
 const formItemToProperty = (item, i, pageAxis) => {
@@ -43,11 +43,10 @@ const getPropertiesValues = (properties) => {
   properties.forEach(p => {
     const v = p.getValue();
 
-
-    if (v) {
+    if (!Common.isNullOrEmpty(v)) {
       dataList.push({
-        ConditionItemId: p.name,
-        Value: v
+        ItemId: p.name,
+        Value: v.toString()
       });
     }
   })
@@ -63,6 +62,13 @@ const judgeValueRange = (properties) => {
     if (p.judgeValueRange) {
       msg = p.judgeValueRange();
       if (!Common.isNullOrEmpty(msg)) break;
+    }
+    else if (p.type === 'TextBox' && p.dataType !== 'float') {
+      var v = p.getValue();
+      if (!Common.isNullOrEmpty(v) && v.length < 2) {
+        msg = p.label + '输入不能少于两个字!';
+        break;
+      }
     }
   }
   return msg;

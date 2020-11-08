@@ -14,6 +14,10 @@ namespace Marriage.Entity.Data
         /// <summary>
         /// 选项计数
         /// </summary>
-        public int ItemCount { get; set; }
+        public int ManItemCount { get; set; }
+        /// <summary>
+        /// 选项计数
+        /// </summary>
+        public int WomanItemCount { get; set; }
     }
 }

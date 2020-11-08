@@ -49,5 +49,10 @@ namespace Marriage.Application
         /// 获取用户条件类型
         /// </summary>
         GetUserConditionTypeResponse GetUserConditionType(GetUserConditionTypeRequest request);
+
+        /// <summary>
+        /// 保存用户条件类型
+        /// </summary>
+        SaveUserConditionTypeResponse SaveUserConditionType(SaveUserConditionTypeRequest request);
     }
 }

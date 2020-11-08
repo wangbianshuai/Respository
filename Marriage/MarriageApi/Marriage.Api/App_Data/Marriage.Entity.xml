@@ -514,6 +514,56 @@
             注册响应
             </summary>
         </member>
+        <member name="T:Marriage.Entity.Application.MarriageUser.SaveUserConditionTypeRequest">
+            <summary>
+            保存用户条件类型请求
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageUser.SaveUserConditionTypeRequest.SelectType">
+            <summary>
+            选择类型
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageUser.SaveUserConditionTypeRequest.ConditionTypeId">
+            <summary>
+            条件类型Id
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageUser.SaveUserConditionTypeRequest.UserConditionTypeId">
+            <summary>
+            条件类型Id
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageUser.SaveUserConditionTypeRequest.IsPublic">
+            <summary>
+            是否公开
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageUser.SaveUserConditionTypeRequest.Items">
+            <summary>
+            选项集合
+            </summary>
+        </member>
+        <member name="T:Marriage.Entity.Application.MarriageUser.SaveUserConditionTypeResponse">
+            <summary>
+            保存用户条件类型响应
+            </summary>
+        </member>
+        <member name="T:Marriage.Entity.Application.MarriageUser.ConditionItem2">
+            <summary>
+            条件选择
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageUser.ConditionItem2.ItemId">
+            <summary> 
+            主键
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageUser.ConditionItem2.Value">
+            <summary>
+            值
+            </summary>
+        </member>
         <member name="T:Marriage.Entity.Application.MarriageUser.UpdateUserInfoRequest">
             <summary>
             更新用户信息请求
@@ -2067,7 +2117,12 @@
             条件类型信息视图
             </summary>
         </member>
-        <member name="P:Marriage.Entity.Data.ViewConditionType.ItemCount">
+        <member name="P:Marriage.Entity.Data.ViewConditionType.ManItemCount">
+            <summary>
+            选项计数
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Data.ViewConditionType.WomanItemCount">
             <summary>
             选项计数
             </summary>
@@ -2107,17 +2162,32 @@
             条件类型名称
             </summary> 
         </member>
-        <member name="P:Marriage.Entity.Data.ViewUserConditionType.UserItemCount">
+        <member name="P:Marriage.Entity.Data.ViewUserConditionType.ManUserItemCount">
             <summary> 
             用户选择值计数
             </summary> 
         </member>
-        <member name="P:Marriage.Entity.Data.ViewUserConditionType.ItemCount">
+        <member name="P:Marriage.Entity.Data.ViewUserConditionType.WomanUserItemCount">
+            <summary> 
+            用户选择值计数
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Data.ViewUserConditionType.ManItemCount">
             <summary> 
             总项数
             </summary> 
         </member>
-        <member name="P:Marriage.Entity.Data.ViewUserConditionType.Percentage">
+        <member name="P:Marriage.Entity.Data.ViewUserConditionType.ManPercentage">
+            <summary> 
+            完成百分比
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Data.ViewUserConditionType.WomanItemCount">
+            <summary> 
+            总项数
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Data.ViewUserConditionType.WomanPercentage">
             <summary> 
             完成百分比
             </summary> 
@@ -2607,7 +2677,12 @@
             条件类型名称
             </summary> 
         </member>
-        <member name="P:Marriage.Entity.Domain.ViewUserConditionType.UserItemCount">
+        <member name="P:Marriage.Entity.Domain.ViewUserConditionType.ManUserItemCount">
+            <summary> 
+            用户选择值计数
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Domain.ViewUserConditionType.WomanUserItemCount">
             <summary> 
             用户选择值计数
             </summary> 

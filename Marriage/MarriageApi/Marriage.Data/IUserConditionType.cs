@@ -30,5 +30,19 @@ namespace Marriage.Data
         /// <param name="id"></param>
         /// <returns></returns>
         IEntityData GetEntityDataById(Guid id);
+
+        /// <summary>
+        /// 插入
+        /// </summary>
+        /// <param name="entityData"></param>
+        /// <returns></returns>
+        Guid Insert(IEntityData entityData);
+
+        /// <summary>
+        /// 更新
+        /// </summary>
+        /// <param name="entityData"></param>
+        /// <returns></returns>
+        bool Update(IEntityData entityData);
     }
 }

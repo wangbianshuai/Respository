@@ -231,7 +231,7 @@ namespace Marriage.Application.Impl
 
             //2、获取条件类型
             stepNo += 1;
-            GetConditionType(stepNo, request, response);
+            GetConditionType(stepNo, request.ConditionTypeId, response);
 
             //3、获取用户条件类型
             stepNo += 1;
@@ -245,6 +245,68 @@ namespace Marriage.Application.Impl
         }
 
         /// <summary>
+        /// 保存用户条件类型
+        /// </summary>
+        public SaveUserConditionTypeResponse SaveUserConditionType(SaveUserConditionTypeRequest request)
+        {
+            string title = "保存用户条件类型";
+            string requestContent = Utility.Common.ToJson(request);
+            SaveUserConditionTypeResponse response = new SaveUserConditionTypeResponse();
+
+            this.InitMessage();
+
+            this.IsNullRequest(request, response);
+
+            //1、获取用户信息
+            int stepNo = 1;
+            var user = GetUserInfoById(stepNo, request.LoginUserId, response);
+
+            //2、获取条件类型
+            stepNo += 1;
+            GetConditionType(stepNo, request.ConditionTypeId, response);
+
+            //3、保存用户条件类型
+            stepNo += 1;
+            SaveUserConditionType(stepNo, user, request, response);
+
+            //4、执行结束
+            this.ExecEnd(response);
+
+            //日志记录
+            return this.SetReturnResponse<SaveUserConditionTypeResponse>(title, "SaveUserConditionType", requestContent, response);
+        }
+
+        /// <summary>
+        /// 保存用户条件类型
+        /// </summary>
+        /// <param name="stepNo"></param>
+        /// <param name="user"></param>
+        /// <param name="request"></param>
+        /// <param name="response"></param>
+        /// <returns></returns>
+        private bool SaveUserConditionType(int stepNo, Entity.Domain.MarriageUser user, SaveUserConditionTypeRequest request, SaveUserConditionTypeResponse response)
+        {
+            Func<bool> execStep = () =>
+            {
+                Entity.Domain.UserConditionType entity = new Entity.Domain.UserConditionType();
+                entity.ConditionTypeId = request.ConditionTypeId;
+                entity.IsPublic = request.IsPublic;
+                entity.SelectType = request.SelectType;
+                entity.UserConditionTypeId = request.UserConditionTypeId;
+                entity.UserId = Guid.Parse(request.LoginUserId);
+                entity.Items = (from a in request.Items
+                                select new Entity.Domain.ConditionItem()
+                                {
+                                    ItemId = a.ItemId,
+                                    Value = a.Value
+                                }).ToList();
+                return _UserConditionType.SaveUserConditionType(entity);
+            };
+
+            return this.UpdateEntityData(stepNo, "保存用户条件类型", "SaveUserConditionType", response, execStep);
+
+        }
+        /// <summary>
         /// 获取条件类型
         /// </summary>
         /// <param name="stepNo"></param>
@@ -252,11 +314,11 @@ namespace Marriage.Application.Impl
         /// <param name="request"></param>
         /// <param name="response"></param>
         /// <returns></returns>
-        private Entity.Domain.ConditionType GetConditionType(int stepNo, GetUserConditionTypeRequest request, GetUserConditionTypeResponse response)
+        private Entity.Domain.ConditionType GetConditionType(int stepNo, Guid conditonTypeId, IResponse response)
         {
             Func<Entity.Domain.ConditionType> execStep = () =>
             {
-                return _ConditionType.GetConditionTypeById(request.ConditionTypeId);
+                return _ConditionType.GetConditionTypeById(conditonTypeId);
             };
 
             return this.GetEntityData<Entity.Domain.ConditionType>(stepNo, "获取条件类型", "GetConditionType", response, execStep);
@@ -337,7 +399,7 @@ namespace Marriage.Application.Impl
                                          ConditionTypeName = a.ConditionTypeName,
                                          Percentage = request.SelectType == 1 ? string.Format("完善：{0}%", user.Sex == 1 ? a.ManPercentage : a.WomanPercentage) : string.Empty,
                                          UserConditionTypeId = a.UserConditionTypeId,
-                                         UserItemCount = request.SelectType == 2 ? string.Format("选择：{0}/{1}", a.UserItemCount, user.Sex == 1 ? a.ManItemCount : a.WomanItemCount) : string.Empty
+                                         UserItemCount = request.SelectType == 2 ? string.Format("选择：{0}/{1}", user.Sex == 1 ? a.WomanUserItemCount : a.ManUserItemCount, user.Sex == 1 ? a.WomanItemCount : a.ManItemCount) : string.Empty
                                      }).ToList();
 
                 return list;

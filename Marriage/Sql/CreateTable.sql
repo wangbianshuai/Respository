@@ -584,8 +584,8 @@ create view v_ConditionType
 as
 with ConditionItemCount as
 (
-select ConditionTypeId,COUNT(case when Sex in (0,1) then 1 else 0) ManItemCount,
-COUNT(case when Sex in (0,2) then 1 else 0) WomanItemCount,
+select ConditionTypeId,sum(case when Sex in (0,1) then 1 else 0 end) ManItemCount,
+sum(case when Sex in (0,2) then 1 else 0 end) WomanItemCount
 from t_ConditionItem
 group by ConditionTypeId
 )
@@ -654,12 +654,18 @@ create view v_UserConditionType
 as
 with UserConditionItemCount as
 (
-select UserConditionTypeId,COUNT(*) UserItemCount from t_UserConditionSelectValue
+select UserConditionTypeId,
+sum(case when b.Sex in (0,1) then 1 else 0 end) ManUserItemCount,
+sum(case when b.Sex in (0,2) then 1 else 0 end) WomanUserItemCount
+from t_UserConditionSelectValue a,t_ConditionItem b
+where a.ConditionItemId= b.ItemId
 group by UserConditionTypeId
 ),
 ConditionItemCount as
 (
-select ConditionTypeId,COUNT(*) ItemCount from t_ConditionItem
+select ConditionTypeId,sum(case when Sex in (0,1) then 1 else 0 end) ManItemCount,
+sum(case when Sex in (0,2) then 1 else 0 end) WomanItemCount
+from t_ConditionItem
 group by ConditionTypeId
 )
 select a.UserConditionTypeId,
@@ -668,9 +674,12 @@ a.SelectType,
 a.UserId,
 a.IsPublic,
 d.Name as ConditionTypeName,
-b.UserItemCount,
-c.ItemCount,
-convert(int,(b.UserItemCount*100)/c.ItemCount) Percentage 
+b.ManUserItemCount,
+b.WomanUserItemCount,
+c.ManItemCount,
+c.WomanItemCount,
+case when c.ManItemCount=0 then 0 else convert(int,(b.ManUserItemCount*100)/c.ManItemCount) end ManPercentage, 
+case when c.WomanItemCount=0 then 0 else convert(int,(b.WomanUserItemCount*100)/c.WomanItemCount) end WomanPercentage 
 from t_UserConditionType a, UserConditionItemCount b,ConditionItemCount c,t_ConditionType d
 where a.UserConditionTypeId=b.UserConditionTypeId
 and a.ConditionTypeId= c.ConditionTypeId

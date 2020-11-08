@@ -26,5 +26,12 @@ namespace Marriage.Domain
         /// <param name="selectType"></param>
         /// <returns></returns>
         Entity.Domain.UserConditionType GetUserConditionTypeById(Guid conditionTypeId, Guid userConditionTypeId, byte sex, byte selectType);
+
+        /// <summary>
+        /// 保存用户条件类型
+        /// </summary>
+        /// <param name="entity"></param>
+        /// <returns></returns>
+        bool SaveUserConditionType(Entity.Domain.UserConditionType entity);
     }
 }

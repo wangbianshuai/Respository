@@ -9,14 +9,19 @@ const setValue = (dataList, setDataList) => {
     setDataList(dataList);
 };
 
-const add = (data, dataList, setDataList) => {
-    data.id = data.id || Common.createGuid();
+const getPrimaryKey = (property) => {
+    return property.entity ? property.entity.primaryKey : 'id';
+};
+
+const add = (data, property, dataList, setDataList) => {
+    const primaryKey = getPrimaryKey(property);
+    data[primaryKey] = data[primaryKey] || Common.createGuid();
 
     let blExists = false;
     const list = [];
 
     for (let i = 0; i < dataList.length; i++) {
-        if (dataList[i].id === data.id) blExists = true;
+        if (dataList[i][primaryKey] === data[primaryKey]) blExists = true;
         else list.push(dataList[i])
     }
 
@@ -26,9 +31,10 @@ const add = (data, dataList, setDataList) => {
     setValue(list, setDataList);
 };
 
-const update = (data, dataList, setDataList) => {
-    const id = data.id;
-    const editData = Common.arrayFirst(dataList, (f) => Common.isEquals(f.id, id, true));
+const update = (data, property, dataList, setDataList) => {
+    const primaryKey = getPrimaryKey(property);
+    const id = data[primaryKey];
+    const editData = Common.arrayFirst(dataList, (f) => Common.isEquals(f[primaryKey], id, true));
     if (editData !== null) {
         for (let key in data) editData[key] = data[key];
 
@@ -36,8 +42,9 @@ const update = (data, dataList, setDataList) => {
     }
 };
 
-const remove = (id, dataList, setDataList) => {
-    setValue(dataList.filter(f => !Common.isEquals(f.id, id, true)), setDataList);
+const remove = (id, property, dataList, setDataList) => {
+    const primaryKey = getPrimaryKey(property);
+    setValue(dataList.filter(f => !Common.isEquals(f[primaryKey], id, true)), setDataList);
 };
 
 const judgeNullable = (value, property, rowsColsProperties) => {
@@ -63,9 +70,10 @@ const judgeNullable = (value, property, rowsColsProperties) => {
     return msg;
 };
 
-const assignProperty = (p, data, controlProperties, rowsColsProperties) => {
-    const id = data.id;
-    const id2 = p.id + data.id;
+const assignProperty = (p, data, view, controlProperties, rowsColsProperties) => {
+    const primaryKey = getPrimaryKey(view);
+    const id = data[primaryKey];
+    const id2 = p.id + id;
 
     if (!controlProperties[id]) controlProperties[id] = {};
     const itemProperties = controlProperties[id];
@@ -85,7 +93,7 @@ const assignProperty = (p, data, controlProperties, rowsColsProperties) => {
 };
 
 const renderItemProperty = (p, data, property, pageId, controlProperties, rowsColsProperties) => {
-    p = assignProperty(p, data, controlProperties, rowsColsProperties);
+    p = assignProperty(p, data, property, controlProperties, rowsColsProperties);
 
     return <PropertyItem property={p} key={p.id} view={property} pageId={pageId} />
 };
@@ -95,9 +103,11 @@ const renderRowCols = (data, property, pageId, controlProperties, rowsColsProper
 };
 
 const rendDataItem = (data, property, pageId, controlProperties, rowsColsProperties) => {
-    data.id = data.id || Common.createGuid();
+    const primaryKey = getPrimaryKey(property);
+    data[primaryKey] = data[primaryKey] || Common.createGuid();
+    console.log(data)
     return (
-        <Row gutter={6} key={data.id} style={{ padding: "8px 8px", borderBottom: "1px solid #e8e8e8" }}>
+        <Row gutter={6} key={data[primaryKey]} style={{ padding: "8px 8px", borderBottom: "1px solid #e8e8e8" }}>
             {renderRowCols(data, property, pageId, controlProperties, rowsColsProperties)}
         </Row>
     )
@@ -133,13 +143,13 @@ export default (props) => {
     const rowsColsProperties = [];
 
     const addRow = useCallback(() => {
-        add({}, dataList, setDataList);
-    }, [dataList, setDataList]);
+        add({}, property, dataList, setDataList);
+    }, [dataList, property, setDataList]);
 
     property.setVisible = (v) => setIsVisible(v);
-    property.add = (v) => add(v, dataList, setDataList);
-    property.update = (v) => update(v, dataList, setDataList);
-    property.remove = (v) => remove(v, dataList, setDataList);
+    property.add = (v) => add(v, property, dataList, setDataList);
+    property.update = (v) => update(v, property, dataList, setDataList);
+    property.remove = (v) => remove(v, property, dataList, setDataList);
     property.setValue = (v) => setValue(v, setDataList);
     property.getValue = () => dataList;
     property.judgeNullable = (v) => judgeNullable(v, property, rowsColsProperties);

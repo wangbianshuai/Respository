@@ -10,6 +10,9 @@ export default {
     const { entityData } = data;
 
     const payload = { action: this.getAction(id, actionType), ...entityData };
+    payload.ConditionTypeId = data.pageData.ConditionTypeId;
+    payload.UserConditionTypeId = data.pageData.UserConditionTypeId;
+    payload.SelectType = 1;
 
     this.dvaActions.dispatch(this.serviceName, "saveUserConditionType", payload);
   }

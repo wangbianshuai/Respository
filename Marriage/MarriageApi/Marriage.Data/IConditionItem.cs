@@ -16,6 +16,6 @@ namespace Marriage.Data
         /// <param name="conditionTypeId"></param>
         /// <param name="sex"></param>
         /// <returns></returns>
-        List<IEntityData> GetEnityDataListByConditionTypeIds(Guid conditionTypeId, byte sex);
+        List<IEntityData> GetEnityDataListByConditionTypeId(Guid conditionTypeId, byte sex);
     }
 }
