@@ -4,11 +4,13 @@ import { Common } from 'UtilsCommon';
 import styles from '../styles/view.scss';
 import { List } from 'antd-mobile';
 
-const getTextBox = (item) => {
+const getTextBox = (item, selectType) => {
   const { Value } = item;
   const dataType = item.DataType === 'number' ? 'float' : 'string';
   const maxLength = item.DataType === 'number' ? 10 : 100;
-  return { name: item.ItemId, value: Value, isLabelItem: true, dataType, scale: 2, type: 'TextBox', maxLength, placeHolder: '可选填', label: item.Title, isEdit: true };
+  const controlType = item.DataType === 'number' ? '' : 'textarea';
+  const placeHolder = selectType === 1 ? '可选填' : '可选值(输入选择的关键字，多个以逗号或顿号隔开)'
+  return { name: item.ItemId, value: Value, isLabelItem: true, autoHeight: true, dataType, controlType, scale: 2, type: 'TextBox', maxLength, placeHolder, label: item.Title, isEdit: true };
 }
 
 const getIntervalTextBox = (item) => {
@@ -26,15 +28,23 @@ const getPicker = (item) => {
   return { name: item.ItemId, value: Value, isLabelItem: true, className: 'divPicker', type: 'Picker', label: item.Title, dataSource: item.DataSourceItems, isEdit: true };
 }
 
-const formItemToProperty = (item, i, pageAxis) => {
-  if (item.IsSingle && item.DataSourceItems) return getPicker(item);
-  else if (!item.IsSingle && item.DataSourceItems) return getCheckBoxGroup(item);
-  else if (item.IsInterval) return getIntervalTextBox(item);
-  return getTextBox(item);
+const formItemToProperty = (item, i, property, pageAxis) => {
+  const { selectType } = property;
+  if (selectType === 1) {
+    if (item.IsSingle && item.DataSourceItems) return getPicker(item);
+    else if (!item.IsSingle && item.DataSourceItems) return getCheckBoxGroup(item);
+    else if (item.IsInterval) return getIntervalTextBox(item);
+    return getTextBox(item, selectType);
+  }
+  else {
+    if (item.DataSourceItems) return getCheckBoxGroup(item);
+    else if (item.IsInterval || item.DataType === 'number') return getIntervalTextBox(item);
+    return getTextBox(item, selectType);
+  }
 };
 
-const getProperties = (itemList, pageAxis) => {
-  return itemList.map((m, i) => formItemToProperty(m, i, pageAxis));
+const getProperties = (itemList, property, pageAxis) => {
+  return itemList.map((m, i) => formItemToProperty(m, i, property, pageAxis));
 };
 
 const getPropertiesValues = (properties) => {
@@ -87,8 +97,8 @@ export default (props) => {
   property.judgeValueRange = () => judgeValueRange(properties);
 
   useEffect(() => {
-    setProperties(getProperties(value, pageAxis));
-  }, [pageAxis, value, setProperties])
+    setProperties(getProperties(value, property, pageAxis));
+  }, [pageAxis, value, property, setProperties])
 
   if (!isVisible) return null;
 

@@ -1,15 +1,15 @@
 const { getButton } = require('../../common');
 
-//mine/conditionType 800-899
+//mine/selectonditionType 900-999
 const dataActionTypes = {
   //get entity data
-  getEntityData: 800,
+  getEntityData: 900,
   //Save entity data
-  saveEntityData: 801,
+  saveEntityData: 901,
   //get entity data
-  getUserConditionType: 802,
+  getUserConditionType: 902,
   //Save entity data
-  saveUserConditionType: 803
+  saveUserConditionType: 903
 };
 
 const entity = { name: 'ConditionType', primaryKey: 'ConditionTypeId' };
@@ -39,13 +39,6 @@ function getEditFormView() {
       className: 'divTitle'
     },
     getEditView2(),
-    {
-      name: 'IsPublic',
-      label: '信息是否公开',
-      type: 'Switch',
-      isEdit: true,
-      defaultValue: 0
-    },
     getButtonView()]
   }
 }
@@ -70,7 +63,7 @@ function getEditView2() {
     isList: true,
     isEdit: true,
     entity: entity,
-    selectType: 1,
+    selectType: 2,
     className: 'divConditionType',
     properties: []
   }
