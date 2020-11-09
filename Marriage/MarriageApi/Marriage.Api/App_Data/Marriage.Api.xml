@@ -106,9 +106,38 @@
             红娘
             </summary>
         </member>
-        <member name="M:Marriage.Api.Controllers.MatchmakerController.GetUserMatchmaker(Marriage.Entity.Application.Matchmaker.GetUserMatchmakerRequest)">
+        <member name="M:Marriage.Api.Controllers.MatchmakerController.GetMatchmakerMatchmaker(Marriage.Entity.Application.Matchmaker.GetUserMatchmakerRequest)">
             <summary>
             获取用户红娘
+            </summary>
+            <param name="request"></param>
+            <returns></returns>
+        </member>
+        <!-- Badly formed XML comment ignored for member "M:Marriage.Api.Controllers.MatchmakerController.GetMatchmakerByOpenId(Marriage.Entity.Application.Matchmaker.GetMatchmakerByOpenIdRequest)" -->
+        <member name="M:Marriage.Api.Controllers.MatchmakerController.Register(Marriage.Entity.Application.Matchmaker.RegisterRequest)">
+            <summary>
+            注册
+            </summary>
+            <param name="request"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Marriage.Api.Controllers.MatchmakerController.GetMatchmakerInfo(Marriage.Entity.Application.Matchmaker.GetMatchmakerInfoRequest)">
+            <summary>
+            获取红娘信息
+            </summary>
+            <param name="request"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Marriage.Api.Controllers.MatchmakerController.GetMatchmaker(Marriage.Entity.Application.Matchmaker.GetMatchmakerRequest)">
+            <summary>
+            获取红娘
+            </summary>
+            <param name="request"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Marriage.Api.Controllers.MatchmakerController.UpdateMatchmakerInfo(Marriage.Entity.Application.Matchmaker.UpdateMatchmakerInfoRequest)">
+            <summary>
+            更新红娘基本信息
             </summary>
             <param name="request"></param>
             <returns></returns>

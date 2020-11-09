@@ -649,6 +649,156 @@
             更新用户信息响应
             </summary>
         </member>
+        <member name="T:Marriage.Entity.Application.Matchmaker.GetMatchmakerByOpenIdRequest">
+            <summary>
+            以微信OpenId获取红娘请求
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Application.Matchmaker.GetMatchmakerByOpenIdRequest.OpenId">
+            <summary>
+            OpenId
+            </summary>
+        </member>
+        <member name="T:Marriage.Entity.Application.Matchmaker.GetMatchmakerByOpenIdResponse">
+            <summary>
+            以微信OpenId获取红娘响应
+            </summary>
+        </member>
+        <member name="T:Marriage.Entity.Application.Matchmaker.GetMatchmakerInfoRequest">
+            <summary>
+            获取红娘信息请求
+            </summary>
+        </member>
+        <member name="T:Marriage.Entity.Application.Matchmaker.GetMatchmakerInfoResponse">
+            <summary>
+            获取红娘信息响应
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Application.Matchmaker.GetMatchmakerInfoResponse.MatchmakerInfo">
+            <summary>
+            红娘信息
+            </summary>
+        </member>
+        <member name="T:Marriage.Entity.Application.Matchmaker.MatchmakerInfo">
+            <summary>
+            红娘信息
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Application.Matchmaker.MatchmakerInfo.MatchmakerId">
+            <summary> 
+            主键
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Application.Matchmaker.MatchmakerInfo.Name">
+            <summary> 
+            名称
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Application.Matchmaker.MatchmakerInfo.OpenId">
+            <summary> 
+            微信OpenId
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Application.Matchmaker.MatchmakerInfo.NickName">
+            <summary> 
+            微信昵称
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Application.Matchmaker.MatchmakerInfo.Sex">
+            <summary> 
+            微信红娘的性别，值为1时是男性，值为2时是女性，值为0时是未知
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Application.Matchmaker.MatchmakerInfo.City">
+            <summary> 
+            微信红娘所在城市
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Application.Matchmaker.MatchmakerInfo.Province">
+            <summary> 
+            微信红娘所在省份
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Application.Matchmaker.MatchmakerInfo.HeadImgUrl">
+            <summary> 
+            微信红娘头像
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Application.Matchmaker.MatchmakerInfo.IdCard">
+            <summary> 
+            身份证号码
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Application.Matchmaker.MatchmakerInfo.Phone">
+            <summary> 
+            手机
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Application.Matchmaker.MatchmakerInfo.Address">
+            <summary> 
+            家庭地址
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Application.Matchmaker.MatchmakerInfo.Features">
+            <summary> 
+            特点说明
+            </summary> 
+        </member>
+        <member name="T:Marriage.Entity.Application.Matchmaker.GetMatchmakerRequest">
+            <summary>
+            获取红娘信息请求
+            </summary>
+        </member>
+        <member name="T:Marriage.Entity.Application.Matchmaker.GetMatchmakerResponse">
+            <summary>
+            获取红娘信息响应
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Application.Matchmaker.GetMatchmakerResponse.MatchmakerInfo">
+            <summary>
+            红娘信息
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Application.Matchmaker.GetMatchmakerResponse.StatusInfo">
+            <summary>
+            状态信息
+            </summary>
+        </member>
+        <member name="T:Marriage.Entity.Application.Matchmaker.StatusInfo">
+            <summary>
+            状态信息
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Application.Matchmaker.StatusInfo.Status">
+            <summary> 
+            状态：0：待审核，1：审核通过，2：审核不通过，3：关闭
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Application.Matchmaker.StatusInfo.NoPassReason">
+            <summary> 
+            审核不通过原因
+            </summary> 
+        </member>
+        <member name="T:Marriage.Entity.Application.Matchmaker.MatchmakerInfo3">
+            <summary>
+            红娘信息
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Application.Matchmaker.MatchmakerInfo3.NickName">
+            <summary> 
+            微信昵称
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Application.Matchmaker.MatchmakerInfo3.HeadImgUrl">
+            <summary> 
+            微信红娘头像
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Application.Matchmaker.MatchmakerInfo3.Phone">
+            <summary> 
+            手机
+            </summary> 
+        </member>
         <member name="T:Marriage.Entity.Application.Matchmaker.GetUserMatchmakerRequest">
             <summary>
             获取用户红娘请求
@@ -718,6 +868,121 @@
             <summary> 
             性别
             </summary> 
+        </member>
+        <member name="T:Marriage.Entity.Application.Matchmaker.RegisterRequest">
+            <summary>
+            注册请求
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Application.Matchmaker.RegisterRequest.Name">
+            <summary> 
+            名称
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Application.Matchmaker.RegisterRequest.OpenId">
+            <summary> 
+            微信OpenId
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Application.Matchmaker.RegisterRequest.NickName">
+            <summary> 
+            微信昵称
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Application.Matchmaker.RegisterRequest.City">
+            <summary> 
+            微信用户所在城市
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Application.Matchmaker.RegisterRequest.Province">
+            <summary> 
+            微信用户所在省份
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Application.Matchmaker.RegisterRequest.HeadImgUrl">
+            <summary> 
+            微信用户头像
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Application.Matchmaker.RegisterRequest.IdCard">
+            <summary> 
+            身份证号码
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Application.Matchmaker.RegisterRequest.Phone">
+            <summary> 
+            手机
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Application.Matchmaker.RegisterRequest.Address">
+            <summary> 
+            家庭地址
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Application.Matchmaker.RegisterRequest.Features">
+            <summary> 
+            特点说明
+            </summary> 
+        </member>
+        <member name="T:Marriage.Entity.Application.Matchmaker.RegisterResponse">
+            <summary>
+            注册响应
+            </summary>
+        </member>
+        <member name="T:Marriage.Entity.Application.Matchmaker.UpdateMatchmakerInfoRequest">
+            <summary>
+            更新红娘信息请求
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Application.Matchmaker.UpdateMatchmakerInfoRequest.Name">
+            <summary> 
+            名称
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Application.Matchmaker.UpdateMatchmakerInfoRequest.NickName">
+            <summary> 
+            微信昵称
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Application.Matchmaker.UpdateMatchmakerInfoRequest.City">
+            <summary> 
+            微信红娘所在城市
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Application.Matchmaker.UpdateMatchmakerInfoRequest.Province">
+            <summary> 
+            微信红娘所在省份
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Application.Matchmaker.UpdateMatchmakerInfoRequest.HeadImgUrl">
+            <summary> 
+            微信红娘头像
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Application.Matchmaker.UpdateMatchmakerInfoRequest.IdCard">
+            <summary> 
+            身份证号码
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Application.Matchmaker.UpdateMatchmakerInfoRequest.Phone">
+            <summary> 
+            手机
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Application.Matchmaker.UpdateMatchmakerInfoRequest.Address">
+            <summary> 
+            家庭地址
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Application.Matchmaker.UpdateMatchmakerInfoRequest.Features">
+            <summary> 
+            特点说明
+            </summary> 
+        </member>
+        <member name="T:Marriage.Entity.Application.Matchmaker.UpdateMatchmakerInfoResponse">
+            <summary>
+            更新红娘信息响应
+            </summary>
         </member>
         <member name="T:Marriage.Entity.Application.IRequest">
             <summary>

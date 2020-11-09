@@ -16,5 +16,36 @@ namespace Marriage.Application
         /// <param name="request"></param>
         /// <returns></returns>
         GetUserMatchmakerResponse GetUserMatchmaker(GetUserMatchmakerRequest request);
+
+        /// <summary>
+        /// 以微信OpenId获取红娘
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+
+        GetMatchmakerByOpenIdResponse GetMatchmakerByOpenId(GetMatchmakerByOpenIdRequest request);
+
+        /// <summary>
+        /// 注册
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        RegisterResponse Register(RegisterRequest request);
+
+        /// <summary>
+        /// 获取红娘信息
+        /// </summary>
+        GetMatchmakerInfoResponse GetMatchmakerInfo(GetMatchmakerInfoRequest request);
+
+        /// <summary>
+        /// 获取红娘信息
+        /// </summary>
+        GetMatchmakerResponse GetMatchmaker(GetMatchmakerRequest request);
+
+
+        /// <summary>
+        /// 更新红娘信息
+        /// </summary>
+        UpdateMatchmakerInfoResponse UpdateMatchmakerInfo(UpdateMatchmakerInfoRequest request);
     }
 }

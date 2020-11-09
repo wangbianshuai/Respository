@@ -2,7 +2,6 @@
 using System.Threading.Tasks;
 using Marriage.Api.Code;
 using Marriage.Entity.Application.Matchmaker;
-using Marriage.Entity.Application.WxUser;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.OpenApi.Models;
 
@@ -30,9 +29,69 @@ namespace Marriage.Api.Controllers
         /// <returns></returns>
         [HttpPost]
         [SwaggerOpenApiTokenParameter]
-        public async Task<GetUserMatchmakerResponse> GetUserMatchmaker(GetUserMatchmakerRequest request)
+        public async Task<GetUserMatchmakerResponse> GetMatchmakerMatchmaker(GetUserMatchmakerRequest request)
         {
             return await Task.Run(() => _Matchmaker.GetUserMatchmaker(request));
+        }
+
+        // <summary>
+        /// 以微信OpenId获取红娘
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        [HttpPost]
+        [SwaggerOpenApiTokenParameter]
+        public async Task<GetMatchmakerByOpenIdResponse> GetMatchmakerByOpenId(GetMatchmakerByOpenIdRequest request)
+        {
+            return await Task.Run(() => _Matchmaker.GetMatchmakerByOpenId(request));
+        }
+
+        /// <summary>
+        /// 注册
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        [HttpPost]
+        [SwaggerOpenApiTokenParameter]
+        public async Task<RegisterResponse> Register(RegisterRequest request)
+        {
+            return await Task.Run(() => _Matchmaker.Register(request));
+        }
+
+        /// <summary>
+        /// 获取红娘信息
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        [HttpPost]
+        [SwaggerOpenApiTokenParameter]
+        public async Task<GetMatchmakerInfoResponse> GetMatchmakerInfo(GetMatchmakerInfoRequest request)
+        {
+            return await Task.Run(() => _Matchmaker.GetMatchmakerInfo(request));
+        }
+
+        /// <summary>
+        /// 获取红娘
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        [HttpPost]
+        [SwaggerOpenApiTokenParameter]
+        public async Task<GetMatchmakerResponse> GetMatchmaker(GetMatchmakerRequest request)
+        {
+            return await Task.Run(() => _Matchmaker.GetMatchmaker(request));
+        }
+
+        /// <summary>
+        /// 更新红娘基本信息
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        [HttpPost]
+        [SwaggerOpenApiTokenParameter]
+        public async Task<UpdateMatchmakerInfoResponse> UpdateMatchmakerInfo(UpdateMatchmakerInfoRequest request)
+        {
+            return await Task.Run(() => _Matchmaker.UpdateMatchmakerInfo(request));
         }
     }
 }
