@@ -113,8 +113,14 @@
             <param name="request"></param>
             <returns></returns>
         </member>
-        <!-- Badly formed XML comment ignored for member "M:Marriage.Api.Controllers.MatchmakerController.GetMatchmakerByOpenId(Marriage.Entity.Application.Matchmaker.GetMatchmakerByOpenIdRequest)" -->
-        <member name="M:Marriage.Api.Controllers.MatchmakerController.Register(Marriage.Entity.Application.Matchmaker.RegisterRequest)">
+        <member name="M:Marriage.Api.Controllers.MatchmakerController.GetMatchmakerByOpenId(Marriage.Entity.Application.Matchmaker.GetMatchmakerByOpenIdRequest)">
+            <summary>
+            以微信OpenId获取红娘
+            </summary>
+            <param name="request"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Marriage.Api.Controllers.MatchmakerController.Register(Marriage.Entity.Application.Matchmaker.MatchmakerRegisterRequest)">
             <summary>
             注册
             </summary>

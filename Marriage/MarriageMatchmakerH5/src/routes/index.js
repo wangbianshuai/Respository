@@ -1,6 +1,6 @@
 import { EntityPageEdit } from "PageTemplates";
 
-export default EntityPageEdit("index", "MarriageUser", '连理缘-红娘-注册', 100, {
+export default EntityPageEdit("index", "Matchmaker", '连理缘-红娘-注册', 100, {
     expandInit() {
         this.getProperty('NickName').defaultValue = this.wxUser.nickname;
         this.getProperty('HeadImgUrl').defaultValue = this.wxUser.headimgurl;

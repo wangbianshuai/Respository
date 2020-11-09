@@ -7,7 +7,7 @@ namespace Marriage.Entity.Application.Matchmaker
     /// <summary>
     /// 注册请求
     /// </summary>
-    public class RegisterRequest : Request, IRequest
+    public class MatchmakerRegisterRequest : Request, IRequest
     {
         /// <summary> 
         /// 名称
@@ -54,7 +54,7 @@ namespace Marriage.Entity.Application.Matchmaker
     /// <summary>
     /// 注册响应
     /// </summary>
-    public class RegisterResponse : Response, IResponse
+    public class MatchmakerRegisterResponse : Response, IResponse
     {
     }
 }

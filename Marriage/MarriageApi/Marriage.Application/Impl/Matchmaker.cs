@@ -78,11 +78,11 @@ namespace Marriage.Application.Impl
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
-        public RegisterResponse Register(RegisterRequest request)
+        public MatchmakerRegisterResponse Register(MatchmakerRegisterRequest request)
         {
             string title = "注册";
             string requestContent = Utility.Common.ToJson(request);
-            RegisterResponse response = new RegisterResponse();
+            MatchmakerRegisterResponse response = new MatchmakerRegisterResponse();
 
             this.InitMessage();
 
@@ -100,7 +100,7 @@ namespace Marriage.Application.Impl
             this.ExecEnd(response);
 
             //日志记录
-            return this.SetReturnResponse<RegisterResponse>(title, "Register", requestContent, response);
+            return this.SetReturnResponse<MatchmakerRegisterResponse>(title, "Register", requestContent, response);
         }
 
         /// <summary>
@@ -221,7 +221,7 @@ namespace Marriage.Application.Impl
                         Phone = entity.Phone
                     };
 
-                    response.StatusInfo = new StatusInfo()
+                    response.StatusInfo = new StatusInfo2()
                     {
                         NoPassReason = entity.NoPassReason,
                         Status = entity.Status
@@ -281,7 +281,7 @@ namespace Marriage.Application.Impl
         /// <param name="request"></param>
         /// <param name="response"></param>
         /// <returns></returns>
-        private bool CreateMatchmaker(int stepNo, RegisterRequest request, RegisterResponse response)
+        private bool CreateMatchmaker(int stepNo, MatchmakerRegisterRequest request, MatchmakerRegisterResponse response)
         {
             Func<bool> execStep = () =>
             {
@@ -352,7 +352,7 @@ namespace Marriage.Application.Impl
         /// <param name="request"></param>
         /// <param name="response"></param>
         /// <returns></returns>
-        private bool ValidateRegister(int stepNo, RegisterRequest request, RegisterResponse response)
+        private bool ValidateRegister(int stepNo, MatchmakerRegisterRequest request, MatchmakerRegisterResponse response)
         {
             Func<bool> execStep = () =>
             {

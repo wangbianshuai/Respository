@@ -9,7 +9,7 @@ export default (wxUser, dispatchAction) => {
 
   useEffect(() => {
     if (Common.isNullOrEmpty(token) && wxUser && wxUser.openid) {
-      dispatchAction('MarriageUserService', 'getUserByOpenId', { openId: wxUser.openid }).then(res => {
+      dispatchAction('MatchmakerService', 'getMatchmakerByOpenId', { openId: wxUser.openid }).then(res => {
         if (res.isSuccess === false) PageCommon.alert(res.message);
         else if (res.Token) {
           setToken(res.Token);

@@ -34,7 +34,7 @@ namespace Marriage.Api.Controllers
             return await Task.Run(() => _Matchmaker.GetUserMatchmaker(request));
         }
 
-        // <summary>
+        /// <summary>
         /// 以微信OpenId获取红娘
         /// </summary>
         /// <param name="request"></param>
@@ -53,7 +53,7 @@ namespace Marriage.Api.Controllers
         /// <returns></returns>
         [HttpPost]
         [SwaggerOpenApiTokenParameter]
-        public async Task<RegisterResponse> Register(RegisterRequest request)
+        public async Task<MatchmakerRegisterResponse> Register(MatchmakerRegisterRequest request)
         {
             return await Task.Run(() => _Matchmaker.Register(request));
         }

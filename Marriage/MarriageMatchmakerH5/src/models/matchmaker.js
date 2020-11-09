@@ -7,7 +7,15 @@ const config = {
          //注册
          post('saveEntityData', 'Matchmaker/Register', 'saveEntityData', 'Data'),
         //获取用户红娘
-        post('getUserMatchmaker', 'Matchmaker/GetUserMatchmaker', 'getUserMatchmaker')
+        post('getUserMatchmaker', 'Matchmaker/GetUserMatchmaker', 'getUserMatchmaker'),
+        //以openId获取红娘
+        post('getMatchmakerByOpenId', 'Matchmaker/GetMatchmakerByOpenId', 'getMatchmakerByOpenId', 'Data'),
+        //获取红娘信息
+        post('getMatchmaker', 'Matchmaker/GetMatchmaker', 'getMatchmaker'),
+        //获取红娘信息
+        post('getEntityData', 'Matchmaker/GetMatchmakerInfo', 'getEntityData', 'MatchmakerInfo'),
+        //更新红娘信息
+        post('updateMatchmakerInfo', 'Matchmaker/UpdateMatchmakerInfo', 'updateMatchmakerInfo'),
     ]
 }
 function post(actionName, url, stateName, dataKey) {

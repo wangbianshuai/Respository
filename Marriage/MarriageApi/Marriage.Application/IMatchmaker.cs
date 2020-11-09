@@ -30,7 +30,7 @@ namespace Marriage.Application
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
-        RegisterResponse Register(RegisterRequest request);
+        MatchmakerRegisterResponse Register(MatchmakerRegisterRequest request);
 
         /// <summary>
         /// 获取红娘信息

@@ -96,6 +96,8 @@ namespace Marriage.Api.Code
 
             if ((controllerActionDescriptor.ControllerName == "MarriageUser" && controllerActionDescriptor.ActionName == "GetUserByOpenId")
                 || (controllerActionDescriptor.ControllerName == "MarriageUser" && controllerActionDescriptor.ActionName == "Register")
+                || (controllerActionDescriptor.ControllerName == "Matchmaker" && controllerActionDescriptor.ActionName == "GetMatchmakerByOpenId")
+                || (controllerActionDescriptor.ControllerName == "Matchmaker" && controllerActionDescriptor.ActionName == "Register")
                 || (controllerActionDescriptor.ControllerName == "WxUser" && controllerActionDescriptor.ActionName == "GetWxUser"))
             {
                 string loginmd5 = "d56b699830e77ba53855679cb1d252da";

@@ -20,7 +20,6 @@ export function getResponseData(d, resKey) {
         else {
             if (d.Ack.Code === -100) {
                 Common.removeStorage(EnvConfig.tokenKey);
-                window.location.reload();
                 return;
             }
             obj = { isSuccess: false, message: d.Ack.Message || '请求异常' };

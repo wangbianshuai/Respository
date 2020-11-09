@@ -23,13 +23,13 @@ namespace Marriage.Entity.Application.Matchmaker
         /// <summary>
         /// 状态信息
         /// </summary>
-        public StatusInfo StatusInfo { get; set; }
+        public StatusInfo2 StatusInfo { get; set; }
     }
 
     /// <summary>
     /// 状态信息
     /// </summary>
-    public class StatusInfo
+    public class StatusInfo2
     {
         /// <summary> 
         /// 状态：0：待审核，1：审核通过，2：审核不通过，3：关闭

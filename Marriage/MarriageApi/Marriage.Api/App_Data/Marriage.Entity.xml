@@ -764,17 +764,17 @@
             状态信息
             </summary>
         </member>
-        <member name="T:Marriage.Entity.Application.Matchmaker.StatusInfo">
+        <member name="T:Marriage.Entity.Application.Matchmaker.StatusInfo2">
             <summary>
             状态信息
             </summary>
         </member>
-        <member name="P:Marriage.Entity.Application.Matchmaker.StatusInfo.Status">
+        <member name="P:Marriage.Entity.Application.Matchmaker.StatusInfo2.Status">
             <summary> 
             状态：0：待审核，1：审核通过，2：审核不通过，3：关闭
             </summary> 
         </member>
-        <member name="P:Marriage.Entity.Application.Matchmaker.StatusInfo.NoPassReason">
+        <member name="P:Marriage.Entity.Application.Matchmaker.StatusInfo2.NoPassReason">
             <summary> 
             审核不通过原因
             </summary> 
@@ -869,62 +869,62 @@
             性别
             </summary> 
         </member>
-        <member name="T:Marriage.Entity.Application.Matchmaker.RegisterRequest">
+        <member name="T:Marriage.Entity.Application.Matchmaker.MatchmakerRegisterRequest">
             <summary>
             注册请求
             </summary>
         </member>
-        <member name="P:Marriage.Entity.Application.Matchmaker.RegisterRequest.Name">
+        <member name="P:Marriage.Entity.Application.Matchmaker.MatchmakerRegisterRequest.Name">
             <summary> 
             名称
             </summary> 
         </member>
-        <member name="P:Marriage.Entity.Application.Matchmaker.RegisterRequest.OpenId">
+        <member name="P:Marriage.Entity.Application.Matchmaker.MatchmakerRegisterRequest.OpenId">
             <summary> 
             微信OpenId
             </summary> 
         </member>
-        <member name="P:Marriage.Entity.Application.Matchmaker.RegisterRequest.NickName">
+        <member name="P:Marriage.Entity.Application.Matchmaker.MatchmakerRegisterRequest.NickName">
             <summary> 
             微信昵称
             </summary> 
         </member>
-        <member name="P:Marriage.Entity.Application.Matchmaker.RegisterRequest.City">
+        <member name="P:Marriage.Entity.Application.Matchmaker.MatchmakerRegisterRequest.City">
             <summary> 
             微信用户所在城市
             </summary> 
         </member>
-        <member name="P:Marriage.Entity.Application.Matchmaker.RegisterRequest.Province">
+        <member name="P:Marriage.Entity.Application.Matchmaker.MatchmakerRegisterRequest.Province">
             <summary> 
             微信用户所在省份
             </summary> 
         </member>
-        <member name="P:Marriage.Entity.Application.Matchmaker.RegisterRequest.HeadImgUrl">
+        <member name="P:Marriage.Entity.Application.Matchmaker.MatchmakerRegisterRequest.HeadImgUrl">
             <summary> 
             微信用户头像
             </summary> 
         </member>
-        <member name="P:Marriage.Entity.Application.Matchmaker.RegisterRequest.IdCard">
+        <member name="P:Marriage.Entity.Application.Matchmaker.MatchmakerRegisterRequest.IdCard">
             <summary> 
             身份证号码
             </summary> 
         </member>
-        <member name="P:Marriage.Entity.Application.Matchmaker.RegisterRequest.Phone">
+        <member name="P:Marriage.Entity.Application.Matchmaker.MatchmakerRegisterRequest.Phone">
             <summary> 
             手机
             </summary> 
         </member>
-        <member name="P:Marriage.Entity.Application.Matchmaker.RegisterRequest.Address">
+        <member name="P:Marriage.Entity.Application.Matchmaker.MatchmakerRegisterRequest.Address">
             <summary> 
             家庭地址
             </summary> 
         </member>
-        <member name="P:Marriage.Entity.Application.Matchmaker.RegisterRequest.Features">
+        <member name="P:Marriage.Entity.Application.Matchmaker.MatchmakerRegisterRequest.Features">
             <summary> 
             特点说明
             </summary> 
         </member>
-        <member name="T:Marriage.Entity.Application.Matchmaker.RegisterResponse">
+        <member name="T:Marriage.Entity.Application.Matchmaker.MatchmakerRegisterResponse">
             <summary>
             注册响应
             </summary>
