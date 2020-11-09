@@ -77,7 +77,7 @@ function getProperties() {
         getTextBox2('Province', '省份', '', 1, 1, '省份', 20, true),
         getTextBox2('City', '城市', '', 1, 1, '城市', 20, true),
         getTextBox2('Address', '家庭地址', '', 1, 1, '请输入家庭地址', 100, false),
-        getTextBox2('Remark', '特点', 'textarea', 1, 1, '特点说明', 500, true),
+        getTextBox2('Features', '特点', 'textarea', 1, 1, '特点说明', 500, true),
         getButtonView()
     ]
 }

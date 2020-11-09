@@ -41,7 +41,6 @@ namespace Marriage.Domain.Impl
             entityData.SetValue("OpenId", entity.OpenId);
             entityData.SetValue("Phone", entity.Phone);
             entityData.SetValue("Province", entity.Province);
-            entityData.SetValue("Remark", entity.Remark);
             entityData.SetValue("Sex", entity.Sex);
             entityData.SetValue("MatchmakerId", entity.MatchmakerId);
             entityData.SetValue("CreateUser", entity.MatchmakerId);
@@ -77,7 +76,6 @@ namespace Marriage.Domain.Impl
             entityData.SetValue("NickName", entity.NickName);
             entityData.SetValue("Phone", entity.Phone);
             entityData.SetValue("Province", entity.Province);
-            entityData.SetValue("Remark", entity.Remark);
             entityData.SetValue("Sex", entity.Sex);
             entityData.SetValue("MatchmakerId", entity.MatchmakerId);
             entityData.SetValue("UpdateUser", entity.MatchmakerId);

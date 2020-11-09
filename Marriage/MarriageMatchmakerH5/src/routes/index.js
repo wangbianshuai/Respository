@@ -8,7 +8,7 @@ export default EntityPageEdit("index", "Matchmaker", '连理缘-红娘-注册', 
         this.getProperty('City').defaultValue = this.wxUser.city;
     },
     hasTokenCallback() {
-        this.toPage('marriage/index');
+        this.toPage('boygirl/index');
     },
     expandSetEntityData({ entityData, props, view }) {
         entityData.OpenId = this.wxUser.openid;

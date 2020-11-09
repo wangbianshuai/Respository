@@ -1,6 +1,6 @@
 import React from 'react';
 import { router } from 'dva';
-import MarriageUserLayout from './layouts/marriageUserLayout';
+import MatchmakerLayout from './layouts/matchmakerLayout';
 import Index from './routes/index';
 
 const { Router, Route, Switch } = router;
@@ -10,9 +10,9 @@ function RouterConfig({ history, app }) {
     <Router history={history}>
       <Switch>
         <Route path="/" exact component={(props) => <Index {...props} app={app} />} />
-        <Route path="/boygirl/:name" render={props => <MarriageUserLayout {...props} app={app} />} />
-        <Route path="/marriage/:name" render={props => <MarriageUserLayout {...props} app={app} />} />
-        <Route path="/mine/:name" render={props => <MarriageUserLayout {...props} app={app} />} />
+        <Route path="/boygirl/:name" render={props => <MatchmakerLayout {...props} app={app} />} />
+        <Route path="/marriage/:name" render={props => <MatchmakerLayout {...props} app={app} />} />
+        <Route path="/mine/:name" render={props => <MatchmakerLayout {...props} app={app} />} />
       </Switch>
     </Router>
   );

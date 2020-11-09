@@ -1,7 +1,7 @@
 import React from 'react';
 
 const getPageComponent = (path, props, key) => {
-    if (path === "/") path = "/marriage/index";
+    if (path === "/") path = "/boygirl/index";
     if (key) props = { ...props, key }
 
     try {
@@ -19,10 +19,10 @@ const getItem = (pathName, pageName, title, styles, isLogin) => {
     return { pathName, pageName, title, isLogin, imageClassName: styles.navImage, imageUrl: `${pathName}.png`, selectedImageUrl: `${pathName}_selected.png` };
 }
 
-const getMarriageUserTabBarProperty = (styles) => ({
+const getMatchmakerTabBarProperty = (styles) => ({
     items: [
-        getItem('marriage', 'index', '相亲', styles),
-        getItem('square', 'index', '广场', styles, true),
+        getItem('boygirl', 'index', ' 男&女', styles),
+        getItem('marriage', 'index', '相亲', styles, true),
         getItem('mine', 'index', '我的', styles, true)
     ]
 });
@@ -36,6 +36,6 @@ const getPathName = (location) => {
 export default {
     getPageComponent,
     getItem,
-    getMarriageUserTabBarProperty,
+    getMatchmakerTabBarProperty,
     getPathName
 }

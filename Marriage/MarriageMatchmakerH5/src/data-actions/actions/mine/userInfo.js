@@ -1,9 +1,9 @@
 export default {
-  updateUserInfo(id, actionType, data) {
+  updateMatchmakerInfo(id, actionType, data) {
     const { entityData } = data;
 
     const payload = { action: this.getAction(id, actionType), ...entityData };
 
-    this.dvaActions.dispatch(this.serviceName, "updateUserInfo", payload);
+    this.dvaActions.dispatch(this.serviceName, "updateMatchmakerInfo", payload);
   }
 }

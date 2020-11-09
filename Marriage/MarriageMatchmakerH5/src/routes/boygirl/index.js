@@ -1,3 +1,5 @@
+import React from 'react';
+
 export default (props) => {
-    return <div>boygirl</div>
+    return <div>marriage</div>
 }

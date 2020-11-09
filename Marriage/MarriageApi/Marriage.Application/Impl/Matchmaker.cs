@@ -263,6 +263,7 @@ namespace Marriage.Application.Impl
                         OpenId = entity.OpenId,
                         Phone = entity.Phone,
                         Province = entity.Province,
+                        Features = entity.Features,
                         Sex = entity.Sex
                     };
                 }
