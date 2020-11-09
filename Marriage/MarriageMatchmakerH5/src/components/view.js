@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { List } from 'antd-mobile';
+import { Common } from 'UtilsCommon';
 import styles from '../styles/view.scss';
 import Base from './base';
+
+const isH5 = Common.isH5();
 
 export default (props) => {
     const { property, view, pageId, pageAxis } = Base.getProps(props);
@@ -18,6 +21,7 @@ export default (props) => {
 
     const className = Base.getClassName(property, styles);
 
+    if (property.isRootDiv && !isH5) property.style = { minHeight: "100%", width: '480px', margin: "0 auto", boxSizing: 'border-box', borderLeft: '1px solid #ddd', borderRight: '1px solid #ddd' }
 
     if (property.isList) {
         return (

@@ -4,6 +4,7 @@ import Validate from './validate';
 import * as HttpResponse from './httpResponse';
 import * as PageCommon from './pageCommon';
 import Html2H5 from './html2H5';
+import LunarDate from './lunarDate';
 import './h5Size';
 
 export {
@@ -12,5 +13,6 @@ export {
     Validate,
     HttpResponse,
     PageCommon,
-    Html2H5
+    Html2H5,
+    LunarDate
 };

@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { usePage } from "UseHooks";
+import { usePage, useGetWxUser } from "UseHooks";
 import Components from "Components";
 
 function init(pageExpand) {
@@ -10,17 +10,23 @@ function init(pageExpand) {
 }
 
 export default (name, config) => (props) => {
+  const [wxUser, setWxUser] = useGetWxUser();
   const pageAxis = usePage(name, props, mapStateToProps(config.actionNames, config.entityName, config.stateNames),
-    init(config.pageExpand), config.dataActionOptions);
+    init(config.pageExpand), config.dataActionOptions, wxUser);
 
   useEffect(() => {
     if (config.title) document.title = config.title;
-  }, [config.title]);
+  }, []);
 
   useEffect(() => {
     if (pageAxis && pageAxis.pageData.title) document.title = pageAxis.pageData.title;
   }, [pageAxis]);
 
+  if (wxUser && wxUser.isAuthQrCode) {
+    return (
+      <Components.WxAuthQrCode setWxUser={setWxUser} />
+    )
+  }
   if (pageAxis === null) return null;
 
   //判断是否需要登录,在expandInit中自定义judgeRequireLogin函数

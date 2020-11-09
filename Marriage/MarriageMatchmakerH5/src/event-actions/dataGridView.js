@@ -1,5 +1,6 @@
 import BaseIndex from './baseIndex';
 import { Common } from "UtilsCommon";
+import EnvConfig from '../configs/envConfig';
 
 export default class DataGridView extends BaseIndex {
 
@@ -97,7 +98,6 @@ export default class DataGridView extends BaseIndex {
                     DataType: p.dataType || "string",
                     Value: p.defaultValue
                 }
-                if (p.isCurrentUser) condition.value = Common.getStorage("loginUserId");
 
                 if (!Common.isNullOrEmpty(condition.value)) conditionList.push(condition)
             });
@@ -348,7 +348,7 @@ export default class DataGridView extends BaseIndex {
         const onOk = () => {
             property.setDisabled && property.setDisabled(true);
 
-            pageAxis.invokeDataAction(dataActionType, { AppAccountId: pageAxis.loginUser.AppAccountId });
+            pageAxis.invokeDataAction(dataActionType);
         };
 
         if (property.confirmTip) pageAxis.confirm(property.confirmTip, onOk);

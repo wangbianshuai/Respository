@@ -41,7 +41,7 @@ export function getQueryString(query) {
         if (pos === -1) continue
         let argname = pairs[i].substring(0, pos)
         let value = pairs[i].substring(pos + 1)
-        args[argname] = unescape(value)
+        args[argname] = decodeURIComponent(value)
     }
     return args
 }
@@ -56,11 +56,11 @@ export function addUrlRandom(url) {
     return url
 }
 
-export function addUrlParams(url, name, value, blUrl) {
+export function addUrlParams(url, name, value) {
     if (isNullOrEmpty(url)) return ""
     if (value === undefined || value === null) return url;
     url += url.indexOf("?") >= 0 ? "&" : "?"
-    value = blUrl ? encodeURIComponent(value) : escape(value);
+    value = encodeURIComponent(value);
     url += `${name}=${value}`
     return url
 }
@@ -329,6 +329,7 @@ export function getDateString(myDate, isDate) {
 }
 
 export function convertToDate(dateString, format) {
+    if (isNullOrEmpty(dateString)) return null;
     if (typeof (dateString) === "number") return new Date(dateString);
     if (typeof dateString !== "string") return dateString;
 
@@ -432,7 +433,7 @@ export function dateFormat(date, format) {
 export function getCookie(name) {
     var arr, reg = new RegExp("(^| )" + name + "=([^;]*)(;|$)");
     arr = document.cookie.match(reg)
-    if (arr) return unescape(arr[2]);
+    if (arr) return decodeURIComponent(arr[2]);
     else return null;
 }
 
@@ -441,7 +442,7 @@ export function setCookie(name, value, days, path) {
     path = path || "/";
     var exp = new Date();
     exp.setTime(exp.getTime() + days * 24 * 60 * 60 * 1000);
-    document.cookie = name + "=" + escape(value) + "; expires=" + exp.toGMTString() + "; path=" + path;
+    document.cookie = name + "=" + encodeURIComponent(value) + "; expires=" + exp.toGMTString() + "; path=" + path;
 }
 
 export function removeCookie(name, path) {
@@ -469,7 +470,7 @@ export function isDecimal2(value) {
 export function toQueryString(obj) {
     const list = [];
     let v = null;
-    for (let key in obj) { v = escape(obj[key]); list.push(`${key}=${v}`); }
+    for (let key in obj) { v = encodeURIComponent(obj[key]); list.push(`${key}=${v}`); }
     return list.join("&")
 }
 
@@ -517,7 +518,7 @@ export function toCurrencyNo45(num) {
     return num.substring(0, num.lastIndexOf('.') + 3).replace(/\d{1,3}(?=(\d{3})+(\.\d*)?$)/g, '$&,');
 }
 
-export function replaceDataContent(data, content, blUrl) {
+export function replaceDataContent(data, content) {
     if (!content || !data) return content;
 
     if (content.indexOf("#{") < 0) return content;
@@ -526,8 +527,8 @@ export function replaceDataContent(data, content, blUrl) {
         keyValue = "#{" + key + "}";
         v = data[key];
         v = isNullOrEmpty(v) ? "" : v.toString();
-        v = unescape(v);
-        content = content.replace(new RegExp(keyValue, "g"), blUrl ? escape(v) : v);
+        v = decodeURIComponent(v);
+        content = content.replace(new RegExp(keyValue, "g"), v);
         if (content.indexOf("#{") < 0) break;
     }
     return content;
@@ -634,8 +635,8 @@ export function postFormData(url, formData, successCallback, errorCallback, asyn
 
     //处理请求响应返回
     xmlHttp.onreadystatechange = function () {
-        if (xmlHttp.readyState == 4) {
-            if (xmlHttp.status == 200) {
+        if (xmlHttp.readyState === 4) {
+            if (xmlHttp.status === 200) {
                 successCallback && successCallback(JSON.parse(xmlHttp.responseText));
             }
             else {
@@ -650,8 +651,7 @@ export function postFormData(url, formData, successCallback, errorCallback, asyn
 
     //创建请求对象
     function createRequest() {
-        if (window.XMLHttpRequest) return new XMLHttpRequest();
-        else if (window.ActiveXObject) return new ActiveXObject("Microsoft.XMLHTTP");
+        return new XMLHttpRequest();
     };
 
     return xmlHttp
@@ -663,3 +663,119 @@ export function getFileExt(fileName) {
     if (ns.length < 2) return '';
     return ns.pop().toLowerCase();
 }
+
+export function getImageFileWidthHeight(file) {
+    return new Promise((resolve, reject) => {
+        try {
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                var data = e.target.result;
+                var image = new Image();
+                image.onload = function () {
+                    var width = image.width;
+                    var height = image.height;
+                    resolve({ width, height });
+                };
+                image.src = data;
+            };
+            reader.readAsDataURL(file);
+        }
+        catch (err) {
+            reject(err);
+        }
+    });
+}
+
+export function compressImage(file, width, height, type, quality, maxWidth, maxHeight) {
+    return new Promise((resolve, reject) => {
+        try {
+            var ready = new FileReader();
+            ready.readAsDataURL(file);
+            ready.onload = function () {
+                getImage(this.result).then(res => {
+                    resolve(canvasDataURL(res, width, height, type, quality, maxWidth, maxHeight));
+                });
+            }
+        } catch (err) { reject(err); }
+    });
+}
+
+export function getImage(src) {
+    return new Promise((resolve, reject) => {
+        try {
+            const img = new Image();
+            img.src = src;
+            img.onload = function () {
+                resolve(img);
+            };
+            img.onerror = function (err) {
+                reject(err);
+            };
+        }
+        catch (err) { reject(err); }
+    })
+}
+
+export function canvasDataURL(img, width, height, type, quality, maxWidth, maxHeight) {
+    width = width || img.width;
+    height = height || img.height;
+    type = type || 'image/jpeg';
+    quality = quality || 0.5;
+    maxWidth = maxWidth || 1920;
+    maxHeight = maxHeight || 1080;
+
+    if (width > maxWidth) {
+        height = maxWidth * height / width;
+        width = maxWidth;
+    }
+    if (height > maxHeight) {
+        width = maxHeight * width / height;
+        height = maxHeight;
+    }
+
+    const canvas = document.createElement('canvas');
+    canvas.width = width;
+    canvas.height = height;
+    canvas.getContext('2d').drawImage(img, 0, 0, img.width, img.height, 0, 0, width, height);
+    return canvas.toDataURL(type, quality);
+}
+
+export function dataURItoBlob(base64Data) {
+    //console.log(base64Data);//data:image/png;base64,
+    var byteString;
+    if (base64Data.split(',')[0].indexOf('base64') >= 0)
+        byteString = atob(base64Data.split(',')[1]);//base64 解码
+    else {
+        byteString = unescape(base64Data.split(',')[1]);
+    }
+    var mimeString = base64Data.split(',')[0].split(':')[1].split(';')[0];//mime类型 -- image/png
+
+    // var arrayBuffer = new ArrayBuffer(byteString.length); //创建缓冲数组
+    // var ia = new Uint8Array(arrayBuffer);//创建视图
+    var ia = new Uint8Array(byteString.length);//创建视图
+    for (var i = 0; i < byteString.length; i++) {
+        ia[i] = byteString.charCodeAt(i);
+    }
+    var blob = new Blob([ia], {
+        type: mimeString
+    });
+    return blob;
+}
+
+export function blobToDataURI(blob, callback) {
+    var reader = new FileReader();
+    reader.readAsDataURL(blob);
+    reader.onload = function (e) {
+        callback(e.target.result);
+    }
+}
+
+//将base64转换为文件
+export function dataURLtoFile(dataUrl, filename) {
+    var arr = dataUrl.split(','), mime = arr[0].match(/:(.*?);/)[1],
+        bstr = atob(arr[1]), n = bstr.length, u8arr = new Uint8Array(n);
+    while (n--) {
+        u8arr[n] = bstr.charCodeAt(n);
+    }
+    return new File([u8arr], filename, { type: mime });
+}   

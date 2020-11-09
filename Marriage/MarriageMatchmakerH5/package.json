@@ -9,9 +9,10 @@
     "gulp": "gulp"
   },
   "dependencies": {
+    "@microsoft/signalr": "^3.1.9",
     "antd-mobile": "^2.3.3",
     "dva": "^2.6.0-beta.19",
-    "qrcode-js": "^0.0.2",
+    "qrcode-react": "^0.1.16",
     "react": "^16.13.1",
     "react-dom": "^16.13.1"
   },

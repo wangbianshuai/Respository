@@ -11,9 +11,9 @@ props:父级页面props
 */
 
 import { useEffect } from "react";
-import { Common, PageCommon, Md5 } from 'UtilsCommon';
-import { EnvConfig } from 'Configs';
+import { Common, PageCommon } from 'UtilsCommon';
 import EventActions from 'EventActions';
+import { EnvConfig } from 'Configs';
 
 class PageAxis {
     constructor(id, parames) {
@@ -58,26 +58,15 @@ class PageAxis {
         obj.state = nextState;
     }
 
-    judgeLogin(url) {
-        if (!this.token) this.toLogin(url);
-        return !!this.token
-    }
-
-    toLogin(url) {
-        if (!url) url = this.props.location.pathname + this.props.location.search;
-        url = `/user/login?url=${escape(url)}`;
-        url = Common.addUrlRandom(url);
-        this.toPage(url);
+    toRegister() {
+        if (this.props.location.pathname === '/') return;
+        this.toPage('/');
     }
 
     refreshPage() {
-        const url = this.props.location.pathname + this.props.location.search;
+        let url = this.props.location.pathname + this.props.location.search;
         url = Common.addUrlRandom(url);
         this.toPage(url);
-    }
-
-    isLoginPage() {
-        return this.props.location.pathname.toLowerCase() === '/user/login';
     }
 
     initSet() {
@@ -85,30 +74,22 @@ class PageAxis {
 
         this.modalDialog = {};
 
-        this.loginUser = this.getLoginUser();
-        this.token = Common.getStorage("token");
-
         this.receives = {};
         this.eventActionsConfig = Common.clone(this.pageConfig.eventActions);
         if (this.pageConfig.actionOptions) this.actionTypes = this.pageConfig.actionOptions.actionTypes;
 
         this.pageData = Common.getQueryString();
-        this.pageData.token = this.token;
+
         //将pageAxis id赋值到location pageData上
         if (this.props.location && this.props.location.pageData) this.props.location.pageData.pageId = this.id;
 
         this.eventActions = {};
         for (let key in EventActions) this.eventActions[key] = new EventActions[key]();
-
-        this.getOpenId();
     }
 
-    getLoginUser = () => {
-        var info = Common.getStorage("loginUserInfo");
-        if (!info) return {};
-
-        return JSON.parse(info);
-    };
+    getToken(){
+        return Common.getStorage(EnvConfig.tokenKey);
+    }
 
     setModalDialog(p) {
         this.modalDialog.add && this.modalDialog.add(p);
@@ -203,10 +184,6 @@ class PageAxis {
         if (e != null) e.invoke(obj, e);
     }
 
-    getLoginUserId() {
-        return this.loginUser.AdminUserId;
-    }
-
     getEventAction(name) {
         if (this[name]) return { invoke: (a, b) => this[name](a, b) };
 
@@ -228,96 +205,24 @@ class PageAxis {
     isSuccessProps(res) {
         return res && res.isSuccess !== false;
     }
-
-    getOpenId() {
-        this.isWeixin = Common.isWeiXin();
-        if (!this.isWeixin) return;
-
-        const wXAppID = 'wxaa64304b24432ce5';
-        const companID = 9;
-        this.openIdKey = Md5(wXAppID);
-
-        this.pageData.openId = Common.getStorage(this.openIdKey);
-        if (this.pageData.openId && !this.isLoginPage() && !this.token) {
-            this.loginByOpenId();
-            return;
-        }
-
-        let code = this.pageData.code;
-        const code2 = Common.getStorage("code");
-        if (code && code !== code2) {
-            Common.setStorage("code", code);
-            this.getOpenIdByCode(code, companID);
-            return;
-        }
-        else if (code === code2) code = '';
-
-        if (!this.pageData.openId && !code) {
-            const wXUrl = 'https://open.weixin.qq.com/connect/oauth2/authorize';
-            const scope = 'snsapi_base';
-
-            const redirect_uri = 'http://digital.a2china.cn/scrm/events/page/redirect.html?backurl=' + escape(window.location.href);
-
-            window.location.href = `${wXUrl}?appid=${wXAppID}&redirect_uri=${encodeURIComponent(redirect_uri)}&response_type=code&scope=${scope}&state=test#wechat_redirect`;
-        }
-    }
-
-    loginByOpenId() {
-        if (!this.pageData.openId) return false;
-        
-        const url = EnvConfig.getServiceUrl('ApiService')() + 'Handler.ashx';
-
-        const formData = new FormData();
-        formData.append('Param', JSON.stringify({ OpenID: this.pageData.openId }));
-        formData.append('Act', 'User_LoginByOpenID');
-
-        Common.postFormData(url, formData, (data) => {
-            if (data.Result && data.Data) {
-                data = data.Data;
-                Common.setStorage("loginUserInfo", JSON.stringify(data));
-                Common.setStorage("loginUserId", data.UID);
-                Common.setStorage("token", data.Token, 120);
-                this.token = data.Token;
-                this.loginUser = data;
-            }
-        }, (msg) => this.alert(msg), false);
-
-        return true;
-    }
-
-    getOpenIdByCode(code, companID) {
-        const url = EnvConfig.getServiceUrl('A2ApiService')() + 'Handlers/CommonHandler.ashx';
-
-        var formData = new FormData();
-        formData.append('param', JSON.stringify({ code, WxIdentificationType: 2, companID }));
-        formData.append('act', 'GetWxFanOpenId');
-
-        Common.postFormData(url, formData, (data) => {
-            if (!data.result) { this.alert(data.msg); return; }
-
-            data = data.data;
-            this.pageData.openId = data.openid;
-            Common.setStorage(this.openIdKey, data.openid);
-        }, (msg) => this.alert(msg), false);
-    }
 }
 
 const _PageAxises = {};
 
 const usePageAxis = (id, name, pageConfig, invokeDataAction, actionTypes, dispatch, props,
-    dispatchAction, setActionState, getStateValue, init) => {
+    dispatchAction, setActionState, getStateValue, init, wxUser) => {
     useEffect(() => {
         return () => {
             if (_PageAxises[id]) delete _PageAxises[id];
         }
     }, [id]);
 
-    if (!pageConfig) return null;
+    if (!pageConfig || wxUser == null || wxUser.isAuthQrCode) return null;
 
     if (!_PageAxises[id]) {
         _PageAxises[id] = new PageAxis(id, {
             name, pageConfig, invokeDataAction, actionTypes, dispatch, props,
-            dispatchAction, setActionState, getStateValue, init
+            dispatchAction, setActionState, getStateValue, init, wxUser
         });
     }
 

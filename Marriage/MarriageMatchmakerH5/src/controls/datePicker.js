@@ -24,6 +24,12 @@ const getDefaultValue = (property) => {
     return null;
 }
 
+const getMinDate = (year) => {
+    if (!year) return undefined;
+
+    return new Date(year, 1, 1, 0, 0, 0)
+}
+
 export default (props) => {
     const { property, view, pageAxis } = Base.getProps(props);
 
@@ -52,10 +58,10 @@ export default (props) => {
 
     const className = Base.getClassName(property, styles);
 
-    const { style, label, isShowTime, maxLength, placeholder, isNullable, isRed } = property;
+    const { style, label, isShowTime, maxLength, placeholder, isNullable, isRed, minYear } = property;
 
     const mv = getMomentValue(property, value);
-
+    
     return (
         <div className={className} style={style}>
             <DatePicker placeholder={placeholder}
@@ -63,6 +69,7 @@ export default (props) => {
                 onOk={onChange}
                 maxLength={maxLength}
                 disabled={disabled}
+                minDate={getMinDate(minYear)}
                 mode={isShowTime ? "datetime" : "date"}
                 defaultValue={getDefaultValue(property)}
                 format={isShowTime ? "YYYY-MM-DD HH:mm:ss" : "YYYY-MM-DD"}

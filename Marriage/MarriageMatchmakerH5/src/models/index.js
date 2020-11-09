@@ -1,5 +1,15 @@
 import PageConfig from './pageConfig';
+import MarriageUser from './marriageUser';
+import WxUser from './wxUser';
+import Resources from './resources';
+import MarriageUserPhoto from './marriageUserPhoto';
+import Matchmaker from './matchmaker';
 
 export default [
-    PageConfig
+    PageConfig,
+    MarriageUser,
+    WxUser,
+    Resources,
+    MarriageUserPhoto,
+    Matchmaker
 ]

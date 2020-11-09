@@ -35,7 +35,7 @@ export default (props) => {
         style={property.style}
         shape={property.Shape}
         loading={loading}
-        size={property.size || 'small'}
+        size={property.size}
         prefix={Base.renderPrefix(property)}
         type={buttonType}>{text}</Button>;
 

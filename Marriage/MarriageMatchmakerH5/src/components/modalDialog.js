@@ -1,5 +1,5 @@
 import React, { useState, useMemo, useCallback } from 'react';
-import { Modal, Button } from 'antd-mobile';
+import { Modal } from 'antd-mobile';
 import styles from '../styles/view.scss';
 
 const ok = (property, okProperty) => {

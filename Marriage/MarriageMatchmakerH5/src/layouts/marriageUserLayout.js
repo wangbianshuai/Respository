@@ -5,6 +5,8 @@ import { Common } from 'UtilsCommon';
 import Base from './base';
 import styles from '../styles/layout.scss';
 
+const isH5 = Common.isH5();
+
 const _tabBarProperty = Base.getMarriageUserTabBarProperty(styles);
 
 export default (props) => {
@@ -14,14 +16,17 @@ export default (props) => {
 
     const [pageKey] = useMemo(() => {
         return [Common.createGuid()];
-    }, [location]);
+    }, []);
 
-    return (<Flex style={{ minHeight: "100%", width: "100%" }} direction="column">
-        <Flex.Item className={styles.divPage2} >
+    let style = { minHeight: "100%", width: "100%" };
+    if (!isH5) style = { minHeight: "100%", width: '480px', margin: "0 auto" }
+
+    return (<div style={style}><Flex style={style} direction="column" className={styles.divLayout}>
+        <Flex.Item className={styles.divPage} >
             {Base.getPageComponent(path, props, pageKey)}
         </Flex.Item>
         <Flex.Item className={styles.divTabBar} style={{ flex: 0 }}>
             <Components.TabBar property={_tabBarProperty} pathName={pathName} history={history} />
         </Flex.Item>
-    </Flex>)
+    </Flex></div>)
 };

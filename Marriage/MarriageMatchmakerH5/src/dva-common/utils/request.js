@@ -1,5 +1,6 @@
 import { fetch } from 'dva';
-import { Common, HttpResponse } from 'UtilsCommon';
+import { Common, HttpResponse, Md5 } from 'UtilsCommon';
+import { EnvConfig } from 'Configs';
 
 export function get(url, resKey, serviceName, headers) {
     return fetchRequest(url, null, resKey, serviceName, headers)
@@ -17,11 +18,11 @@ export function delete2(url, data, resKey, serviceName, headers) {
     return FetchByMethod(url, data, resKey, serviceName, headers, "DELETE");
 }
 
-export function postFormData(url, data, resKey, serviceName, headers, isCors) {
+export function postFormData(url, data, resKey, serviceName, headers) {
     return fetchRequest(url, {
         method: "POST",
         body: getFormData(data),
-    }, resKey, serviceName, headers, isCors)
+    }, resKey, serviceName, headers)
 }
 
 function getFormData(data) {
@@ -39,7 +40,7 @@ export function postUrlFormData(url, data, resKey, serviceName, headers) {
         method: "POST",
         headers: {},
         body: getUrlFormData(data)
-    }, resKey, serviceName, headers, isCors)
+    }, resKey, serviceName, headers)
 }
 
 function getUrlFormData(data) {
@@ -58,13 +59,11 @@ export function FetchByMethod(url, data, resKey, serviceName, headers, method) {
     }, resKey, serviceName, headers)
 }
 
-function fetchRequest(url, data, resKey, serviceName, headers, isCors) {
+function fetchRequest(url, data, resKey, serviceName, headers) {
     try {
-        if (isCors) data.headers = {};
-        else {
-            data = setServiceHeader(data, serviceName);
-            data = setParamsHeader(data, headers);
-        }
+        data = setServiceHeader(data, serviceName);
+        data = setParamsHeader(data, headers);
+
         url = getFullUrl(url);
         return fetch(url, data).then(res => setResult(res)).then(d => HttpResponse.getResponse(d, resKey), res => HttpResponse.getErrorResponse(res));
     }
@@ -80,7 +79,6 @@ function setParamsHeader(data, headers) {
         data = data || {};
         data.headers = data.headers || {};
         for (let key in headers) data.headers[key] = headers[key];
-        return data;
     }
 
     return data;
@@ -99,7 +97,7 @@ function setApiServiceHeader(data, serviceName) {
     data = data || { headers: {}, method: "GET" };
     data.headers = data.headers || {};
 
-    let clientId = "Horiba-minisite";
+    let clientId = "marriage-user-h5";
 
     if (_ClientConfig[serviceName]) clientId = _ClientConfig[serviceName];
 
@@ -107,7 +105,22 @@ function setApiServiceHeader(data, serviceName) {
     data.headers.clientTime = new Date().getTime();
     data.headers.requestId = Common.createGuid().replace(/-/g, "").toLowerCase();
 
+    if (serviceName === "ResourcesService") {
+        data.headers.token = getAccessToken(clientId, '784253FE-2E15-459F-93F3-26A23E9DE4B2');
+    }
+    else {
+        data.headers.token = Common.getStorage(EnvConfig.tokenKey);
+        if (!data.headers.token) data.headers.token = "d56b699830e77ba53855679cb1d252da" + window.btoa('781F60E1-429F-41E5-A93D-B8DA6F836182');
+        const appId = '781F60E1-429F-41E5-A93D-B8DA6F836182';
+        data.headers.access_token = getAccessToken(appId, data.headers.token);
+    }
+
     return data;
+}
+function getAccessToken(appId, token) {
+    const time = new Date().getTime()
+    const md5str = Md5(appId + time + token);
+    return window.btoa(appId + '@' + time + "@" + md5str);
 }
 
 function getFullUrl(url) {

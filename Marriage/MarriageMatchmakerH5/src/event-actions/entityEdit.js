@@ -224,7 +224,7 @@ export default class EntityEdit extends BaseIndex {
 
         let entityData = {}
 
-        if (editView.entity) {
+        if (editView.entity && !editView.entity.isGet) {
             const { primaryKey } = editView.entity;
 
             var id = pageAxis.pageData[primaryKey];
@@ -242,10 +242,8 @@ export default class EntityEdit extends BaseIndex {
         //设置接收数据行数返回数据
         pageAxis.receives[editView.getEntityDataActionType] = (d) => this.receivegetEntityDataActionType(d, props, action)
 
-        const { formData } = editView;
-
         //获取编辑值
-        const data = { entityData: entityData, entity: editView.entity, formData }
+        const data = { entityData, entity: editView.entity, pageData: pageAxis.pageData }
 
         if (action.asyncRequest) data.asyncRequest = action.asyncRequest;
 

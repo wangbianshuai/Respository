@@ -78,6 +78,10 @@ export default class BaseIndex {
 
                     if (!Common.isNullOrEmpty(msg)) break;
                 }
+                else if (p.judgeValueRange) {
+                    msg = p.judgeValueRange();
+                    if (!Common.isNullOrEmpty(msg)) break;
+                }
 
                 data[name] = v;
 
@@ -180,7 +184,7 @@ export default class BaseIndex {
         action.okProperty.setDisabled(false);
         const { alertMessage, dataGridView, dialogView } = action.parameters;
         const { pageAxis } = props;
-  
+
         if (this.isSuccessNextsProps(data, pageAxis.alert, null)) {
             this.alert(dialogView.successTip, pageAxis.alert, alertMessage);
             //刷新查询

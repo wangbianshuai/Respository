@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect } from 'react';
+import React, { useState, useCallback, useEffect, useMemo } from 'react';
 import { Common } from 'UtilsCommon';
 import { useGetDataSourceOptions } from 'UseHooks';
 import { Checkbox, List, Button } from 'antd-mobile';
@@ -40,8 +40,10 @@ const valueChange = (property, view, pageAxis, value) => {
     if (property.valueVisibleProperties) Base.setValueVisibleProperties(property, view, value);
 };
 
-const getValue = (v) => {
+const getValue = (property, v) => {
     if (Common.isNullOrEmpty(v)) return [];
+
+    if (property.isJson) return JSON.parse(v);
     return v.split(',');
 }
 
@@ -56,7 +58,9 @@ const renderHeader = (label, collapse, onClick, isNullable) => {
 export default (props) => {
     const { property, view, pageAxis } = Base.getProps(props);
 
-    const [value, setValue] = useState([]);
+    const initValue = useMemo(() => getValue(property, property.value), [property]);
+
+    const [value, setValue] = useState(initValue);
     const [collapse, setCollapse] = useState(false);
     const [isVisible, setIsVisible] = useState(property.isVisible !== false);
     const [isReadOnly, setIsReadOnly] = useState(!!property.isReadOnly);
@@ -82,7 +86,7 @@ export default (props) => {
     }, [setCollapse, collapse]);
 
     property.setVisible = (v) => setIsVisible(v);
-    property.setValue = (v) => setValue(getValue(v));
+    property.setValue = (v) => setValue(getValue(property, v));
     property.getValue = () => Base.getValue(property, value);
     property.refreshOptions = (v) => setOptions(getOptions(property, view, pageAxis));
     property.setIsReadOnly = (v) => setIsReadOnly(v);

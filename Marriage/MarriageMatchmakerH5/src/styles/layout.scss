@@ -1,3 +1,40 @@
 @function toRem($px){
     @return $px/32*1rem;
 }
+
+.divLayout{
+width: 100%;
+min-height: 100%;
+box-sizing: border-box;
+position:absolute;
+bottom: 0;
+top: 0;
+}
+
+.divTabBar{
+    width: 100%;
+    height: toRem(100);
+
+    :global {
+        .am-tab-bar-bar{
+       height: toRem(100) !important;
+
+       .am-tab-bar-tab-title{
+           font-size: toRem(20) !important;
+       }
+    }
+}
+}
+
+.navImage{
+    width: toRem(50);
+    height: toRem(50);
+}
+
+.divPage{
+    width: 100%;
+    overflow: auto;
+    height: 100%;
+    box-sizing: border-box;
+    background-color: #f5f5f9;
+}
