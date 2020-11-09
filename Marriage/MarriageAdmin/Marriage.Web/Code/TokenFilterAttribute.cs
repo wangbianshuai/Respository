@@ -20,17 +20,17 @@ namespace Marriage.Web.Code
             bool blSucceed = true;
             try
             {
-                var tokenParameter = context.ActionDescriptor.EndpointMetadata.Where(w => w is ApiTokenParameterAttribute).FirstOrDefault();
-                if (tokenParameter != null)
-                {
-                    string access_token = Code.Request.GetHeadersValue(context.HttpContext.Request, "access_token");
-                    string token = Code.Request.GetHeadersValue(context.HttpContext.Request, "token");
+                //var tokenParameter = context.ActionDescriptor.EndpointMetadata.Where(w => w is ApiTokenParameterAttribute).FirstOrDefault();
+                //if (tokenParameter != null)
+                //{
+                //    string access_token = Code.Request.GetHeadersValue(context.HttpContext.Request, "access_token");
+                //    string token = Code.Request.GetHeadersValue(context.HttpContext.Request, "token");
 
-                    access_token = OpenDataAccessCore.Utility.Common.FromBase64String(access_token);
+                //    access_token = OpenDataAccessCore.Utility.Common.FromBase64String(access_token);
 
-                    blSucceed = ParseAccessToken(context, access_token, token);
-                    if (blSucceed) blSucceed = ParseToken(context, token);
-                }
+                //    blSucceed = ParseAccessToken(context, access_token, token);
+                //    if (blSucceed) blSucceed = ParseToken(context, token);
+                //}
             }
             catch (Exception ex)
             {

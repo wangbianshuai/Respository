@@ -141,7 +141,7 @@ namespace Marriage.Web.Controllers
         /// <returns></returns>
         ContentResult RequestAction(string requestType, string entityName, string methodName, string loginUserId, string sign, string appId)
         {
-           var request = Code.Request.GetRequest(this, requestType, entityName, methodName, loginUserId, _WebHostEnvironment, sign, appId);
+            var request = Code.Request.GetRequest(this, requestType, entityName, methodName, loginUserId, _WebHostEnvironment, sign, appId);
             string content = new OpenDataAccessCore.Service.RequestHandler().ProcessRequest(request, entityName, methodName);
 
             this.Response.Cookies.Append("token", request.Token);
