@@ -162,6 +162,11 @@
                     width: toRem(48);
                     height: toRem(48);
                 }
+
+                label{
+                    font-size: toRem(28);
+                    color: #108ee9;
+                }
             }
 
             .divBottom{
@@ -572,3 +577,121 @@
         }
     }
     }
+
+    .divDataGridView{
+        width: 100%;
+        height: 100%;
+        box-sizing: border-box;
+    
+        .divData{
+            height: 100%;
+            background-color: #ffffff;
+        }
+    
+        .divItem{
+            margin-left: toRem(30);
+            margin-right: toRem(30);
+        }
+    
+        :global{
+            .am-list-body:before, .am-list-body:after{
+                height: 0 !important;
+            }
+    
+            .am-list-header{
+                padding: 0 !important;
+            }
+        }
+    }
+
+.divDataGridView .divItem{
+        height: toRem(160);
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+    
+       .divLeft{
+           margin-right: toRem(30);
+           width: toRem(188);
+           height: toRem(127);
+    
+            img{
+                width: toRem(188);
+                height: toRem(127);
+                border-radius: toRem(8);
+            }
+        }
+        
+        .divRight{
+            display: flex;
+            flex-direction: column;
+            height: toRem(127);
+            justify-content: space-between;
+            padding-top: toRem(4);
+            padding-bottom: toRem(4);
+            box-sizing: border-box;
+    
+            img{
+                width: toRem(20);
+                height: toRem(24);
+                margin-right: toRem(10);
+            }
+    
+            .spanTitle{
+                color: #222222;
+                font-size: toRem(26);
+                line-height: toRem(40);
+                width: toRem(470);
+                overflow : hidden;
+                text-overflow: ellipsis;
+                display: -webkit-box;
+                -webkit-line-clamp: 2;
+                /* autoprefixer: ignore next */
+                -webkit-box-orient: vertical;
+            }
+    
+            .spanDate{
+               color: #808080;
+               font-size: toRem(22);
+            }
+    
+            .spanAbstract{
+                color: #222222;
+                font-size: toRem(26);
+                line-height: toRem(30);
+                width: toRem(470);
+                overflow : hidden;
+                text-overflow: ellipsis;
+                display: -webkit-box;
+                -webkit-line-clamp: 2;
+                /* autoprefixer: ignore next */
+                -webkit-box-orient: vertical;
+            }
+        }
+    }
+.divActivityIndicator{
+    width: 100%;
+    height: toRem(60);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.divPageInfo{
+    margin-left: toRem(30);
+    margin-right: toRem(30);
+    position: relative;
+    height: toRem(80);
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #7B7B7B;
+    box-sizing: border-box;
+    overflow: hidden;
+
+    span{
+        font-size: toRem(24);
+        color: #999999;
+    }
+}

@@ -55,13 +55,14 @@ export default class Index {
       const pageRecord = dataList.length;
       return { pageRecord, dataList }
     }
-    else if (data.List !== undefined) {
-      const dataList = data.List;
-      const pageInfo = {
-        pageIndex: data.PageNumber || 1,
-        pageSize: data.PageSize || 0,
-        pageCount: data.PageTotal || 0,
-        pageRecord: data.TotalCount || 0
+    else if (data.DataList !== undefined) {
+      const dataList = data.DataList || [];
+      let pageInfo = data.PageInfo || {};
+      pageInfo = {
+        pageIndex: pageInfo.PageIndex || 1,
+        pageSize: pageInfo.PageSize || 0,
+        pageCount: pageInfo.PageCount || 0,
+        pageRecord: pageInfo.TotalCount || 0
       }
       return { dataList, pageInfo }
     }

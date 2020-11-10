@@ -149,6 +149,8 @@ namespace Marriage.Domain.Impl
 
             queryConditionList.Add(new Entity.Data.QueryCondition("Status", "=", request.Status));
 
+            if(!string.IsNullOrEmpty(request.Sex)) queryConditionList.Add(new Entity.Data.QueryCondition("Sex", "=", byte.Parse(request.Sex)));
+
             return queryConditionList;
         }
 

@@ -584,6 +584,11 @@
             状态
             </summary>
         </member>
+        <member name="P:Marriage.Entity.Application.MarriageUser.QueryUsersByMatchmakerRequest.Sex">
+            <summary>
+             性别
+            </summary>
+        </member>
         <member name="T:Marriage.Entity.Application.MarriageUser.QueryUsersByMatchmakerResponse">
             <summary>
             查询红娘下相亲人员列表响应
@@ -602,6 +607,11 @@
         <member name="T:Marriage.Entity.Application.MarriageUser.MarriageUser3">
             <summary>
             相亲人员信息
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageUser.MarriageUser3.UserId">
+            <summary>
+            用户Id
             </summary>
         </member>
         <member name="P:Marriage.Entity.Application.MarriageUser.MarriageUser3.NickName">

@@ -623,7 +623,8 @@ namespace Marriage.Application.Impl
                 HeadImgUrl = user.HeadImgUrl,
                 NickName = user.NickName,
                 Phone = user.Phone,
-                Sex = user.Sex
+                Sex = user.Sex,
+                UserId= user.UserId
             };
         }
 

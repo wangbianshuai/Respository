@@ -21,6 +21,10 @@ namespace Marriage.Entity.Application.MarriageUser
         /// 状态
         /// </summary>
         public byte Status { get; set; }
+        /// <summary>
+        ///  性别
+        /// </summary>
+        public string Sex { get; set; }
     }
 
     /// <summary>
@@ -43,6 +47,10 @@ namespace Marriage.Entity.Application.MarriageUser
     /// </summary>
     public class MarriageUser3
     {
+        /// <summary>
+        /// 用户Id
+        /// </summary>
+        public Guid UserId { get; set; }
         /// <summary> 
         /// 微信昵称
         /// </summary> 
