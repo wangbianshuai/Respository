@@ -269,6 +269,11 @@
             值
             </summary>
         </member>
+        <member name="P:Marriage.Entity.Application.MarriageUser.ConditionItem.IsReadOnly">
+            <summary>
+            是否只读
+            </summary>
+        </member>
         <member name="T:Marriage.Entity.Application.MarriageUser.DataSourceItem">
             <summary>
             数据源
@@ -371,7 +376,7 @@
         </member>
         <member name="T:Marriage.Entity.Application.MarriageUser.GetUserInfoByMatchmakerResponse">
             <summary>
-            获取用户信息响应
+            获取红娘下用户信息响应
             </summary>
         </member>
         <member name="P:Marriage.Entity.Application.MarriageUser.GetUserInfoByMatchmakerResponse.UserInfo">

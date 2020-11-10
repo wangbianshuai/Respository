@@ -16,6 +16,8 @@ namespace Marriage.Application.Impl
 
         public Domain.IMarriageUser _MarriageUser { get; set; }
 
+        public Domain.IMatchmaker _Matchmaker { get; set; }
+
         /// <summary>
         /// 获取用户生活照列表
         /// </summary>
@@ -101,20 +103,42 @@ namespace Marriage.Application.Impl
 
             this.IsNullRequest(request, response);
 
-
-            //1、获取用户信息
+            //1、以主键获取红娘信息
             int stepNo = 1;
+            this.GetMatchmakerById(stepNo, request.LoginUserId, response);
+
+            //2、获取用户信息
+            stepNo += 1;
             var user = GetUserInfoById(stepNo, request.UserId, response);
 
-            //2、获取用户生活照列表
+            //3、获取用户生活照列表
             stepNo += 1;
             GetUserPhotos(stepNo, user, request, response);
 
-            //3、执行结束
+            //4、执行结束
             this.ExecEnd(response);
 
             //日志记录
             return this.SetReturnResponse<GetUserPhotoByMatchmakerResponse>(title, "GetUserPhotoByMatchmaker", requestContent, response);
+        }
+
+        /// <summary>
+        /// 以主键获取红娘信息
+        /// </summary>
+        /// <param name="stepNo"></param>
+        /// <param name="userId"></param>
+        /// <param name="response"></param>
+        /// <returns></returns>
+        private Entity.Domain.Matchmaker GetMatchmakerById(int stepNo, string userId, IResponse response)
+        {
+            Func<Entity.Domain.Matchmaker> execStep = () =>
+            {
+                var entity = _Matchmaker.GetMatchmakerById(Guid.Parse(userId));
+                if (entity == null || entity.Status != 1) return null;
+                return entity;
+            };
+
+            return this.GetEntityData<Entity.Domain.Matchmaker>(stepNo, "以主键获取红娘信息", "GetMatchmakerInfoById", response, execStep, false);
         }
 
         /// <summary>

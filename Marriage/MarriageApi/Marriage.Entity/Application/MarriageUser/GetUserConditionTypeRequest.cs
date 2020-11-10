@@ -82,6 +82,10 @@ namespace Marriage.Entity.Application.MarriageUser
         /// 值
         /// </summary>
         public string Value { get; set; }
+        /// <summary>
+        /// 是否只读
+        /// </summary>
+        public bool IsReadOnly { get; set; }
     }
 
     /// <summary>

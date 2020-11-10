@@ -69,5 +69,20 @@ namespace Marriage.Application
         /// 获取红娘下用户条件类型
         /// </summary>
         GetUserConditionTypeByMatchmakerResponse GetUserConditionTypeByMatchmaker(GetUserConditionTypeByMatchmakerRequest request);
+
+        /// <summary>
+        /// 获取红娘下用户条件类型列表
+        /// </summary>
+        GetUserConditionTypesByMatchmakerResponse GetUserConditionTypesByMatchmaker(GetUserConditionTypesByMatchmakerRequest request);
+
+        /// <summary>
+        /// 获取红娘下用户信息
+        /// </summary>
+        GetUserInfoByMatchmakerResponse GetUserInfoByMatchmaker(GetUserInfoByMatchmakerRequest request);
+
+        /// <summary>
+        /// 更新红娘下用户状态
+        /// </summary>
+        UpdateUserStatusByMatchmakerResponse UpdateUserStatusByMatchmaker(UpdateUserStatusByMatchmakerRequest request);
     }
 }

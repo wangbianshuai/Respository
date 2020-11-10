@@ -51,5 +51,12 @@ namespace Marriage.Domain
         /// <param name="request"></param>
         /// <returns></returns>
         Entity.Application.PageInfo QueryUsersByMatchmakerPageInfo(Entity.Application.MarriageUser.QueryUsersByMatchmakerRequest request);
+
+        /// <summary>
+        /// 红娘审核相亲人员
+        /// </summary>
+        /// <param name="entity"></param>
+        /// <returns></returns>
+        bool UpdateUserStatusByMatchmaker(Entity.Domain.MarriageUser entity);
     }
 }

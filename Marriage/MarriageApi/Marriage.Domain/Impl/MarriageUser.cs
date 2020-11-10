@@ -151,5 +151,22 @@ namespace Marriage.Domain.Impl
 
             return queryConditionList;
         }
+
+        /// <summary>
+        /// 红娘审核相亲人员
+        /// </summary>
+        /// <param name="entity"></param>
+        /// <returns></returns>
+        public bool UpdateUserStatusByMatchmaker(Entity.Domain.MarriageUser entity)
+        {
+            IEntityData entityData = new EntityData("MarriageUser");
+
+            entityData.SetValue("Status", entity.Status);
+            entityData.SetValue("NoPassReason", entity.NoPassReason);
+            entityData.SetValue("UserId", entity.UserId);
+            entityData.SetValue("UpdateStatusDate", DateTime.Now);
+
+            return _MarriageUser.Update(entityData);
+        }
     }
 }

@@ -16,7 +16,7 @@ namespace Marriage.Entity.Application.MarriageUser
     }
 
     /// <summary>
-    /// 获取用户信息响应
+    /// 获取红娘下用户信息响应
     /// </summary>
     public class GetUserInfoByMatchmakerResponse : Response, IResponse
     {

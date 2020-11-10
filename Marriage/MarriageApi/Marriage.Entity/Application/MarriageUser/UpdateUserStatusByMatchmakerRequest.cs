@@ -9,7 +9,6 @@ namespace Marriage.Entity.Application.MarriageUser
     /// </summary>
     public class UpdateUserStatusByMatchmakerRequest : Request, IRequest
     {
-
         /// <summary>
         /// 用户Id
         /// </summary>
