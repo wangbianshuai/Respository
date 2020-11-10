@@ -19,6 +19,26 @@
             删除用户照片响应
             </summary>
         </member>
+        <member name="T:Marriage.Entity.Application.MarriageUserPhoto.GetUserPhotoByMatchmakerRequest">
+            <summary>
+            获取红娘下用户生活照列表请求
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageUserPhoto.GetUserPhotoByMatchmakerRequest.UserId">
+            <summary>
+            用户Id
+            </summary>
+        </member>
+        <member name="T:Marriage.Entity.Application.MarriageUserPhoto.GetUserPhotoByMatchmakerResponse">
+            <summary>
+            获取红娘下用户生活照列表响应
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageUserPhoto.GetUserPhotoByMatchmakerResponse.DataList">
+            <summary>
+            用户照片
+            </summary>
+        </member>
         <member name="T:Marriage.Entity.Application.MarriageUserPhoto.GetUserPhotosRequest">
             <summary>
             获取用户生活照列表请求
@@ -69,6 +89,31 @@
             主键
             </summary>
         </member>
+        <member name="T:Marriage.Entity.Application.MarriageUser.GetUserByMatchmakerRequest">
+            <summary>
+            获取红娘下用户信息请求
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageUser.GetUserByMatchmakerRequest.UserId">
+            <summary>
+            用户Id
+            </summary>
+        </member>
+        <member name="T:Marriage.Entity.Application.MarriageUser.GetUserByMatchmakerResponse">
+            <summary>
+            获取红娘下用户信息响应
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageUser.GetUserByMatchmakerResponse.UserInfo">
+            <summary>
+            用户信息
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageUser.GetUserByMatchmakerResponse.StatusInfo">
+            <summary>
+            状态信息
+            </summary>
+        </member>
         <member name="T:Marriage.Entity.Application.MarriageUser.GetUserByOpenIdRequest">
             <summary>
             以微信OpenId获取用户请求
@@ -82,6 +127,56 @@
         <member name="T:Marriage.Entity.Application.MarriageUser.GetUserByOpenIdResponse">
             <summary>
             以微信OpenId获取用户响应
+            </summary>
+        </member>
+        <member name="T:Marriage.Entity.Application.MarriageUser.GetUserConditionTypeByMatchmakerRequest">
+            <summary>
+            获取红娘下用户条件类型请求
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageUser.GetUserConditionTypeByMatchmakerRequest.UserId">
+            <summary>
+            用户Id
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageUser.GetUserConditionTypeByMatchmakerRequest.SelectType">
+            <summary>
+            选择类型
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageUser.GetUserConditionTypeByMatchmakerRequest.ConditionTypeId">
+            <summary>
+            条件类型Id
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageUser.GetUserConditionTypeByMatchmakerRequest.UserConditionTypeId">
+            <summary>
+            条件类型Id
+            </summary>
+        </member>
+        <member name="T:Marriage.Entity.Application.MarriageUser.GetUserConditionTypeByMatchmakerResponse">
+            <summary>
+            获取红娘下用户条件类型响应
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageUser.GetUserConditionTypeByMatchmakerResponse.UserConditionTypeId">
+            <summary> 
+            主键
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageUser.GetUserConditionTypeByMatchmakerResponse.ConditionTypeId">
+            <summary> 
+            条件类型Id
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageUser.GetUserConditionTypeByMatchmakerResponse.IsPublic">
+            <summary>
+            是否公开
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageUser.GetUserConditionTypeByMatchmakerResponse.Items">
+            <summary>
+            选项集合
             </summary>
         </member>
         <member name="T:Marriage.Entity.Application.MarriageUser.GetUserConditionTypeRequest">
@@ -189,6 +284,31 @@
             文本
             </summary>
         </member>
+        <member name="T:Marriage.Entity.Application.MarriageUser.GetUserConditionTypesByMatchmakerRequest">
+            <summary>
+            获取红娘下用户条件类型列表请求
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageUser.GetUserConditionTypesByMatchmakerRequest.UserId">
+            <summary>
+            用户Id
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageUser.GetUserConditionTypesByMatchmakerRequest.SelectType">
+            <summary>
+            选择类型
+            </summary>
+        </member>
+        <member name="T:Marriage.Entity.Application.MarriageUser.GetUserConditionTypesByMatchmakerResponse">
+            <summary>
+            获取红娘下用户条件类型列表响应
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageUser.GetUserConditionTypesByMatchmakerResponse.DataList">
+            <summary>
+            用户条件类型
+            </summary>
+        </member>
         <member name="T:Marriage.Entity.Application.MarriageUser.GetUserConditionTypesRequest">
             <summary>
             获取用户条件类型列表请求
@@ -238,6 +358,26 @@
             <summary> 
             完成百分比
             </summary> 
+        </member>
+        <member name="T:Marriage.Entity.Application.MarriageUser.GetUserInfoByMatchmakerRequest">
+            <summary>
+            获取红娘下用户信息请求
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageUser.GetUserInfoByMatchmakerRequest.UserId">
+            <summary>
+            用户Id
+            </summary>
+        </member>
+        <member name="T:Marriage.Entity.Application.MarriageUser.GetUserInfoByMatchmakerResponse">
+            <summary>
+            获取用户信息响应
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageUser.GetUserInfoByMatchmakerResponse.UserInfo">
+            <summary>
+            用户信息
+            </summary>
         </member>
         <member name="T:Marriage.Entity.Application.MarriageUser.GetUserInfoRequest">
             <summary>
@@ -418,6 +558,71 @@
             <summary> 
             手机
             </summary> 
+        </member>
+        <member name="T:Marriage.Entity.Application.MarriageUser.QueryUsersByMatchmakerRequest">
+            <summary>
+            查询红娘下相亲人员列表请求
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageUser.QueryUsersByMatchmakerRequest.PageIndex">
+            <summary>
+            分页索引，从1开始
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageUser.QueryUsersByMatchmakerRequest.PageSize">
+            <summary>
+            分页大小
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageUser.QueryUsersByMatchmakerRequest.Status">
+            <summary>
+            状态
+            </summary>
+        </member>
+        <member name="T:Marriage.Entity.Application.MarriageUser.QueryUsersByMatchmakerResponse">
+            <summary>
+            查询红娘下相亲人员列表响应
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageUser.QueryUsersByMatchmakerResponse.DataList">
+            <summary>
+            数据列表
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageUser.QueryUsersByMatchmakerResponse.PageInfo">
+            <summary>
+            分页信息
+            </summary>
+        </member>
+        <member name="T:Marriage.Entity.Application.MarriageUser.MarriageUser3">
+            <summary>
+            相亲人员信息
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageUser.MarriageUser3.NickName">
+            <summary> 
+            微信昵称
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageUser.MarriageUser3.HeadImgUrl">
+            <summary> 
+            微信用户头像
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageUser.MarriageUser3.Phone">
+            <summary> 
+            手机
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageUser.MarriageUser3.Sex">
+            <summary>
+            性别
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageUser.MarriageUser3.Age">
+            <summary>
+            年龄
+            </summary>
         </member>
         <member name="T:Marriage.Entity.Application.MarriageUser.RegisterRequest">
             <summary>
@@ -647,6 +852,31 @@
         <member name="T:Marriage.Entity.Application.MarriageUser.UpdateUserInfoResponse">
             <summary>
             更新用户信息响应
+            </summary>
+        </member>
+        <member name="T:Marriage.Entity.Application.MarriageUser.UpdateUserStatusByMatchmakerRequest">
+            <summary>
+            更新红娘下用户状态请求
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageUser.UpdateUserStatusByMatchmakerRequest.UserId">
+            <summary>
+            用户Id
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageUser.UpdateUserStatusByMatchmakerRequest.Status">
+            <summary> 
+            状态
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageUser.UpdateUserStatusByMatchmakerRequest.NoPassReason">
+            <summary> 
+            审核不通过原因
+            </summary> 
+        </member>
+        <member name="T:Marriage.Entity.Application.MarriageUser.UpdateUserStatusByMatchmakerResponse">
+            <summary>
+            更新红娘下用户状态响应 
             </summary>
         </member>
         <member name="T:Marriage.Entity.Application.Matchmaker.GetMatchmakerByOpenIdRequest">
@@ -2017,6 +2247,11 @@
             状态：0：待审核，1：审核通过，2：审核不通过，3：关闭
             </summary> 
         </member>
+        <member name="P:Marriage.Entity.Data.MarriageUser.UpdateStatusDate">
+            <summary>
+            更新状态时间
+            </summary>
+        </member>
         <member name="P:Marriage.Entity.Data.MarriageUser.NoPassReason">
             <summary> 
             审核不通过原因
@@ -2177,6 +2412,11 @@
             状态：0：待审核，1：审核通过，2：审核不通过，3：关闭
             </summary> 
         </member>
+        <member name="P:Marriage.Entity.Data.Matchmaker.UpdateStatusDate">
+            <summary>
+            更新状态时间
+            </summary>
+        </member>
         <member name="P:Marriage.Entity.Data.Matchmaker.NoPassReason">
             <summary> 
             审核不通过原因
@@ -2296,6 +2536,102 @@
             <summary> 
             行版本
             </summary> 
+        </member>
+        <member name="T:Marriage.Entity.Data.QueryInfo">
+            <summary>
+            查询数据
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Data.QueryInfo.PageIndex">
+            <summary>
+            分页索引
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Data.QueryInfo.PageSize">
+            <summary>
+            分页大小
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Data.QueryInfo.SelectFieldList">
+            <summary>
+            查询字符集合
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Data.QueryInfo.ConditionList">
+            <summary>
+            查询条件
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Data.QueryInfo.OrderByList">
+            <summary>
+            排序
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Data.QueryInfo.SumSql">
+            <summary>
+            统计Sql
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Data.QueryInfo.TableName">
+            <summary>
+            表名或视图名
+            </summary>
+        </member>
+        <member name="T:Marriage.Entity.Data.OrderByType">
+            <summary>
+            排序
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Data.OrderByType.Name">
+            <summary>
+            字段名
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Data.OrderByType.IsDesc">
+            <summary>
+            类型，asc 或 desc
+            </summary>
+        </member>
+        <member name="M:Marriage.Entity.Data.OrderByType.#ctor(System.String,System.String)">
+            <summary>
+            构造函数
+            </summary>
+            <param name="name"></param>
+            <param name="type"></param>
+        </member>
+        <member name="T:Marriage.Entity.Data.QueryCondition">
+            <summary>
+            查询条件
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Data.QueryCondition.Name">
+            <summary>
+            名称
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Data.QueryCondition.ParameterName">
+            <summary>
+            参数名
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Data.QueryCondition.OpearteLogic">
+            <summary>
+            操作符
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Data.QueryCondition.Value">
+            <summary>
+            值
+            </summary>
+        </member>
+        <member name="M:Marriage.Entity.Data.QueryCondition.#ctor(System.String,System.String,System.Object,System.String)">
+            <summary>
+            查询条件
+            </summary>
+            <param name="name"></param>
+            <param name="operateLogic"></param>
+            <param name="value"></param>
+            <param name="parameterName"></param>
         </member>
         <member name="T:Marriage.Entity.Data.UserConditionSelectValue">
             <summary>
@@ -2682,6 +3018,11 @@
             状态：0：待审核，1：审核通过，2：审核不通过，3：关闭
             </summary> 
         </member>
+        <member name="P:Marriage.Entity.Domain.MarriageUser.UpdateStatusDate">
+            <summary>
+            更新状态时间
+            </summary>
+        </member>
         <member name="P:Marriage.Entity.Domain.MarriageUser.NoPassReason">
             <summary> 
             审核不通过原因
@@ -2701,6 +3042,16 @@
             <summary> 
             备注
             </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Domain.MarriageUser.Age">
+            <summary>
+            年龄
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Domain.MarriageUser.Shengxiao">
+            <summary>
+            生肖
+            </summary>
         </member>
         <member name="T:Marriage.Entity.Domain.MarriageUserPhoto">
             <summary>
@@ -2796,6 +3147,11 @@
             <summary> 
             状态：0：待审核，1：审核通过，2：审核不通过，3：关闭
             </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Domain.Matchmaker.UpdateStatusDate">
+            <summary>
+            更新状态时间
+            </summary>
         </member>
         <member name="P:Marriage.Entity.Domain.Matchmaker.NoPassReason">
             <summary> 

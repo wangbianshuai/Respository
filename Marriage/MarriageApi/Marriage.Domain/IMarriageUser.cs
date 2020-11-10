@@ -36,5 +36,20 @@ namespace Marriage.Domain
         /// <param name="entity"></param>
         /// <returns></returns>
         bool UpdateMarriageUser(Entity.Domain.MarriageUser entity);
+
+
+        /// <summary>
+        /// 查询数据列表
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        List<Entity.Domain.MarriageUser> QueryUsersByMatchmakerDataList(Entity.Application.MarriageUser.QueryUsersByMatchmakerRequest request);
+
+        /// <summary>
+        /// 查询分页信息
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        Entity.Application.PageInfo QueryUsersByMatchmakerPageInfo(Entity.Application.MarriageUser.QueryUsersByMatchmakerRequest request);
     }
 }

@@ -85,6 +85,10 @@ namespace Marriage.Entity.Domain
         /// 状态：0：待审核，1：审核通过，2：审核不通过，3：关闭
         /// </summary> 
         public byte Status { get; set; }
+        /// <summary>
+        /// 更新状态时间
+        /// </summary>
+        public DateTime UpdateStatusDate { get; set; }
         /// <summary> 
         /// 审核不通过原因
         /// </summary> 
@@ -101,5 +105,13 @@ namespace Marriage.Entity.Domain
         /// 备注
         /// </summary> 
         public string Remark { get; set; }
+        /// <summary>
+        /// 年龄
+        /// </summary>
+        public int Age { get; set; }
+        /// <summary>
+        /// 生肖
+        /// </summary>
+        public string Shengxiao { get; set; }
     }
 }

@@ -96,5 +96,60 @@ namespace Marriage.Domain.Impl
 
             return _MarriageUser.Update(entityData);
         }
+
+        /// <summary>
+        /// 查询数据列表
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        public List<Entity.Domain.MarriageUser> QueryUsersByMatchmakerDataList(Entity.Application.MarriageUser.QueryUsersByMatchmakerRequest request)
+        {
+            Entity.Data.QueryInfo queryInfo = new Entity.Data.QueryInfo();
+            queryInfo.ConditionList = GetConditionList(request);
+            queryInfo.OrderByList = GetOrderByList(request);
+            queryInfo.TableName = "v_MarriageUser";
+
+            queryInfo.PageIndex = request.PageIndex;
+            queryInfo.PageSize = request.PageSize;
+
+            return Parse.IEntityDataListTo<Entity.Domain.MarriageUser>(_MarriageUser.QueryDataList(queryInfo));
+        }
+
+        /// <summary>
+        /// 查询分页信息
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        public Entity.Application.PageInfo QueryUsersByMatchmakerPageInfo(Entity.Application.MarriageUser.QueryUsersByMatchmakerRequest request)
+        {
+            Entity.Data.QueryInfo queryInfo = new Entity.Data.QueryInfo();
+            queryInfo.ConditionList = GetConditionList(request);
+            queryInfo.OrderByList = GetOrderByList(request);
+            queryInfo.TableName = "v_MarriageUser";
+
+            int totalCount = _MarriageUser.QueryCount(queryInfo);
+
+            return new Entity.Application.PageInfo(request.PageIndex, request.PageSize, totalCount);
+        }
+
+        List<Entity.Data.OrderByType> GetOrderByList(Entity.Application.MarriageUser.QueryUsersByMatchmakerRequest request)
+        {
+            Entity.Data.OrderByType orderBy = null;
+            if(request.Status>0) orderBy = new Entity.Data.OrderByType("UpdateStatusDate", "desc");
+            else orderBy = new Entity.Data.OrderByType("CreateDate", "desc");
+
+            return new List<Entity.Data.OrderByType>() { orderBy };
+        }
+
+        List<Entity.Data.QueryCondition> GetConditionList(Entity.Application.MarriageUser.QueryUsersByMatchmakerRequest request)
+        {
+            List<Entity.Data.QueryCondition> queryConditionList = new List<Entity.Data.QueryCondition>();
+
+            queryConditionList.Add(new Entity.Data.QueryCondition("MatchmakerId", "=", Guid.Parse(request.LoginUserId)));
+
+            queryConditionList.Add(new Entity.Data.QueryCondition("Status", "=", request.Status));
+
+            return queryConditionList;
+        }
     }
 }

@@ -101,6 +101,7 @@ Address nvarchar(100) not null,                                --地址
 Features nvarchar(500),                                        --特点说明
 IsAppMatchmaker tinyint not null default(0),                   --是否平台红娘
 Status tinyint not null default(0),                            --状态：0：待审核，1：审核通过，2：审核不通过，3：关闭
+UdpateStatusDate datetime,                                     --更新状态时间
 NoPassReason nvarchar(500),                                    --审核不通过原因
 LastLoginDate datetime,                                        --最近登录时间
 LoginIp varchar(30),                                           --登录Ip
@@ -128,6 +129,7 @@ exec proc_AddCellExplanation '手机','t_Matchmaker','Phone'
 exec proc_AddCellExplanation '特点说明','t_Matchmaker','Features'
 exec proc_AddCellExplanation '是否平台红娘','t_Matchmaker','IsAppMatchmaker'
 exec proc_AddCellExplanation '状态：0：待审核，1：审核通过，2：审核不通过，3：关闭','t_Matchmaker','Status'
+exec proc_AddCellExplanation '更新状态时间','t_Matchmaker','UdpateStatusDate'
 exec proc_AddCellExplanation '最近登录时间','t_Matchmaker','LastLoginDate'
 exec proc_AddCellExplanation '审核不通过原因','t_Matchmaker','NoPassReason'
 exec proc_AddCellExplanation '登录Ip','t_Matchmaker','LoginIp'
@@ -181,6 +183,7 @@ BirthEight nvarchar(30),                                       --生辰八字
 IsPublic tinyint not null default(0),                          --是否公开
 MatchmakerId uniqueidentifier not null,                        --所属红娘
 Status tinyint not null default(0),                            --状态：0：待审核，1：审核通过，2：审核不通过，3：关闭
+UdpateStatusDate datetime,                                     --更新状态时间
 NoPassReason nvarchar(500),                                    --审核不通过原因
 LastLoginDate datetime,                                        --最近登录时间
 LoginIp varchar(30),                                           --登录Ip
@@ -213,6 +216,7 @@ exec proc_AddCellExplanation '生辰八字','t_MarriageUser','BirthEight'
 exec proc_AddCellExplanation '是否公开','t_MarriageUser','IsPublic'
 exec proc_AddCellExplanation '所属红娘','t_MarriageUser','MatchmakerId'
 exec proc_AddCellExplanation '状态：0：待审核，1：审核通过，2：审核不通过，3：关闭','t_MarriageUser','Status'
+exec proc_AddCellExplanation '更新状态时间','t_MarriageUser','UdpateStatusDate'
 exec proc_AddCellExplanation '最近登录时间','t_MarriageUser','LastLoginDate'
 exec proc_AddCellExplanation '审核不通过原因','t_MarriageUser','NoPassReason'
 exec proc_AddCellExplanation '登录Ip','t_MarriageUser','LoginIp'

@@ -1,4 +1,5 @@
-﻿using Marriage.Entity.Application.MarriageUserPhoto;
+﻿using Marriage.Entity.Application;
+using Marriage.Entity.Application.MarriageUserPhoto;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,6 +13,8 @@ namespace Marriage.Application.Impl
     public class MarriageUserPhoto : BaseAction, IMarriageUserPhoto
     {
         public Domain.IMarriageUserPhoto _MarriageUserPhoto { get; set; }
+
+        public Domain.IMarriageUser _MarriageUser { get; set; }
 
         /// <summary>
         /// 获取用户生活照列表
@@ -83,6 +86,81 @@ namespace Marriage.Application.Impl
 
             //日志记录
             return this.SetReturnResponse<DeleteUserPhotosResponse>(title, "DeleteUserPhotos", requestContent, response);
+        }
+
+        /// <summary>
+        /// 获取红娘下用户生活照列表
+        /// </summary>
+        public GetUserPhotoByMatchmakerResponse GetUserPhotoByMatchmaker(GetUserPhotoByMatchmakerRequest request)
+        {
+            string title = "获取红娘下用户生活照列表";
+            string requestContent = Utility.Common.ToJson(request);
+            GetUserPhotoByMatchmakerResponse response = new GetUserPhotoByMatchmakerResponse();
+
+            this.InitMessage();
+
+            this.IsNullRequest(request, response);
+
+
+            //1、获取用户信息
+            int stepNo = 1;
+            var user = GetUserInfoById(stepNo, request.UserId, response);
+
+            //2、获取用户生活照列表
+            stepNo += 1;
+            GetUserPhotos(stepNo, user, request, response);
+
+            //3、执行结束
+            this.ExecEnd(response);
+
+            //日志记录
+            return this.SetReturnResponse<GetUserPhotoByMatchmakerResponse>(title, "GetUserPhotoByMatchmaker", requestContent, response);
+        }
+
+        /// <summary>
+        /// 获取用户生活照列表
+        /// </summary>
+        /// <param name="stepNo"></param>
+        /// <param name="request"></param>
+        /// <param name="response"></param>
+        /// <returns></returns>
+        private List<Entity.Domain.MarriageUserPhoto> GetUserPhotos(int stepNo, Entity.Domain.MarriageUser user, GetUserPhotoByMatchmakerRequest request, GetUserPhotoByMatchmakerResponse response)
+        {
+            Func<List<Entity.Domain.MarriageUserPhoto>> execStep = () =>
+            {
+
+                if (user.MatchmakerId != Guid.Parse(request.LoginUserId)) return null;
+
+                var list = _MarriageUserPhoto.GetUserPhotos(user.MatchmakerId);
+
+                response.DataList = (from a in list
+                                     select new UserPhoto()
+                                     {
+                                         PhotoId = a.PhotoId,
+                                         PhotoUrl = a.PhotoUrl
+                                     }).ToList();
+
+                return list;
+            };
+
+            return this.GetEntityDataList<Entity.Domain.MarriageUserPhoto>(stepNo, "获取用户生活照列表", "GetUserPhotos", response, execStep, false);
+        }
+
+        /// <summary>
+        /// 以主键获取用户信息
+        /// </summary>
+        /// <param name="stepNo"></param>
+        /// <param name="request"></param>
+        /// <param name="response"></param>
+        /// <returns></returns>
+        private Entity.Domain.MarriageUser GetUserInfoById(int stepNo, Guid userId, IResponse response)
+        {
+            Func<Entity.Domain.MarriageUser> execStep = () =>
+            {
+                return _MarriageUser.GetUserInfoById(userId);
+            };
+
+            return this.GetEntityData<Entity.Domain.MarriageUser>(stepNo, "以主键获取用户信息", "GetUserInfoById", response, execStep);
         }
 
         /// <summary>

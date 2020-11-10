@@ -10,7 +10,7 @@ namespace Marriage.Data.Impl
     /// <summary>
     /// 相亲人员
     /// </summary>
-    public class MarriageUser : EntityAccess, IMarriageUser
+    public class MarriageUser : BaseData, IMarriageUser
     {
         public MarriageUser()
         {

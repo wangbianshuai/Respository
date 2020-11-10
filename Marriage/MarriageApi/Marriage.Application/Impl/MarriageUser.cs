@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Marriage.Application.Impl
 {
@@ -21,6 +22,8 @@ namespace Marriage.Application.Impl
         public Domain.IUserConditionType _UserConditionType { get; set; }
 
         public Domain.IConditionType _ConditionType { get; set; }
+
+        public Domain.IMatchmaker _Matchmaker { get; set; }
 
         /// <summary>
         /// 以微信OpenId获取用户
@@ -277,6 +280,172 @@ namespace Marriage.Application.Impl
         }
 
         /// <summary>
+        /// 查询红娘下相亲人员列表
+        /// </summary>
+        public QueryUsersByMatchmakerResponse QueryUsersByMatchmaker(QueryUsersByMatchmakerRequest request)
+        {
+            string title = "查询红娘下相亲人员列表";
+            string requestContent = Utility.Common.ToJson(request);
+            QueryUsersByMatchmakerResponse response = new QueryUsersByMatchmakerResponse();
+
+            this.InitMessage();
+
+            this.IsNullRequest(request, response);
+
+            //1、验证数据
+            int stepNo = 1;
+            Entity.Domain.Matchmaker matchmaker = this.GetMatchmakerById(stepNo, request.LoginUserId, response);
+
+            //2、查询红娘下相亲人员列表
+            stepNo += 1;
+            QueryUsersByMatchmaker(stepNo, matchmaker, request, response);
+
+            //3、执行结束
+            this.ExecEnd(response);
+
+            //日志记录
+            return this.SetReturnResponse<QueryUsersByMatchmakerResponse>(title, "QueryUsersByMatchmaker", requestContent, response);
+        }
+
+        /// <summary>
+        /// 获取红娘下用户信息
+        /// </summary>
+        public GetUserByMatchmakerResponse GetUserByMatchmaker(GetUserByMatchmakerRequest request)
+        {
+            string title = "获取红娘下用户信息";
+            string requestContent = Utility.Common.ToJson(request);
+            GetUserByMatchmakerResponse response = new GetUserByMatchmakerResponse();
+
+            this.InitMessage();
+
+            this.IsNullRequest(request, response);
+
+            //1、获取用户信息
+            int stepNo = 1;
+            GetUserByMatchcmaker(stepNo, request, response);
+
+            //2、执行结束
+            this.ExecEnd(response);
+
+            //日志记录
+            return this.SetReturnResponse<GetUserByMatchmakerResponse>(title, "GetUserByMatchmaker", requestContent, response);
+        }
+
+        /// <summary>
+        /// 获取红娘下用户条件类型
+        /// </summary>
+        public GetUserConditionTypeByMatchmakerResponse GetUserConditionTypeByMatchmaker(GetUserConditionTypeByMatchmakerRequest request)
+        {
+            string title = "获取红娘下用户条件类型";
+            string requestContent = Utility.Common.ToJson(request);
+            GetUserConditionTypeByMatchmakerResponse response = new GetUserConditionTypeByMatchmakerResponse();
+
+            this.InitMessage();
+
+            this.IsNullRequest(request, response);
+
+            //1、获取用户信息
+            int stepNo = 1;
+            var user = GetUserInfoById(stepNo, request.UserId.ToString(), response);
+
+            //2、获取条件类型
+            stepNo += 1;
+            GetConditionType(stepNo, request.ConditionTypeId, response);
+
+            ////3、获取用户条件类型
+            //stepNo += 1;
+            //GetUserConditionType(stepNo, user, request, response);
+
+            //4、执行结束
+            this.ExecEnd(response);
+
+            //日志记录
+            return this.SetReturnResponse<GetUserConditionTypeByMatchmakerResponse>(title, "GetUserConditionTypeByMatchmaker", requestContent, response);
+        }
+
+
+        /// <summary>
+        /// 以主键获取用户信息
+        /// </summary>
+        /// <param name="stepNo"></param>
+        /// <param name="request"></param>
+        /// <param name="response"></param>
+        /// <returns></returns>
+        private Entity.Domain.MarriageUser GetUserInfoByIdAndMatchmaker(int stepNo, Guid userId, string matchmakerId, IResponse response)
+        {
+            Func<Entity.Domain.MarriageUser> execStep = () =>
+            {
+                var entity = _MarriageUser.GetUserInfoById(userId);
+                if (entity != null && entity.MatchmakerId != Guid.Parse(matchmakerId)) return null;
+                return entity;
+            };
+
+            return this.GetEntityData<Entity.Domain.MarriageUser>(stepNo, "以主键获取用户信息", "GetUserInfoById", response, execStep);
+        }
+
+        /// <summary>
+        /// 查询红娘下相亲人员列表
+        /// </summary>
+        /// <param name="stepNo"></param>
+        /// <param name="matchmaker"></param>
+        /// <param name="request"></param>
+        /// <param name="response"></param>
+        /// <returns></returns>
+        private List<Entity.Domain.MarriageUser> QueryUsersByMatchmaker(int stepNo, Entity.Domain.Matchmaker matchmaker, QueryUsersByMatchmakerRequest request, QueryUsersByMatchmakerResponse response)
+        {
+            if (matchmaker == null) return null;
+
+            Func<List<Entity.Domain.MarriageUser>> execStep = () =>
+            {
+                List<Entity.Domain.MarriageUser> dataList = null;
+
+                if (request.PageIndex > 0 && request.PageSize > 0)
+                {
+                    Parallel.Invoke(() =>
+                    {
+                        dataList = _MarriageUser.QueryUsersByMatchmakerDataList(request);
+                    },
+                    () =>
+                    {
+                        response.PageInfo = _MarriageUser.QueryUsersByMatchmakerPageInfo(request);
+                    });
+                }
+                else dataList = _MarriageUser.QueryUsersByMatchmakerDataList(request);
+
+                if (dataList != null) response.DataList = (from a in dataList
+                                                           select GetMarriageUser(a)).ToList();
+
+                return dataList;
+            };
+
+            return this.GetEntityDataList<Entity.Domain.MarriageUser>(stepNo, "查询红娘下相亲人员列表", "QueryUsersByMatchmaker", response, execStep, false);
+        }
+
+        MarriageUser3 GetMarriageUser(Entity.Domain.MarriageUser user)
+        {
+            return new MarriageUser3()
+            {
+                Age = user.Age,
+                HeadImgUrl = user.HeadImgUrl,
+                NickName = user.NickName,
+                Phone = user.Phone,
+                Sex = user.Sex
+            };
+        }
+
+        private Entity.Domain.Matchmaker GetMatchmakerById(int stepNo, string userId, IResponse response)
+        {
+            Func<Entity.Domain.Matchmaker> execStep = () =>
+            {
+                var entity = _Matchmaker.GetMatchmakerById(Guid.Parse(userId));
+                if (entity == null || entity.Status != 1) return null;
+                return entity;
+            };
+
+            return this.GetEntityData<Entity.Domain.Matchmaker>(stepNo, "以主键获取红娘信息", "GetMatchmakerInfoById", response, execStep, false);
+        }
+
+        /// <summary>
         /// 保存用户条件类型
         /// </summary>
         /// <param name="stepNo"></param>
@@ -445,6 +614,44 @@ namespace Marriage.Application.Impl
             return this.GetEntityData<Entity.Domain.MarriageUser>(stepNo, "获取用户信息", "GetUserInfoById", response, execStep);
         }
 
+        /// <summary>
+        /// 获取用户信息
+        /// </summary>
+        /// <param name="stepNo"></param>
+        /// <param name="request"></param>
+        /// <param name="response"></param>
+        /// <returns></returns>
+        private Entity.Domain.MarriageUser GetUserByMatchcmaker(int stepNo, GetUserByMatchmakerRequest request, GetUserByMatchmakerResponse response)
+        {
+            Func<Entity.Domain.MarriageUser> execStep = () =>
+            {
+
+                var entity = _MarriageUser.GetUserInfoById(Guid.Parse(request.LoginUserId));
+
+                if (entity != null)
+                {
+                    if (entity.MatchmakerId != Guid.Parse(request.LoginUserId)) return null;
+
+                    response.UserInfo = new MarriageUser3()
+                    {
+                        HeadImgUrl = entity.HeadImgUrl,
+                        NickName = entity.NickName,
+                        Phone = entity.Phone
+                    };
+
+                    response.StatusInfo = new StatusInfo()
+                    {
+                        NoPassReason = entity.NoPassReason,
+                        Status = entity.Status
+                    };
+                }
+
+                return entity;
+            };
+
+            return this.GetEntityData<Entity.Domain.MarriageUser>(stepNo, "获取用户信息", "GetUserByMatchcmaker", response, execStep);
+        }
+        
         /// <summary>
         /// 以主键获取用户信息
         /// </summary>

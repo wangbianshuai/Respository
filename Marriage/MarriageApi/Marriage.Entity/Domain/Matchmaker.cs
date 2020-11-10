@@ -65,6 +65,10 @@ namespace Marriage.Entity.Domain
         /// 状态：0：待审核，1：审核通过，2：审核不通过，3：关闭
         /// </summary> 
         public byte Status { get; set; }
+        /// <summary>
+        /// 更新状态时间
+        /// </summary>
+        public DateTime UpdateStatusDate { get; set; }
         /// <summary> 
         /// 审核不通过原因
         /// </summary> 

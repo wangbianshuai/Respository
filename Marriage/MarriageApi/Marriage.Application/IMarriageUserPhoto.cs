@@ -24,5 +24,10 @@ namespace Marriage.Application
         /// 删除用户照片
         /// </summary>
         DeleteUserPhotosResponse DeleteUserPhotos(DeleteUserPhotosRequest request);
+
+        /// <summary>
+        /// 获取红娘下用户生活照列表
+        /// </summary>
+        GetUserPhotoByMatchmakerResponse GetUserPhotoByMatchmaker(GetUserPhotoByMatchmakerRequest request);
     }
 }

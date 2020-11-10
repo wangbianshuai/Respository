@@ -117,5 +117,17 @@ namespace Marriage.Api.Controllers
         {
             return await Task.Run(() => _MarriageUser.SaveUserConditionType(request));
         }
+
+        /// <summary>
+        /// 查询红娘下相亲人员列表
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        [HttpPost]
+        [SwaggerOpenApiTokenParameter]
+        public async Task<QueryUsersByMatchmakerResponse> QueryUsersByMatchmaker(QueryUsersByMatchmakerRequest request)
+        {
+            return await Task.Run(() => _MarriageUser.QueryUsersByMatchmaker(request));
+        }
     }
 }

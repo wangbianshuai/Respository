@@ -151,25 +151,6 @@ namespace Marriage.Application.Impl
             return this.SetReturnResponse<GetMatchmakerResponse>(title, "GetMatchmaker", requestContent, response);
         }
 
- 
-
-        /// <summary>
-        /// 以主键获取红娘信息
-        /// </summary>
-        /// <param name="stepNo"></param>
-        /// <param name="request"></param>
-        /// <param name="response"></param>
-        /// <returns></returns>
-        private Entity.Domain.Matchmaker GetMatchmakerInfoById(int stepNo, string userId, IResponse response)
-        {
-            Func<Entity.Domain.Matchmaker> execStep = () =>
-            {
-                return _Matchmaker.GetMatchmakerById(Guid.Parse(userId));
-            };
-
-            return this.GetEntityData<Entity.Domain.Matchmaker>(stepNo, "以主键获取红娘信息", "GetMatchmakerInfoById", response, execStep);
-        }
-
         /// <summary>
         /// 更新红娘信息
         /// </summary>
