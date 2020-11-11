@@ -245,29 +245,28 @@ from t_MarriageUser a
 where a.IsDelete=0
 go
 
---4、相亲记录信息表（t_MarriageRecord）
-if exists(select * from sysobjects where name='t_MarriageRecord')
-drop table t_MarriageRecord
+--16、相亲安排信息表（t_ArrangeMarriage）
+if exists(select * from sysobjects where name='t_MarriageArrange')
+drop table t_MarriageArrange
 go
 
-create table t_MarriageRecord
+create table t_MarriageArrange
 (
-RecordId uniqueidentifier not null primary key,                --主键
+MarriageArrangeId uniqueidentifier not null primary key,       --主键
 ManUserId uniqueidentifier not null,                           --男生ID
 WomanUserId uniqueidentifier not null,                         --女生ID
 ManMatchmakerId uniqueidentifier not null,                     --男生红娘
 WomanMatchmakerId uniqueidentifier not null,                   --女生红娘
 AppMatchmakerId uniqueidentifier not null,                     --平台红娘
-MarriageArrangeId uniqueidentifier not null,                   --安装相亲Id
 MarriageDate datetime not null,                                --相亲时间
+MarriageAddress nvarchar(100),                                 --相亲地点
 MarriageContent nvarchar(2000) not null,                       --相亲情况
-ManScore int not null,                                         --男生得分
-ManScoreRemark nvarchar(2000),                                 --男生得分点说明
-ManNoScoreRemark nvarchar(2000),                               --男生失分点说明
-WomanScore int not null,                                       --女生得分
-WomanScoreRemark nvarchar(2000),                               --女生得分点说明
-WomanNoScoreRemark nvarchar(2000),                             --女生失分点说明
-Status tinyint not null,                                       --状态：1：有意向，2：无意向，3：先了解
+Status tinyint not null,                                       --状态：0：待相亲，1：有意向，2：无意向，3：牵手成功，4：取消
+IsManAgree tinyint not null default(0),                        --男生是否同意
+NoManAgreeRemark nvarchar(500),                                --男生不同意原因
+IsWomanAgree tinyint not null default(0),                      --女生是否同意
+NoWomanAgreeRemark nvarchar(500),                              --女生不同意原因
+CancelReason nvarchar(500),                                    --取消原因
 Remark nvarchar(200),                                          --备注 
 IsDelete tinyint not null default(0),                          --是否删除
 CreateUser uniqueidentifier not null,                          --创建人
@@ -278,42 +277,59 @@ RowVersion timestamp not null                                  --行版本
 )
 go
 
-exec proc_AddCellExplanation '主键','t_MarriageRecord','RecordId'
-exec proc_AddCellExplanation '男生ID','t_MarriageRecord','ManUserId'
-exec proc_AddCellExplanation '女生ID','t_MarriageRecord','WomanUserId'
-exec proc_AddCellExplanation '男生红娘','t_MarriageRecord','ManMatchmakerId'
-exec proc_AddCellExplanation '女生红娘','t_MarriageRecord','WomanMatchmakerId'
-exec proc_AddCellExplanation '平台红娘','t_MarriageRecord','AppMatchmakerId'
-exec proc_AddCellExplanation '安装相亲Id','t_MarriageRecord','MarriageArrangeId'
-exec proc_AddCellExplanation '相亲时间','t_MarriageRecord','MarriageDate'
-exec proc_AddCellExplanation '相亲情况','t_MarriageRecord','MarriageContent'
-exec proc_AddCellExplanation '男生得分','t_MarriageRecord','ManScore'
-exec proc_AddCellExplanation '男生得分点说明','t_MarriageRecord','ManScoreRemark'
-exec proc_AddCellExplanation '男生失分点说明','t_MarriageRecord','ManNoScoreRemark'
-exec proc_AddCellExplanation '女生得分','t_MarriageRecord','WomanScore'
-exec proc_AddCellExplanation '女生得分点说明','t_MarriageRecord','WomanScoreRemark'
-exec proc_AddCellExplanation '女生失分点说明','t_MarriageRecord','WomanNoScoreRemark'
-exec proc_AddCellExplanation '状态：1：有意向，2：无意向，3：先了解','t_MarriageRecord','Status'
-exec proc_AddCellExplanation '备注','t_MarriageRecord','Remark'
-exec proc_AddCellExplanation '是否删除','t_MarriageRecord','IsDelete'
-exec proc_AddCellExplanation '创建人','t_MarriageRecord','CreateUser'
-exec proc_AddCellExplanation '创建时间','t_MarriageRecord','CreateDate'
-exec proc_AddCellExplanation '更新人','t_MarriageRecord','UpdateUser'
-exec proc_AddCellExplanation '更新时间','t_MarriageRecord','UpdateDate'
-exec proc_AddCellExplanation '行版本','t_MarriageRecord','RowVersion'
+exec proc_AddCellExplanation '主键','t_MarriageArrange','MarriageArrangeId'
+exec proc_AddCellExplanation '男生ID','t_MarriageArrange','ManUserId'
+exec proc_AddCellExplanation '女生ID','t_MarriageArrange','WomanUserId'
+exec proc_AddCellExplanation '男生红娘','t_MarriageArrange','ManMatchmakerId'
+exec proc_AddCellExplanation '女生红娘','t_MarriageArrange','WomanMatchmakerId'
+exec proc_AddCellExplanation '平台红娘','t_MarriageArrange','AppMatchmakerId'
+exec proc_AddCellExplanation '相亲时间','t_MarriageArrange','MarriageDate'
+exec proc_AddCellExplanation '相亲地点','t_MarriageArrange','MarriageAddress'
+exec proc_AddCellExplanation '相亲情况','t_MarriageArrange','MarriageContent'
+exec proc_AddCellExplanation '状态：0：待相亲，1：有意向，2：无意向，3：牵手成功，4：取消','t_MarriageArrange','Status'
+exec proc_AddCellExplanation '男生是否同意','t_MarriageArrange','IsManAgree'
+exec proc_AddCellExplanation '男生不同意原因','t_MarriageArrange','NoManAgreeRemark'
+exec proc_AddCellExplanation '女生是否同意','t_MarriageArrange','IsWomanAgree'
+exec proc_AddCellExplanation '女生不同意原因','t_MarriageArrange','NoWomanAgreeRemark'
+exec proc_AddCellExplanation '备注','t_MarriageArrange','Remark'
+exec proc_AddCellExplanation '是否删除','t_MarriageArrange','IsDelete'
+exec proc_AddCellExplanation '创建人','t_MarriageArrange','CreateUser'
+exec proc_AddCellExplanation '创建时间','t_MarriageArrange','CreateDate'
+exec proc_AddCellExplanation '更新人','t_MarriageArrange','UpdateUser'
+exec proc_AddCellExplanation '更新时间','t_MarriageArrange','UpdateDate'
+exec proc_AddCellExplanation '行版本','t_MarriageArrange','RowVersion'
 go
 
-if exists(select * from sysobjects where name='v_MarriageRecord')
-drop view v_MarriageRecord
+if exists(select * from sysobjects where name='v_MarriageArrange')
+drop view v_MarriageArrange
 go
 
-create view v_MarriageRecord
+create view v_MarriageArrange
 as
-select a.*,
-case when a.Status=1 then '有意向'
-when a.Status=2 then '无意向' when a.Status=3 then '先了解' else '未知' end StatusName
-from t_MarriageRecord a 
-where a.IsDelete=0
+select a.*
+from t_MarriageArrange a where IsDelete=0
+go
+
+--4、相亲广场信息表（t_MarriageSpuare）
+if exists(select * from sysobjects where name='t_MarriageSpuare')
+drop table t_MarriageSpuare
+go
+
+create table t_MarriageSpuare
+(
+MarriageSpuareId uniqueidentifier not null primary key,        --主键
+UserId uniqueidentifier not null,                              --相亲用户ID
+OtherSideUserId uniqueidentifier not null,                     --对方用户Id 
+CreateDate datetime default(getdate()) not null,               --创建时间
+RowVersion timestamp not null                                  --行版本
+)
+go
+
+exec proc_AddCellExplanation '主键','t_MarriageSpuare','MarriageSpuareId'
+exec proc_AddCellExplanation '相亲用户ID','t_MarriageSpuare','UserId'
+exec proc_AddCellExplanation '对方用户ID','t_MarriageSpuare','OtherSideUserId'
+exec proc_AddCellExplanation '创建时间','t_MarriageSpuare','CreateDate'
+exec proc_AddCellExplanation '行版本','t_MarriageSpuare','RowVersion'
 go
 
 
@@ -330,13 +346,12 @@ WomanUserId uniqueidentifier not null,                         --女生ID
 ManMatchmakerId uniqueidentifier not null,                     --男生红娘
 WomanMatchmakerId uniqueidentifier not null,                   --女生红娘
 AppMatchmakerId uniqueidentifier not null,                     --平台红娘
-MarriageRecordId uniqueidentifier not null,                    --相关记录Id,相亲成功的那次记录
+MarriageArrangeId uniqueidentifier not null,                   --相亲安排Id
 FeeDate datetime,                                              --费用日期
-SuccessDate datetime,                                          --相亲成功日期
 BookMarryDate datetime,                                        --订婚日期
 MarryDate datetime,                                            --结婚日期
 BreakUpDate datetime,                                          --分手日期
-Status tinyint not null,                                       --状态：1：相亲成功，2：订婚，3：结婚,4:分手
+Status tinyint not null,                                       --状态：1：订婚，2：结婚，3：分手
 BreakUpReason nvarchar(2000),                                  --分手原因
 Amount money,                                                  --相亲总费用
 Remark nvarchar(200),                                          --备注 
@@ -355,13 +370,12 @@ exec proc_AddCellExplanation '女生ID','t_MarriageSccuess','WomanUserId'
 exec proc_AddCellExplanation '男生红娘','t_MarriageSccuess','ManMatchmakerId'
 exec proc_AddCellExplanation '女生红娘','t_MarriageSccuess','WomanMatchmakerId'
 exec proc_AddCellExplanation '平台红娘','t_MarriageSccuess','AppMatchmakerId'
-exec proc_AddCellExplanation '相关记录Id,相亲成功的那次记录','t_MarriageSccuess','MarriageRecordId'
+exec proc_AddCellExplanation '相亲安排Id','t_MarriageSccuess','MarriageArrangeId'
 exec proc_AddCellExplanation '费用日期','t_MarriageSccuess','FeeDate'
-exec proc_AddCellExplanation '相亲成功日期','t_MarriageSccuess','SuccessDate'
 exec proc_AddCellExplanation '订婚日期','t_MarriageSccuess','BookMarryDate'
 exec proc_AddCellExplanation '结婚日期','t_MarriageSccuess','MarryDate'
 exec proc_AddCellExplanation '分手日期','t_MarriageSccuess','BreakUpDate'
-exec proc_AddCellExplanation '状态：1：相亲成功，2：订婚，3：结婚，4：分手','t_MarriageSccuess','Status'
+exec proc_AddCellExplanation '状态：1：订婚，2：结婚，3：分手','t_MarriageSccuess','Status'
 exec proc_AddCellExplanation '备注','t_MarriageSccuess','Remark'
 exec proc_AddCellExplanation '分手原因','t_MarriageSccuess','BreakUpReason'
 exec proc_AddCellExplanation '相亲总费用','t_MarriageSccuess','Amount'
@@ -380,9 +394,8 @@ go
 create view v_MarriageSccuess
 as
 select a.*,
-case when a.Status=1 then '相亲成功'
-when a.Status=2 then '订婚' when a.Status=3 then '结婚' 
-when a.Status=4 then '分手' else '未知' end StatusName
+case when a.Status=1 then '订婚'
+when a.Status=2 then '结婚' when a.Status=3 then '分手'  else '未知' end StatusName
 from t_MarriageSccuess a 
 where a.IsDelete=0
 go
@@ -769,65 +782,6 @@ exec proc_AddCellExplanation '对方选择值','t_MarriageMakePairRecord','OtherSideS
 exec proc_AddCellExplanation '匹配度（%）','t_MarriageMakePairRecord','PercentValue'
 go
 
-
---16、相亲安排信息表（t_ArrangeMarriage）
-if exists(select * from sysobjects where name='t_MarriageArrange')
-drop table t_MarriageArrange
-go
-
-create table t_MarriageArrange
-(
-MarriageArrangeId uniqueidentifier not null primary key,       --主键
-ManUserId uniqueidentifier not null,                           --男生ID
-WomanUserId uniqueidentifier not null,                         --女生ID
-ManMatchmakerId uniqueidentifier not null,                     --男生红娘
-WomanMatchmakerId uniqueidentifier not null,                   --女生红娘
-AppMatchmakerId uniqueidentifier not null,                     --平台红娘
-MarriageDate datetime not null,                                --相亲时间
-MarriageAddress nvarchar(100),                                 --相亲地址
-IsManAgree tinyint not null default(0),                        --男生是否同意
-NoManAgreeRemark nvarchar(500),                                --男生不同意原因
-IsWomanAgree tinyint not null default(0),                      --女生是否同意
-NoWomanAgreeRemark nvarchar(500),                              --女生不同意原因
-Remark nvarchar(200),                                          --备注 
-IsDelete tinyint not null default(0),                          --是否删除
-CreateUser uniqueidentifier not null,                          --创建人
-CreateDate datetime default(getdate()) not null,               --创建时间
-UpdateUser uniqueidentifier,                                   --更新人
-UpdateDate datetime,                                           --更新时间
-RowVersion timestamp not null                                  --行版本
-)
-go
-
-exec proc_AddCellExplanation '主键','t_MarriageArrange','MarriageArrangeId'
-exec proc_AddCellExplanation '男生ID','t_MarriageArrange','ManUserId'
-exec proc_AddCellExplanation '女生ID','t_MarriageArrange','WomanUserId'
-exec proc_AddCellExplanation '男生红娘','t_MarriageArrange','ManMatchmakerId'
-exec proc_AddCellExplanation '女生红娘','t_MarriageArrange','WomanMatchmakerId'
-exec proc_AddCellExplanation '平台红娘','t_MarriageArrange','AppMatchmakerId'
-exec proc_AddCellExplanation '相亲时间','t_MarriageArrange','MarriageDate'
-exec proc_AddCellExplanation '男生是否同意','t_MarriageArrange','IsManAgree'
-exec proc_AddCellExplanation '男生不同意原因','t_MarriageArrange','NoManAgreeRemark'
-exec proc_AddCellExplanation '女生是否同意','t_MarriageArrange','IsWomanAgree'
-exec proc_AddCellExplanation '女生不同意原因','t_MarriageArrange','NoWomanAgreeRemark'
-exec proc_AddCellExplanation '备注','t_MarriageArrange','Remark'
-exec proc_AddCellExplanation '是否删除','t_MarriageArrange','IsDelete'
-exec proc_AddCellExplanation '创建人','t_MarriageArrange','CreateUser'
-exec proc_AddCellExplanation '创建时间','t_MarriageArrange','CreateDate'
-exec proc_AddCellExplanation '更新人','t_MarriageArrange','UpdateUser'
-exec proc_AddCellExplanation '更新时间','t_MarriageArrange','UpdateDate'
-exec proc_AddCellExplanation '行版本','t_MarriageArrange','RowVersion'
-go
-
-if exists(select * from sysobjects where name='v_MarriageArrange')
-drop view v_MarriageArrange
-go
-
-create view v_MarriageArrange
-as
-select a.*
-from t_MarriageArrange a where IsDelete=0
-go
 
 --18、生辰八字匹配结果（t_BirthEightResult）
 if exists(select * from sysobjects where name='t_BirthEightResult')
