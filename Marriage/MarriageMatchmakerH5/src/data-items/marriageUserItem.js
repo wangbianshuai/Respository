@@ -13,7 +13,7 @@ export default (props) => {
   const sexImg = Sex > 0 ? Common.getImageUrl(Sex === 1 ? 'man.png' : 'woman.png') : undefined;
 
   let url = Common.addUrlParams(detailPageUrl, 'UserId', UserId);
-  let = Common.addUrlParams(detailPageUrl, 'title', '连理缘-' + NickName);
+  url = Common.addUrlParams(detailPageUrl, 'title', '连理缘-' + NickName);
 
   return (<div className={styles.divUserInfo}>
     <Link to={url}>
