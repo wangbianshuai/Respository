@@ -261,12 +261,18 @@ AppMatchmakerId uniqueidentifier not null,                     --平台红娘
 MarriageDate datetime not null,                                --相亲时间
 MarriageAddress nvarchar(100),                                 --相亲地点
 MarriageContent nvarchar(2000) not null,                       --相亲情况
-Status tinyint not null,                                       --状态：0：待相亲，1：有意向，2：无意向，3：牵手成功，4：取消
+Status tinyint not null,                                       --状态：0：待相亲，1：有意向，2：无意向，3：牵手成功，4：订婚，5：结婚，6：分手，7：取消
 IsManAgree tinyint not null default(0),                        --男生是否同意
 NoManAgreeRemark nvarchar(500),                                --男生不同意原因
 IsWomanAgree tinyint not null default(0),                      --女生是否同意
 NoWomanAgreeRemark nvarchar(500),                              --女生不同意原因
 CancelReason nvarchar(500),                                    --取消原因
+FeeDate datetime,                                              --费用日期
+BookMarryDate datetime,                                        --订婚日期
+MarryDate datetime,                                            --结婚日期
+BreakUpDate datetime,                                          --分手日期
+BreakUpReason nvarchar(500),                                   --分手原因
+Amount money,                                                  --相亲总费用
 Remark nvarchar(200),                                          --备注 
 IsDelete tinyint not null default(0),                          --是否删除
 CreateUser uniqueidentifier not null,                          --创建人
@@ -286,11 +292,18 @@ exec proc_AddCellExplanation '平台红娘','t_MarriageArrange','AppMatchmakerId'
 exec proc_AddCellExplanation '相亲时间','t_MarriageArrange','MarriageDate'
 exec proc_AddCellExplanation '相亲地点','t_MarriageArrange','MarriageAddress'
 exec proc_AddCellExplanation '相亲情况','t_MarriageArrange','MarriageContent'
-exec proc_AddCellExplanation '状态：0：待相亲，1：有意向，2：无意向，3：牵手成功，4：取消','t_MarriageArrange','Status'
+exec proc_AddCellExplanation '状态：0：待相亲，1：有意向，2：无意向，3：牵手成功，4：订婚，5：结婚，6：分手，7：取消','t_MarriageArrange','Status'
 exec proc_AddCellExplanation '男生是否同意','t_MarriageArrange','IsManAgree'
 exec proc_AddCellExplanation '男生不同意原因','t_MarriageArrange','NoManAgreeRemark'
 exec proc_AddCellExplanation '女生是否同意','t_MarriageArrange','IsWomanAgree'
 exec proc_AddCellExplanation '女生不同意原因','t_MarriageArrange','NoWomanAgreeRemark'
+exec proc_AddCellExplanation '费用日期','t_MarriageArrange','FeeDate'
+exec proc_AddCellExplanation '订婚日期','t_MarriageArrange','BookMarryDate'
+exec proc_AddCellExplanation '结婚日期','t_MarriageArrange','MarryDate'
+exec proc_AddCellExplanation '分手日期','t_MarriageArrange','BreakUpDate'
+exec proc_AddCellExplanation '备注','t_MarriageArrange','Remark'
+exec proc_AddCellExplanation '分手原因','t_MarriageArrange','BreakUpReason'
+exec proc_AddCellExplanation '相亲总费用','t_MarriageArrange','Amount'
 exec proc_AddCellExplanation '备注','t_MarriageArrange','Remark'
 exec proc_AddCellExplanation '是否删除','t_MarriageArrange','IsDelete'
 exec proc_AddCellExplanation '创建人','t_MarriageArrange','CreateUser'
@@ -306,7 +319,10 @@ go
 
 create view v_MarriageArrange
 as
-select a.*
+select a.*,
+case when a.Status=0 then '待相亲' when a.Status=1 then '有意向' when a.Status=2 then '无意向'
+when a.Status=3 then '牵手成功' when a.Status=4 then '订婚' when a.Status=5 then '结婚'
+when a.Status=6 then '分手' when a.Status=7 then '取消'  else '未知' end StatusName
 from t_MarriageArrange a where IsDelete=0
 go
 
@@ -332,74 +348,6 @@ exec proc_AddCellExplanation '创建时间','t_MarriageSpuare','CreateDate'
 exec proc_AddCellExplanation '行版本','t_MarriageSpuare','RowVersion'
 go
 
-
---5、相亲成功信息表（t_MarriageSccuess）
-if exists(select * from sysobjects where name='t_MarriageSccuess')
-drop table t_MarriageSccuess
-go
-
-create table t_MarriageSccuess
-(
-SccuessId uniqueidentifier not null primary key,               --主键
-ManUserId uniqueidentifier not null,                           --男生ID
-WomanUserId uniqueidentifier not null,                         --女生ID
-ManMatchmakerId uniqueidentifier not null,                     --男生红娘
-WomanMatchmakerId uniqueidentifier not null,                   --女生红娘
-AppMatchmakerId uniqueidentifier not null,                     --平台红娘
-MarriageArrangeId uniqueidentifier not null,                   --相亲安排Id
-FeeDate datetime,                                              --费用日期
-BookMarryDate datetime,                                        --订婚日期
-MarryDate datetime,                                            --结婚日期
-BreakUpDate datetime,                                          --分手日期
-Status tinyint not null,                                       --状态：1：订婚，2：结婚，3：分手
-BreakUpReason nvarchar(2000),                                  --分手原因
-Amount money,                                                  --相亲总费用
-Remark nvarchar(200),                                          --备注 
-IsDelete tinyint not null default(0),                          --是否删除
-CreateUser uniqueidentifier not null,                          --创建人
-CreateDate datetime default(getdate()) not null,               --创建时间
-UpdateUser uniqueidentifier,                                   --更新人
-UpdateDate datetime,                                           --更新时间
-RowVersion timestamp not null                                  --行版本
-)
-go
-
-exec proc_AddCellExplanation '主键','t_MarriageSccuess','SccuessId'
-exec proc_AddCellExplanation '男生ID','t_MarriageSccuess','ManUserId'
-exec proc_AddCellExplanation '女生ID','t_MarriageSccuess','WomanUserId'
-exec proc_AddCellExplanation '男生红娘','t_MarriageSccuess','ManMatchmakerId'
-exec proc_AddCellExplanation '女生红娘','t_MarriageSccuess','WomanMatchmakerId'
-exec proc_AddCellExplanation '平台红娘','t_MarriageSccuess','AppMatchmakerId'
-exec proc_AddCellExplanation '相亲安排Id','t_MarriageSccuess','MarriageArrangeId'
-exec proc_AddCellExplanation '费用日期','t_MarriageSccuess','FeeDate'
-exec proc_AddCellExplanation '订婚日期','t_MarriageSccuess','BookMarryDate'
-exec proc_AddCellExplanation '结婚日期','t_MarriageSccuess','MarryDate'
-exec proc_AddCellExplanation '分手日期','t_MarriageSccuess','BreakUpDate'
-exec proc_AddCellExplanation '状态：1：订婚，2：结婚，3：分手','t_MarriageSccuess','Status'
-exec proc_AddCellExplanation '备注','t_MarriageSccuess','Remark'
-exec proc_AddCellExplanation '分手原因','t_MarriageSccuess','BreakUpReason'
-exec proc_AddCellExplanation '相亲总费用','t_MarriageSccuess','Amount'
-exec proc_AddCellExplanation '是否删除','t_MarriageSccuess','IsDelete'
-exec proc_AddCellExplanation '创建人','t_MarriageSccuess','CreateUser'
-exec proc_AddCellExplanation '创建时间','t_MarriageSccuess','CreateDate'
-exec proc_AddCellExplanation '更新人','t_MarriageSccuess','UpdateUser'
-exec proc_AddCellExplanation '更新时间','t_MarriageSccuess','UpdateDate'
-exec proc_AddCellExplanation '行版本','t_MarriageSccuess','RowVersion'
-go
-
-if exists(select * from sysobjects where name='v_MarriageSccuess')
-drop view v_MarriageSccuess
-go
-
-create view v_MarriageSccuess
-as
-select a.*,
-case when a.Status=1 then '订婚'
-when a.Status=2 then '结婚' when a.Status=3 then '分手'  else '未知' end StatusName
-from t_MarriageSccuess a 
-where a.IsDelete=0
-go
-
 --6、红娘中介费明细表
 if exists(select * from sysobjects where name='t_MatchmakerFeeDetail')
 drop table t_MatchmakerFeeDetail
@@ -409,7 +357,7 @@ create table t_MatchmakerFeeDetail
 (
 DetailId uniqueidentifier not null primary key,                --主键
 MatchmakerId uniqueidentifier not null,                        --红娘Id
-MarriageSccuessId uniqueidentifier not null,                   --相亲成功Id
+MarriageArrangeId uniqueidentifier not null,                   --相亲安排Id
 FeeDate datetime not null,                                     --费用日期
 Amount money not null,                                         --金额
 AppAmount money not null default(0),                           --平台中介费             
@@ -425,7 +373,7 @@ go
 
 exec proc_AddCellExplanation '主键','t_MatchmakerFeeDetail','DetailId'
 exec proc_AddCellExplanation '红娘Id','t_MatchmakerFeeDetail','MatchmakerId'
-exec proc_AddCellExplanation '相亲成功Id','t_MatchmakerFeeDetail','MarriageSccuessId'
+exec proc_AddCellExplanation '相亲安排Id','t_MatchmakerFeeDetail','MarriageArrangeId'
 exec proc_AddCellExplanation '费用日期','t_MatchmakerFeeDetail','FeeDate'
 exec proc_AddCellExplanation '金额','t_MatchmakerFeeDetail','Amount'
 exec proc_AddCellExplanation '平台中介费','t_MatchmakerFeeDetail','AppAmount'
