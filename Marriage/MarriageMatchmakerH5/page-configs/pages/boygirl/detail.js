@@ -26,7 +26,6 @@ function getProperties() {
         getPhotoListMenu(),
         getConditionTypeListMenu(),
         getSelectLoverListMenu(),
-        getMatchmakerListMenu(),
         getStatusListMenu(),
         getExitListMenu()
     ]
@@ -36,7 +35,7 @@ function getUserInfoView() {
     return {
         name: 'UserInfo',
         type: 'topUserInfo',
-        detailUrl: '/mine/userInfo'
+        detailUrl: '/boygirl/userInfo'
     }
 }
 
@@ -53,16 +52,7 @@ function getPhotoListMenu() {
         name: 'UserPhoto',
         type: 'ListMenu',
         className: 'divListMenu',
-        dataSource: [{ text: '生活照', arrow: 'horizontal', thumb: 'photo.png', url: '/mine/userPhoto' }]
-    }
-}
-
-function getMatchmakerListMenu() {
-    return {
-        name: 'Matchmarker',
-        type: 'ListMenu',
-        className: 'divListMenu',
-        dataSource: [{ text: '专属红娘', arrow: 'horizontal', thumb: 'matchmaker.png', url: '/mine/matchmaker' }]
+        dataSource: [{ text: '生活照', arrow: 'horizontal', thumb: 'photo.png', url: '/boygirl/userPhoto' }]
     }
 }
 
@@ -71,7 +61,7 @@ function getSelectLoverListMenu() {
         name: 'SelectLover',
         type: 'ListMenu',
         className: 'divListMenu',
-        dataSource: [{ text: '择偶标准', arrow: 'horizontal', thumb: 'select_lover.png', url: '/mine/selectLover' }]
+        dataSource: [{ text: '择偶标准', arrow: 'horizontal', thumb: 'select_lover.png', url: '/boygirl/selectLover' }]
     }
 }
 
@@ -97,7 +87,7 @@ function getConditionTypeListMenu() {
         type: 'ListMenu',
         className: 'divConditionListMenu',
         isRightArraw: true,
-        url: '/mine/conditionType?ConditionTypeId=#{ConditionTypeId}&UserConditionTypeId=#{UserConditionTypeId}&title='+ encodeURIComponent('条件信息-')+'#{ConditionTypeName}',
+        url: '/boygirl/conditionType?ConditionTypeId=#{ConditionTypeId}&UserConditionTypeId=#{UserConditionTypeId}&title='+ encodeURIComponent('条件信息-')+'#{ConditionTypeName}',
         serviceDataSource: getConditionTypeDataSource()
     }
 }

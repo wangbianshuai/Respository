@@ -19,7 +19,7 @@ const config = {
         //获取红娘下用户条件类型列表
         post('getUserConditionTypesByMatchmaker', 'MarriageUser/GetUserConditionTypesByMatchmaker', 'getUserConditionTypesByMatchmaker', 'DataList'),
         //获取红娘下用户信息
-        post('getUserInfoByMatchmaker', 'MarriageUser/GetUserInfoByMatchmaker', 'getUserInfoByMatchmaker', 'UserInfo'),
+        post('getEntityData', 'MarriageUser/GetUserInfoByMatchmaker', 'getEntityData', 'UserInfo'),
         //更新红娘下用户状态
         post('updateUserStatusByMatchmaker', 'MarriageUser/UpdateUserStatusByMatchmaker', 'updateUserStatusByMatchmaker')
     ]

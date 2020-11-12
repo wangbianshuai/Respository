@@ -1,9 +1,9 @@
-//index 500-599
+//boygirl/userPhoto 800-899
 const dataActionTypes = {
   //get entity data
-  getEntityData: 500,
+  getEntityData: 800,
   //Save entity data
-  saveEntityData: 501
+  saveEntityData: 801,
 };
 
 const entity = { name: 'MarriageUserPhoto', primaryKey: 'PhotoId', isGet: true };
