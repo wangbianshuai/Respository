@@ -129,5 +129,65 @@ namespace Marriage.Api.Controllers
         {
             return await Task.Run(() => _MarriageUser.QueryUsersByMatchmaker(request));
         }
+
+        /// <summary>
+        /// 获取红娘下用户信息
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        [HttpPost]
+        [SwaggerOpenApiTokenParameter]
+        public async Task<GetUserByMatchmakerResponse> GetUserByMatchmaker(GetUserByMatchmakerRequest request)
+        {
+            return await Task.Run(() => _MarriageUser.GetUserByMatchmaker(request));
+        }
+
+        /// <summary>
+        /// 获取红娘下用户条件类型
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        [HttpPost]
+        [SwaggerOpenApiTokenParameter]
+        public async Task<GetUserConditionTypeByMatchmakerResponse> GetUserConditionTypeByMatchmaker(GetUserConditionTypeByMatchmakerRequest request)
+        {
+            return await Task.Run(() => _MarriageUser.GetUserConditionTypeByMatchmaker(request));
+        }
+
+        /// <summary>
+        /// 获取红娘下用户条件类型列表
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        [HttpPost]
+        [SwaggerOpenApiTokenParameter]
+        public async Task<GetUserConditionTypesByMatchmakerResponse> GetUserConditionTypesByMatchmaker(GetUserConditionTypesByMatchmakerRequest request)
+        {
+            return await Task.Run(() => _MarriageUser.GetUserConditionTypesByMatchmaker(request));
+        }
+
+        /// <summary>
+        /// 获取红娘下用户信息
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        [HttpPost]
+        [SwaggerOpenApiTokenParameter]
+        public async Task<GetUserInfoByMatchmakerResponse> GetUserInfoByMatchmaker(GetUserInfoByMatchmakerRequest request)
+        {
+            return await Task.Run(() => _MarriageUser.GetUserInfoByMatchmaker(request));
+        }
+
+        /// <summary>
+        /// 更新红娘下用户状态
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        [HttpPost]
+        [SwaggerOpenApiTokenParameter]
+        public async Task<UpdateUserStatusByMatchmakerResponse> UpdateUserStatusByMatchmaker(UpdateUserStatusByMatchmakerRequest request)
+        {
+            return await Task.Run(() => _MarriageUser.UpdateUserStatusByMatchmaker(request));
+        }
     }
 }

@@ -8,7 +8,7 @@ const dataActionTypes = {
     saveEntityData: 701,
 };
 
-const entity = { name: 'MarriageUser', primaryKey: 'UserId', isGet: true };
+const entity = { name: 'MarriageUser', primaryKey: 'userId'};
 
 module.exports = {
     name: "marriageUserEdit",
@@ -84,7 +84,7 @@ function getProperties() {
         getTextBox2('Remark', '个性签名', 'textarea', 1, 1, '个性签名', 500, true),
         {
             name: 'IsPublic',
-            label: '信息是否公开（公开广场中可见）',
+            label: '信息是否公开',
             type: 'Switch',
             isEdit: true,
             isReadOnly: true,

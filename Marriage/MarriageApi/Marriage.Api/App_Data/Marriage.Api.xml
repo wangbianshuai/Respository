@@ -82,6 +82,41 @@
             <param name="request"></param>
             <returns></returns>
         </member>
+        <member name="M:Marriage.Api.Controllers.MarriageUserController.GetUserByMatchmaker(Marriage.Entity.Application.MarriageUser.GetUserByMatchmakerRequest)">
+            <summary>
+            获取红娘下用户信息
+            </summary>
+            <param name="request"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Marriage.Api.Controllers.MarriageUserController.GetUserConditionTypeByMatchmaker(Marriage.Entity.Application.MarriageUser.GetUserConditionTypeByMatchmakerRequest)">
+            <summary>
+            获取红娘下用户条件类型
+            </summary>
+            <param name="request"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Marriage.Api.Controllers.MarriageUserController.GetUserConditionTypesByMatchmaker(Marriage.Entity.Application.MarriageUser.GetUserConditionTypesByMatchmakerRequest)">
+            <summary>
+            获取红娘下用户条件类型列表
+            </summary>
+            <param name="request"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Marriage.Api.Controllers.MarriageUserController.GetUserInfoByMatchmaker(Marriage.Entity.Application.MarriageUser.GetUserInfoByMatchmakerRequest)">
+            <summary>
+            获取红娘下用户信息
+            </summary>
+            <param name="request"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Marriage.Api.Controllers.MarriageUserController.UpdateUserStatusByMatchmaker(Marriage.Entity.Application.MarriageUser.UpdateUserStatusByMatchmakerRequest)">
+            <summary>
+            更新红娘下用户状态
+            </summary>
+            <param name="request"></param>
+            <returns></returns>
+        </member>
         <member name="T:Marriage.Api.Controllers.MarriageUserPhotoController">
             <summary>
             相亲照片
@@ -108,12 +143,19 @@
             <param name="request"></param>
             <returns></returns>
         </member>
+        <member name="M:Marriage.Api.Controllers.MarriageUserPhotoController.GetUserPhotoByMatchmaker(Marriage.Entity.Application.MarriageUserPhoto.GetUserPhotoByMatchmakerRequest)">
+            <summary>
+            获取红娘下用户生活照列表
+            </summary>
+            <param name="request"></param>
+            <returns></returns>
+        </member>
         <member name="T:Marriage.Api.Controllers.MatchmakerController">
             <summary>
             红娘
             </summary>
         </member>
-        <member name="M:Marriage.Api.Controllers.MatchmakerController.GetMatchmakerMatchmaker(Marriage.Entity.Application.Matchmaker.GetUserMatchmakerRequest)">
+        <member name="M:Marriage.Api.Controllers.MatchmakerController.GetUserMatchmaker(Marriage.Entity.Application.Matchmaker.GetUserMatchmakerRequest)">
             <summary>
             获取用户红娘
             </summary>

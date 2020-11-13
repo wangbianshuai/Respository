@@ -11,7 +11,7 @@ const renderItem = (property, data, i, onClick) => {
   const value = data[valueName];
 
   if (!data.arrow && property.isRightArraw) data.arrow = 'horizontal';
-  if (!data.url && property.url) data.url = Common.replaceDataContent(data, property.url);
+  if (!data.url && property.url) data.url = Common.replaceDataContent(data, property.url, true);
 
   const thumb = data.thumb ? Common.getImageUrl(data.thumb) : undefined;
 

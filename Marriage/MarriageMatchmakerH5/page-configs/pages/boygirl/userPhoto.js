@@ -6,7 +6,7 @@ const dataActionTypes = {
   saveEntityData: 801,
 };
 
-const entity = { name: 'MarriageUserPhoto', primaryKey: 'PhotoId', isGet: true };
+const entity = { name: 'MarriageUserPhoto', primaryKey: 'userId' };
 
 module.exports = {
   name: "userPhotoEdit",
@@ -19,34 +19,35 @@ module.exports = {
 
 function userPhotoEditView() {
   return {
-      name: "editView",
-      type: "View",
-      properties: [userPhotoEditView2()]
+    name: "editView",
+    type: "View",
+    properties: [userPhotoEditView2()]
   }
 }
 
 function userPhotoEditView2() {
   return {
-      name: "userPhotoEditEdit",
-      type: "View",
-      entity,
-      eventActionName: "getEntityData",
-      getEntityDataActionType: dataActionTypes.getEntityData,
-      properties: getProperties()
+    name: "userPhotoEditEdit",
+    type: "View",
+    entity,
+    eventActionName: "getEntityData",
+    getEntityDataActionType: dataActionTypes.getEntityData,
+    properties: getProperties()
   }
 }
 
 function getProperties() {
   return [{
-      name: 'DataList',
-      type: 'userPhotoList'
+    name: 'DataList',
+    type: 'userPhotoList',
+    isReadOnly: true,
   }]
 }
 
 function getEventActions() {
   return [{
-      name: "getEntityData",
-      type: "entityEdit/getEntityData",
-      editView: "userPhotoEditEdit"
+    name: "getEntityData",
+    type: "entityEdit/getEntityData",
+    editView: "userPhotoEditEdit"
   }]
 }

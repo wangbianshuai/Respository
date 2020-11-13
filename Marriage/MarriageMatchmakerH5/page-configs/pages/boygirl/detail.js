@@ -27,7 +27,6 @@ function getProperties() {
         getConditionTypeListMenu(),
         getSelectLoverListMenu(),
         getStatusListMenu(),
-        getExitListMenu()
     ]
 }
 
@@ -35,7 +34,7 @@ function getUserInfoView() {
     return {
         name: 'UserInfo',
         type: 'topUserInfo',
-        detailUrl: '/boygirl/userInfo'
+        detailUrl: '/boygirl/userInfo?userId=#{userId}'
     }
 }
 
@@ -52,7 +51,7 @@ function getPhotoListMenu() {
         name: 'UserPhoto',
         type: 'ListMenu',
         className: 'divListMenu',
-        dataSource: [{ text: '生活照', arrow: 'horizontal', thumb: 'photo.png', url: '/boygirl/userPhoto' }]
+        dataSource: [{ text: '生活照', arrow: 'horizontal', thumb: 'photo.png', url: '/boygirl/userPhoto?userId=#{userId}' }]
     }
 }
 
@@ -61,15 +60,7 @@ function getSelectLoverListMenu() {
         name: 'SelectLover',
         type: 'ListMenu',
         className: 'divListMenu',
-        dataSource: [{ text: '择偶标准', arrow: 'horizontal', thumb: 'select_lover.png', url: '/boygirl/selectLover' }]
-    }
-}
-
-function getExitListMenu() {
-    return {
-        name: 'exitListMenu',
-        type: 'ExitListMenu',
-        className: 'divExitListMenu',
+        dataSource: [{ text: '择偶标准', arrow: 'horizontal', thumb: 'select_lover.png', url: '/boygirl/selectLover?userId=#{userId}' }]
     }
 }
 
@@ -77,6 +68,9 @@ function getStatusListMenu() {
     return {
         name: 'StatusInfo',
         type: 'StatusListMenu',
+        arrow: 'horizontal',
+        isMenu: true,
+        url: '/boygirl/userStatus?userId=#{userId}',
         className: 'divListMenu',
     }
 }
@@ -87,7 +81,7 @@ function getConditionTypeListMenu() {
         type: 'ListMenu',
         className: 'divConditionListMenu',
         isRightArraw: true,
-        url: '/boygirl/conditionType?ConditionTypeId=#{ConditionTypeId}&UserConditionTypeId=#{UserConditionTypeId}&title='+ encodeURIComponent('条件信息-')+'#{ConditionTypeName}',
+        url: '/boygirl/conditionType?userId=#{userId}&ConditionTypeId=#{ConditionTypeId}&UserConditionTypeId=#{UserConditionTypeId}&title=' + encodeURIComponent('条件信息-') + '#{ConditionTypeName}',
         serviceDataSource: getConditionTypeDataSource()
     }
 }
@@ -100,6 +94,7 @@ function getConditionTypeDataSource() {
         serviceName: "MarriageUserService",
         actionName: "getUserConditionTypesByMatchmaker",
         isRefresh: true,
-        payload: { SelectType: 1 }
+        getPayload: 'getUserConditionTypesPayload',
+        payload: { SelectType: 1, }
     }
 }

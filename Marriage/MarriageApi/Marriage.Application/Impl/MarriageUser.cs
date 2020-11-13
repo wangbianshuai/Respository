@@ -828,7 +828,7 @@ namespace Marriage.Application.Impl
             Func<Entity.Domain.MarriageUser> execStep = () =>
             {
 
-                var entity = _MarriageUser.GetUserInfoById(Guid.Parse(request.LoginUserId));
+                var entity = _MarriageUser.GetUserInfoById(request.UserId);
 
                 if (entity != null)
                 {
@@ -838,7 +838,9 @@ namespace Marriage.Application.Impl
                     {
                         HeadImgUrl = entity.HeadImgUrl,
                         NickName = entity.NickName,
-                        Phone = entity.Phone
+                        Phone = entity.Phone,
+                        Sex = entity.Sex,
+                        Age = DateTime.Now.Year - entity.Birthday.Year
                     };
 
                     response.StatusInfo = new StatusInfo()

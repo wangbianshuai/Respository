@@ -155,7 +155,7 @@ namespace Marriage.Application.Impl
 
                 if (user.MatchmakerId != Guid.Parse(request.LoginUserId)) return null;
 
-                var list = _MarriageUserPhoto.GetUserPhotos(user.MatchmakerId);
+                var list = _MarriageUserPhoto.GetUserPhotos(user.UserId);
 
                 response.DataList = (from a in list
                                      select new UserPhoto()

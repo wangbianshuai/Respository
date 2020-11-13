@@ -29,7 +29,7 @@ namespace Marriage.Api.Controllers
         /// <returns></returns>
         [HttpPost]
         [SwaggerOpenApiTokenParameter]
-        public async Task<GetUserMatchmakerResponse> GetMatchmakerMatchmaker(GetUserMatchmakerRequest request)
+        public async Task<GetUserMatchmakerResponse> GetUserMatchmaker(GetUserMatchmakerRequest request)
         {
             return await Task.Run(() => _Matchmaker.GetUserMatchmaker(request));
         }

@@ -38,6 +38,15 @@ export default (props) => {
 
   let checked = Common.isNullOrEmpty(value) ? false : value.toString().toLowerCase() === "true" || parseInt(value, 10) === 1;
 
+  const { style, label } = property;
+
+  if (isReadOnly) {
+    return (<List.Item className={className} style={style} extra={checked ? '是' : '否'}>
+      {label}
+    </List.Item>
+    );
+  }
+
   return (<List.Item className={className} style={property.style} extra={<Switch checked={checked} disabled={disabled} onChange={onChange} />}>
     {property.label}
   </List.Item>)

@@ -1,5 +1,5 @@
 import React, { useState, useCallback, useEffect } from 'react';
-import { DatePicker, List } from 'antd-mobile';
+import { DatePicker, InputItem, List } from 'antd-mobile';
 import { Common } from 'UtilsCommon';
 import Base from './base';
 import styles from '../styles/view.scss';
@@ -36,6 +36,7 @@ export default (props) => {
     const [value, setValue] = useState(Base.getInitValue(property));
     const [isVisible, setIsVisible] = useState(property.isVisible !== false);
     const [disabled, setDisabled] = useState(!!property.disabled);
+    const [isReadOnly, setIsReadOnly] = useState(!!property.isReadOnly);
 
     const onChange = useCallback((v) => {
         const value2 = Common.getDateString(v, !property.isShowTime)
@@ -51,6 +52,7 @@ export default (props) => {
     property.setValue = (v) => setValue(v);
     property.getValue = () => Base.getValue(property, value);
     property.setDisabled = (v) => setDisabled(v);
+    property.setIsReadOnly = (v) => setIsReadOnly(v);
 
     if (!isVisible) return null;
 
@@ -61,7 +63,15 @@ export default (props) => {
     const { style, label, isShowTime, maxLength, placeholder, isNullable, isRed, minYear } = property;
 
     const mv = getMomentValue(property, value);
-    
+
+    if (isReadOnly) {
+        return (<InputItem className={className} style={style}
+            editable={!isReadOnly}
+            type='text'
+            value={value}>{label}</InputItem>
+        );
+    }
+
     return (
         <div className={className} style={style}>
             <DatePicker placeholder={placeholder}

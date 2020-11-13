@@ -45,6 +45,7 @@ export default (props) => {
     const { property, pageAxis } = Base.getProps(props);
     const [isVisible, setIsVisible] = useState(property.isVisible !== false);
     const [value, setValue] = useState(Base.getInitValue(property));
+    const [isReadOnly, setIsReadOnly] = useState(!!property.isReadOnly);
 
     const inputFile = useRef(null)
 
@@ -59,6 +60,7 @@ export default (props) => {
     property.setVisible = (v) => setIsVisible(v);
     property.setValue = (v) => setValue(v);
     property.getValue = () => value;
+    property.setIsReadOnly = (v) => setIsReadOnly(v);
 
     if (!isVisible) return null;
 
@@ -73,13 +75,18 @@ export default (props) => {
         <input type='file' accept='image/*' onChange={onChange} ref={inputFile} style={{ display: 'none' }} />
     </React.Fragment>
 
+    const render2 = <React.Fragment>
+        {label && <div className={styles.divLabel}><span>{label}</span></div>}
+        {value && <div className={styles.divImage3}><img src={value} alt='' /></div>}
+    </React.Fragment>
+
     if (property.isListItem) {
         return (<List.Item className={className} style={property.style} >
-            {render}
+            {isReadOnly ? render2 : render}
         </List.Item>)
     }
 
     return (<div className={className} style={style}>
-        {render}
+        {isReadOnly ? render2 : render}
     </div>)
 };
