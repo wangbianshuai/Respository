@@ -50,7 +50,7 @@ function getMatchmakerFeeListMenu() {
         name: 'MatchmarkerFee',
         type: 'ListMenu',
         className: 'divListMenu',
-        dataSource: [{ text: '佣金明细', arrow: 'horizontal', thumb: 'fee.png', url: '/mine/matchmakerFee' }]
+        dataSource: [{ text: '红包总金额', arrow: 'horizontal', thumb: 'fee.png', url: '/mine/matchmakerFee' }]
     }
 }
 function getExitListMenu() {

@@ -471,8 +471,6 @@ namespace Marriage.Application.Impl
         {
             Func<bool> execStep = () =>
             {
-                if (user.Status != 0) return false;
-
                 Entity.Domain.MarriageUser entity = new Entity.Domain.MarriageUser();
 
                 entity.Status = request.Status;
@@ -1106,7 +1104,7 @@ namespace Marriage.Application.Impl
             Func<bool> execStep = () =>
             {
                 if (request.Status == 2 && string.IsNullOrEmpty(request.NoPassReason)) this.SetValidateMessageRepsonse("审核不通过原因", response);
-                else if (request.Status != 1 && request.Status != 2) this.SetValidateMessageRepsonse("未知状态", response);
+                else if (request.Status < 0 || request.Status > 2) this.SetValidateMessageRepsonse("未知状态", response);
 
                 return response.Ack.IsSuccess;
             };

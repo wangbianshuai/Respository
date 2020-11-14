@@ -14,6 +14,8 @@ const config = {
         post('searchNoPass', 'MarriageUser/QueryUsersByMatchmaker', 'searchNoPass'),
         //获取红娘下用户信息
         post('getUserByMatchmaker', 'MarriageUser/GetUserByMatchmaker', 'getUserByMatchmaker'),
+        //获取红娘下用户信息
+        post('getUserStatusByMatchmaker', 'MarriageUser/GetUserByMatchmaker', 'getUserStatusByMatchmaker', 'StatusInfo'),
         //获取红娘下用户条件类型
         post('getUserConditionTypeByMatchmaker', 'MarriageUser/GetUserConditionTypeByMatchmaker', 'getUserConditionTypeByMatchmaker'),
         //获取红娘下用户条件类型列表

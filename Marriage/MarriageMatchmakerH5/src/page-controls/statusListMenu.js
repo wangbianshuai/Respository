@@ -19,7 +19,7 @@ export default (props) => {
 
   if (!property.isMenu && (Status === 1 || Status === undefined)) return null;
 
-  const statusName = Status === 0 ? '待审核' : Status === 2 ? '审核不通过' : '未知';
+  const statusName = Status === 0 ? '待审核' : Status === 1 ? '审核通过' : Status === 2 ? '审核不通过' : '未知';
 
   const className = Controls.Base.getClassName(property, styles);
 

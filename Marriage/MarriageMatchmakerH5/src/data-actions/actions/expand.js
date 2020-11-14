@@ -4,6 +4,7 @@ import boygirl_index from './boygirl/index';
 import boygirl_detail from './boygirl/detail';
 import boygirl_conditionType from './boygirl/conditionType';
 import boygirl_selectConditionType from './boygirl/selectConditionType';
+import boygirl_userStatus from './boygirl/userStatus';
 
 export default {
       mine_index,
@@ -11,5 +12,6 @@ export default {
       boygirl_index,
       boygirl_detail,
       boygirl_conditionType,
-      boygirl_selectConditionType
+      boygirl_selectConditionType,
+      boygirl_userStatus
 }
