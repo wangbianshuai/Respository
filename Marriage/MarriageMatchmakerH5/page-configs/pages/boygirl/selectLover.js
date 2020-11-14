@@ -33,7 +33,7 @@ function getConditionTypeListMenu() {
     type: 'ListMenu',
     className: 'divConditionListMenu',
     isRightArraw: true,
-    url: '/detail/selectConditionType?ConditionTypeId=#{ConditionTypeId}&UserConditionTypeId=#{UserConditionTypeId}&title='+ encodeURIComponent('择偶标准-')+'#{ConditionTypeName}',
+    url: '/boygirl/selectConditionType?&userId=#{userId}&ConditionTypeId=#{ConditionTypeId}&UserConditionTypeId=#{UserConditionTypeId}&title=' + encodeURIComponent('择偶标准-') + '#{ConditionTypeName}',
     serviceDataSource: getConditionTypeDataSource()
   }
 }
@@ -42,10 +42,11 @@ function getConditionTypeDataSource() {
   return {
     valueName: "UserItemCount",
     textName: "ConditionTypeName",
-    stateName: "getUserConditionTypes",
+    stateName: "getUserConditionTypesByMatchmaker",
     serviceName: "MarriageUserService",
-    actionName: "getUserConditionTypes",
+    actionName: "getUserConditionTypesByMatchmaker",
     isRefresh: true,
+    getPayload: 'getUserConditionTypesPayload',
     payload: { SelectType: 2 }
   }
 }

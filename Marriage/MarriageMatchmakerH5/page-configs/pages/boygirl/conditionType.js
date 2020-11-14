@@ -5,7 +5,7 @@ const dataActionTypes = {
   //Save entity data
   saveEntityData: 1101,
   //get entity data
-  getUserConditionType: 1102
+  getUserConditionTypeByMatchmaker: 1102
 };
 
 const entity = { name: 'ConditionType', primaryKey: 'ConditionTypeId' };
@@ -23,8 +23,8 @@ function getEditFormView() {
     type: "View",
     isDiv: true,
     entity,
-    eventActionName: "getUserConditionType",
-    getEntityDataActionType: dataActionTypes.getUserConditionType,
+    eventActionName: "getUserConditionTypeByMatchmaker",
+    getEntityDataActionType: dataActionTypes.getUserConditionTypeByMatchmaker,
     className: 'divConditionView',
     properties: [{
       name: "title",
@@ -61,7 +61,7 @@ function getEditView2() {
 
 function getEventActions() {
   return [{
-    name: "getUserConditionType",
+    name: "getUserConditionTypeByMatchmaker",
     type: "entityEdit/getEntityData",
     editView: "editFormView"
   }]

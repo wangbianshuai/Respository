@@ -119,8 +119,7 @@ export default (props) => {
   return (<div className={styles.divUserPhoto}>
     <NavBar className={styles.divNavBar}
       mode="mark"
-      rightContent={rightContent}
-    >生活照</NavBar>
+      rightContent={rightContent}>生活照</NavBar>
     <div className={styles.divData}>
       {value.map((m, i) => renderItem(m, i, isEdit))}
     </div>

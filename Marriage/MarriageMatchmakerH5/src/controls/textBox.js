@@ -87,6 +87,7 @@ export default (props) => {
     if (isReadOnly) {
         isRed2 = false;
         isNullable = true;
+        property.placeHolder = ''
     }
 
     if (isLabelItem) {
