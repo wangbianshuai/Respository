@@ -24,6 +24,7 @@ function getProperties() {
     return [
         getUserInfoView(),
         getMatchmakerFeeListMenu(),
+        getQrCodeListMenu(),
         getStatusListMenu(),
         getExitListMenu()
     ]
@@ -53,6 +54,16 @@ function getMatchmakerFeeListMenu() {
         dataSource: [{ text: '红包总金额', arrow: 'horizontal', thumb: 'fee.png', url: '/mine/matchmakerFee' }]
     }
 }
+
+function getQrCodeListMenu() {
+    return {
+        name: 'MatchmarkerFee',
+        type: 'ListMenu',
+        className: 'divListMenu',
+        dataSource: [{ text: '我的二维码', arrow: 'horizontal', thumb: 'qrcode.png', url: '/mine/myqrcode' }]
+    }
+}
+
 function getExitListMenu() {
     return {
         name: 'exitListMenu',
