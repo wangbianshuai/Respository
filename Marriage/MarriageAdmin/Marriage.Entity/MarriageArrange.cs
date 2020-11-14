@@ -1,9 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using OpenDataAccessCore.Entity;
-
+﻿using OpenDataAccessCore.Entity;
+using System; 
+using System.Collections.Generic; 
+using System.Linq;  
+using System.Text; 
+ 
 namespace Marriage.Entity
 {
     [TableProperty(Name = "t_ArrangeMarriage", PrimaryKey = "ArrangeMarriageId")]
@@ -38,10 +38,18 @@ namespace Marriage.Entity
         /// 相亲时间
         /// </summary> 
         public DateTime MarriageDate { get; set; }
-        /// <summary>
+        /// <summary> 
         /// 相亲地点
-        /// </summary>
+        /// </summary> 
         public string MarriageAddress { get; set; }
+        /// <summary> 
+        /// 相亲情况
+        /// </summary> 
+        public string MarriageContent { get; set; }
+        /// <summary> 
+        /// 状态：0：待相亲，1：有意向，2：无意向，3：牵手成功，4：订婚，5：结婚，6：分手，7：取消
+        /// </summary> 
+        public byte Status { get; set; }
         /// <summary> 
         /// 男生是否同意
         /// </summary> 
@@ -58,6 +66,34 @@ namespace Marriage.Entity
         /// 女生不同意原因
         /// </summary> 
         public string NoWomanAgreeRemark { get; set; }
+        /// <summary>
+        /// 取消原因
+        /// </summary>
+        public string CancelReason { get; set; }
+        /// <summary> 
+        /// 费用日期
+        /// </summary> 
+        public DateTime FeeDate { get; set; }
+        /// <summary> 
+        /// 订婚日期
+        /// </summary> 
+        public DateTime BookMarryDate { get; set; }
+        /// <summary> 
+        /// 结婚日期
+        /// </summary> 
+        public DateTime MarryDate { get; set; }
+        /// <summary> 
+        /// 分手日期
+        /// </summary> 
+        public DateTime BreakUpDate { get; set; }
+        /// <summary> 
+        /// 分手原因
+        /// </summary> 
+        public string BreakUpReason { get; set; }
+        /// <summary> 
+        /// 相亲总费用
+        /// </summary> 
+        public decimal Amount { get; set; }
         /// <summary> 
         /// 备注
         /// </summary> 
@@ -85,12 +121,12 @@ namespace Marriage.Entity
         /// <summary> 
         /// 行版本
         /// </summary> 
-        public string RowVersion { get; set; }
     }
 
     [TableProperty(Name = "v_MarriageArrange", PrimaryKey = "MarriageArrangeId", NoSelectNames = "IsDelete")]
     [RequestMethod(IsDelete = false, IsPost = false, IsPut = false)]
     public class ViewMarriageArrange : MarriageArrange
     {
+        public string StatusName { get; set; }
     }
 }

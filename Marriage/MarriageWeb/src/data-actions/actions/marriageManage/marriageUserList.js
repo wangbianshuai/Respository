@@ -12,7 +12,7 @@ export default {
       return;
     }
 
-    const entityData = { ...selectData, RowVersion, MatchmakerId: primaryKey }
+    const entityData = { ...selectData, RowVersion, UserId: primaryKey }
 
     const pathQuery = `(${primaryKey})`;
     this.dvaActions.dispatch(this.serviceName, "updateStatus", { pathQuery, Matchmaker: entityData, action: this.getAction(id, actionType) });

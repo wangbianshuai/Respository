@@ -63,7 +63,7 @@ namespace Marriage.Entity
         /// </summary> 
         public DateTime Birthday { get; set; }
         /// <summary> 
-        /// 出生时辰
+        /// 时辰
         /// </summary> 
         public int BirthTime { get; set; }
         /// <summary> 
@@ -75,17 +75,21 @@ namespace Marriage.Entity
         /// </summary> 
         public string BirthEight { get; set; }
         /// <summary> 
-        /// 所属红娘
-        /// </summary> 
-        public Guid MatchmakerId { get; set; }
-        /// <summary> 
         /// 是否公开
         /// </summary> 
         public byte IsPublic { get; set; }
         /// <summary> 
+        /// 所属红娘
+        /// </summary> 
+        public Guid MatchmakerId { get; set; }
+        /// <summary> 
         /// 状态：0：待审核，1：审核通过，2：审核不通过，3：关闭
         /// </summary> 
         public byte Status { get; set; }
+        /// <summary> 
+        /// 更新状态时间
+        /// </summary> 
+        public DateTime UpdateStatusDate { get; set; }
         /// <summary> 
         /// 审核不通过原因
         /// </summary> 
@@ -125,7 +129,6 @@ namespace Marriage.Entity
         /// <summary> 
         /// 行版本
         /// </summary> 
-        public string RowVersion { get; set; }
     }
 
     [TableProperty(Name = "v_MarriageUser", PrimaryKey = "UserId", NoSelectNames = "IsDelete")]
@@ -135,5 +138,11 @@ namespace Marriage.Entity
         public string StatusName { get; set; }
 
         public string SexName { get; set; }
+
+        public int Age { get; set; }
+
+        public string Shengxiao { get; set; }
+
+        public string MatchmakerName { get; set; }
     }
 }

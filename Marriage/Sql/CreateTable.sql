@@ -239,9 +239,10 @@ select a.*,
 case when a.Status=0 then '待审核' when a.Status=1 then '审核通过'
 when a.Status=2 then '审核不通过' when a.Status=3 then '关闭' else '未知' end StatusName,
 case when a.Sex=1 then '男' when a.Sex=2 then '女' else '未知' end SexName,
-year(GETDATE())- YEAR(Birthday) as Age,
+year(GETDATE())- YEAR(Birthday) as Age,b.Name as MatchmakerName,
 SUBSTRING(LunarBirthday,4,1) as Shengxiao
 from t_MarriageUser a 
+left join t_Matchmaker b on a.MatchmakerId=b.MatchmakerId
 where a.IsDelete=0
 go
 
@@ -297,6 +298,7 @@ exec proc_AddCellExplanation '男生是否同意','t_MarriageArrange','IsManAgree'
 exec proc_AddCellExplanation '男生不同意原因','t_MarriageArrange','NoManAgreeRemark'
 exec proc_AddCellExplanation '女生是否同意','t_MarriageArrange','IsWomanAgree'
 exec proc_AddCellExplanation '女生不同意原因','t_MarriageArrange','NoWomanAgreeRemark'
+exec proc_AddCellExplanation '取消原因','t_MarriageArrange','CancelReason'
 exec proc_AddCellExplanation '费用日期','t_MarriageArrange','FeeDate'
 exec proc_AddCellExplanation '订婚日期','t_MarriageArrange','BookMarryDate'
 exec proc_AddCellExplanation '结婚日期','t_MarriageArrange','MarryDate'
@@ -712,7 +714,7 @@ MakePairDetailId uniqueidentifier not null,                    --配对明细Id
 ConditionTypeId uniqueidentifier not null,                     --条件类型Id
 ConditionTypeNmae nvarchar(50) not null,                       --条件类型
 ConditionItemId uniqueidentifier not null,                     --条件选项Id
-ConditionItemTile nvarchar(100) not null,                      --条件标题
+ConditionItemTitle nvarchar(100) not null,                     --条件标题
 SelfSelectValue nvarchar(500) not null,                        --自己选择值
 OtherSideSelectValue nvarchar(500) not null,                   --对方选择值
 PercentValue decimal(8,2) not null                             --匹配度（%）
@@ -724,7 +726,7 @@ exec proc_AddCellExplanation '配对明细Id','t_MarriageMakePairRecord','MakePairDe
 exec proc_AddCellExplanation '条件类型Id','t_MarriageMakePairRecord','ConditionTypeId'
 exec proc_AddCellExplanation '条件类型','t_MarriageMakePairRecord','ConditionTypeNmae'
 exec proc_AddCellExplanation '条件选项Id','t_MarriageMakePairRecord','ConditionItemId'
-exec proc_AddCellExplanation '条件标题','t_MarriageMakePairRecord','ConditionItemTile'
+exec proc_AddCellExplanation '条件标题','t_MarriageMakePairRecord','ConditionItemTitle'
 exec proc_AddCellExplanation '自己选择值','t_MarriageMakePairRecord','SelfSelectValue'
 exec proc_AddCellExplanation '对方选择值','t_MarriageMakePairRecord','OtherSideSelectValue'
 exec proc_AddCellExplanation '匹配度（%）','t_MarriageMakePairRecord','PercentValue'
