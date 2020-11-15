@@ -24,7 +24,7 @@ const getOptions = (property, view, pageAxis, parentValue) => {
 const getSelectData = (property, value) => {
     if (Common.isNullOrEmpty(value)) return null;
 
-    const { textName } = Base.getValueTextName(property);
+    const { textName } = property;
 
     return Common.arrayFirst(property.dataSource, f => Common.isEquals(f[textName], value));
 }

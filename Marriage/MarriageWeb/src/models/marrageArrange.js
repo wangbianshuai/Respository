@@ -1,11 +1,10 @@
 import DvaIndex from "DvaCommon";
 import { EntityModelConfig } from 'Configs';
 
-const config = EntityModelConfig('MarriageUser');
+const config = EntityModelConfig('MarriageArrange');
 
-config.actionList.push(post("updateStatus", "MarriageUser/UpdateStatus", "updateStatus", "MarriageUser", true));
-config.actionList.push(get("getViewEntityData", "ViewMarriageUser", "getViewEntityData", "ViewMarriageUser", true));
-config.actionList.push(get("getMarriageUsers", "MarriageUser/GetMarriageUsers", "getMarriageUsers", "MarriageUser", true));
+config.actionList.push(post("updateStatus", "MarriageArrange/UpdateStatus", "updateStatus", "MarriageArrange", true));
+config.actionList.push(get("getViewEntityData", "ViewMarriageArrange", "getViewEntityData", "ViewMarriageArrange", true));
 
 function post(actionName, url, stateName, dataKey, isToken) {
     return { actionName, url, method: "POST", stateName, dataKey, isToken }

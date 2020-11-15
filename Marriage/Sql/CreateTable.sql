@@ -274,6 +274,25 @@ where a.IsDelete=0
 go
 
 
+if exists(select * from sysobjects where name='v_MarriageUser2')
+drop view v_MarriageUser2
+go
+
+create view v_MarriageUser2
+as
+select a.UserId,a.Sex,
+a.Name +'('+ a.Phone+')' UserName,
+a.MatchmakerId,a.UpdateStatusDate
+from t_MarriageUser a
+where a.IsDelete=0 and a.Status=1
+and not exists
+(
+select 1 from t_MarriageArrange b where (a.UserId = b.ManUserId or a.UserId=b.WomanUserId) 
+and b.Status in (3,4,5)
+)
+go
+
+
 --16、相亲安排信息表（t_ArrangeMarriage）
 if exists(select * from sysobjects where name='t_MarriageArrange')
 drop table t_MarriageArrange
@@ -290,7 +309,7 @@ WomanMatchmakerId uniqueidentifier not null,                   --女生红娘
 AppMatchmakerId uniqueidentifier not null,                     --平台红娘
 MarriageDate datetime not null,                                --相亲时间
 MarriageAddress nvarchar(100),                                 --相亲地点
-MarriageContent nvarchar(2000) not null,                       --相亲情况
+MarriageContent nvarchar(500),                                 --相亲情况
 SourceType tinyint not null,                                   --来源类型：1：相亲匹配，2：相亲广场，3：相亲牵线
 Status tinyint not null,                                       --状态：0：待相亲，1：有意向，2：无意向，3：牵手成功，4：订婚，5：结婚，6：分手，7：取消
 IsManAgree tinyint not null default(0),                        --男生是否同意
