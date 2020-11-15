@@ -29,6 +29,7 @@ export default (props) => {
   return (<div className={styles.divUserPhoto}>
     <div className={styles.divData}>
       {value.map((m, i) => renderItem(m, i, value.length === i + 1))}
+      {value.length === 0 && <span>未上传照片</span>}
     </div>
   </div>)
 };
