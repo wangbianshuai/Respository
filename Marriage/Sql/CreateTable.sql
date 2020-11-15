@@ -451,6 +451,17 @@ exec proc_AddCellExplanation '创建人','t_MarriageUserPhoto','CreateUser'
 exec proc_AddCellExplanation '创建时间','t_MarriageUserPhoto','CreateDate'
 go
 
+if exists(select * from sysobjects where name='v_MarriageUserPhoto')
+drop view v_MarriageUserPhoto
+go
+
+create view v_MarriageUserPhoto
+as
+select a.*
+from t_MarriageUserPhoto a 
+where a.IsDelete=0
+go
+
 
 --8、数据源（t_DataSource）
 if exists(select * from sysobjects where name='t_DataSource')

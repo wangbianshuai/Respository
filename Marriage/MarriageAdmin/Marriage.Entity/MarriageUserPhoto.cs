@@ -6,9 +6,9 @@ using OpenDataAccessCore.Entity;
 
 namespace Marriage.Entity
 {
-    [TableProperty(Name = "t_MarriagePhoto", PrimaryKey = "PhotoId")]
+    [TableProperty(Name = "t_MarriageUserPhoto", PrimaryKey = "PhotoId")]
     [RequestMethod(IsDelete = false)]
-    public class MarriagePhoto : EntityModel, IEntity
+    public class MarriageUserPhoto : EntityModel, IEntity
     {
         /// <summary> 
         /// 主键
@@ -34,5 +34,11 @@ namespace Marriage.Entity
         /// 创建时间
         /// </summary> 
         public DateTime CreateDate { get; set; }
+    }
+
+    [TableProperty(Name = "v_MarriageUserPhoto", PrimaryKey = "PhotoId", NoSelectNames = "IsDelete")]
+    [RequestMethod(IsDelete = false, IsPost = false, IsPut = false)]
+    public class ViewMarriageUserPhoto : MarriageUserPhoto
+    {
     }
 }

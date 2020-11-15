@@ -1,5 +1,5 @@
 const marriageUser = require("../../entities/marriageUser");
-const { getButton, assignProporties, getTextBox, getSelect, getSelect2, getRadio, createGuid } = require("../../Common");
+const { getButton, assignProporties, getTextBox, getSelect, getSelect2, createGuid } = require("../../Common");
 
 //marriageManage/marriageUserList 900-999
 const dataActionTypes = {
@@ -12,7 +12,9 @@ const dataActionTypes = {
   //审核
   updateStatus: 903,
   //获取实体数据
-  getViewEntityData: 904
+  getViewEntityData: 904,
+  //获取生活照
+  getMarriageUserPhotos: 905
 };
 
 const { name, primaryKey, viewName } = marriageUser;
@@ -176,6 +178,17 @@ function getEventActions() {
     lookView: "lookDetailView"
   },
   {
+    name: "lookPhoto",
+    type: "dialog/showDialogLookData",
+    dialogView: "lookPhotoView",
+    lookView: "lookPhotoView"
+  },
+  {
+    name: "getMarriageUserPhotos",
+    type: "entityEdit/getEntityData",
+    editView: "lookPhotoView"
+  },
+  {
     name: "getViewEntityData",
     type: "entityEdit/getEntityData",
     editView: "lookDetailView"
@@ -192,9 +205,31 @@ function getEventActions() {
 function getDialogViews() {
   return [
     getAddUserTagView(),
-    getLookDetailView()
+    getLookDetailView(),
+    getLookPhotoView()
   ]
 }
+
+function getLookPhotoView() {
+  return {
+    id: createGuid(),
+    dialogId: createGuid(),
+    name: "lookPhotoView",
+    entity,
+    type: "View",
+    dialogTitle: "生活照 ",
+    dialogWidth: 860,
+    className: "divView2",
+    eventActionName: "getMarriageUserPhotos",
+    getEntityDataActionType: dataActionTypes.getMarriageUserPhotos,
+    dialogStyle: { height: 620, overflow: "auto" },
+    properties: assignProporties(entity, [{
+      name: 'ViewMarriageUserPhoto',
+      type: 'marriageUserPhotoList'
+    }])
+  }
+}
+
 
 function getLookDetailView() {
   return {

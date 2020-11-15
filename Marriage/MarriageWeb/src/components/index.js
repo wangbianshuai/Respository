@@ -8,10 +8,12 @@ import WhiteSpace from "./whiteSpace";
 import Tabs from "./tabs";
 import ComplexDataGrid from "./complexDataGrid";
 import ModalDialog from './modalDialog';
-import ModalDialogList from './modalDialogList'
+import ModalDialogList from './modalDialogList';
+import Base from './base';
 
 export default {
     View,
+    Base,
     RowsColsView,
     PropertyItem,
     DataGridView,

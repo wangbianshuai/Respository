@@ -220,7 +220,7 @@ export default class EntityEdit extends BaseIndex {
 
         let entityData = {}
 
-        if (editView.entity) {
+        if (editView.entity && !editView.entity.isGet) {
             const { primaryKey } = editView.entity;
 
             var id = pageAxis.pageData[primaryKey];

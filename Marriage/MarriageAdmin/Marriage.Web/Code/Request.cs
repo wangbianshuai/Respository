@@ -43,6 +43,8 @@ namespace Marriage.Web.Code
             EntityType.SetEntityType<Entity.ViewMatchmaker>();
             EntityType.SetEntityType<Entity.MarriageUser>();
             EntityType.SetEntityType<Entity.ViewMarriageUser>();
+            EntityType.SetEntityType<Entity.MarriageUserPhoto>();
+            EntityType.SetEntityType<Entity.ViewMarriageUserPhoto>();
 
             OpenDataAccessCore.Service.ComponentType.SetComponentType<Component.DictionaryConfig>();
             OpenDataAccessCore.Service.ComponentType.SetComponentType<Component.AppUser>();

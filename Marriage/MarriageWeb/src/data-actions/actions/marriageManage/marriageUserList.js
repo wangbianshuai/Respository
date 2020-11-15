@@ -23,5 +23,10 @@ export default {
     const primaryKeyValue = data.entityData[primaryKey];
     const pathQuery = `${method}(${primaryKeyValue})`;
     this.dvaActions.dispatch(this.serviceName, "getViewEntityData", { pathQuery, action: this.getAction(id, actionType) });
+  },
+  getMarriageUserPhotos(id, actionType, data) {
+    const primaryKeyValue = data.entityData.UserId;
+    const pathQuery = `?$select=PhotoId,PhotoUrl&$filter=MarriageUserId eq '${primaryKeyValue}'&$orderby CreateDate desc`;
+    this.dvaActions.dispatch('MarriageUserPhotoService', "getMarriageUserPhotos", { pathQuery, action: this.getAction(id, actionType) });
   }
 }
