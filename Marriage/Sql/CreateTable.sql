@@ -523,6 +523,18 @@ exec proc_AddCellExplanation '名称','t_DataSourceItem','Name'
 exec proc_AddCellExplanation '值','t_DataSourceItem','Value'
 go
 
+
+if exists(select * from sysobjects where name='v_DataSourceItem')
+drop view v_DataSourceItem
+go
+
+create view v_DataSourceItem
+as
+select a.*
+from t_DataSourceItem a, t_DataSource b where a.DataSourceId=b.DataSourceId and  b.IsDelete=0
+go
+
+
 --10、条件类型信息表（t_ConditionType）
 if exists(select * from sysobjects where name='t_ConditionType')
 drop table t_ConditionType
@@ -693,6 +705,30 @@ and a.ConditionTypeId= c.ConditionTypeId
 and a.ConditionTypeId= d.ConditionTypeId
 and d.IsDelete=0
 go
+
+if exists(select * from sysobjects where name='v_UserConditionType2')
+drop view v_UserConditionType2
+go
+
+create view v_UserConditionType2
+as
+select a.*,b.Name ConditionTypeName from t_UserConditionType a,t_ConditionType b
+where a.ConditionTypeId=b.ConditionTypeId
+and b.IsDelete=0
+go
+
+if exists(select * from sysobjects where name='v_UserConditionSelectValue')
+drop view v_UserConditionSelectValue
+go
+
+create view v_UserConditionSelectValue
+as
+select a.*,b.UserId,b.SelectType,c.DataSourceId,c.DataType,c.DisplayIndex,c.IsInterval,c.IsSingle,c.Sex,c.Title from t_UserConditionSelectValue a, t_UserConditionType b,
+t_ConditionItem c 
+where a.UserConditionTypeId=b.UserConditionTypeId
+and a.ConditionItemId= c.ItemId
+go
+
 
 --13、相亲配对计算信息表
 if exists(select * from sysobjects where name='t_MarriageMakePair')

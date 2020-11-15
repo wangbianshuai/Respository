@@ -14,7 +14,11 @@ const dataActionTypes = {
   //获取实体数据
   getViewEntityData: 904,
   //获取生活照
-  getMarriageUserPhotos: 905
+  getMarriageUserPhotos: 905,
+  //获取用户条件类型1
+  getUserConditionType1: 906,
+  //获取用户条件类型2
+  getUserConditionType2: 907
 };
 
 const { name, primaryKey, viewName } = marriageUser;
@@ -136,7 +140,6 @@ function lookPhoto() {
   }
 }
 
-
 function lookConditionType() {
   return {
     name: "lookConditionType",
@@ -184,9 +187,31 @@ function getEventActions() {
     lookView: "lookPhotoView"
   },
   {
+    name: "lookConditionType",
+    type: "dialog/showDialogLookData",
+    dialogView: "lookConditionTypeView",
+    lookView: "lookConditionTypeView"
+  },
+  {
+    name: "lookSelectConditionType",
+    type: "dialog/showDialogLookData",
+    dialogView: "lookSelectConditionTypeView",
+    lookView: "lookSelectConditionTypeView"
+  },
+  {
     name: "getMarriageUserPhotos",
     type: "entityEdit/getEntityData",
     editView: "lookPhotoView"
+  },
+  {
+    name: "getUserConditionType1",
+    type: "entityEdit/getEntityData",
+    editView: "lookConditionTypeView"
+  },
+  {
+    name: "getUserConditionType2",
+    type: "entityEdit/getEntityData",
+    editView: "lookSelectConditionTypeView"
   },
   {
     name: "getViewEntityData",
@@ -206,8 +231,53 @@ function getDialogViews() {
   return [
     getAddUserTagView(),
     getLookDetailView(),
-    getLookPhotoView()
+    getLookPhotoView(),
+    getLookConditionTypeView(),
+    getLookSelectConditionTypeView()
   ]
+}
+
+function getLookSelectConditionTypeView() {
+  return {
+    id: createGuid(),
+    dialogId: createGuid(),
+    name: "lookSelectConditionTypeView",
+    entity,
+    type: "View",
+    dialogTitle: "条件信息 ",
+    dialogWidth: 860,
+    className: "divView2",
+    eventActionName: "getUserConditionType2",
+    getEntityDataActionType: dataActionTypes.getUserConditionType2,
+    dialogStyle: { height: 620, overflow: "auto" },
+    properties: assignProporties(entity, [{
+      name: 'ConditionTypes2',
+      type: 'conditionTypePage',
+      selectType: 2
+    }])
+  }
+}
+
+
+function getLookConditionTypeView() {
+  return {
+    id: createGuid(),
+    dialogId: createGuid(),
+    name: "lookConditionTypeView",
+    entity,
+    type: "View",
+    dialogTitle: "条件信息 ",
+    dialogWidth: 860,
+    className: "divView2",
+    eventActionName: "getUserConditionType1",
+    getEntityDataActionType: dataActionTypes.getUserConditionType1,
+    dialogStyle: { height: 620, overflow: "auto" },
+    properties: assignProporties(entity, [{
+      name: 'ConditionTypes1',
+      type: 'conditionTypePage',
+      selectType: 1
+    }])
+  }
 }
 
 function getLookPhotoView() {

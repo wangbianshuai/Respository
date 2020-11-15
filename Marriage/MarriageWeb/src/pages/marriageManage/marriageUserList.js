@@ -8,4 +8,4 @@ export default EntityPageList("marriageManage_marriageUserList", "MarriageUser",
     updateApprovalDataLoad(props, aciton, selectDataList) {
         aciton.currentValue = selectDataList[0];
     }
-}, ['updateStatus', 'getViewEntityData', 'MarriageUserPhotoService/getMarriageUserPhotos']);
+}, ['updateStatus', 'getViewEntityData', 'MarriageUserPhotoService/getMarriageUserPhotos', 'UserConditionTypeService/getUserConditionType1', 'UserConditionTypeService/getUserConditionType2']);

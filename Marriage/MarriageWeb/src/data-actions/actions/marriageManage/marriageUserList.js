@@ -28,5 +28,15 @@ export default {
     const primaryKeyValue = data.entityData.UserId;
     const pathQuery = `?$select=PhotoId,PhotoUrl&$filter=MarriageUserId eq '${primaryKeyValue}'&$orderby CreateDate desc`;
     this.dvaActions.dispatch('MarriageUserPhotoService', "getMarriageUserPhotos", { pathQuery, action: this.getAction(id, actionType) });
+  },
+  getUserConditionType1(id, actionType, data) {
+    const primaryKeyValue = data.entityData.UserId;
+    const entityData = { UserId: primaryKeyValue, SelectType: 1 }
+    this.dvaActions.dispatch('UserConditionTypeService', "getUserConditionType1", { UserConditionType: entityData, action: this.getAction(id, actionType) });
+  },
+  getUserConditionType2(id, actionType, data) {
+    const primaryKeyValue = data.entityData.UserId;
+    const entityData = { UserId: primaryKeyValue, SelectType: 2 }
+    this.dvaActions.dispatch('UserConditionTypeService', "getUserConditionType2", { UserConditionType: entityData, action: this.getAction(id, actionType) });
   }
 }
