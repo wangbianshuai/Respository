@@ -56,7 +56,7 @@ export function addUrlRandom(url) {
     return url
 }
 
-export function AddUrlParams(url, name, value) {
+export function addUrlParams(url, name, value) {
     if (isNullOrEmpty(url)) return ""
     if (value === undefined || value === null) return url;
     url += url.indexOf("?") >= 0 ? "&" : "?"

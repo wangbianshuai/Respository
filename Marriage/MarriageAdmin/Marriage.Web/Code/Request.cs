@@ -46,6 +46,10 @@ namespace Marriage.Web.Code
             EntityType.SetEntityType<Entity.MarriageUserPhoto>();
             EntityType.SetEntityType<Entity.ViewMarriageUserPhoto>();
             EntityType.SetEntityType<Entity.UserConditionType>();
+            EntityType.SetEntityType<Entity.ViewMatchmakerFeeDetail>();
+            EntityType.SetEntityType<Entity.MatchmakerFeeDetail>();
+            EntityType.SetEntityType<Entity.MarriageArrange>();
+            EntityType.SetEntityType<Entity.ViewMarriageArrange>();
 
             OpenDataAccessCore.Service.ComponentType.SetComponentType<Component.DictionaryConfig>();
             OpenDataAccessCore.Service.ComponentType.SetComponentType<Component.AppUser>();
@@ -54,6 +58,8 @@ namespace Marriage.Web.Code
             OpenDataAccessCore.Service.ComponentType.SetComponentType<Component.Matchmaker>();
             OpenDataAccessCore.Service.ComponentType.SetComponentType<Component.MarriageUser>();
             OpenDataAccessCore.Service.ComponentType.SetComponentType<Component.UserConditionType>();
+            OpenDataAccessCore.Service.ComponentType.SetComponentType<Component.ViewMatchmakerFeeDetail>();
+            OpenDataAccessCore.Service.ComponentType.SetComponentType<Component.MarriageArrange>();
 
             _DirectRequestList = new List<string>()
             {

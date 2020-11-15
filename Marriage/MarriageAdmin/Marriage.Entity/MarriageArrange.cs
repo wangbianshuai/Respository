@@ -51,6 +51,10 @@ namespace Marriage.Entity
         /// </summary> 
         public byte Status { get; set; }
         /// <summary> 
+        /// 来源类型：1：相亲匹配，2：相亲广场，3：相亲牵线
+        /// </summary> 
+        public byte SourceType { get; set; }
+        /// <summary> 
         /// 男生是否同意
         /// </summary> 
         public byte IsManAgree { get; set; }
@@ -128,5 +132,17 @@ namespace Marriage.Entity
     public class ViewMarriageArrange : MarriageArrange
     {
         public string StatusName { get; set; }
+
+        public string SourceTypeName { get; set; }
+
+        public string AppMatchmakerName { get; set; }
+
+        public string ManMatchmakerName { get; set; }
+
+        public string WomanMatchmakerName { get; set; }
+
+        public string ManUserName { get; set; }
+
+        public string WomanUserName { get; set; }
     }
 }

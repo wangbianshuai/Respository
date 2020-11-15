@@ -7,7 +7,7 @@ using OpenDataAccessCore.Entity;
 namespace Marriage.Entity
 {
     [TableProperty(Name = "t_MatchmakerFeeDetail", PrimaryKey = "DetailId")]
-    [RequestMethod(IsDelete = false)]
+    [RequestMethod(IsDelete = false, IsPost = false, IsPut = false, IsGet = false)]
     public class MatchmakerFeeDetail : EntityModel, IEntity
     {
         /// <summary> 
@@ -19,9 +19,9 @@ namespace Marriage.Entity
         /// </summary> 
         public Guid MatchmakerId { get; set; }
         /// <summary> 
-        /// 相亲成功Id
+        /// 相亲安排Id
         /// </summary> 
-        public Guid MarriageSccuessId { get; set; }
+        public Guid MarriageArrangeId { get; set; }
         /// <summary> 
         /// 费用日期
         /// </summary> 
@@ -68,5 +68,14 @@ namespace Marriage.Entity
     [RequestMethod(IsDelete = false, IsPost = false, IsPut = false)]
     public class ViewMatchmakerFeeDetail : MatchmakerFeeDetail
     {
+        public int ArrangeId { get; set; }
+
+        public string ManName { get; set; }
+
+        public string WomanName { get; set; }
+
+        public string MatchmakerName { get; set; }
+
+        public byte IsAppMatchmaker { get; set; }
     }
 }

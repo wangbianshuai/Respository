@@ -282,6 +282,7 @@ go
 create table t_MarriageArrange
 (
 MarriageArrangeId uniqueidentifier not null primary key,       --主键
+ArrangeId int not null identity(10001,1),                      --编号
 ManUserId uniqueidentifier not null,                           --男生ID
 WomanUserId uniqueidentifier not null,                         --女生ID
 ManMatchmakerId uniqueidentifier not null,                     --男生红娘
@@ -290,6 +291,7 @@ AppMatchmakerId uniqueidentifier not null,                     --平台红娘
 MarriageDate datetime not null,                                --相亲时间
 MarriageAddress nvarchar(100),                                 --相亲地点
 MarriageContent nvarchar(2000) not null,                       --相亲情况
+SourceType tinyint not null,                                   --来源类型：1：相亲匹配，2：相亲广场，3：相亲牵线
 Status tinyint not null,                                       --状态：0：待相亲，1：有意向，2：无意向，3：牵手成功，4：订婚，5：结婚，6：分手，7：取消
 IsManAgree tinyint not null default(0),                        --男生是否同意
 NoManAgreeRemark nvarchar(500),                                --男生不同意原因
@@ -321,6 +323,7 @@ exec proc_AddCellExplanation '平台红娘','t_MarriageArrange','AppMatchmakerId'
 exec proc_AddCellExplanation '相亲时间','t_MarriageArrange','MarriageDate'
 exec proc_AddCellExplanation '相亲地点','t_MarriageArrange','MarriageAddress'
 exec proc_AddCellExplanation '相亲情况','t_MarriageArrange','MarriageContent'
+exec proc_AddCellExplanation '来源类型：1：相亲匹配，2：相亲广场，3：相亲牵线','t_MarriageArrange','SourceType'
 exec proc_AddCellExplanation '状态：0：待相亲，1：有意向，2：无意向，3：牵手成功，4：订婚，5：结婚，6：分手，7：取消','t_MarriageArrange','Status'
 exec proc_AddCellExplanation '男生是否同意','t_MarriageArrange','IsManAgree'
 exec proc_AddCellExplanation '男生不同意原因','t_MarriageArrange','NoManAgreeRemark'
@@ -352,8 +355,21 @@ as
 select a.*,
 case when a.Status=0 then '待相亲' when a.Status=1 then '有意向' when a.Status=2 then '无意向'
 when a.Status=3 then '牵手成功' when a.Status=4 then '订婚' when a.Status=5 then '结婚'
-when a.Status=6 then '分手' when a.Status=7 then '取消'  else '未知' end StatusName
-from t_MarriageArrange a where IsDelete=0
+when a.Status=6 then '分手' when a.Status=7 then '取消'  else '未知' end StatusName,
+case when a.SourceType=1 then '相亲匹配' when a.Status=2 then '相亲广场'
+when a.Status=3 then '相亲牵线' else '未知' end SourceTypeName,
+b.Name+'('+ b.Phone+')' AppMatchmakerName,
+c.Name+'('+ c.Phone+')' ManMatchmakerName,
+d.Name+'('+ d.Phone+')' WomanMatchmakerName,
+e.Name+'('+ e.Phone+')' ManUserName,
+f.Name+'('+ f.Phone+')' WomanUserName
+from t_MarriageArrange a
+left join t_Matchmaker b on a.AppMatchmakerId=b.MatchmakerId
+left join t_Matchmaker c on a.ManMatchmakerId=c.MatchmakerId
+left join t_Matchmaker d on a.WomanMatchmakerId=d.MatchmakerId
+left join t_MarriageUser e on a.ManUserId=e.UserId
+left join t_MarriageUser f on a.ManUserId=f.UserId
+where a.IsDelete=0
 go
 
 --4、相亲广场信息表（t_MarriageSpuare）
@@ -422,8 +438,16 @@ go
 
 create view v_MatchmakerFeeDetail
 as
-select a.*
+select a.*,b.ArrangeId,
+c.Name ManName,
+d.Name WomanName,
+e.Name MatchmakerName,
+e.IsAppMatchmaker
 from t_MatchmakerFeeDetail a 
+left join t_MarriageArrange b on a.MarriageArrangeId=b.MarriageArrangeId
+left join t_MarriageUser c on b.ManUserId=c.UserId
+left join t_MarriageUser d on b.WomanUserId=c.UserId
+left join t_Matchmaker e on a.MatchmakerId=e.MatchmakerId
 where a.IsDelete=0
 go
 
@@ -712,7 +736,7 @@ go
 
 create view v_UserConditionType2
 as
-select a.*,b.Name ConditionTypeName from t_UserConditionType a,t_ConditionType b
+select a.*,b.Name ConditionTypeName,b.CreateDate CreateDate2 from t_UserConditionType a,t_ConditionType b
 where a.ConditionTypeId=b.ConditionTypeId
 and b.IsDelete=0
 go
