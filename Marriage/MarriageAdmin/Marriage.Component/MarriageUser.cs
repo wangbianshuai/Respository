@@ -6,13 +6,13 @@ using System.Text;
 
 namespace Marriage.Component
 {
-    public class Matchmaker : EntityRequest
+    public class MarriageUser : EntityRequest
     {
-        public Matchmaker()
+        public MarriageUser()
         {
         }
 
-        public Matchmaker(Request request)
+        public MarriageUser(Request request)
             : base(request)
         {
         }
@@ -20,7 +20,7 @@ namespace Marriage.Component
         [Log]
         public object Delete2()
         {
-            return CommonOperation.DeleteByLogic<Matchmaker>(this);
+            return CommonOperation.DeleteByLogic<MarriageUser>(this);
         }
 
         /// <summary>

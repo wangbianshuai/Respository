@@ -144,5 +144,11 @@ namespace Marriage.Entity
         public string Shengxiao { get; set; }
 
         public string MatchmakerName { get; set; }
+        /// <summary>
+        /// 信息公开
+        /// </summary>
+        public string IsPublicName { get; set; }
+
+        public string BirthTimeName { get; set; }
     }
 }

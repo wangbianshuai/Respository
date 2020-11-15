@@ -240,11 +240,39 @@ case when a.Status=0 then '待审核' when a.Status=1 then '审核通过'
 when a.Status=2 then '审核不通过' when a.Status=3 then '关闭' else '未知' end StatusName,
 case when a.Sex=1 then '男' when a.Sex=2 then '女' else '未知' end SexName,
 year(GETDATE())- YEAR(Birthday) as Age,b.Name as MatchmakerName,
-SUBSTRING(LunarBirthday,4,1) as Shengxiao
+SUBSTRING(LunarBirthday,4,1) as Shengxiao,
+Case when a.IsPublic = 1 then '公开' else '未公开' end IsPublicName,
+case when a.BirthTime=0 then '子 00:00-00:59'
+when a.BirthTime=1 then '丑 01:00-01:59'
+when a.BirthTime=2 then '丑 02:00-02:59'
+when a.BirthTime=3 then '寅 03:00-03:59'
+when a.BirthTime=4 then '寅 04:00-04:59'
+when a.BirthTime=5 then '卯 05:00-05:59'
+when a.BirthTime=6 then '卯 06:00-06:59'
+when a.BirthTime=7 then '辰 07:00-07:59'
+when a.BirthTime=8 then '辰 08:00-08:59'
+when a.BirthTime=9 then '巳 09:00-09:59'
+when a.BirthTime=10 then '巳 10:00-10:59'
+when a.BirthTime=11 then '午 11:00-11:59'
+when a.BirthTime=12 then '午 12:00-12:59'
+when a.BirthTime=13 then '未 13:00-13:59'
+when a.BirthTime=14 then '未 14:00-14:59'
+when a.BirthTime=15 then '申 15:00-15:59'
+when a.BirthTime=16 then '申 16:00-16:59'
+when a.BirthTime=17 then '酉 17:00-17:59'
+when a.BirthTime=18 then '酉 18:00-18:59'
+when a.BirthTime=19 then '戌 19:00-19:59'
+when a.BirthTime=20 then '戌 20:00-20:59'
+when a.BirthTime=21 then '亥 21:00-21:59'
+when a.BirthTime=22 then '亥 22:00-22:59'
+when a.BirthTime=23 then '子 23:00-23:59'
+else '未知'
+end BirthTimeName
 from t_MarriageUser a 
 left join t_Matchmaker b on a.MatchmakerId=b.MatchmakerId
 where a.IsDelete=0
 go
+
 
 --16、相亲安排信息表（t_ArrangeMarriage）
 if exists(select * from sysobjects where name='t_MarriageArrange')

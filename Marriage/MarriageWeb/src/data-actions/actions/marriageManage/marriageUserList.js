@@ -15,7 +15,7 @@ export default {
     const entityData = { ...selectData, RowVersion, UserId: primaryKey }
 
     const pathQuery = `(${primaryKey})`;
-    this.dvaActions.dispatch(this.serviceName, "updateStatus", { pathQuery, Matchmaker: entityData, action: this.getAction(id, actionType) });
+    this.dvaActions.dispatch(this.serviceName, "updateStatus", { pathQuery, MarriageUser: entityData, action: this.getAction(id, actionType) });
   },
   getViewEntityData(id, actionType, data) {
     const { primaryKey, expandMethods } = data.entity;
