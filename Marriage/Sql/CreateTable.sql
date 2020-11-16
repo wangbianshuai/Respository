@@ -400,7 +400,9 @@ create table t_MarriageSpuare
 (
 MarriageSpuareId uniqueidentifier not null primary key,        --主键
 UserId uniqueidentifier not null,                              --相亲用户ID
-OtherSideUserId uniqueidentifier not null,                     --对方用户Id 
+OtherSideUserId uniqueidentifier not null,                     --对方用户Id
+UpdateDate datetime not null,                                  --更新时间
+RoseCount int not null,                                        --玫瑰数量
 CreateDate datetime default(getdate()) not null,               --创建时间
 RowVersion timestamp not null                                  --行版本
 )
@@ -409,8 +411,55 @@ go
 exec proc_AddCellExplanation '主键','t_MarriageSpuare','MarriageSpuareId'
 exec proc_AddCellExplanation '相亲用户ID','t_MarriageSpuare','UserId'
 exec proc_AddCellExplanation '对方用户ID','t_MarriageSpuare','OtherSideUserId'
+exec proc_AddCellExplanation '玫瑰数量','t_MarriageSpuare','RoseCount'
+exec proc_AddCellExplanation '更新时间','t_MarriageSpuare','UpdateDate'
 exec proc_AddCellExplanation '创建时间','t_MarriageSpuare','CreateDate'
 exec proc_AddCellExplanation '行版本','t_MarriageSpuare','RowVersion'
+go
+
+if exists(select * from sysobjects where name='v_MarriageSpuare')
+drop view v_MarriageSpuare
+go
+
+create view v_MarriageSpuare
+as
+select a.*,b.Name+'('+ b.Phone+')' UserName, 
+b.Sex UserSex,
+case when b.Sex=1 then '男' when b.Sex=2 then '女' else '未知' end UserSexName,
+c.Name+'('+ c.Phone+')' OtherSideUserName,
+c.Sex OtherSideUserSex,
+case when c.Sex=1 then '男' when c.Sex=2 then '女' when c.Sex is null then null else '未知' end OtherSideUserSexName
+from t_MarriageSpuare a
+left join t_MarriageUser b on a.UserId=b.UserId and b.Status=1 and b.IsDelete=0
+left join t_MarriageUser c on a.OtherSideUserId=c.UserId and c.Status=1 and c.IsDelete=0
+go
+
+if exists(select * from sysobjects where name='v_MarriageSpuare2')
+drop view v_MarriageSpuare2
+go
+
+create view v_MarriageSpuare2
+as
+with ManUser as
+(
+select a.*,b.Name+'('+ b.Phone+')' ManUserName from t_MarriageSpuare a,t_MarriageUser b
+where a.UserId=b.UserId and b.Status=1 and IsDelete=0 and Sex=1
+),
+WomanUser as
+(
+select a.*,b.Name+'('+ b.Phone+')' WomanUserName  from t_MarriageSpuare a,t_MarriageUser b
+where a.UserId=b.UserId and b.Status=1 and IsDelete=0 and Sex=2
+)
+select a.MarriageSpuareId,a.UserId ManUserId,a.ManUserName,a.CreateDate, 
+a.RoseCount,
+a.UpdateDate,
+b.CreateDate CreateDate2,
+b.RoseCount RoseCount2,
+b.UpdateDate UpdateDate2,
+b.UserId WomanUserId,
+b.WomanUserName
+from ManUser a,WomanUser b
+where a.UserId=b.OtherSideUserId and a.OtherSideUserId=b.UserId
 go
 
 --6、红娘中介费明细表
@@ -781,20 +830,18 @@ go
 create table t_MarriageMakePair
 (
 MarkPairId uniqueidentifier not null primary key,              --主键
-UserId uniqueidentifier not null,                              --用户Id
-UserCount int not null,                                        --配对符合条件人数，大于30%的人数,最大值为100
-CreateUser uniqueidentifier not null,                          --创建人
+UserId uniqueidentifier not null,                              --相亲用户ID
+OtherSideUserId uniqueidentifier not null,                     --对方用户Id
+PercentValue decimal(8,2) not null,                            --匹配度（%）
 CreateDate datetime default(getdate()) not null,               --创建时间
 RowVersion timestamp not null                                  --行版本
 )
 go
 
 exec proc_AddCellExplanation '主键','t_MarriageMakePair','MarkPairId'
-exec proc_AddCellExplanation '用户','t_MarriageMakePair','UserId'
-exec proc_AddCellExplanation '配对符合条件人数，大于30%的人数','t_MarriageMakePair','UserCount'
-exec proc_AddCellExplanation '创建人','t_MarriageMakePair','CreateUser'
-exec proc_AddCellExplanation '创建时间','t_MarriageMakePair','CreateDate'
-exec proc_AddCellExplanation '更新人','t_MarriageMakePair','CreateUser'
+exec proc_AddCellExplanation '对方用户Id','t_MarriageMakePair','OtherSideUserId'
+exec proc_AddCellExplanation '相亲用户Id','t_MarriageMakePair','UserId'
+exec proc_AddCellExplanation '匹配度（%）','t_MarriageMakePair','PercentValue'
 exec proc_AddCellExplanation '更新时间','t_MarriageMakePair','CreateDate'
 exec proc_AddCellExplanation '行版本','t_MarriageMakePair','RowVersion'
 go
@@ -809,46 +856,27 @@ create table t_MarriageMakePairDetail
 (
 DetailId uniqueidentifier not null primary key,                --主键
 MarkPairId uniqueidentifier not null,                          --配对Id
-UserId uniqueidentifier not null,                              --用户Id
+ConditionTypeId uniqueidentifier not null,                     --条件类型Id
+ConditionTypeNmae nvarchar(50) not null,                       --条件类型
+ConditionItemId uniqueidentifier not null,                     --条件选项Id
+ConditionItemTitle nvarchar(100) not null,                     --条件标题
+SelfSelectValue nvarchar(2000) not null,                       --自己选择值
+OtherSideSelectValue nvarchar(2000) not null,                  --对方选择值
 PercentValue decimal(8,2) not null                             --匹配度（%）
 )
 go
 
 exec proc_AddCellExplanation '主键','t_MarriageMakePairDetail','DetailId'
-exec proc_AddCellExplanation '配对Id','t_MarriageMakePairDetail','MarkPairId'
-exec proc_AddCellExplanation '用户Id','t_MarriageMakePairDetail','UserId'
+exec proc_AddCellExplanation '配对明细Id','t_MarriageMakePairDetail','MarkPairId'
+exec proc_AddCellExplanation '条件类型Id','t_MarriageMakePairDetail','ConditionTypeId'
+exec proc_AddCellExplanation '条件类型','t_MarriageMakePairDetail','ConditionTypeNmae'
+exec proc_AddCellExplanation '条件选项Id','t_MarriageMakePairDetail','ConditionItemId'
+exec proc_AddCellExplanation '条件标题','t_MarriageMakePairDetail','ConditionItemTitle'
+exec proc_AddCellExplanation '自己选择值','t_MarriageMakePairDetail','SelfSelectValue'
+exec proc_AddCellExplanation '对方选择值','t_MarriageMakePairDetail','OtherSideSelectValue'
 exec proc_AddCellExplanation '匹配度（%）','t_MarriageMakePairDetail','PercentValue'
 go
 
---15、相亲配对计算记录表
-if exists(select * from sysobjects where name='t_MarriageMakePairRecord')
-drop table t_MarriageMakePairRecord
-go
-
-create table t_MarriageMakePairRecord
-(
-DetailId uniqueidentifier not null primary key,                --主键
-MakePairDetailId uniqueidentifier not null,                    --配对明细Id
-ConditionTypeId uniqueidentifier not null,                     --条件类型Id
-ConditionTypeNmae nvarchar(50) not null,                       --条件类型
-ConditionItemId uniqueidentifier not null,                     --条件选项Id
-ConditionItemTitle nvarchar(100) not null,                     --条件标题
-SelfSelectValue nvarchar(500) not null,                        --自己选择值
-OtherSideSelectValue nvarchar(500) not null,                   --对方选择值
-PercentValue decimal(8,2) not null                             --匹配度（%）
-)
-go
-
-exec proc_AddCellExplanation '主键','t_MarriageMakePairRecord','DetailId'
-exec proc_AddCellExplanation '配对明细Id','t_MarriageMakePairRecord','MakePairDetailId'
-exec proc_AddCellExplanation '条件类型Id','t_MarriageMakePairRecord','ConditionTypeId'
-exec proc_AddCellExplanation '条件类型','t_MarriageMakePairRecord','ConditionTypeNmae'
-exec proc_AddCellExplanation '条件选项Id','t_MarriageMakePairRecord','ConditionItemId'
-exec proc_AddCellExplanation '条件标题','t_MarriageMakePairRecord','ConditionItemTitle'
-exec proc_AddCellExplanation '自己选择值','t_MarriageMakePairRecord','SelfSelectValue'
-exec proc_AddCellExplanation '对方选择值','t_MarriageMakePairRecord','OtherSideSelectValue'
-exec proc_AddCellExplanation '匹配度（%）','t_MarriageMakePairRecord','PercentValue'
-go
 
 
 --18、生辰八字匹配结果（t_BirthEightResult）
