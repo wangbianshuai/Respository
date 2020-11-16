@@ -229,7 +229,7 @@ function getEventActions() {
 
 function getDialogViews() {
   return [
-    getAddUserTagView(),
+    getUpdateApprovalView(),
     getLookDetailView(),
     getLookPhotoView(),
     getLookConditionTypeView(),
@@ -352,7 +352,7 @@ function getTextBox3(name, label, x, y, contorlType, placeHolder, maxLength) {
   }
 }
 
-function getAddUserTagView() {
+function getUpdateApprovalView() {
   return {
     id: createGuid(),
     dialogId: createGuid(),

@@ -175,6 +175,11 @@ function getEventActions() {
     editView: "lookDetailView"
   },
   {
+    name: "getMarriageFee",
+    type: "entityEdit/getEntityData",
+    editView: "updateFeeView"
+  },
+  {
     name: "toEditPage",
     type: "page/toPage",
     pageUrl: "/marriageManage/marriageArrangeEdit"
@@ -197,15 +202,72 @@ function getEventActions() {
     dataProperties: ["Status", "IsManAgree", 'NoManAgreeRemark', 'IsWomanAgree', 'NoWomanAgreeRemark', 'CancelReason',
       'BookMarryDate', 'MarryDate', 'BreakUpDate', 'BreakUpReason'],
     dataGridView: "dataGridView1"
+  },
+  {
+    name: "updateFee",
+    isUpdate: true,
+    type: "dialog/showDialogEditEntityData",
+    dialogView: "updateFeeView",
+    dataGridView: "dataGridView1",
+    editView: 'updateFeeView'
   }]
 }
 
 function getDialogViews() {
   return [
-    getAddUserTagView(),
-    getLookDetailView()
+    getUpdateApprovalView(),
+    getLookDetailView(),
+    getUpdateFeeView(),
   ]
 }
+
+function getUpdateFeeView() {
+  return {
+    id: createGuid(),
+    dialogId: createGuid(),
+    name: "updateFeeView",
+    entity,
+    type: "RowsColsView",
+    dialogTitle: "相亲安排中介费",
+    dialogWidth: 1000,
+    className: "divView2",
+    eventActionName: "getMarriageFee",
+    setSelectValuesOkActionType: dataActionTypes.updateFee,
+    getEntityDataActionType: dataActionTypes.getMarriageFee,
+    dialogStyle: { height: 460, overflow: "auto" },
+    properties: assignProporties(marriageArrange, [
+      getTextBox4("ManMatchmakerName", "男方红娘", 1, 1, true),
+      getTextBox4("ManAmount", "男方红娘金额", 1, 2, false, false, '请输入男方红娘金额', 'float', 10),
+      getTextBox4("ManAppAmount", "男方平台金额", 2, 1, false, false, '请输入男方平台金额', 'float', 10),
+      getTextBox4("ManRemark", "男方备注", 2, 2, false, true),
+      getTextBox4("WomanMatchmakerName", "女方红娘", 3, 1, true),
+      getTextBox4("WomanAmount", "女方红娘金额", 3, 2, false, false, '请输入女方红娘金额', 'float', 10),
+      getTextBox4("WomanAppAmount", "女方平台金额", 4, 1, false, false, '请输入女方平台金额', 'float', 10),
+      getTextBox4("WomanRemark", "女方备注", 4, 2, false, true),
+      getTextBox4("AppMatchmakerName", "平台红娘", 5, 1, true),
+      getTextBox4("AppAmount", "平台红娘金额", 5, 2, false, false, '请输入平台红娘金额', 'float', 10),
+      getTextBox4("AppAppAmount", "平台方平台金额", 6, 1, false, false, '请输入平台方平台金额', 'float', 10),
+      getTextBox4("AppRemark", "平台方备注", 6, 2, false, true),
+      getTextBox4("Amount", "总金额", 7, 1, true),
+      getDatePicker3("FeeDate", "费用日期", 7, 2, false,'请选择费用日期')
+    ])
+  }
+}
+
+
+function getDatePicker3(name, label, x, y, isNullable, placeHolder) {
+  return {
+    ...getDatePicker(name, label, x, y),
+    isFormItem: true,
+    colSpan: 12,
+    labelCol: 6,
+    placeHolder,
+    isEdit: true,
+    isNullable,
+    wrapperCol: 18
+  }
+}
+
 
 function getLookDetailView() {
   return {
@@ -251,6 +313,20 @@ function getLookDetailView() {
   }
 }
 
+function getTextBox4(name, label, x, y, isReadOnly, isNullable, placeHolder, dataType, maxLength, contorlType) {
+  return {
+    ...getTextBox(name, label, contorlType, x, y, placeHolder, maxLength || 50),
+    isFormItem: true,
+    isEdit: true,
+    colSpan: 12,
+    dataType,
+    labelCol: 6,
+    isNullable,
+    wrapperCol: 18,
+    isReadOnly
+  }
+}
+
 function getTextBox3(name, label, x, y, contorlType, placeHolder, maxLength) {
   return {
     ...getTextBox(name, label, contorlType, x, y, placeHolder, maxLength || 50),
@@ -262,7 +338,7 @@ function getTextBox3(name, label, x, y, contorlType, placeHolder, maxLength) {
   }
 }
 
-function getAddUserTagView() {
+function getUpdateApprovalView() {
   return {
     id: createGuid(),
     dialogId: createGuid(),

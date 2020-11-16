@@ -26,6 +26,7 @@ export default class BaseIndex {
     }
 
     getSelectToList(list, names) {
+        if (!names) return [];
         const selectList = [];
         list.forEach(p => names.indexOf(p.name) >= 0 && selectList.push(p))
         return selectList;
@@ -181,7 +182,7 @@ export default class BaseIndex {
         action.okProperty.setDisabled(false);
         const { alertMessage, dataGridView, dialogView } = action.parameters;
         const { pageAxis } = props;
-  
+
         if (this.isSuccessNextsProps(data, pageAxis.alert, null)) {
             this.alert(dialogView.successTip, pageAxis.alert, alertMessage);
             //刷新查询

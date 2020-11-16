@@ -8,4 +8,4 @@ export default EntityPageList("marriageManage_marriageArrangeList", "MarriageArr
     updateApprovalDataLoad(props, aciton, selectDataList) {
         aciton.currentValue = selectDataList[0];
     }
-}, ['updateStatus', 'getViewEntityData']);
+}, ['updateStatus', 'getViewEntityData', 'updateFee', 'getMarriageFee']);

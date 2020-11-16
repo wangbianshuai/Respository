@@ -132,7 +132,7 @@ export default class Dialog extends BaseIndex {
         const { dialogView, lookView } = action.parameters;
 
         const data = property.params ? property.params : null;
-        
+
         if (data) lookView.primaryKey = data[lookView.entity.primaryKey];
 
         const properties = lookView.properties.filter(f => f.isClear);
@@ -175,10 +175,20 @@ export default class Dialog extends BaseIndex {
     showDialogEditEntityData(props, action) {
         if (!action.parameters) this.initShowDialogEditEntityData(props, action);
         const { pageAxis } = props;
-        const { dialogView } = action.parameters;
+        const { dialogView, dataGridView, editView } = action.parameters;
 
-        const properties = dialogView.properties.filter(f => f.isClear);
+        const selectRowKeys = dataGridView.getSelectedRowKeys();
+        if (action.isUpdate && selectRowKeys.length === 0) {
+            this.alert("请选择记录再操作！", pageAxis.showMessage)
+            return;
+        }
+
+        if (action.isUpdate) editView.primaryKey = selectRowKeys[0];
+
+        const properties = editView.properties.filter(f => f.isClear);
         this.setPropertiesValue(properties);
+
+        if (editView.reLoad) editView.reLoad();
 
         const onOk = (e, p) => this.setEditEntityData(e, p, props, action);
         this.showdialog(action, pageAxis, dialogView, onOk);
