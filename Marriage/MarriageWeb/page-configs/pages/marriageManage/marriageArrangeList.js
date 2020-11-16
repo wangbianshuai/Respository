@@ -1,5 +1,5 @@
 const marriageArrange = require("../../entities/marriageArrange");
-const { getButton, assignProporties, getTextBox, getSelect, getSelect2, getRadio, createGuid } = require("../../Common");
+const { getButton, assignProporties, getTextBox, getSelect, getSelect2, getRadio, createGuid, getDatePicker } = require("../../Common");
 
 //marriageManage/marriageArrangeList 1100-1199
 const dataActionTypes = {
@@ -110,7 +110,7 @@ function getTextBox2(name, label, x, y, contorlType, placeHolder, maxLength) {
 function getDataGridView() {
   return {
     name: "dataGridView1",
-    entity: entity,
+    entity,
     type: "DataGridView",
     entitySearchQuery: dataActionTypes.searchQuery,
     entityExcelExport: dataActionTypes.excelExport,
@@ -180,13 +180,13 @@ function getEventActions() {
     pageUrl: "/marriageManage/marriageArrangeEdit"
   },
   {
-    name: "editMarriageManage",
+    name: "editMarriageArrange",
     type: "dataGridView/selectRowToPage",
     dataGridView: "dataGridView1",
     pageUrl: "/marriageManage/marriageArrangeEdit?MarriageArrangeId=#{MarriageArrangeId}&menuName=" + encodeURIComponent("修改")
   },
   {
-    name: "deleteMarriageManage",
+    name: "deleteMarriageArrange",
     type: "dataGrid/batchUpdateRowDataList",
     dataGridView: "dataGridView1"
   },
@@ -215,27 +215,38 @@ function getLookDetailView() {
     entity,
     type: "RowsColsView",
     dialogTitle: "相亲安排详情",
-    dialogWidth: 860,
+    dialogWidth: 1000,
     className: "divView2",
     eventActionName: "getViewEntityData",
     getEntityDataActionType: dataActionTypes.getViewEntityData,
     dialogStyle: { height: 620, overflow: "auto" },
     properties: assignProporties(marriageArrange, [
-      getTextBox3("Name", "姓名", 1, 1),
-      getTextBox3("NickName", "昵称", 1, 2),
-      getTextBox3("SexName", "性别", 2, 1),
-      getTextBox3("IdCard", "身份证号码", 2, 2),
-      getTextBox3("Phone", "手机号码", 3, 1),
-      getTextBox3("Address", "家庭地址", 3, 2),
-      getTextBox3("Province", "省份", 4, 1),
-      getTextBox3("City", "城市", 4, 2),
-      getTextBox3("IsAppMatchmakerName", "是否平台红娘", 5, 1),
-      getTextBox3("StatusName", "状态", 5, 2),
-      getTextBox3("LastLoginDate", "最近登录时间", 6, 1),
-      getTextBox3("LoginIp", "登录IP", 6, 2),
-      getTextBox3("NoPassReason", "不通过原因", 7, 1, "TextArea"),
-      getTextBox3("Features", "特点说明", 7, 2, "TextArea"),
-      getTextBox3("Remark", "备注", 8, 1, "TextArea"),
+      getTextBox3("ArrangeId", "编号", 1, 1),
+      getTextBox3("StatusName", "状态", 1, 2),
+      getTextBox3("ManUserName", "男方", 2, 1),
+      getTextBox3("WomanUserName", "女方", 2, 2),
+      getTextBox3("ManMatchmakerName", "男方红娘", 3, 1),
+      getTextBox3("WomanMatchmakerName", "女方红娘", 3, 2),
+      getTextBox3("AppMatchmakerName", "平台红娘", 4, 1),
+      getTextBox3("MarriageDate", "相亲时间", 4, 2),
+      getTextBox3("MarriageAddress", "相亲地点", 5, 1),
+      getTextBox3("SourceTypeName", "来源类型", 5, 2),
+      getTextBox3("Amount", "相亲总费用", 6, 1),
+      getTextBox3("FeeDate", "费用日期", 6, 2),
+      getTextBox3("CreateDate", "创建时间", 7, 1),
+      getTextBox3("CreateUserName", "创建人", 7, 2),
+      getTextBox3("BookMarryDate", "订婚日期", 8, 1),
+      getTextBox3("MarryDate", "结婚日期", 8, 2),
+      getTextBox3("UpdateDate", "更新时间", 9, 1),
+      getTextBox3("BreakUpDate", "分手日期", 9, 2),
+      getTextBox3("IsManAgreeName", "男方是否同意", 10, 1),
+      getTextBox3("IsWomanAgreeName", "女方是否同意", 10, 2),
+      getTextBox3("NoManAgreeRemark", "男方不同意原因", 11, 1, "TextArea"),
+      getTextBox3("NoWomanAgreeRemark", "女方不同意原因", 11, 2, "TextArea"),
+      getTextBox3("CancelReason", "取消原因", 12, 1, "TextArea"),
+      getTextBox3("BreakUpReason", "分手原因", 12, 2, "TextArea"),
+      getTextBox3("MarriageContent", "相亲情况", 13, 1, "TextArea"),
+      getTextBox3("Remark", "备注", 13, 2, "TextArea"),
     ])
   }
 }
@@ -259,16 +270,45 @@ function getAddUserTagView() {
     entity,
     type: "RowsColsView",
     dialogTitle: "设置状态",
-    dialogWidth: 540,
+    dialogWidth: 660,
     successTip: "操作成功",
     className: "divView2",
     setSelectValuesOkActionType: dataActionTypes.updateStatus,
-    dialogStyle: { height: 360, overflow: "auto" },
+    dialogStyle: { height: 450, overflow: "auto" },
     properties: assignProporties(entity, [
-      { ...getEditSelect3("Status", "状态", marriageArrange.statusDataSource, 1, 1) },
-      getTextArea2('NoPassReason', '不通过原因', 2, 1),
-      { ...getRadio2("IsManAgree", "男生是否同意", marriageArrange.agreeDataSource, 3, 1, 0), buttonWidth: 157 }
+      {
+        ...getEditSelect3("Status", "状态", marriageArrange.statusDataSource, 1, 1),
+        valueVisibleProperties: {
+          2: ['IsManAgree', 'NoManAgreeRemark', 'IsWomanAgree', 'NoWomanAgreeRemark'],
+          4: ['BookMarryDate'],
+          5: ['MarryDate'],
+          6: ['BreakUpDate', 'BreakUpReason'],
+          7: ['CancelReason'],
+        }
+      },
+      { ...getRadio2("IsManAgree", "男方是否同意", marriageArrange.agreeDataSource, 2, 1, 0), buttonWidth: 193 },
+      getTextArea2('NoManAgreeRemark', '男方不同意原因', 3, 1),
+      { ...getRadio2("IsWomanAgree", "女方是否同意", marriageArrange.agreeDataSource, 4, 1, 0), buttonWidth: 193 },
+      getTextArea2('NoWomanAgreeRemark', '女方不同意原因', 5, 1),
+      getTextArea2('CancelReason', '取消原因', 6, 1),
+      getDatePicker2('BreakUpDate', '分手日期', 7, 1),
+      getTextArea2('BreakUpReason', '分手原因', 8, 1),
+      getDatePicker2('BookMarryDate', '订婚日期', 9, 1),
+      getDatePicker2('MarryDate', '结婚日期', 10, 1)
     ])
+  }
+}
+
+function getDatePicker2(name, label, x, y, placeHolder) {
+  return {
+    ...getDatePicker(name, label, x, y),
+    isFormItem: true,
+    colSpan: 22,
+    labelCol: 6,
+    placeHolder,
+    wrapperCol: 18,
+    isEdit: true,
+    isVisible: false
   }
 }
 
@@ -279,7 +319,8 @@ function getTextArea2(name, label, x, y, placeHolder) {
     colSpan: 22,
     labelCol: 6,
     wrapperCol: 18,
-    isEdit: true
+    isEdit: true,
+    isVisible: false
   }
 }
 
@@ -290,7 +331,8 @@ function getRadio2(name, label, dataSource, x, y, defaultValue) {
     colSpan: 22,
     labelCol: 6,
     wrapperCol: 18,
-    isEdit: true
+    isEdit: true,
+    isVisible: false
   }
 }
 

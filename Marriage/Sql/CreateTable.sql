@@ -311,7 +311,7 @@ MarriageDate datetime not null,                                --相亲时间
 MarriageAddress nvarchar(100),                                 --相亲地点
 MarriageContent nvarchar(500),                                 --相亲情况
 SourceType tinyint not null,                                   --来源类型：1：相亲匹配，2：相亲广场，3：相亲牵线
-Status tinyint not null,                                       --状态：0：待相亲，1：有意向，2：无意向，3：牵手成功，4：订婚，5：结婚，6：分手，7：取消
+Status tinyint not null default(0),                            --状态：0：待相亲，1：有意向，2：无意向，3：牵手成功，4：订婚，5：结婚，6：分手，7：取消
 IsManAgree tinyint not null default(0),                        --男生是否同意
 NoManAgreeRemark nvarchar(500),                                --男生不同意原因
 IsWomanAgree tinyint not null default(0),                      --女生是否同意
@@ -334,6 +334,7 @@ RowVersion timestamp not null                                  --行版本
 go
 
 exec proc_AddCellExplanation '主键','t_MarriageArrange','MarriageArrangeId'
+exec proc_AddCellExplanation '编号','t_MarriageArrange','ArrangeId'
 exec proc_AddCellExplanation '男生ID','t_MarriageArrange','ManUserId'
 exec proc_AddCellExplanation '女生ID','t_MarriageArrange','WomanUserId'
 exec proc_AddCellExplanation '男生红娘','t_MarriageArrange','ManMatchmakerId'
@@ -375,19 +376,23 @@ select a.*,
 case when a.Status=0 then '待相亲' when a.Status=1 then '有意向' when a.Status=2 then '无意向'
 when a.Status=3 then '牵手成功' when a.Status=4 then '订婚' when a.Status=5 then '结婚'
 when a.Status=6 then '分手' when a.Status=7 then '取消'  else '未知' end StatusName,
-case when a.SourceType=1 then '相亲匹配' when a.Status=2 then '相亲广场'
-when a.Status=3 then '相亲牵线' else '未知' end SourceTypeName,
+case when a.SourceType=1 then '相亲匹配' when a.SourceType=2 then '相亲广场'
+when a.SourceType=3 then '相亲牵线' else '未知' end SourceTypeName,
 b.Name+'('+ b.Phone+')' AppMatchmakerName,
 c.Name+'('+ c.Phone+')' ManMatchmakerName,
 d.Name+'('+ d.Phone+')' WomanMatchmakerName,
 e.Name+'('+ e.Phone+')' ManUserName,
-f.Name+'('+ f.Phone+')' WomanUserName
+f.Name+'('+ f.Phone+')' WomanUserName,
+g.Name CreateUserName,
+case when a.Status=2 and a.IsManAgree=1 then '同意' when a.Status=2 and a.IsManAgree=0 then '不同意' else '' end IsManAgreeName,
+case when a.Status=2 and a.IsWomanAgree=1 then '同意' when a.Status=2 and a.IsWomanAgree=0 then '不同意' else '' end IsWomanAgreeName
 from t_MarriageArrange a
 left join t_Matchmaker b on a.AppMatchmakerId=b.MatchmakerId
 left join t_Matchmaker c on a.ManMatchmakerId=c.MatchmakerId
 left join t_Matchmaker d on a.WomanMatchmakerId=d.MatchmakerId
 left join t_MarriageUser e on a.ManUserId=e.UserId
-left join t_MarriageUser f on a.ManUserId=f.UserId
+left join t_MarriageUser f on a.WomanUserId=f.UserId
+left join t_AppUser g on a.CreateUser=g.CreateUser
 where a.IsDelete=0
 go
 

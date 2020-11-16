@@ -1,12 +1,12 @@
 const marriageArrange = require("../../entities/marriageArrange");
-const { assignProporties, getTextBox, getButton, getDatePicker, getAutoComplete, getSelect2 } = require("../../Common");
+const { assignProporties, getTextBox, getButton, getDatePicker, getSelect2 } = require("../../Common");
 
 //marriageManage/marriageArrangeEdit 1200-1299
 const dataActionTypes = {
   //get entity data
   getEntityData: 1200,
   //Save entity data
-  saveEntityData: 1299
+  saveEntityData: 1201
 }
 
 const { name, primaryKey } = marriageArrange;
@@ -48,7 +48,7 @@ function getProperties() {
   return [
     getAutoComplete2("ManUserId", "男方", 1, 1, marriageArrange.manMarriageUserDataSource, false, "请输入关键字选择"),
     getAutoComplete2("WomanUserId", "女方", 2, 1, marriageArrange.womanMarriageUserDataSource, false, "请输入关键字选择"),
-    getEditSelect2("AppMathmakerId", "平台红娘", 3, 1, marriageArrange.matchmakerDataSource, false, "请输入平台红娘"),
+    getEditSelect2("AppMatchmakerId", "平台红娘", 3, 1, marriageArrange.matchmakerDataSource, false, "请输入平台红娘"),
     getDatePicker2("MarriageDate", "相亲时间", 4, 1, "", "请选择相亲时间", 10, false),
     getTextBox2("MarriageAddress", "相亲地点", 5, 1, "", "相亲地址", 100, true),
     getTextArea("MarriageContent", "相亲情况", 6, 1, '相亲情况', 500),

@@ -132,7 +132,7 @@ export default class Dialog extends BaseIndex {
         const { dialogView, lookView } = action.parameters;
 
         const data = property.params ? property.params : null;
-
+        
         if (data) lookView.primaryKey = data[lookView.entity.primaryKey];
 
         const properties = lookView.properties.filter(f => f.isClear);

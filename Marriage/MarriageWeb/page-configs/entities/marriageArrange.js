@@ -1,7 +1,7 @@
 module.exports = {
   name: "MarriageArrange",
   viewName: 'ViewMarriageArrange',
-  primaryKey: "UserId",
+  primaryKey: "MarriageArrangeId",
   properties: getProperties(),
   statusDataSource: getStatusDataSource(),
   sourceTypeDataSource: getSourceTypeDataSource(),
@@ -15,8 +15,8 @@ function getProperties() {
   return [
     getProperty("MarriageArrangeId", "MarriageArrangeId"),
     getProperty("ArrangeId", "编号"),
-    getProperty("ManName", "男方"),
-    getProperty("WomanName", "女主"),
+    getProperty("ManUserName", "男方"),
+    getProperty("WomanUserName", "女方"),
     getProperty("ManMatchmakerName", "男方红娘"),
     getProperty("WomanMatchmakerName", "女方红娘"),
     getProperty("AppMatchmakerName", "平台红娘"),

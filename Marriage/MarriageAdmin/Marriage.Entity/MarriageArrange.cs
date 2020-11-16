@@ -2,11 +2,11 @@
 using System; 
 using System.Collections.Generic; 
 using System.Linq;  
-using System.Text; 
- 
+using System.Text;
+
 namespace Marriage.Entity
 {
-    [TableProperty(Name = "t_ArrangeMarriage", PrimaryKey = "ArrangeMarriageId")]
+    [TableProperty(Name = "t_MarriageArrange", PrimaryKey = "MarriageArrangeId")]
     [RequestMethod(IsDelete = false)]
     public class MarriageArrange : EntityModel, IEntity
     {
@@ -14,6 +14,10 @@ namespace Marriage.Entity
         /// 主键
         /// </summary> 
         public Guid MarriageArrangeId { get; set; }
+        /// <summary>
+        /// 编号
+        /// </summary>
+        public int ArrangeId { get; set; }
         /// <summary> 
         /// 男生ID
         /// </summary> 
@@ -125,6 +129,18 @@ namespace Marriage.Entity
         /// <summary> 
         /// 行版本
         /// </summary> 
+        public string RowVersion { get; set; }
+
+        public override void InsertValidate(List<Func<IValidate, IEntityData, string>> validateList)
+        {
+            validateList.Add(this.ValidateExists<MarriageArrange>("IsDelete=0 and ManUserId=@ManUserId and WomanUserId=@WomanUserId", "对不起，该相亲安排已存在！"));
+        }
+
+        public override void UpdateValidate(List<Func<IValidate, IEntityData, string>> validateList)
+        {
+            validateList.Add(this.ValidateExists<MarriageArrange>("MarriageArrangeId=@MarriageArrangeId and ManUserId=@ManUserId and WomanUserId=@WomanUserId", "true"));
+            validateList.Add(this.ValidateExists<MarriageArrange>("IsDelete=0 and ManUserId=@ManUserId and WomanUserId=@WomanUserId", "对不起，该相亲安排已存在！"));
+        }
     }
 
     [TableProperty(Name = "v_MarriageArrange", PrimaryKey = "MarriageArrangeId", NoSelectNames = "IsDelete")]
@@ -144,5 +160,11 @@ namespace Marriage.Entity
         public string ManUserName { get; set; }
 
         public string WomanUserName { get; set; }
+
+        public string IsManAgreeName { get; set; }
+
+        public string IsWomanAgreeName { get; set; }
+
+        public string CreateUserName { get; set; }
     }
 }

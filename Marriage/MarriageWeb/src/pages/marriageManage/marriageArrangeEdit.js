@@ -8,7 +8,7 @@ export default EntityPageEdit("marriageManage_marriageArrangeEdit", "MarriageArr
     this.womanUserIdProperty.valueChange = (value, selectData) => this.womanUserIdProperty.MatchmakerId = selectData ? selectData.MatchmakerId : undefined;
   },
   expandSetEntityData({ entityData, props, view }) {
-    if (this.pageData.MarriageArrangeId) entityData.SourceType = 3;
+    if (!this.pageData.MarriageArrangeId) entityData.SourceType = 3;
     entityData.ManMatchmakerId = this.manUserIdProperty.MatchmakerId;
     entityData.WomanMatchmakerId = this.womanUserIdProperty.MatchmakerId;
     return entityData;

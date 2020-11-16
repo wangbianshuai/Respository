@@ -95,7 +95,7 @@ const setValueTextName = (property) => {
 const setDefaultValue = (property) => {
   if (property.isCurrentDay) property.defaultValue = Common.getCurrentDate().substr(0, 10);
   if (property.isYesterday) property.defaultValue = Common.getYesterdayDate().substr(0, 10);
-  
+
   if (property.isMonthFirst) property.defaultValue = Common.getCurrentDate().substr(0, 8) + "01";
 
   if (property.isCurrentUser) property.defaultValue = Common.getStorage("loginUserId");
@@ -129,6 +129,27 @@ const setSelectDataToProperties = (property, view, data) => {
   property.selectDataToProperties.forEach(p => setPropertyValue(p, data, view));
 };
 
+const setPropertiesVisible = (names, view, isVisible) => {
+  names.forEach(n => {
+    const p = getProperty(n, view);
+    if (p) {
+      if (p.setIsVisible) p.setIsVisible(isVisible);
+      if (p.setFormItemVisible) p.setFormItemVisible(isVisible);
+      p.isVisible = isVisible;
+    }
+  });
+}
+
+const setValueVisibleProperties = (property, view, value) => {
+  if (Common.isNullOrEmpty(value)) return;
+
+  const { valueVisibleProperties } = property;
+
+  for (let key in valueVisibleProperties) {
+    setPropertiesVisible(valueVisibleProperties[key], view, Common.isEquals(key, value))
+  }
+};
+
 export default {
   setVisible,
   getClassName,
@@ -144,5 +165,6 @@ export default {
   getValue,
   getSelectData,
   setSelectDataToProperties,
+  setValueVisibleProperties,
   setPropertyValue
 }

@@ -49,6 +49,7 @@ const search = (property) => {
 const valueChange = (property, view, value) => {
     if (property.valueChange) property.valueChange(value, Base.getSelectData(property, value));
 
+    if (property.valueVisibleProperties) Base.setValueVisibleProperties(property, view, value);
     if (property.selectDataToProperties) Base.setSelectDataToProperties(property, view, Base.getSelectData(property, value));
 };
 

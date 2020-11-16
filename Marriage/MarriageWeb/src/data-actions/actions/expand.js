@@ -1,9 +1,9 @@
 import marriageManage_matchmakerList from "./marriageManage/matchmakerList";
 import marriageManage_marriageUserList from "./marriageManage/marriageUserList";
-import marriageManage_marrageArrangeList from "./marriageManage/marrageArrangeList";
+import marriageManage_marriageArrangeList from "./marriageManage/marriageArrangeList";
 
 export default {
   marriageManage_matchmakerList,
   marriageManage_marriageUserList,
-  marriageManage_marrageArrangeList
+  marriageManage_marriageArrangeList
 }
