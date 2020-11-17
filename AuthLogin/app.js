@@ -41,7 +41,8 @@ App({
   },
   apiUrl: 'https://www.lianliyuan.site/',
   onShow: function (res) {
-    this.globalData.scene = res.scene;
+    if (res.query && res.query.scene) this.globalData.scene = res.query.scene
+    else this.globalData.scene = res.scene;
   },
   getOpenId: function (code) {
     const $this = this;

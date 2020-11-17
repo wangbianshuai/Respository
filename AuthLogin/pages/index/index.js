@@ -52,11 +52,23 @@ Page({
     })
   },
   authLogin: function () {
-    if (this.isAuthLogin) return;
+    if (!app.globalData) {
+      wx.showToast({
+        title: '获取中请稍后',
+        icon:'fail'
+      })
+      return;
+    }
+    if(this.isAuthLogin){
+      wx.showToast({
+        title: '已授权登录',
+      })
+      return;
+    }
     const userInfo = app.globalData.userInfo;
     userInfo.openid = app.globalData.openid;
     const scene = app.globalData.scene.toString();
-
+    
     const $this = this;
     wx.request({
       url: app.apiUrl + 'api/wxuser/authlogin',

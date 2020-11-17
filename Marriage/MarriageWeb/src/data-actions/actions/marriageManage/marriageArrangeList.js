@@ -114,16 +114,13 @@ export default {
     const { name, primaryKey } = data.entity;
     const primaryKeyValue = data.oldEntityData && data.oldEntityData[primaryKey] ? data.oldEntityData[primaryKey] : null;
 
-    var pathQuery = method;
-    if (primaryKeyValue) {
-        data.entityData[primaryKey] = primaryKeyValue;
-        pathQuery = `${method}(${primaryKeyValue})`;
-    }
+    var pathQuery = `(${primaryKeyValue})`;
+    data.entityData[primaryKey] = primaryKeyValue;
 
     const payload = { action: this.getAction(id, actionType) };
     payload[name] = data.entityData;
     payload.pathQuery = pathQuery
 
-    this.dvaActions.dispatch(this.serviceName, serviceName, payload);
-}
+    this.dvaActions.dispatch(this.serviceName, 'updateFee', payload);
+  }
 }

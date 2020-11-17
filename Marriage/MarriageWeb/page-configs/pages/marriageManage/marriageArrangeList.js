@@ -229,7 +229,7 @@ function getUpdateFeeView() {
     entity,
     type: "RowsColsView",
     dialogTitle: "相亲安排中介费",
-    dialogWidth: 1000,
+    dialogWidth: 1050,
     className: "divView2",
     eventActionName: "getMarriageFee",
     setSelectValuesOkActionType: dataActionTypes.updateFee,
