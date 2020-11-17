@@ -60,5 +60,17 @@ namespace Marriage.Service.Impl
             string url = string.Format("{0}?{1}", request.Url, new FormUrlEncodedContent(dict).ReadAsStringAsync().Result);
             return this.GetRequest2<GetUserInfoResponse>(url);
         }
+
+        /// <summary>
+        /// 通过微信小程序获取微信用户openid
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        public GetOpenIdByCodeResponse GetOpenIdByCode(GetOpenIdByCodeRequest request)
+        {
+            string url = string.Format("https://api.weixin.qq.com/sns/jscode2session?appid={0}&secret={1}&js_code={2}&grant_type=authorization_code", request.AppId, request.Secret, request.Code);
+
+            return this.GetRequest2<GetOpenIdByCodeResponse>(url);
+        }
     }
 }

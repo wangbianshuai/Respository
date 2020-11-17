@@ -30,5 +30,12 @@ namespace Marriage.Service
         /// <param name="request"></param>
         /// <returns></returns>
         GetUserInfoResponse GetUserInfo(GetUserInfoRequest request);
+
+        /// <summary>
+        /// 通过微信小程序获取微信用户openid
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        GetOpenIdByCodeResponse GetOpenIdByCode(GetOpenIdByCodeRequest request);
     }
 }

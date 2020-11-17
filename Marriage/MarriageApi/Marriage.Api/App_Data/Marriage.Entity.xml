@@ -1377,6 +1377,71 @@
             <param name="pageSize"></param>
             <param name="totalCount"></param>
         </member>
+        <member name="T:Marriage.Entity.Application.WxUser.AuthLoginRequest">
+            <summary>
+            微信用户授权登录请求
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Application.WxUser.AuthLoginRequest.Scene">
+            <summary>
+            scene
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Application.WxUser.AuthLoginRequest.UserInfo">
+            <summary>
+            用户信息
+            </summary>
+        </member>
+        <member name="T:Marriage.Entity.Application.WxUser.AuthLoginResponse">
+            <summary>
+            微信用户授权登录响应
+            </summary>
+        </member>
+        <member name="T:Marriage.Entity.Application.WxUser.WxUserInfo">
+            <summary>
+            微信用户
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Application.WxUser.WxUserInfo.openid">
+            <summary>
+            用户的唯一标识
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Application.WxUser.WxUserInfo.nickname">
+            <summary>
+            用户昵称
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Application.WxUser.WxUserInfo.avatarUrl">
+            <summary>
+            用户头像
+            </summary>
+        </member>
+        <member name="T:Marriage.Entity.Application.WxUser.GetOpenIdByCodeRequest">
+            <summary>
+            通过微信小程序获取微信用户请求
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Application.WxUser.GetOpenIdByCodeRequest.Code">
+            <summary>
+            Code
+            </summary>
+        </member>
+        <member name="T:Marriage.Entity.Application.WxUser.GetOpenIdByCodeResponse">
+            <summary>
+            通过微信小程序获取微信用户响应
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Application.WxUser.GetOpenIdByCodeResponse.openid">
+            <summary>
+            微信OpenId
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Application.WxUser.GetOpenIdByCodeResponse.session_key">
+            <summary>
+            会话密钥
+            </summary>
+        </member>
         <member name="T:Marriage.Entity.Application.WxUser.GetWxUserRequest">
             <summary>
             获取微信用户请求
@@ -3651,6 +3716,41 @@
         <member name="M:Marriage.Entity.Service.UserManage.UserList.#ctor">
             <summary>
             构造函数
+            </summary>
+        </member>
+        <member name="T:Marriage.Entity.Service.UserManage.GetOpenIdByCodeRequest">
+            <summary>
+            通过微信小程序获取微信用户openid请求
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Service.UserManage.GetOpenIdByCodeRequest.AppId">
+            <summary>
+            第三方用户唯一凭证
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Service.UserManage.GetOpenIdByCodeRequest.Secret">
+            <summary>
+            第三方用户唯一凭证密钥，即appsecret
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Service.UserManage.GetOpenIdByCodeRequest.Code">
+            <summary>
+            Code
+            </summary>
+        </member>
+        <member name="T:Marriage.Entity.Service.UserManage.GetOpenIdByCodeResponse">
+            <summary>
+            通过微信小程序获取微信用户openid响应
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Service.UserManage.GetOpenIdByCodeResponse.openid">
+            <summary>
+            微信OpenId
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Service.UserManage.GetOpenIdByCodeResponse.session_key">
+            <summary>
+            会话密钥
             </summary>
         </member>
         <member name="T:Marriage.Entity.Service.UserManage.GetUserInfoRequest">

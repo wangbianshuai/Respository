@@ -209,5 +209,19 @@
             <param name="request"></param>
             <returns></returns>
         </member>
+        <member name="M:Marriage.Api.Controllers.WxUserController.GetOpenIdByCode(Marriage.Entity.Application.WxUser.GetOpenIdByCodeRequest)">
+            <summary>
+            通过微信小程序获取微信用户
+            </summary>
+            <param name="request"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Marriage.Api.Controllers.WxUserController.AuthLogin(Marriage.Entity.Application.WxUser.AuthLoginRequest)">
+            <summary>
+            微信用户授权登录
+            </summary>
+            <param name="request"></param>
+            <returns></returns>
+        </member>
     </members>
 </doc>

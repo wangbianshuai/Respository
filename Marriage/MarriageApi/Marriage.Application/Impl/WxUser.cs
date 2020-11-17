@@ -3,6 +3,7 @@ using Marriage.Entity.Application.WxUser;
 using OpenDataAccessCore.Utility;
 using System;
 using System.Collections.Generic;
+using System.Net.Http;
 using System.Text;
 
 namespace Marriage.Application.Impl
@@ -60,6 +61,110 @@ namespace Marriage.Application.Impl
         }
 
         /// <summary>
+        /// 通过微信小程序获取微信用户
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        public GetOpenIdByCodeResponse GetOpenIdByCode(GetOpenIdByCodeRequest request)
+        {
+            string title = "通过微信小程序获取微信用户openid";
+            string requestContent = Utility.Common.ToJson(request);
+            GetOpenIdByCodeResponse response = new GetOpenIdByCodeResponse();
+
+            this.InitMessage();
+
+            this.IsNullRequest(request, response);
+
+            //1、验证数据
+            int stepNo = 1;
+            this.ValidateGetOpenIdByCode(stepNo, request, response);
+
+
+            //2、以获取集合获取键值配置集合
+            List<string> nameList = new List<string>() { "WxMini_AppId", "WxMini_Secret" };
+
+            stepNo += 1;
+            var dictionaryConfigList = GetDictionaryConfigListByNames(stepNo, nameList, response);
+
+            //3、通过微信小程序获取微信用户openid
+            stepNo += 1;
+            GetOpenIdByCode(stepNo, dictionaryConfigList, request.Code, response);
+
+            //4、执行结束
+            this.ExecEnd(response);
+
+            //日志记录
+            return this.SetReturnResponse<GetOpenIdByCodeResponse>(title, "GetOpenIdByCode", requestContent, response);
+        }
+
+        /// <summary>
+        /// 微信用户授权登录
+        /// </summary>
+        public AuthLoginResponse AuthLogin(AuthLoginRequest request)
+        {
+            string title = "通过微信小程序获取微信用户openid";
+            string requestContent = Utility.Common.ToJson(request);
+            AuthLoginResponse response = new AuthLoginResponse();
+
+            this.InitMessage();
+
+            this.IsNullRequest(request, response);
+
+
+            //4、执行结束
+            this.ExecEnd(response);
+
+            //日志记录
+            return this.SetReturnResponse<AuthLoginResponse>(title, "AuthLogin", requestContent, response);
+        }
+        /// <summary>
+        /// 通过微信小程序获取微信用户openid
+        /// </summary>
+        /// <param name="stepNo"></param>
+        /// <param name="app"></param>
+        /// <param name="serviceInterfaceList"></param>
+        /// <param name="response"></param>
+        /// <returns></returns>
+        private Entity.Service.UserManage.GetOpenIdByCodeResponse GetOpenIdByCode(int stepNo, List<Entity.Domain.DictionaryConfig> dictionaryConfigs, string code, GetOpenIdByCodeResponse response)
+        {
+            Func<Entity.Service.UserManage.GetOpenIdByCodeResponse> execStep = () =>
+            {
+                var serviceResponse = _UserManage.GetOpenIdByCode(dictionaryConfigs, code);
+
+                this.SetServiceFailedResponse(serviceResponse, response);
+
+                response.openid = serviceResponse.openid;
+                response.session_key = serviceResponse.session_key;
+
+                return serviceResponse;
+            };
+
+            return this.GetEntityData<Entity.Service.UserManage.GetOpenIdByCodeResponse>(stepNo, "通过微信小程序获取微信用户openid", "GetOpenIdByCode", response, execStep);
+        }
+
+        /// <summary>
+        /// 验证数据
+        /// </summary>
+        /// <param name="stepNo"></param>
+        /// <param name="request"></param>
+        /// <param name="response"></param>
+        /// <returns></returns>
+        private bool ValidateGetWxUser(int stepNo, GetWxUserRequest request, GetWxUserResponse response)
+        {
+            Func<bool> execStep = () =>
+            {
+                if (string.IsNullOrEmpty(request.Code))
+                {
+                    this.SetValidateMessageRepsonse("Code不能为空", response);
+                }
+
+                return response.Ack.IsSuccess;
+            };
+
+            return this.ExecValidate(stepNo, "验证数据", "ValidateGetWxUser", response, execStep);
+        }
+
+        /// <summary>
         /// 获取微信用户
         /// </summary>
         /// <param name="stepNo"></param>
@@ -101,7 +206,7 @@ namespace Marriage.Application.Impl
         /// <param name="request"></param>
         /// <param name="response"></param>
         /// <returns></returns>
-        private bool ValidateGetWxUser(int stepNo, GetWxUserRequest request, GetWxUserResponse response)
+        private bool ValidateGetOpenIdByCode(int stepNo, GetOpenIdByCodeRequest request, GetOpenIdByCodeResponse response)
         {
             Func<bool> execStep = () =>
             {
@@ -113,7 +218,7 @@ namespace Marriage.Application.Impl
                 return response.Ack.IsSuccess;
             };
 
-            return this.ExecValidate(stepNo, "验证数据", "ValidateGetWxUser", response, execStep);
+            return this.ExecValidate(stepNo, "验证数据", "ValidateGetOpenIdByCode", response, execStep);
         }
 
         /// <summary>

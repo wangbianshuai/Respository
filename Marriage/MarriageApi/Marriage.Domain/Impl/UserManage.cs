@@ -125,5 +125,26 @@ namespace Marriage.Domain.Impl
 
             return _UserManage.GetUserInfo(entity);
         }
+
+        /// <summary>
+        /// 通过微信小程序获取微信用户openid
+        /// </summary>
+        /// <param name="dictionaryConfigs"></param>
+        /// <param name="code"></param>
+        /// <returns></returns>
+        public Entity.Service.UserManage.GetOpenIdByCodeResponse GetOpenIdByCode(List<Entity.Domain.DictionaryConfig> dictionaryConfigs, string code)
+        {
+            var request = new Entity.Service.UserManage.GetOpenIdByCodeRequest();
+
+            dictionaryConfigs.ForEach(c =>
+            {
+                if (c.Name == "WxMini_Secret") request.Secret = c.Value;
+                else if (c.Name == "WxMini_AppId") request.AppId = c.Value;
+            });
+
+            request.Code = code;
+
+            return _UserManage.GetOpenIdByCode(request);
+        }
     }
 }

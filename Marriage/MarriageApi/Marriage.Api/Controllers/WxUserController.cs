@@ -33,5 +33,27 @@ namespace Marriage.Api.Controllers
         {
             return await Task.Run(() => _WxUser.GetWxUser(request));
         }
+
+        /// <summary>
+        /// 通过微信小程序获取微信用户
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public async Task<GetOpenIdByCodeResponse> GetOpenIdByCode(GetOpenIdByCodeRequest request)
+        {
+            return await Task.Run(() => _WxUser.GetOpenIdByCode(request));
+        }
+
+        /// <summary>
+        /// 微信用户授权登录
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public async Task<AuthLoginResponse> AuthLogin(AuthLoginRequest request)
+        {
+            return await Task.Run(() => _WxUser.AuthLogin(request));
+        }
     }
 }
