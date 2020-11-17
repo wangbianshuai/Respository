@@ -2,7 +2,8 @@ module.exports = {
     name: "MarriageSquare2",
     viewName: 'ViewMarriageSquare2',
     primaryKey: "MarriageSquareId",
-    properties: getProperties()
+    properties: getProperties(),
+    appMatchmakerDataSource:getAppMatchmakerDataSource()
   }
   
   function getProperties() {
@@ -21,3 +22,15 @@ module.exports = {
   }
   
   function getProperty(name, label) { return { name, label } }
+
+  function getAppMatchmakerDataSource() {
+    return {
+      valueName: "MatchmakerId",
+      textName: "Name",
+      stateName: "getAppMatchmakers",
+      serviceName: "MatchmakerService",
+      actionName: "getAppMatchmakers",
+      isRefresh: true,
+      payload: {}
+    }
+  }

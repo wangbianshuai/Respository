@@ -2,7 +2,8 @@ module.exports = {
     name: "MarriageSquare",
     viewName: 'ViewMarriageSquare',
     primaryKey: "MarriageSquareId",
-    properties: getProperties()
+    properties: getProperties(),
+    sexDataSource:getSexDataSource()
   }
   
   function getProperties() {
@@ -17,3 +18,7 @@ module.exports = {
   }
   
   function getProperty(name, label) { return { name, label } }
+
+  function getSexDataSource() {
+    return [{ value: 1, text: "男" }, { value: 2, text: "女" }]
+  }

@@ -37,9 +37,9 @@ function getSearchOperationView() {
     type: "RowsColsView",
     className: "divSerachView",
     properties: assignProporties({ name: "marriageArrangeList" }, [
-      getEditSelect2("MatchmakerId", "男方红娘", marriageArrange.matchmakerDataSource, 1, 1),
-      getEditSelect2("MatchmakerId", "女方红娘", marriageArrange.matchmakerDataSource, 1, 2),
-      getEditSelect2("MatchmakerId", "平台红娘", marriageArrange.matchmakerDataSource, 1, 3),
+      getEditSelect2("ManMatchmakerId", "男方红娘", marriageArrange.matchmakerDataSource, 1, 1),
+      getEditSelect2("WomanMatchmakerId", "女方红娘", marriageArrange.matchmakerDataSource, 1, 2),
+      getEditSelect2("AppMatchmakerId", "平台红娘", marriageArrange.appMatchmakerDataSource, 1, 3),
       getEditSelect("Status", "状态", marriageArrange.statusDataSource, 2, 1),
       getEditSelect("SourceType", "来源类型", marriageArrange.sourceTypeDataSource, 2, 2),
       {
@@ -232,7 +232,7 @@ function getUpdateFeeView() {
     dialogWidth: 1050,
     className: "divView2",
     eventActionName: "getMarriageFee",
-    setSelectValuesOkActionType: dataActionTypes.updateFee,
+    saveEntityDataActionType: dataActionTypes.updateFee,
     getEntityDataActionType: dataActionTypes.getMarriageFee,
     dialogStyle: { height: 460, overflow: "auto" },
     properties: assignProporties(marriageArrange, [

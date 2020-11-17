@@ -396,14 +396,14 @@ left join t_AppUser g on a.CreateUser=g.CreateUser
 where a.IsDelete=0
 go
 
---4、相亲广场信息表（t_MarriageSpuare）
-if exists(select * from sysobjects where name='t_MarriageSpuare')
-drop table t_MarriageSpuare
+--4、相亲广场信息表（t_MarriageSquare）
+if exists(select * from sysobjects where name='t_MarriageSquare')
+drop table t_MarriageSquare
 go
 
-create table t_MarriageSpuare
+create table t_MarriageSquare
 (
-MarriageSpuareId uniqueidentifier not null primary key,        --主键
+MarriageSquareId uniqueidentifier not null primary key,        --主键
 UserId uniqueidentifier not null,                              --相亲用户ID
 OtherSideUserId uniqueidentifier not null,                     --对方用户Id
 UpdateDate datetime not null,                                  --更新时间
@@ -413,20 +413,20 @@ RowVersion timestamp not null                                  --行版本
 )
 go
 
-exec proc_AddCellExplanation '主键','t_MarriageSpuare','MarriageSpuareId'
-exec proc_AddCellExplanation '相亲用户ID','t_MarriageSpuare','UserId'
-exec proc_AddCellExplanation '对方用户ID','t_MarriageSpuare','OtherSideUserId'
-exec proc_AddCellExplanation '玫瑰数量','t_MarriageSpuare','RoseCount'
-exec proc_AddCellExplanation '更新时间','t_MarriageSpuare','UpdateDate'
-exec proc_AddCellExplanation '创建时间','t_MarriageSpuare','CreateDate'
-exec proc_AddCellExplanation '行版本','t_MarriageSpuare','RowVersion'
+exec proc_AddCellExplanation '主键','t_MarriageSquare','MarriageSquareId'
+exec proc_AddCellExplanation '相亲用户ID','t_MarriageSquare','UserId'
+exec proc_AddCellExplanation '对方用户ID','t_MarriageSquare','OtherSideUserId'
+exec proc_AddCellExplanation '玫瑰数量','t_MarriageSquare','RoseCount'
+exec proc_AddCellExplanation '更新时间','t_MarriageSquare','UpdateDate'
+exec proc_AddCellExplanation '创建时间','t_MarriageSquare','CreateDate'
+exec proc_AddCellExplanation '行版本','t_MarriageSquare','RowVersion'
 go
 
-if exists(select * from sysobjects where name='v_MarriageSpuare')
-drop view v_MarriageSpuare
+if exists(select * from sysobjects where name='v_MarriageSquare')
+drop view v_MarriageSquare
 go
 
-create view v_MarriageSpuare
+create view v_MarriageSquare
 as
 select a.*,b.Name+'('+ b.Phone+')' UserName, 
 b.Sex UserSex,
@@ -434,28 +434,28 @@ case when b.Sex=1 then '男' when b.Sex=2 then '女' else '未知' end UserSexName,
 c.Name+'('+ c.Phone+')' OtherSideUserName,
 c.Sex OtherSideUserSex,
 case when c.Sex=1 then '男' when c.Sex=2 then '女' when c.Sex is null then null else '未知' end OtherSideUserSexName
-from t_MarriageSpuare a
-left join t_MarriageUser b on a.UserId=b.UserId and b.Status=1 and b.IsDelete=0
-left join t_MarriageUser c on a.OtherSideUserId=c.UserId and c.Status=1 and c.IsDelete=0
+from t_MarriageSquare a
+inner join t_MarriageUser b on a.UserId=b.UserId and b.Status=1 and b.IsDelete=0
+inner join t_MarriageUser c on a.OtherSideUserId=c.UserId and c.Status=1 and c.IsDelete=0
 go
 
-if exists(select * from sysobjects where name='v_MarriageSpuare2')
-drop view v_MarriageSpuare2
+if exists(select * from sysobjects where name='v_MarriageSquare2')
+drop view v_MarriageSquare2
 go
 
-create view v_MarriageSpuare2
+create view v_MarriageSquare2
 as
 with ManUser as
 (
-select a.*,b.Name+'('+ b.Phone+')' ManUserName,b.MatchmakerId as ManMatchmakerId from t_MarriageSpuare a,t_MarriageUser b
+select a.*,b.Name+'('+ b.Phone+')' ManUserName,b.MatchmakerId as ManMatchmakerId from t_MarriageSquare a,t_MarriageUser b
 where a.UserId=b.UserId and b.Status=1 and IsDelete=0 and Sex=1
 ),
 WomanUser as
 (
-select a.*,b.Name+'('+ b.Phone+')' WomanUserName,b.MatchmakerId as WomanMatchmakerId from t_MarriageSpuare a,t_MarriageUser b
+select a.*,b.Name+'('+ b.Phone+')' WomanUserName,b.MatchmakerId as WomanMatchmakerId from t_MarriageSquare a,t_MarriageUser b
 where a.UserId=b.UserId and b.Status=1 and IsDelete=0 and Sex=2
 )
-select a.MarriageSpuareId,a.UserId ManUserId,a.ManUserName,a.CreateDate, a.ManMatchmakerId,
+select a.MarriageSquareId,a.UserId ManUserId,a.ManUserName,a.CreateDate, a.ManMatchmakerId,
 a.RoseCount,
 a.UpdateDate,
 b.CreateDate CreateDate2,
@@ -465,7 +465,7 @@ b.UserId WomanUserId,
 b.WomanMatchmakerId,
 b.WomanUserName,
 c.ArrangeId,
-case when c.MarriageArrangeId is not null then '相亲安排' else '' end ArrangeLabel,
+case when c.MarriageArrangeId is null then '相亲安排' else '' end ArrangeLabel,
 d.Name+'('+ d.Phone+')' ManMatchmakerName,
 e.Name+'('+ e.Phone+')' WomanMatchmakerName,
 case when a.UpdateDate>b.UpdateDate then a.UpdateDate else b.UpdateDate end UpdateDate3
@@ -485,6 +485,7 @@ create table t_MatchmakerFeeDetail
 (
 DetailId uniqueidentifier not null primary key,                --主键
 MatchmakerId uniqueidentifier not null,                        --红娘Id
+MatchmakerType tinyint not null,                               --红娘类型，1：男方，2：女方，3：平台
 MarriageArrangeId uniqueidentifier not null,                   --相亲安排Id
 FeeDate datetime not null,                                     --费用日期
 Amount money not null,                                         --金额
@@ -499,6 +500,7 @@ go
 
 exec proc_AddCellExplanation '主键','t_MatchmakerFeeDetail','DetailId'
 exec proc_AddCellExplanation '红娘Id','t_MatchmakerFeeDetail','MatchmakerId'
+exec proc_AddCellExplanation '红娘类型，1：男方，2：女方，3：平台','t_MatchmakerFeeDetail','MatchmakerType'
 exec proc_AddCellExplanation '相亲安排Id','t_MatchmakerFeeDetail','MarriageArrangeId'
 exec proc_AddCellExplanation '费用日期','t_MatchmakerFeeDetail','FeeDate'
 exec proc_AddCellExplanation '金额','t_MatchmakerFeeDetail','Amount'
@@ -517,14 +519,14 @@ go
 create view v_MatchmakerFeeDetail
 as
 select a.*,b.ArrangeId,
+case when a.MatchmakerType=1 then '男方' when a.MatchmakerType=2 then '女方' when a.MatchmakerType=3 then '平台' else '未知' end MatchmakerTypeName,
 c.Name ManName,
 d.Name WomanName,
-e.Name MatchmakerName,
-e.IsAppMatchmaker
+e.Name MatchmakerName
 from t_MatchmakerFeeDetail a 
 left join t_MarriageArrange b on a.MarriageArrangeId=b.MarriageArrangeId
 left join t_MarriageUser c on b.ManUserId=c.UserId
-left join t_MarriageUser d on b.WomanUserId=c.UserId
+left join t_MarriageUser d on b.WomanUserId=d.UserId
 left join t_Matchmaker e on a.MatchmakerId=e.MatchmakerId
 where a.IsDelete=0
 go

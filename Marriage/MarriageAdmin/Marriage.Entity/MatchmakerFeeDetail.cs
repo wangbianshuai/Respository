@@ -18,6 +18,10 @@ namespace Marriage.Entity
         /// 红娘Id
         /// </summary> 
         public Guid MatchmakerId { get; set; }
+        /// <summary>
+        /// 红娘类型，1：男方，2：女方，3：平台
+        /// </summary>
+        public byte MatchmakerType { get; set; }
         /// <summary> 
         /// 相亲安排Id
         /// </summary> 
@@ -67,7 +71,6 @@ namespace Marriage.Entity
         public string WomanName { get; set; }
 
         public string MatchmakerName { get; set; }
-
-        public byte IsAppMatchmaker { get; set; }
+        public string MatchmakerTypeName { get; set; }
     }
 }

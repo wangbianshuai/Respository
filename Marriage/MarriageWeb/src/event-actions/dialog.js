@@ -174,19 +174,32 @@ export default class Dialog extends BaseIndex {
     //弹出层编辑
     showDialogEditEntityData(props, action) {
         if (!action.parameters) this.initShowDialogEditEntityData(props, action);
-        const { pageAxis } = props;
+        const { pageAxis, property } = props;
         const { dialogView, dataGridView, editView } = action.parameters;
 
-        const selectRowKeys = dataGridView.getSelectedRowKeys();
-        if (action.isUpdate && selectRowKeys.length === 0) {
-            this.alert("请选择记录再操作！", pageAxis.showMessage)
-            return;
+        if (action.isUpdate) {
+            const selectRowKeys = dataGridView.getSelectedRowKeys();
+            if (selectRowKeys.length === 0) {
+                this.alert("请选择记录再操作！", pageAxis.showMessage)
+                return;
+            }
+            editView.primaryKey = selectRowKeys[0];
         }
 
-        if (action.isUpdate) editView.primaryKey = selectRowKeys[0];
+        const data = property.params ? property.params : null;
 
-        const properties = editView.properties.filter(f => f.isClear);
-        this.setPropertiesValue(properties);
+        if (data) {
+            editView.entityData = data;
+            editView.primaryKey = data[editView.entity.primaryKey];
+        }
+
+        if (editView.isSetData && data) {
+            this.setPropertiesValue(editView.properties, data);
+        }
+        else {
+            const properties = editView.properties.filter(f => f.isClear);
+            this.setPropertiesValue(properties);
+        }
 
         if (editView.reLoad) editView.reLoad();
 

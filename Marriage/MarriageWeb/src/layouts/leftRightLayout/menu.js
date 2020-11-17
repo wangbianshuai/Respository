@@ -19,8 +19,8 @@ function getMarriageManage() {
     menuList.push(addMenu("marriageMakePairList", "相亲匹配", false, "table", "/marriageManage/marriageMakePairList"));
     menuList.push(addMenu("marriageMakePairRecordList", "相亲匹配记录", false, "table", "/marriageManage/marriageMakePairRecordList"));
 
-    menuList.push(addMenu("marriageSpuareList", "相亲广场", false, "table", "/marriageManage/marriageSpuareList"));
-    menuList.push(addMenu("marriageSpuareRecordList", "相亲广场记录", false, "table", "/marriageManage/marriageSpuareRecordList"));
+    menuList.push(addMenu("marriageSquareList", "相亲广场", false, "table", "/marriageManage/marriageSquareList"));
+    menuList.push(addMenu("marriageSquareRecordList", "相亲广场记录", false, "table", "/marriageManage/marriageSquareRecordList"));
 
     menuList.push(addMenu("marriageArrangeList", "相亲安排", false, "table", "/marriageManage/marriageArrangeList"));
     menuList.push(addMenu("marriageArrangeEdit", "新增", true, "form", "/marriageManage/marriageArrangeEdit", "", null, false, "相亲安排", "/marriageManage/marriageArrangeList", null, true));

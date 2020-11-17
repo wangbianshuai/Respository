@@ -92,7 +92,7 @@ function getDataGridView() {
     isDiv: true,
     className: "divInfoView3",
     groupByInfoHtml: getGroupByInfoHtml(),
-    properties: assignProporties(matchmakerFeeDetail, ["ArrangeId", "FeeDate", "ManName", "WomanName", "MatchmakerName", getAmount("Amount"), getAmount("AppAmount"),'Remark',
+    properties: assignProporties(matchmakerFeeDetail, ["ArrangeId", "FeeDate", "ManName", "WomanName", "MatchmakerName", "MatchmakerTypeName", getAmount("Amount"), getAmount("AppAmount"), 'Remark',
       { name: "CreateDate", OrderByType: "desc" }])
   }
 }
@@ -107,7 +107,8 @@ function getAmount(name) {
 function getGroupByInfoHtml() {
   var html = [];
 
-  html.push("红娘总中介费：<span style=\"color:#1890ff;\">{TotalAmount}</span>，");
+  html.push("总中介费：<span style=\"color:#1890ff;\">{TotalAmount}</span>，");
+  html.push("红娘总中介费：<span style=\"color:#1890ff;\">{TotalMatchmakerAmount}</span>，");
   html.push("平台红娘中介费：<span style=\"color:#1890ff;\">{TotalAppMatchmakerAmount}</span>，");
   html.push("平台中介费：<span style=\"color:#1890ff;\">{TotalAppAmount}</span>");
 

@@ -52,29 +52,38 @@ namespace Marriage.Component
         {
             bool blSucceed = true;
 
-            object marriageArrangeId = this._QueryRequest.PrimaryKeyProperty.Value;
-
-            List<IEntityData> detailList = new List<IEntityData>();
-
-            detailList.Add(GetDetail(entityData, marriageArrangeId, "Man"));
-            detailList.Add(GetDetail(entityData, marriageArrangeId, "Woman"));
-            detailList.Add(GetDetail(entityData, marriageArrangeId, "App"));
-
-            DeleteMatchmakerFeeDetail(trans);
-
-            blSucceed = InsertMatchmakerFeeDetailList(detailList, trans);
-
-            if (blSucceed)
+            try
             {
-                entityData.SetValue("UpdateUser", Guid.Parse(_Request.OperationUser));
-                entityData.SetValue("UpdateDate", DateTime.Now);
-                blSucceed = this.UpdateEntityByPrimaryKey(marriageArrangeId, entityData, trans);
-            }
+                object marriageArrangeId = this._QueryRequest.PrimaryKeyProperty.Value;
 
+                List<IEntityData> detailList = new List<IEntityData>();
+
+                detailList.Add(GetDetail(entityData, marriageArrangeId, "Man", 1));
+                detailList.Add(GetDetail(entityData, marriageArrangeId, "Woman", 2));
+                detailList.Add(GetDetail(entityData, marriageArrangeId, "App", 3));
+
+                DeleteMatchmakerFeeDetail(trans);
+
+                blSucceed = InsertMatchmakerFeeDetailList(detailList, trans);
+
+                if (blSucceed)
+                {
+                    IEntityData newEntityData = new EntityData(this.EntityType);
+                    newEntityData.SetValue("Amount", entityData.GetValue("Amount"));
+                    newEntityData.SetValue("FeeDate", entityData.GetValue("FeeDate"));
+                    newEntityData.SetValue("UpdateUser", Guid.Parse(_Request.OperationUser));
+                    newEntityData.SetValue("UpdateDate", DateTime.Now);
+                    blSucceed = this.UpdateEntityByPrimaryKey(marriageArrangeId, newEntityData, trans);
+                }
+            }
+            catch
+            {
+                blSucceed = false;
+            }
             return blSucceed;
         }
 
-        IEntityData GetDetail(IEntityData entityData, object marriageArrangeId, string type)
+        IEntityData GetDetail(IEntityData entityData, object marriageArrangeId, string type, int matchmakerType)
         {
             IEntityData detail = new EntityData(_MatchmakerFeeDetailEntity);
             detail.SetValue("MatchmakerId", entityData.GetValue(type + "MatchmakerId"));
@@ -84,6 +93,7 @@ namespace Marriage.Component
             detail.SetValue("AppAmount", entityData.GetValue(type + "AppAmount"));
             detail.SetValue("Remark", entityData.GetValue(type + "Remark"));
             detail.SetValue("CreateUser", Guid.Parse(_Request.OperationUser));
+            detail.SetValue("MatchmakerType", matchmakerType);
 
             return detail;
         }
@@ -166,7 +176,7 @@ namespace Marriage.Component
 
             query.Where("where MarriageArrangeId=@MarriageArrangeId", parameterList);
 
-            return this.DeleteEntity(query, trans);
+            return this.DeleteEntity(_MatchmakerFeeDetailEntity, query, trans);
         }
     }
 }

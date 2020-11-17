@@ -1,5 +1,5 @@
 const marriageSquare2 = require("../../entities/marriageSquare2");
-const { getButton, assignProporties, getTextBox, createGuid } = require("../../Common");
+const { getButton, assignProporties, getTextBox, createGuid, getSelect2, getDatePicker } = require("../../Common");
 
 //marriageManage/marriageSquareList 1400-1499
 const dataActionTypes = {
@@ -64,16 +64,22 @@ function getDataGridView() {
         className: "divInfoView3",
         properties: assignProporties(marriageSquare2, ["ManUserName", "ManMatchmakerName", "RoseCount", "UpdateDate",
             "WomanUserName", "WomanMatchmakerName", "RoseCount2", "UpdateDate2", "ArrangeId",
+            { name: 'ManUserId', isVisible: false },{ name: 'WomanUserId', isVisible: false },
+            { name: 'ManMatchmakerId', isVisible: false },{ name: 'WomanMatchmakerId', isVisible: false },
             { name: "UpdateDate3", OrderByType: "desc", isVisible: false }, getOperation(),])
     }
 }
 
 function getOperation() {
     return {
-        name: "operation",
+        name: "ArrangeLabel",
         label: "操作",
-        eventActionName: "createMarriageArrange",
-        type: "AButton"
+        action: {
+            name: "createMarriageArrange",
+            eventActionName: "createMarriageArrange",
+            type: "AButton"
+        }
+
     }
 }
 
@@ -113,16 +119,78 @@ function getCreateMarriageArrangeView() {
         id: createGuid(),
         dialogId: createGuid(),
         name: "createMarriageArrangeView",
-        entity,
+        entity: { name: 'MarriageArrange', primaryKey: 'MarriageArrangeId' },
         type: "RowsColsView",
         dialogTitle: "创建相亲安排",
         dialogWidth: 600,
+        isSetData: true,
         className: "divView2",
-        setSelectValuesOkActionType: dataActionTypes.createMarriageArrange,
-        dialogStyle: { height: 460, overflow: "auto" },
+        saveEntityDataActionType: dataActionTypes.createMarriageArrange,
+        dialogStyle: { height: 560, overflow: "auto" },
         properties: assignProporties(marriageSquare2, [
-            getTextBox4("ManMatchmakerName", "男方红娘", 1, 1, true),
-            getTextBox4("WomanMatchmakerName", "女方红娘", 3, 1, true),
+            getTextBox4("ManUserName", "男方", 1, 1, true),
+            getTextBox4("WomanUserName", "女方", 2, 1, true),
+            getEditSelect2("AppMatchmakerId", "平台红娘", 3, 1, marriageSquare2.appMatchmakerDataSource, false, "请输入平台红娘"),
+            getDatePicker2("MarriageDate", "相亲时间", 4, 1, "", "请选择相亲时间", 10, false),
+            getTextBox4("MarriageAddress", "相亲地点", 5, 1, false, true, "相亲地址", '', 100),
+            getTextArea("MarriageContent", "相亲情况", 6, 1, '相亲情况', 500),
+            getTextArea("Remark", "备注", 7, 1, '备注', 200),
         ])
+    }
+}
+
+function getTextArea(name, label, x, y, placeHolder, maxLength) {
+    return {
+        ...getTextBox(name, label, "TextArea", x, y),
+        isFormItem: true,
+        isNullable: true,
+        isEdit: true,
+        colSpan: 24,
+        Rows: 3,
+        maxLength,
+        placeHolder,
+        labelCol: 5,
+        wrapperCol: 18,
+    }
+}
+
+function getDatePicker2(name, label, x, y, isNullable, placeHolder, defaultValue) {
+    return {
+        ...getDatePicker(name, label, x, y, defaultValue),
+        isFormItem: true,
+        colSpan: 24,
+        labelCol: 5,
+        wrapperCol: 18,
+        isNullable,
+        placeHolder,
+        isEdit: true,
+        isCurrentDay: true
+    }
+}
+
+function getEditSelect2(name, label, x, y, serviceDataSrouce, isNullable, placeHolder) {
+    return {
+        ...getSelect2(name, label, serviceDataSrouce, x, y),
+        isFormItem: true,
+        colSpan: 24,
+        labelCol: 5,
+        wrapperCol: 18,
+        isNullable,
+        placeHolder,
+        isEdit: true
+    }
+}
+
+function getTextBox4(name, label, x, y, isReadOnly, isNullable, placeHolder, dataType, maxLength, contorlType) {
+    return {
+        ...getTextBox(name, label, contorlType, x, y, placeHolder, maxLength || 50),
+        isFormItem: true,
+        isEdit: true,
+        colSpan: 24,
+        dataType,
+        labelCol: 5,
+        isNullable,
+        wrapperCol: 18,
+        isReadOnly
     }
 }

@@ -117,6 +117,10 @@ export default {
     var pathQuery = `(${primaryKeyValue})`;
     data.entityData[primaryKey] = primaryKeyValue;
 
+    data.entityData.ManMatchmakerId = data.oldEntityData.ManMatchmakerId;
+    data.entityData.WomanMatchmakerId = data.oldEntityData.WomanMatchmakerId;
+    data.entityData.AppMatchmakerId = data.oldEntityData.AppMatchmakerId;
+
     const payload = { action: this.getAction(id, actionType) };
     payload[name] = data.entityData;
     payload.pathQuery = pathQuery

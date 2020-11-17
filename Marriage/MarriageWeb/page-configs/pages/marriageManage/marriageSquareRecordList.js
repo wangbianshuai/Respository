@@ -24,7 +24,7 @@ function getSearchOperationView() {
         type: "RowsColsView",
         className: "divSerachView",
         properties: assignProporties({ name: "marriageSquareList" }, [
-            getEditSelect("Sex", "性别", marriageSquare.sexDataSource, 1, 1),
+            getEditSelect("UserSex", "性别", marriageSquare.sexDataSource, 1, 1),
             {
                 ...getTextBox2("keyword", "关键字", 1, 2, "", "姓名/手机号码"), propertyName: "UserName,OtherSideUserName",
                 operateLogic: "like", pressEnterEventActionName: "searchQuery", pressEnterEventPropertyName: "search",
@@ -39,7 +39,7 @@ function getEditSelect(name, label, dataSource, x, y, defaultValue) {
     return {
         ...getSelect(name, label, dataSource, x, y, defaultValue),
         isFormItem: true,
-        colSpan: 8,
+        colSpan: 6,
         labelCol: 8,
         wrapperCol: 16,
         operateLogic: "=",
@@ -53,7 +53,7 @@ function getTextBox2(name, label, x, y, contorlType, placeHolder, maxLength) {
     return {
         ...getTextBox(name, label, contorlType, x, y, placeHolder, maxLength || 50),
         isFormItem: true,
-        colSpan: 8,
+        colSpan: 6,
         labelCol: 8,
         wrapperCol: 16,
         isNullable: true,

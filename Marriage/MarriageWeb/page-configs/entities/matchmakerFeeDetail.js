@@ -3,7 +3,7 @@ module.exports = {
   viewName: 'ViewMatchmakerFeeDetail',
   primaryKey: "DetailId",
   properties: getProperties(),
-  matchmakerDataSource: getMatchmakerDataSource(),
+  matchmakerDataSource: getMatchmakerDataSource()
 }
 
 function getProperties() {
@@ -14,6 +14,7 @@ function getProperties() {
     getProperty("ManName", "男方"),
     getProperty("WomanName", "女方"),
     getProperty("MatchmakerName", "红娘"),
+    getProperty("MatchmakerTypeName","红娘类型"),
     getProperty("Amount", "红娘中介费"),
     getProperty("AppAmount", "平台中介费"),
     getProperty("Remark", "备注"),

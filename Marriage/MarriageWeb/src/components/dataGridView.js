@@ -170,6 +170,12 @@ const setDataProperty = (p, property, pageAxis) => {
             return Base.renderActions(list, record, property, pageAxis.id);
         }
     }
+    else if (p.action) {
+        p.render = (text, record, index) => {
+            const list = [{ ...p.action, label: text }]
+            return Base.renderActions(list, record, property, pageAxis.id);
+        }
+    }
     else if (p.isImage) {
         p.render = (text, record, index) => {
             if (!Common.isNullOrEmpty(text)) {

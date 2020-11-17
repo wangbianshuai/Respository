@@ -50,9 +50,9 @@ namespace Marriage.Web.Code
             EntityType.SetEntityType<Entity.MatchmakerFeeDetail>();
             EntityType.SetEntityType<Entity.MarriageArrange>();
             EntityType.SetEntityType<Entity.ViewMarriageArrange>();
-            EntityType.SetEntityType<Entity.MarriageSpuare>();
-            EntityType.SetEntityType<Entity.ViewMarriageSpuare>();
-            EntityType.SetEntityType<Entity.ViewMarriageSpuare2>();
+            EntityType.SetEntityType<Entity.MarriageSquare>();
+            EntityType.SetEntityType<Entity.ViewMarriageSquare>();
+            EntityType.SetEntityType<Entity.ViewMarriageSquare2>();
 
             OpenDataAccessCore.Service.ComponentType.SetComponentType<Component.DictionaryConfig>();
             OpenDataAccessCore.Service.ComponentType.SetComponentType<Component.AppUser>();

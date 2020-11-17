@@ -24,19 +24,21 @@ namespace Marriage.Component
         void QueryAmountGroupByInfo(IEntityData data, string whereSql, List<IDbDataParameter> paramterList)
         {
             IQuery query = new Query(this.EntityType.TableName);
-            query.Select("sum(Amount) as Amount,sum(AppAmount) as AppAmount,sum(case when IsAppMatchmaker=1 then Amount else 0 end) AppMatchmakerAmount");
+            query.Select("sum(Amount+AppAmount) as TotalAmount,sum(Amount) as Amount,sum(AppAmount) as AppAmount,sum(case when MatchmakerType=3 then Amount else 0 end) AppMatchmakerAmount");
             query.Where(whereSql, paramterList);
 
             IEntityData entityData = this.SelectEntity(query);
 
+            decimal totalAmount = entityData.GetValue<decimal>("TotalAmount");
             decimal amount = entityData.GetValue<decimal>("Amount");
             decimal appAmount = entityData.GetValue<decimal>("AppAmount");
             decimal appMatchmakerAmount = entityData.GetValue<decimal>("AppMatchmakerAmount");
 
             IEntityData groupByInfo = new EntityData(string.Empty);
-            groupByInfo.SetValue("TotalAmount", amount.ToString("C"));
-            groupByInfo.SetValue("TotalAppMatchmakerAmount", appAmount.ToString("C"));
-            groupByInfo.SetValue("TotalAppAmount", appMatchmakerAmount.ToString("C"));
+            groupByInfo.SetValue("TotalAmount", totalAmount.ToString("C"));
+            groupByInfo.SetValue("TotalMatchmakerAmount", amount.ToString("C"));
+            groupByInfo.SetValue("TotalAppMatchmakerAmount", appMatchmakerAmount.ToString("C"));
+            groupByInfo.SetValue("TotalAppAmount", appAmount.ToString("C"));
 
             data.SetValue("GroupByInfo", groupByInfo);
         }

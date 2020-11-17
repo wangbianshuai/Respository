@@ -6,14 +6,14 @@ using OpenDataAccessCore.Entity;
 
 namespace Marriage.Entity
 {
-    [TableProperty(Name = "t_MarriageSpuare", PrimaryKey = "MarriageSpuareId")]
+    [TableProperty(Name = "t_MarriageSquare", PrimaryKey = "MarriageSquareId")]
     [RequestMethod(IsDelete = false, IsPost = false, IsPut = false, IsGet = false)]
-    public class MarriageSpuare : EntityModel, IEntity
+    public class MarriageSquare : EntityModel, IEntity
     {
         /// <summary> 
         /// 主键
         /// </summary> 
-        public Guid MarriageSpuareId { get; set; }
+        public Guid MarriageSquareId { get; set; }
         /// <summary> 
         /// 相亲用户ID
         /// </summary> 
@@ -40,9 +40,9 @@ namespace Marriage.Entity
         public string RowVersion { get; set; }
     }
 
-    [TableProperty(Name = "v_MarriageSpuare", PrimaryKey = "MarriageSpuareId", NoSelectNames = "IsDelete")]
+    [TableProperty(Name = "v_MarriageSquare", PrimaryKey = "MarriageSquareId", NoSelectNames = "IsDelete")]
     [RequestMethod(IsDelete = false, IsPost = false, IsPut = false)]
-    public class ViewMarriageSpuare : MarriageSpuare
+    public class ViewMarriageSquare : MarriageSquare
     {
         public string UserName { get; set; }
         public byte UserSex { get; set; }
@@ -52,11 +52,11 @@ namespace Marriage.Entity
         public string OtherSideUserSexName { get; set; }
     }
 
-    [TableProperty(Name = "v_MarriageSpuare2")]
+    [TableProperty(Name = "v_MarriageSquare2")]
     [RequestMethod(IsDelete = false, IsPost = false, IsPut = false)]
-    public class ViewMarriageSpuare2 : EntityModel, IEntity
+    public class ViewMarriageSquare2 : EntityModel, IEntity
     {
-        public Guid MarriageSpuareId { get; set; }
+        public Guid MarriageSquareId { get; set; }
         public Guid ManUserId { get; set; }
         public string ManUserName { get; set; }
         public DateTime CreateDate { get; set; }

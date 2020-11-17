@@ -9,6 +9,7 @@ module.exports = {
   manMarriageUserDataSource: getManMarriageUserDataSource(),
   womanMarriageUserDataSource: getWomanMarriageUserDataSource(),
   agreeDataSource: getAgreeDataSource(),
+  appMatchmakerDataSource: getAppMatchmakerDataSource()
 }
 
 function getProperties() {
@@ -77,5 +78,17 @@ function getWomanMarriageUserDataSource() {
     actionName: "getMarriageUsers",
     isRefresh: true,
     payload: { pathQuery: '?Sex=2' }
+  }
+}
+
+function getAppMatchmakerDataSource() {
+  return {
+    valueName: "MatchmakerId",
+    textName: "Name",
+    stateName: "getAppMatchmakers",
+    serviceName: "MatchmakerService",
+    actionName: "getAppMatchmakers",
+    isRefresh: true,
+    payload: {}
   }
 }
