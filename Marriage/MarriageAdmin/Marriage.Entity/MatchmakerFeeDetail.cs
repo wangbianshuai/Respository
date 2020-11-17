@@ -51,14 +51,6 @@ namespace Marriage.Entity
         /// </summary> 
         public DateTime CreateDate { get; set; }
         /// <summary> 
-        /// 更新人
-        /// </summary> 
-        public Guid UpdateUser { get; set; }
-        /// <summary> 
-        /// 更新时间
-        /// </summary> 
-        public DateTime UpdateDate { get; set; }
-        /// <summary> 
         /// 行版本
         /// </summary> 
         public string RowVersion { get; set; }

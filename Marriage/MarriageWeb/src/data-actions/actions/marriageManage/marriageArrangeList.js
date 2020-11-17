@@ -109,5 +109,21 @@ export default {
     const primaryKeyValue = data.entityData[primaryKey];
     const pathQuery = `${method}(${primaryKeyValue})`;
     this.dvaActions.dispatch(this.serviceName, "getMarriageFee", { pathQuery, action: this.getAction(id, actionType) });
-  }
+  },
+  updateFee(id, actionType, data) {
+    const { name, primaryKey } = data.entity;
+    const primaryKeyValue = data.oldEntityData && data.oldEntityData[primaryKey] ? data.oldEntityData[primaryKey] : null;
+
+    var pathQuery = method;
+    if (primaryKeyValue) {
+        data.entityData[primaryKey] = primaryKeyValue;
+        pathQuery = `${method}(${primaryKeyValue})`;
+    }
+
+    const payload = { action: this.getAction(id, actionType) };
+    payload[name] = data.entityData;
+    payload.pathQuery = pathQuery
+
+    this.dvaActions.dispatch(this.serviceName, serviceName, payload);
+}
 }

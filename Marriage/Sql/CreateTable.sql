@@ -447,24 +447,33 @@ create view v_MarriageSpuare2
 as
 with ManUser as
 (
-select a.*,b.Name+'('+ b.Phone+')' ManUserName from t_MarriageSpuare a,t_MarriageUser b
+select a.*,b.Name+'('+ b.Phone+')' ManUserName,b.MatchmakerId as ManMatchmakerId from t_MarriageSpuare a,t_MarriageUser b
 where a.UserId=b.UserId and b.Status=1 and IsDelete=0 and Sex=1
 ),
 WomanUser as
 (
-select a.*,b.Name+'('+ b.Phone+')' WomanUserName  from t_MarriageSpuare a,t_MarriageUser b
+select a.*,b.Name+'('+ b.Phone+')' WomanUserName,b.MatchmakerId as WomanMatchmakerId from t_MarriageSpuare a,t_MarriageUser b
 where a.UserId=b.UserId and b.Status=1 and IsDelete=0 and Sex=2
 )
-select a.MarriageSpuareId,a.UserId ManUserId,a.ManUserName,a.CreateDate, 
+select a.MarriageSpuareId,a.UserId ManUserId,a.ManUserName,a.CreateDate, a.ManMatchmakerId,
 a.RoseCount,
 a.UpdateDate,
 b.CreateDate CreateDate2,
 b.RoseCount RoseCount2,
 b.UpdateDate UpdateDate2,
 b.UserId WomanUserId,
-b.WomanUserName
-from ManUser a,WomanUser b
-where a.UserId=b.OtherSideUserId and a.OtherSideUserId=b.UserId
+b.WomanMatchmakerId,
+b.WomanUserName,
+c.ArrangeId,
+case when c.MarriageArrangeId is not null then '相亲安排' else '' end ArrangeLabel,
+d.Name+'('+ d.Phone+')' ManMatchmakerName,
+e.Name+'('+ e.Phone+')' WomanMatchmakerName,
+case when a.UpdateDate>b.UpdateDate then a.UpdateDate else b.UpdateDate end UpdateDate3
+from ManUser a
+inner join WomanUser b on a.UserId=b.OtherSideUserId and a.OtherSideUserId=b.UserId
+left join t_MarriageArrange c on a.UserId=c.ManUserId and a.OtherSideUserId=c.WomanUserId and c.IsDelete=0
+left join t_Matchmaker d on a.ManMatchmakerId=d.MatchmakerId and d.IsDelete=0
+left join t_Matchmaker e on b.WomanMatchmakerId=e.MatchmakerId and e.IsDelete=0
 go
 
 --6、红娘中介费明细表
@@ -484,8 +493,6 @@ Remark nvarchar(200),                                          --备注
 IsDelete tinyint not null default(0),                          --是否删除
 CreateUser uniqueidentifier not null,                          --创建人
 CreateDate datetime default(getdate()) not null,               --创建时间
-UpdateUser uniqueidentifier,                                   --更新人
-UpdateDate datetime,                                           --更新时间
 RowVersion timestamp not null                                  --行版本
 )
 go
@@ -500,8 +507,6 @@ exec proc_AddCellExplanation '备注','t_MatchmakerFeeDetail','Remark'
 exec proc_AddCellExplanation '是否删除','t_MatchmakerFeeDetail','IsDelete'
 exec proc_AddCellExplanation '创建人','t_MatchmakerFeeDetail','CreateUser'
 exec proc_AddCellExplanation '创建时间','t_MatchmakerFeeDetail','CreateDate'
-exec proc_AddCellExplanation '更新人','t_MatchmakerFeeDetail','UpdateUser'
-exec proc_AddCellExplanation '更新时间','t_MatchmakerFeeDetail','UpdateDate'
 exec proc_AddCellExplanation '行版本','t_MatchmakerFeeDetail','RowVersion'
 go
 
