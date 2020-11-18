@@ -5,6 +5,7 @@ import Resources from './resources';
 import MarriageUserPhoto from './marriageUserPhoto';
 import Matchmaker from './matchmaker';
 import MarriageSquare from './marriageSquare';
+import MarriageArrange from './marriageArrange';
 
 export default [
     PageConfig,
@@ -13,5 +14,6 @@ export default [
     Resources,
     MarriageUserPhoto,
     Matchmaker,
-    MarriageSquare
+    MarriageSquare,
+    MarriageArrange
 ]

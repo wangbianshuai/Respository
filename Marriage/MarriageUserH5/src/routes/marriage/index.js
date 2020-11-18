@@ -1,5 +1,3 @@
-import React from 'react';
+import { EntityPageList } from "PageTemplates";
 
-export default (props) => {
-    return <div>marriage</div>
-}
+export default EntityPageList("marriage_index", "MarriageArrange", '连理缘-相亲安排', 1100, null, ['searchLike', 'searchMarriage', 'searchDislike']);

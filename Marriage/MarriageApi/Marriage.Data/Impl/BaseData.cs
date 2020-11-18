@@ -148,6 +148,10 @@ namespace Marriage.Data.Impl
 
                     whereList.Add(string.Format("({0})", string.Join(" or ", likeWheres)));
                 }
+                else if (c.OpearteLogic == "in")
+                {
+                    whereList.Add(string.Format("{0} in ({1})", c.Name, c.Value));
+                }
                 else
                 {
                     string parameterName = c.ParameterName ?? "@" + c.Name;

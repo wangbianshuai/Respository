@@ -8,13 +8,13 @@ using System.Text;
 namespace Marriage.Data.Impl
 {
     /// <summary>
-    /// 相亲广场
+    /// 相亲安排
     /// </summary>
-    public class MarriageSquare : BaseData, IMarriageSquare
+    public class MarriageArrange : BaseData, IMarriageArrange
     {
-        public MarriageSquare()
+        public MarriageArrange()
         {
-            this.EntityType = EntityType.GetEntityType<Entity.Data.MarriageSquare>();
+            this.EntityType = EntityType.GetEntityType<Entity.Data.MarriageArrange>();
         }
     }
 }

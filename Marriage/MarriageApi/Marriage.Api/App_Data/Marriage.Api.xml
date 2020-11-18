@@ -14,6 +14,18 @@
             Token过滤
             </summary>
         </member>
+        <member name="T:Marriage.Api.Controllers.MarriageArrangeController">
+            <summary>
+            相亲安排
+            </summary>
+        </member>
+        <member name="M:Marriage.Api.Controllers.MarriageArrangeController.QueryMarriageArrange(Marriage.Entity.Application.MarriageArrange.QueryMarriageArrangeRequest)">
+            <summary>
+            查询相亲安排
+            </summary>
+            <param name="request"></param>
+            <returns></returns>
+        </member>
         <member name="T:Marriage.Api.Controllers.MarriageSquareController">
             <summary>
             相亲广场

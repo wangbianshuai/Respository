@@ -1,13 +1,13 @@
-//square/index 1000-1099
+//marriage/index 1100-1199
 const dataActionTypes = {
-    //相亲广场
-    searchQuery: 1000,
-    //赠送玫瑰
-    searchSend: 1001,
-    //收到玫瑰
-    searchReceive: 1002,
-    //互赠玫瑰
-    searchMutual: 1003,
+    //待相亲
+    searchQuery: 1100,
+    //有意向
+    searchLike: 1101,
+    //牵手成功
+    searchMarriage: 1102,
+    //无意向
+    searchDislike: 1103
 };
 
 const entity = { name: 'MarriageUser', primaryKey: 'UserId' };
@@ -24,16 +24,16 @@ function getTabs() {
         name: 'tabs1',
         type: 'Tabs',
         properties: [
-            getTabView('userDataGridView1', '相亲广场', 0, 'searchQuery', dataActionTypes.searchQuery, {
+            getTabView('userDataGridView1', '待相亲', 0, 'searchQuery', dataActionTypes.searchQuery, {
                 Type: 0
             }),
-            getTabView('sendDataGridView1', '赠送玫瑰', 1, 'searchSend', dataActionTypes.searchSend, {
+            getTabView('likeDataGridView1', '有意向', 1, 'searchLike', dataActionTypes.searchLike, {
                 Type: 1,
             }),
-            getTabView('receiveDataGridView1', '收到玫瑰', 2, 'searchReceive', dataActionTypes.searchReceive, {
+            getTabView('marriageDataGridView1', '牵手成功', 2, 'searchMarriage', dataActionTypes.searchMarriage, {
                 Type: 2,
             }),
-            getTabView('MutualDataGridView1', '互赠玫瑰', 3, 'searchMutual', dataActionTypes.searchMutual, {
+            getTabView('dislikeDataGridView1', '无意向', 3, 'searchDislike', dataActionTypes.searchDislike, {
                 Type: 3,
             })
         ]
@@ -48,19 +48,19 @@ function getEventActions() {
             dataGridView: "userDataGridView1"
         },
         {
-            name: "searchSend",
+            name: "searchLike",
             type: "dataGridView/searchQuery",
-            dataGridView: "sendDataGridView1"
+            dataGridView: "likeDataGridView1"
         },
         {
-            name: "searchReceive",
+            name: "searchMarriage",
             type: "dataGridView/searchQuery",
-            dataGridView: "receiveDataGridView1"
+            dataGridView: "marriageDataGridView1"
         },
         {
-            name: "searchMutual",
+            name: "searchDislike",
             type: "dataGridView/searchQuery",
-            dataGridView: "MutualDataGridView1"
+            dataGridView: "dislikeDataGridView1"
         }]
 }
 
@@ -74,7 +74,7 @@ function getTabView(name, tabLabel, tabPage, eventActionName, entitySearchQuery,
         conditions,
         entitySearchQuery,
         eventActionName,
-        detailPageUrl: '/user/index?type=1&tabPage=' + tabPage,
+        detailPageUrl: '/user/index?type=2&tabPage=' + tabPage,
         actionName: eventActionName,
         className: "divDataGridView",
         itemType: 'MarriageUserItem'

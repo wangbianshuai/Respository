@@ -396,6 +396,44 @@ left join t_AppUser g on a.CreateUser=g.CreateUser
 where a.IsDelete=0
 go
 
+if exists(select * from sysobjects where name='v_MarriageArrangeUser1')
+drop view v_MarriageArrangeUser1
+go
+
+create view v_MarriageArrangeUser1
+as
+select a.UserId,
+a.NickName,
+a.HeadImgUrl,
+a.Sex,
+a.Remark,
+year(GETDATE())- YEAR(Birthday) as Age,
+isnull(b.UpdateDate,b.CreateDate) as UpdateDate,
+b.ManUserId SelfUserId
+from t_MarriageUser a,t_MarriageArrange b 
+where a.IsDelete=0 and a.Status=1 and a.UserId=b.WomanUserId
+and b.IsDelete=0
+go
+
+if exists(select * from sysobjects where name='v_MarriageArrangeUser2')
+drop view v_MarriageArrangeUser2
+go
+
+create view v_MarriageArrangeUser2
+as
+select a.UserId,
+a.NickName,
+a.HeadImgUrl,
+a.Sex,
+a.Remark,
+year(GETDATE())- YEAR(Birthday) as Age,
+isnull(b.UpdateDate,b.CreateDate) as UpdateDate,
+b.WomanUserId SelfUserId
+from t_MarriageUser a,t_MarriageArrange b 
+where a.IsDelete=0 and a.Status=1 and a.UserId=b.ManUserId
+and b.IsDelete=0
+go
+
 --4、相亲广场信息表（t_MarriageSquare）
 if exists(select * from sysobjects where name='t_MarriageSquare')
 drop table t_MarriageSquare
