@@ -223,7 +223,7 @@ export default class EntityEdit extends BaseIndex {
         const { pageAxis } = props;
 
         let entityData = {}
-
+        
         if (editView.entity && !editView.entity.isGet) {
             const { primaryKey } = editView.entity;
 

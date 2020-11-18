@@ -510,7 +510,7 @@ b.RoseCount,
 b.UpdateDate,
 b.UserId SelfUserId
 from  t_MarriageUser a,t_MarriageSquare b
-where a.IsDelete=0 and a.Status=1 and a.IsPublic=1
+where a.IsDelete=0 and a.Status=1
 and a.UserId=b.OtherSideUserId
 go
 
@@ -530,7 +530,7 @@ b.RoseCount,
 b.UpdateDate,
 b.OtherSideUserId SelfUserId
 from  t_MarriageUser a,t_MarriageSquare b
-where a.IsDelete=0 and a.Status=1 and a.IsPublic=1
+where a.IsDelete=0 and a.Status=1
 and a.UserId=b.UserId
 go
 

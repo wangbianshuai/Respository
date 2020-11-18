@@ -42,7 +42,7 @@ export default class DataGridView extends BaseIndex {
         dataGridView.pageSize = pageSize;
         searchButton && searchButton.setDisabled(true);
 
-        const data = { entitySearchQuery, formData: dataGridView.formData, actionName: dataGridView.actionName, entity: dataGridView.entity, isData, pageIndex, pageSize, queryInfo, pageData: pageAxis.pageData }
+        const data = { entitySearchQuery, conditions: dataGridView.conditions, actionName: dataGridView.actionName, entity: dataGridView.entity, isData, pageIndex, pageSize, queryInfo, pageData: pageAxis.pageData }
 
         invokeDataAction(searchQuery, data);
     }

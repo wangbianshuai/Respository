@@ -158,9 +158,34 @@
                     font-weight: 700;
                 }
 
+                
+                .divRose{
+                    display: flex;
+                    flex-direction: row;
+                    align-items: center;
+                    margin-left: toRem(16);
+
+                    span{
+                        font-size: toRem(30);
+                        color:#e64290;
+                        font-weight: 500;
+                    }
+
+                    img{
+                        width: toRem(32);
+                        height: toRem(32);
+                    }
+                }
+
                 img{
                     width: toRem(48);
                     height: toRem(48);
+                }
+                
+                label{
+                    font-size: toRem(28);
+                    color: #108ee9;
+                    margin-left: toRem(16);
                 }
             }
 

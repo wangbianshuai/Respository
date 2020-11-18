@@ -20,9 +20,12 @@ export default class EntityList extends BaseIndex {
 
     searchQuery(id, actionType, data) {
         const payload = { action: this.getAction(id, actionType, false) };
-        const { pageSize, pageIndex } = data;
+        const { pageSize, pageIndex, conditions } = data;
         const { WhereFields } = data.queryInfo
 
+        if (conditions) {
+            for (let key in conditions) payload[key] = conditions[key];
+        }
         payload.WhereFields = WhereFields;
         payload.pageSize = pageSize;
         payload.pageIndex = pageIndex
