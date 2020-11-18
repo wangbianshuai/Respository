@@ -858,6 +858,58 @@ exec proc_AddCellExplanation '更新时间','t_MarriageMakePair','CreateDate'
 exec proc_AddCellExplanation '行版本','t_MarriageMakePair','RowVersion'
 go
 
+if exists(select * from sysobjects where name='v_MarriageMakePair')
+drop view v_MarriageMakePair
+go
+
+create view v_MarriageMakePair
+as
+select a.*,b.Name+'('+ b.Phone+')' UserName, 
+b.Sex UserSex,
+case when b.Sex=1 then '男' when b.Sex=2 then '女' else '未知' end UserSexName,
+c.Name+'('+ c.Phone+')' OtherSideUserName,
+c.Sex OtherSideUserSex,
+case when c.Sex=1 then '男' when c.Sex=2 then '女' when c.Sex is null then null else '未知' end OtherSideUserSexName
+from t_MarriageMakePair a
+inner join t_MarriageUser b on a.UserId=b.UserId and b.Status=1 and b.IsDelete=0
+inner join t_MarriageUser c on a.OtherSideUserId=c.UserId and c.Status=1 and c.IsDelete=0
+go
+
+if exists(select * from sysobjects where name='v_MarriageMakePair2')
+drop view v_MarriageMakePair2
+go
+
+create view v_MarriageMakePair2
+as
+with ManUser as
+(
+select a.*,b.Name+'('+ b.Phone+')' ManUserName,b.MatchmakerId as ManMatchmakerId from t_MarriageMakePair a,t_MarriageUser b
+where a.UserId=b.UserId and b.Status=1 and IsDelete=0 and Sex=1
+),
+WomanUser as
+(
+select a.*,b.Name+'('+ b.Phone+')' WomanUserName,b.MatchmakerId as WomanMatchmakerId from t_MarriageMakePair a,t_MarriageUser b
+where a.UserId=b.UserId and b.Status=1 and IsDelete=0 and Sex=2
+)
+select a.MarkPairId,a.UserId ManUserId,a.ManUserName,a.CreateDate, a.ManMatchmakerId,
+convert(varchar(10),a.PercentValue)+'%' PercentValue,
+b.CreateDate CreateDate2,
+convert(varchar(10),b.PercentValue)+'%' PercentValue2,
+b.UserId WomanUserId,
+b.WomanMatchmakerId,
+b.WomanUserName,
+c.ArrangeId,
+case when c.MarriageArrangeId is null then '相亲安排' else '' end ArrangeLabel,
+d.Name+'('+ d.Phone+')' ManMatchmakerName,
+e.Name+'('+ e.Phone+')' WomanMatchmakerName,
+case when a.CreateDate>b.CreateDate then a.CreateDate else b.CreateDate end CreateDate3,
+convert(varchar(10), convert(decimal(10,2),(a.PercentValue+b.PercentValue)/200)) PercentValue3
+from ManUser a
+inner join WomanUser b on a.UserId=b.OtherSideUserId and a.OtherSideUserId=b.UserId
+left join t_MarriageArrange c on a.UserId=c.ManUserId and a.OtherSideUserId=c.WomanUserId and c.IsDelete=0
+left join t_Matchmaker d on a.ManMatchmakerId=d.MatchmakerId and d.IsDelete=0
+left join t_Matchmaker e on b.WomanMatchmakerId=e.MatchmakerId and e.IsDelete=0
+go
 
 --14、相亲配对计算明细表
 if exists(select * from sysobjects where name='t_MarriageMakePairDetail')
@@ -888,8 +940,6 @@ exec proc_AddCellExplanation '自己选择值','t_MarriageMakePairDetail','SelfSelect
 exec proc_AddCellExplanation '对方选择值','t_MarriageMakePairDetail','OtherSideSelectValue'
 exec proc_AddCellExplanation '匹配度（%）','t_MarriageMakePairDetail','PercentValue'
 go
-
-
 
 --18、生辰八字匹配结果（t_BirthEightResult）
 if exists(select * from sysobjects where name='t_BirthEightResult')
