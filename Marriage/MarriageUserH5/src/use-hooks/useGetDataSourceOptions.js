@@ -26,7 +26,7 @@ export default (property, view, pageAxis, getOptions) => {
       if (pageAxis.isSuccessProps(state) && !serviceDataSource.isRefresh) receiveDataSource(state, property, view, pageAxis, setOptions, getOptions);
       else {
         var payload = serviceDataSource.payload || {};
-        if (serviceDataSource.getPayload) payload = pageAxis.getFunction(serviceDataSource.getPayload)({ property, view })
+        if (serviceDataSource.getPayload) payload = pageAxis.getFunction(serviceDataSource.getPayload)({ payload, property, view })
         pageAxis.dispatchAction(serviceDataSource.serviceName, serviceDataSource.actionName, payload).then(res => receiveDataSource(res, property, view, pageAxis, setOptions, getOptions));
       }
     }

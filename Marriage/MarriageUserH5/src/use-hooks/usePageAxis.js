@@ -87,7 +87,7 @@ class PageAxis {
         for (let key in EventActions) this.eventActions[key] = new EventActions[key]();
     }
 
-    getToken(){
+    getToken() {
         return Common.getStorage(EnvConfig.tokenKey);
     }
 
@@ -156,6 +156,7 @@ class PageAxis {
     }
 
     toPage(url) {
+        if (url.match(/#{.*?}/)) url = Common.replaceDataContent(this.pageData, url, true);
         this.props.history.push(url);
     }
 

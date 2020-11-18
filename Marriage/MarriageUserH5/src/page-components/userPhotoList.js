@@ -79,6 +79,7 @@ export default (props) => {
   const [isVisible, setIsVisible] = useState(property.isVisible !== false);
   const [value, setValue] = useState([]);
   const [isEdit, setIsEdit] = useState(false);
+  const [isReadOnly, setIsReadOnly] = useState(!!property.isReadOnly);
 
   const inputFile = useRef(null)
 
@@ -106,20 +107,22 @@ export default (props) => {
   property.setVisible = (v) => setIsVisible(v);
   property.setValue = (v) => setValue(v);
   property.getValue = () => value;
+  property.setIsReadOnly = (v) => setIsReadOnly(v);
 
   if (!isVisible) return null;
+
+  const rightContent = isReadOnly ? undefined : [
+    <Button size='small' key={0} onClick={onClick} style={{ marginRight: '0.5rem' }}>{isEdit ? '删除' : '上传'}</Button>,
+    <Button size='small' key={1} onClick={onEdit}>{isEdit ? '取消' : '编辑'}</Button>
+  ]
 
   return (<div className={styles.divUserPhoto}>
     <NavBar className={styles.divNavBar}
       mode="mark"
-      rightContent={[
-        <Button size='small' key={0} onClick={onClick} style={{ marginRight: '0.5rem' }}>{isEdit ? '删除' : '上传'}</Button>,
-        <Button size='small' key={1} onClick={onEdit}>{isEdit ? '取消' : '编辑'}</Button>
-      ]}
-    >生活照</NavBar>
+      rightContent={rightContent}>生活照</NavBar>
     <div className={styles.divData}>
       {value.map((m, i) => renderItem(m, i, isEdit))}
     </div>
-    <input type='file' accept='image/*' onChange={onChange} ref={inputFile} style={{ display: 'none' }} />
+    {!isReadOnly && <input type='file' accept='image/*' onChange={onChange} ref={inputFile} style={{ display: 'none' }} />}
   </div>)
 };

@@ -8,14 +8,16 @@ import { Common } from 'UtilsCommon';
 const { Link } = router;
 
 export default (props) => {
-    const { property } = Components.Base.getProps(props);
+    const { property, pageAxis } = Components.Base.getProps(props);
     const [data, setData] = useState({});
 
     property.setValue = (d) => setData(d);
 
-    const { detailUrl } = property;
+    let detailUrl = property.detailUrl;
+    detailUrl = Common.replaceDataContent(pageAxis.pageData, detailUrl, true);
 
-    const { HeadImgUrl, Phone, NickName, Sex } = data || {}
+    const { HeadImgUrl, Phone, NickName, Sex, Age } = data || {}
+
 
     const sexImg = Sex > 0 ? Common.getImageUrl(Sex === 1 ? 'man.png' : 'woman.png') : undefined;
 
@@ -26,6 +28,7 @@ export default (props) => {
                 <div className={styles.divTop}>
                     <span>{NickName}</span>
                     {sexImg && <img src={sexImg} alt='' />}
+                    {Age && <label>{Age}岁</label>}
                 </div>
                 <div className={styles.divBottom}>
                     <span>手机号码：{Phone}</span>

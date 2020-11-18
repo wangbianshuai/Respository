@@ -120,11 +120,14 @@ export default (props) => {
   let clear2 = clear === undefined ? true : clear;
   if (isReadOnly || disabled) clear2 = false;
 
+  const minPlaceholder = isReadOnly ? '' : '最小值(' + property.placeHolder + ')';
+  const maxPlaceholder = isReadOnly ? '' : '最大值(' + property.placeHolder + ')';
+
   return (
     <React.Fragment>
-      <List.Item className={styles.divLabelItem}>{label}{isNullable === false ? <span style={{ color: 'red' }}>*</span> : ''}</List.Item>
+      <List.Item className={styles.divLabelItem}>{label}{isNullable === false && !isReadOnly ? <span style={{ color: 'red' }}>*</span> : ''}</List.Item>
       <div className={styles.divIntervalTextBox}>
-        <InputItem placeholder={'最小值(' + property.placeHolder + ')'}
+        <InputItem placeholder={minPlaceholder}
           className={className}
           onChange={onMinChange}
           maxLength={property.maxLength}
@@ -135,7 +138,7 @@ export default (props) => {
           extra={extra}
           value={minValue}></InputItem>
         <div className={styles.divSpan}><span>至</span></div>
-        <InputItem placeholder={'最大值(' + property.placeHolder + ')'}
+        <InputItem placeholder={maxPlaceholder}
           className={className}
           onChange={onMaxChange}
           maxLength={property.maxLength}

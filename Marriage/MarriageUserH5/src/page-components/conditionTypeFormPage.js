@@ -5,27 +5,27 @@ import styles from '../styles/view.scss';
 import { List } from 'antd-mobile';
 
 const getTextBox = (item, selectType) => {
-  const { Value } = item;
+  const { Value, IsReadOnly } = item;
   const dataType = item.DataType === 'number' ? 'float' : 'string';
   const maxLength = item.DataType === 'number' ? 10 : 100;
   const controlType = item.DataType === 'number' ? '' : 'textarea';
   const placeHolder = selectType === 1 ? '可选填' : '可选值(输入选择的关键字，多个以逗号或顿号隔开)'
-  return { name: item.ItemId, value: Value, isLabelItem: true, autoHeight: true, dataType, controlType, scale: 2, type: 'TextBox', maxLength, placeHolder, label: item.Title, isEdit: true };
+  return { name: item.ItemId, value: Value, isReadOnly: IsReadOnly, isLabelItem: true, autoHeight: true, dataType, controlType, scale: 2, type: 'TextBox', maxLength, placeHolder, label: item.Title, isEdit: true };
 }
 
 const getIntervalTextBox = (item) => {
-  const { Value } = item;
-  return { name: item.ItemId, dataType: 'float', value: Value, isLabelItem: true, scale: 2, type: 'IntervalTextBox', maxLength: 10, placeHolder: '可选填', label: item.Title, isEdit: true };
+  const { Value, IsReadOnly } = item;
+  return { name: item.ItemId, dataType: 'float', isReadOnly: IsReadOnly, value: Value, isLabelItem: true, scale: 2, type: 'IntervalTextBox', maxLength: 10, placeHolder: '可选填', label: item.Title, isEdit: true };
 };
 
 const getCheckBoxGroup = (item) => {
-  const { Value } = item;
-  return { name: item.ItemId, value: Value, type: 'CheckBoxGroup', isJson: true, nullTipMessage: '请选择' + item.Title, isList: true, label: item.Title, dataSource: item.DataSourceItems, isEdit: true };
+  const { Value, IsReadOnly } = item;
+  return { name: item.ItemId, value: Value, isReadOnly: IsReadOnly, type: 'CheckBoxGroup', isJson: true, nullTipMessage: '请选择' + item.Title, isList: true, label: item.Title, dataSource: item.DataSourceItems, isEdit: true };
 }
 
 const getPicker = (item) => {
-  const { Value } = item;
-  return { name: item.ItemId, value: Value, isLabelItem: true, className: 'divPicker', type: 'Picker', label: item.Title, dataSource: item.DataSourceItems, isEdit: true };
+  const { Value, IsReadOnly } = item;
+  return { name: item.ItemId, value: Value, isReadOnly: IsReadOnly, isLabelItem: true, className: 'divPicker', type: 'Picker', label: item.Title, dataSource: item.DataSourceItems, isEdit: true };
 }
 
 const formItemToProperty = (item, i, property, pageAxis) => {
@@ -44,6 +44,7 @@ const formItemToProperty = (item, i, property, pageAxis) => {
 };
 
 const getProperties = (itemList, property, pageAxis) => {
+  if (!itemList) return [];
   return itemList.map((m, i) => formItemToProperty(m, i, property, pageAxis));
 };
 
@@ -93,7 +94,7 @@ export default (props) => {
 
   property.setVisible = (v) => setIsVisible(v);
   property.setValue = (v) => setValue(v);
-  property.getValue = (v) => getPropertiesValues(properties);
+  property.getValue = () => getPropertiesValues(properties);
   property.judgeValueRange = () => judgeValueRange(properties);
 
   useEffect(() => {

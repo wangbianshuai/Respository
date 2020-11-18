@@ -4,7 +4,6 @@ import { Common } from 'UtilsCommon';
 import { useGetDataSourceOptions } from 'UseHooks';
 import Base from './base';
 import styles from '../styles/view.scss';
-import { options } from 'less';
 
 const getOptions = (property, view, pageAxis, parentValue) => {
   parentValue = parentValue || property.parentValue;

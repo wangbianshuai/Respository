@@ -1,5 +1,5 @@
 import React, { useState, useRef, useCallback } from 'react';
-import { Button, NavBar, Icon, Checkbox } from 'antd-mobile';
+import { Button, NavBar, Checkbox } from 'antd-mobile';
 import { Common } from 'UtilsCommon';
 import Components from 'Components';
 import styles from '../styles/view.scss';

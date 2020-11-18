@@ -71,7 +71,8 @@ export default (props) => {
 
     if (!isVisible) return null;
 
-    const { label, extra, style, clear, isNullable, isLabelItem, isRed, rows, isValueVisible } = property;
+    const { label, extra, style, clear, isLabelItem, isRed, rows, isValueVisible } = property;
+    let isNullable = property.isNullable
 
     if (isValueVisible && !value) return null;
 
@@ -82,7 +83,12 @@ export default (props) => {
     let clear2 = clear === undefined ? true : clear;
     if (isReadOnly || disabled) clear2 = false;
 
-    const isRed2 = property.isRed2 || (isNullable === false && isRed);
+    let isRed2 = property.isRed2 || (isNullable === false && isRed);
+    if (isReadOnly) {
+        isRed2 = false;
+        isNullable = true;
+        property.placeHolder = ''
+    }
 
     if (isLabelItem) {
         if (property.controlType === 'textarea') {

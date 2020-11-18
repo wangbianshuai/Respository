@@ -1,5 +1,5 @@
 import React, { useState, useCallback, useEffect } from 'react';
-import { Picker, List } from 'antd-mobile';
+import { Picker, List, InputItem } from 'antd-mobile';
 import { Common } from 'UtilsCommon';
 import { useGetDataSourceOptions } from 'UseHooks';
 import Base from './base';
@@ -46,12 +46,19 @@ const exists = (options, value) => {
   return !!Common.arrayFirst(options, (f) => Common.isEquals(f.value, value, true));
 }
 
+const getText = (options, value) => {
+  var item = Common.arrayFirst(options, (f) => Common.isEquals(f.value, value, true));
+  if (item === null) return '';
+  return item.label;
+};
+
 export default (props) => {
   const { property, view, pageAxis } = Base.getProps(props);
 
   const [value, setValue] = useState(Base.getInitValue(property));
   const [isVisible, setIsVisible] = useState(property.isVisible !== false);
   const [disabled, setDisabled] = useState(!!property.disabled);
+  const [isReadOnly, setIsReadOnly] = useState(!!property.isReadOnly);
 
   const [options, setOptions] = useGetDataSourceOptions(property, view, pageAxis, getOptions);
 
@@ -71,10 +78,11 @@ export default (props) => {
   property.setDisabled = (v) => setDisabled(v);
   property.setParentValue = (v) => setOptions(getOptions(property, view, pageAxis, v));
   property.refreshOptions = () => setOptions(getOptions(property, view, pageAxis));
+  property.setIsReadOnly = (v) => setIsReadOnly(v);
 
   if (!isVisible) return null;
 
-  let value2 = Common.isNullOrEmpty(value) ? emptyOption ? [emptyOption.value] : [] : [value];
+  if (isReadOnly) property.isNullable = true;
 
   let extra = "请选择" + (property.isNullable === false ? "" : "(可选)");
 
@@ -82,11 +90,25 @@ export default (props) => {
 
   const { style, label, defaultValue, emptyOption, isNullable, isRed } = property;
 
+  let value2 = Common.isNullOrEmpty(value) ? emptyOption ? [emptyOption.value] : [] : [value];
+
   if (emptyOption && emptyOption.label) extra = emptyOption.label;
 
   if (!exists(options, value)) value2 = [];
 
   if (property.isLabelItem) {
+    if (isReadOnly) {
+      const text = getText(options, value);
+      return (
+        <React.Fragment>
+          <List.Item className={styles.divLabelItem}>{label}</List.Item>
+          <InputItem className={className} style={style}
+            editable={!isReadOnly}
+            type='text'
+            value={text}></InputItem>
+        </React.Fragment>
+      )
+    }
     return (
       <div className={className} style={style}>
         <List.Item className={styles.divLabelItem}>{label}{isNullable === false ? <span style={{ color: 'red' }}>*</span> : ''}</List.Item>
@@ -103,6 +125,15 @@ export default (props) => {
         </Picker>
       </div>
     )
+  }
+
+  if (isReadOnly) {
+    const text = getText(options, value);
+    return (<InputItem className={className} style={style}
+      editable={!isReadOnly}
+      type='text'
+      value={text}>{label}</InputItem>
+    );
   }
 
   return (

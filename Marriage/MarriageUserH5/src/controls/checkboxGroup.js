@@ -26,11 +26,11 @@ const renderOptions = (options, value, onChange) => {
         checked={value.includes(m.value)} onChange={(e) => onChange(e, m)}>{m.label}</Checkbox.CheckboxItem >)
 };
 
-const getSelectValues = (options, value) => {
+const getSelectValues = (options, value, isReadOnly) => {
     const list = options.filter(f => value.includes(f.value));
     return <List.Item className={styles.divOptionValue}>
         {list.length > 0 && list.map((m, i) => <span key={i}>{m.label}</span>)}
-        {list.length === 0 && <label>未有选择项</label>}
+        {list.length === 0 && !isReadOnly && <label>未有选择项</label>}
     </List.Item>
 };
 
@@ -52,6 +52,12 @@ const renderHeader = (label, collapse, onClick, isNullable) => {
     return <div className={styles.divGroupHeader}>
         <span>{label}{isNullable === false ? <span style={{ color: 'red' }}>*</span> : ''}</span>
         <Button size='small' type='ghost' onClick={onClick} className={styles.button}>{butonText}</Button>
+    </div>
+}
+
+const renderReadOnlyHeader = (label) => {
+    return <div className={styles.divGroupHeader}>
+        <span>{label}</span>
     </div>
 }
 
@@ -97,8 +103,8 @@ export default (props) => {
     const { isList, label, isNullable } = property;
 
     if (isReadOnly) {
-        return (<List className={className} style={property.style} renderHeader={() => label}>
-            {getSelectValues(options, value)}
+        return (<List className={className} style={property.style} renderHeader={() => renderReadOnlyHeader(label)}>
+            {getSelectValues(options, value, isReadOnly)}
         </List>)
     }
 
