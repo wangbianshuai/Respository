@@ -51,6 +51,5 @@ namespace Marriage.Data
         /// <param name="queryInfo"></param>
         /// <returns></returns>
         int QueryCount(Entity.Data.QueryInfo queryInfo);
-
     }
 }

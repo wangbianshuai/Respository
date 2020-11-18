@@ -122,6 +122,101 @@ namespace Marriage.Application.Impl
             return this.SetReturnResponse<GetUserPhotoByMatchmakerResponse>(title, "GetUserPhotoByMatchmaker", requestContent, response);
         }
 
+
+        /// <summary>
+        /// 获取用户下用户生活照列表
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        public GetUserPhotoByUserResponse GetUserPhotoByUser(GetUserPhotoByUserRequest request)
+        {
+            string title = "获取用户下用户生活照列表";
+            string requestContent = Utility.Common.ToJson(request);
+            GetUserPhotoByUserResponse response = new GetUserPhotoByUserResponse();
+
+            this.InitMessage();
+
+            this.IsNullRequest(request, response);
+
+            //2、获取用户信息
+            int stepNo = 1;
+            Entity.Domain.MarriageUser user = null;
+            
+            if(request.Type== 1) user= GetMarriageSquareUserByUserId(stepNo, request.LoginUserId, request.UserId, response);
+            else if(request.Type ==2) user= GetMarriageArrangeUserByUserId(stepNo, request.LoginUserId, request.UserId, response);
+
+            //3、获取用户生活照列表
+            stepNo += 1;
+            GetUserPhotos(stepNo, user, request, response);
+
+            //4、执行结束
+            this.ExecEnd(response);
+
+            //日志记录
+            return this.SetReturnResponse<GetUserPhotoByUserResponse>(title, "GetUserPhotoByUser", requestContent, response);
+        }
+
+        /// <summary>
+        /// 获取用户生活照列表
+        /// </summary>
+        /// <param name="stepNo"></param>
+        /// <param name="request"></param>
+        /// <param name="response"></param>
+        /// <returns></returns>
+        private List<Entity.Domain.MarriageUserPhoto> GetUserPhotos(int stepNo, Entity.Domain.MarriageUser user, GetUserPhotoByUserRequest request, GetUserPhotoByUserResponse response)
+        {
+            Func<List<Entity.Domain.MarriageUserPhoto>> execStep = () =>
+            {
+                var list = _MarriageUserPhoto.GetUserPhotos(user.UserId);
+
+                response.DataList = (from a in list
+                                     select new UserPhoto()
+                                     {
+                                         PhotoId = a.PhotoId,
+                                         PhotoUrl = a.PhotoUrl
+                                     }).ToList();
+
+                return list;
+            };
+
+            return this.GetEntityDataList<Entity.Domain.MarriageUserPhoto>(stepNo, "获取用户生活照列表", "GetUserPhotos", response, execStep, false);
+        }
+
+        /// <summary>
+        /// 获取相亲广场用户信息
+        /// </summary>
+        /// <param name="stepNo"></param>
+        /// <param name="request"></param>
+        /// <param name="response"></param>
+        /// <returns></returns>
+        private Entity.Domain.MarriageUser GetMarriageSquareUserByUserId(int stepNo, string loginUserId, Guid userId, IResponse response)
+        {
+            Func<Entity.Domain.MarriageUser> execStep = () =>
+            {
+                return _MarriageUser.GetMarriageSquareUserByUserId(Guid.Parse(loginUserId), userId);
+            };
+
+            return this.GetEntityData<Entity.Domain.MarriageUser>(stepNo, "获取相亲广场用户信息", "GetMarriageSquareUserByUserId", response, execStep);
+        }
+
+        /// <summary>
+        /// 获取相亲安排用户信息
+        /// </summary>
+        /// <param name="stepNo"></param>
+        /// <param name="loginUserId"></param>
+        /// <param name="userId"></param>
+        /// <param name="response"></param>
+        /// <returns></returns>
+        private Entity.Domain.MarriageUser GetMarriageArrangeUserByUserId(int stepNo, string loginUserId, Guid userId, IResponse response)
+        {
+            Func<Entity.Domain.MarriageUser> execStep = () =>
+            {
+                return _MarriageUser.GetMarriageArrangeUserByUserId(Guid.Parse(loginUserId), userId);
+            };
+
+            return this.GetEntityData<Entity.Domain.MarriageUser>(stepNo, "获取相亲安排用户信息", "GetUserInfoById", response, execStep);
+        }
+
         /// <summary>
         /// 以主键获取红娘信息
         /// </summary>

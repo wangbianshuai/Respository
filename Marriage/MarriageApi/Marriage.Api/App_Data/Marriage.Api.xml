@@ -141,6 +141,34 @@
             <param name="request"></param>
             <returns></returns>
         </member>
+        <member name="M:Marriage.Api.Controllers.MarriageUserController.GetUserByUser(Marriage.Entity.Application.MarriageUser2.GetUserByUserRequest)">
+            <summary>
+            获取用户下用户信息
+            </summary>
+            <param name="request"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Marriage.Api.Controllers.MarriageUserController.GetUserConditionTypeByUser(Marriage.Entity.Application.MarriageUser2.GetUserConditionTypeByUserRequest)">
+            <summary>
+            获取用户下用户条件类型
+            </summary>
+            <param name="request"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Marriage.Api.Controllers.MarriageUserController.GetUserConditionTypesByUser(Marriage.Entity.Application.MarriageUser2.GetUserConditionTypesByUserRequest)">
+            <summary>
+            获取用户下用户条件类型列表
+            </summary>
+            <param name="request"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Marriage.Api.Controllers.MarriageUserController.GetUserInfoByUser(Marriage.Entity.Application.MarriageUser2.GetUserInfoByUserRequest)">
+            <summary>
+            获取用户下用户信息
+            </summary>
+            <param name="request"></param>
+            <returns></returns>
+        </member>
         <member name="T:Marriage.Api.Controllers.MarriageUserPhotoController">
             <summary>
             相亲照片
@@ -170,6 +198,13 @@
         <member name="M:Marriage.Api.Controllers.MarriageUserPhotoController.GetUserPhotoByMatchmaker(Marriage.Entity.Application.MarriageUserPhoto.GetUserPhotoByMatchmakerRequest)">
             <summary>
             获取红娘下用户生活照列表
+            </summary>
+            <param name="request"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Marriage.Api.Controllers.MarriageUserPhotoController.GetUserPhotoByUser(Marriage.Entity.Application.MarriageUserPhoto.GetUserPhotoByUserRequest)">
+            <summary>
+            获取用户下用户生活照列表
             </summary>
             <param name="request"></param>
             <returns></returns>

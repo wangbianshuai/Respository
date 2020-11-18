@@ -104,6 +104,31 @@
             用户照片
             </summary>
         </member>
+        <member name="T:Marriage.Entity.Application.MarriageUserPhoto.GetUserPhotoByUserRequest">
+            <summary>
+            获取用户下用户生活照列表请求
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageUserPhoto.GetUserPhotoByUserRequest.UserId">
+            <summary>
+            用户Id
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageUserPhoto.GetUserPhotoByUserRequest.Type">
+            <summary>
+            类型，1：相亲广场用户，2：相亲安排用户
+            </summary>
+        </member>
+        <member name="T:Marriage.Entity.Application.MarriageUserPhoto.GetUserPhotoByUserResponse">
+            <summary>
+            获取用户下用户生活照列表响应
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageUserPhoto.GetUserPhotoByUserResponse.DataList">
+            <summary>
+            用户照片
+            </summary>
+        </member>
         <member name="T:Marriage.Entity.Application.MarriageUserPhoto.GetUserPhotosRequest">
             <summary>
             获取用户生活照列表请求
@@ -227,6 +252,186 @@
         <member name="P:Marriage.Entity.Application.MarriageSquare.MarriageSquareUser.RoseCount2">
             <summary>
             收到玫瑰数
+            </summary>
+        </member>
+        <member name="T:Marriage.Entity.Application.MarriageUser2.GetUserByUserRequest">
+            <summary>
+            获取用户下用户信息请求
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageUser2.GetUserByUserRequest.UserId">
+            <summary>
+            用户Id
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageUser2.GetUserByUserRequest.Type">
+            <summary>
+            类型，1：相亲广场用户，2：相亲安排用户
+            </summary>
+        </member>
+        <member name="T:Marriage.Entity.Application.MarriageUser2.GetUserByUserResponse">
+            <summary>
+            获取用户下用户信息响应
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageUser2.GetUserByUserResponse.UserInfo">
+            <summary>
+            用户信息
+            </summary>
+        </member>
+        <member name="T:Marriage.Entity.Application.MarriageUser2.MarriageUser4">
+            <summary>
+            相亲人员信息
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageUser2.MarriageUser4.UserId">
+            <summary>
+            用户Id
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageUser2.MarriageUser4.NickName">
+            <summary> 
+            微信昵称
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageUser2.MarriageUser4.HeadImgUrl">
+            <summary> 
+            微信用户头像
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageUser2.MarriageUser4.Remark">
+            <summary> 
+            个性签名
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageUser2.MarriageUser4.Sex">
+            <summary>
+            性别
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageUser2.MarriageUser4.Age">
+            <summary>
+            年龄
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageUser2.MarriageUser4.RoseCount">
+            <summary>
+            玫瑰数
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageUser2.MarriageUser4.RoseCount2">
+            <summary>
+            收到玫瑰数
+            </summary>
+        </member>
+        <member name="T:Marriage.Entity.Application.MarriageUser2.GetUserConditionTypeByUserRequest">
+            <summary>
+            获取用户下用户条件类型请求
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageUser2.GetUserConditionTypeByUserRequest.UserId">
+            <summary>
+            用户Id
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageUser2.GetUserConditionTypeByUserRequest.SelectType">
+            <summary>
+            选择类型
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageUser2.GetUserConditionTypeByUserRequest.ConditionTypeId">
+            <summary>
+            条件类型Id
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageUser2.GetUserConditionTypeByUserRequest.UserConditionTypeId">
+            <summary>
+            条件类型Id
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageUser2.GetUserConditionTypeByUserRequest.Type">
+            <summary>
+            类型，1：相亲广场用户，2：相亲安排用户
+            </summary>
+        </member>
+        <member name="T:Marriage.Entity.Application.MarriageUser2.GetUserConditionTypeByUserResponse">
+            <summary>
+            获取用户下用户条件类型响应
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageUser2.GetUserConditionTypeByUserResponse.UserConditionTypeId">
+            <summary> 
+            主键
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageUser2.GetUserConditionTypeByUserResponse.ConditionTypeId">
+            <summary> 
+            条件类型Id
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageUser2.GetUserConditionTypeByUserResponse.IsPublic">
+            <summary>
+            是否公开
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageUser2.GetUserConditionTypeByUserResponse.Items">
+            <summary>
+            选项集合
+            </summary>
+        </member>
+        <member name="T:Marriage.Entity.Application.MarriageUser2.GetUserConditionTypesByUserRequest">
+            <summary>
+            获取用户下用户条件类型列表请求
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageUser2.GetUserConditionTypesByUserRequest.UserId">
+            <summary>
+            用户Id
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageUser2.GetUserConditionTypesByUserRequest.SelectType">
+            <summary>
+            选择类型
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageUser2.GetUserConditionTypesByUserRequest.Type">
+            <summary>
+            类型，1：相亲广场用户，2：相亲安排用户
+            </summary>
+        </member>
+        <member name="T:Marriage.Entity.Application.MarriageUser2.GetUserConditionTypesByUserResponse">
+            <summary>
+            获取用户下用户条件类型列表响应
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageUser2.GetUserConditionTypesByUserResponse.DataList">
+            <summary>
+            用户条件类型
+            </summary>
+        </member>
+        <member name="T:Marriage.Entity.Application.MarriageUser2.GetUserInfoByUserRequest">
+            <summary>
+            获取用户下用户信息请求
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageUser2.GetUserInfoByUserRequest.UserId">
+            <summary>
+            用户Id
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageUser2.GetUserInfoByUserRequest.Type">
+            <summary>
+            类型，1：相亲广场用户，2：相亲安排用户
+            </summary>
+        </member>
+        <member name="T:Marriage.Entity.Application.MarriageUser2.GetUserInfoByUserResponse">
+            <summary>
+            获取用户下用户信息响应
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageUser2.GetUserInfoByUserResponse.UserInfo">
+            <summary>
+            用户信息
             </summary>
         </member>
         <member name="T:Marriage.Entity.Application.MarriageUser.GetUserByMatchmakerRequest">
@@ -3156,6 +3361,21 @@
         <member name="P:Marriage.Entity.Domain.MarriageUser.Shengxiao">
             <summary>
             生肖
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Domain.MarriageUser.MarriageArrangeStatus">
+            <summary>
+            相亲安排状态
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Domain.MarriageUser.RoseCount">
+            <summary> 
+            玫瑰数量
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Domain.MarriageUser.RoseCount2">
+            <summary>
+            收到玫瑰数
             </summary>
         </member>
         <member name="T:Marriage.Entity.Domain.MarriageUserPhoto">

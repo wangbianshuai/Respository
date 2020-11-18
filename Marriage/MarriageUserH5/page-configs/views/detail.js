@@ -1,9 +1,11 @@
 var dataActionTypes = {};
 
 var pageType = '';
+var userType = '';
 
-module.exports = function (type, actionTypes) {
-    pageType = type;
+module.exports = function (pageType2, actionTypes, userType2) {
+    pageType = pageType2;
+    userType = userType2;
     dataActionTypes = actionTypes;
 
     return {
@@ -78,6 +80,6 @@ function getConditionTypeDataSource() {
         actionName: "getUserConditionTypesByUser",
         isRefresh: true,
         getPayload: 'getUserConditionTypesPayload',
-        payload: { SelectType: 1, }
+        payload: { SelectType: 1, Type: userType }
     }
 }

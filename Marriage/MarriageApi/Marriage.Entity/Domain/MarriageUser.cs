@@ -113,5 +113,17 @@ namespace Marriage.Entity.Domain
         /// 生肖
         /// </summary>
         public string Shengxiao { get; set; }
+        /// <summary>
+        /// 相亲安排状态
+        /// </summary>
+        public byte MarriageArrangeStatus { get; set; }
+        /// <summary> 
+        /// 玫瑰数量
+        /// </summary> 
+        public int RoseCount { get; set; }
+        /// <summary>
+        /// 收到玫瑰数
+        /// </summary>
+        public int RoseCount2 { get; set; }
     }
 }

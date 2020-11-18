@@ -5,7 +5,7 @@ const config = {
     serviceName: 'ApiService',
     actionList: [
         //获取用户照片信息
-        post('getEntityData', 'MarriageSquareUserPhoto/GetUserPhotoByUser', 'getEntityData')
+        post('getEntityData', 'MarriageUserPhoto/GetUserPhotoByUser', 'getEntityData')
     ]
 }
 function post(actionName, url, stateName, dataKey) {

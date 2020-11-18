@@ -58,5 +58,21 @@ namespace Marriage.Domain
         /// <param name="entity"></param>
         /// <returns></returns>
         bool UpdateUserStatusByMatchmaker(Entity.Domain.MarriageUser entity);
+
+        /// <summary>
+        /// 获取相亲广场用户
+        /// </summary>
+        /// <param name="loginUserId"></param>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        Entity.Domain.MarriageUser GetMarriageSquareUserByUserId(Guid loginUserId, Guid userId);
+
+        /// <summary>
+        /// 获取相亲安排用户
+        /// </summary>
+        /// <param name="loginUserId"></param>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        Entity.Domain.MarriageUser GetMarriageArrangeUserByUserId(Guid loginUserId, Guid userId);
     }
 }

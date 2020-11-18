@@ -23,5 +23,14 @@ namespace Marriage.Data
         /// <param name="queryInfo"></param>
         /// <returns></returns>
         int QueryCount(Entity.Data.QueryInfo queryInfo);
+
+        /// <summary>
+        /// 获取相亲广场用户
+        /// </summary>
+        /// <param name="loginUserId"></param>
+        /// <param name="userId"></param>
+        /// <param name="type"></param>
+        /// <returns></returns>
+        IEntityData GetMarriageSquareUserByUserId(Guid loginUserId, Guid userId, int type);
     }
 }

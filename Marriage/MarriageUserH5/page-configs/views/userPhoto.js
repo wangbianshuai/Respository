@@ -1,10 +1,10 @@
 const entity = { name: 'MarriageUserPhoto', primaryKey: 'userId' };
 
-
 var dataActionTypes = {};
 
-module.exports = function (actionTypes) {
+module.exports = function (actionTypes, type) {
   dataActionTypes = actionTypes;
+  entity.params = { type }
 
   return {
     name: "userPhotoEdit",

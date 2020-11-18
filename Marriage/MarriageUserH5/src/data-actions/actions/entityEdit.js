@@ -18,10 +18,12 @@ export default class EntityEdit extends BaseIndex {
     }
 
     getEntityData(id, actionType, data) {
-        const { primaryKey } = data.entity;
+        const { primaryKey, params } = data.entity;
         const primaryKeyValue = data.entityData[primaryKey];
         const payload = { action: this.getAction(id, actionType) };
         payload[primaryKey] = primaryKeyValue;
+
+        if (params) for (var key in params) payload[key] = params[key];
 
         this.dvaActions.dispatch(this.serviceName, "getEntityData", payload);
     }

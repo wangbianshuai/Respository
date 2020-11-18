@@ -326,7 +326,7 @@ namespace Marriage.Application.Impl
 
             //2、获取用户信息
             stepNo += 1;
-            GetUserByMatchcmaker(stepNo, request, response);
+            GetUserByMatchmaker(stepNo, request, response);
 
             //2、执行结束
             this.ExecEnd(response);
@@ -496,7 +496,7 @@ namespace Marriage.Application.Impl
             Func<List<Entity.Domain.ViewUserConditionType>> execStep = () =>
             {
 
-                var list = _UserConditionType.GetUserConditionTypeList(Guid.Parse(request.LoginUserId), request.SelectType);
+                var list = _UserConditionType.GetUserConditionTypeList(user.UserId, request.SelectType);
 
                 response.DataList = (from a in list
                                      select new UserConditionType()
@@ -821,7 +821,7 @@ namespace Marriage.Application.Impl
         /// <param name="request"></param>
         /// <param name="response"></param>
         /// <returns></returns>
-        private Entity.Domain.MarriageUser GetUserByMatchcmaker(int stepNo, GetUserByMatchmakerRequest request, GetUserByMatchmakerResponse response)
+        private Entity.Domain.MarriageUser GetUserByMatchmaker(int stepNo, GetUserByMatchmakerRequest request, GetUserByMatchmakerResponse response)
         {
             Func<Entity.Domain.MarriageUser> execStep = () =>
             {
@@ -851,11 +851,11 @@ namespace Marriage.Application.Impl
                 return entity;
             };
 
-            return this.GetEntityData<Entity.Domain.MarriageUser>(stepNo, "获取用户信息", "GetUserByMatchcmaker", response, execStep);
+            return this.GetEntityData<Entity.Domain.MarriageUser>(stepNo, "获取用户信息", "GetUserByMatchmaker", response, execStep);
         }
 
         /// <summary>
-        /// 以主键获取用户信息s
+        /// 以主键获取用户信息
         /// </summary>
         /// <param name="stepNo"></param>
         /// <param name="request"></param>

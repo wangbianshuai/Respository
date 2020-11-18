@@ -8,4 +8,4 @@ const dataActionTypes = {
   saveEntityData: 1501
 };
 
-module.exports =getUserPhotoView(dataActionTypes);
+module.exports = getUserPhotoView(dataActionTypes, 1);

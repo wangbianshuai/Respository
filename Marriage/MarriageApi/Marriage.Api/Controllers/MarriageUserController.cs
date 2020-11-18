@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using Marriage.Api.Code;
 using Marriage.Entity.Application.MarriageUser;
+using Marriage.Entity.Application.MarriageUser2;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.OpenApi.Models;
 
@@ -21,6 +22,8 @@ namespace Marriage.Api.Controllers
     public class MarriageUserController : ControllerBase
     {
         public Application.IMarriageUser _MarriageUser { get; set; }
+
+        public Application.IMarriageUser2 _MarriageUser2 { get; set; }
 
         /// <summary>
         /// 以微信OpenId获取用户
@@ -188,6 +191,54 @@ namespace Marriage.Api.Controllers
         public async Task<UpdateUserStatusByMatchmakerResponse> UpdateUserStatusByMatchmaker(UpdateUserStatusByMatchmakerRequest request)
         {
             return await Task.Run(() => _MarriageUser.UpdateUserStatusByMatchmaker(request));
+        }
+
+        /// <summary>
+        /// 获取用户下用户信息
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        [HttpPost]
+        [SwaggerOpenApiTokenParameter]
+        public async Task<GetUserByUserResponse> GetUserByUser(GetUserByUserRequest request)
+        {
+            return await Task.Run(() => _MarriageUser2.GetUserByUser(request));
+        }
+
+        /// <summary>
+        /// 获取用户下用户条件类型
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        [HttpPost]
+        [SwaggerOpenApiTokenParameter]
+        public async Task<GetUserConditionTypeByUserResponse> GetUserConditionTypeByUser(GetUserConditionTypeByUserRequest request)
+        {
+            return await Task.Run(() => _MarriageUser2.GetUserConditionTypeByUser(request));
+        }
+
+        /// <summary>
+        /// 获取用户下用户条件类型列表
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        [HttpPost]
+        [SwaggerOpenApiTokenParameter]
+        public async Task<GetUserConditionTypesByUserResponse> GetUserConditionTypesByUser(GetUserConditionTypesByUserRequest request)
+        {
+            return await Task.Run(() => _MarriageUser2.GetUserConditionTypesByUser(request));
+        }
+
+        /// <summary>
+        /// 获取用户下用户信息
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        [HttpPost]
+        [SwaggerOpenApiTokenParameter]
+        public async Task<GetUserInfoByUserResponse> GetUserInfoByUser(GetUserInfoByUserRequest request)
+        {
+            return await Task.Run(() => _MarriageUser2.GetUserInfoByUser(request));
         }
     }
 }

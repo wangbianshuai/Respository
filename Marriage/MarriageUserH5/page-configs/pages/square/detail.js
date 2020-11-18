@@ -5,4 +5,4 @@ const dataActionTypes = {
     getUserByUser: 1200
 };
 
-module.exports =getDetailView('square',dataActionTypes);
+module.exports = getDetailView('square', dataActionTypes, 1);

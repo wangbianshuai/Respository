@@ -29,5 +29,13 @@ namespace Marriage.Application
         /// 获取红娘下用户生活照列表
         /// </summary>
         GetUserPhotoByMatchmakerResponse GetUserPhotoByMatchmaker(GetUserPhotoByMatchmakerRequest request);
+
+        /// <summary>
+        /// 获取用户下用户生活照列表
+        /// </summary>
+        /// <param name="request"></param>
+        /// <param name="type"></param>
+        /// <returns></returns>
+        GetUserPhotoByUserResponse GetUserPhotoByUser(GetUserPhotoByUserRequest request);
     }
 }

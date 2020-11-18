@@ -1,11 +1,12 @@
 const { getTextBox, getSelect, getDatePicker } = require('../../common');
 
-const entity = { name: 'MarriageUser', primaryKey: 'userId'};
+const entity = { name: 'MarriageUser', primaryKey: 'userId' };
 
 var dataActionTypes = {};
 
-module.exports = function (actionTypes) {
+module.exports = function (actionTypes, type) {
     dataActionTypes = actionTypes;
+    entity.params = { type }
 
     return {
         name: "marriageUserEdit",

@@ -12,6 +12,10 @@ namespace Marriage.Domain.Impl
     {
         public Data.IMarriageUser _MarriageUser { get; set; }
 
+        public Data.IMarriageSquare _MarriageSquare { get; set; }
+
+        public Data.IMarriageArrange _MarriageArrange { get; set; }
+
         /// <summary>
         /// 以OpenId获取用户信息
         /// </summary>
@@ -169,6 +173,54 @@ namespace Marriage.Domain.Impl
             entityData.SetValue("UpdateStatusDate", DateTime.Now);
 
             return _MarriageUser.Update(entityData);
+        }
+
+        /// <summary>
+        /// 获取相亲广场用户
+        /// </summary>
+        /// <param name="loginUserId"></param>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        public Entity.Domain.MarriageUser GetMarriageSquareUserByUserId(Guid loginUserId, Guid userId)
+        {
+            Entity.Domain.MarriageUser entity = GetUserInfoById(userId);
+
+            if (entity.Status != 1) return null;
+
+            IEntityData marriageSquare1 = _MarriageSquare.GetMarriageSquareUserByUserId(loginUserId, userId, 1);
+            IEntityData marriageSquare2 = _MarriageSquare.GetMarriageSquareUserByUserId(loginUserId, userId, 2);
+            if (marriageSquare1 == null || marriageSquare2 == null)
+            {
+                if (entity.IsPublic == 1) return entity;
+
+                return null;
+            }
+
+            if (marriageSquare1 != null) entity.RoseCount = marriageSquare1.GetValue<int>("RoseCount");
+            if (marriageSquare2 != null) entity.RoseCount2 = marriageSquare2.GetValue<int>("RoseCount");
+
+            return entity;
+        }
+
+        /// <summary>
+        /// 获取相亲安排用户
+        /// </summary>
+        /// <param name="loginUserId"></param>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        public Entity.Domain.MarriageUser GetMarriageArrangeUserByUserId(Guid loginUserId, Guid userId)
+        {
+            Entity.Domain.MarriageUser entity = GetUserInfoById(userId);
+
+            if (entity.Status != 1) return null;
+
+            IEntityData marriageArrange = _MarriageArrange.GetMarriageArrangeUserByUserId(loginUserId, userId, (byte)(entity.Sex == 1 ? 2 : 1));
+            if (marriageArrange == null) return null;
+
+            entity.MarriageArrangeStatus = marriageArrange.GetValue<byte>("Status");
+
+            return entity;
+
         }
     }
 }
