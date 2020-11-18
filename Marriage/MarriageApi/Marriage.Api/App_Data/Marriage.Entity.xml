@@ -89,6 +89,81 @@
             主键
             </summary>
         </member>
+        <member name="T:Marriage.Entity.Application.MarriageSquare.QueryMarriageSquareRequest">
+            <summary>
+            查询相亲广场请求
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageSquare.QueryMarriageSquareRequest.PageIndex">
+            <summary>
+            分页索引，从1开始
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageSquare.QueryMarriageSquareRequest.PageSize">
+            <summary>
+            分页大小
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageSquare.QueryMarriageSquareRequest.Type">
+            <summary>
+            类型
+            </summary>
+        </member>
+        <member name="T:Marriage.Entity.Application.MarriageSquare.QueryMarriageSquareResponse">
+            <summary>
+            查询相亲广场响应
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageSquare.QueryMarriageSquareResponse.DataList">
+            <summary>
+            数据列表
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageSquare.QueryMarriageSquareResponse.PageInfo">
+            <summary>
+            分页信息
+            </summary>
+        </member>
+        <member name="T:Marriage.Entity.Application.MarriageSquare.MarriageSquareUser">
+            <summary>
+            相亲人员信息
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageSquare.MarriageSquareUser.UserId">
+            <summary>
+            用户Id
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageSquare.MarriageSquareUser.NickName">
+            <summary> 
+            微信昵称
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageSquare.MarriageSquareUser.HeadImgUrl">
+            <summary> 
+            微信用户头像
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageSquare.MarriageSquareUser.Remark">
+            <summary> 
+            个性签名
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageSquare.MarriageSquareUser.Age">
+            <summary>
+            年龄
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageSquare.MarriageSquareUser.RoseCount">
+            <summary>
+            玫瑰数
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageSquare.MarriageSquareUser.RoseCount2">
+            <summary>
+            收到玫瑰数
+            </summary>
+        </member>
         <member name="T:Marriage.Entity.Application.MarriageUser.GetUserByMatchmakerRequest">
             <summary>
             获取红娘下用户信息请求
@@ -1942,287 +2017,42 @@
             匹配度（%）
             </summary> 
         </member>
-        <member name="T:Marriage.Entity.Data.MarriageMakePairRecord">
+        <member name="T:Marriage.Entity.Data.MarriageSquare">
             <summary>
-            相亲配对计算记录表
+            相亲广场
             </summary>
         </member>
-        <member name="P:Marriage.Entity.Data.MarriageMakePairRecord.DetailId">
+        <member name="P:Marriage.Entity.Data.MarriageSquare.MarriageSquareId">
             <summary> 
             主键
             </summary> 
         </member>
-        <member name="P:Marriage.Entity.Data.MarriageMakePairRecord.MakePairDetailId">
+        <member name="P:Marriage.Entity.Data.MarriageSquare.UserId">
             <summary> 
-            配对明细Id
+            相亲用户ID
             </summary> 
         </member>
-        <member name="P:Marriage.Entity.Data.MarriageMakePairRecord.ConditionTypeId">
+        <member name="P:Marriage.Entity.Data.MarriageSquare.OtherSideUserId">
             <summary> 
-            条件类型Id
+            对方用户ID
             </summary> 
         </member>
-        <member name="P:Marriage.Entity.Data.MarriageMakePairRecord.ConditionTypeNmae">
-            <summary> 
-            条件类型
-            </summary> 
-        </member>
-        <member name="P:Marriage.Entity.Data.MarriageMakePairRecord.ConditionItemId">
-            <summary> 
-            条件选项Id
-            </summary> 
-        </member>
-        <member name="P:Marriage.Entity.Data.MarriageMakePairRecord.ConditionItemTile">
-            <summary> 
-            条件标题
-            </summary> 
-        </member>
-        <member name="P:Marriage.Entity.Data.MarriageMakePairRecord.SelfSelectValue">
-            <summary> 
-            自己选择值
-            </summary> 
-        </member>
-        <member name="P:Marriage.Entity.Data.MarriageMakePairRecord.OtherSideSelectValue">
-            <summary> 
-            对方选择值
-            </summary> 
-        </member>
-        <member name="P:Marriage.Entity.Data.MarriageMakePairRecord.PercentValue">
-            <summary> 
-            匹配度（%）
-            </summary> 
-        </member>
-        <member name="T:Marriage.Entity.Data.MarriageRecord">
-            <summary>
-            相亲记录信息表
-            </summary>
-        </member>
-        <member name="P:Marriage.Entity.Data.MarriageRecord.RecordId">
-            <summary> 
-            主键
-            </summary> 
-        </member>
-        <member name="P:Marriage.Entity.Data.MarriageRecord.ManUserId">
-            <summary> 
-            男生ID
-            </summary> 
-        </member>
-        <member name="P:Marriage.Entity.Data.MarriageRecord.WomanUserId">
-            <summary> 
-            女生ID
-            </summary> 
-        </member>
-        <member name="P:Marriage.Entity.Data.MarriageRecord.ManMatchmakerId">
-            <summary> 
-            男生红娘
-            </summary> 
-        </member>
-        <member name="P:Marriage.Entity.Data.MarriageRecord.WomanMatchmakerId">
-            <summary> 
-            女生红娘
-            </summary> 
-        </member>
-        <member name="P:Marriage.Entity.Data.MarriageRecord.AppMatchmakerId">
-            <summary> 
-            平台红娘
-            </summary> 
-        </member>
-        <member name="P:Marriage.Entity.Data.MarriageRecord.MarriageArrangeId">
-            <summary> 
-            安装相亲Id
-            </summary> 
-        </member>
-        <member name="P:Marriage.Entity.Data.MarriageRecord.MarriageDate">
-            <summary> 
-            相亲时间
-            </summary> 
-        </member>
-        <member name="P:Marriage.Entity.Data.MarriageRecord.MarriageContent">
-            <summary> 
-            相亲情况
-            </summary> 
-        </member>
-        <member name="P:Marriage.Entity.Data.MarriageRecord.ManScore">
-            <summary> 
-            男生得分
-            </summary> 
-        </member>
-        <member name="P:Marriage.Entity.Data.MarriageRecord.ManScoreRemark">
-            <summary> 
-            男生得分点说明
-            </summary> 
-        </member>
-        <member name="P:Marriage.Entity.Data.MarriageRecord.ManNoScoreRemark">
-            <summary> 
-            男生失分点说明
-            </summary> 
-        </member>
-        <member name="P:Marriage.Entity.Data.MarriageRecord.WomanScore">
-            <summary> 
-            女生得分
-            </summary> 
-        </member>
-        <member name="P:Marriage.Entity.Data.MarriageRecord.WomanScoreRemark">
-            <summary> 
-            女生得分点说明
-            </summary> 
-        </member>
-        <member name="P:Marriage.Entity.Data.MarriageRecord.WomanNoScoreRemark">
-            <summary> 
-            女生失分点说明
-            </summary> 
-        </member>
-        <member name="P:Marriage.Entity.Data.MarriageRecord.Status">
-            <summary> 
-            状态：1：有意向，2：无意向，3：先了解
-            </summary> 
-        </member>
-        <member name="P:Marriage.Entity.Data.MarriageRecord.Remark">
-            <summary> 
-            备注
-            </summary> 
-        </member>
-        <member name="P:Marriage.Entity.Data.MarriageRecord.IsDelete">
-            <summary> 
-            是否删除
-            </summary> 
-        </member>
-        <member name="P:Marriage.Entity.Data.MarriageRecord.CreateUser">
-            <summary> 
-            创建人
-            </summary> 
-        </member>
-        <member name="P:Marriage.Entity.Data.MarriageRecord.CreateDate">
-            <summary> 
-            创建时间
-            </summary> 
-        </member>
-        <member name="P:Marriage.Entity.Data.MarriageRecord.UpdateUser">
-            <summary> 
-            更新人
-            </summary> 
-        </member>
-        <member name="P:Marriage.Entity.Data.MarriageRecord.UpdateDate">
+        <member name="P:Marriage.Entity.Data.MarriageSquare.UpdateDate">
             <summary> 
             更新时间
             </summary> 
         </member>
-        <member name="P:Marriage.Entity.Data.MarriageRecord.RowVersion">
+        <member name="P:Marriage.Entity.Data.MarriageSquare.RoseCount">
             <summary> 
-            行版本
+            玫瑰数量
             </summary> 
         </member>
-        <member name="T:Marriage.Entity.Data.MarriageSccuess">
-            <summary>
-            相亲成功信息表
-            </summary>
-        </member>
-        <member name="P:Marriage.Entity.Data.MarriageSccuess.SccuessId">
-            <summary> 
-            主键
-            </summary> 
-        </member>
-        <member name="P:Marriage.Entity.Data.MarriageSccuess.ManUserId">
-            <summary> 
-            男生ID
-            </summary> 
-        </member>
-        <member name="P:Marriage.Entity.Data.MarriageSccuess.WomanUserId">
-            <summary>
-            女生Id
-            </summary>
-        </member>
-        <member name="P:Marriage.Entity.Data.MarriageSccuess.ManMatchmakerId">
-            <summary> 
-            男生红娘
-            </summary> 
-        </member>
-        <member name="P:Marriage.Entity.Data.MarriageSccuess.WomanMatchmakerId">
-            <summary> 
-            女生红娘
-            </summary> 
-        </member>
-        <member name="P:Marriage.Entity.Data.MarriageSccuess.AppMatchmakerId">
-            <summary> 
-            平台红娘
-            </summary> 
-        </member>
-        <member name="P:Marriage.Entity.Data.MarriageSccuess.MarriageRecordId">
-            <summary> 
-            相关记录Id,相亲成功的那次记录
-            </summary> 
-        </member>
-        <member name="P:Marriage.Entity.Data.MarriageSccuess.FeeDate">
-            <summary> 
-            费用日期
-            </summary> 
-        </member>
-        <member name="P:Marriage.Entity.Data.MarriageSccuess.SuccessDate">
-            <summary> 
-            相亲成功日期
-            </summary> 
-        </member>
-        <member name="P:Marriage.Entity.Data.MarriageSccuess.BookMarryDate">
-            <summary> 
-            订婚日期
-            </summary> 
-        </member>
-        <member name="P:Marriage.Entity.Data.MarriageSccuess.MarryDate">
-            <summary> 
-            结婚日期
-            </summary> 
-        </member>
-        <member name="P:Marriage.Entity.Data.MarriageSccuess.BreakUpDate">
-            <summary> 
-            分手日期
-            </summary> 
-        </member>
-        <member name="P:Marriage.Entity.Data.MarriageSccuess.Status">
-            <summary> 
-            状态：1：相亲成功，2：订婚，3：结婚，4：分手
-            </summary> 
-        </member>
-        <member name="P:Marriage.Entity.Data.MarriageSccuess.BreakUpReason">
-            <summary> 
-            分手原因
-            </summary> 
-        </member>
-        <member name="P:Marriage.Entity.Data.MarriageSccuess.Amount">
-            <summary> 
-            相亲总费用
-            </summary> 
-        </member>
-        <member name="P:Marriage.Entity.Data.MarriageSccuess.Remark">
-            <summary> 
-            备注
-            </summary> 
-        </member>
-        <member name="P:Marriage.Entity.Data.MarriageSccuess.IsDelete">
-            <summary> 
-            是否删除
-            </summary> 
-        </member>
-        <member name="P:Marriage.Entity.Data.MarriageSccuess.CreateUser">
-            <summary> 
-            创建人
-            </summary> 
-        </member>
-        <member name="P:Marriage.Entity.Data.MarriageSccuess.CreateDate">
+        <member name="P:Marriage.Entity.Data.MarriageSquare.CreateDate">
             <summary> 
             创建时间
             </summary> 
         </member>
-        <member name="P:Marriage.Entity.Data.MarriageSccuess.UpdateUser">
-            <summary> 
-            更新人
-            </summary> 
-        </member>
-        <member name="P:Marriage.Entity.Data.MarriageSccuess.UpdateDate">
-            <summary> 
-            更新时间
-            </summary> 
-        </member>
-        <member name="P:Marriage.Entity.Data.MarriageSccuess.RowVersion">
+        <member name="P:Marriage.Entity.Data.MarriageSquare.RowVersion">
             <summary> 
             行版本
             </summary> 
@@ -2997,6 +2827,46 @@
             <summary> 
             类型名
             </summary> 
+        </member>
+        <member name="T:Marriage.Entity.Domain.MarriageSquareUser">
+            <summary>
+            相亲广场
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Domain.MarriageSquareUser.UserId">
+            <summary> 
+            相亲用户ID
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Domain.MarriageSquareUser.NickName">
+            <summary> 
+            微信昵称
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Domain.MarriageSquareUser.HeadImgUrl">
+            <summary> 
+            微信用户头像
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Domain.MarriageSquareUser.Remark">
+            <summary> 
+            个性签名
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Domain.MarriageSquareUser.Age">
+            <summary>
+            年龄
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Domain.MarriageSquareUser.RoseCount">
+            <summary> 
+            玫瑰数量
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Domain.MarriageSquareUser.RoseCount2">
+            <summary>
+            收到玫瑰数
+            </summary>
         </member>
         <member name="T:Marriage.Entity.Domain.MarriageUser">
             <summary>

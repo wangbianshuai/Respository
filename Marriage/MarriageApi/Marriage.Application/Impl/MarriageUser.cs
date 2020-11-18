@@ -511,7 +511,7 @@ namespace Marriage.Application.Impl
                 return list;
             };
 
-            return this.GetEntityDataList<Entity.Domain.ViewUserConditionType>(stepNo, "获取用户条件类型列表", "GetUserConditionTypes", response, execStep);
+            return this.GetEntityDataList<Entity.Domain.ViewUserConditionType>(stepNo, "获取用户条件类型列表", "GetUserConditionTypes", response, execStep, false);
         }
 
         /// <summary>
@@ -774,7 +774,7 @@ namespace Marriage.Application.Impl
                 return list;
             };
 
-            return this.GetEntityDataList<Entity.Domain.ViewUserConditionType>(stepNo, "获取用户条件类型列表", "GetUserConditionTypes", response, execStep);
+            return this.GetEntityDataList<Entity.Domain.ViewUserConditionType>(stepNo, "获取用户条件类型列表", "GetUserConditionTypes", response, execStep, false);
         }
 
         /// <summary>

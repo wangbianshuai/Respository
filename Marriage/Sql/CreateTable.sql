@@ -476,6 +476,140 @@ left join t_Matchmaker d on a.ManMatchmakerId=d.MatchmakerId and d.IsDelete=0
 left join t_Matchmaker e on b.WomanMatchmakerId=e.MatchmakerId and e.IsDelete=0
 go
 
+
+if exists(select * from sysobjects where name='v_MarriageSquareUser')
+drop view v_MarriageSquareUser
+go
+
+create view v_MarriageSquareUser
+as
+select a.UserId,
+a.NickName,
+a.HeadImgUrl,
+a.Sex,
+a.Remark,
+year(GETDATE())- YEAR(Birthday) as Age,
+isnull(a.UpdateDate,CreateDate) as UpdateDate
+from t_MarriageUser a
+where a.IsDelete=0 and a.Status=1 and a.IsPublic=1
+go
+
+if exists(select * from sysobjects where name='v_MarriageSquareUser1')
+drop view v_MarriageSquareUser1
+go
+
+create view v_MarriageSquareUser1
+as
+select a.UserId,
+a.NickName,
+a.HeadImgUrl,
+a.Sex,
+a.Remark,
+year(GETDATE())- YEAR(Birthday) as Age,
+b.RoseCount,
+b.UpdateDate,
+b.UserId SelfUserId
+from  t_MarriageUser a,t_MarriageSquare b
+where a.IsDelete=0 and a.Status=1 and a.IsPublic=1
+and a.UserId=b.OtherSideUserId
+go
+
+if exists(select * from sysobjects where name='v_MarriageSquareUser2')
+drop view v_MarriageSquareUser2
+go
+
+create view v_MarriageSquareUser2
+as
+select a.UserId,
+a.NickName,
+a.HeadImgUrl,
+a.Sex,
+a.Remark,
+year(GETDATE())- YEAR(Birthday) as Age,
+b.RoseCount,
+b.UpdateDate,
+b.OtherSideUserId SelfUserId
+from  t_MarriageUser a,t_MarriageSquare b
+where a.IsDelete=0 and a.Status=1 and a.IsPublic=1
+and a.UserId=b.UserId
+go
+
+if exists(select * from sysobjects where name='v_MarriageSquareUser3')
+drop view v_MarriageSquareUser3
+go
+
+create view v_MarriageSquareUser3
+as
+with ManUser as
+(
+select a.*
+from t_MarriageSquare a,t_MarriageUser b
+where a.UserId=b.UserId and b.Status=1 and IsDelete=0 and Sex=1
+),
+WomanUser as
+(
+select a.*,
+b.NickName,
+b.HeadImgUrl,
+b.Sex,
+b.Remark,
+year(GETDATE())- YEAR(b.Birthday) as Age
+from t_MarriageSquare a,t_MarriageUser b
+where a.UserId=b.UserId and b.Status=1 and IsDelete=0 and Sex=2
+)
+select 
+b.UserId,
+b.NickName,
+b.HeadImgUrl,
+b.Sex,
+b.Remark,
+b.Age,
+a.RoseCount,
+b.RoseCount RoseCount2,
+case when a.UpdateDate>b.UpdateDate then a.UpdateDate else b.UpdateDate end UpdateDate,
+a.UserId SelfUserId
+from ManUser a
+inner join WomanUser b on a.UserId=b.OtherSideUserId and a.OtherSideUserId=b.UserId
+go
+
+if exists(select * from sysobjects where name='v_MarriageSquareUser4')
+drop view v_MarriageSquareUser4
+go
+
+create view v_MarriageSquareUser4
+as
+with ManUser as
+(
+select a.*,
+b.NickName,
+b.HeadImgUrl,
+b.Sex,
+b.Remark,
+year(GETDATE())- YEAR(b.Birthday) as Age
+from t_MarriageSquare a,t_MarriageUser b
+where a.UserId=b.UserId and b.Status=1 and IsDelete=0 and Sex=1
+),
+WomanUser as
+(
+select a.*
+from t_MarriageSquare a,t_MarriageUser b
+where a.UserId=b.UserId and b.Status=1 and IsDelete=0 and Sex=2
+)
+select 
+a.UserId,
+a.NickName,
+a.HeadImgUrl,
+a.Sex,
+a.Remark,
+a.Age,
+b.RoseCount,
+a.RoseCount RoseCount2,
+case when a.UpdateDate>b.UpdateDate then a.UpdateDate else b.UpdateDate end UpdateDate,
+b.UserId SelfUserId
+from ManUser a
+inner join WomanUser b on a.UserId=b.OtherSideUserId and a.OtherSideUserId=b.UserId
+go
+
 --6、红娘中介费明细表
 if exists(select * from sysobjects where name='t_MatchmakerFeeDetail')
 drop table t_MatchmakerFeeDetail

@@ -52,7 +52,7 @@ export default (props) => {
   property.setVisible = (v) => setIsVisible(v);
   property.refreshOptions = () => setOptions(getOptions(property, view, pageAxis));
 
-  if (!isVisible) return null;
+  if (!isVisible || options.length === 0) return null;
 
   const className = Base.getClassName(property, styles);
 
