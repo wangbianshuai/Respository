@@ -74,7 +74,7 @@ function getTabView(name, tabLabel, tabPage, eventActionName, entitySearchQuery,
         conditions,
         entitySearchQuery,
         eventActionName,
-        detailPageUrl: '/user/index?type=1&tabPage=' + tabPage,
+        detailPageUrl: '/square/detail?tabPage=' + tabPage,
         actionName: eventActionName,
         className: "divDataGridView",
         itemType: 'MarriageUserItem'
