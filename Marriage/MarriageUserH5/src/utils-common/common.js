@@ -518,22 +518,26 @@ export function toCurrencyNo45(num) {
     return num.substring(0, num.lastIndexOf('.') + 3).replace(/\d{1,3}(?=(\d{3})+(\.\d*)?$)/g, '$&,');
 }
 
-export function replaceDataContent(data, content) {
+export function replaceDataContent(data, content, isUrl, startTag, endTag) {
     if (!content || !data) return content;
 
-    if (content.indexOf("#{") < 0) return content;
+    startTag = startTag || '#{';
+    endTag = endTag || '}';
+
+    if (content.indexOf(startTag) < 0) return content;
     let keyValue = "", v = null;
     for (let key in data) {
-        keyValue = "#{" + key + "}";
+        keyValue = startTag + key + endTag;
         v = data[key];
         v = isNullOrEmpty(v) ? "" : v.toString();
-        v = decodeURIComponent(v);
+
+        if (isUrl) v = encodeURIComponent(v);
+        
         content = content.replace(new RegExp(keyValue, "g"), v);
-        if (content.indexOf("#{") < 0) break;
+        if (content.indexOf(startTag) < 0) break;
     }
     return content;
 }
-
 
 export function assign(a, b, c) {
     if (!isObject(a)) return a

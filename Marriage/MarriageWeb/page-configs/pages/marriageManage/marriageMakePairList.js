@@ -10,11 +10,17 @@ const dataActionTypes = {
     //Excel导出
     excelExport: 1602,
     //创建相亲安排
-    createMarriageArrange: 1603
+    createMarriageArrange: 1603,
+    //获取实体数据
+    getMarriageMakePairsDetails: 1604,
+    //获取实体数据
+    getMarriageMakePairsDetails2: 1605
 };
 
 const { name, primaryKey, viewName } = marriageMakePair2;
 const entity = { name, primaryKey, viewName };
+
+const detailItem = { name: "MarriageMakePairDetail", primaryKey: 'DetailId' }
 
 module.exports = {
     name: "marriageMakePair2List",
@@ -65,6 +71,7 @@ function getDataGridView() {
         properties: assignProporties(marriageMakePair2, ["ManUserName", "ManMatchmakerName", getPercentValue(),
             "WomanUserName", "WomanMatchmakerName", getPercentValue2(), "PercentValue3", { name: "CreateDate3", OrderByType: "desc" }, "ArrangeId",
             { name: 'ManUserId', isVisible: false }, { name: 'WomanUserId', isVisible: false },
+            { name: 'MakePairId2', isVisible: false },
             { name: 'ManMatchmakerId', isVisible: false }, { name: 'WomanMatchmakerId', isVisible: false },
             , getOperation(),])
     }
@@ -131,12 +138,36 @@ function getEventActions() {
         searchButton: "clearQuery",
         dataGridView: "dataGridView1",
         isClearQuery: true
+    },
+    {
+        name: "lookMakePairDetail",
+        type: "dialog/showDialogLookData",
+        dialogView: "lookMakePairDetailView",
+        lookView: "lookMakePairDetailView"
+    },
+    {
+        name: "getMarriageMakePairsDetails",
+        type: "entityEdit/getEntityData",
+        editView: "lookMakePairDetailView"
+    },
+    {
+        name: "lookMakePairDetail2",
+        type: "dialog/showDialogLookData",
+        dialogView: "lookMakePairDetailView2",
+        lookView: "lookMakePairDetailView2"
+    },
+    {
+        name: "getMarriageMakePairsDetails2",
+        type: "entityEdit/getEntityData",
+        editView: "lookMakePairDetailView2"
     }]
 }
 
 function getDialogViews() {
     return [
-        getCreateMarriageArrangeView()
+        getCreateMarriageArrangeView(),
+        getLookMakePairDetailView(),
+        getLookMakePairDetailView2()
     ]
 }
 
@@ -218,5 +249,61 @@ function getTextBox4(name, label, x, y, isReadOnly, isNullable, placeHolder, dat
         isNullable,
         wrapperCol: 18,
         isReadOnly
+    }
+}
+
+function getLookMakePairDetailView() {
+    return {
+        id: createGuid(),
+        dialogId: createGuid(),
+        name: "lookMakePairDetailView",
+        entity,
+        type: "View",
+        dialogTitle: "#{ManUserName}与#{WomanUserName}匹配详情",
+        dialogWidth: 1060,
+        eventActionName: "getMarriageMakePairsDetails",
+        getEntityDataActionType: dataActionTypes.getMarriageMakePairsDetails,
+        dialogStyle: { height: 520, overflow: "auto" },
+        properties: assignProporties(marriageMakePair2, [
+            getComplexView()
+        ])
+    }
+}
+
+function getLookMakePairDetailView2() {
+    return {
+        id: createGuid(),
+        dialogId: createGuid(),
+        name: "lookMakePairDetailView2",
+        entity: { name: 'MarriageMakePair2', primaryKey: 'MakePairId2' },
+        type: "View",
+        dialogTitle: "#{WomanUserName}与#{ManUserName}匹配详情",
+        dialogWidth: 1060,
+        eventActionName: "getMarriageMakePairsDetails2",
+        getEntityDataActionType: dataActionTypes.getMarriageMakePairsDetails2,
+        dialogStyle: { height: 520, overflow: "auto" },
+        properties: assignProporties(marriageMakePair2, [
+            getComplexView()
+        ])
+    }
+}
+
+function getComplexView() {
+    return {
+        name: "Details",
+        type: "DataGridView",
+        x: 1,
+        y: 1,
+        isComplexEntity: true,
+        isPaging: false,
+        entity: detailItem,
+        isDiv: true,
+        className: "divInfoView3",
+        properties: assignProporties(detailItem, [{ name: 'ConditionTypeName', label: '类型' },
+        { name: 'ConditionItemTitle', label: '标题' },
+        { name: 'SelfSelectValue', label: '择偶标准选择值' },
+        { name: 'OtherSideSelectValue', label: '对方条件选择值' },
+        { name: 'PercentValueName', label: '匹配度(%)' }
+        ])
     }
 }

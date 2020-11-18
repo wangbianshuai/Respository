@@ -841,7 +841,7 @@ go
 
 create table t_MarriageMakePair
 (
-MarkPairId uniqueidentifier not null primary key,              --主键
+MakePairId uniqueidentifier not null primary key,              --主键
 UserId uniqueidentifier not null,                              --相亲用户ID
 OtherSideUserId uniqueidentifier not null,                     --对方用户Id
 PercentValue decimal(8,2) not null,                            --匹配度（%）
@@ -850,7 +850,7 @@ RowVersion timestamp not null                                  --行版本
 )
 go
 
-exec proc_AddCellExplanation '主键','t_MarriageMakePair','MarkPairId'
+exec proc_AddCellExplanation '主键','t_MarriageMakePair','MakePairId'
 exec proc_AddCellExplanation '对方用户Id','t_MarriageMakePair','OtherSideUserId'
 exec proc_AddCellExplanation '相亲用户Id','t_MarriageMakePair','UserId'
 exec proc_AddCellExplanation '匹配度（%）','t_MarriageMakePair','PercentValue'
@@ -864,7 +864,10 @@ go
 
 create view v_MarriageMakePair
 as
-select a.*,b.Name+'('+ b.Phone+')' UserName, 
+select a.MakePairId,a.UserId,
+a.OtherSideUserId,convert(varchar(10),a.PercentValue)+'%' PercentValue,
+a.CreateDate,
+b.Name+'('+ b.Phone+')' UserName, 
 b.Sex UserSex,
 case when b.Sex=1 then '男' when b.Sex=2 then '女' else '未知' end UserSexName,
 c.Name+'('+ c.Phone+')' OtherSideUserName,
@@ -891,19 +894,20 @@ WomanUser as
 select a.*,b.Name+'('+ b.Phone+')' WomanUserName,b.MatchmakerId as WomanMatchmakerId from t_MarriageMakePair a,t_MarriageUser b
 where a.UserId=b.UserId and b.Status=1 and IsDelete=0 and Sex=2
 )
-select a.MarkPairId,a.UserId ManUserId,a.ManUserName,a.CreateDate, a.ManMatchmakerId,
+select a.MakePairId,a.UserId ManUserId,a.ManUserName,a.CreateDate, a.ManMatchmakerId,
 convert(varchar(10),a.PercentValue)+'%' PercentValue,
 b.CreateDate CreateDate2,
 convert(varchar(10),b.PercentValue)+'%' PercentValue2,
 b.UserId WomanUserId,
 b.WomanMatchmakerId,
 b.WomanUserName,
+b.MakePairId MakePairId2,
 c.ArrangeId,
 case when c.MarriageArrangeId is null then '相亲安排' else '' end ArrangeLabel,
 d.Name+'('+ d.Phone+')' ManMatchmakerName,
 e.Name+'('+ e.Phone+')' WomanMatchmakerName,
 case when a.CreateDate>b.CreateDate then a.CreateDate else b.CreateDate end CreateDate3,
-convert(varchar(10), convert(decimal(10,2),(a.PercentValue+b.PercentValue)/200)) PercentValue3
+convert(varchar(10), convert(decimal(10,2),(a.PercentValue+b.PercentValue)/2)) +'%' PercentValue3
 from ManUser a
 inner join WomanUser b on a.UserId=b.OtherSideUserId and a.OtherSideUserId=b.UserId
 left join t_MarriageArrange c on a.UserId=c.ManUserId and a.OtherSideUserId=c.WomanUserId and c.IsDelete=0
@@ -919,9 +923,9 @@ go
 create table t_MarriageMakePairDetail
 (
 DetailId uniqueidentifier not null primary key,                --主键
-MarkPairId uniqueidentifier not null,                          --配对Id
+MakePairId uniqueidentifier not null,                          --配对Id
 ConditionTypeId uniqueidentifier not null,                     --条件类型Id
-ConditionTypeNmae nvarchar(50) not null,                       --条件类型
+ConditionTypeName nvarchar(50) not null,                       --条件类型
 ConditionItemId uniqueidentifier not null,                     --条件选项Id
 ConditionItemTitle nvarchar(100) not null,                     --条件标题
 SelfSelectValue nvarchar(2000) not null,                       --自己选择值
@@ -931,14 +935,25 @@ PercentValue decimal(8,2) not null                             --匹配度（%）
 go
 
 exec proc_AddCellExplanation '主键','t_MarriageMakePairDetail','DetailId'
-exec proc_AddCellExplanation '配对明细Id','t_MarriageMakePairDetail','MarkPairId'
+exec proc_AddCellExplanation '配对明细Id','t_MarriageMakePairDetail','MakePairId'
 exec proc_AddCellExplanation '条件类型Id','t_MarriageMakePairDetail','ConditionTypeId'
-exec proc_AddCellExplanation '条件类型','t_MarriageMakePairDetail','ConditionTypeNmae'
+exec proc_AddCellExplanation '条件类型','t_MarriageMakePairDetail','ConditionTypeName'
 exec proc_AddCellExplanation '条件选项Id','t_MarriageMakePairDetail','ConditionItemId'
 exec proc_AddCellExplanation '条件标题','t_MarriageMakePairDetail','ConditionItemTitle'
 exec proc_AddCellExplanation '自己选择值','t_MarriageMakePairDetail','SelfSelectValue'
 exec proc_AddCellExplanation '对方选择值','t_MarriageMakePairDetail','OtherSideSelectValue'
 exec proc_AddCellExplanation '匹配度（%）','t_MarriageMakePairDetail','PercentValue'
+go
+
+if exists(select * from sysobjects where name='v_MarriageMakePairDetail')
+drop view v_MarriageMakePairDetail
+go
+
+create view v_MarriageMakePairDetail
+as
+select a.*,
+convert(varchar(10),a.PercentValue)+'%' PercentValueName
+from t_MarriageMakePairDetail a
 go
 
 --18、生辰八字匹配结果（t_BirthEightResult）

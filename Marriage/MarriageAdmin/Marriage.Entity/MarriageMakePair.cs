@@ -6,14 +6,14 @@ using OpenDataAccessCore.Entity;
 
 namespace Marriage.Entity
 {
-    [TableProperty(Name = "t_MarriageMakePair", PrimaryKey = "MarkPairId")]
+    [TableProperty(Name = "t_MarriageMakePair", PrimaryKey = "MakePairId")]
     [RequestMethod(IsDelete = false, IsPost = false, IsPut = false, IsGet = false)]
     public class MarriageMakePair : EntityModel, IEntity
     {
         /// <summary> 
         /// 主键
         /// </summary> 
-        public Guid MarkPairId { get; set; }
+        public Guid MakePairId { get; set; }
         /// <summary> 
         /// 相亲用户Id
         /// </summary> 
@@ -47,7 +47,7 @@ namespace Marriage.Entity
         /// <summary> 
         /// 配对明细Id
         /// </summary> 
-        public Guid MarkPairId { get; set; }
+        public Guid MakePairId { get; set; }
         /// <summary> 
         /// 条件类型Id
         /// </summary> 
@@ -78,11 +78,11 @@ namespace Marriage.Entity
         public decimal PercentValue { get; set; }
     }
 
-    [TableProperty(Name = "v_MarriageMakePair", PrimaryKey = "MarkPairId")]
+    [TableProperty(Name = "v_MarriageMakePair", PrimaryKey = "MakePairId")]
     [RequestMethod(IsDelete = false, IsPost = false, IsPut = false, IsGet = false)]
     public class ViewMarriageMakePair : EntityModel, IEntity
     {
-        public Guid MarkPairId { get; set; }
+        public Guid MakePairId { get; set; }
         public Guid UserId { get; set; }
         public Guid OtherSideUserId { get; set; }
         public string PercentValue { get; set; }
@@ -95,11 +95,11 @@ namespace Marriage.Entity
         public string OtherSideUserSexName { get; set; }
     }
 
-    [TableProperty(Name = "v_MarriageMakePair2", PrimaryKey = "MarkPairId")]
+    [TableProperty(Name = "v_MarriageMakePair2", PrimaryKey = "MakePairId")]
     [RequestMethod(IsDelete = false, IsPost = false, IsPut = false, IsGet = false)]
-    public class MarriageMakePair2 : EntityModel, IEntity
+    public class ViewMarriageMakePair2 : EntityModel, IEntity
     {
-        public Guid MarkPairId { get; set; }
+        public Guid MakePairId { get; set; }
         public Guid ManUserId { get; set; }
         public string ManUserName { get; set; }
         public DateTime CreateDate { get; set; }
@@ -110,6 +110,7 @@ namespace Marriage.Entity
         public Guid WomanUserId { get; set; }
         public Guid WomanMatchmakerId { get; set; }
         public string WomanUserName { get; set; }
+        public Guid MakePairId2 { get; set; }
         public int ArrangeId { get; set; }
         public string ArrangeLabel { get; set; }
         public string ManMatchmakerName { get; set; }

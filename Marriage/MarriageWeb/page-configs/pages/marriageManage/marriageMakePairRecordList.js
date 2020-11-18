@@ -1,18 +1,27 @@
 const marriageMakePair = require("../../entities/marriageMakePair");
-const { getButton, assignProporties, getTextBox, getSelect, } = require("../../Common");
+const { getButton, assignProporties, getTextBox, getSelect, createGuid } = require("../../Common");
 
 //marriageManage/marriageMakePairRecordList 1500-1599
 const dataActionTypes = {
     //搜索查询
-    searchQuery: 1500
+    searchQuery: 1500,
+    //删除实体数据
+    deleteEntityData: 1501,
+    //Excel导出
+    excelExport: 1502,
+    //获取实体数据
+    getMarriageMakePairsDetails: 1503
 };
 
 const { name, primaryKey, viewName } = marriageMakePair;
 const entity = { name, primaryKey, viewName };
 
+const detailItem = { name: "MarriageMakePairDetail", primaryKey: 'DetailId' }
+
 module.exports = {
     name: "marriageMakePairList",
     type: "View",
+    dialogViews: getDialogViews(),
     eventActions: getEventActions(),
     properties: assignProporties({ name: "marriageMakePairList" }, [getSearchOperationView(), getDataGridView()])
 }
@@ -70,8 +79,21 @@ function getDataGridView() {
         eventActionName: "searchQuery",
         isDiv: true,
         className: "divInfoView3",
-        properties: assignProporties(marriageMakePair, ["UserName", "UserSexName", "OtherSideUserName", "PercentValue",
+        properties: assignProporties(marriageMakePair, ["UserName", "UserSexName", "OtherSideUserName", getPercentValue(),
             { name: "CreateDate", OrderByType: "desc" }])
+    }
+}
+
+function getPercentValue() {
+    return {
+        name: "PercentValue",
+        label: "匹配度(%)",
+        action: {
+            name: "lookMakePairDetail",
+            eventActionName: "lookMakePairDetail",
+            type: "AButton"
+        }
+
     }
 }
 
@@ -90,5 +112,60 @@ function getEventActions() {
         searchButton: "clearQuery",
         dataGridView: "dataGridView1",
         isClearQuery: true
+    },
+    {
+        name: "lookMakePairDetail",
+        type: "dialog/showDialogLookData",
+        dialogView: "lookMakePairDetailView",
+        lookView: "lookMakePairDetailView"
+    },
+    {
+        name: "getMarriageMakePairsDetails",
+        type: "entityEdit/getEntityData",
+        editView: "lookMakePairDetailView"
     }]
+}
+
+function getDialogViews() {
+    return [
+        getLookMakePairDetailView()
+    ]
+}
+
+function getLookMakePairDetailView() {
+    return {
+        id: createGuid(),
+        dialogId: createGuid(),
+        name: "lookMakePairDetailView",
+        entity,
+        type: "View",
+        dialogTitle: "#{UserName}与#{OtherSideUserName}匹配详情",
+        dialogWidth: 1060,
+        eventActionName: "getMarriageMakePairsDetails",
+        getEntityDataActionType: dataActionTypes.getMarriageMakePairsDetails,
+        dialogStyle: { height: 520, overflow: "auto" },
+        properties: assignProporties(marriageMakePair, [
+            getComplexView()
+        ])
+    }
+}
+
+function getComplexView() {
+    return {
+        name: "Details",
+        type: "DataGridView",
+        x: 1,
+        y: 1,
+        isComplexEntity: true,
+        isPaging: false,
+        entity: detailItem,
+        isDiv: true,
+        className: "divInfoView3",
+        properties: assignProporties(detailItem, [{ name: 'ConditionTypeName', label: '类型' },
+        { name: 'ConditionItemTitle', label: '标题' },
+        { name: 'SelfSelectValue', label: '择偶标准选择值' },
+        { name: 'OtherSideSelectValue', label: '对方条件选择值' },
+        { name: 'PercentValueName', label: '匹配度(%)' }
+        ])
+    }
 }

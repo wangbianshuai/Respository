@@ -30,8 +30,10 @@ export default class Dialog extends BaseIndex {
         //扩展数据加载
         if (dialogView.expandDataLoad) dialogView.expandDataLoad(props, action, selectDataList);
 
+        const title = Common.replaceDataContent(selectDataList[0], dialogView.dialogTitle)
+
         const onOk = (e, p) => this.setSelectViewDataToList(e, p, props, action, selectRowKeys);
-        this.showdialog(action, pageAxis, dialogView, onOk, action.setValue);
+        this.showdialog(action, pageAxis, dialogView, onOk, action.setValue,title);
     }
 
     //弹出层确定事件行为
@@ -140,7 +142,9 @@ export default class Dialog extends BaseIndex {
 
         if (lookView.reLoad) lookView.reLoad();
 
-        this.showdialog(action, pageAxis, dialogView);
+        const title = Common.replaceDataContent(data, dialogView.dialogTitle)
+
+        this.showdialog(action, pageAxis, dialogView, undefined, undefined, title);
     }
 
     initShowDialogLookDataAction(props, action) {

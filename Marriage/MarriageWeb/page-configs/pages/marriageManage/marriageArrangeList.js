@@ -345,7 +345,7 @@ function getUpdateApprovalView() {
     name: "updateApprovalView",
     entity,
     type: "RowsColsView",
-    dialogTitle: "设置状态",
+    dialogTitle: "相亲安排:#{ArrangeId}设置状态",
     dialogWidth: 660,
     successTip: "操作成功",
     className: "divView2",

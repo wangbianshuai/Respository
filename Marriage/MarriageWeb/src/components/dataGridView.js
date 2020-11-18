@@ -140,7 +140,7 @@ const setDataProperty = (p, property, pageAxis) => {
                 let url = p.pageUrl;
                 if (p.isAddPublicPath) url = window.publicPath + url;
                 else if (p.isAddRouterBase) url = window.routerBase + url;
-                url = Common.replaceDataContent(record, url, !p.isHttp)
+                url = Common.replaceDataContent(record, url, true)
                 if (Common.isNullOrEmpty(url)) return text;
                 else return <a href={url} target="_blank" rel="noopener noreferrer">{text}</a>
             }
@@ -152,8 +152,7 @@ const setDataProperty = (p, property, pageAxis) => {
             if (p.isRender && !p.isRender(text, record, index)) return emptyRender();
             if (!Common.isNullOrEmpty(text)) {
                 let url = p.pageUrl;
-                const blUrl = !(p.isUrl === false)
-                url = Common.replaceDataContent(record, url, blUrl)
+                url = Common.replaceDataContent(record, url, true)
                 if (Common.isNullOrEmpty(url)) return text;
                 else return <Link to={url}>{text}</Link>
             }

@@ -53,7 +53,7 @@ const getParentMenuRight = (menuName, menuList) => {
 const getHref = (parenPageName, parentQueryString, queryString) => {
     let href = parenPageName;
     if (parentQueryString) {
-        parentQueryString = Common.replaceDataContent(queryString, parentQueryString);
+        parentQueryString = Common.replaceDataContent(queryString, parentQueryString, true);
         href += parentQueryString
     }
     return href;
