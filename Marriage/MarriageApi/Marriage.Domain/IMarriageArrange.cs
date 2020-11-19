@@ -38,5 +38,19 @@ namespace Marriage.Domain
         /// <param name="id"></param>
         /// <returns></returns>
         Entity.Domain.MarriageArrange GetViewMarriageArrange(Guid id);
+
+        /// <summary>
+        /// 查询数据列表
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        List<Entity.Domain.MarriageArrange> QueryMarriageArrangeByMatchmakerDataList(Entity.Application.MarriageArrange.QueryMarriageArrangeByMatchmakerRequest request);
+
+        /// <summary>
+        /// 查询分页信息
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        Entity.Application.PageInfo QueryMarriageArrangeByMatchmakerPageInfo(Entity.Application.MarriageArrange.QueryMarriageArrangeByMatchmakerRequest request);
     }
 }

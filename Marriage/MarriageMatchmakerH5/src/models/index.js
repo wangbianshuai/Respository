@@ -4,6 +4,7 @@ import WxUser from './wxUser';
 import Resources from './resources';
 import MarriageUserPhoto from './marriageUserPhoto';
 import Matchmaker from './matchmaker';
+import MarriageArrange from './marriageArrange';
 
 export default [
     PageConfig,
@@ -11,5 +12,6 @@ export default [
     WxUser,
     Resources,
     MarriageUserPhoto,
-    Matchmaker
+    Matchmaker,
+    MarriageArrange
 ]

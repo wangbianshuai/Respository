@@ -54,6 +54,91 @@
             女方
             </summary>
         </member>
+        <member name="T:Marriage.Entity.Application.MarriageArrange.QueryMarriageArrangeByMatchmakerRequest">
+            <summary>
+            查询红娘下相亲安排请求
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageArrange.QueryMarriageArrangeByMatchmakerRequest.PageIndex">
+            <summary>
+            分页索引，从1开始
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageArrange.QueryMarriageArrangeByMatchmakerRequest.PageSize">
+            <summary>
+            分页大小
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageArrange.QueryMarriageArrangeByMatchmakerRequest.Type">
+            <summary>
+            类型
+            </summary>
+        </member>
+        <member name="T:Marriage.Entity.Application.MarriageArrange.QueryMarriageArrangeByMatchmakerResponse">
+            <summary>
+            查询红娘下相亲安排响应
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageArrange.QueryMarriageArrangeByMatchmakerResponse.DataList">
+            <summary>
+            数据列表
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageArrange.QueryMarriageArrangeByMatchmakerResponse.PageInfo">
+            <summary>
+            分页信息
+            </summary>
+        </member>
+        <member name="T:Marriage.Entity.Application.MarriageArrange.MarriageArrangeInfo">
+            <summary>
+            相亲安排信息
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageArrange.MarriageArrangeInfo.MarriageArrangeId">
+            <summary> 
+            主键
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageArrange.MarriageArrangeInfo.MarriageDate">
+            <summary> 
+            相亲时间
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageArrange.MarriageArrangeInfo.MarriageAddress">
+            <summary> 
+            相亲地点
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageArrange.MarriageArrangeInfo.ManUserName">
+            <summary>
+            男方
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageArrange.MarriageArrangeInfo.WomanUserName">
+            <summary>
+            女方
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageArrange.MarriageArrangeInfo.ManHeadImgUrl">
+            <summary>
+            男方头像
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageArrange.MarriageArrangeInfo.ManAge">
+            <summary>
+            男方年龄
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageArrange.MarriageArrangeInfo.WomanHeadImgUrl">
+            <summary>
+            女方头像
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageArrange.MarriageArrangeInfo.WomanAge">
+            <summary>
+            女方年龄
+            </summary>
+        </member>
         <member name="T:Marriage.Entity.Application.MarriageArrange.QueryMarriageArrangeRequest">
             <summary>
             查询相亲安排请求
@@ -2999,6 +3084,16 @@
             值
             </summary>
         </member>
+        <member name="P:Marriage.Entity.Data.QueryCondition.OrConditions">
+            <summary>
+            或条件集合
+            </summary>
+        </member>
+        <member name="M:Marriage.Entity.Data.QueryCondition.#ctor">
+            <summary>
+            查询条件
+            </summary>
+        </member>
         <member name="M:Marriage.Entity.Data.QueryCondition.#ctor(System.String,System.String,System.Object,System.String)">
             <summary>
             查询条件
@@ -3431,6 +3526,26 @@
         <member name="P:Marriage.Entity.Domain.MarriageArrange.WomanUserName">
             <summary>
             女方
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Domain.MarriageArrange.ManHeadImgUrl">
+            <summary>
+            男方头像
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Domain.MarriageArrange.ManAge">
+            <summary>
+            男方年龄
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Domain.MarriageArrange.WomanHeadImgUrl">
+            <summary>
+            女方头像
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Domain.MarriageArrange.WomanAge">
+            <summary>
+            女方年龄
             </summary>
         </member>
         <member name="T:Marriage.Entity.Domain.MarriageArrangeUser">

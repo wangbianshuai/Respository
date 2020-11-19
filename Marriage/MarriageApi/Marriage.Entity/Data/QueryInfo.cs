@@ -87,6 +87,18 @@ namespace Marriage.Entity.Data
         /// 值
         /// </summary>
         public object Value { get; set; }
+        /// <summary>
+        /// 或条件集合
+        /// </summary>
+        public List<QueryCondition> OrConditions { get; set; }
+
+        /// <summary>
+        /// 查询条件
+        /// </summary>
+        public QueryCondition()
+        {
+
+        }
 
         /// <summary>
         /// 查询条件

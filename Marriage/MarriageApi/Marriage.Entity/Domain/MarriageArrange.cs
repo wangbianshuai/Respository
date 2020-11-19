@@ -118,5 +118,21 @@ namespace Marriage.Entity.Domain
         /// 女方
         /// </summary>
         public string WomanUserName { get; set; }
+        /// <summary>
+        /// 男方头像
+        /// </summary>
+        public string ManHeadImgUrl { get; set; }
+        /// <summary>
+        /// 男方年龄
+        /// </summary>
+        public string ManAge { get; set; }
+        /// <summary>
+        /// 女方头像
+        /// </summary>
+        public string WomanHeadImgUrl { get; set; }
+        /// <summary>
+        /// 女方年龄
+        /// </summary>
+        public string WomanAge { get; set; }
     }
 }

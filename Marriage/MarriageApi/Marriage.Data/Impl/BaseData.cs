@@ -152,6 +152,18 @@ namespace Marriage.Data.Impl
                 {
                     whereList.Add(string.Format("{0} in ({1})", c.Name, c.Value));
                 }
+                else if (c.OrConditions != null)
+                {
+                    List<string> orWheres = new List<string>();
+                    c.OrConditions.ForEach(c2 =>
+                    {
+                        string parameterName = c2.ParameterName ?? "@" + c2.Name;
+                        parameterList.Add(this.InParameter(parameterName, c2.Value));
+                        whereList.Add(string.Format("{0} {1} {2}", c2.Name, c2.OpearteLogic, parameterName));
+                    });
+
+                    whereList.Add(string.Format("({0})", string.Join(" or ", orWheres)));
+                }
                 else
                 {
                     string parameterName = c.ParameterName ?? "@" + c.Name;

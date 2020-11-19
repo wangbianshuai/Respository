@@ -21,5 +21,10 @@ namespace Marriage.Application
         /// 获取相亲安排
         /// </summary>
         GetMarriageArrangeByUserResponse GetMarriageArrangeByUser(GetMarriageArrangeByUserRequest request);
+
+        /// <summary>
+        /// 查询红娘下相亲安排
+        /// </summary>
+        QueryMarriageArrangeByMatchmakerResponse QueryMarriageArrangeByMatchmaker(QueryMarriageArrangeByMatchmakerRequest request);
     }
 }

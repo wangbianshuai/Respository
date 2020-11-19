@@ -33,6 +33,13 @@
             <param name="request"></param>
             <returns></returns>
         </member>
+        <member name="M:Marriage.Api.Controllers.MarriageArrangeController.QueryMarriageArrangeByMatchmaker(Marriage.Entity.Application.MarriageArrange.QueryMarriageArrangeByMatchmakerRequest)">
+            <summary>
+            查询红娘下相亲安排
+            </summary>
+            <param name="request"></param>
+            <returns></returns>
+        </member>
         <member name="T:Marriage.Api.Controllers.MarriageSquareController">
             <summary>
             相亲广场

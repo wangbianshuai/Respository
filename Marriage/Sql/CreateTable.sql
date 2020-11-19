@@ -405,7 +405,12 @@ as
 select a.*,
 b.Name AppMatchmakerName,
 e.Name ManUserName,
-f.Name WomanUserName
+e.HeadImgUrl ManHeadImgUrl,
+year(GETDATE())- YEAR(e.Birthday) as ManAge,
+f.Name WomanUserName,
+f.HeadImgUrl WomanHeadImgUrl,
+year(GETDATE())- YEAR(f.Birthday) as WomanAge,
+isNull(a.UpdateDate,a.CreateDate) UpdateDate2
 from t_MarriageArrange a
 left join t_Matchmaker b on a.AppMatchmakerId=b.MatchmakerId
 left join t_MarriageUser e on a.ManUserId=e.UserId

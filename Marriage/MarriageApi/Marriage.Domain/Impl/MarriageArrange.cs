@@ -98,5 +98,66 @@ namespace Marriage.Domain.Impl
         {
             return Parse.IEntityDataTo<Entity.Domain.MarriageArrange>(_MarriageArrange.GetViewEntityDataById(id));
         }
+
+        /// <summary>
+        /// 查询数据列表
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        public List<Entity.Domain.MarriageArrange> QueryMarriageArrangeByMatchmakerDataList(Entity.Application.MarriageArrange.QueryMarriageArrangeByMatchmakerRequest request)
+        {
+            Entity.Data.QueryInfo queryInfo = new Entity.Data.QueryInfo();
+            queryInfo.ConditionList = GetConditionList2(request);
+            queryInfo.OrderByList = GetOrderByList2(request);
+            queryInfo.TableName = "v_MarriageArrange2";
+
+            queryInfo.PageIndex = request.PageIndex;
+            queryInfo.PageSize = request.PageSize;
+
+            return Parse.IEntityDataListTo<Entity.Domain.MarriageArrange>(_MarriageArrange.QueryDataList(queryInfo));
+        }
+
+        /// <summary>
+        /// 查询分页信息
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        public Entity.Application.PageInfo QueryMarriageArrangeByMatchmakerPageInfo(Entity.Application.MarriageArrange.QueryMarriageArrangeByMatchmakerRequest request)
+        {
+            Entity.Data.QueryInfo queryInfo = new Entity.Data.QueryInfo();
+            queryInfo.ConditionList = GetConditionList2(request);
+            queryInfo.OrderByList = GetOrderByList2(request);
+            queryInfo.TableName = "v_MarriageArrange2";
+
+            int totalCount = _MarriageArrange.QueryCount(queryInfo);
+
+            return new Entity.Application.PageInfo(request.PageIndex, request.PageSize, totalCount);
+        }
+
+        List<Entity.Data.OrderByType> GetOrderByList2(Entity.Application.MarriageArrange.QueryMarriageArrangeByMatchmakerRequest request)
+        {
+            Entity.Data.OrderByType orderBy = new Entity.Data.OrderByType("UpdateDate2", "desc");
+
+            return new List<Entity.Data.OrderByType>() { orderBy };
+        }
+
+        List<Entity.Data.QueryCondition> GetConditionList2(Entity.Application.MarriageArrange.QueryMarriageArrangeByMatchmakerRequest request)
+        {
+            List<Entity.Data.QueryCondition> queryConditionList = new List<Entity.Data.QueryCondition>();
+
+            Guid matchmakerId = Guid.Parse(request.LoginUserId);
+
+            List<Entity.Data.QueryCondition> orConditionList = new List<Entity.Data.QueryCondition>();
+
+            orConditionList.Add(new Entity.Data.QueryCondition("ManMatchmakerId", "=", matchmakerId));
+            orConditionList.Add(new Entity.Data.QueryCondition("WomanMatchmakerId", "=", matchmakerId));
+            orConditionList.Add(new Entity.Data.QueryCondition("AppMatchmakerId", "=", matchmakerId));
+
+            var condition =  new Entity.Data.QueryCondition();
+            condition.OrConditions = orConditionList;
+            queryConditionList.Add(condition);
+
+            return queryConditionList;
+        }
     }
 }
