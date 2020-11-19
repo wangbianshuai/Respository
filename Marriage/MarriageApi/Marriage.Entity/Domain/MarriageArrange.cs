@@ -111,6 +111,14 @@ namespace Marriage.Entity.Domain
         /// </summary>
         public string AppMatchmakerName { get; set; }
         /// <summary>
+        /// 男方红娘
+        /// </summary>
+        public string ManMatchmakerName { get; set; }
+        /// <summary>
+        /// 女方红娘
+        /// </summary>
+        public string WomanMatchmakerName { get; set; }
+        /// <summary>
         /// 男方
         /// </summary>
         public string ManUserName { get; set; }

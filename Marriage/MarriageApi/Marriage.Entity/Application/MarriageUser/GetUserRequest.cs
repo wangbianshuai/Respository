@@ -39,6 +39,10 @@ namespace Marriage.Entity.Application.MarriageUser
         /// 审核不通过原因
         /// </summary> 
         public string NoPassReason { get; set; }
+        /// <summary>
+        /// 是否编辑
+        /// </summary>
+        public bool IsEdit { get; set; }
     }
 
     /// <summary>

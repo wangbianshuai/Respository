@@ -17,9 +17,9 @@ export default (props) => {
     else if (Status === 2) statusName = "无意向";
     else if (Status === 3) statusName = "牵手成功";
     else if (Status === 4) statusName = "订婚";
-    else if (Status == 5) statusName = "结婚";
-    else if (Status == 6) statusName = "分手";
-    else if (Status == 7) statusName = "取消";
+    else if (Status === 5) statusName = "结婚";
+    else if (Status === 6) statusName = "分手";
+    else if (Status === 7) statusName = "取消";
 
     const className = Controls.Base.getClassName(property, styles);
 

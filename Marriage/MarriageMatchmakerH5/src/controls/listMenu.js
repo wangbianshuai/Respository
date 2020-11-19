@@ -5,10 +5,10 @@ import { List } from 'antd-mobile';
 import Base from './base';
 import styles from '../styles/view.scss';
 
-const renderItem = (property, data, i, onClick) => {
+const renderItem = (property, data, i, value, onClick) => {
   const { valueName, textName } = property;
   const text = data[textName];
-  const value = data[valueName];
+  value = value || data[valueName];
 
   if (!data.arrow && property.isRightArraw) data.arrow = 'horizontal';
   if (!data.url && property.url) data.url = Common.replaceDataContent(data, property.url, true);
@@ -20,8 +20,8 @@ const renderItem = (property, data, i, onClick) => {
   </List.Item>;
 };
 
-const renderOptions = (options, property, onClick) => {
-  return options.map((m, i) => renderItem(property, m, i, onClick));
+const renderOptions = (options, property, value, onClick) => {
+  return options.map((m, i) => renderItem(property, m, i, value, onClick));
 }
 
 const getOptions = (property, view, pageAxis, parentValue) => {
@@ -42,6 +42,7 @@ export default (props) => {
   const { property, view, pageAxis } = Base.getProps(props);
 
   const [isVisible, setIsVisible] = useState(property.isVisible !== false);
+  const [value, setValue] = useState(property.value);
 
   const [options, setOptions] = useGetDataSourceOptions(property, view, pageAxis, getOptions);
 
@@ -50,11 +51,12 @@ export default (props) => {
   }, [pageAxis]);
 
   property.setVisible = (v) => setIsVisible(v);
+  property.setValue = (v) => setValue(v);
   property.refreshOptions = () => setOptions(getOptions(property, view, pageAxis));
 
-  if (!isVisible || options.length === 0) return null;
+  if (!isVisible || options.length === 0 || (Common.isNullOrEmpty(value) && property.isHasValueVisible)) return null;
 
   const className = Base.getClassName(property, styles);
 
-  return <List className={className}> {renderOptions(options, property, onClick)}</List>
+  return <List className={className}> {renderOptions(options, property, value, onClick)}</List>
 }

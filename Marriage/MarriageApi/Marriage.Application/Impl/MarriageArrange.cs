@@ -62,7 +62,7 @@ namespace Marriage.Application.Impl
 
             //1、获取相亲安排
             int stepNo = 1;
-            var marriageArrange = GetMarriageArrange(stepNo, request.MarriageArrangeId, response);
+            var marriageArrange = GetViewMarriageArrange(stepNo, request.MarriageArrangeId, response);
 
             //2、以用户获取相亲安排
             stepNo += 1;
@@ -102,6 +102,125 @@ namespace Marriage.Application.Impl
 
             //日志记录
             return this.SetReturnResponse<QueryMarriageArrangeByMatchmakerResponse>(title, "QueryMarriageArrangeByMatchmaker", requestContent, response);
+        }
+
+
+        /// <summary>
+        /// 获取红娘下相亲安排
+        /// </summary>
+        public GetMarriageArrangeByMatchmakerResponse GetMarriageArrangeByMatchmaker(GetMarriageArrangeByMatchmakerRequest request)
+        {
+            string title = "获取红娘下相亲安排";
+            string requestContent = Utility.Common.ToJson(request);
+            GetMarriageArrangeByMatchmakerResponse response = new GetMarriageArrangeByMatchmakerResponse();
+
+            this.InitMessage();
+
+            this.IsNullRequest(request, response);
+
+            //1、获取红娘信息
+            int stepNo = 1;
+            Entity.Domain.Matchmaker matchmaker = this.GetMatchmakerById(stepNo, request.LoginUserId, response);
+
+            //2、获取相亲安排
+             stepNo += 1;
+            var marriageArrange = GetMarriageArrange(stepNo, request.MarriageArrangeId, request.LoginUserId, response);
+
+            //3、获取男方信息
+            stepNo += 1;
+            var manUser = GetUserInfoById(stepNo, marriageArrange, 1, response);
+
+            //4、获取男方信息
+            stepNo += 1;
+            var womanUser = GetUserInfoById(stepNo, marriageArrange, 2, response);
+
+            //2、获取红娘下相亲安排
+            stepNo += 1;
+            GetMarriageArrangeByMatchmaker(stepNo, matchmaker, marriageArrange, manUser, womanUser, response);
+
+            //3、执行结束
+            this.ExecEnd(response);
+
+            //日志记录
+            return this.SetReturnResponse<GetMarriageArrangeByMatchmakerResponse>(title, "GetMarriageArrangeByMatchmaker", requestContent, response);
+        }
+
+        /// <summary>
+        /// 获取红娘下相亲安排
+        /// </summary>
+        /// <param name="stepNo"></param>
+        /// <param name="matchmaker"></param>
+        /// <param name="entity"></param>
+        /// <param name="manUser"></param>
+        /// <param name="womanUser"></param>
+        /// <param name="response"></param>
+        /// <returns></returns>
+        private Entity.Domain.MarriageArrange GetMarriageArrangeByMatchmaker(int stepNo, Entity.Domain.Matchmaker matchmaker,
+            Entity.Domain.MarriageArrange entity, Entity.Domain.MarriageUser manUser, Entity.Domain.MarriageUser womanUser, GetMarriageArrangeByMatchmakerResponse response)
+        {
+            Func<Entity.Domain.MarriageArrange> execStep = () =>
+            {
+                if (entity != null)
+                {
+                    bool isAppMatchmaker = matchmaker.MatchmakerId == entity.AppMatchmakerId;
+
+                    response.ManUserInfo = new Entity.Application.MarriageUser.MarriageUser3()
+                    {
+                        Age = DateTime.Now.Year - manUser.Birthday.Year,
+                        HeadImgUrl = manUser.HeadImgUrl,
+                        NickName = manUser.NickName,
+                        UserId = manUser.UserId
+                    };
+
+                    response.WomanUserInfo = new Entity.Application.MarriageUser.MarriageUser3()
+                    {
+                        Age = DateTime.Now.Year - womanUser.Birthday.Year,
+                        HeadImgUrl = womanUser.HeadImgUrl,
+                        NickName = womanUser.NickName,
+                        UserId = womanUser.UserId
+                    };
+
+                    response.StatusInfo = new Entity.Application.MarriageUser.StatusInfo()
+                    {
+                        Status = entity.Status
+                    };
+
+                    if (isAppMatchmaker)
+                    {
+                        response.ManUserInfo.Phone = manUser.Phone;
+                        response.WomanUserInfo.Phone = womanUser.Phone;
+                        response.StatusInfo.IsEdit = true;
+
+                        if (entity.ManMatchmakerId != matchmaker.MatchmakerId) response.ManMatchmaker = new MatchmakerInfo4()
+                        {
+                            MatchmakerId = entity.ManMatchmakerId,
+                            Name = entity.ManMatchmakerName
+                        };
+
+                        if (entity.WomanMatchmakerId != matchmaker.MatchmakerId) response.WomanMatchmaker = new MatchmakerInfo4()
+                        {
+                            MatchmakerId = entity.WomanMatchmakerId,
+                            Name = entity.WomanMatchmakerName
+                        };
+
+                        response.MarriageFee = entity.Amount.ToString("C");
+                    }
+                    else
+                    {
+                        response.ManUserInfo.Remark = manUser.Remark;
+                        response.WomanUserInfo.Remark = womanUser.Remark;
+
+                        response.AppMatchmaker = new MatchmakerInfo4()
+                        {
+                            MatchmakerId = entity.AppMatchmakerId,
+                            Name = entity.AppMatchmakerName
+                        };
+                    }
+                }
+                return entity;
+            };
+
+            return this.GetEntityData<Entity.Domain.MarriageArrange>(stepNo, "以用户获取相亲安排", "GetMarriageArrangeByMatchmaker", response, execStep);
         }
 
         private List<Entity.Domain.MarriageArrange> QueryMarriageArrangeByMatchmaker(int stepNo, Entity.Domain.Matchmaker matchmaker, QueryMarriageArrangeByMatchmakerRequest request, QueryMarriageArrangeByMatchmakerResponse response)
@@ -186,6 +305,22 @@ namespace Marriage.Application.Impl
             return this.GetEntityData<Entity.Domain.MarriageArrange>(stepNo, "以用户获取相亲安排", "GetMarriageArrangeByUser", response, execStep);
         }
 
+        /// <summary>
+        /// 以主键获取相亲安排
+        /// </summary>
+        /// <param name="stepNo"></param>
+        /// <param name="marriageArrangeId"></param>
+        /// <param name="response"></param>
+        /// <returns></returns>
+        private Entity.Domain.MarriageArrange GetViewMarriageArrange(int stepNo, Guid marriageArrangeId, IResponse response)
+        {
+            Func<Entity.Domain.MarriageArrange> execStep = () =>
+            {
+                return _MarriageArrange.GetViewMarriageArrange(marriageArrangeId);
+            };
+
+            return this.GetEntityData<Entity.Domain.MarriageArrange>(stepNo, "以主键获取相亲安排", "GetMarriageArrange", response, execStep);
+        }
 
         /// <summary>
         /// 以主键获取相亲安排
@@ -194,14 +329,40 @@ namespace Marriage.Application.Impl
         /// <param name="marriageArrangeId"></param>
         /// <param name="response"></param>
         /// <returns></returns>
-        private Entity.Domain.MarriageArrange GetMarriageArrange(int stepNo, Guid marriageArrangeId, IResponse response)
+        private Entity.Domain.MarriageArrange GetMarriageArrange(int stepNo, Guid marriageArrangeId, string loginUserId, IResponse response)
         {
             Func<Entity.Domain.MarriageArrange> execStep = () =>
             {
-                return _MarriageArrange.GetViewMarriageArrange(marriageArrangeId);
+                Guid matchmakerId = Guid.Parse(loginUserId);
+
+                var entity = _MarriageArrange.GetViewMarriageArrange(marriageArrangeId);
+
+                if (entity != null && entity.ManMatchmakerId != matchmakerId && entity.WomanMatchmakerId != matchmakerId && entity.AppMatchmakerId != matchmakerId) return null;
+
+                return entity;
             };
 
             return this.GetEntityData<Entity.Domain.MarriageArrange>(stepNo, "以主键获取相亲安排", "GetMarriageArrange", response, execStep);
+        }
+
+        /// <summary>
+        /// 以主键获取用户信息
+        /// </summary>
+        /// <param name="stepNo"></param>
+        /// <param name="request"></param>
+        /// <param name="response"></param>
+        /// <returns></returns>
+        private Entity.Domain.MarriageUser GetUserInfoById(int stepNo, Entity.Domain.MarriageArrange marriageArrange, byte sex, IResponse response)
+        {
+            Func<Entity.Domain.MarriageUser> execStep = () =>
+            {
+                var entity = _MarriageUser.GetUserInfoById(sex == 1 ? marriageArrange.ManUserId : marriageArrange.WomanUserId);
+
+                if (entity == null || entity.Status != 1) return null;
+                return entity;
+            };
+
+            return this.GetEntityData<Entity.Domain.MarriageUser>(stepNo, "以主键获取用户信息", "GetUserInfoById", response, execStep);
         }
 
         /// <summary>

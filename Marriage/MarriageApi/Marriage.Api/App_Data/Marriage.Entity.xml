@@ -4,6 +4,71 @@
         <name>Marriage.Entity</name>
     </assembly>
     <members>
+        <member name="T:Marriage.Entity.Application.MarriageArrange.GetMarriageArrangeByMatchmakerRequest">
+            <summary>
+            获取红娘下相亲安排请求
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageArrange.GetMarriageArrangeByMatchmakerRequest.MarriageArrangeId">
+            <summary>
+            获取相亲安排
+            </summary>
+        </member>
+        <member name="T:Marriage.Entity.Application.MarriageArrange.GetMarriageArrangeByMatchmakerResponse">
+            <summary>
+            获取红娘下相亲安排响应
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageArrange.GetMarriageArrangeByMatchmakerResponse.ManUserInfo">
+            <summary>
+            男方用户信息
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageArrange.GetMarriageArrangeByMatchmakerResponse.WomanUserInfo">
+            <summary>
+            女方用户信息
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageArrange.GetMarriageArrangeByMatchmakerResponse.StatusInfo">
+            <summary>
+            状态信息
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageArrange.GetMarriageArrangeByMatchmakerResponse.ManMatchmaker">
+            <summary>
+            男方红娘
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageArrange.GetMarriageArrangeByMatchmakerResponse.WomanMatchmaker">
+            <summary>
+            女方红娘
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageArrange.GetMarriageArrangeByMatchmakerResponse.AppMatchmaker">
+            <summary>
+            平台红娘
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageArrange.GetMarriageArrangeByMatchmakerResponse.MarriageFee">
+            <summary>
+            相亲费用
+            </summary>
+        </member>
+        <member name="T:Marriage.Entity.Application.MarriageArrange.MatchmakerInfo4">
+            <summary>
+            红娘信息
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageArrange.MatchmakerInfo4.MatchmakerId">
+            <summary>
+            红娘Id
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageArrange.MatchmakerInfo4.Name">
+            <summary>
+            姓名
+            </summary>
+        </member>
         <member name="T:Marriage.Entity.Application.MarriageArrange.GetMarriageArrangeByUserRequest">
             <summary>
             获取相亲安排请求
@@ -1054,6 +1119,11 @@
             审核不通过原因
             </summary> 
         </member>
+        <member name="P:Marriage.Entity.Application.MarriageUser.StatusInfo.IsEdit">
+            <summary>
+            是否编辑
+            </summary>
+        </member>
         <member name="T:Marriage.Entity.Application.MarriageUser.UserInfo2">
             <summary>
             用户信息
@@ -1147,6 +1217,11 @@
         <member name="P:Marriage.Entity.Application.MarriageUser.MarriageUser3.Age">
             <summary>
             年龄
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageUser.MarriageUser3.Remark">
+            <summary>
+            个性签名
             </summary>
         </member>
         <member name="T:Marriage.Entity.Application.MarriageUser.RegisterRequest">
@@ -3522,6 +3597,16 @@
         <member name="P:Marriage.Entity.Domain.MarriageArrange.AppMatchmakerName">
             <summary>
             平台红娘
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Domain.MarriageArrange.ManMatchmakerName">
+            <summary>
+            男方红娘
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Domain.MarriageArrange.WomanMatchmakerName">
+            <summary>
+            女方红娘
             </summary>
         </member>
         <member name="P:Marriage.Entity.Domain.MarriageArrange.ManUserName">

@@ -404,6 +404,8 @@ create view v_MarriageArrange2
 as
 select a.*,
 b.Name AppMatchmakerName,
+c.Name ManMatchmakerName,
+d.Name WomanMatchmakerName,
 e.Name ManUserName,
 e.HeadImgUrl ManHeadImgUrl,
 year(GETDATE())- YEAR(e.Birthday) as ManAge,
@@ -413,6 +415,8 @@ year(GETDATE())- YEAR(f.Birthday) as WomanAge,
 isNull(a.UpdateDate,a.CreateDate) UpdateDate2
 from t_MarriageArrange a
 left join t_Matchmaker b on a.AppMatchmakerId=b.MatchmakerId
+left join t_Matchmaker c on a.ManMatchmakerId=c.MatchmakerId
+left join t_Matchmaker d on a.WomanMatchmakerId=d.MatchmakerId
 left join t_MarriageUser e on a.ManUserId=e.UserId
 left join t_MarriageUser f on a.WomanUserId=f.UserId
 where a.IsDelete=0

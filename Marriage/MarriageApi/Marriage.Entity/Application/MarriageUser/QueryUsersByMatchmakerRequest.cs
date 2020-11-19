@@ -71,5 +71,9 @@ namespace Marriage.Entity.Application.MarriageUser
         /// 年龄
         /// </summary>
         public int Age { get; set; }
+        /// <summary>
+        /// 个性签名
+        /// </summary>
+        public string Remark { get; set; }
     }
 }
