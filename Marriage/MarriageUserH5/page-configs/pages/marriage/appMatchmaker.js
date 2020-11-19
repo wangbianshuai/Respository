@@ -1,9 +1,9 @@
 const { getTextBox } = require('../../common');
 
-//index 600-699
+//marriage/appMatchmaker 2000-2099
 const dataActionTypes = {
   //更新用户红娘
-  getUserMatchmaker: 600
+  getAppMatchmaker: 2000
 };
 
 const entity = { name: 'Matchmaker', primaryKey: 'MatchmakerId', isGet: true };
@@ -32,8 +32,8 @@ function matchmakerEditView2() {
     type: "View",
     entity,
     isList: true,
-    eventActionName: "getUserMatchmaker",
-    getEntityDataActionType: dataActionTypes.getUserMatchmaker,
+    eventActionName: "getAppMatchmaker",
+    getEntityDataActionType: dataActionTypes.getAppMatchmaker,
     className: 'divDetail',
     properties: getProperties()
   }
@@ -64,7 +64,7 @@ function getTextBox2(name, label, controlType, x, y, placeHorder, maxLength) {
 
 function getEventActions() {
   return [{
-    name: "getUserMatchmaker",
+    name: "getAppMatchmaker",
     type: "entityEdit/getEntityData",
     editView: "matchmakerEditEdit"
   }]

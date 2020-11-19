@@ -99,6 +99,11 @@ namespace Marriage.Application.Impl
                         return true;
                     }
                 }
+                else if (request.IsSend && marriageSquare.RoseCount > 999)
+                {
+                    this.SetValidateMessageRepsonse("最多只可赠送999朵玫瑰", response);
+                    return true;
+                }
                 return _MarriageSquare.UpdateMarriageSquareRoseCount(Guid.Parse(request.LoginUserId), user.UserId, request.IsSend);
             };
 

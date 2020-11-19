@@ -9,6 +9,10 @@ namespace Marriage.Entity.Domain
     /// </summary>
     public class MarriageArrangeUser
     {
+        /// <summary>
+        /// 相亲安排Id
+        /// </summary>
+        public Guid MarriageArrangeId { get; set; }
         /// <summary> 
         /// 相亲用户ID
         /// </summary> 

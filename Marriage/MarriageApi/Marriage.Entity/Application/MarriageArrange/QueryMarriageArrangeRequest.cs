@@ -44,6 +44,10 @@ namespace Marriage.Entity.Application.MarriageArrange
     public class MarriageArrangeUser
     {
         /// <summary>
+        /// 相亲安排Id
+        /// </summary>
+        public Guid MarriageArrangeId { get; set; }
+        /// <summary>
         /// 用户Id
         /// </summary>
         public Guid UserId { get; set; }

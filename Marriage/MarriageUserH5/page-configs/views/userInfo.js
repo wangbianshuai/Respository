@@ -100,7 +100,8 @@ function getEventActions() {
     return [{
         name: "getEntityData",
         type: "entityEdit/getEntityData",
-        editView: "marriageUserEditEdit"
+        editView: "marriageUserEditEdit",
+        setGetEntityDataLoad: 'setGetEntityDataLoad'
     }]
 }
 

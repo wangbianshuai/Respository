@@ -370,6 +370,10 @@ namespace Marriage.Application.Impl
                         RoseCount2 = entity.RoseCount2,
                         UserId = entity.UserId
                     };
+                    response.StatusInfo = new StatusInfo()
+                    {
+                        Status = entity.MarriageArrangeStatus
+                    };
                 }
 
                 return entity;

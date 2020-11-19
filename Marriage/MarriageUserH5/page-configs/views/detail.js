@@ -37,6 +37,11 @@ function getProperties() {
         properties.push(getRoseListMenu());
         properties.push(getCancelRoseListMenu());
     }
+    else {
+        properties.push(getMarriageArrangeListMenu());
+        properties.push(getAppMatchmakerListMenu());
+        properties.push(getStatusListMenu());
+    }
 
     return properties;
 }
@@ -73,6 +78,32 @@ function getEventActions() {
         type: "entityEdit/getEntityData",
         editView: "infoView"
     }]
+}
+
+function getStatusListMenu() {
+    return {
+        name: 'StatusInfo',
+        type: 'ArrangeStatusListMenu',
+        className: 'divListMenu',
+    }
+}
+
+function getAppMatchmakerListMenu() {
+    return {
+        name: 'Matchmarker',
+        type: 'ListMenu',
+        className: 'divListMenu',
+        dataSource: [{ text: '平台红娘', arrow: 'horizontal', thumb: 'matchmaker.png', url: '/' + pageType + '/appMatchmaker?userId=#{userId}&marriageArrangeId=#{marriageArrangeId}' }]
+    }
+}
+
+function getMarriageArrangeListMenu() {
+    return {
+        name: 'MarriageArrange',
+        type: 'ListMenu',
+        className: 'divListMenu',
+        dataSource: [{ text: '相亲安排', arrow: 'horizontal', thumb: 'marriage_selected.png', url: '/' + pageType + '/marriageArrange?userId=#{userId}&marriageArrangeId=#{marriageArrangeId}' }]
+    }
 }
 
 function getPhotoListMenu() {

@@ -8,6 +8,8 @@ import MarriageSquare from './marriageSquare';
 import MarriageArrange from './marriageArrange';
 import MarriageSquareUser from './marriageSquareUser';
 import MarriageSquareUserPhoto from './marriageSquareUserPhoto';
+import MarriageArrangeUser from './marriageArrangeUser';
+import MarriageArrangeUserPhoto from './marriageArrangeUserPhoto';
 
 export default [
     PageConfig,
@@ -19,5 +21,7 @@ export default [
     MarriageSquare,
     MarriageArrange,
     MarriageSquareUser,
-    MarriageSquareUserPhoto
+    MarriageSquareUserPhoto,
+    MarriageArrangeUser,
+    MarriageArrangeUserPhoto
 ]

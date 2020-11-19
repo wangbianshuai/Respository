@@ -28,6 +28,11 @@ namespace Marriage.Entity.Application.MarriageUser2
         /// 用户信息
         /// </summary>
         public MarriageUser4 UserInfo { get; set; }
+
+        /// <summary>
+        /// 状态信息
+        /// </summary>
+        public MarriageUser.StatusInfo StatusInfo { get; set; }
     }
 
     /// <summary>

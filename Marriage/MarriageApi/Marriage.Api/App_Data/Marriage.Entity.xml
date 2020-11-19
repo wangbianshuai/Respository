@@ -44,6 +44,11 @@
             相亲人员信息
             </summary>
         </member>
+        <member name="P:Marriage.Entity.Application.MarriageArrange.MarriageArrangeUser.MarriageArrangeId">
+            <summary>
+            相亲安排Id
+            </summary>
+        </member>
         <member name="P:Marriage.Entity.Application.MarriageArrange.MarriageArrangeUser.UserId">
             <summary>
             用户Id
@@ -297,6 +302,11 @@
         <member name="P:Marriage.Entity.Application.MarriageUser2.GetUserByUserResponse.UserInfo">
             <summary>
             用户信息
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageUser2.GetUserByUserResponse.StatusInfo">
+            <summary>
+            状态信息
             </summary>
         </member>
         <member name="T:Marriage.Entity.Application.MarriageUser2.MarriageUser4">
@@ -3181,6 +3191,11 @@
         <member name="T:Marriage.Entity.Domain.MarriageArrangeUser">
             <summary>
             相亲安排用户
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Domain.MarriageArrangeUser.MarriageArrangeId">
+            <summary>
+            相亲安排Id
             </summary>
         </member>
         <member name="P:Marriage.Entity.Domain.MarriageArrangeUser.UserId">

@@ -1,13 +1,11 @@
 import DvaIndex from "DvaCommon";
 
 const config = {
-    name: 'MatchmakerService',
+    name: 'MarriageArrangeUserPhotoService',
     serviceName: 'ApiService',
     actionList: [
-        //获取用户红娘
-        post('getUserMatchmaker', 'Matchmaker/GetUserMatchmaker', 'getUserMatchmaker'),
-        //获取平台红娘
-        post('getAppMatchmaker', 'Matchmaker/GetAppMatchmaker', 'getAppMatchmaker')
+        //获取用户照片信息
+        post('getEntityData', 'MarriageUserPhoto/GetUserPhotoByUser', 'getEntityData')
     ]
 }
 function post(actionName, url, stateName, dataKey) {

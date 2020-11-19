@@ -92,7 +92,8 @@ namespace Marriage.Application.Impl
                 HeadImgUrl = user.HeadImgUrl,
                 NickName = user.NickName,
                 Remark = user.Remark,
-                UserId = user.UserId
+                UserId = user.UserId,
+                MarriageArrangeId = user.MarriageArrangeId
             };
         }
 

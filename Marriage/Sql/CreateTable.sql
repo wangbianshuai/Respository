@@ -410,7 +410,8 @@ a.Remark,
 year(GETDATE())- YEAR(Birthday) as Age,
 isnull(b.UpdateDate,b.CreateDate) as UpdateDate,
 b.ManUserId SelfUserId,
-b.Status
+b.Status,
+b.MarriageArrangeId
 from t_MarriageUser a,t_MarriageArrange b 
 where a.IsDelete=0 and a.Status=1 and a.UserId=b.WomanUserId
 and b.IsDelete=0
@@ -430,7 +431,8 @@ a.Remark,
 year(GETDATE())- YEAR(Birthday) as Age,
 isnull(b.UpdateDate,b.CreateDate) as UpdateDate,
 b.WomanUserId SelfUserId,
-b.Status
+b.Status,
+b.MarriageArrangeId
 from t_MarriageUser a,t_MarriageArrange b 
 where a.IsDelete=0 and a.Status=1 and a.UserId=b.ManUserId
 and b.IsDelete=0
