@@ -12,7 +12,7 @@ export default (props) => {
 
   const onClick = useCallback(() => {
     Common.removeStorage(EnvConfig.wxUserKey);
-    Common.removeStorage(EnvConfig.tokeyKey);
+    Common.removeStorage(EnvConfig.tokenKey);
     pageAxis.toPage('/');
   }, [pageAxis]);
 

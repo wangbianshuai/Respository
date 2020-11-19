@@ -1,4 +1,4 @@
-const { getTextBox, getSelect, getDatePicker } = require('../../common');
+const { getTextBox, getSelect, getDatePicker } = require('../common');
 
 const entity = { name: 'MarriageUser', primaryKey: 'userId' };
 

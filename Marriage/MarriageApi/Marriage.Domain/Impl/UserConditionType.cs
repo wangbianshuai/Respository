@@ -102,7 +102,7 @@ namespace Marriage.Domain.Impl
 
             foreach (var c in list)
             {
-                c.a.DataSourceItems = c.b.ToList();
+                c.a.DataSourceItems = c.b.OrderBy(b => b.Value).ToList();
             }
 
             //3、获取用户选择值

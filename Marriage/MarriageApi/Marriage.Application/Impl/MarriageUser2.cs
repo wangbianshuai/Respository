@@ -198,6 +198,7 @@ namespace Marriage.Application.Impl
                             Province = entity.Province,
                             Remark = entity.Remark,
                             Sex = entity.Sex,
+                            BirthTime = -1,
                             UserId = entity.UserId
                         };
                     }
@@ -364,7 +365,6 @@ namespace Marriage.Application.Impl
                         HeadImgUrl = entity.HeadImgUrl,
                         NickName = entity.NickName,
                         Remark = entity.Remark,
-                        Sex = entity.Sex,
                         Age = DateTime.Now.Year - entity.Birthday.Year,
                         RoseCount = entity.RoseCount,
                         RoseCount2 = entity.RoseCount2,

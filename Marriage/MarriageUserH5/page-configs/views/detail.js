@@ -37,7 +37,8 @@ function getProperties() {
 function getUserInfoView() {
     return {
         name: 'UserInfo',
-        type: 'topUserInfo',
+        type: 'topUserInfo2',
+        isSquare: userType === 1,
         detailUrl: '/' + pageType + '/userInfo?userId=#{userId}'
     }
 }
@@ -76,7 +77,7 @@ function getConditionTypeDataSource() {
         valueName: "Percentage",
         textName: "ConditionTypeName",
         stateName: "getUserConditionTypesByUser",
-        serviceName: "MarriageUserService",
+        serviceName: userType === 1 ? "MarriageSquareUserService" : 'MarriageArrangeUserService',
         actionName: "getUserConditionTypesByUser",
         isRefresh: true,
         getPayload: 'getUserConditionTypesPayload',

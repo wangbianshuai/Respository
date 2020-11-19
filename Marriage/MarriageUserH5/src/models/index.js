@@ -6,6 +6,8 @@ import MarriageUserPhoto from './marriageUserPhoto';
 import Matchmaker from './matchmaker';
 import MarriageSquare from './marriageSquare';
 import MarriageArrange from './marriageArrange';
+import MarriageSquareUser from './marriageSquareUser';
+import MarriageSquareUserPhoto from './marriageSquareUserPhoto';
 
 export default [
     PageConfig,
@@ -15,5 +17,7 @@ export default [
     MarriageUserPhoto,
     Matchmaker,
     MarriageSquare,
-    MarriageArrange
+    MarriageArrange,
+    MarriageSquareUser,
+    MarriageSquareUserPhoto
 ]
