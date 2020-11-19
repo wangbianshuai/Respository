@@ -467,6 +467,14 @@ namespace Marriage.Application.Impl
             return this.SetReturnResponse<UpdateUserStatusByMatchmakerResponse>(title, "UpdateUserStatusByMatchmaker", requestContent, response);
         }
 
+        /// <summary>
+        /// 更新用户信息
+        /// </summary>
+        /// <param name="stepNo"></param>
+        /// <param name="user"></param>
+        /// <param name="request"></param>
+        /// <param name="response"></param>
+        /// <returns></returns>
         private bool UpdateUserStatusByMatchmaker(int stepNo, Entity.Domain.MarriageUser user, UpdateUserStatusByMatchmakerRequest request, UpdateUserStatusByMatchmakerResponse response)
         {
             Func<bool> execStep = () =>

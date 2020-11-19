@@ -38,6 +38,13 @@
             <param name="request"></param>
             <returns></returns>
         </member>
+        <member name="M:Marriage.Api.Controllers.MarriageSquareController.UpdateMarriageSquareRoseCount(Marriage.Entity.Application.MarriageSquare.UpdateMarriageSquareRoseCountRequest)">
+            <summary>
+            更新相亲广场玫瑰数
+            </summary>
+            <param name="request"></param>
+            <returns></returns>
+        </member>
         <member name="T:Marriage.Api.Controllers.MarriageUserController">
             <summary>
             相亲用户

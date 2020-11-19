@@ -47,6 +47,100 @@ namespace Marriage.Application.Impl
         }
 
         /// <summary>
+        /// 更新相亲广场玫瑰数
+        /// </summary>
+        public UpdateMarriageSquareRoseCountResponse UpdateMarriageSquareRoseCount(UpdateMarriageSquareRoseCountRequest request)
+        {
+            string title = "更新相亲广场玫瑰数";
+            string requestContent = Utility.Common.ToJson(request);
+            UpdateMarriageSquareRoseCountResponse response = new UpdateMarriageSquareRoseCountResponse();
+
+            this.InitMessage();
+
+            this.IsNullRequest(request, response);
+
+            //2、获取用户信息
+            int stepNo = 1;
+            Entity.Domain.MarriageUser user = GetMarriageSquareUserByUserId(stepNo, request.LoginUserId, request.UserId, response);
+
+            stepNo += 1;
+            var marriageSquare = GetMarriageSquareByUserId(stepNo, request.LoginUserId, request.UserId, response);
+
+            //3、更新相亲广场玫瑰数
+            stepNo += 1;
+            UpdateMarriageSquareRoseCount(stepNo, marriageSquare, user, request, response);
+
+            //4、执行结束
+            this.ExecEnd(response);
+
+            //日志记录
+            return this.SetReturnResponse<UpdateMarriageSquareRoseCountResponse>(title, "UpdateMarriageSquareRoseCount", requestContent, response);
+        }
+
+        /// <summary>
+        /// 更新相亲广场玫瑰数
+        /// </summary>
+        /// <param name="stepNo"></param>
+        /// <param name="marriageSquare"></param>
+        /// <param name="user"></param>
+        /// <param name="request"></param>
+        /// <param name="response"></param>
+        /// <returns></returns>
+        private bool UpdateMarriageSquareRoseCount(int stepNo,Entity.Domain.MarriageSquare marriageSquare, Entity.Domain.MarriageUser user, UpdateMarriageSquareRoseCountRequest request, UpdateMarriageSquareRoseCountResponse response)
+        {
+            Func<bool> execStep = () =>
+            {
+                if (marriageSquare == null)
+                {
+                    if (request.IsSend) return _MarriageSquare.InsertMarriageSquare(Guid.Parse(request.LoginUserId), user.UserId);
+                    else
+                    {
+                        this.SetValidateMessageRepsonse("已取消赠送", response);
+                        return true;
+                    }
+                }
+                return _MarriageSquare.UpdateMarriageSquareRoseCount(Guid.Parse(request.LoginUserId), user.UserId, request.IsSend);
+            };
+
+            return this.UpdateEntityData(stepNo, "更新相亲广场玫瑰数", "UpdateMarriageSquareRoseCount", response, execStep);
+        }
+
+
+        /// <summary>
+        /// 获取相亲广场
+        /// </summary>
+        /// <param name="stepNo"></param>
+        /// <param name="request"></param>
+        /// <param name="response"></param>
+        /// <returns></returns>
+        private Entity.Domain.MarriageSquare GetMarriageSquareByUserId(int stepNo, string loginUserId, Guid userId, IResponse response)
+        {
+            Func<Entity.Domain.MarriageSquare> execStep = () =>
+            {
+                return _MarriageSquare.GetMarriageSquareByUserId(Guid.Parse(loginUserId), userId);
+            };
+
+            return this.GetEntityData<Entity.Domain.MarriageSquare>(stepNo, "获取相亲广场", "GetMarriageSquareUserByUserId", response, execStep, false);
+        }
+
+        /// <summary>
+        /// 获取相亲广场用户信息
+        /// </summary>
+        /// <param name="stepNo"></param>
+        /// <param name="request"></param>
+        /// <param name="response"></param>
+        /// <returns></returns>
+        private Entity.Domain.MarriageUser GetMarriageSquareUserByUserId(int stepNo, string loginUserId, Guid userId, IResponse response)
+        {
+            Func<Entity.Domain.MarriageUser> execStep = () =>
+            {
+                return _MarriageUser.GetMarriageSquareUserByUserId(Guid.Parse(loginUserId), userId);
+            };
+
+            return this.GetEntityData<Entity.Domain.MarriageUser>(stepNo, "获取相亲广场用户信息", "GetMarriageSquareUserByUserId", response, execStep);
+        }
+
+        /// <summary>
         /// 查询相亲广场
         /// </summary>
         /// <param name="stepNo"></param>

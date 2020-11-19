@@ -12,6 +12,12 @@ export default (props) => {
     const [data, setData] = useState({});
 
     property.setValue = (d) => setData(d);
+    pageAxis.updateRoseCount = (isSend) => {
+        if (isSend) data.RoseCount += 1;
+        else data.RoseCount = 0;
+
+        setData({ ...data });
+    };
 
     let detailUrl = property.detailUrl;
     detailUrl = Common.replaceDataContent(pageAxis.pageData, detailUrl, true);

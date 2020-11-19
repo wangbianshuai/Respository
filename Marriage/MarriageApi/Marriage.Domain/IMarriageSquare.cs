@@ -24,5 +24,30 @@ namespace Marriage.Domain
         /// <param name="sex"></param>
         /// <returns></returns>
         Entity.Application.PageInfo QueryMarriageSquarePageInfo(Entity.Application.MarriageSquare.QueryMarriageSquareRequest request, byte sex);
+
+        /// <summary>
+        /// 更新相亲广场玫瑰数
+        /// </summary>
+        /// <param name="loginUserId"></param>
+        /// <param name="userId"></param>
+        /// <param name="isSend"></param>
+        /// <returns></returns>
+        bool UpdateMarriageSquareRoseCount(Guid loginUserId, Guid userId, bool isSend);
+
+        /// <summary>
+        /// 新增相亲广场
+        /// </summary>
+        /// <param name="loginUserId"></param>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        bool InsertMarriageSquare(Guid loginUserId, Guid userId);
+
+        /// <summary>
+        /// 获取相亲广场
+        /// </summary>
+        /// <param name="loginUserId"></param>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        Entity.Domain.MarriageSquare GetMarriageSquareByUserId(Guid loginUserId, Guid userId);
     }
 }

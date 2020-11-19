@@ -254,6 +254,26 @@
             收到玫瑰数
             </summary>
         </member>
+        <member name="T:Marriage.Entity.Application.MarriageSquare.UpdateMarriageSquareRoseCountRequest">
+            <summary>
+            更新相亲广场玫瑰数请求
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageSquare.UpdateMarriageSquareRoseCountRequest.UserId">
+            <summary>
+            用户Id
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageSquare.UpdateMarriageSquareRoseCountRequest.IsSend">
+            <summary> 
+            是否赠送
+            </summary> 
+        </member>
+        <member name="T:Marriage.Entity.Application.MarriageSquare.UpdateMarriageSquareRoseCountResponse">
+            <summary>
+            更新相亲广场玫瑰数响应 
+            </summary>
+        </member>
         <member name="T:Marriage.Entity.Application.MarriageUser2.GetUserByUserRequest">
             <summary>
             获取用户下用户信息请求
@@ -3187,6 +3207,41 @@
             <summary>
             年龄
             </summary>
+        </member>
+        <member name="T:Marriage.Entity.Domain.MarriageSquare">
+            <summary>
+            相亲广场
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Domain.MarriageSquare.MarriageSquareId">
+            <summary> 
+            主键
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Domain.MarriageSquare.UserId">
+            <summary> 
+            相亲用户ID
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Domain.MarriageSquare.OtherSideUserId">
+            <summary> 
+            对方用户ID
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Domain.MarriageSquare.UpdateDate">
+            <summary> 
+            更新时间
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Domain.MarriageSquare.RoseCount">
+            <summary> 
+            玫瑰数量
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Domain.MarriageSquare.CreateDate">
+            <summary> 
+            创建时间
+            </summary> 
         </member>
         <member name="T:Marriage.Entity.Domain.MarriageSquareUser">
             <summary>

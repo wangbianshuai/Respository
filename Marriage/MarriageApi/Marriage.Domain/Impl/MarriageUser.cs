@@ -189,7 +189,7 @@ namespace Marriage.Domain.Impl
 
             IEntityData marriageSquare1 = _MarriageSquare.GetMarriageSquareUserByUserId(loginUserId, userId, 1);
             IEntityData marriageSquare2 = _MarriageSquare.GetMarriageSquareUserByUserId(loginUserId, userId, 2);
-            if (marriageSquare1 == null || marriageSquare2 == null)
+            if (marriageSquare1 == null && marriageSquare2 == null)
             {
                 if (entity.IsPublic == 1) return entity;
 

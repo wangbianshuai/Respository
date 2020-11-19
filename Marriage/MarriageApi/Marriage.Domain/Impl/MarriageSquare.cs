@@ -79,5 +79,47 @@ namespace Marriage.Domain.Impl
             return queryConditionList;
         }
 
+        /// <summary>
+        /// 获取相亲广场
+        /// </summary>
+        /// <param name="loginUserId"></param>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        public Entity.Domain.MarriageSquare GetMarriageSquareByUserId(Guid loginUserId, Guid userId)
+        {
+            return Parse.IEntityDataTo<Entity.Domain.MarriageSquare>(_MarriageSquare.GetMarriageSquareUserByUserId(loginUserId, userId, 1));
+        }
+
+        /// <summary>
+        /// 更新相亲广场玫瑰数
+        /// </summary>
+        /// <param name="loginUserId"></param>
+        /// <param name="userId"></param>
+        /// <param name="isSend"></param>
+        /// <returns></returns>
+        public bool UpdateMarriageSquareRoseCount(Guid loginUserId, Guid userId, bool isSend)
+        {
+            if (isSend) return _MarriageSquare.UpdateMarriageSquareRoseCount(loginUserId, userId);
+            else return _MarriageSquare.DeleteMarriageSquareByUserId(loginUserId, userId);
+        }
+
+        /// <summary>
+        /// 新增相亲广场
+        /// </summary>
+        /// <param name="loginUserId"></param>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        public bool InsertMarriageSquare(Guid loginUserId, Guid userId)
+        {
+            IEntityData entityData = new EntityData("MarriageSquare");
+
+            entityData.SetValue("UpdateDate", DateTime.Now);
+            entityData.SetValue("RoseCount", 1);
+            entityData.SetValue("UserId", loginUserId);
+            entityData.SetValue("OtherSideUserId", userId);
+            entityData.SetValue("CreateUser", loginUserId);
+
+            return _MarriageSquare.Insert(entityData) != Guid.Empty;
+        }
     }
 }

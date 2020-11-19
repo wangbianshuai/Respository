@@ -11,7 +11,9 @@ const config = {
         //收到玫瑰
         post('searchReceive', 'MarriageSquare/QueryMarriageSquare', 'searchReceive'),
         //互赠玫瑰
-        post('searchMutual', 'MarriageSquare/QueryMarriageSquare', 'searchMutual')
+        post('searchMutual', 'MarriageSquare/QueryMarriageSquare', 'searchMutual'),
+        //赠送玫瑰
+        post('updateMarriageSquareRoseCount', 'MarriageSquare/UpdateMarriageSquareRoseCount', 'updateMarriageSquareRoseCount'),
     ]
 }
 function post(actionName, url, stateName, dataKey) {

@@ -27,11 +27,35 @@ function getInfoView() {
     }
 }
 function getProperties() {
-    return [
+    var properties = [
         getUserInfoView(),
         getPhotoListMenu(),
         getConditionTypeListMenu()
     ]
+
+    if (userType === 1) {
+        properties.push(getRoseListMenu());
+        properties.push(getCancelRoseListMenu());
+    }
+
+    return properties;
+}
+
+function getRoseListMenu() {
+    return {
+        name: 'roseCountListMenu',
+        type: 'RoseCountListMenu',
+        className: 'divExitListMenu',
+    }
+}
+
+function getCancelRoseListMenu() {
+    return {
+        name: 'cancelRoseListMenu',
+        type: 'RoseCountListMenu',
+        isCancel: true,
+        className: 'divExitListMenu',
+    }
 }
 
 function getUserInfoView() {

@@ -34,5 +34,17 @@ namespace Marriage.Api.Controllers
         {
             return await Task.Run(() => _MarriageSquare.QueryMarriageSquare(request));
         }
+
+        /// <summary>
+        /// 更新相亲广场玫瑰数
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        [HttpPost]
+        [SwaggerOpenApiTokenParameter]
+        public async Task<UpdateMarriageSquareRoseCountResponse> UpdateMarriageSquareRoseCount(UpdateMarriageSquareRoseCountRequest request)
+        {
+            return await Task.Run(() => _MarriageSquare.UpdateMarriageSquareRoseCount(request));
+        }
     }
 }

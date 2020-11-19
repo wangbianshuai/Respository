@@ -5,4 +5,4 @@ export default EntityPageInfo("square_detail", "MarriageSquareUser", '连理缘'
     payload.UserId = this.pageData.userId;
     return payload;
   }
-}, ["getUserByUser", 'getUserConditionTypesByUser']);
+}, ["getUserByUser", 'getUserConditionTypesByUser', 'MarriageSquareService/updateMarriageSquareRoseCount']);

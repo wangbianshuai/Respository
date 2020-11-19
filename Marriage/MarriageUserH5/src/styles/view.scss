@@ -227,6 +227,11 @@
             text-align: center !important;
         }
     }
+
+    img{
+        width: toRem(32);
+        height: toRem(32);
+    }
 }
 
 .divConditionListMenu{

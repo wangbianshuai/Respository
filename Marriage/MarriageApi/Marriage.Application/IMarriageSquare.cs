@@ -16,5 +16,10 @@ namespace Marriage.Application
         /// <param name="request"></param>
         /// <returns></returns>
         QueryMarriageSquareResponse QueryMarriageSquare(QueryMarriageSquareRequest request);
+
+        /// <summary>
+        /// 更新相亲广场玫瑰数
+        /// </summary>
+        UpdateMarriageSquareRoseCountResponse UpdateMarriageSquareRoseCount(UpdateMarriageSquareRoseCountRequest request);
     }
 }
