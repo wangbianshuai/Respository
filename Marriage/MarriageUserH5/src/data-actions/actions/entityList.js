@@ -18,7 +18,7 @@ export default class EntityList extends BaseIndex {
         }
     }
 
-    searchQuery(id, actionType, data) {
+    searchQuery(id, actionType, data, actionName) {
         const payload = { action: this.getAction(id, actionType, false) };
         const { pageSize, pageIndex, conditions } = data;
         const { WhereFields } = data.queryInfo
@@ -30,7 +30,7 @@ export default class EntityList extends BaseIndex {
         payload.pageSize = pageSize;
         payload.pageIndex = pageIndex
 
-        this.dvaActions.dispatch(this.serviceName, 'searchQuery', payload);
+        this.dvaActions.dispatch(this.serviceName, actionName || 'searchQuery', payload);
     }
 
     setsearchQuery(id, actionType, data) {

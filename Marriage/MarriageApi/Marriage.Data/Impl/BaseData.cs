@@ -118,14 +118,15 @@ namespace Marriage.Data.Impl
 
             queryInfo.OrderByList.ForEach(d =>
             {
-                orderList.Add(string.Format("{0} {1}", GetPropertyName(d.Name), d.IsDesc ? "desc" : "asc"));
+                orderList.Add(string.Format("{0} {1}", GetPropertyName(d.Name, d.PropertyName), d.IsDesc ? "desc" : "asc"));
             });
 
             return string.Format("order by {0}", string.Join(",", orderList));
         }
 
-        string GetPropertyName(string name)
+        string GetPropertyName(string name, string propertyName)
         {
+            if (!string.IsNullOrEmpty(propertyName)) return propertyName;
             return this.EntityType.Properties.Where(w => w.Name == name).FirstOrDefault().Name;
         }
 
@@ -159,7 +160,7 @@ namespace Marriage.Data.Impl
                     {
                         string parameterName = c2.ParameterName ?? "@" + c2.Name;
                         parameterList.Add(this.InParameter(parameterName, c2.Value));
-                        whereList.Add(string.Format("{0} {1} {2}", c2.Name, c2.OpearteLogic, parameterName));
+                        orWheres.Add(string.Format("{0} {1} {2}", c2.Name, c2.OpearteLogic, parameterName));
                     });
 
                     whereList.Add(string.Format("({0})", string.Join(" or ", orWheres)));

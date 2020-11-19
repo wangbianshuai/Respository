@@ -136,7 +136,7 @@ namespace Marriage.Domain.Impl
 
         List<Entity.Data.OrderByType> GetOrderByList2(Entity.Application.MarriageArrange.QueryMarriageArrangeByMatchmakerRequest request)
         {
-            Entity.Data.OrderByType orderBy = new Entity.Data.OrderByType("UpdateDate2", "desc");
+            Entity.Data.OrderByType orderBy = new Entity.Data.OrderByType("", "desc", "UpdateDate2");
 
             return new List<Entity.Data.OrderByType>() { orderBy };
         }
@@ -144,6 +144,13 @@ namespace Marriage.Domain.Impl
         List<Entity.Data.QueryCondition> GetConditionList2(Entity.Application.MarriageArrange.QueryMarriageArrangeByMatchmakerRequest request)
         {
             List<Entity.Data.QueryCondition> queryConditionList = new List<Entity.Data.QueryCondition>();
+
+            string status = "0";
+            if (request.Type == 1) status = "1";
+            else if (request.Type == 2) status = "3,4,5";
+            else if (request.Type == 3) status = "2,6,7";
+
+            queryConditionList.Add(new Entity.Data.QueryCondition("Status", "in", status));
 
             Guid matchmakerId = Guid.Parse(request.LoginUserId);
 

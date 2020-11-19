@@ -53,15 +53,21 @@ namespace Marriage.Entity.Data
         /// 类型，asc 或 desc
         /// </summary>
         public bool IsDesc { get; set; }
+        /// <summary>
+        /// 属性名
+        /// </summary>
+        public string PropertyName { get; set; }
 
         /// <summary>
         /// 构造函数
         /// </summary>
         /// <param name="name"></param>
         /// <param name="type"></param>
-        public OrderByType(string name, string type)
+        /// <param name="propertyName"></param>
+        public OrderByType(string name, string type, string propertyName = null)
         {
             this.Name = name;
+            this.PropertyName = propertyName;
             this.IsDesc = !string.IsNullOrEmpty(type) && type.ToLower() == "desc";
         }
     }

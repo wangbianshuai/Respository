@@ -3052,12 +3052,18 @@
             类型，asc 或 desc
             </summary>
         </member>
-        <member name="M:Marriage.Entity.Data.OrderByType.#ctor(System.String,System.String)">
+        <member name="P:Marriage.Entity.Data.OrderByType.PropertyName">
+            <summary>
+            属性名
+            </summary>
+        </member>
+        <member name="M:Marriage.Entity.Data.OrderByType.#ctor(System.String,System.String,System.String)">
             <summary>
             构造函数
             </summary>
             <param name="name"></param>
             <param name="type"></param>
+            <param name="propertyName"></param>
         </member>
         <member name="T:Marriage.Entity.Data.QueryCondition">
             <summary>

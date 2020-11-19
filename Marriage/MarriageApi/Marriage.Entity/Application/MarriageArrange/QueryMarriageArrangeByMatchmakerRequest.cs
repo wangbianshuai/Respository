@@ -70,7 +70,7 @@ namespace Marriage.Entity.Application.MarriageArrange
         /// <summary>
         /// 男方年龄
         /// </summary>
-        public string ManAge { get; set; }
+        public int ManAge { get; set; }
         /// <summary>
         /// 女方头像
         /// </summary>
@@ -78,6 +78,6 @@ namespace Marriage.Entity.Application.MarriageArrange
         /// <summary>
         /// 女方年龄
         /// </summary>
-        public string WomanAge { get; set; }
+        public int WomanAge { get; set; }
     }
 }
