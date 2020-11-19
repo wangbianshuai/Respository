@@ -51,7 +51,7 @@ const uploadImage = (e, pageAxis, value, setValue) => {
 };
 
 const renderItem = (data, i, isEdit) => {
-  const style = i / 2 !== 0 ? { borderLeft: '1px solid #ddd' } : undefined;
+  const style = (i + 1) % 2 !== 0 ? { borderRight: '1px solid #ddd' } : undefined;
   return <div className={styles.divItem} style={style} key={data.PhotoId}>
     {isEdit && <div className={styles.divImage}><img src={data.PhotoUrl} alt='' /></div>}
     {!isEdit && <a href={data.PhotoUrl} rel="noreferrer" target='_blank'>
