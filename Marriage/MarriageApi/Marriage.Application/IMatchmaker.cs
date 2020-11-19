@@ -47,5 +47,10 @@ namespace Marriage.Application
         /// 更新红娘信息
         /// </summary>
         UpdateMatchmakerInfoResponse UpdateMatchmakerInfo(UpdateMatchmakerInfoRequest request);
+
+        /// <summary>
+        /// 获取平台红娘
+        /// </summary>
+        GetAppMatchmakerResponse GetAppMatchmaker(GetAppMatchmakerRequest request);
     }
 }

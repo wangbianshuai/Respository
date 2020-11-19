@@ -1269,6 +1269,61 @@
             更新红娘下用户状态响应 
             </summary>
         </member>
+        <member name="T:Marriage.Entity.Application.Matchmaker.GetAppMatchmakerRequest">
+            <summary>
+            获取平台红娘请求
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Application.Matchmaker.GetAppMatchmakerRequest.UserId">
+            <summary>
+            用户ID
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Application.Matchmaker.GetAppMatchmakerRequest.MarriageArrangeId">
+            <summary>
+            相亲安排Id
+            </summary>
+        </member>
+        <member name="T:Marriage.Entity.Application.Matchmaker.GetAppMatchmakerResponse">
+            <summary>
+            获取平台红娘响应
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Application.Matchmaker.GetAppMatchmakerResponse.MatchmakerInfo">
+            <summary>
+            红娘信息
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Application.Matchmaker.GetAppMatchmakerResponse.Name">
+            <summary> 
+            名称
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Application.Matchmaker.GetAppMatchmakerResponse.City">
+            <summary> 
+            微信用户所在城市
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Application.Matchmaker.GetAppMatchmakerResponse.Province">
+            <summary> 
+            微信用户所在省份
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Application.Matchmaker.GetAppMatchmakerResponse.Address">
+            <summary> 
+            地址
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Application.Matchmaker.GetAppMatchmakerResponse.Features">
+            <summary> 
+            特点说明
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Application.Matchmaker.GetAppMatchmakerResponse.Remark">
+            <summary> 
+            备注
+            </summary> 
+        </member>
         <member name="T:Marriage.Entity.Application.Matchmaker.GetMatchmakerByOpenIdRequest">
             <summary>
             以微信OpenId获取红娘请求
@@ -3186,6 +3241,131 @@
         <member name="P:Marriage.Entity.Domain.DictionaryConfig.TypeName">
             <summary> 
             类型名
+            </summary> 
+        </member>
+        <member name="T:Marriage.Entity.Domain.MarriageArrange">
+            <summary>
+            相亲安排
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Domain.MarriageArrange.MarriageArrangeId">
+            <summary> 
+            主键
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Domain.MarriageArrange.ArrangeId">
+            <summary>
+            编号
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Domain.MarriageArrange.ManUserId">
+            <summary> 
+            男生ID
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Domain.MarriageArrange.WomanUserId">
+            <summary> 
+            女生ID
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Domain.MarriageArrange.ManMatchmakerId">
+            <summary> 
+            男生红娘
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Domain.MarriageArrange.WomanMatchmakerId">
+            <summary> 
+            女生红娘
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Domain.MarriageArrange.AppMatchmakerId">
+            <summary> 
+            平台红娘
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Domain.MarriageArrange.MarriageDate">
+            <summary> 
+            相亲时间
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Domain.MarriageArrange.MarriageAddress">
+            <summary> 
+            相亲地点
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Domain.MarriageArrange.MarriageContent">
+            <summary> 
+            相亲情况
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Domain.MarriageArrange.Status">
+            <summary> 
+            状态：0：待相亲，1：有意向，2：无意向，3：牵手成功，4：订婚，5：结婚，6：分手，7：取消
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Domain.MarriageArrange.SourceType">
+            <summary> 
+            来源类型：1：相亲匹配，2：相亲广场，3：相亲牵线
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Domain.MarriageArrange.IsManAgree">
+            <summary> 
+            男生是否同意
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Domain.MarriageArrange.NoManAgreeRemark">
+            <summary> 
+            男生不同意原因
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Domain.MarriageArrange.IsWomanAgree">
+            <summary> 
+            女生是否同意
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Domain.MarriageArrange.NoWomanAgreeRemark">
+            <summary> 
+            女生不同意原因
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Domain.MarriageArrange.CancelReason">
+            <summary>
+            取消原因
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Domain.MarriageArrange.FeeDate">
+            <summary> 
+            费用日期
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Domain.MarriageArrange.BookMarryDate">
+            <summary> 
+            订婚日期
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Domain.MarriageArrange.MarryDate">
+            <summary> 
+            结婚日期
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Domain.MarriageArrange.BreakUpDate">
+            <summary> 
+            分手日期
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Domain.MarriageArrange.BreakUpReason">
+            <summary> 
+            分手原因
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Domain.MarriageArrange.Amount">
+            <summary> 
+            相亲总费用
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Domain.MarriageArrange.Remark">
+            <summary> 
+            备注
             </summary> 
         </member>
         <member name="T:Marriage.Entity.Domain.MarriageArrangeUser">

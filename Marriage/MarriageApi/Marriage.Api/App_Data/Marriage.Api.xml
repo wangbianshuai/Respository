@@ -263,6 +263,13 @@
             <param name="request"></param>
             <returns></returns>
         </member>
+        <member name="M:Marriage.Api.Controllers.MatchmakerController.GetAppMatchmaker(Marriage.Entity.Application.Matchmaker.GetAppMatchmakerRequest)">
+            <summary>
+            获取平台红娘
+            </summary>
+            <param name="request"></param>
+            <returns></returns>
+        </member>
         <member name="T:Marriage.Api.Controllers.WxUserController">
             <summary>
             微信用户

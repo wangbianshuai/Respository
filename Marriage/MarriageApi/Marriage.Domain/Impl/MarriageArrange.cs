@@ -79,5 +79,14 @@ namespace Marriage.Domain.Impl
             return queryConditionList;
         }
 
+        /// <summary>
+        /// 以主键获取相亲安排
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public Entity.Domain.MarriageArrange GetMarriageArrange(Guid id)
+        {
+            return Parse.IEntityDataTo<Entity.Domain.MarriageArrange>(_MarriageArrange.GetEntityDataById(id));
+        }
     }
 }

@@ -24,5 +24,12 @@ namespace Marriage.Domain
         /// <param name="sex"></param>
         /// <returns></returns>
         Entity.Application.PageInfo QueryMarriageArrangePageInfo(Entity.Application.MarriageArrange.QueryMarriageArrangeRequest request, byte sex);
+
+        /// <summary>
+        /// 以主键获取相亲安排
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        Entity.Domain.MarriageArrange GetMarriageArrange(Guid id);
     }
 }

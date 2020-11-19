@@ -37,5 +37,22 @@ namespace Marriage.Data.Impl
 
             return this.SelectEntity(query);
         }
+
+        /// <summary>
+        /// 以主键获取实体数据
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public IEntityData GetEntityDataById(Guid id)
+        {
+            IQuery query = new Query(this.EntityType.TableName);
+
+            List<IDbDataParameter> parameterList = new List<IDbDataParameter>();
+            parameterList.Add(this.InParameter("@MarriageArrangeId", id));
+
+            query.Where("where IsDelete=0 and MarriageArrangeId=@MarriageArrangeId", parameterList);
+
+            return this.SelectEntity(query);
+        }
     }
 }

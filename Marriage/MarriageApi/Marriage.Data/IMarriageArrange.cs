@@ -32,5 +32,12 @@ namespace Marriage.Data
         /// <param name="sex"></param>
         /// <returns></returns>
         IEntityData GetMarriageArrangeUserByUserId(Guid loginUserId, Guid userId, byte sex);
+
+        /// <summary>
+        /// 以主键获取实体数据
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        IEntityData GetEntityDataById(Guid id);
     }
 }
