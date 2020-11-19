@@ -16,5 +16,10 @@ namespace Marriage.Application
         /// <param name="request"></param>
         /// <returns></returns>
         QueryMarriageArrangeResponse QueryMarriageArrange(QueryMarriageArrangeRequest request);
+
+        /// <summary>
+        /// 获取相亲安排
+        /// </summary>
+        GetMarriageArrangeByUserResponse GetMarriageArrangeByUser(GetMarriageArrangeByUserRequest request);
     }
 }

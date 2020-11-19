@@ -26,6 +26,13 @@
             <param name="request"></param>
             <returns></returns>
         </member>
+        <member name="M:Marriage.Api.Controllers.MarriageArrangeController.GetMarriageArrangeByUser(Marriage.Entity.Application.MarriageArrange.GetMarriageArrangeByUserRequest)">
+            <summary>
+            以用户获取相亲安排
+            </summary>
+            <param name="request"></param>
+            <returns></returns>
+        </member>
         <member name="T:Marriage.Api.Controllers.MarriageSquareController">
             <summary>
             相亲广场

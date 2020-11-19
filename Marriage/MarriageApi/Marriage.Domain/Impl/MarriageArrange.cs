@@ -88,5 +88,15 @@ namespace Marriage.Domain.Impl
         {
             return Parse.IEntityDataTo<Entity.Domain.MarriageArrange>(_MarriageArrange.GetEntityDataById(id));
         }
+
+        /// <summary>
+        /// 以主键获取相亲安排
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public Entity.Domain.MarriageArrange GetViewMarriageArrange(Guid id)
+        {
+            return Parse.IEntityDataTo<Entity.Domain.MarriageArrange>(_MarriageArrange.GetViewEntityDataById(id));
+        }
     }
 }

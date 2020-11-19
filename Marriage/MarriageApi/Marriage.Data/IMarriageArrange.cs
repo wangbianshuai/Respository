@@ -39,5 +39,12 @@ namespace Marriage.Data
         /// <param name="id"></param>
         /// <returns></returns>
         IEntityData GetEntityDataById(Guid id);
+
+        /// <summary>
+        /// 以主键获取视图实体数据
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        IEntityData GetViewEntityDataById(Guid id);
     }
 }

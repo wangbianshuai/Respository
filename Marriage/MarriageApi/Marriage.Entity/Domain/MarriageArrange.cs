@@ -105,5 +105,18 @@ namespace Marriage.Entity.Domain
         /// 备注
         /// </summary> 
         public string Remark { get; set; }
+
+        /// <summary>
+        /// 平台红娘
+        /// </summary>
+        public string AppMatchmakerName { get; set; }
+        /// <summary>
+        /// 男方
+        /// </summary>
+        public string ManUserName { get; set; }
+        /// <summary>
+        /// 女方
+        /// </summary>
+        public string WomanUserName { get; set; }
     }
 }

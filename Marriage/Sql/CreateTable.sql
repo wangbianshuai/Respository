@@ -396,6 +396,23 @@ left join t_AppUser g on a.CreateUser=g.CreateUser
 where a.IsDelete=0
 go
 
+if exists(select * from sysobjects where name='v_MarriageArrange2')
+drop view v_MarriageArrange2
+go
+
+create view v_MarriageArrange2
+as
+select a.*,
+b.Name AppMatchmakerName,
+e.Name ManUserName,
+f.Name WomanUserName
+from t_MarriageArrange a
+left join t_Matchmaker b on a.AppMatchmakerId=b.MatchmakerId
+left join t_MarriageUser e on a.ManUserId=e.UserId
+left join t_MarriageUser f on a.WomanUserId=f.UserId
+where a.IsDelete=0
+go
+
 if exists(select * from sysobjects where name='v_MarriageArrangeUser1')
 drop view v_MarriageArrangeUser1
 go

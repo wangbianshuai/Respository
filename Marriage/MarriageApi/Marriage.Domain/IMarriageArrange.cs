@@ -31,5 +31,12 @@ namespace Marriage.Domain
         /// <param name="id"></param>
         /// <returns></returns>
         Entity.Domain.MarriageArrange GetMarriageArrange(Guid id);
+
+        /// <summary>
+        /// 以主键获取相亲安排
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        Entity.Domain.MarriageArrange GetViewMarriageArrange(Guid id);
     }
 }

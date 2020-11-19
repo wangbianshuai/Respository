@@ -47,6 +47,86 @@ namespace Marriage.Application.Impl
         }
 
         /// <summary>
+        /// 获取相亲安排
+        /// </summary>
+        public GetMarriageArrangeByUserResponse GetMarriageArrangeByUser(GetMarriageArrangeByUserRequest request)
+        {
+            string title = "获取相亲安排";
+            string requestContent = Utility.Common.ToJson(request);
+            GetMarriageArrangeByUserResponse response = new GetMarriageArrangeByUserResponse();
+
+            this.InitMessage();
+
+            this.IsNullRequest(request, response);
+
+            //1、获取相亲安排
+            int stepNo = 1;
+            var marriageArrange = GetMarriageArrange(stepNo, request.MarriageArrangeId, response);
+
+            //2、以用户获取相亲安排
+            stepNo += 1;
+            GetMarriageArrangeByUser(stepNo, marriageArrange, request, response);
+
+            //2、执行结束
+            this.ExecEnd(response);
+
+            //日志记录
+            return this.SetReturnResponse<GetMarriageArrangeByUserResponse>(title, "GetMarriageArrangeByUser", requestContent, response);
+
+        }
+
+        /// <summary>
+        /// 以用户获取相亲安排
+        /// </summary>
+        /// <param name="stepNo"></param>
+        /// <param name="marriageArrange"></param>
+        /// <param name="request"></param>
+        /// <param name="response"></param>
+        /// <returns></returns>
+        private Entity.Domain.MarriageArrange GetMarriageArrangeByUser(int stepNo, Entity.Domain.MarriageArrange entity, GetMarriageArrangeByUserRequest request, GetMarriageArrangeByUserResponse response)
+        {
+            Func<Entity.Domain.MarriageArrange> execStep = () =>
+            {
+                if (entity != null)
+                {
+                    Guid loginUserId = Guid.Parse(request.LoginUserId);
+
+                    bool blSucceed = entity.ManUserId == loginUserId || entity.WomanUserId == loginUserId;
+                    if (!blSucceed) return null;
+
+                    response.AppMatchmakerName = entity.AppMatchmakerName;
+                    response.ManUserName = entity.ManUserName;
+                    response.MarriageAddress = entity.MarriageAddress;
+                    response.MarriageArrangeId = entity.MarriageArrangeId;
+                    response.MarriageContent = entity.MarriageContent;
+                    response.MarriageDate = entity.MarriageDate.ToString("yyyy-MM-dd");
+                    response.WomanUserName = entity.WomanUserName;
+                }
+                return entity;
+            };
+
+            return this.GetEntityData<Entity.Domain.MarriageArrange>(stepNo, "以用户获取相亲安排", "GetMarriageArrangeByUser", response, execStep);
+        }
+
+
+        /// <summary>
+        /// 以主键获取相亲安排
+        /// </summary>
+        /// <param name="stepNo"></param>
+        /// <param name="marriageArrangeId"></param>
+        /// <param name="response"></param>
+        /// <returns></returns>
+        private Entity.Domain.MarriageArrange GetMarriageArrange(int stepNo, Guid marriageArrangeId, IResponse response)
+        {
+            Func<Entity.Domain.MarriageArrange> execStep = () =>
+            {
+                return _MarriageArrange.GetViewMarriageArrange(marriageArrangeId);
+            };
+
+            return this.GetEntityData<Entity.Domain.MarriageArrange>(stepNo, "以主键获取相亲安排", "GetMarriageArrange", response, execStep);
+        }
+
+        /// <summary>
         /// 查询相亲安排
         /// </summary>
         /// <param name="stepNo"></param>

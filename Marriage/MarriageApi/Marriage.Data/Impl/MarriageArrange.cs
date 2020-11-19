@@ -54,5 +54,22 @@ namespace Marriage.Data.Impl
 
             return this.SelectEntity(query);
         }
+
+        /// <summary>
+        /// 以主键获取视图实体数据
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public IEntityData GetViewEntityDataById(Guid id)
+        {
+            IQuery query = new Query("v_MarriageArrange2");
+
+            List<IDbDataParameter> parameterList = new List<IDbDataParameter>();
+            parameterList.Add(this.InParameter("@MarriageArrangeId", id));
+
+            query.Where("where MarriageArrangeId=@MarriageArrangeId", parameterList);
+
+            return this.SelectEntity(query);
+        }
     }
 }

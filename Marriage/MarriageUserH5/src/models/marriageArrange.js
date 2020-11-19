@@ -11,7 +11,9 @@ const config = {
         //牵手成功
         post('searchMarriage', 'MarriageArrange/QueryMarriageArrange', 'searchMarriage'),
         //无意向
-        post('searchDislike', 'MarriageArrange/QueryMarriageArrange', 'searchDislike')
+        post('searchDislike', 'MarriageArrange/QueryMarriageArrange', 'searchDislike'),
+        //获取相亲安排
+        post('getEntityData', 'MarriageArrange/GetMarriageArrangeByUser', 'getEntityData'),
     ]
 }
 function post(actionName, url, stateName, dataKey) {
