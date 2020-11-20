@@ -37,7 +37,7 @@ function getMarriageArrangeInfoView(name) {
   return {
     name,
     type: 'topMarriageArrangeInfo',
-    detailUrl: '/marriage/userdetail?userId=#{UserId}&marriageArrangeId=#{marriageArrangeId}'
+    detailUrl: '/marriage/userDetail?userId=#{UserId}&marriageArrangeId=#{marriageArrangeId}'
   }
 }
 
