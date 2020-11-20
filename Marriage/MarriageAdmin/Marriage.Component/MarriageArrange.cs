@@ -109,20 +109,20 @@ namespace Marriage.Component
             Guid womanMatchmakerId = entityData.GetValue<Guid>("WomanMatchmakerId");
             Guid appMatchmakerId = entityData.GetValue<Guid>("AppMatchmakerId");
 
-            SetMarriageFee(entityData,manMatchmakerId, detailList, "Man");
-            SetMarriageFee(entityData,womanMatchmakerId, detailList, "Woman");
-            SetMarriageFee(entityData,appMatchmakerId, detailList, "App");
+            SetMarriageFee(entityData, manMatchmakerId, detailList, 1, "Man");
+            SetMarriageFee(entityData, womanMatchmakerId, detailList, 2, "Woman");
+            SetMarriageFee(entityData, appMatchmakerId, detailList, 3, "App");
 
             Dictionary<string, object> dict = new Dictionary<string, object>();
             dict.Add("MarriageArrange", entityData);
             return dict;
         }
 
-        void SetMarriageFee(IEntityData entityData, Guid matchmakerId, List<IEntityData> detailList, string type)
+        void SetMarriageFee(IEntityData entityData, Guid matchmakerId, List<IEntityData> detailList, byte matchmakerType, string type)
         {
             if (detailList.Count == 0) return;
 
-            var detail = detailList.Where(w => w.GetValue<Guid>("MatchMakerId") == matchmakerId).FirstOrDefault();
+            var detail = detailList.Where(w => w.GetValue<Guid>("MatchMakerId") == matchmakerId && w.GetValue<byte>("MatchmakerType") == matchmakerType).FirstOrDefault();
             if (detail == null) return;
 
             entityData.SetValue(type + "Amount", detail.GetValue("Amount"));

@@ -5,6 +5,7 @@ import Resources from './resources';
 import MarriageUserPhoto from './marriageUserPhoto';
 import Matchmaker from './matchmaker';
 import MarriageArrange from './marriageArrange';
+import MarriageFee from './marriageFee';
 
 export default [
     PageConfig,
@@ -13,5 +14,6 @@ export default [
     Resources,
     MarriageUserPhoto,
     Matchmaker,
-    MarriageArrange
+    MarriageArrange,
+    MarriageFee
 ]

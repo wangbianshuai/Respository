@@ -17,6 +17,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Serialization;
 
 namespace Marriage.Api
@@ -53,6 +54,15 @@ namespace Marriage.Api
             services.AddMvc().AddJsonOptions(options =>
             {
                 options.JsonSerializerOptions.PropertyNamingPolicy = null;
+                options.JsonSerializerOptions.Converters.Add(new Code.BoolJsonConverter());
+                options.JsonSerializerOptions.Converters.Add(new Code.ByteJsonConverter());
+                options.JsonSerializerOptions.Converters.Add(new Code.ShortJsonConverter());
+                options.JsonSerializerOptions.Converters.Add(new Code.IntJsonConverter());
+                options.JsonSerializerOptions.Converters.Add(new Code.LongJsonConverter());
+                options.JsonSerializerOptions.Converters.Add(new Code.DoubleJsonConverter());
+                options.JsonSerializerOptions.Converters.Add(new Code.FloatJsonConverter());
+                options.JsonSerializerOptions.Converters.Add(new Code.DecimalJsonConverter());
+                options.JsonSerializerOptions.Converters.Add(new Code.StringJsonConverter());
             });
 
             services.AddSwaggerGen(options =>

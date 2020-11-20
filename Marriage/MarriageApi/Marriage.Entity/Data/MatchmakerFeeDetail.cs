@@ -20,10 +20,14 @@ namespace Marriage.Entity.Data
         /// 红娘Id
         /// </summary> 
         public Guid MatchmakerId { get; set; }
+        /// <summary>
+        /// 红娘类型，1：男方，2：女方，3：平台
+        /// </summary>
+        public byte MatchmakerType { get; set; }
         /// <summary> 
-        /// 相亲成功Id
+        /// 相亲安排Id
         /// </summary> 
-        public Guid MarriageSccuessId { get; set; }
+        public Guid MarriageArrangeId { get; set; }
         /// <summary> 
         /// 费用日期
         /// </summary> 
@@ -52,14 +56,6 @@ namespace Marriage.Entity.Data
         /// 创建时间
         /// </summary> 
         public DateTime CreateDate { get; set; }
-        /// <summary> 
-        /// 更新人
-        /// </summary> 
-        public Guid UpdateUser { get; set; }
-        /// <summary> 
-        /// 更新时间
-        /// </summary> 
-        public DateTime UpdateDate { get; set; }
         /// <summary> 
         /// 行版本
         /// </summary> 

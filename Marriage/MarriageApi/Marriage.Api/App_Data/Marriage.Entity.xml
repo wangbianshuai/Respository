@@ -364,6 +364,181 @@
             更新相亲安排响应 
             </summary>
         </member>
+        <member name="T:Marriage.Entity.Application.MarriageFee.GetMarriageFeeRequest">
+            <summary>
+            获取相亲费用请求
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageFee.GetMarriageFeeRequest.MarriageArrangeId">
+            <summary>
+            相亲安排Id
+            </summary>
+        </member>
+        <member name="T:Marriage.Entity.Application.MarriageFee.GetMarriageFeeResponse">
+            <summary>
+            获取相亲费用响应
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageFee.GetMarriageFeeResponse.MarriageArrangeId">
+            <summary>
+            主键
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageFee.GetMarriageFeeResponse.ManMatchmakerName">
+            <summary>
+            男方红娘
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageFee.GetMarriageFeeResponse.ManAmount">
+            <summary>
+            男方红娘金额
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageFee.GetMarriageFeeResponse.ManAppAmount">
+            <summary>
+            男方平台金额
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageFee.GetMarriageFeeResponse.ManRemark">
+            <summary>
+            男方备注
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageFee.GetMarriageFeeResponse.WomanMatchmakerName">
+            <summary>
+            女方红娘
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageFee.GetMarriageFeeResponse.WomanAmount">
+            <summary>
+            女方红娘金额
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageFee.GetMarriageFeeResponse.WomanAppAmount">
+            <summary>
+            女方平台金额
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageFee.GetMarriageFeeResponse.WomanRemark">
+            <summary>
+            女方备注
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageFee.GetMarriageFeeResponse.AppMatchmakerName">
+            <summary>
+            平台红娘
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageFee.GetMarriageFeeResponse.AppAmount">
+            <summary>
+            平台红娘金额
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageFee.GetMarriageFeeResponse.AppAppAmount">
+            <summary>
+            平台方平台金额
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageFee.GetMarriageFeeResponse.AppRemark">
+            <summary>
+            平台方备注
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageFee.GetMarriageFeeResponse.Amount">
+            <summary>
+            总金额
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageFee.GetMarriageFeeResponse.FeeDate">
+            <summary>
+            费用日期
+            </summary>
+        </member>
+        <member name="T:Marriage.Entity.Application.MarriageFee.SaveMarriageFeeRequest">
+            <summary>
+            保存相亲费用请求
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageFee.SaveMarriageFeeRequest.MarriageArrangeId">
+            <summary>
+            主键
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageFee.SaveMarriageFeeRequest.ManMatchmakerName">
+            <summary>
+            男方红娘
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageFee.SaveMarriageFeeRequest.ManAmount">
+            <summary>
+            男方红娘金额
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageFee.SaveMarriageFeeRequest.ManAppAmount">
+            <summary>
+            男方平台金额
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageFee.SaveMarriageFeeRequest.ManRemark">
+            <summary>
+            男方备注
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageFee.SaveMarriageFeeRequest.WomanMatchmakerName">
+            <summary>
+            女方红娘
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageFee.SaveMarriageFeeRequest.WomanAmount">
+            <summary>
+            女方红娘金额
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageFee.SaveMarriageFeeRequest.WomanAppAmount">
+            <summary>
+            女方平台金额
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageFee.SaveMarriageFeeRequest.WomanRemark">
+            <summary>
+            女方备注
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageFee.SaveMarriageFeeRequest.AppMatchmakerName">
+            <summary>
+            平台红娘
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageFee.SaveMarriageFeeRequest.AppAmount">
+            <summary>
+            平台红娘金额
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageFee.SaveMarriageFeeRequest.AppAppAmount">
+            <summary>
+            平台方平台金额
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageFee.SaveMarriageFeeRequest.AppRemark">
+            <summary>
+            平台方备注
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageFee.SaveMarriageFeeRequest.Amount">
+            <summary>
+            总金额
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageFee.SaveMarriageFeeRequest.FeeDate">
+            <summary>
+            费用日期
+            </summary>
+        </member>
+        <member name="T:Marriage.Entity.Application.MarriageFee.SaveMarriageFeeResponse">
+            <summary>
+            保存相亲费用响应
+            </summary>
+        </member>
         <member name="T:Marriage.Entity.Application.MarriageUserPhoto.DeleteUserPhotosRequest">
             <summary>
             删除用户照片请求
@@ -3162,9 +3337,14 @@
             红娘Id
             </summary> 
         </member>
-        <member name="P:Marriage.Entity.Data.MatchmakerFeeDetail.MarriageSccuessId">
+        <member name="P:Marriage.Entity.Data.MatchmakerFeeDetail.MatchmakerType">
+            <summary>
+            红娘类型，1：男方，2：女方，3：平台
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Data.MatchmakerFeeDetail.MarriageArrangeId">
             <summary> 
-            相亲成功Id
+            相亲安排Id
             </summary> 
         </member>
         <member name="P:Marriage.Entity.Data.MatchmakerFeeDetail.FeeDate">
@@ -3200,16 +3380,6 @@
         <member name="P:Marriage.Entity.Data.MatchmakerFeeDetail.CreateDate">
             <summary> 
             创建时间
-            </summary> 
-        </member>
-        <member name="P:Marriage.Entity.Data.MatchmakerFeeDetail.UpdateUser">
-            <summary> 
-            更新人
-            </summary> 
-        </member>
-        <member name="P:Marriage.Entity.Data.MatchmakerFeeDetail.UpdateDate">
-            <summary> 
-            更新时间
             </summary> 
         </member>
         <member name="P:Marriage.Entity.Data.MatchmakerFeeDetail.RowVersion">
@@ -3823,6 +3993,106 @@
             <summary>
             年龄
             </summary>
+        </member>
+        <member name="T:Marriage.Entity.Domain.MarriageFee">
+            <summary>
+            相亲费用
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Domain.MarriageFee.MarriageArrangeId">
+            <summary>
+            主键
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Domain.MarriageFee.ManMatchmakerName">
+            <summary>
+            男方红娘
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Domain.MarriageFee.ManAmount">
+            <summary>
+            男方红娘金额
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Domain.MarriageFee.ManAppAmount">
+            <summary>
+            男方平台金额
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Domain.MarriageFee.ManRemark">
+            <summary>
+            男方备注
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Domain.MarriageFee.WomanMatchmakerName">
+            <summary>
+            女方红娘
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Domain.MarriageFee.WomanAmount">
+            <summary>
+            女方红娘金额
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Domain.MarriageFee.WomanAppAmount">
+            <summary>
+            女方平台金额
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Domain.MarriageFee.WomanRemark">
+            <summary>
+            女方备注
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Domain.MarriageFee.AppMatchmakerName">
+            <summary>
+            平台红娘
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Domain.MarriageFee.AppAmount">
+            <summary>
+            平台红娘金额
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Domain.MarriageFee.AppAppAmount">
+            <summary>
+            平台方平台金额
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Domain.MarriageFee.AppRemark">
+            <summary>
+            平台方备注
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Domain.MarriageFee.Amount">
+            <summary>
+            总金额
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Domain.MarriageFee.FeeDate">
+            <summary>
+            费用日期
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Domain.MarriageFee.UpdateUser">
+            <summary>
+            更新人
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Domain.MarriageFee.ManMatchmakerId">
+            <summary> 
+            男生红娘
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Domain.MarriageFee.WomanMatchmakerId">
+            <summary> 
+            女生红娘
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Domain.MarriageFee.AppMatchmakerId">
+            <summary> 
+            平台红娘
+            </summary> 
         </member>
         <member name="T:Marriage.Entity.Domain.MarriageSquare">
             <summary>

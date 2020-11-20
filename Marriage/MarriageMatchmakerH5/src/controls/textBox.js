@@ -71,7 +71,7 @@ export default (props) => {
 
     if (!isVisible) return null;
 
-    const { label, extra, style, clear, isLabelItem, isRed, rows, isValueVisible } = property;
+    const { label, extra, style, clear, isLabelItem, isRed, rows, isValueVisible, labelNumber } = property;
     let isNullable = property.isNullable
 
     if (isValueVisible && !value) return null;
@@ -136,6 +136,7 @@ export default (props) => {
                 editable={!isReadOnly}
                 disabled={disabled && !isReadOnly}
                 clear={clear2}
+                labelNumber={labelNumber}
                 title={<span>{label}{isRed2 ? <span style={{ color: 'red' }}>*</span> : ''}</span>}
                 value={value} />
             );
@@ -150,6 +151,7 @@ export default (props) => {
             type={type}
             clear={clear2}
             extra={extra}
+            labelNumber={labelNumber}
             value={value}>{label}{isRed2 ? <span style={{ color: 'red' }}>*</span> : ''}</InputItem>
         );
     }

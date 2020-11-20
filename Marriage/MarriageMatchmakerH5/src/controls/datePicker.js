@@ -60,7 +60,7 @@ export default (props) => {
 
     const className = Base.getClassName(property, styles);
 
-    const { style, label, isShowTime, maxLength, placeholder, isNullable, isRed, minYear } = property;
+    const { style, label, isShowTime, maxLength, placeholder, isNullable, isRed, minYear, labelNumber } = property;
 
     const mv = getMomentValue(property, value);
 
@@ -68,6 +68,7 @@ export default (props) => {
         return (<InputItem className={className} style={style}
             editable={!isReadOnly}
             type='text'
+            labelNumber={labelNumber}
             value={value}>{label}</InputItem>
         );
     }

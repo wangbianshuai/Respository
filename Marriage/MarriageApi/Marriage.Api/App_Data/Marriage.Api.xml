@@ -61,6 +61,25 @@
             <param name="request"></param>
             <returns></returns>
         </member>
+        <member name="T:Marriage.Api.Controllers.MarriageFeeController">
+            <summary>
+            相亲费用
+            </summary>
+        </member>
+        <member name="M:Marriage.Api.Controllers.MarriageFeeController.GetMarriageFee(Marriage.Entity.Application.MarriageFee.GetMarriageFeeRequest)">
+            <summary>
+            获取相亲费用
+            </summary>
+            <param name="request"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Marriage.Api.Controllers.MarriageFeeController.SaveMarriageFee(Marriage.Entity.Application.MarriageFee.SaveMarriageFeeRequest)">
+            <summary>
+            保存相亲费用
+            </summary>
+            <param name="request"></param>
+            <returns></returns>
+        </member>
         <member name="T:Marriage.Api.Controllers.MarriageSquareController">
             <summary>
             相亲广场
