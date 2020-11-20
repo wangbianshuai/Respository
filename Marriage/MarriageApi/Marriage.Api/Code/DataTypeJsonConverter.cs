@@ -13,7 +13,9 @@ namespace Marriage.Api.Code
         {
             if (reader.TokenType == JsonTokenType.True || reader.TokenType == JsonTokenType.False) return reader.GetBoolean();
 
-            return bool.Parse(reader.GetString());
+            bool value = false;
+            bool.TryParse(reader.GetString(), out value);
+            return value;
         }
 
         public override void Write(Utf8JsonWriter writer, bool value, JsonSerializerOptions options)
@@ -28,7 +30,9 @@ namespace Marriage.Api.Code
         {
             if (reader.TokenType == JsonTokenType.Number) return reader.GetInt32();
 
-            return int.Parse(reader.GetString());
+            int value = 0;
+            int.TryParse(reader.GetString(), out value);
+            return value;
         }
 
         public override void Write(Utf8JsonWriter writer, int value, JsonSerializerOptions options)
@@ -43,7 +47,9 @@ namespace Marriage.Api.Code
         {
             if (reader.TokenType == JsonTokenType.Number) return reader.GetByte();
 
-            return byte.Parse(reader.GetString());
+            byte value = 0;
+            byte.TryParse(reader.GetString(), out value);
+            return value;
         }
 
         public override void Write(Utf8JsonWriter writer, byte value, JsonSerializerOptions options)
@@ -58,7 +64,9 @@ namespace Marriage.Api.Code
         {
             if (reader.TokenType == JsonTokenType.Number) return reader.GetInt64();
 
-            return long.Parse(reader.GetString());
+            long value = 0;
+            long.TryParse(reader.GetString(), out value);
+            return value;
         }
 
         public override void Write(Utf8JsonWriter writer, long value, JsonSerializerOptions options)
@@ -73,7 +81,9 @@ namespace Marriage.Api.Code
         {
             if (reader.TokenType == JsonTokenType.Number) return reader.GetDecimal();
 
-            return decimal.Parse(reader.GetString());
+            decimal value = 0;
+            decimal.TryParse(reader.GetString(), out value);
+            return value;
         }
 
         public override void Write(Utf8JsonWriter writer, decimal value, JsonSerializerOptions options)
@@ -88,7 +98,9 @@ namespace Marriage.Api.Code
         {
             if (reader.TokenType == JsonTokenType.Number) return reader.GetDouble();
 
-            return double.Parse(reader.GetString());
+            double value = 0;
+            double.TryParse(reader.GetString(), out value);
+            return value;
         }
 
         public override void Write(Utf8JsonWriter writer, double value, JsonSerializerOptions options)
@@ -103,7 +115,9 @@ namespace Marriage.Api.Code
         {
             if (reader.TokenType == JsonTokenType.Number) return reader.GetSingle();
 
-            return float.Parse(reader.GetString());
+            float value = 0;
+            float.TryParse(reader.GetString(), out value);
+            return value;
         }
 
         public override void Write(Utf8JsonWriter writer, float value, JsonSerializerOptions options)
@@ -118,7 +132,9 @@ namespace Marriage.Api.Code
         {
             if (reader.TokenType == JsonTokenType.Number) return reader.GetInt16();
 
-            return short.Parse(reader.GetString());
+            short value = 0;
+            short.TryParse(reader.GetString(), out value);
+            return value;
         }
 
         public override void Write(Utf8JsonWriter writer, short value, JsonSerializerOptions options)

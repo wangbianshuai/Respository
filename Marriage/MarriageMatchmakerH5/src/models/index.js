@@ -6,6 +6,7 @@ import MarriageUserPhoto from './marriageUserPhoto';
 import Matchmaker from './matchmaker';
 import MarriageArrange from './marriageArrange';
 import MarriageFee from './marriageFee';
+import MarriageStatus from './marriageStatus';
 
 export default [
     PageConfig,
@@ -15,5 +16,6 @@ export default [
     MarriageUserPhoto,
     Matchmaker,
     MarriageArrange,
-    MarriageFee
+    MarriageFee,
+    MarriageStatus
 ]
