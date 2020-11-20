@@ -37,5 +37,10 @@ namespace Marriage.Application
         /// <param name="type"></param>
         /// <returns></returns>
         GetUserPhotoByUserResponse GetUserPhotoByUser(GetUserPhotoByUserRequest request);
+
+        /// <summary>
+        /// 获取相亲安排下用户生活照列表
+        /// </summary>
+        GetMarriageArrangeUserPhotoResponse GetMarriageArrangeUserPhoto(GetMarriageArrangeUserPhotoRequest request);
     }
 }

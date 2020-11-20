@@ -4,6 +4,146 @@
         <name>Marriage.Entity</name>
     </assembly>
     <members>
+        <member name="T:Marriage.Entity.Application.MarriageArrangeUser.GetMarriageArrangeUserByMatchmakerRequest">
+            <summary>
+            获取红娘下用户信息请求
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageArrangeUser.GetMarriageArrangeUserByMatchmakerRequest.UserId">
+            <summary>
+            用户Id
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageArrangeUser.GetMarriageArrangeUserByMatchmakerRequest.MarriageArrangeId">
+            <summary>
+            相亲安排Id
+            </summary>
+        </member>
+        <member name="T:Marriage.Entity.Application.MarriageArrangeUser.GetMarriageArrangeUserByMatchmakerResponse">
+            <summary>
+            获取红娘下用户信息响应
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageArrangeUser.GetMarriageArrangeUserByMatchmakerResponse.UserInfo">
+            <summary>
+            用户信息
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageArrangeUser.GetMarriageArrangeUserByMatchmakerResponse.SelectLover">
+            <summary>
+            是否显示择偶标准
+            </summary>
+        </member>
+        <member name="T:Marriage.Entity.Application.MarriageArrangeUser.GetMarriageArrangeUserConditionTypeByMatchmakerRequest">
+            <summary>
+            获取红娘下用户条件类型请求
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageArrangeUser.GetMarriageArrangeUserConditionTypeByMatchmakerRequest.UserId">
+            <summary>
+            用户Id
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageArrangeUser.GetMarriageArrangeUserConditionTypeByMatchmakerRequest.SelectType">
+            <summary>
+            选择类型
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageArrangeUser.GetMarriageArrangeUserConditionTypeByMatchmakerRequest.ConditionTypeId">
+            <summary>
+            条件类型Id
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageArrangeUser.GetMarriageArrangeUserConditionTypeByMatchmakerRequest.UserConditionTypeId">
+            <summary>
+            条件类型Id
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageArrangeUser.GetMarriageArrangeUserConditionTypeByMatchmakerRequest.MarriageArrangeId">
+            <summary>
+            相亲安排Id
+            </summary>
+        </member>
+        <member name="T:Marriage.Entity.Application.MarriageArrangeUser.GetMarriageArrangeUserConditionTypeByMatchmakerResponse">
+            <summary>
+            获取红娘下用户条件类型响应
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageArrangeUser.GetMarriageArrangeUserConditionTypeByMatchmakerResponse.UserConditionTypeId">
+            <summary> 
+            主键
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageArrangeUser.GetMarriageArrangeUserConditionTypeByMatchmakerResponse.ConditionTypeId">
+            <summary> 
+            条件类型Id
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageArrangeUser.GetMarriageArrangeUserConditionTypeByMatchmakerResponse.IsPublic">
+            <summary>
+            是否公开
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageArrangeUser.GetMarriageArrangeUserConditionTypeByMatchmakerResponse.Items">
+            <summary>
+            选项集合
+            </summary>
+        </member>
+        <member name="T:Marriage.Entity.Application.MarriageArrangeUser.GetMarriageArrangeUserConditionTypesByMatchmakerRequest">
+            <summary>
+            获取红娘下用户条件类型列表请求
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageArrangeUser.GetMarriageArrangeUserConditionTypesByMatchmakerRequest.UserId">
+            <summary>
+            用户Id
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageArrangeUser.GetMarriageArrangeUserConditionTypesByMatchmakerRequest.SelectType">
+            <summary>
+            选择类型
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageArrangeUser.GetMarriageArrangeUserConditionTypesByMatchmakerRequest.MarriageArrangeId">
+            <summary>
+            相亲安排Id
+            </summary>
+        </member>
+        <member name="T:Marriage.Entity.Application.MarriageArrangeUser.GetMarriageArrangeUserConditionTypesByMatchmakerResponse">
+            <summary>
+            获取红娘下用户条件类型列表响应
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageArrangeUser.GetMarriageArrangeUserConditionTypesByMatchmakerResponse.DataList">
+            <summary>
+            用户条件类型
+            </summary>
+        </member>
+        <member name="T:Marriage.Entity.Application.MarriageArrangeUser.GetMarriageArrangeUserInfoByMatchmakerRequest">
+            <summary>
+            获取红娘下用户信息请求
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageArrangeUser.GetMarriageArrangeUserInfoByMatchmakerRequest.UserId">
+            <summary>
+            用户Id
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageArrangeUser.GetMarriageArrangeUserInfoByMatchmakerRequest.MarriageArrangeId">
+            <summary>
+            相亲安排Id
+            </summary>
+        </member>
+        <member name="T:Marriage.Entity.Application.MarriageArrangeUser.GetMarriageArrangeUserInfoByMatchmakerResponse">
+            <summary>
+            获取红娘下用户信息响应
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageArrangeUser.GetMarriageArrangeUserInfoByMatchmakerResponse.UserInfo">
+            <summary>
+            用户信息
+            </summary>
+        </member>
         <member name="T:Marriage.Entity.Application.MarriageArrange.GetMarriageArrangeByIdRequest">
             <summary>
             获取相亲安排信息请求
@@ -552,6 +692,31 @@
         <member name="T:Marriage.Entity.Application.MarriageUserPhoto.DeleteUserPhotosResponse">
             <summary>
             删除用户照片响应
+            </summary>
+        </member>
+        <member name="T:Marriage.Entity.Application.MarriageUserPhoto.GetMarriageArrangeUserPhotoRequest">
+            <summary>
+            获取相亲安排下用户生活照列表请求
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageUserPhoto.GetMarriageArrangeUserPhotoRequest.UserId">
+            <summary>
+            用户Id
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageUserPhoto.GetMarriageArrangeUserPhotoRequest.MarriageArrangeId">
+            <summary>
+            相亲安排Id
+            </summary>
+        </member>
+        <member name="T:Marriage.Entity.Application.MarriageUserPhoto.GetMarriageArrangeUserPhotoResponse">
+            <summary>
+            获取相亲安排下用户生活照列表响应
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageUserPhoto.GetMarriageArrangeUserPhotoResponse.DataList">
+            <summary>
+            用户照片
             </summary>
         </member>
         <member name="T:Marriage.Entity.Application.MarriageUserPhoto.GetUserPhotoByMatchmakerRequest">

@@ -25,15 +25,14 @@ function getProperties() {
       getUserInfoView(),
       getPhotoListMenu(),
       getConditionTypeListMenu(),
-      getSelectLoverListMenu(),
-      getStatusListMenu(),
+      getSelectLoverListMenu()
   ]
 }
 
 function getUserInfoView() {
   return {
       name: 'UserInfo',
-      type: 'topUserInfo',
+      type: 'topMarriageArrangeInfo',
       detailUrl: '/marriage/userInfo?userId=#{userId}&marriageArrangeId=#{marriageArrangeId}'
   }
 }
@@ -60,18 +59,9 @@ function getSelectLoverListMenu() {
       name: 'SelectLover',
       type: 'ListMenu',
       className: 'divListMenu',
+      isShowValue:false,
+      isHasValueVisible: true,
       dataSource: [{ text: '择偶标准', arrow: 'horizontal', thumb: 'select_lover.png', url: '/marriage/selectLover?userId=#{userId}&marriageArrangeId=#{marriageArrangeId}' }]
-  }
-}
-
-function getStatusListMenu() {
-  return {
-      name: 'StatusInfo',
-      type: 'StatusListMenu',
-      arrow: 'horizontal',
-      isMenu: true,
-      url: '/marriage/userStatus?userId=#{userId}&marriageArrangeId=#{marriageArrangeId}',
-      className: 'divListMenu',
   }
 }
 
@@ -91,7 +81,7 @@ function getConditionTypeDataSource() {
       valueName: "Percentage",
       textName: "ConditionTypeName",
       stateName: "getUserConditionTypesByMatchmaker",
-      serviceName: "MarriageUserService",
+      serviceName: "MarriageArrangeUserService",
       actionName: "getUserConditionTypesByMatchmaker",
       isRefresh: true,
       getPayload: 'getUserConditionTypesPayload',

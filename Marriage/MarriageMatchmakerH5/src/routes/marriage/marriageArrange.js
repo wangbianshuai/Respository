@@ -5,7 +5,7 @@ export default EntityPageEdit("marriage_marriageArrange", "MarriageArrange", doc
         this.marriageArrangeEditEdit = this.getProperty('marriageArrangeEditEdit');
     },
     setGetEntityDataLoad({ data }) {
-        if (data.MarriageArrangeId) {
+        if (data.MarriageArrangeId !== '00000000-0000-0000-0000-000000000000') {
             this.marriageArrangeEditEdit.properties.forEach(p => {
                 if (p.name === 'Remark' || p.name === 'buttonView') {
                     p.style = undefined;

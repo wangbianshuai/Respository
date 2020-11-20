@@ -9,6 +9,7 @@ const renderItem = (property, data, i, value, onClick) => {
   const { valueName, textName } = property;
   const text = data[textName];
   value = value || data[valueName];
+  if (property.isShowValue === false) value = undefined;
 
   if (!data.arrow && property.isRightArraw) data.arrow = 'horizontal';
   if (!data.url && property.url) data.url = Common.replaceDataContent(data, property.url, true);

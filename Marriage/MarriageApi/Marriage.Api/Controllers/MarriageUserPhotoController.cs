@@ -81,5 +81,17 @@ namespace Marriage.Api.Controllers
         {
             return await Task.Run(() => _MarriageUserPhoto.GetUserPhotoByUser(request));
         }
+
+        /// <summary>
+        /// 获取相亲安排下用户生活照列表
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        [HttpPost]
+        [SwaggerOpenApiTokenParameter]
+        public async Task<GetMarriageArrangeUserPhotoResponse> GetMarriageArrangeUserPhoto(GetMarriageArrangeUserPhotoRequest request)
+        {
+            return await Task.Run(() => _MarriageUserPhoto.GetMarriageArrangeUserPhoto(request));
+        }
     }
 }

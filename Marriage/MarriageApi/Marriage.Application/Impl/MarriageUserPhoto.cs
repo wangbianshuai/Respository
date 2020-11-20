@@ -18,6 +18,8 @@ namespace Marriage.Application.Impl
 
         public Domain.IMatchmaker _Matchmaker { get; set; }
 
+        public Domain.IMarriageArrange _MarriageArrange { get; set; }
+
         /// <summary>
         /// 获取用户生活照列表
         /// </summary>
@@ -154,6 +156,84 @@ namespace Marriage.Application.Impl
 
             //日志记录
             return this.SetReturnResponse<GetUserPhotoByUserResponse>(title, "GetUserPhotoByUser", requestContent, response);
+        }
+
+
+        /// <summary>
+        /// 获取相亲安排下用户生活照列表
+        /// </summary>
+        public GetMarriageArrangeUserPhotoResponse GetMarriageArrangeUserPhoto(GetMarriageArrangeUserPhotoRequest request)
+        {
+            string title = "获取相亲安排下用户生活照列表";
+            string requestContent = Utility.Common.ToJson(request);
+            GetMarriageArrangeUserPhotoResponse response = new GetMarriageArrangeUserPhotoResponse();
+
+            this.InitMessage();
+
+            this.IsNullRequest(request, response);
+
+
+            //1、获取用户信息
+            int stepNo = 1;
+            this.GetMatchmakerById(stepNo, request.LoginUserId, response);
+
+            //2、获取相亲安排
+            stepNo += 1;
+            var marriageArrange = GetMarriageArrange(stepNo, request.MarriageArrangeId, response);
+
+            //3、获取相亲安排下用户生活照列表
+            stepNo += 1;
+            GetMarriageArrangeUserPhoto(stepNo, marriageArrange, request, response);
+
+            //4、执行结束
+            this.ExecEnd(response);
+
+            //日志记录
+            return this.SetReturnResponse<GetMarriageArrangeUserPhotoResponse>(title, "GetMarriageArrangeUserPhoto", requestContent, response);
+        }
+
+        /// <summary>
+        /// 获取相亲安排下用户生活照列表
+        /// </summary>
+        /// <param name="stepNo"></param>
+        /// <param name="marriageArrange"></param>
+        /// <param name="request"></param>
+        /// <param name="response"></param>
+        /// <returns></returns>
+        private List<Entity.Domain.MarriageUserPhoto> GetMarriageArrangeUserPhoto(int stepNo, Entity.Domain.MarriageArrange marriageArrange, GetMarriageArrangeUserPhotoRequest request, GetMarriageArrangeUserPhotoResponse response)
+        {
+            Func<List<Entity.Domain.MarriageUserPhoto>> execStep = () =>
+            {
+                var list = _MarriageUserPhoto.GetUserPhotos(request.UserId);
+
+                response.DataList = (from a in list
+                                     select new UserPhoto()
+                                     {
+                                         PhotoId = a.PhotoId,
+                                         PhotoUrl = a.PhotoUrl
+                                     }).ToList();
+
+                return list;
+            };
+
+            return this.GetEntityDataList<Entity.Domain.MarriageUserPhoto>(stepNo, "获取相亲安排下用户生活照列表", "GetMarriageArrangeUserPhoto", response, execStep, false);
+        }
+
+        /// <summary>
+        /// 以主键获取相亲安排
+        /// </summary>
+        /// <param name="stepNo"></param>
+        /// <param name="marriageArrangeId"></param>
+        /// <param name="response"></param>
+        /// <returns></returns>
+        private Entity.Domain.MarriageArrange GetMarriageArrange(int stepNo, Guid marriageArrangeId, IResponse response)
+        {
+            Func<Entity.Domain.MarriageArrange> execStep = () =>
+            {
+                return _MarriageArrange.GetMarriageArrange(marriageArrangeId);
+            };
+
+            return this.GetEntityData<Entity.Domain.MarriageArrange>(stepNo, "以主键获取相亲安排", "GetMarriageArrange", response, execStep);
         }
 
         /// <summary>

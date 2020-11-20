@@ -539,9 +539,9 @@ namespace Marriage.Application.Impl
             return this.GetEntityDataList<Entity.Domain.MarriageArrangeUser>(stepNo, "查询相亲安排", "QueryUsersByMatchmaker", response, execStep, false);
         }
 
-        MarriageArrangeUser GetMarriageUser(Entity.Domain.MarriageArrangeUser user)
+        Entity.Application.MarriageArrange.MarriageArrangeUser GetMarriageUser(Entity.Domain.MarriageArrangeUser user)
         {
-            return new MarriageArrangeUser()
+            return new Entity.Application.MarriageArrange.MarriageArrangeUser()
             {
                 Age = user.Age,
                 HeadImgUrl = user.HeadImgUrl,
