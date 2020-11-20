@@ -166,5 +166,24 @@ namespace Marriage.Domain.Impl
 
             return queryConditionList;
         }
+
+        /// <summary>
+        /// 更新相亲安排
+        /// </summary>
+        /// <param name="entity"></param>
+        /// <returns></returns>
+        public bool UpdateMarriageArrange(Entity.Domain.MarriageArrange entity)
+        {
+            IEntityData entityData = new EntityData("MarriageArrange");
+
+            entityData.SetValue("MarriageArrangeId", entity.MarriageArrangeId);
+            entityData.SetValue("MarriageAddress", entity.MarriageAddress);
+            entityData.SetValue("MarriageContent", entity.MarriageContent);
+            entityData.SetValue("Remark", entity.Remark);
+            entityData.SetValue("UpdateUser", entity.UpdateUser);
+            entityData.SetValue("UpdateDate", DateTime.Now);
+
+            return _MarriageArrange.Update(entityData);
+        }
     }
 }

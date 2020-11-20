@@ -47,6 +47,20 @@
             <param name="request"></param>
             <returns></returns>
         </member>
+        <member name="M:Marriage.Api.Controllers.MarriageArrangeController.GetMarriageArrangeById(Marriage.Entity.Application.MarriageArrange.GetMarriageArrangeByIdRequest)">
+            <summary>
+            获取相亲安排信息
+            </summary>
+            <param name="request"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Marriage.Api.Controllers.MarriageArrangeController.UpdateMarriageArrange(Marriage.Entity.Application.MarriageArrange.UpdateMarriageArrangeRequest)">
+            <summary>
+            更新相亲安排
+            </summary>
+            <param name="request"></param>
+            <returns></returns>
+        </member>
         <member name="T:Marriage.Api.Controllers.MarriageSquareController">
             <summary>
             相亲广场

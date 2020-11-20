@@ -71,5 +71,16 @@ namespace Marriage.Data.Impl
 
             return this.SelectEntity(query);
         }
+
+        /// <summary>
+        /// 更新
+        /// </summary>
+        /// <param name="entityData"></param>
+        /// <returns></returns>
+        public bool Update(IEntityData entityData)
+        {
+            object primaryKey = entityData.GetValue(this.EntityType.PrimaryKey);
+            return this.UpdateEntityByPrimaryKey(primaryKey, entityData);
+        }
     }
 }

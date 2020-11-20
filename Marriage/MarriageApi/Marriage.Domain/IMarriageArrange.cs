@@ -52,5 +52,12 @@ namespace Marriage.Domain
         /// <param name="request"></param>
         /// <returns></returns>
         Entity.Application.PageInfo QueryMarriageArrangeByMatchmakerPageInfo(Entity.Application.MarriageArrange.QueryMarriageArrangeByMatchmakerRequest request);
+
+        /// <summary>
+        /// 更新相亲安排
+        /// </summary>
+        /// <param name="entity"></param>
+        /// <returns></returns>
+        bool UpdateMarriageArrange(Entity.Domain.MarriageArrange entity);
     }
 }

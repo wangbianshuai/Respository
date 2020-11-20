@@ -142,5 +142,9 @@ namespace Marriage.Entity.Domain
         /// 女方年龄
         /// </summary>
         public int WomanAge { get; set; }
+        /// <summary>
+        /// 更新人
+        /// </summary>
+        public Guid UpdateUser { get; set; }
     }
 }

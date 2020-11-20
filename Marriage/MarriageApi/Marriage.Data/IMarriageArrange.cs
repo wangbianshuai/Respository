@@ -46,5 +46,12 @@ namespace Marriage.Data
         /// <param name="id"></param>
         /// <returns></returns>
         IEntityData GetViewEntityDataById(Guid id);
+
+        /// <summary>
+        /// 更新
+        /// </summary>
+        /// <param name="entityData"></param>
+        /// <returns></returns>
+        bool Update(IEntityData entityData);
     }
 }

@@ -14,6 +14,10 @@ const config = {
         post('searchDislike', 'MarriageArrange/QueryMarriageArrangeByMatchmaker', 'searchDislike'),
         //获取相亲安排
         post('getEntityData', 'MarriageArrange/GetMarriageArrangeByMatchmaker', 'getEntityData'),
+        //获取相亲安排
+        post('getMarriageArrangeById', 'MarriageArrange/GetMarriageArrangeById', 'getMarriageArrangeById'),
+        //更新相亲安排
+        post('saveEntityData', 'MarriageArrange/UpdateMarriageArrange', 'saveEntityData')
     ]
 }
 function post(actionName, url, stateName, dataKey) {

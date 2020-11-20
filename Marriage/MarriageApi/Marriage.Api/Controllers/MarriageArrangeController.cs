@@ -70,5 +70,29 @@ namespace Marriage.Api.Controllers
         {
             return await Task.Run(() => _MarriageArrange.GetMarriageArrangeByMatchmaker(request));
         }
+
+        /// <summary>
+        /// 获取相亲安排信息
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        [HttpPost]
+        [SwaggerOpenApiTokenParameter]
+        public async Task<GetMarriageArrangeByIdResponse> GetMarriageArrangeById(GetMarriageArrangeByIdRequest request)
+        {
+            return await Task.Run(() => _MarriageArrange.GetMarriageArrangeById(request));
+        }
+
+        /// <summary>
+        /// 更新相亲安排
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        [HttpPost]
+        [SwaggerOpenApiTokenParameter]
+        public async Task<UpdateMarriageArrangeResponse> UpdateMarriageArrange(UpdateMarriageArrangeRequest request)
+        {
+            return await Task.Run(() => _MarriageArrange.UpdateMarriageArrange(request));
+        }
     }
 }

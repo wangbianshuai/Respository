@@ -31,5 +31,15 @@ namespace Marriage.Application
         /// 获取红娘下相亲安排
         /// </summary>
         GetMarriageArrangeByMatchmakerResponse GetMarriageArrangeByMatchmaker(GetMarriageArrangeByMatchmakerRequest request);
+
+        /// <summary>
+        /// 获取相亲安排信息
+        /// </summary>
+        GetMarriageArrangeByIdResponse GetMarriageArrangeById(GetMarriageArrangeByIdRequest request);
+
+        /// <summary>
+        /// 更新相亲安排
+        /// </summary>
+        UpdateMarriageArrangeResponse UpdateMarriageArrange(UpdateMarriageArrangeRequest request);
     }
 }

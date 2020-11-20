@@ -27,10 +27,16 @@ export default class EntityEdit extends BaseIndex {
     }
 
     saveEntityData(id, actionType, data) {
-        const { primaryKey } = data.entity;
+        const { primaryKey, dataPrimaryKey } = data.entity;
         const { entityData } = data;
+        
         let primaryKeyValue = data.oldEntityData && data.oldEntityData[primaryKey] ? data.oldEntityData[primaryKey] : null;
         if (primaryKeyValue) entityData[primaryKey] = primaryKeyValue;
+
+        if (!primaryKeyValue) {
+            primaryKeyValue = data.oldEntityData && data.oldEntityData[dataPrimaryKey] ? data.oldEntityData[dataPrimaryKey] : null;
+            if (primaryKeyValue) entityData[dataPrimaryKey] = primaryKeyValue;
+        }
 
         const payload = { action: this.getAction(id, actionType), ...entityData };
 
