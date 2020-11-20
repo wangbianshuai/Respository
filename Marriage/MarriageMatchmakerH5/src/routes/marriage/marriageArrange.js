@@ -7,7 +7,7 @@ export default EntityPageEdit("marriage_marriageArrange", "MarriageArrange", doc
     setGetEntityDataLoad({ data }) {
         if (data.MarriageArrangeId) {
             this.marriageArrangeEditEdit.properties.forEach(p => {
-                if (p.name === 'Remark' || p.name == 'buttonView') {
+                if (p.name === 'Remark' || p.name === 'buttonView') {
                     p.style = undefined;
                     p.isVisible = true;
                     p.setVisible(true)

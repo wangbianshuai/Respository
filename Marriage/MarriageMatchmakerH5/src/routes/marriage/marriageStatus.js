@@ -2,6 +2,31 @@ import { EntityPageEdit } from "PageTemplates";
 import { Common } from 'UtilsCommon';
 
 export default EntityPageEdit("marriage_marriageStatus", "MarriageStatus", document.title + '-相亲状态', 1800, {
+    expandInit() {
+        const statusView = this.getProperty("marriageStatusEditEdit");
+
+        this.isManAgree = this.getViewProperty(statusView, "IsManAgree");
+        this.isManAgree.valueChange = this.isManAgreeChange.bind(this);
+
+        this.noManAgreeRemark = this.getViewProperty(statusView, "NoManAgreeRemark");
+
+        this.isWomanAgree = this.getViewProperty(statusView, "IsWomanAgree");
+        this.isWomanAgree.valueChange = this.isWomanAgreeChange.bind(this);
+
+        this.noWomanAgreeRemark = this.getViewProperty(statusView, "NoWomanAgreeRemark");
+    },
+    isManAgreeChange(value) {
+        if (!this.noManAgreeRemark.setVisible) return;
+        const isVisible = value === 0;
+        this.noManAgreeRemark.setVisible(isVisible);
+        this.noManAgreeRemark.isVisible = isVisible;
+    },
+    isWomanAgreeChange(value) {
+        if (!this.noWomanAgreeRemark.setVisible) return;
+        const isVisible = value === 0;
+        this.noWomanAgreeRemark.setVisible(isVisible);
+        this.noWomanAgreeRemark.isVisible = isVisible;
+    },
     expandSetEntityData({ entityData, props, view }) {
         let message = '';
         const { Status } = entityData;

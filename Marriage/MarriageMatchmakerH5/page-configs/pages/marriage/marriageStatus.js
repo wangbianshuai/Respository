@@ -8,7 +8,7 @@ const dataActionTypes = {
   saveEntityData: 1801
 };
 
-const entity = { name: 'MarriageStatus', primaryKey: 'marriageArrangeId' };
+const entity = { name: 'MarriageStatus', primaryKey: 'marriageArrangeId', dataPrimaryKey: 'MarriageArrangeId' };
 
 module.exports = {
   name: "marriageStatusEdit",
@@ -100,6 +100,7 @@ function getTextArea2(name, label, x, y, placeHolder) {
     ...getTextBox(name, label, 'textarea', x, y, placeHolder, 500),
     clear: true,
     labelNumber: 7,
+    isNullable:false,
     isEdit: true,
     isVisible: false
   }
@@ -110,6 +111,7 @@ function getDatePicker2(name, label, x, y, placeHolder) {
     ...getDatePicker(name, label, x, y),
     placeHolder,
     isEdit: true,
+    isNullable:false,
     isVisible: false
   }
 }
