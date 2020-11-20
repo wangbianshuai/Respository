@@ -16,6 +16,8 @@ const config = {
         post('getEntityData', 'Matchmaker/GetMatchmakerInfo', 'getEntityData', 'MatchmakerInfo'),
         //更新红娘信息
         post('updateMatchmakerInfo', 'Matchmaker/UpdateMatchmakerInfo', 'updateMatchmakerInfo'),
+         //获取相亲安排红娘信息
+         post('getMatchmakerById', 'Matchmaker/GetMatchmakerById', 'getMatchmakerById'),
     ]
 }
 function post(actionName, url, stateName, dataKey) {

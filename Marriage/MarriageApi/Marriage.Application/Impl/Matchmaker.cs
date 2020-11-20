@@ -209,6 +209,86 @@ namespace Marriage.Application.Impl
             return this.SetReturnResponse<GetAppMatchmakerResponse>(title, "GetAppMatchmaker", requestContent, response);
         }
 
+        /// <summary>
+        /// 获取相亲安排红娘
+        /// </summary>
+        public GetMatchmakerByIdResponse GetMatchmakerById(GetMatchmakerByIdRequest request)
+        {
+            string title = "获取相亲安排红娘";
+            string requestContent = Utility.Common.ToJson(request);
+            GetMatchmakerByIdResponse response = new GetMatchmakerByIdResponse();
+
+            this.InitMessage();
+
+            this.IsNullRequest(request, response);
+
+            //1、获取用户信息
+            int stepNo = 1;
+            var marriageArrange = GetMarriageArrange(stepNo, request.MarriageArrangeId, response);
+
+            //2、获取相亲安排红娘
+            stepNo += 1;
+            GetMatchmakerById(stepNo, marriageArrange, request, response);
+
+            //2、执行结束
+            this.ExecEnd(response);
+
+            //日志记录
+            return this.SetReturnResponse<GetMatchmakerByIdResponse>(title, "GetMatchmakerById", requestContent, response);
+        }
+
+        /// <summary>
+        /// 获取相亲安排红娘
+        /// </summary>
+        /// <param name="stepNo"></param>
+        /// <param name="marriageArrange"></param>
+        /// <param name="request"></param>
+        /// <param name="response"></param>
+        /// <returns></returns>
+        private Entity.Domain.Matchmaker GetMatchmakerById(int stepNo, Entity.Domain.MarriageArrange marriageArrange, GetMatchmakerByIdRequest request, GetMatchmakerByIdResponse response)
+        {
+            Func<Entity.Domain.Matchmaker> execStep = () =>
+            {
+                Guid loginUserId = Guid.Parse(request.LoginUserId);
+
+                bool blSucceed = marriageArrange.AppMatchmakerId == loginUserId || marriageArrange.ManMatchmakerId == loginUserId || marriageArrange.WomanMatchmakerId == loginUserId;
+                if (!blSucceed) return null;
+
+                var entity = _Matchmaker.GetMatchmakerById(request.MatchmakerId);
+
+                if (entity != null)
+                {
+                    response.MatchmakerInfo = new MatchmakerInfo2()
+                    {
+                        HeadImgUrl = entity.HeadImgUrl,
+                        NickName = entity.NickName,
+                        Phone = entity.Phone,
+                        Sex = entity.Sex
+                    };
+
+                    response.Address = entity.Address;
+                    response.City = entity.City;
+                    response.Features = entity.Features;
+                    response.Name = entity.Name;
+                    response.Province = entity.Province;
+                    response.Remark = entity.Remark;
+                }
+
+                return entity;
+            };
+
+            return this.GetEntityData<Entity.Domain.Matchmaker>(stepNo, "获取用户红娘", "GetUserMatchmakers", response, execStep);
+        }
+
+
+        /// <summary>
+        /// 获取平台红娘
+        /// </summary>
+        /// <param name="stepNo"></param>
+        /// <param name="marriageArrange"></param>
+        /// <param name="request"></param>
+        /// <param name="response"></param>
+        /// <returns></returns>
         private Entity.Domain.Matchmaker GetAppMatchmaker(int stepNo, Entity.Domain.MarriageArrange marriageArrange, GetAppMatchmakerRequest request, GetAppMatchmakerResponse response)
         {
             Func<Entity.Domain.Matchmaker> execStep = () =>

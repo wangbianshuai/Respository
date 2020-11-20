@@ -30,7 +30,7 @@ export default (props) => {
   const thumb = Common.getImageUrl('status.png');
 
   const arrow = IsEdit ? property.arrow : undefined;
-  const onClick2 = IsEdit ? onclick : undefined;
+  const onClick2 = IsEdit ? onClick : undefined;
 
   return <List className={className}>
     <List.Item extra={statusName} thumb={thumb} arrow={arrow} onClick={onClick2}>相亲状态

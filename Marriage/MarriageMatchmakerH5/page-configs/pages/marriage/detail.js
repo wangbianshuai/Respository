@@ -100,7 +100,7 @@ function getStatusListMenu() {
     type: 'ArrangeStatusListMenu',
     arrow: 'horizontal',
     isMenu: true,
-    url: '/marriage/userStatus?userId=#{userId}',
+    url: '/marriage/arrangeStatus?marriageArrangeId=#{marriageArrangeId}',
     className: 'divListMenu',
   }
 }

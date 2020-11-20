@@ -6,6 +6,7 @@ import boygirl_conditionType from './boygirl/conditionType';
 import boygirl_selectConditionType from './boygirl/selectConditionType';
 import boygirl_userStatus from './boygirl/userStatus';
 import marriage_index from './marriage/index';
+import marriage_matchmaker from './marriage/matchmaker';
 
 export default {
       mine_index,
@@ -15,5 +16,6 @@ export default {
       boygirl_conditionType,
       boygirl_selectConditionType,
       boygirl_userStatus,
-      marriage_index
+      marriage_index,
+      marriage_matchmaker
 }

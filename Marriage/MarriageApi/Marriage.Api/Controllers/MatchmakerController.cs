@@ -105,5 +105,17 @@ namespace Marriage.Api.Controllers
         {
             return await Task.Run(() => _Matchmaker.GetAppMatchmaker(request));
         }
+
+        /// <summary>
+        /// 获取相亲安排红娘
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        [HttpPost]
+        [SwaggerOpenApiTokenParameter]
+        public async Task<GetMatchmakerByIdResponse> GetMatchmakerById(GetMatchmakerByIdRequest request)
+        {
+            return await Task.Run(() => _Matchmaker.GetMatchmakerById(request));
+        }
     }
 }

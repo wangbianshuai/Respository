@@ -1534,6 +1534,61 @@
             备注
             </summary> 
         </member>
+        <member name="T:Marriage.Entity.Application.Matchmaker.GetMatchmakerByIdRequest">
+            <summary>
+            获取相亲安排红娘请求
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Application.Matchmaker.GetMatchmakerByIdRequest.MatchmakerId">
+            <summary>
+            红娘Id
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Application.Matchmaker.GetMatchmakerByIdRequest.MarriageArrangeId">
+            <summary>
+            相亲安排Id
+            </summary>
+        </member>
+        <member name="T:Marriage.Entity.Application.Matchmaker.GetMatchmakerByIdResponse">
+            <summary>
+            获取相亲安排红娘响应
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Application.Matchmaker.GetMatchmakerByIdResponse.MatchmakerInfo">
+            <summary>
+            红娘信息
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Application.Matchmaker.GetMatchmakerByIdResponse.Name">
+            <summary> 
+            名称
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Application.Matchmaker.GetMatchmakerByIdResponse.City">
+            <summary> 
+            微信用户所在城市
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Application.Matchmaker.GetMatchmakerByIdResponse.Province">
+            <summary> 
+            微信用户所在省份
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Application.Matchmaker.GetMatchmakerByIdResponse.Address">
+            <summary> 
+            地址
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Application.Matchmaker.GetMatchmakerByIdResponse.Features">
+            <summary> 
+            特点说明
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Application.Matchmaker.GetMatchmakerByIdResponse.Remark">
+            <summary> 
+            备注
+            </summary> 
+        </member>
         <member name="T:Marriage.Entity.Application.Matchmaker.GetMatchmakerByOpenIdRequest">
             <summary>
             以微信OpenId获取红娘请求

@@ -52,5 +52,10 @@ namespace Marriage.Application
         /// 获取平台红娘
         /// </summary>
         GetAppMatchmakerResponse GetAppMatchmaker(GetAppMatchmakerRequest request);
+
+        /// <summary>
+        /// 获取相亲安排红娘
+        /// </summary>
+        GetMatchmakerByIdResponse GetMatchmakerById(GetMatchmakerByIdRequest request);
     }
 }

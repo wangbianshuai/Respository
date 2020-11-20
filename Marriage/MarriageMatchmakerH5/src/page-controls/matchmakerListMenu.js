@@ -19,9 +19,10 @@ export default (props) => {
   const [value, setValue] = useState(property.value);
 
   const onClick = useCallback(() => {
-    const url = '/marriage/matchmaker?matchmaker=' + value.MatchmakerId;
+    const title = document.title + '-' + property.label;
+    const url = '/marriage/matchmaker?matchmakerId=' + value.MatchmakerId + '&marriageArrangeId=' + pageAxis.pageData.marriageArrangeId + '&title=' + title;
     pageAxis.toPage(url)
-  }, [pageAxis, value]);
+  }, [pageAxis, property, value]);
 
   property.setVisible = (v) => setIsVisible(v);
   property.setValue = (v) => setValue(v);
