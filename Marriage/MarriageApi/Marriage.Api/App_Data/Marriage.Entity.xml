@@ -744,6 +744,141 @@
             更新相亲广场玫瑰数响应 
             </summary>
         </member>
+        <member name="T:Marriage.Entity.Application.MarriageStatus.GetMarriageStatusRequest">
+            <summary>
+            获取相亲状态请求
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageStatus.GetMarriageStatusRequest.MarriageArrangeId">
+            <summary>
+            相亲安排Id
+            </summary>
+        </member>
+        <member name="T:Marriage.Entity.Application.MarriageStatus.GetMarriageStatusResponse">
+            <summary>
+            获取相亲状态响应
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageStatus.GetMarriageStatusResponse.MarriageArrangeId">
+            <summary>
+            主键
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageStatus.GetMarriageStatusResponse.Status">
+            <summary> 
+            状态：0：待相亲，1：有意向，2：无意向，3：牵手成功，4：订婚，5：结婚，6：分手，7：取消
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageStatus.GetMarriageStatusResponse.IsManAgree">
+            <summary> 
+            男生是否同意
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageStatus.GetMarriageStatusResponse.NoManAgreeRemark">
+            <summary> 
+            男生不同意原因
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageStatus.GetMarriageStatusResponse.IsWomanAgree">
+            <summary> 
+            女生是否同意
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageStatus.GetMarriageStatusResponse.NoWomanAgreeRemark">
+            <summary> 
+            女生不同意原因
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageStatus.GetMarriageStatusResponse.CancelReason">
+            <summary>
+            取消原因
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageStatus.GetMarriageStatusResponse.BookMarryDate">
+            <summary> 
+            订婚日期
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageStatus.GetMarriageStatusResponse.MarryDate">
+            <summary> 
+            结婚日期
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageStatus.GetMarriageStatusResponse.BreakUpDate">
+            <summary> 
+            分手日期
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageStatus.GetMarriageStatusResponse.BreakUpReason">
+            <summary> 
+            分手原因
+            </summary> 
+        </member>
+        <member name="T:Marriage.Entity.Application.MarriageStatus.SaveMarriageStatusRequest">
+            <summary>
+            保存相亲状态请求
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageStatus.SaveMarriageStatusRequest.MarriageArrangeId">
+            <summary>
+            主键
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageStatus.SaveMarriageStatusRequest.Status">
+            <summary> 
+            状态：0：待相亲，1：有意向，2：无意向，3：牵手成功，4：订婚，5：结婚，6：分手，7：取消
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageStatus.SaveMarriageStatusRequest.IsManAgree">
+            <summary> 
+            男生是否同意
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageStatus.SaveMarriageStatusRequest.NoManAgreeRemark">
+            <summary> 
+            男生不同意原因
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageStatus.SaveMarriageStatusRequest.IsWomanAgree">
+            <summary> 
+            女生是否同意
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageStatus.SaveMarriageStatusRequest.NoWomanAgreeRemark">
+            <summary> 
+            女生不同意原因
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageStatus.SaveMarriageStatusRequest.CancelReason">
+            <summary>
+            取消原因
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageStatus.SaveMarriageStatusRequest.BookMarryDate">
+            <summary> 
+            订婚日期
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageStatus.SaveMarriageStatusRequest.MarryDate">
+            <summary> 
+            结婚日期
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageStatus.SaveMarriageStatusRequest.BreakUpDate">
+            <summary> 
+            分手日期
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageStatus.SaveMarriageStatusRequest.BreakUpReason">
+            <summary> 
+            分手原因
+            </summary> 
+        </member>
+        <member name="T:Marriage.Entity.Application.MarriageStatus.SaveMarriageStatusResponse">
+            <summary>
+            保存相亲状态响应
+            </summary>
+        </member>
         <member name="T:Marriage.Entity.Application.MarriageUser2.GetUserByUserRequest">
             <summary>
             获取用户下用户信息请求

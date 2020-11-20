@@ -99,6 +99,25 @@
             <param name="request"></param>
             <returns></returns>
         </member>
+        <member name="T:Marriage.Api.Controllers.MarriageStatusController">
+            <summary>
+            相亲状态
+            </summary>
+        </member>
+        <member name="M:Marriage.Api.Controllers.MarriageStatusController.GetMarriageStatus(Marriage.Entity.Application.MarriageStatus.GetMarriageStatusRequest)">
+            <summary>
+            获取相亲状态
+            </summary>
+            <param name="request"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Marriage.Api.Controllers.MarriageStatusController.SaveMarriageStatus(Marriage.Entity.Application.MarriageStatus.SaveMarriageStatusRequest)">
+            <summary>
+            保存相亲状态
+            </summary>
+            <param name="request"></param>
+            <returns></returns>
+        </member>
         <member name="T:Marriage.Api.Controllers.MarriageUserController">
             <summary>
             相亲用户

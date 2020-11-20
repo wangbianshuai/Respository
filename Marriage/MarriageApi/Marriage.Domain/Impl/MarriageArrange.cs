@@ -185,5 +185,37 @@ namespace Marriage.Domain.Impl
 
             return _MarriageArrange.Update(entityData);
         }
+
+        /// <summary>
+        /// 更新状态
+        /// </summary>
+        /// <param name="entity"></param>
+        /// <returns></returns>
+        public bool SaveMarriageStatus(Entity.Domain.MarriageArrange entity)
+        {
+            IEntityData entityData = new EntityData("MarriageArrange");
+
+            entityData.SetValue("MarriageArrangeId", entity.MarriageArrangeId);
+            entityData.SetValue("BookMarryDate", GetDateObject(entity.BookMarryDate));
+            entityData.SetValue("BreakUpDate", GetDateObject(entity.BreakUpDate));
+            entityData.SetValue("BreakUpReason", entity.BreakUpReason);
+            entityData.SetValue("CancelReason", entity.CancelReason);
+            entityData.SetValue("IsManAgree", entity.IsManAgree);
+            entityData.SetValue("IsWomanAgree", entity.IsWomanAgree);
+            entityData.SetValue("MarryDate", GetDateObject(entity.MarryDate));
+            entityData.SetValue("NoManAgreeRemark", entity.NoManAgreeRemark);
+            entityData.SetValue("NoWomanAgreeRemark", entity.NoWomanAgreeRemark);
+            entityData.SetValue("Status", entity.Status);
+            entityData.SetValue("UpdateUser", entity.UpdateUser);
+            entityData.SetValue("UpdateDate", DateTime.Now);
+
+            return _MarriageArrange.Update(entityData);
+        }
+
+        object GetDateObject(DateTime date)
+        {
+            if (date == DateTime.MinValue) return null;
+            return date;
+        }
     }
 }

@@ -59,5 +59,11 @@ namespace Marriage.Domain
         /// <param name="entity"></param>
         /// <returns></returns>
         bool UpdateMarriageArrange(Entity.Domain.MarriageArrange entity);
+        /// <summary>
+        /// 更新状态
+        /// </summary>
+        /// <param name="entity"></param>
+        /// <returns></returns>
+        bool SaveMarriageStatus(Entity.Domain.MarriageArrange entity);
     }
 }
