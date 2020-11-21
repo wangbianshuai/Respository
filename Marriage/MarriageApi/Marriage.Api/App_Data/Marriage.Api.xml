@@ -113,6 +113,13 @@
             <param name="request"></param>
             <returns></returns>
         </member>
+        <member name="M:Marriage.Api.Controllers.MarriageFeeController.QueryMatchmakerFee(Marriage.Entity.Application.MarriageFee.QueryMatchmakerFeeRequest)">
+            <summary>
+            查询红娘中介费明细
+            </summary>
+            <param name="request"></param>
+            <returns></returns>
+        </member>
         <member name="T:Marriage.Api.Controllers.MarriageSquareController">
             <summary>
             相亲广场

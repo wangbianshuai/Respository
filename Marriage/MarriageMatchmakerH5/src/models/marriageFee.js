@@ -8,6 +8,8 @@ const config = {
         post('saveEntityData', 'MarriageFee/SaveMarriageFee', 'saveEntityData'),
         //获取相亲费用
         post('getEntityData', 'MarriageFee/GetMarriageFee', 'getEntityData'),
+        //查询红娘下中介费明细
+        post('searchQuery', 'MarriageFee/QueryMatchmakerFee', 'searchQuery'),
     ]
 }
 function post(actionName, url, stateName, dataKey) {

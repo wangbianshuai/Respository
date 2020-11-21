@@ -720,6 +720,18 @@
         flex-direction:column;
         }
 
+        .divLeft2{
+            display: flex;
+            flex-direction:row;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+
+            .divDateLocation{
+                width: 50%;
+            }
+            }
+
         .divRight{
             display: flex;
             align-items: center;
@@ -790,5 +802,25 @@
 
     a, a:hover,  a:visited{
         color: #222222;
+    }
+}
+
+.divView3{
+    width: 100%;
+    height: 100%;
+    padding-top: toRem(90);
+    box-sizing: border-box;
+
+    .divNavBar{
+        width: 100%;
+        height: toRem(90);
+        margin-top: toRem(-90);
+        :global{  
+            .am-navbar{
+                padding: 0 !important;
+                margin: 0 !important;
+                height: toRem(90) !important;
+            }
+        }
     }
 }

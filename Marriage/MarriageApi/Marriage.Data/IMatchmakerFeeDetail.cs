@@ -30,5 +30,25 @@ namespace Marriage.Data
         /// <param name="entityData"></param>
         /// <returns></returns>
         Guid Insert(IEntityData entityData);
+        /// <summary>
+        /// 获取红娘总金额
+        /// </summary>
+        /// <param name="matchmakerId"></param>
+        /// <returns></returns>
+        IEntityData GetTotalAmountByMatchmakerId(Guid matchmakerId);
+
+        /// <summary>
+        /// 查询数据列表
+        /// </summary>
+        /// <param name="queryInfo"></param>
+        /// <returns></returns>
+        List<IEntityData> QueryDataList(Entity.Data.QueryInfo queryInfo);
+
+        /// <summary>
+        /// 查询总记录数
+        /// </summary>
+        /// <param name="queryInfo"></param>
+        /// <returns></returns>
+        int QueryCount(Entity.Data.QueryInfo queryInfo);
     }
 }

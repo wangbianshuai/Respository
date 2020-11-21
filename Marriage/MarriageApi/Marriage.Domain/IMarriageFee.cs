@@ -25,5 +25,26 @@ namespace Marriage.Domain
         /// <param name="entity"></param>
         /// <returns></returns>
         bool SaveMarriageFee(Entity.Domain.MarriageFee entity);
+        
+        /// <summary>
+        /// 获取红娘总金额
+        /// </summary>
+        /// <param name="matchmakerId"></param>
+        /// <returns></returns>
+        Entity.Domain.MarriageFee GetTotalMarriageFee(Guid matchmakerId);
+
+        /// <summary>
+        /// 查询数据列表
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        List<Entity.Domain.MatchmakerFeeDetail> QueryMatchmakerFeeDataList(Entity.Application.MarriageFee.QueryMatchmakerFeeRequest request);
+
+        /// <summary>
+        /// 查询分页信息
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        Entity.Application.PageInfo QueryMatchmakerFeePageInfo(Entity.Application.MarriageFee.QueryMatchmakerFeeRequest request);
     }
 }

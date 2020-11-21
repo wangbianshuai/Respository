@@ -594,6 +594,86 @@
             费用日期
             </summary>
         </member>
+        <member name="T:Marriage.Entity.Application.MarriageFee.QueryMatchmakerFeeRequest">
+            <summary>
+            查询红娘中介费明细请求
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageFee.QueryMatchmakerFeeRequest.PageIndex">
+            <summary>
+            分页索引，从1开始
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageFee.QueryMatchmakerFeeRequest.PageSize">
+            <summary>
+            分页大小
+            </summary>
+        </member>
+        <member name="T:Marriage.Entity.Application.MarriageFee.QueryMatchmakerFeeResponse">
+            <summary>
+            查询红娘中介费明细响应
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageFee.QueryMatchmakerFeeResponse.DataList">
+            <summary>
+            数据列表
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageFee.QueryMatchmakerFeeResponse.PageInfo">
+            <summary>
+            分页信息
+            </summary>
+        </member>
+        <member name="T:Marriage.Entity.Application.MarriageFee.MatchmakerFeeInfo">
+            <summary>
+            相亲安排信息
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageFee.MatchmakerFeeInfo.DetailId">
+            <summary> 
+            主键
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageFee.MatchmakerFeeInfo.ManUserName">
+            <summary>
+            男方
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageFee.MatchmakerFeeInfo.WomanUserName">
+            <summary>
+            女方
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageFee.MatchmakerFeeInfo.ManHeadImgUrl">
+            <summary>
+            男方头像
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageFee.MatchmakerFeeInfo.ManAge">
+            <summary>
+            男方年龄
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageFee.MatchmakerFeeInfo.WomanHeadImgUrl">
+            <summary>
+            女方头像
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageFee.MatchmakerFeeInfo.WomanAge">
+            <summary>
+            女方年龄
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageFee.MatchmakerFeeInfo.FeeDate">
+            <summary>
+            费用日期
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Application.MarriageFee.MatchmakerFeeInfo.Amount">
+            <summary>
+            总金额
+            </summary>
+        </member>
         <member name="T:Marriage.Entity.Application.MarriageFee.SaveMarriageFeeRequest">
             <summary>
             保存相亲费用请求
@@ -2267,6 +2347,11 @@
         <member name="P:Marriage.Entity.Application.Matchmaker.GetMatchmakerResponse.StatusInfo">
             <summary>
             状态信息
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Application.Matchmaker.GetMatchmakerResponse.TotalFeeAmount">
+            <summary>
+            中介费总金额
             </summary>
         </member>
         <member name="T:Marriage.Entity.Application.Matchmaker.StatusInfo2">
@@ -4738,6 +4823,76 @@
             <summary> 
             备注
             </summary> 
+        </member>
+        <member name="T:Marriage.Entity.Domain.MatchmakerFeeDetail">
+            <summary>
+            红娘中介费明细表
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Domain.MatchmakerFeeDetail.DetailId">
+            <summary> 
+            主键
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Domain.MatchmakerFeeDetail.MatchmakerId">
+            <summary> 
+            红娘Id
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Domain.MatchmakerFeeDetail.MatchmakerType">
+            <summary>
+            红娘类型，1：男方，2：女方，3：平台
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Domain.MatchmakerFeeDetail.MarriageArrangeId">
+            <summary> 
+            相亲安排Id
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Domain.MatchmakerFeeDetail.FeeDate">
+            <summary> 
+            费用日期
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Domain.MatchmakerFeeDetail.Amount">
+            <summary> 
+            金额
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Domain.MatchmakerFeeDetail.AppAmount">
+            <summary> 
+            平台中介费
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Domain.MatchmakerFeeDetail.ManUserName">
+            <summary>
+            男方
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Domain.MatchmakerFeeDetail.WomanUserName">
+            <summary>
+            女方
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Domain.MatchmakerFeeDetail.ManHeadImgUrl">
+            <summary>
+            男方头像
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Domain.MatchmakerFeeDetail.ManAge">
+            <summary>
+            男方年龄
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Domain.MatchmakerFeeDetail.WomanHeadImgUrl">
+            <summary>
+            女方头像
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Domain.MatchmakerFeeDetail.WomanAge">
+            <summary>
+            女方年龄
+            </summary>
         </member>
         <member name="T:Marriage.Entity.Domain.ConditionSelectValue">
             <summary>

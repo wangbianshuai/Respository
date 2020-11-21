@@ -14,6 +14,8 @@ namespace Marriage.Application.Impl
 
         public Domain.IMarriageArrange _MarriageArrange { get; set; }
 
+        public Domain.IMarriageFee _MarriageFee { get; set; }
+
         /// <summary>
         /// 获取用户红娘
         /// </summary>
@@ -145,6 +147,9 @@ namespace Marriage.Application.Impl
             //1、获取红娘信息
             int stepNo = 1;
             GetMatchmakerById(stepNo, request, response);
+
+            //2、获取中介费总金额
+            GetTotalMarriageFee(stepNo, request, response);
 
             //2、执行结束
             this.ExecEnd(response);
@@ -361,6 +366,29 @@ namespace Marriage.Application.Impl
             };
 
             return this.GetEntityData<Entity.Domain.Matchmaker>(stepNo, "获取红娘信息", "GetMatchmakerInfoById", response, execStep);
+        }
+
+        /// <summary>
+        /// 获取中介费总金额
+        /// </summary>
+        /// <param name="stepNo"></param>
+        /// <param name="request"></param>
+        /// <param name="response"></param>
+        /// <returns></returns>
+        private Entity.Domain.MarriageFee GetTotalMarriageFee(int stepNo, GetMatchmakerRequest request, GetMatchmakerResponse response)
+        {
+            Func<Entity.Domain.MarriageFee> execStep = () =>
+            {
+                var entity = _MarriageFee.GetTotalMarriageFee(Guid.Parse(request.LoginUserId));
+
+                entity = entity ?? new Entity.Domain.MarriageFee();
+
+                response.TotalFeeAmount = entity.Amount.ToString("C");
+
+                return entity;
+            };
+
+            return this.GetEntityData<Entity.Domain.MarriageFee>(stepNo, "获取中介费总金额", "GetTotalMarriageFee", response, execStep);
         }
 
         /// <summary>

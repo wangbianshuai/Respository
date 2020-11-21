@@ -7,7 +7,7 @@ using System.Text;
 
 namespace Marriage.Data.Impl
 {
-    public class MatchmakerFeeDetail : EntityAccess, IMatchmakerFeeDetail
+    public class MatchmakerFeeDetail : BaseData, IMatchmakerFeeDetail
     {
         public MatchmakerFeeDetail()
         {
@@ -58,6 +58,25 @@ namespace Marriage.Data.Impl
             object primaryKey = null;
             if (this.InsertEntity(entityData, out primaryKey)) return (Guid)primaryKey;
             return Guid.Empty;
+        }
+
+        /// <summary>
+        /// 获取红娘总金额
+        /// </summary>
+        /// <param name="matchmakerId"></param>
+        /// <returns></returns>
+        public IEntityData GetTotalAmountByMatchmakerId(Guid matchmakerId)
+        {
+            IQuery query = new Query(this.EntityType.TableName);
+
+            List<IDbDataParameter> parameterList = new List<IDbDataParameter>();
+            parameterList.Add(this.InParameter("@MatchmakerId", matchmakerId));
+
+            query.Where("where MatchmakerId=@MatchmakerId", parameterList);
+
+            query.Select("sum(Amount) Amount");
+
+            return this.SelectEntity(query);
         }
     }
 }

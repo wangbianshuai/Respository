@@ -2,7 +2,9 @@
 using Marriage.Entity.Application.MarriageFee;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace Marriage.Application.Impl
 {
@@ -79,6 +81,81 @@ namespace Marriage.Application.Impl
             //日志记录
             return this.SetReturnResponse<SaveMarriageFeeResponse>(title, "SaveMarriageFee", requestContent, response);
         }
+
+        /// <summary>
+        /// 查询红娘中介费明细
+        /// </summary>
+        public QueryMatchmakerFeeResponse QueryMatchmakerFee(QueryMatchmakerFeeRequest request)
+        {
+            string title = "查询红娘中介费明细";
+            string requestContent = Utility.Common.ToJson(request);
+            QueryMatchmakerFeeResponse response = new QueryMatchmakerFeeResponse();
+
+            this.InitMessage();
+
+            this.IsNullRequest(request, response);
+
+            //1、获取用户信息
+            int stepNo = 1;
+            Entity.Domain.Matchmaker matchmaker = this.GetMatchmakerById(stepNo, request.LoginUserId, response);
+
+            //2、查询红娘中介费明细
+            stepNo += 1;
+            QueryMatchmakerFee(stepNo, matchmaker, request, response);
+
+            //3、执行结束
+            this.ExecEnd(response);
+
+            //日志记录
+            return this.SetReturnResponse<QueryMatchmakerFeeResponse>(title, "QueryMatchmakerFee", requestContent, response);
+        }
+
+        private List<Entity.Domain.MatchmakerFeeDetail> QueryMatchmakerFee(int stepNo, Entity.Domain.Matchmaker matchmaker, QueryMatchmakerFeeRequest request, QueryMatchmakerFeeResponse response)
+        {
+            if (matchmaker == null) return null;
+
+            Func<List<Entity.Domain.MatchmakerFeeDetail>> execStep = () =>
+            {
+                List<Entity.Domain.MatchmakerFeeDetail> dataList = null;
+
+                if (request.PageIndex > 0 && request.PageSize > 0)
+                {
+                    Parallel.Invoke(() =>
+                    {
+                        dataList = _MarriageFee.QueryMatchmakerFeeDataList(request);
+                    },
+                    () =>
+                    {
+                        response.PageInfo = _MarriageFee.QueryMatchmakerFeePageInfo(request);
+                    });
+                }
+                else dataList = _MarriageFee.QueryMatchmakerFeeDataList(request);
+
+                if (dataList != null) response.DataList = (from a in dataList
+                                                           select GetMatchmakerFeeDetail(a)).ToList();
+
+                return dataList;
+            };
+
+            return this.GetEntityDataList<Entity.Domain.MatchmakerFeeDetail>(stepNo, "查询红娘中介费明细", "QueryMatchmakerFee", response, execStep, false);
+        }
+
+        MatchmakerFeeInfo GetMatchmakerFeeDetail(Entity.Domain.MatchmakerFeeDetail entity)
+        {
+            return new MatchmakerFeeInfo()
+            {
+                ManAge = entity.ManAge,
+                ManHeadImgUrl = entity.ManHeadImgUrl,
+                ManUserName = entity.ManUserName,
+                Amount = entity.Amount.ToString("C"),
+                FeeDate = entity.FeeDate.ToString("yyyy-MM-dd"),
+                WomanAge = entity.WomanAge,
+                WomanHeadImgUrl = entity.WomanHeadImgUrl,
+                WomanUserName = entity.WomanUserName,
+                DetailId = entity.DetailId
+            };
+        }
+
 
         /// <summary>
         /// 保存相亲费用

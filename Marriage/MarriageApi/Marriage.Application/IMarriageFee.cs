@@ -19,5 +19,10 @@ namespace Marriage.Application
         /// 保存相亲费用
         /// </summary>
         SaveMarriageFeeResponse SaveMarriageFee(SaveMarriageFeeRequest request);
+
+        /// <summary>
+        /// 查询红娘中介费明细
+        /// </summary>
+        QueryMatchmakerFeeResponse QueryMatchmakerFee(QueryMatchmakerFeeRequest request);
     }
 }

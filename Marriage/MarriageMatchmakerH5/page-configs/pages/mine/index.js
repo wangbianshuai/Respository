@@ -48,7 +48,7 @@ function getEventActions() {
 
 function getMatchmakerFeeListMenu() {
     return {
-        name: 'MatchmakerFee',
+        name: 'TotalFeeAmount',
         type: 'ListMenu',
         className: 'divListMenu',
         dataSource: [{ text: '红包总金额', arrow: 'horizontal', thumb: 'fee.png', url: '/mine/matchmakerFee' }]
@@ -57,7 +57,7 @@ function getMatchmakerFeeListMenu() {
 
 function getQrCodeListMenu() {
     return {
-        name: 'MatchmakerFee',
+        name: 'MyQrcode',
         type: 'ListMenu',
         className: 'divListMenu',
         dataSource: [{ text: '我的二维码', arrow: 'horizontal', thumb: 'qrcode.png', url: '/mine/myqrcode' }]

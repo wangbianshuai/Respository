@@ -24,6 +24,10 @@ namespace Marriage.Entity.Application.Matchmaker
         /// 状态信息
         /// </summary>
         public StatusInfo2 StatusInfo { get; set; }
+        /// <summary>
+        /// 中介费总金额
+        /// </summary>
+        public string TotalFeeAmount { get; set; }
     }
 
     /// <summary>

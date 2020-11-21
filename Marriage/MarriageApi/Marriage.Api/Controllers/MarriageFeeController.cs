@@ -46,5 +46,17 @@ namespace Marriage.Api.Controllers
         {
             return await Task.Run(() => _MarriageFee.SaveMarriageFee(request));
         }
+
+        /// <summary>
+        /// 查询红娘中介费明细
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        [HttpPost]
+        [SwaggerOpenApiTokenParameter]
+        public async Task<QueryMatchmakerFeeResponse> QueryMatchmakerFee(QueryMatchmakerFeeRequest request)
+        {
+            return await Task.Run(() => _MarriageFee.QueryMatchmakerFee(request));
+        }
     }
 }

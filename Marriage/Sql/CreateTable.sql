@@ -733,6 +733,35 @@ left join t_Matchmaker e on a.MatchmakerId=e.MatchmakerId
 where a.IsDelete=0
 go
 
+if exists(select * from sysobjects where name='v_MatchmakerFeeDetail2')
+drop view v_MatchmakerFeeDetail2
+go
+
+create view v_MatchmakerFeeDetail2
+as
+with MatchmakerFee as
+(
+select MarriageArrangeId DetailId, FeeDate, MatchmakerId, sum(Amount) Amount from t_MatchmakerFeeDetail
+group by MarriageArrangeId, FeeDate,MatchmakerId
+)
+select a.*,
+b.Name AppMatchmakerName,
+c.Name ManMatchmakerName,
+d.Name WomanMatchmakerName,
+e.Name ManUserName,
+e.HeadImgUrl ManHeadImgUrl,
+year(GETDATE())- YEAR(e.Birthday) as ManAge,
+f.Name WomanUserName,
+f.HeadImgUrl WomanHeadImgUrl,
+year(GETDATE())- YEAR(f.Birthday) as WomanAge,
+isNull(a.UpdateDate,a.CreateDate) UpdateDate2
+from MatchmakerFee a
+inner join t_MarriageArrange b on a.DetailId=b.MarriageArrangeId and b.IsDelete=0
+left join t_MarriageUser e on b.ManUserId=e.UserId
+left join t_MarriageUser f on b.WomanUserId=f.UserId
+go
+
+
 --7、相亲用户生活照信息表
 if exists(select * from sysobjects where name='t_MarriageUserPhoto')
 drop table t_MarriageUserPhoto

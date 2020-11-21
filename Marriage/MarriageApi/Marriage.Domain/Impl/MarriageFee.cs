@@ -132,5 +132,66 @@ namespace Marriage.Domain.Impl
 
             return detail;
         }
+
+        /// <summary>
+        /// 获取红娘总金额
+        /// </summary>
+        /// <param name="matchmakerId"></param>
+        /// <returns></returns>
+        public Entity.Domain.MarriageFee GetTotalMarriageFee(Guid matchmakerId)
+        {
+            return Parse.IEntityDataTo<Entity.Domain.MarriageFee>(_MatchmakerFeeDetail.GetTotalAmountByMatchmakerId(matchmakerId));
+        }
+
+        /// <summary>
+        /// 查询数据列表
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        public List<Entity.Domain.MatchmakerFeeDetail> QueryMatchmakerFeeDataList(Entity.Application.MarriageFee.QueryMatchmakerFeeRequest request)
+        {
+            Entity.Data.QueryInfo queryInfo = new Entity.Data.QueryInfo();
+            queryInfo.ConditionList = GetConditionList(request);
+            queryInfo.OrderByList = GetOrderByList(request);
+            queryInfo.TableName = "v_MatchmakerFeeDetail2";
+
+            queryInfo.PageIndex = request.PageIndex;
+            queryInfo.PageSize = request.PageSize;
+
+            return Parse.IEntityDataListTo<Entity.Domain.MatchmakerFeeDetail>(_MatchmakerFeeDetail.QueryDataList(queryInfo));
+        }
+
+        /// <summary>
+        /// 查询分页信息
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        public Entity.Application.PageInfo QueryMatchmakerFeePageInfo(Entity.Application.MarriageFee.QueryMatchmakerFeeRequest request)
+        {
+            Entity.Data.QueryInfo queryInfo = new Entity.Data.QueryInfo();
+            queryInfo.ConditionList = GetConditionList(request);
+            queryInfo.OrderByList = GetOrderByList(request);
+            queryInfo.TableName = "v_MatchmakerFeeDetail2";
+
+            int totalCount = _MatchmakerFeeDetail.QueryCount(queryInfo);
+
+            return new Entity.Application.PageInfo(request.PageIndex, request.PageSize, totalCount);
+        }
+
+        List<Entity.Data.OrderByType> GetOrderByList(Entity.Application.MarriageFee.QueryMatchmakerFeeRequest request)
+        {
+            Entity.Data.OrderByType orderBy = new Entity.Data.OrderByType("FeeDate", "desc");
+
+            return new List<Entity.Data.OrderByType>() { orderBy };
+        }
+
+        List<Entity.Data.QueryCondition> GetConditionList(Entity.Application.MarriageFee.QueryMatchmakerFeeRequest request)
+        {
+            List<Entity.Data.QueryCondition> queryConditionList = new List<Entity.Data.QueryCondition>();
+
+            queryConditionList.Add(new Entity.Data.QueryCondition("MatchmakerId", "=", Guid.Parse(request.LoginUserId)));
+
+            return queryConditionList;
+        }
     }
 }
