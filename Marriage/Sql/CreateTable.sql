@@ -745,16 +745,12 @@ select MarriageArrangeId DetailId, FeeDate, MatchmakerId, sum(Amount) Amount fro
 group by MarriageArrangeId, FeeDate,MatchmakerId
 )
 select a.*,
-b.Name AppMatchmakerName,
-c.Name ManMatchmakerName,
-d.Name WomanMatchmakerName,
 e.Name ManUserName,
 e.HeadImgUrl ManHeadImgUrl,
 year(GETDATE())- YEAR(e.Birthday) as ManAge,
 f.Name WomanUserName,
 f.HeadImgUrl WomanHeadImgUrl,
-year(GETDATE())- YEAR(f.Birthday) as WomanAge,
-isNull(a.UpdateDate,a.CreateDate) UpdateDate2
+year(GETDATE())- YEAR(f.Birthday) as WomanAge
 from MatchmakerFee a
 inner join t_MarriageArrange b on a.DetailId=b.MarriageArrangeId and b.IsDelete=0
 left join t_MarriageUser e on b.ManUserId=e.UserId
