@@ -1,4 +1,4 @@
-const { getTextBox, getSelect, getButton, getDatePicker } = require('../common');
+const { getTextBox, getButton } = require('../common');
 
 //index 100-199
 const dataActionTypes = {
