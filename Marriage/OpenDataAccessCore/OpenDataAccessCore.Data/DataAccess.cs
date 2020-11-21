@@ -79,6 +79,11 @@ namespace OpenDataAccessCore.Data
                 if (string.IsNullOrEmpty(_ConnectionString))
                 {
                     _ConnectionString = Utility.AppSettings.GetAppSetting("ConnectionString");
+
+                    if (string.IsNullOrEmpty(_ConnectionString) && ConfigurationManager.ConnectionStrings["ConnectionString"] != null)
+                    {
+                        return ConfigurationManager.ConnectionStrings["ConnectionString"].ConnectionString;
+                    }
                 }
                 return _ConnectionString;
             }

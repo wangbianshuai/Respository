@@ -13,7 +13,7 @@ namespace Marriage.ComputeMarriageMakePair
                 var startup =new Startup();
                 var container= startup.ConfigureContainer();
 
-                Application.IMarriageMakePair marriageMakePair = container.Resolve<Application.Impl.MarriageMakePair>();
+                Application.IMarriageMakePair marriageMakePair = container.Resolve<Application.IMarriageMakePair>();
 
                 ComputeMarriageMakePair(marriageMakePair);
 
