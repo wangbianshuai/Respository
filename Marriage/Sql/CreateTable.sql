@@ -293,30 +293,6 @@ and b.Status in (3,4,5)
 go
 
 
-if exists(select * from sysobjects where name='v_MarriageUser3')
-drop view v_MarriageUser3
-go
-
-create view v_MarriageUser3
-as
-with UserConditionType as
-(
-select distinct a.UserId from t_UserConditionType a, t_UserConditionType b
-where a.UserId= b.UserId
-and a.SelectType=1 and b.SelectType=2
-)
-select a.*
-from t_MarriageUser a,UserConditionType c
-where a.IsDelete=0 and a.Status=1
-and a.UserId=c.UserId
-and not exists
-(
-select 1 from t_MarriageArrange b where (a.UserId = b.ManUserId or a.UserId=b.WomanUserId) 
-and b.Status in (3,4,5)
-)
-go
-
-
 --16、相亲安排信息表（t_ArrangeMarriage）
 if exists(select * from sysobjects where name='t_MarriageArrange')
 drop table t_MarriageArrange
@@ -444,6 +420,29 @@ left join t_Matchmaker d on a.WomanMatchmakerId=d.MatchmakerId
 left join t_MarriageUser e on a.ManUserId=e.UserId
 left join t_MarriageUser f on a.WomanUserId=f.UserId
 where a.IsDelete=0
+go
+
+if exists(select * from sysobjects where name='v_MarriageUser3')
+drop view v_MarriageUser3
+go
+
+create view v_MarriageUser3
+as
+with UserConditionType as
+(
+select distinct a.UserId from t_UserConditionType a, t_UserConditionType b
+where a.UserId= b.UserId
+and a.SelectType=1 and b.SelectType=2
+)
+select a.*
+from t_MarriageUser a,UserConditionType c
+where a.IsDelete=0 and a.Status=1
+and a.UserId=c.UserId
+and not exists
+(
+select 1 from t_MarriageArrange b where (a.UserId = b.ManUserId or a.UserId=b.WomanUserId) 
+and b.Status in (3,4,5)
+)
 go
 
 if exists(select * from sysobjects where name='v_MarriageArrangeUser1')

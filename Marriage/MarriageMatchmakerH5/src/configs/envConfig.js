@@ -31,7 +31,7 @@ function getEnv(h) {
 }
 
 function getWebServiceUrl() {
-    return EnvConfig.isProd ? "/user/" : '/';
+    return EnvConfig.isProd ? "/matchmaker/" : '/';
 }
 
 function getResourcesServiceUrl() {

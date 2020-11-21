@@ -25,7 +25,7 @@ export default (props) => {
         <Flex.Item className={styles.divPage} >
             {Base.getPageComponent(path, props, pageKey)}
         </Flex.Item>
-        <Flex.Item className={styles.divTabBar} style={{ flex: 0 }}>
+        <Flex.Item className={styles.divTabBar}>
             <Components.TabBar property={_tabBarProperty} pathName={pathName} history={history} />
         </Flex.Item>
     </Flex></div>)
