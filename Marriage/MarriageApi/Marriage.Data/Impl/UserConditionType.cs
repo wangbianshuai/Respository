@@ -75,5 +75,16 @@ namespace Marriage.Data.Impl
             object primaryKey = entityData.GetValue(this.EntityType.PrimaryKey);
             return this.UpdateEntityByPrimaryKey(primaryKey, entityData);
         }
+
+        /// <summary>
+        /// 获取条件型
+        /// </summary>
+        /// <returns></returns>
+        public List<IEntityData> GetUserConditionTypes()
+        {
+            IQuery query = new Query("v_UserConditionType3");
+
+            return this.SelectEntities(query);
+        }
     }
 }

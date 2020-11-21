@@ -108,7 +108,7 @@ namespace Marriage.Domain.Impl
             //3、获取用户选择值
             if (userConditionTypeId != Guid.Empty)
             {
-                var selectValueList = Parse.IEntityDataListTo<Entity.Domain.ConditionSelectValue>(_UserConditionSelectValue.GetEntityDataList(userConditionTypeId));
+                var selectValueList = Parse.IEntityDataListTo<Entity.Domain.UserConditionSelectValue>(_UserConditionSelectValue.GetEntityDataList(userConditionTypeId));
                 var list2 = (from a in itemList
                              from b in selectValueList
                              where a.ItemId == b.ConditionItemId
@@ -215,6 +215,62 @@ namespace Marriage.Domain.Impl
             }
 
             return blSucceed;
+        }
+
+        /// <summary>
+        /// 获取条件型
+        /// </summary>
+        /// <returns></returns>
+        public List<Entity.Domain.UserConditionType> GetUserConditionTypes()
+        {
+            List<IEntityData> entityDataList = _UserConditionType.GetUserConditionTypes();
+
+            var groupby = entityDataList.GroupBy(b => new { CondtionTypeId = b.GetValue<Guid>("ConditionTypeId"), UserId = b.GetValue<Guid>("UserId") });
+
+            List<Entity.Domain.UserConditionType> userConditionTypeList = new List<Entity.Domain.UserConditionType>();
+
+            Entity.Domain.UserConditionType userConditionType = null;
+            foreach (var a in groupby)
+            {
+                List<IEntityData> list = a.ToList();
+                IEntityData data = list[0];
+
+                userConditionType = new Entity.Domain.UserConditionType();
+
+                userConditionType.ConditionTypeId = data.GetValue<Guid>("ConditionTypeId");
+                userConditionType.ConditionTypeName = data.GetStringValue("ConditionTypeName");
+                userConditionType.UserId = data.GetValue<Guid>("UserId");
+
+                userConditionType.UserSelectItems1 = new List<Entity.Domain.UserConditionSelectValue>();
+                userConditionType.UserSelectItems2 = new List<Entity.Domain.UserConditionSelectValue>();
+
+                foreach(var c in list)
+                {
+                    byte selectType = c.GetValue<byte>("SelectType");
+                    if (selectType == 1) userConditionType.UserSelectItems1.Add(GetSelectItem(c));
+                    else if (selectType == 2) userConditionType.UserSelectItems2.Add(GetSelectItem(c));
+                }
+
+                userConditionTypeList.Add(userConditionType);
+            }
+
+            return userConditionTypeList;
+        }
+
+        Entity.Domain.UserConditionSelectValue GetSelectItem(IEntityData c)
+        {
+            return new Entity.Domain.UserConditionSelectValue()
+            {
+                ItemId = c.GetValue<Guid>("ItemId"),
+                Title = c.GetStringValue("Title"),
+                Value = c.GetStringValue("Value"),
+                DataSourceId = c.GetValue<Guid>("DataSourceId"),
+                DataType = c.GetStringValue("DataType"),
+                DisplayIndex = c.GetValue<int>("DisplayIndex"),
+                IsInterval = c.GetValue<byte>("IsInterval"),
+                IsSingle = c.GetValue<byte>("IsSingle"),
+                Sex = c.GetValue<byte>("Sex")
+            };
         }
     }
 }

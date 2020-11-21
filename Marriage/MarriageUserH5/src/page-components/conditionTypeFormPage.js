@@ -33,12 +33,18 @@ const formItemToProperty = (item, i, property, pageAxis) => {
   if (selectType === 1) {
     if (item.IsSingle && item.DataSourceItems) return getPicker(item);
     else if (!item.IsSingle && item.DataSourceItems) return getCheckBoxGroup(item);
-    else if (item.IsInterval) return getIntervalTextBox(item);
+    else if (item.IsInterval) {
+      item.DataType = 'number';
+      return getIntervalTextBox(item);
+    }
     return getTextBox(item, selectType);
   }
   else {
     if (item.DataSourceItems) return getCheckBoxGroup(item);
-    else if (item.IsInterval || item.DataType === 'number') return getIntervalTextBox(item);
+    else if (item.IsInterval || item.DataType === 'number') {
+      item.DataType = 'number';
+      return getIntervalTextBox(item);
+    }
     return getTextBox(item, selectType);
   }
 };

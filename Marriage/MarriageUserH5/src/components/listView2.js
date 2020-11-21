@@ -65,12 +65,15 @@ export default (props) => {
 
   const className = styles[property.listClassName || 'divData'];
 
+  const size = dataList ? dataList.length : 0;
+
   return (<ListView dataSource={dataSource}
     renderRow={renderRow}
     className={className}
     onEndReached={onEndReached}
     onEndReachedThreshold={50}
     onScroll={onScroll}
+    pageSize={size}
     renderHeader={renderHeader}
     renderFooter={() => renderFooter(isLoadingMore)}
     pullToRefresh={

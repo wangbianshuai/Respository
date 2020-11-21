@@ -1,0 +1,25 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Autofac" Version="5.2.0" />
+    <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="6.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\OpenDataAccessCore\OpenDataAccessCore.Data\OpenDataAccessCore.Data.csproj" />
+    <ProjectReference Include="..\..\..\OpenDataAccessCore\OpenDataAccessCore.Entity\OpenDataAccessCore.Entity.csproj" />
+    <ProjectReference Include="..\..\..\OpenDataAccessCore\OpenDataAccessCore.Utility\OpenDataAccessCore.Utility.csproj" />
+    <ProjectReference Include="..\..\Marriage.Application\Marriage.Application.csproj" />
+    <ProjectReference Include="..\..\Marriage.Data\Marriage.Data.csproj" />
+    <ProjectReference Include="..\..\Marriage.Domain\Marriage.Domain.csproj" />
+    <ProjectReference Include="..\..\Marriage.Entity\Marriage.Entity.csproj" />
+    <ProjectReference Include="..\..\Marriage.Service\Marriage.Service.csproj" />
+    <ProjectReference Include="..\..\Marriage.Utility\Marriage.Utility.csproj" />
+  </ItemGroup>
+
+</Project>

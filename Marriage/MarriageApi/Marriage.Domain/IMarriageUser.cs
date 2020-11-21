@@ -74,5 +74,11 @@ namespace Marriage.Domain
         /// <param name="userId"></param>
         /// <returns></returns>
         Entity.Domain.MarriageUser GetMarriageArrangeUserByUserId(Guid loginUserId, Guid userId);
+
+        /// <summary>
+        /// 获取相亲匹配用户列表
+        /// </summary>
+        /// <returns></returns>
+        List<Entity.Domain.MarriageUser> GetMarriageMakePairUsers();
     }
 }

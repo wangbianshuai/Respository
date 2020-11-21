@@ -222,5 +222,14 @@ namespace Marriage.Domain.Impl
             return entity;
 
         }
+
+        /// <summary>
+        /// 获取相亲匹配用户列表
+        /// </summary>
+        /// <returns></returns>
+        public List<Entity.Domain.MarriageUser> GetMarriageMakePairUsers()
+        {
+            return Parse.IEntityDataListTo<Entity.Domain.MarriageUser>(_MarriageUser.GetMarriageMakePairUsers());
+        }
     }
 }

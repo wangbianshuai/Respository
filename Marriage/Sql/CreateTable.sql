@@ -293,6 +293,30 @@ and b.Status in (3,4,5)
 go
 
 
+if exists(select * from sysobjects where name='v_MarriageUser3')
+drop view v_MarriageUser3
+go
+
+create view v_MarriageUser3
+as
+with UserConditionType as
+(
+select distinct a.UserId from t_UserConditionType a, t_UserConditionType b
+where a.UserId= b.UserId
+and a.SelectType=1 and b.SelectType=2
+)
+select a.*
+from t_MarriageUser a,UserConditionType c
+where a.IsDelete=0 and a.Status=1
+and a.UserId=c.UserId
+and not exists
+(
+select 1 from t_MarriageArrange b where (a.UserId = b.ManUserId or a.UserId=b.WomanUserId) 
+and b.Status in (3,4,5)
+)
+go
+
+
 --16、相亲安排信息表（t_ArrangeMarriage）
 if exists(select * from sysobjects where name='t_MarriageArrange')
 drop table t_MarriageArrange
@@ -861,7 +885,7 @@ go
 
 create view v_DataSourceItem
 as
-select a.*
+select a.*,b.Name Title
 from t_DataSourceItem a, t_DataSource b where a.DataSourceId=b.DataSourceId and  b.IsDelete=0
 go
 
@@ -941,6 +965,17 @@ group by ConditionTypeId
 )
 select a.*,b.ManItemCount,b.WomanItemCount
 from t_ConditionType a, ConditionItemCount b
+where IsDelete=0 and a.ConditionTypeId=b.ConditionTypeId
+go
+
+if exists(select * from sysobjects where name='v_ConditionType2')
+drop view v_ConditionType2
+go
+
+create view v_ConditionType2
+as
+select b.*,a.Name
+from t_ConditionType a, t_ConditionItem b
 where IsDelete=0 and a.ConditionTypeId=b.ConditionTypeId
 go
 
@@ -1058,6 +1093,34 @@ select a.*,b.UserId,b.SelectType,c.DataSourceId,c.DataType,c.DisplayIndex,c.IsIn
 t_ConditionItem c 
 where a.UserConditionTypeId=b.UserConditionTypeId
 and a.ConditionItemId= c.ItemId
+go
+
+
+if exists(select * from sysobjects where name='v_UserConditionType3')
+drop view v_UserConditionType3
+go
+
+create view v_UserConditionType3
+as
+select a.UserConditionTypeId,a.UserId,a.SelectType,a.ConditionTypeId,
+b.Name ConditionTypeName,
+c.Value,
+d.DataSourceId,
+d.DataType,
+d.DisplayIndex,
+d.IsInterval,
+d.IsSingle,
+d.Sex,
+d.ItemId,
+d.Title
+from t_UserConditionType a,t_ConditionType b,
+t_UserConditionSelectValue c,t_ConditionItem d,v_MarriageUser3 e
+where a.ConditionTypeId=b.ConditionTypeId
+and b.IsDelete=0
+and a.UserId=e.UserId
+and a.UserConditionTypeId=c.UserConditionTypeId
+and c.ConditionItemId=d.ItemId
+and b.ConditionTypeId=d.ConditionTypeId
 go
 
 

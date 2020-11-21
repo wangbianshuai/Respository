@@ -37,5 +37,16 @@ namespace Marriage.Data.Impl
             query.Where(string.Format("where IsDelete=0 and DataSourceId in ({0})", string.Join(",", inParameterList)), parameterList);
             return this.SelectEntities(query);
         }
+
+        /// <summary>
+        /// 获取数据源列表
+        /// </summary>
+        /// <returns></returns>
+        public List<IEntityData> GetDataSources()
+        {
+            IQuery query = new Query("v_DataSourceItem");
+
+            return this.SelectEntities(query);
+        }
     }
 }

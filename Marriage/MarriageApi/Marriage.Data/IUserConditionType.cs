@@ -44,5 +44,11 @@ namespace Marriage.Data
         /// <param name="entityData"></param>
         /// <returns></returns>
         bool Update(IEntityData entityData);
+
+        /// <summary>
+        /// 获取条件型
+        /// </summary>
+        /// <returns></returns>
+        List<IEntityData> GetUserConditionTypes();
     }
 }

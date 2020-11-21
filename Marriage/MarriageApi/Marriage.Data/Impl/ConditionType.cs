@@ -30,6 +30,5 @@ namespace Marriage.Data.Impl
 
             return this.SelectEntity(query);
         }
-
     }
 }

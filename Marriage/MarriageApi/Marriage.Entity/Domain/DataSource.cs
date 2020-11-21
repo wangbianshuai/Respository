@@ -21,5 +21,9 @@ namespace Marriage.Entity.Domain
         /// 备注
         /// </summary> 
         public string Remark { get; set; }
+        /// <summary>
+        /// 数据源选项
+        /// </summary>
+        public List<DataSourceItem> Items { get; set; }
     }
 }

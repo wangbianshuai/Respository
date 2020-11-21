@@ -51,5 +51,11 @@ namespace Marriage.Data
         /// <param name="queryInfo"></param>
         /// <returns></returns>
         int QueryCount(Entity.Data.QueryInfo queryInfo);
+
+        /// <summary>
+        /// 获取相亲匹配用户列表
+        /// </summary>
+        /// <returns></returns>
+        List<IEntityData> GetMarriageMakePairUsers();
     }
 }

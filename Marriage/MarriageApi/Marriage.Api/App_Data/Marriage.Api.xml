@@ -120,6 +120,18 @@
             <param name="request"></param>
             <returns></returns>
         </member>
+        <member name="T:Marriage.Api.Controllers.MarriageMakePairController">
+            <summary>
+            相亲匹配
+            </summary>
+        </member>
+        <member name="M:Marriage.Api.Controllers.MarriageMakePairController.ComputeMarriageMakePair(Marriage.Entity.Application.MarriageMakePair.ComputeMarriageMakePairRequest)">
+            <summary>
+            计算相亲匹配
+            </summary>
+            <param name="request"></param>
+            <returns></returns>
+        </member>
         <member name="T:Marriage.Api.Controllers.MarriageSquareController">
             <summary>
             相亲广场

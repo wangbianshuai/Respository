@@ -16,5 +16,11 @@ namespace Marriage.Data
         /// <param name="ids"></param>
         /// <returns></returns>
         List<IEntityData> GetEnityDataListByIds(List<Guid> ids);
+
+        /// <summary>
+        /// 获取数据源列表
+        /// </summary>
+        /// <returns></returns>
+        List<IEntityData> GetDataSources();
     }
 }

@@ -1,16 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using OpenDataAccessCore.Entity;
 
-namespace Marriage.Entity.Data
+namespace Marriage.Entity.Domain
 {
     /// <summary>
-    /// 相亲配对计算信息表
+    /// 相亲匹配
     /// </summary>
-    [TableProperty(Name = "t_MarriageMakePair", PrimaryKey = "MarkPairId")]
-    public class MarriageMakePair : EntityModel, IEntity
+    public class MarriageMakePair
     {
         /// <summary> 
         /// 主键
@@ -28,13 +25,5 @@ namespace Marriage.Entity.Data
         /// 匹配度（%）
         /// </summary> 
         public decimal PercentValue { get; set; }
-        /// <summary> 
-        /// 更新时间
-        /// </summary> 
-        public DateTime CreateDate { get; set; }
-        /// <summary> 
-        /// 行版本
-        /// </summary> 
-        public string RowVersion { get; set; }
     }
 }

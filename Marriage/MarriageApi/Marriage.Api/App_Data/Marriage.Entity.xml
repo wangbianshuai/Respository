@@ -759,6 +759,16 @@
             保存相亲费用响应
             </summary>
         </member>
+        <member name="T:Marriage.Entity.Application.MarriageMakePair.ComputeMarriageMakePairRequest">
+            <summary>
+            计算相亲匹配请求
+            </summary>
+        </member>
+        <member name="T:Marriage.Entity.Application.MarriageMakePair.ComputeMarriageMakePairResponse">
+            <summary>
+            计算相亲匹配响应
+            </summary>
+        </member>
         <member name="T:Marriage.Entity.Application.MarriageUserPhoto.DeleteUserPhotosRequest">
             <summary>
             删除用户照片请求
@@ -3297,24 +3307,24 @@
             相亲配对计算信息表
             </summary>
         </member>
-        <member name="P:Marriage.Entity.Data.MarriageMakePair.MarkPairId">
+        <member name="P:Marriage.Entity.Data.MarriageMakePair.MakePairId">
             <summary> 
             主键
             </summary> 
         </member>
         <member name="P:Marriage.Entity.Data.MarriageMakePair.UserId">
             <summary> 
-            用户
+            相亲用户Id
             </summary> 
         </member>
-        <member name="P:Marriage.Entity.Data.MarriageMakePair.UserCount">
+        <member name="P:Marriage.Entity.Data.MarriageMakePair.OtherSideUserId">
             <summary> 
-            配对符合条件人数，大于30%的人数
+            对方用户Id
             </summary> 
         </member>
-        <member name="P:Marriage.Entity.Data.MarriageMakePair.CreateUser">
+        <member name="P:Marriage.Entity.Data.MarriageMakePair.PercentValue">
             <summary> 
-            更新人
+            匹配度（%）
             </summary> 
         </member>
         <member name="P:Marriage.Entity.Data.MarriageMakePair.CreateDate">
@@ -3337,14 +3347,39 @@
             主键
             </summary> 
         </member>
-        <member name="P:Marriage.Entity.Data.MarriageMakePairDetail.MarkPairId">
+        <member name="P:Marriage.Entity.Data.MarriageMakePairDetail.MakePairId">
             <summary> 
-            配对Id
+            配对明细Id
             </summary> 
         </member>
-        <member name="P:Marriage.Entity.Data.MarriageMakePairDetail.UserId">
+        <member name="P:Marriage.Entity.Data.MarriageMakePairDetail.ConditionTypeId">
             <summary> 
-            用户Id
+            条件类型Id
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Data.MarriageMakePairDetail.ConditionTypeNmae">
+            <summary> 
+            条件类型
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Data.MarriageMakePairDetail.ConditionItemId">
+            <summary> 
+            条件选项Id
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Data.MarriageMakePairDetail.ConditionItemTitle">
+            <summary> 
+            条件标题
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Data.MarriageMakePairDetail.SelfSelectValue">
+            <summary> 
+            自己选择值
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Data.MarriageMakePairDetail.OtherSideSelectValue">
+            <summary> 
+            对方选择值
             </summary> 
         </member>
         <member name="P:Marriage.Entity.Data.MarriageMakePairDetail.PercentValue">
@@ -4124,6 +4159,11 @@
             备注
             </summary> 
         </member>
+        <member name="P:Marriage.Entity.Domain.DataSource.Items">
+            <summary>
+            数据源选项
+            </summary>
+        </member>
         <member name="T:Marriage.Entity.Domain.DataSourceItem">
             <summary>
             数据源选项
@@ -4483,6 +4523,46 @@
             <summary> 
             平台红娘
             </summary> 
+        </member>
+        <member name="T:Marriage.Entity.Domain.MarriageMakePair">
+            <summary>
+            相亲匹配
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Domain.MarriageMakePair.MakePairId">
+            <summary> 
+            主键
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Domain.MarriageMakePair.UserId">
+            <summary> 
+            相亲用户Id
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Domain.MarriageMakePair.OtherSideUserId">
+            <summary> 
+            对方用户Id
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Domain.MarriageMakePair.PercentValue">
+            <summary> 
+            匹配度（%）
+            </summary> 
+        </member>
+        <member name="T:Marriage.Entity.Domain.MarriageMakePair2">
+            <summary>
+            相亲匹配
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Domain.MarriageMakePair2.ManUserId">
+            <summary>
+            男方
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Domain.MarriageMakePair2.WomanUserId">
+            <summary>
+            女方
+            </summary>
         </member>
         <member name="T:Marriage.Entity.Domain.MarriageSquare">
             <summary>
@@ -4899,30 +4979,70 @@
             女方年龄
             </summary>
         </member>
-        <member name="T:Marriage.Entity.Domain.ConditionSelectValue">
+        <member name="T:Marriage.Entity.Domain.UserConditionSelectValue">
             <summary>
             相亲用户条件选项值
             </summary>
         </member>
-        <member name="P:Marriage.Entity.Domain.ConditionSelectValue.ItemId">
+        <member name="P:Marriage.Entity.Domain.UserConditionSelectValue.ItemId">
             <summary> 
             主键
             </summary> 
         </member>
-        <member name="P:Marriage.Entity.Domain.ConditionSelectValue.UserConditionTypeId">
+        <member name="P:Marriage.Entity.Domain.UserConditionSelectValue.UserConditionTypeId">
             <summary> 
             相亲用户条件类型Id
             </summary> 
         </member>
-        <member name="P:Marriage.Entity.Domain.ConditionSelectValue.ConditionItemId">
+        <member name="P:Marriage.Entity.Domain.UserConditionSelectValue.ConditionItemId">
             <summary> 
             条件项Id
             </summary> 
         </member>
-        <member name="P:Marriage.Entity.Domain.ConditionSelectValue.Value">
+        <member name="P:Marriage.Entity.Domain.UserConditionSelectValue.Value">
             <summary> 
             值
             </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Domain.UserConditionSelectValue.Title">
+            <summary> 
+            标题
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Domain.UserConditionSelectValue.Sex">
+            <summary> 
+            性别，1：男生，2：女生
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Domain.UserConditionSelectValue.DataType">
+            <summary> 
+            数据类型
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Domain.UserConditionSelectValue.DataSourceId">
+            <summary> 
+            数据源ID
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Domain.UserConditionSelectValue.IsSingle">
+            <summary> 
+            是否单选，1：是
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Domain.UserConditionSelectValue.IsInterval">
+            <summary> 
+            是否区间，1：是，一般数据类型为数值
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Domain.UserConditionSelectValue.DisplayIndex">
+            <summary> 
+            显示顺序
+            </summary> 
+        </member>
+        <member name="P:Marriage.Entity.Domain.UserConditionSelectValue.ValueList">
+            <summary>
+            数据源值
+            </summary>
         </member>
         <member name="T:Marriage.Entity.Domain.UserConditionType">
             <summary>
@@ -4959,6 +5079,21 @@
             选项集合
             </summary>
         </member>
+        <member name="P:Marriage.Entity.Domain.UserConditionType.ConditionTypeName">
+            <summary>
+            类型名称
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Domain.UserConditionType.UserSelectItems1">
+            <summary>
+            条件选项集合
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Domain.UserConditionType.UserSelectItems2">
+            <summary>
+            择偶标题集合
+            </summary>
+        </member>
         <member name="T:Marriage.Entity.Domain.ConditionType">
             <summary>
             条件类型
@@ -4987,6 +5122,11 @@
         <member name="P:Marriage.Entity.Domain.ConditionType.WomanItemCount">
             <summary>
             选项计数
+            </summary>
+        </member>
+        <member name="P:Marriage.Entity.Domain.ConditionType.Items">
+            <summary>
+            条件选项
             </summary>
         </member>
         <member name="T:Marriage.Entity.Domain.ViewUserConditionType">

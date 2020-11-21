@@ -29,5 +29,9 @@ namespace Marriage.Entity.Domain
         /// 选项计数
         /// </summary>
         public int WomanItemCount { get; set; }
+        /// <summary>
+        /// 条件选项
+        /// </summary>
+        public List<ConditionItem> Items { get; set; }
     }
 }

@@ -73,5 +73,16 @@ namespace Marriage.Data.Impl
             object primaryKey = entityData.GetValue(this.EntityType.PrimaryKey);
             return this.UpdateEntityByPrimaryKey(primaryKey, entityData);
         }
+
+        /// <summary>
+        /// 获取相亲匹配用户列表
+        /// </summary>
+        /// <returns></returns>
+        public List<IEntityData> GetMarriageMakePairUsers()
+        {
+            IQuery query = new Query("v_MarriageUser3");
+
+            return this.SelectEntities(query);
+        }
     }
 }

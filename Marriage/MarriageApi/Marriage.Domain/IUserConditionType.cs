@@ -33,5 +33,11 @@ namespace Marriage.Domain
         /// <param name="entity"></param>
         /// <returns></returns>
         bool SaveUserConditionType(Entity.Domain.UserConditionType entity);
+
+        /// <summary>
+        /// 获取条件型
+        /// </summary>
+        /// <returns></returns>
+        List<Entity.Domain.UserConditionType> GetUserConditionTypes();
     }
 }

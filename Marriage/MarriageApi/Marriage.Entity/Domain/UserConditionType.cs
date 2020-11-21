@@ -33,5 +33,18 @@ namespace Marriage.Entity.Domain
         /// 选项集合
         /// </summary>
         public List<ConditionItem> Items { get; set; }
+
+        /// <summary>
+        /// 类型名称
+        /// </summary>
+        public string ConditionTypeName { get; set; }
+        /// <summary>
+        /// 条件选项集合
+        /// </summary>
+        public List<UserConditionSelectValue> UserSelectItems1 { get; set; }
+        /// <summary>
+        /// 择偶标题集合
+        /// </summary>
+        public List<UserConditionSelectValue> UserSelectItems2 { get; set; }
     }
 }
