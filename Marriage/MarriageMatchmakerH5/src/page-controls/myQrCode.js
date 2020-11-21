@@ -6,7 +6,7 @@ import Controls from 'Controls';
 export default (props) => {
   const { pageAxis } = Controls.Base.getProps(props);
 
-  const url = 'http://www.lianliyuan.site/user/#/?matchmakerId=' + pageAxis.pageData.matchmakerId;
+  const url = 'https://www.lianliyuan.site/user/#/?matchmakerId=' + pageAxis.pageData.matchmakerId;
 
   return (<div className={styles.divWxAuth} style={{width:'100%',height:'100%'}}>
     <div className={styles.divCenter}>
