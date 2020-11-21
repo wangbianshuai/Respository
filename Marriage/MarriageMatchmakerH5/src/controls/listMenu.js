@@ -48,8 +48,12 @@ export default (props) => {
   const [options, setOptions] = useGetDataSourceOptions(property, view, pageAxis, getOptions);
 
   const onClick = useCallback((data) => {
-    if (data.url) pageAxis.toPage(data.url)
-  }, [pageAxis]);
+    if (data.url) {
+      let url = data.url;
+      if (value && property.isValueParams) url += value;
+      pageAxis.toPage(url);
+    }
+  }, [pageAxis, property, value]);
 
   property.setVisible = (v) => setIsVisible(v);
   property.setValue = (v) => setValue(v);

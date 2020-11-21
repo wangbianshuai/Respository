@@ -57,8 +57,10 @@ function getMatchmakerFeeListMenu() {
 
 function getQrCodeListMenu() {
     return {
-        name: 'MyQrcode',
+        name: 'MyQrCode',
         type: 'ListMenu',
+        isValueParams: true,
+        isShowValue: false,
         className: 'divListMenu',
         dataSource: [{ text: '我的二维码', arrow: 'horizontal', thumb: 'qrcode.png', url: '/mine/myqrcode' }]
     }

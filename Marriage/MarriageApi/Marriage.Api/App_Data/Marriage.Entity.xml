@@ -2354,6 +2354,11 @@
             中介费总金额
             </summary>
         </member>
+        <member name="P:Marriage.Entity.Application.Matchmaker.GetMatchmakerResponse.MyQrCode">
+            <summary>
+            我的二维码
+            </summary>
+        </member>
         <member name="T:Marriage.Entity.Application.Matchmaker.StatusInfo2">
             <summary>
             状态信息

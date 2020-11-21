@@ -359,6 +359,8 @@ namespace Marriage.Application.Impl
                         NoPassReason = entity.NoPassReason,
                         Status = entity.Status
                     };
+
+                    response.MyQrCode = "?matchmakerId=" + entity.MatchmakerId.ToString();
                 }
                 else response.Token = "null";
 

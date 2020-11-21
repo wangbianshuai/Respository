@@ -28,6 +28,10 @@ namespace Marriage.Entity.Application.Matchmaker
         /// 中介费总金额
         /// </summary>
         public string TotalFeeAmount { get; set; }
+        /// <summary>
+        /// 我的二维码
+        /// </summary>
+        public string MyQrCode { get; set; }
     }
 
     /// <summary>
