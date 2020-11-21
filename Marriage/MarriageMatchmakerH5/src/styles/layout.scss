@@ -14,6 +14,8 @@ top: 0;
 .divTabBar{
     width: 100%;
     height: toRem(100);
+    position: absolute;
+    bottom: 0;
 
     :global {
         .am-tab-bar-bar{
@@ -34,7 +36,9 @@ top: 0;
 .divPage{
     width: 100%;
     overflow: auto;
-    height: 100%;
     box-sizing: border-box;
     background-color: #f5f5f9;
+    position: absolute;
+    top: 0;
+    bottom: toRem(100);
 }
