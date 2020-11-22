@@ -175,6 +175,7 @@ export default class BaseIndex {
         }
         else {
             action.modalDialog.title = title;
+            action.modalDialog.onOk= onOk;
             setValue && setValue();
             action.modalDialog.setVisible(true);
         }

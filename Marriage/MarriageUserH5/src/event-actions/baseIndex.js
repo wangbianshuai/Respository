@@ -161,10 +161,11 @@ export default class BaseIndex {
         })
     }
 
-    showdialog(action, pageAxis, dialogView, onOk, setValue) {
+    showdialog(action, pageAxis, dialogView, onOk, setValue, title) {
+        title = title || dialogView.dialogTitle;
         if (!action.modalDialog) {
             action.modalDialog = {
-                id: dialogView.dialogId, title: dialogView.dialogTitle, visible: true,
+                id: dialogView.dialogId, title, visible: true,
                 className: dialogView.className,
                 wrapClassName: dialogView.wrapClassName,
                 okText: dialogView.okText,
@@ -173,8 +174,11 @@ export default class BaseIndex {
                 onOk: onOk
             };
             pageAxis.setModalDialog(action.modalDialog);
+            setValue && setValue();
         }
         else {
+            action.modalDialog.title = title;
+            action.modalDialog.onOk= onOk;
             setValue && setValue();
             action.modalDialog.setVisible(true);
         }

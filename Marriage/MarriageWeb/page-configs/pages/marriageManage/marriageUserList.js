@@ -107,7 +107,7 @@ function getDataGridView() {
     isRowSelection: true,
     isSingleSelection: true,
     properties: assignProporties(marriageUser, [{ name: "HeadImgUrl", label: "头像", isImage: true, imageWidth: 75 }, "Name", "NickName", "SexName", "IdCard", "Phone", "Address", 'Birthday',
-      'Age', 'Shengxiao', "StatusName", { name: "Status", isVisible: false }, { name: "RowVersion", isVisible: false }, { name: "NoPassReason", isVisible: false },
+      'Age', 'Shengxiao', 'MatchmakerName', "StatusName", { name: "Status", isVisible: false }, { name: "MatchmakerId", isVisible: false }, { name: "RowVersion", isVisible: false }, { name: "NoPassReason", isVisible: false },
     { name: "CreateDate", OrderByType: "desc" }, getOperation()])
   }
 }
@@ -222,7 +222,7 @@ function getEventActions() {
     name: "updateStatus",
     type: "dialog/selectViewDataToList",
     dialogView: "updateApprovalView",
-    dataProperties: ["Status", 'NoPassReason'],
+    dataProperties: ["Status", 'NoPassReason', 'MatchmakerId'],
     dataGridView: "dataGridView1"
   }]
 }
@@ -364,11 +364,24 @@ function getUpdateApprovalView() {
     successTip: "操作成功",
     className: "divView2",
     setSelectValuesOkActionType: dataActionTypes.updateStatus,
-    dialogStyle: { height: 200, overflow: "auto" },
+    dialogStyle: { height: 260, overflow: "auto" },
     properties: assignProporties(entity, [
       { ...getEditSelect3("Status", "状态", marriageUser.statusDataSource, 1, 1) },
       getTextArea2('NoPassReason', '不通过原因', 2, 1),
+      getEditSelect4("MatchmakerId", "专属红娘", marriageUser.matchmakerDataSource, 3, 1),
     ])
+  }
+}
+
+function getEditSelect4(name, label, serviceDataSource, x, y, defaultValue) {
+  return {
+    ...getSelect2(name, label, serviceDataSource, x, y, defaultValue),
+    isFormItem: true,
+    colSpan: 22,
+    labelCol: 6,
+    wrapperCol: 18,
+    isEdit: true,
+    isNullable: false,
   }
 }
 
