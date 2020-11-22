@@ -37,7 +37,10 @@ namespace Marriage.Component
 
         public object GetEntityData()
         {
-            return EntityByComplexTypeOperation.GetEntityData<DataSource>(this, _DataSourcePropertyEntity, "Properties") as IEntityData;
+            var entityData = EntityByComplexTypeOperation.GetEntityData<DataSource>(this, _DataSourcePropertyEntity, "Properties") as IEntityData;
+            List<IEntityData> properties = entityData.GetValue<List<IEntityData>>("Properties");
+            entityData.SetValue("Properties", properties.OrderBy(b => b.GetStringValue("Value")).ToList());
+            return entityData;
         }
 
         [Log]

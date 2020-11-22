@@ -105,7 +105,6 @@ const renderRowCols = (data, property, pageId, controlProperties, rowsColsProper
 const rendDataItem = (data, property, pageId, controlProperties, rowsColsProperties) => {
     const primaryKey = getPrimaryKey(property);
     data[primaryKey] = data[primaryKey] || Common.createGuid();
-    console.log(data)
     return (
         <Row gutter={6} key={data[primaryKey]} style={{ padding: "8px 8px", borderBottom: "1px solid #e8e8e8" }}>
             {renderRowCols(data, property, pageId, controlProperties, rowsColsProperties)}
