@@ -21,7 +21,7 @@ export default (props) => {
   const [value, setValue] = useState([]);
 
   property.setVisible = (v) => setIsVisible(v);
-  property.setValue = (v) => setValue(v);
+  property.setValue = (v) => v && setValue(v);
   property.getValue = () => value;
 
   if (!isVisible) return null;
