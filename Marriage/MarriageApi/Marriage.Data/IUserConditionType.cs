@@ -50,5 +50,14 @@ namespace Marriage.Data
         /// </summary>
         /// <returns></returns>
         List<IEntityData> GetUserConditionTypes();
+
+        /// <summary>
+        /// 以条件类型和用户Id获取用户条件信息
+        /// </summary>
+        /// <param name="conditionTypeId"></param>
+        /// <param name="userId"></param>
+        /// <param name="selectType"></param>
+        /// <returns></returns>
+        IEntityData GetUserConditionTypeByConditionTypeIdAndUser(Guid conditionTypeId, Guid userId, byte selectType);
     }
 }

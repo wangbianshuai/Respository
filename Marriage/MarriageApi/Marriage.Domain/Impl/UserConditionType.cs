@@ -177,6 +177,14 @@ namespace Marriage.Domain.Impl
                 var entityData = _UserConditionType.GetEntityDataById(entity.UserConditionTypeId);
                 if (entityData == null) return false;
             }
+            else
+            {
+                var entityData = _UserConditionType.GetUserConditionTypeByConditionTypeIdAndUser(entity.ConditionTypeId, entity.UserId, entity.SelectType);
+                if (entityData != null)
+                {
+                    entity.UserConditionTypeId = entityData.GetValue<Guid>("UserConditionTypeId");
+                }
+            }
 
             using (TransactionScope scope = new TransactionScope())
             {

@@ -86,5 +86,26 @@ namespace Marriage.Data.Impl
 
             return this.SelectEntities(query);
         }
+
+        /// <summary>
+        /// 以条件类型和用户Id获取用户条件信息
+        /// </summary>
+        /// <param name="conditionTypeId"></param>
+        /// <param name="userId"></param>
+        /// <param name="selectType"></param>
+        /// <returns></returns>
+        public IEntityData GetUserConditionTypeByConditionTypeIdAndUser(Guid conditionTypeId, Guid userId, byte selectType)
+        {
+            IQuery query = new Query(this.EntityType.TableName);
+
+            List<IDbDataParameter> parameterList = new List<IDbDataParameter>();
+            parameterList.Add(this.InParameter("@ConditionTypeId", conditionTypeId));
+            parameterList.Add(this.InParameter("@UserId", userId));
+            parameterList.Add(this.InParameter("@SelectType", selectType));
+
+            query.Where("where ConditionTypeId=@ConditionTypeId and UserId=@UserId and SelectType=@SelectType", parameterList);
+
+            return this.SelectEntity(query);
+        }
     }
 }
