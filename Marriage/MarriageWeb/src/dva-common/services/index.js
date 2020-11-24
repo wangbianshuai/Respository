@@ -14,6 +14,7 @@ export default (serviceName, getServiceUrl) => (action) => async (payload) => {
     let headers = {};
     if (action.isToken && !payload.token) return Promise.resolve({ isSuccess: false, isReLogin: true, message: 'the token is null' });
     if ((action.isToken || action.hastoken) && payload.token) headers = { token: payload.token };
+    if (action.isNoToken) headers.isNoToken = action.isNoToken;
 
     if (payload.userAgent) { headers = headers || {}; headers["User-Agent"] = payload.userAgent; }
 

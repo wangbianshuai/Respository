@@ -3,7 +3,7 @@ import { EntityModelConfig } from 'Configs';
 
 const config = EntityModelConfig('AppUser');
 
-config.actionList.push(post("login", "AppUser/Login", "login", "AppUser"));
+config.actionList.push({ ...post("login", "AppUser/Login", "login", "AppUser"), isNoToken: true });
 config.actionList.push(post("changePassword", "AppUser/ChangePassword", "changePassword", "changePassword", true));
 
 function post(actionName, url, stateName, dataKey, istoken) {

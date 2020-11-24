@@ -42,7 +42,15 @@ function getSearchOperationView() {
       },
       { ...getButton("search", "搜索", "primary", 2, 4), isFormItem: true, icon: "search", eventActionName: "searchQuery", pressEnterEventActionName: "searchQuery" },
       { ...getButton("clearQuery", "清空", "default", 2, 5), isFormItem: true, eventActionName: "clearQuery" },
-      { eventActionName: "updateStatus", ...getButton("updateStatus", "设置状态", "primary", 3, 1), icon: 'check', style: { marginLeft: 16, marginBottom: 16 } }
+      { eventActionName: "updateStatus", ...getButton("updateStatus", "设置状态", "primary", 3, 1), icon: 'check', style: { marginLeft: 16, marginBottom: 16 } },
+      {
+        eventActionName: "deleteMatchmaker",
+        colStyle: { paddingLeft: 0 },
+        dataActionType: dataActionTypes.deleteEntityData,
+        successTip: "删除成功！",
+        confirmTip: "请确认是否删除当前红娘？",
+        ...getButton("deleteMatchmaker", "删除", "default", 3, 3)
+      }
     ])
   }
 }
@@ -124,6 +132,11 @@ function getEventActions() {
     searchButton: "clearQuery",
     dataGridView: "dataGridView1",
     isClearQuery: true
+  },
+  {
+    name: "deleteMatchmaker",
+    type: "dataGrid/batchUpdateRowDataList",
+    dataGridView: "dataGridView1"
   },
   {
     name: "lookDetail",
