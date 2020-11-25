@@ -102,13 +102,15 @@ export default (props) => {
         pageInfo, isPaging, pageIndexChange, groupByInfo, groupByInfoHtml } = props;
     const pageAxis = usePageAxis.getPageAxis(pageId);
 
+
     const [selectedRowKeys, setSelectedRowKeys] = useState([]);
     const [sorter, setSorter] = useState({});
-    const [selectedRowKey, setSelectedRowKey] = useState('');
+    const [selectedRowKey, setSelectedRowKey] = useState(pageAxis.pageData.selectedRowKey && !property.isRowSelection || '');
 
     useEffect(() => {
-        selectChanged([], setSelectedRowKeys, isSingleSelection, dataList);
-    }, [dataList, setSelectedRowKeys, isSingleSelection]);
+        const keys = pageAxis.pageData.selectedRowKey ? [pageAxis.pageData.selectedRowKey] : []
+        selectChanged(keys, setSelectedRowKeys, isSingleSelection, dataList);
+    }, [dataList, setSelectedRowKeys, isSingleSelection, pageAxis]);
 
     const onChange = useCallback((pagination, filters, sorter2) => {
         setSorter(sorter2);
@@ -142,7 +144,7 @@ export default (props) => {
     return (
         <React.Fragment>
             {renderGroupByInfoAlert(groupByInfo, groupByInfoHtml)}
-            <Table dataSource={dataList} loading={isLoading}
+            <Table dataSource={dataList} loading={isLoading} scroll={{x:'max-content'}}
                 rowSelection={rowSelection} onChange={onChange} onRow={onRow(onRowClick, selectedRowKey)}
                 pagination={isPartPaging ? false : getPagination(isPaging, pageInfo, pageIndexChange)} >
                 {dataProperties.map(p => getColumn(p, sorter))}

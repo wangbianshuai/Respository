@@ -11,6 +11,8 @@ export default class DataGridView extends BaseIndex {
         this.searchData(props, action.parameters, props.pageIndex || 1, props.pageSize || 10, action.isClearQuery);
     }
 
+    static _CurrentDataGridViewData = {};
+
     initSearchQueryAction(props, action) {
         const { property, pageAxis } = props;
 
@@ -20,6 +22,11 @@ export default class DataGridView extends BaseIndex {
         const searchView = pageAxis.getProperty(action.searchView);
         const alertMessage = pageAxis.getProperty(action.alertMessage);
         const expandSearchQueryLoad = pageAxis.getFunction(action.expandSearchQueryLoad)
+
+        DataGridView._CurrentDataGridViewData[dataGridView.id] = DataGridView._CurrentDataGridViewData[dataGridView.id] || {};
+        dataGridView.currentData = DataGridView._CurrentDataGridViewData[dataGridView.id];
+        dataGridView.currentData.isInit = true;
+
         action.parameters = { dataGridView, searchButton, searchView, alertMessage, expandSearchQueryLoad }
     }
 
@@ -29,7 +36,21 @@ export default class DataGridView extends BaseIndex {
         const { searchQuery } = actionTypes;
         const { pageAxis, isData } = props;
 
-        const conditionList = this.getConditionList(parameters, isClearQuery);
+        const { currentData } = dataGridView;
+
+        const isInit = currentData.isInit;
+        if (currentData.isInit) {
+            currentData.isInit = false;
+            if (currentData.pageIndex !== undefined) pageIndex = currentData.pageIndex;
+            if (currentData.pageSize !== undefined) pageSize = currentData.pageSize;
+            if (currentData.conditions) this.setConditionList(parameters, currentData.conditions);
+        }
+        else {
+            currentData.pageIndex = pageIndex;
+            currentData.pageSize = pageSize;
+        }
+
+        const conditionList = this.getConditionList(parameters, isClearQuery, currentData, isInit);
         if (conditionList === false) return;
 
         const queryInfo = this.getQueryInfo(dataGridView);
@@ -75,17 +96,38 @@ export default class DataGridView extends BaseIndex {
         if (expandSearchQueryLoad) expandSearchQueryLoad({ data, props })
     }
 
-    getConditionList(parameters, isClearQuery) {
+
+    setConditionList(parameters, conditions) {
+        const { searchView } = parameters;
+        if (!searchView) return {};
+
+        searchView.properties.forEach(p => {
+            if (p.isCondition) {
+                const value = conditions[p.name];
+                if (p.setValue) p.setValue(value);
+                p.value = value;
+            }
+        });
+    }
+
+    getConditionList(parameters, isClearQuery, currentData, isInit) {
         const { searchView } = parameters;
         if (!searchView) return {};
 
         const conditionList = [];
+        const conditions = {};
         searchView.properties.forEach(p => {
             const name = p.propertyName || p.name;
-            if (p.isCondition && p.getValue) conditionList.push({
-                Name: name, Label: p.label, OperateLogic: p.operateLogic || "=",
-                DataType: p.dataType || "string", Value: this.getPropertyValues(p, isClearQuery)
-            });
+            if (p.isCondition && p.getValue) {
+                let value = null;
+                if (currentData.conditions && isInit && currentData.conditions[p.name] !== undefined) value = currentData.conditions[p.name];
+                else value = this.getPropertyValues(p, isClearQuery);
+                conditionList.push({
+                    Name: name, Label: p.label, OperateLogic: p.operateLogic || "=",
+                    DataType: p.dataType || "string", Value: value
+                });
+                conditions[p.name] = value;
+            }
         });
 
         if (Common.isArray(searchView.DefaultConditions)) {
@@ -102,6 +144,9 @@ export default class DataGridView extends BaseIndex {
                 if (!Common.isNullOrEmpty(condition.value)) conditionList.push(condition)
             });
         }
+
+        currentData.conditions = conditions;
+
         return conditionList;
     }
 

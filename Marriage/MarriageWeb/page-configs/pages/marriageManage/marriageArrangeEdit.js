@@ -41,7 +41,7 @@ function getButtonProperties() {
     className: "ant-col ant-col-8 ant-form-item-label"
   },
   { ...getButton("saveEntityData", "保存", "primary"), eventActionName: "saveEntityData", style: { width: 84 } },
-  { ...getButton("backToLast", "返回", ""), eventActionName: "backToLast", style: { marginLeft: 10 } }]
+  { ...getButton("backToList", "返回", ""), eventActionName: "backToList", style: { marginLeft: 10 } }]
 }
 
 function getProperties() {
@@ -144,9 +144,10 @@ function getTextArea(name, label, x, y, placeHolder, maxLength) {
 
 function getEventActions() {
   return [{
-    name: "backToLast",
+    name: "backToList",
     type: "page/toPage",
-    pageUrl: "/marriageManage/marriageArrangeList",
+    propertyNames: [entity.primaryKey],
+    pageUrl: '/marriageManage/marriageArrangeList?selectedRowKey=#{' + entity.primaryKey + '}'
   },
   {
     name: "saveEntityData",

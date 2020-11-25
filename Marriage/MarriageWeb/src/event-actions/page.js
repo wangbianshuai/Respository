@@ -5,9 +5,16 @@ export default class Page extends BaseIndex {
 
     toPage(props, action) {
         const { pageAxis } = props;
+        const { propertyNames } = action;
         var url = Common.replaceDataContent(pageAxis.pageData, action.pageUrl, true);
         const expandSetPageUrl = pageAxis.getFunction(action.expandSetPageUrl);
         if (expandSetPageUrl) url = expandSetPageUrl(url);
+        if (propertyNames) {
+            propertyNames.forEach(n => {
+                const keyValue = `#{${n}}`;
+                url = url.replace(keyValue, '')
+            })
+        }
         pageAxis.toPage(url)
     }
 

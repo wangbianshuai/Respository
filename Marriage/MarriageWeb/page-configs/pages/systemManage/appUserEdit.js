@@ -40,7 +40,7 @@ function getButtonProperties() {
         className: "ant-col ant-col-8 ant-form-item-label"
     },
     { ...getButton("saveEntityData", "保存", "primary"), eventActionName: "saveEntityData", style: { width: 84 } },
-    { ...getButton("backToLast", "返回", ""), eventActionName: "backToLast", style: { marginLeft: 10 } }]
+    { ...getButton("backToList", "返回", ""), eventActionName: "backToList", style: { marginLeft: 10 } }]
 }
 
 function getProperties() {
@@ -83,9 +83,10 @@ function getTextBox2(name, label, x, y, contorlType, placeHolder, maxLength, isN
 
 function getEventActions() {
     return [{
-        name: "backToLast",
+        name: "backToList",
         type: "page/toPage",
-        pageUrl: "/systemManage/appUserList"
+        propertyNames: [entity.primaryKey],
+        pageUrl: '/systemManage/appUserList?selectedRowKey=#{' + entity.primaryKey + '}'
     },
     {
         name: "saveEntityData",
