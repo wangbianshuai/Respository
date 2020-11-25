@@ -106,7 +106,7 @@ export default (props) => {
 
   const onError = useCallback((e) => {
     e.target.src = 'https://www.lianliyuan.site/noimage.png';
-  });
+  }, []);
 
   property.setVisible = (v) => setIsVisible(v);
   property.setValue = (v) => setValue(v);
