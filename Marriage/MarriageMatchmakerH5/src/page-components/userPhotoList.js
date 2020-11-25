@@ -50,12 +50,12 @@ const uploadImage = (e, pageAxis, value, setValue) => {
   });
 };
 
-const renderItem = (data, i, isEdit) => {
+const renderItem = (data, i, isEdit, onError) => {
   const style = (i + 1) % 2 !== 0 ? { borderRight: '1px solid #ddd' } : undefined;
   return <div className={styles.divItem} style={style} key={data.PhotoId}>
-    {isEdit && <div className={styles.divImage}><img src={data.PhotoUrl} alt='' /></div>}
+    {isEdit && <div className={styles.divImage}><img src={data.PhotoUrl} alt='' onError={onError} /></div>}
     {!isEdit && <a href={data.PhotoUrl} rel="noreferrer" target='_blank'>
-      <div className={styles.divImage}><img src={data.PhotoUrl} alt='' /></div>
+      <div className={styles.divImage}><img src={data.PhotoUrl} alt='' onError={onError} /></div>
     </a>}
     {isEdit && <Checkbox className={styles.iconDelete} onChange={(e) => { data.isDelete = e.target.checked }} />}
   </div>
@@ -104,6 +104,10 @@ export default (props) => {
     setIsEdit(!isEdit);
   }, [isEdit, setIsEdit, value]);
 
+  const onError = useCallback((e) => {
+    e.target.src = 'https://www.lianliyuan.site/noimage.png';
+  });
+
   property.setVisible = (v) => setIsVisible(v);
   property.setValue = (v) => setValue(v);
   property.getValue = () => value;
@@ -121,7 +125,7 @@ export default (props) => {
       mode="mark"
       rightContent={rightContent}>生活照</NavBar>
     <div className={styles.divData}>
-      {value.map((m, i) => renderItem(m, i, isEdit))}
+      {value.map((m, i) => renderItem(m, i, isEdit, onError))}
     </div>
     {!isReadOnly && <input type='file' accept='image/*' onChange={onChange} ref={inputFile} style={{ display: 'none' }} />}
   </div>)

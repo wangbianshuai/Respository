@@ -52,6 +52,20 @@ namespace Marriage.Utility
             return default(T);
         }
 
+        public static string GetFileSize(int len)
+        {
+            if (len < 1000) return string.Format("{0}B", len);
+
+            decimal k = (decimal)len / (decimal)1024;
+            if (k < 1000) return string.Format("{0}K", decimal.Round(k, 2).ToString());
+
+            k = k / 1024;
+            if (k < 1000) return string.Format("{0}M", decimal.Round(k, 2).ToString());
+
+            k = k / 1024;
+            return string.Format("{0}G", decimal.Round(k, 2).ToString());
+        }
+
         public static List<T> StringSplitTo<T>(string str, char[] chs)
         {
             if (string.IsNullOrEmpty(str)) return null;

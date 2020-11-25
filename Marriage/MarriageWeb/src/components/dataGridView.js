@@ -138,10 +138,16 @@ const setDataProperty = (p, property, pageAxis) => {
             if (p.isRender && !p.isRender(text, record, index)) return emptyRender();
             if (!Common.isNullOrEmpty(text)) {
                 let url = p.pageUrl;
-                if (p.isAddPublicPath) url = window.publicPath + url;
-                else if (p.isAddRouterBase) url = window.routerBase + url;
-                url = Common.replaceDataContent(record, url, true)
+                if (!url && text.toLowerCase().indexOf("http") === 0) url = text;
+                else {
+                    if (p.isAddPublicPath) url = window.publicPath + url;
+                    else if (p.isAddRouterBase) url = window.routerBase + url;
+                    url = Common.replaceDataContent(record, url, true)
+                }
                 if (Common.isNullOrEmpty(url)) return text;
+                else if(record[p.imageTypeName]=== p.imageTypeValue){
+                    return <a href={url} target='_blank' rel="noopener noreferrer"><img src={url} width={p.imageWidth} alt="" /></a>
+                }
                 else return <a href={url} target="_blank" rel="noopener noreferrer">{text}</a>
             }
             return text;

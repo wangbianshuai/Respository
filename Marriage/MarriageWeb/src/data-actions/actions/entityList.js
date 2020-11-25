@@ -38,11 +38,27 @@ export default class EntityList extends BaseIndex {
     }
 
     deleteEntityData(id, actionType, data) {
+        const { entity } = data;
+        const { expandMethods } = entity;
+        if (expandMethods && expandMethods.isBatchDelete) {
+            this.batchDeleteEntityData(id, actionType, data)
+            return;
+        }
         const primaryKey = data.selectRowKeys[0];
         const { RowVersion } = data.selectDataList[0];
         const pathQuery = `/Delete2(${primaryKey})?RowVersion=${RowVersion}`;
         this.dvaActions.dispatch(this.serviceName, 'delete', { pathQuery, action: this.getAction(id, actionType) });
     }
+
+    batchDeleteEntityData(id, actionType, data) {
+        const { entity } = data;
+
+        const entityDataList = entity.isIds ? data.selectDataList.map(m => ({ [entity.primaryKey]: m[entity.primaryKey], RowVersion: m.RowVersion })) : data.selectDataList;
+        const pathQuery = '/' + entity.expandMethods.delete;
+
+        this.dvaActions.dispatch(this.serviceName, 'delete', { pathQuery, [entity.name]: entityDataList, action: this.getAction(id, actionType) });
+    }
+
 
     excelExport(id, actionType, data) {
         data.action = this.getAction(id, actionType, false);

@@ -53,7 +53,8 @@ function getsystemManageNavNenu() {
     menuList.push(addMenu("dictionaryConfigList", "键值配置", false, "table", "/systemManage/dictionaryConfigList"));
     menuList.push(addMenu("dictionaryConfigEdit", "新增", true, "form", "/systemManage/dictionaryConfigEdit", "", null, false, "键值配置", "/systemManage/dictionaryConfigList", null, true));
 
-
+    menuList.push(addMenu("fileRecordList", "资源文件", false, "table", "/systemManage/fileRecordList"));
+  
     menuList.push(addMenu("appUserList", "用户", false, "table", "/systemManage/appUserList"));
     menuList.push(addMenu("appUserEdit", "新增", true, "form", "/systemManage/appUserEdit", "", null, false, "用户", "/systemManage/appUserList", null, true));
 

@@ -19,6 +19,7 @@
     <ProjectReference Include="..\..\OpenDataAccessCore\OpenDataAccessCore.Service\OpenDataAccessCore.Service.csproj" />
     <ProjectReference Include="..\..\OpenDataAccessCore\OpenDataAccessCore.Utility\OpenDataAccessCore.Utility.csproj" />
     <ProjectReference Include="..\Marriage.Entity\Marriage.Entity.csproj" />
+    <ProjectReference Include="..\Marriage.Utility\Marriage.Utility.csproj" />
   </ItemGroup>
 
 </Project>
