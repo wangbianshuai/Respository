@@ -21,7 +21,7 @@ module.exports = {
 
 function getTabs() {
     return {
-        name: 'tabs1',
+        name: 'marriageTabs1',
         type: 'Tabs',
         properties: [
             getTabView('userDataGridView1', '待相亲', 0, 'searchQuery', dataActionTypes.searchQuery, {

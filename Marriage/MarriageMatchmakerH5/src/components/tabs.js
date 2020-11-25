@@ -9,13 +9,11 @@ const getTabs = (property) => {
   return property.properties.map((m, i) => ({ title: m.tabLabel, sub: i + 1, url: m.url }));
 };
 
+const _TabsData = {};
+
 export default (props) => {
   const { property, view, pageId, pageAxis } = Base.getProps(props);
   const [isVisible, setIsVisible] = useState(property.isVisible !== false);
-
-  const initialPage = property.initialPage || Common.getIntValue(pageAxis.pageData.tabPage);
-
-  const initCurrentClassName = property.isChangeClassName && (parseInt(initialPage) + 1) > property.subIndex ? property.className + (parseInt(initialPage) + 1) : null;
 
   const [currentClassName, setCurrentClassName] = useState(initCurrentClassName);
 
@@ -31,9 +29,19 @@ export default (props) => {
       if (tab.sub > property.subIndex) setCurrentClassName(property.className + tab.sub)
       else setCurrentClassName(null)
     }
+    _TabsData[property.name].currentTabPage = tab.sub - 1;
   }, [pageAxis, property, setCurrentClassName])
 
   property.setVisible = (v) => setIsVisible(v);
+
+  let initialPage = 0;
+  if (!_TabsData[property.name]) _TabsData[property.name] = {};
+  if (_TabsData[property.name].currentTabPage !== undefined && !pageAxis.pageData.tabPage) {
+    initialPage = _TabsData[property.name].currentTabPage
+  }
+  else initialPage = property.initialPage || Common.getIntValue(pageAxis.pageData.tabPage);
+
+  const initCurrentClassName = property.isChangeClassName && (parseInt(initialPage) + 1) > property.subIndex ? property.className + (parseInt(initialPage) + 1) : null;
 
   if (!isVisible) return null;
 
@@ -56,4 +64,3 @@ export default (props) => {
     </Tabs>
   )
 }
-
