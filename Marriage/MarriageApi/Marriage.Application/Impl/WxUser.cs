@@ -1,5 +1,6 @@
 ﻿using Marriage.Entity.Application;
 using Marriage.Entity.Application.WxUser;
+using Microsoft.AspNetCore.SignalR.Client;
 using OpenDataAccessCore.Utility;
 using System;
 using System.Collections.Generic;
@@ -102,7 +103,7 @@ namespace Marriage.Application.Impl
         /// </summary>
         public AuthLoginResponse AuthLogin(AuthLoginRequest request)
         {
-            string title = "通过微信小程序获取微信用户openid";
+            string title = "微信用户授权登录";
             string requestContent = Utility.Common.ToJson(request);
             AuthLoginResponse response = new AuthLoginResponse();
 
@@ -110,13 +111,58 @@ namespace Marriage.Application.Impl
 
             this.IsNullRequest(request, response);
 
+            //1、以获取集合获取键值配置集合
+            List<string> nameList = new List<string>() { "SignalRServicerUrl" };
 
-            //4、执行结束
+            int stepNo = 1;
+            var dictionaryConfigList = GetDictionaryConfigListByNames(stepNo, nameList, response);
+
+            //2、发送微信用户信息
+            stepNo += 1;
+            SendWxUserInfo(stepNo, dictionaryConfigList, request, response);
+
+            //3、执行结束
             this.ExecEnd(response);
 
             //日志记录
             return this.SetReturnResponse<AuthLoginResponse>(title, "AuthLogin", requestContent, response);
         }
+
+        /// <summary>
+        /// 发送微信用户信息
+        /// </summary>
+        /// <param name="stepNo"></param>
+        /// <param name="request"></param>
+        /// <param name="response"></param>
+        /// <returns></returns>
+        private bool SendWxUserInfo(int stepNo, List<Entity.Domain.DictionaryConfig> dictionaryConfigs, AuthLoginRequest request, AuthLoginResponse response)
+        {
+            Func<bool> execStep = () =>
+            {
+                if (request.UserInfo == null) return false;
+
+                string url = dictionaryConfigs[0].Value;
+                var connection = new HubConnectionBuilder().WithUrl(url).Build();
+
+                connection.StartAsync().Wait();
+
+                connection.InvokeAsync("SendMessageToUser", request.Scene, "AuthSucceed", Common.ToJson(new
+                {
+                    openid = request.UserInfo.openid,
+                    nickname = request.UserInfo.nickname,
+                    headimgurl= request.UserInfo.avatarUrl
+                })).Wait();
+
+                connection.StopAsync().Wait();
+
+                connection.DisposeAsync();
+
+                return true;
+            };
+
+            return this.Exce(stepNo, "发送微信用户信息", "SendWxUserInfo", response, execStep);
+        }
+
         /// <summary>
         /// 通过微信小程序获取微信用户openid
         /// </summary>

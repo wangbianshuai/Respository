@@ -41,7 +41,7 @@ namespace Marriage.Api.Controllers
         string GetToken()
         {
             string appId = "wx48b8a2ada91bb9a7";
-            string secret = "ecbdce061e763a0fe8ba02c0c804ca61";
+            string secret = "5b2505e6240b69bd1dc83fbb66e8d4c5";
             string url = string.Format("https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid={0}&secret={1}", appId, secret);
 
             string result = new HttpClient().GetAsync(url).Result.Content.ReadAsStringAsync().Result;
@@ -54,10 +54,10 @@ namespace Marriage.Api.Controllers
             string url = "https://api.weixin.qq.com/wxa/getwxacodeunlimit?access_token=" + token;
             Dictionary<string, object> dict = new Dictionary<string, object>();
             dict.Add("scene", scene);
-            dict.Add("page", "page/index/index");
+            dict.Add("page", "pages/authlogin/index");
 
             HttpClient client = new HttpClient();
-            var response = client.PostAsync(url, new StringContent(Common.ToJsJson(dict), Encoding.UTF8, "application/json"));
+            var response = client.PostAsync(url, new StringContent(Common.ToJson(dict), Encoding.UTF8, "application/json"));
 
             return response.Result.Content.ReadAsByteArrayAsync().Result;
         }
