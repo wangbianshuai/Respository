@@ -44,6 +44,9 @@ export default (props) => {
             <div className={styles.divData}>
                 <img src={url} alt="" />
             </div>
+            <div className={styles.divRemark}>
+                <span><label style={{ color: 'red' }}>注：</label>首次打开小程序会出现“获取头像昵称”按钮，需先点击“获取头像昵称”授权获取头像昵称，再点击“授权登录”按钮授权登录。</span>
+            </div>
         </div>
     </div>)
 };

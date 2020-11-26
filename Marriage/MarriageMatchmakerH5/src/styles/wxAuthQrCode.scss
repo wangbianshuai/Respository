@@ -14,7 +14,7 @@
                 position: relative;
                 display: inline-block;
                 text-align: left;
-                font-size: 14px;
+                font-size: toRem(28);
                 box-sizing: content-box;
 
                 .divTitle{
@@ -41,5 +41,21 @@ border-bottom: 1px solid #ddd;
           }
             }
 
+
+            .divRemark{
+              width: 100%;
+              display: flex;
+              padding: toRem(16);
+ 
+              span{
+                 font-size: toRem(26);
+                 color:#108ee9;
+                 line-height: toRem(40);
+              }
+            }
+
+            .divButton{
+              margin-top: toRem(32);
+            }
 
 }

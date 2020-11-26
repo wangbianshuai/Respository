@@ -784,3 +784,12 @@ export function dataURLtoFile(dataUrl, filename) {
     }
     return new File([u8arr], filename, { type: mime });
 }   
+
+export function copyToClip(content) {
+    var input = document.createElement("input"); 
+    input.setAttribute("value", content); 
+    document.body.appendChild(input); 
+    input.select();
+    document.execCommand("copy"); 
+    document.body.removeChild(input);
+}
