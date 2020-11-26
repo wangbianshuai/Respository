@@ -1,4 +1,4 @@
-﻿var connection = new signalR.HubConnectionBuilder().withUrl("/service").build();
+﻿var connection = new signalR.HubConnectionBuilder().withUrl("/signalr/service").build();
 
 //Disable send button until connection is established
 document.getElementById("sendButton").disabled = true;
