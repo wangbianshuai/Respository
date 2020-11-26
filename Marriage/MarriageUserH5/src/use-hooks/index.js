@@ -6,6 +6,7 @@ import useGetDataSourceOptions from './useGetDataSourceOptions';
 import useGetPageConfig from './useGetPageConfig';
 import usePage from './usePage';
 import useGetWxUser from './useGetWxUser';
+import useGetWxUser2 from './useGetWxUser2';
 import useGetLoginUser from './useGetLoginUser';
 
 export {
@@ -17,5 +18,6 @@ export {
   useGetPageConfig,
   usePage,
   useGetWxUser,
+  useGetWxUser2,
   useGetLoginUser
 };

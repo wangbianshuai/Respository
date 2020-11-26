@@ -10,6 +10,7 @@ import WhiteSpace from './whiteSpace';
 import RowsColsView from './rowsColsView';
 import WxAuthQrCode from './wxAuthQrCode';
 import NavBar from './navBar';
+import WxMiniAuthQrCode from './wxMiniAuthQrCode';
 
 export default {
     Base,
@@ -23,5 +24,6 @@ export default {
     WhiteSpace,
     RowsColsView,
     WxAuthQrCode,
-    NavBar
+    NavBar,
+    WxMiniAuthQrCode
 }
