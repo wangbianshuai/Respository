@@ -6,6 +6,8 @@ const signalR = require('@microsoft/signalr');
 
 const isH5 = Common.isH5();
 
+const isWeiXin = Common.isWeiXin();
+
 export default (props) => {
     const { setWxUser } = props;
     const [url, setUrl] = useState('');
@@ -22,7 +24,7 @@ export default (props) => {
 
         connection.start().then(() => {
             console.log('connection success');
-            const url = `https:/www.lianliyuan.site/api/image?connectionId=${connection.connectionId}`;
+            const url = `https://www.lianliyuan.site/api/image?connectionId=${connection.connectionId}`;
             setUrl(url)
         }).catch(function (err) {
             return console.error(err);
@@ -34,7 +36,7 @@ export default (props) => {
     let style = { minHeight: "100%", width: "100%" };
     if (!isH5) style = { minHeight: "100%", width: '480px', margin: "0 auto" }
 
-    const title = isH5 ? '请使用微信打开长按小程序码授权登录' : '请使用微信扫一扫小程序码授权登录'
+    const title = isWeiXin ? '请长按打开小程序登录' : isH5 ? '请使用微信打开长按小程序码登录' : '请使用微信扫一扫小程序码登录'
 
     return (<div className={styles.divWxAuth} style={style}>
         <div className={styles.divCenter}>
