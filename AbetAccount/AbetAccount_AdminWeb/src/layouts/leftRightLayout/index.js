@@ -260,7 +260,7 @@ export default (props) => {
             <Header style={{ background: '#fff', padding: 0, margin: 0 }}>
                 <div className={styles.logo} >
                     <img src={getImageUrl("logo.png")} height={42} alt="" />
-                    <span>Abet-计账</span>
+                    <span>Abet-记账</span>
                 </div>
                 {loginName ? (
                     <Dropdown overlay={renderUserRightMenuList(onSelectMenuClick)} >

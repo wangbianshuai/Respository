@@ -95,7 +95,6 @@ namespace AbetAccount.Api
             RegisterTypes("AbetAccount.Application", builder);
             RegisterTypes("AbetAccount.Data", builder);
             RegisterTypes("AbetAccount.Domain", builder);
-            RegisterTypes("AbetAccount.Service", builder);
 
             var controllersTypesInAssembly = typeof(Startup).Assembly.GetExportedTypes()
                     .Where(type => typeof(ControllerBase).IsAssignableFrom(type)).ToArray();

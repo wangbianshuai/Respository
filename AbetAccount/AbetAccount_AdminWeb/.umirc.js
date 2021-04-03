@@ -8,7 +8,7 @@ export default {
       antd: true,
       dva: true,
       dynamicImport: false,
-      title: 'app2.a2china.cn-admin',
+      title: 'Abet-记账',
       links: [{ rel: 'icon', type: "image/x-icon", href: '/admin/favicon.ico' }],
       dll: false,
 
@@ -30,12 +30,12 @@ export default {
   exportStatic: {
     htmlSuffix: true,
   },
-  proxy: {
-    '/api/': {
-      target: 'http://localhost:6001/',
-      changeOrigin: true
-    }
-  },
+  // proxy: {
+  //   '/api/': {
+  //     target: 'https://localhost:5081/',
+  //     changeOrigin: true
+  //   }
+  // },
   alias: {
     UtilsCommon: path.resolve(__dirname, './src/utils-common/index.js'),
     DvaCommon: path.resolve(__dirname, './src/dva-common/index.js'),
