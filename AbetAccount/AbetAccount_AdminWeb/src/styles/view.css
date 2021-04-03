@@ -1,0 +1,375 @@
+.divView{
+    background-color: #ffffff;
+    margin-top: 8px;
+    padding: 16px;
+}
+
+
+.divSerachView{
+    background-color: #ffffff;
+    margin-top: 8px;
+    margin-bottom: 8px;
+    padding-top: 16px;
+}
+
+.divView2{
+    background-color: #ffffff;
+    margin: 0;
+    padding: 0 16px;
+}
+
+.divLeftRightView{
+    background-color: #ffffff;
+    margin-top: 8px;
+    padding: 16px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.divInfoView{
+    background-color: #ffffff;
+    margin: 0;
+    padding: 16px;
+}
+
+.divInfoView2{
+    background-color: #ffffff;
+    margin: 0;
+    padding: 16px 0;
+}
+
+.divInfoView3
+{
+    background-color: #ffffff;
+    margin: 0;
+    padding: 0;
+}
+.divRightButton{
+   width: 100%;
+   height: 60px;
+   display: flex;
+   flex-direction: row;
+   justify-content: flex-end;
+   align-items: center;
+   background-color: #ffffff;
+   border-top:1px solid #e8e8e8;
+}
+
+.divLeftRightButton{
+    width: 100%;
+   height: 60px;
+   display: flex;
+   flex-direction: row;
+   justify-content: space-between;
+   align-items: center;
+   background-color: #ffffff;
+   border-top:1px solid #e8e8e8;
+}
+
+.divRightButton2{
+    width: 100%;
+    height: 60px;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+    background-color: #ffffff;
+    margin-top: 8px;
+ }
+
+.spanTitle{
+    color: rgba(0, 0, 0, 0.85);
+    font-weight: 500;
+    font-size: 16px;
+    display: block;
+    margin-top: 4px;
+}
+
+.spanLabel{
+    color: rgba(0, 0, 0, 0.85);
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 32px;
+}
+
+.spanLabel label{
+    color: #999999;
+    font-weight: 400;
+    font-size: 14px;
+    margin-left: 10px;
+}
+
+.divLeftRightTitleView{
+    background-color: #ffffff;
+    margin-top: 8px;
+    padding-left: 16px;
+    padding-right: 16px;
+    height: 57px;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    border-bottom:1px solid #e8e8e8;
+    align-items: center;
+}
+
+.leftTitle{
+    color: rgba(0, 0, 0, 0.85);
+    font-weight: 500;
+    font-size: 16px;
+}
+
+.whiteSpace1{
+    width:100%;
+    height: 10px;
+    border-bottom:1px solid #e8e8e8;
+}
+
+.whiteSpace2{
+    width:100%;
+    height: 10px;
+}
+
+.spanLabel2{
+    color: rgba(0, 0, 0, 0.85);
+    font-size: 14px;
+}
+
+.spanLabel2 label{
+    color: #999999;
+    font-weight: 400;
+    font-size: 14px;
+}
+
+.redSpanTip{
+    color:red;
+    font-size: 14px;
+    margin-left: 16px;
+}
+
+
+.spanLabel3{
+    color: rgba(0, 0, 0, 0.85);
+    font-size: 14px;
+}
+
+.spanLabel3 label{
+    color: #666666;
+    font-weight: 400;
+    font-size: 14px;
+}
+
+.divCenterButton{
+    background-color: #ffffff;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.divCenterButton2{
+    background-color: #ffffff;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    margin-top: 260px;
+}
+
+.loginHeader{
+    height: 60px;
+    text-align: center;
+    line-height: 48px;
+    font-size: 24px;
+    color:#1890ff;
+    display: block;
+    margin-bottom: 24px;
+    font-family: 'Myriad Pro', 'Helvetica Neue', Arial, Helvetica, sans-serif;
+    font-weight: 500;
+    border-bottom: 2px solid #1890ff;
+}
+
+.specialOrderRemark{
+    color:red;
+    font-size: 14px;
+    margin-right: 8px;
+}
+
+.divRightButton3{
+    display: flex;
+    align-items: center;
+}
+
+.aLeftTitle{
+    color:#1890ff;
+    margin-right: 124px;
+}
+
+.aSpan{
+    color:#1890ff;
+}
+
+.divTable{
+    padding: 16px;
+    margin: 0;
+}
+
+.divhtmlTitleView{
+    background-color: #ffffff;
+    margin: 0;
+    padding: 0;
+    height: 60px;
+    line-height: 60px;
+}
+
+.divColumsView{
+    margin: 0;
+    padding: 0;
+}
+
+.divColumsView label{
+border-bottom: 1px solid #e8e8e8 !important;
+padding-top: 5px;
+padding-bottom: 5px;
+padding-left: 16px;
+}
+
+
+.checkBoxGroup{
+    margin-left: 8px !important;
+    margin-top: 4px !important;
+}
+
+.checkBoxGroup label{
+    line-height: 32px !important;
+}
+
+
+.divUserPhoto{
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+
+
+}
+
+.divUserPhoto .divData{
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: #ffffff;
+}
+
+.divUserPhoto .divData .divItem{
+    width: 25%;
+    height: 160px;
+    float: left;
+    padding: 8px;
+    box-sizing: border-box;
+    border-bottom: 1px solid #ddd;
+    position: relative;
+}
+
+.divUserPhoto .divData .divItem .divImage{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;    
+}
+
+.divUserPhoto .divData .divItem .divImage img{
+    height: 100%;
+    max-width: 100%;
+}
+
+.divUserConditionType{
+    width: 100%;
+}
+
+.divUserConditionType .divItem{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.divUserConditionType .divItem .divTitle{
+    width: 100%;
+    background-color: #fafafa;
+    padding-left: 16px;
+    box-sizing: border-box;
+    min-height: 48px;
+    display: flex;
+    align-items: center;
+}
+
+.divUserConditionType .divItem .divTitle span{
+    color: #333;
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 32px;
+}
+
+
+.divUserConditionType .divItem .divData{
+    width: 100%;
+    padding: 16px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+}
+
+.divUserConditionType .divItem .divData .divItem2{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.divUserConditionType .divItem .divData .divItem2 .divTitle2{
+    width: 100%;
+    background-color: #f5f5f9;
+    padding-left: 16px;
+    box-sizing: border-box;
+    min-height: 48px;
+    display: flex;
+    align-items: center;
+}
+.divUserConditionType .divItem .divData .divItem2 .divTitle2 span{
+    color: #333;
+    font-size: 14px;
+    line-height: 32px;
+}
+
+.divUserConditionType .divItem .divData .divItem2 .divValue{
+    width: 100%;
+    padding-left: 32px;
+    min-height: 48px;
+    display: flex;
+    align-items: center;
+}
+
+.divUserConditionType .divItem .divData .divItem2 .divValue span{
+    line-height: 32px;
+    font-size: 14px;
+    color: #187FC4;
+}
+
+.divUserConditionType .divItem .divData .divItem2 .divValue span label{
+    display: block;
+    padding-left: 8px;
+    padding-right: 8px;
+    font-size: 14px;
+    line-height: 32px;
+    background-color: #fafafa;
+    color: #187FC4;
+    border: 1px solid #d9d9d9;
+    float: left;
+    border-radius: 2px;
+    margin-right: 8px;
+}
+.divUserConditionType .divItem .divData .divItem2 .divValue span .spZhi{
+    display: block;
+    margin-right: 8px;
+    float: left;
+}

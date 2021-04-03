@@ -1,0 +1,567 @@
+@function toRem($px){
+    @return $px/32*1rem;
+}
+
+.divView{
+    width: 100%;
+    min-height: 100%;
+    height: 100%;
+}
+
+.divView1{
+    width: 100%;
+    height: 100%;
+    padding-top: toRem(120);
+    box-sizing: border-box;
+    min-height: 100%;
+ 
+    .divHeader{
+        width: 100%;
+        height: toRem(120);
+        margin-top: toRem(-120);
+        background-color: #b28850;
+        display: flex;
+        justify-content: space-between;
+     
+        .divLeft{
+            width: toRem(180);
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+ 
+            .divBack{
+                width: toRem(102);
+                height: toRem(36);
+                background-image: url(../assets/back.png);
+                background-size: 100% 100%;
+            }
+        }
+ 
+        .divRight{
+         width: toRem(260);
+         height: 100%;
+         display: flex;
+         justify-content: center;
+         align-items: center;
+ 
+         .divLogo{
+             width: toRem(160);
+             height: toRem(48);
+             background-image: url(../assets/logo_1.png);
+             background-size: 100% 100%;
+         }
+     }
+ 
+        .divLeft:active{
+            opacity: 0.8;
+        }
+    }
+}
+
+.divIndexPage{
+    width: 100%;
+    min-height: 100%;
+    height: 100%;
+    padding-top: toRem(360);
+    box-sizing: border-box;
+
+.divBannerImage{
+    touch-action: none;
+    width: 100%;
+    height: toRem(360);
+    margin-top: toRem(-360);
+    overflow:hidden;
+    
+    a{
+        display: inline-block;
+        width: 100%;
+        height: toRem(360);
+    .divImage2{
+        width: 100%;
+        height: toRem(360);
+    }
+  }
+
+  :global {
+    .slider-list{
+        width: 100% !important;
+        height: toRem(360) !important;
+    }
+}
+}
+}
+
+.divTitleInfo{
+    width: 100%;
+    height: toRem(318);
+    padding: toRem(16);
+    box-sizing: border-box;
+
+.divContent{
+ background: #D1C0A5;
+ border-radius: 5px;
+ width: 100%;
+ height: toRem(286);
+ display: flex;
+ justify-content: center;
+ align-items: center;
+
+
+     span{
+         line-height: toRem(60);
+         font-size:  toRem(42);
+font-weight: 500;
+color: #FFFFFF;
+
+     }
+
+}
+}
+
+.divUserInfoEdit{
+    width: 100%;
+    height: 100%;
+    padding-bottom: toRem(100);
+    box-sizing: border-box;
+}
+
+.divUserInfoEdit2{
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+
+    :global {
+      .am-list-item{
+            width: 100% !important;
+            height: toRem(140) !important;
+            padding: 0 !important;
+            margin: 0 !important;
+        }
+
+        .am-list-line{
+            width: 100% !important;
+            height: 100% !important;
+            padding: 0 !important;
+            margin: 0 !important;
+        }
+
+        .am-input-control{
+            width: 100% !important;
+            height: 100% !important;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 0 !important;
+            margin: 0 !important;
+
+            input{
+                width: toRem(608) !important;
+                height: toRem(100) !important;
+                box-sizing: border-box !important;
+                border: 1px solid #bfbaaa !important;
+                font-size: toRem(32) !important;
+                border-radius: toRem(8) !important;
+                padding-left: toRem(16) !important;
+            }
+        }
+
+        .am-input-label{
+            display: none !important;
+        }
+
+        .am-list-line::after{
+            display: none !important;
+        }
+    }
+}
+
+.divButtonView{
+    width: 100%;
+    height: toRem(100);
+
+    :global {
+
+        .am-button{
+            font-size: toRem(34) !important;
+            height: toRem(100) !important;
+            line-height:  toRem(100) !important;
+            display: flex !important;
+            justify-content: center !important;
+            align-items: center !important;
+            color: #FFFFFF !important;
+            background-color: #b28850;
+            border-radius:0 !important;
+            border: 0 !important;
+        }
+        .am-button::before{
+            display: none !important;
+        }
+    }
+}
+
+.divPostInfoView{
+    width: 100%;
+    height: 100%;
+    padding-bottom: toRem(100);
+    box-sizing: border-box;
+
+
+}
+
+    
+.divDataGridView{
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+    
+    .divData{
+        height: 100%;
+        background-color: #ffffff;
+    }
+
+.divPostInfoItem{
+    width: 100%;
+    border-top: toRem(6) solid #d0cabd;
+    
+    .divPostInfoItem2{
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        padding-top: toRem(32);
+
+         .divRight{
+             width: toRem(540);
+             display: flex;
+             flex-direction: column;
+
+             .divContentItem{
+                 width: 100%;
+                 margin-bottom: toRem(32);
+             }
+
+.divBottom{
+    width: 100%;
+    height: toRem(76);
+    box-sizing: border-box;
+    border-top: 1px solid #ebe6e1;
+     display: flex;
+     flex-direction: row;
+     justify-content: space-between;
+
+     .divRight2, .divRight3{
+        height: 100%;
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+
+        .divLike{
+            width: toRem(96);
+            height: toRem(30);
+            background-image: url(../assets/like.png);
+            background-size: 100% 100%;
+        }
+
+        .divLiked{
+            width: toRem(96);
+            height: toRem(30);
+            background-image: url(../assets/liked.png);
+            background-size: 100% 100%;
+        }
+
+        span{
+            color:#333333;
+            font-size: toRem(28);
+            padding-left: toRem(8);
+        }
+    }
+
+    .divRight2:active{
+background-color: #ddd;
+    }
+
+     .divLeft2{
+         height: 100%;
+         display: flex;
+         align-items: center;
+
+         .divComment{
+             width: toRem(96);
+             height: toRem(30);
+             background-image: url(../assets/comment.png);
+             background-size: 100% 100%;
+         }
+         
+         span{
+            color:#333333;
+            font-size: toRem(28);
+            padding-left: toRem(8);
+        }
+     }
+}
+
+             .divDate{
+                 width: 100%;
+                height: toRem(50);
+                
+                span{
+                font-size: toRem(22);
+                color: #333333;
+                line-height: toRem(50);
+                }
+             }
+
+             .divContent{
+                 width: 100%;
+
+                 span{
+                    font-size: toRem(30);
+                    color: #333333;
+                    line-height:toRem(48);
+                 }
+               
+             }
+
+             .divImage{
+                 width: 100%;
+                 
+                 img{
+                     max-width: 100%;
+                 }
+             }
+         }
+
+        .divLeft{
+            width: toRem(172);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+
+            .divTop{
+                width: 100%;
+                height: toRem(50);
+                display: flex;
+                justify-content: center;
+                
+                span{
+                font-size: toRem(28);
+                color: #333333;
+                line-height: toRem(50);
+                }
+            }
+
+            .divHeadImg{
+                width: toRem(96);
+                height: toRem(96);
+                background-size: 100% 100%;
+                border-radius: 50%;
+            }
+            
+            .divNickName{
+                width: 100%;
+                padding-top: toRem(12);
+                display: flex;
+                justify-content: center;
+
+                span{
+                font-size: toRem(26);
+                line-height: toRem(40);
+color: #333333;
+                }
+            }
+
+        }
+    }
+}
+
+    :global{
+        .am-list-body:before, .am-list-body:after{
+            height: 0 !important;
+        }
+
+        .am-list-header{
+            padding: 0 !important;
+        }
+    }
+}
+
+.divPostEditView{
+    width: 100%;
+    position:fixed;
+    height: 100%;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    overflow: hidden;
+    background-color: #ffffff;
+    z-index: 200;
+    padding-top: toRem(230);
+    padding-bottom: toRem(100);
+    box-sizing: border-box;
+}
+
+.divPostInfoEdit{
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    position: relative;
+
+
+    .divContentInput {
+        width: 100% !important;
+        height: toRem(320) !important;
+            padding: 0 !important;
+            margin: 0 !important;
+
+        :global{
+
+            .am-textarea-label{
+                display: none !important;
+            }
+
+            .am-textarea-control{
+                height: 100% !important;
+                padding: 0 !important;
+                margin: 0 !important;
+                display: flex !important;
+                align-items: center !important;
+                justify-content: center !important;
+
+                textarea{
+             font-size: toRem(30) !important;
+line-height: toRem(48) !important;
+padding: toRem(32) !important;
+width: 100% !important;
+height: 100% !important;
+box-sizing: border-box;
+                }
+            }
+        }
+
+    }
+}
+
+.divUserInfo2{
+    width: 100%;
+    height: toRem(230);
+    margin-top: toRem(-230);
+    background-color: #ebe6e0;
+
+ .divHeadImg{
+width: 100%;
+height: toRem(150);
+display: flex;
+align-items: flex-end;
+justify-content: center;
+
+img{
+ width: toRem(100);
+ height: toRem(100);
+ border-radius: 50%;
+ border: toRem(3) solid #ffffff;
+ box-sizing: border-box;
+}
+ }
+
+ .divName{
+     width: 100%;
+     height: toRem(48);
+     display: flex;
+     justify-content: center;
+
+     span{
+         line-height: toRem(48);
+         color: #333333;
+     }
+ }
+
+
+}
+
+
+.divButtonView2{
+    width: 100%;
+    height: toRem(100);
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+    :global {
+
+        .am-button{
+            font-size: toRem(34) !important;
+            height: toRem(100) !important;
+            line-height:  toRem(100) !important;
+            display: flex !important;
+            justify-content: center !important;
+            align-items: center !important;
+            color: #FFFFFF !important;
+            background-color: #B28850;
+            border-radius:0 !important;
+            border: 0 !important;
+            width: 50%;
+        }
+        .am-button::before{
+            display: none !important;
+        }
+    }
+    .cancelButton{
+        span{
+        display: block !important;
+        width: 100% !important; 
+        height: toRem(60) !important;
+        line-height: toRem(60) !important;
+        border-right: 1px solid #ffffff !important;
+        box-sizing: border-box !important;
+        }
+    }
+}
+
+.divDialog{
+    width: toRem(600) !important;
+}
+
+.divActivityIndicator{
+    width: 100%;
+    height: toRem(60);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+.divPostCommentEdit{
+    width: 100%;
+
+    .divContentInput {
+        width: 100% !important;
+            padding: 0 !important;
+            margin: 0 !important;
+
+        :global{
+
+            .am-textarea-label{
+                display: none !important;
+            }
+
+            .am-textarea-control{
+                height: 100% !important;
+                padding: 0 !important;
+                margin: 0 !important;
+                display: flex !important;
+                align-items: center !important;
+                justify-content: center !important;
+
+                textarea{
+             font-size: toRem(30) !important;
+line-height: toRem(48) !important;
+width: 100% !important;
+height: 100% !important;
+box-sizing: border-box;
+                }
+            }
+        }
+
+    }
+}
