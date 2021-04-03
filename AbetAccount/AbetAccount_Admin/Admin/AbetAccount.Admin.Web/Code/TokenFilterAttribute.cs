@@ -78,7 +78,6 @@ namespace AbetAccount.Admin.Web.Code
             string loginUserId = string.Empty;
 
             bool isLogin = entityName == "AdminUser" && methodName == "Login";
-            if(!isLogin) isLogin = entityName == "KeminGame20210322AdminUser" && methodName == "Login";
 
             if (isLogin)
             {

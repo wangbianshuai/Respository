@@ -74,6 +74,11 @@ namespace AbetAccount.Admin.Web
                 builder.AllowAnyOrigin();
             });
 
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllers();
+            });
+
             app.UseStaticFiles();
 
             Code.AppSettings.SetAppSetting(Configuration.GetSection("AppSetting"));

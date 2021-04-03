@@ -32,7 +32,7 @@ function getEnv(h) {
 }
 
 function getApiSericeUrl() {
-    return "https://localhost:5081/api/";
+    return "/api/";
 }
 
 function getWebServiceUrl() {

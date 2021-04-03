@@ -30,12 +30,12 @@ export default {
   exportStatic: {
     htmlSuffix: true,
   },
-  // proxy: {
-  //   '/api/': {
-  //     target: 'https://localhost:5081/',
-  //     changeOrigin: true
-  //   }
-  // },
+  proxy: {
+    '/api/': {
+      target: 'http://localhost:5080/',
+      changeOrigin: true
+    }
+  },
   alias: {
     UtilsCommon: path.resolve(__dirname, './src/utils-common/index.js'),
     DvaCommon: path.resolve(__dirname, './src/dva-common/index.js'),
