@@ -145,7 +145,7 @@ const setDataProperty = (p, property, pageAxis) => {
                     url = Common.replaceDataContent(record, url, true)
                 }
                 if (Common.isNullOrEmpty(url)) return text;
-                else if(record[p.imageTypeName]=== p.imageTypeValue){
+                else if (p.imageTypeValue && record[p.imageTypeName] === p.imageTypeValue) {
                     return <a href={url} target='_blank' rel="noopener noreferrer"><img src={url} width={p.imageWidth} alt="" /></a>
                 }
                 else return <a href={url} target="_blank" rel="noopener noreferrer">{text}</a>
