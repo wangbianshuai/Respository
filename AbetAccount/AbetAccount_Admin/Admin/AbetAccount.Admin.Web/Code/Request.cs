@@ -35,7 +35,7 @@ namespace AbetAccount.Admin.Web.Code
             EntityType.SetEntityType<Entity.ViewDictionaryConfig>();
             EntityType.SetEntityType<Entity.OperationLog>();
             EntityType.SetEntityType<Entity.ViewOperationLog>();
-         
+
 
             OpenDataAccessCore.Service.ComponentType.SetComponentType<Component.DictionaryConfig>();
             OpenDataAccessCore.Service.ComponentType.SetComponentType<Component.AdminUser>();

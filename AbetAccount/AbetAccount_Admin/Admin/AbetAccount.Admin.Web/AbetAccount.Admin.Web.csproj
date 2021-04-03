@@ -20,6 +20,7 @@
     <Content Remove="logs\**" />
     <EmbeddedResource Remove="logs\**" />
     <None Remove="logs\**" />
+    <None Remove="Properties\PublishProfiles\A2DigitalSolution.Web.pubxml" />
   </ItemGroup>
 
   <ItemGroup>

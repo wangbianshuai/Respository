@@ -1,7 +1,6 @@
 const _ServiceConfig = {
     ApiService: getApiSericeUrl,
-    WebService: getWebServiceUrl,
-    A2ApiService: getA2ApiServiceUrl,
+    WebService: getWebServiceUrl
 };
 
 const EnvConfig = {
@@ -33,17 +32,11 @@ function getEnv(h) {
 }
 
 function getApiSericeUrl() {
-    return "/admin/api/";
+    return "/api/";
 }
 
 function getWebServiceUrl() {
     return "/admin/";
-}
-
-function getA2ApiServiceUrl() {
-    let url = "http://localhost/admin/api/"
-
-    return url;
 }
 
 function getServiceUrl(serverName) {

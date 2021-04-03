@@ -31,8 +31,8 @@ export default {
     htmlSuffix: true,
   },
   proxy: {
-    '/admin/api/': {
-      target: 'http://localhost/',
+    '/api/': {
+      target: 'http://localhost:6001/',
       changeOrigin: true
     }
   },
