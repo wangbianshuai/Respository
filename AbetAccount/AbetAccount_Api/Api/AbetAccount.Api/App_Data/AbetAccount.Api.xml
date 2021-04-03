@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>AbetAccount.Api</name>
+    </assembly>
+    <members>
+        <member name="T:AbetAccount.Api.Code.ApiExceptionFilterAttribute">
+            <summary>
+            异常
+            </summary>
+        </member>
+        <member name="T:AbetAccount.Api.Code.TokenFilterAttribute">
+            <summary>
+            Token过滤
+            </summary>
+        </member>
+        <member name="M:AbetAccount.Api.Controllers.DefaultController.GetCurrentTime">
+            <summary>
+            获取当前时间
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:AbetAccount.Api.Controllers.FormDataProxyController.Post(System.String,System.String,System.String)">
+            <summary>
+            POST请求
+            </summary>
+            <param name="act"></param>
+            <param name="param"></param>
+            <param name="url"></param>
+            <returns></returns>
+        </member>
+    </members>
+</doc>

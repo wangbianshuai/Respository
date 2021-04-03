@@ -1,0 +1,21 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup Label="Globals">
+    <SccProjectName>SAK</SccProjectName>
+    <SccProvider>SAK</SccProvider>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccLocalPath>SAK</SccLocalPath>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <AssemblyName>AbetAccount.Application</AssemblyName>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\AbetAccount.Domain\AbetAccount.Domain.csproj" />
+    <ProjectReference Include="..\AbetAccount.Entity\AbetAccount.Entity.csproj" />
+    <ProjectReference Include="..\AbetAccount.Utility\AbetAccount.Utility.csproj" />
+  </ItemGroup>
+
+</Project>

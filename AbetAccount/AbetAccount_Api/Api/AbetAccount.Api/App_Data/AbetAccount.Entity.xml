@@ -1,0 +1,464 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>AbetAccount.Entity</name>
+    </assembly>
+    <members>
+        <member name="T:AbetAccount.Entity.Application.GetCurrentTimeRequest">
+            <summary>
+            获取当前时间请求
+            </summary>
+        </member>
+        <member name="T:AbetAccount.Entity.Application.GetCurrentTimeResponse">
+            <summary>
+            获取当前时间响应
+            </summary>
+        </member>
+        <member name="P:AbetAccount.Entity.Application.GetCurrentTimeResponse.Time">
+            <summary>
+            时间毫秒数
+            </summary>
+        </member>
+        <member name="T:AbetAccount.Entity.Application.IRequest">
+            <summary>
+            请求接口
+            </summary>
+        </member>
+        <member name="P:AbetAccount.Entity.Application.IRequest.IpAddress">
+            <summary>
+            IP地址
+            </summary>
+        </member>
+        <member name="P:AbetAccount.Entity.Application.IRequest.AppId">
+            <summary>
+            AppId
+            </summary>
+        </member>
+        <member name="P:AbetAccount.Entity.Application.IRequest.LoginUserId">
+            <summary>
+            登录用户Id
+            </summary>
+        </member>
+        <member name="P:AbetAccount.Entity.Application.IRequest.Referer">
+            <summary>
+            引用地址
+            </summary>
+        </member>
+        <member name="T:AbetAccount.Entity.Application.Request">
+            <summary>
+            请求基类
+            </summary>
+        </member>
+        <member name="P:AbetAccount.Entity.Application.Request.IpAddress">
+            <summary>
+            IP地址
+            </summary>
+        </member>
+        <member name="P:AbetAccount.Entity.Application.Request.AppId">
+            <summary>
+            AppId
+            </summary>
+        </member>
+        <member name="P:AbetAccount.Entity.Application.Request.LoginUserId">
+            <summary>
+            登录用户Id
+            </summary>
+        </member>
+        <member name="P:AbetAccount.Entity.Application.Request.Referer">
+            <summary>
+            引用地址
+            </summary>
+        </member>
+        <member name="T:AbetAccount.Entity.Application.OrderByType">
+            <summary>
+            排序
+            </summary>
+        </member>
+        <member name="P:AbetAccount.Entity.Application.OrderByType.Name">
+            <summary>
+            字段名
+            </summary>
+        </member>
+        <member name="P:AbetAccount.Entity.Application.OrderByType.Type">
+            <summary>
+            类型，asc 或 desc
+            </summary>
+        </member>
+        <member name="T:AbetAccount.Entity.Application.IResponse">
+            <summary>
+            响应接口
+            </summary>
+        </member>
+        <member name="P:AbetAccount.Entity.Application.IResponse.Ack">
+            <summary>
+            应答
+            </summary>
+        </member>
+        <member name="P:AbetAccount.Entity.Application.IResponse.Token">
+            <summary>
+            Token
+            </summary>
+        </member>
+        <member name="T:AbetAccount.Entity.Application.Response">
+            <summary>
+            响应基类
+            </summary>
+        </member>
+        <member name="P:AbetAccount.Entity.Application.Response.Ack">
+            <summary>
+            应答
+            </summary>
+        </member>
+        <member name="P:AbetAccount.Entity.Application.Response.Token">
+            <summary>
+            Token
+            </summary>
+        </member>
+        <member name="M:AbetAccount.Entity.Application.Response.#ctor">
+            <summary>
+            构造函数
+            </summary>
+        </member>
+        <member name="T:AbetAccount.Entity.Application.Ack">
+            <summary>
+            应答
+            </summary>
+        </member>
+        <member name="P:AbetAccount.Entity.Application.Ack.IsSuccess">
+            <summary>
+            是否成功
+            </summary>
+        </member>
+        <member name="P:AbetAccount.Entity.Application.Ack.Code">
+            <summary>
+            编号
+            </summary>
+        </member>
+        <member name="P:AbetAccount.Entity.Application.Ack.Message">
+            <summary>
+            信息
+            </summary>
+        </member>
+        <member name="M:AbetAccount.Entity.Application.Ack.#ctor">
+            <summary>
+            构造函数
+            </summary>
+        </member>
+        <member name="T:AbetAccount.Entity.Application.PageInfo">
+            <summary>
+            分页信息
+            </summary>
+        </member>
+        <member name="P:AbetAccount.Entity.Application.PageInfo.PageIndex">
+            <summary>
+            分页索引，从1开始
+            </summary>
+        </member>
+        <member name="P:AbetAccount.Entity.Application.PageInfo.PageSize">
+            <summary>
+            分页大小
+            </summary>
+        </member>
+        <member name="P:AbetAccount.Entity.Application.PageInfo.PageCount">
+            <summary>
+            页数
+            </summary>
+        </member>
+        <member name="P:AbetAccount.Entity.Application.PageInfo.TotalCount">
+            <summary>
+            总记录数
+            </summary>
+        </member>
+        <member name="M:AbetAccount.Entity.Application.PageInfo.#ctor(System.Int32,System.Int32,System.Int32)">
+            <summary>
+            构造函数
+            </summary>
+            <param name="pageIndex"></param>
+            <param name="pageSize"></param>
+            <param name="totalCount"></param>
+        </member>
+        <member name="T:AbetAccount.Entity.Data.DictionaryConfig">
+            <summary>
+            键值配置
+            </summary>
+        </member>
+        <member name="P:AbetAccount.Entity.Data.DictionaryConfig.DictionaryConfigId">
+            <summary> 
+            主键
+            </summary> 
+        </member>
+        <member name="P:AbetAccount.Entity.Data.DictionaryConfig.Name">
+            <summary> 
+            名称
+            </summary> 
+        </member>
+        <member name="P:AbetAccount.Entity.Data.DictionaryConfig.Value">
+            <summary> 
+            值
+            </summary> 
+        </member>
+        <member name="P:AbetAccount.Entity.Data.DictionaryConfig.TypeName">
+            <summary> 
+            类型名
+            </summary> 
+        </member>
+        <member name="P:AbetAccount.Entity.Data.DictionaryConfig.Remark">
+            <summary> 
+            备注
+            </summary> 
+        </member>
+        <member name="P:AbetAccount.Entity.Data.DictionaryConfig.IsDelete">
+            <summary> 
+            是否删除
+            </summary> 
+        </member>
+        <member name="P:AbetAccount.Entity.Data.DictionaryConfig.CreateUser">
+            <summary> 
+            创建人
+            </summary> 
+        </member>
+        <member name="P:AbetAccount.Entity.Data.DictionaryConfig.CreateDate">
+            <summary> 
+            创建时间
+            </summary> 
+        </member>
+        <member name="P:AbetAccount.Entity.Data.DictionaryConfig.UpdateUser">
+            <summary> 
+            更新人
+            </summary> 
+        </member>
+        <member name="P:AbetAccount.Entity.Data.DictionaryConfig.UpdateDate">
+            <summary> 
+            更新时间
+            </summary> 
+        </member>
+        <member name="P:AbetAccount.Entity.Data.DictionaryConfig.RowVersion">
+            <summary> 
+            行版本
+            </summary> 
+        </member>
+        <member name="T:AbetAccount.Entity.Data.QueryInfo">
+            <summary>
+            查询数据
+            </summary>
+        </member>
+        <member name="P:AbetAccount.Entity.Data.QueryInfo.PageIndex">
+            <summary>
+            分页索引
+            </summary>
+        </member>
+        <member name="P:AbetAccount.Entity.Data.QueryInfo.PageSize">
+            <summary>
+            分页大小
+            </summary>
+        </member>
+        <member name="P:AbetAccount.Entity.Data.QueryInfo.SelectFieldList">
+            <summary>
+            查询字符集合
+            </summary>
+        </member>
+        <member name="P:AbetAccount.Entity.Data.QueryInfo.ConditionList">
+            <summary>
+            查询条件
+            </summary>
+        </member>
+        <member name="P:AbetAccount.Entity.Data.QueryInfo.OrderByList">
+            <summary>
+            排序
+            </summary>
+        </member>
+        <member name="P:AbetAccount.Entity.Data.QueryInfo.SumSql">
+            <summary>
+            统计Sql
+            </summary>
+        </member>
+        <member name="P:AbetAccount.Entity.Data.QueryInfo.TableName">
+            <summary>
+            表名或视图名
+            </summary>
+        </member>
+        <member name="T:AbetAccount.Entity.Data.OrderByType">
+            <summary>
+            排序
+            </summary>
+        </member>
+        <member name="P:AbetAccount.Entity.Data.OrderByType.Name">
+            <summary>
+            字段名
+            </summary>
+        </member>
+        <member name="P:AbetAccount.Entity.Data.OrderByType.IsDesc">
+            <summary>
+            类型，asc 或 desc
+            </summary>
+        </member>
+        <member name="M:AbetAccount.Entity.Data.OrderByType.#ctor(System.String,System.String)">
+            <summary>
+            构造函数
+            </summary>
+            <param name="name"></param>
+            <param name="type"></param>
+        </member>
+        <member name="T:AbetAccount.Entity.Data.QueryCondition">
+            <summary>
+            查询条件
+            </summary>
+        </member>
+        <member name="P:AbetAccount.Entity.Data.QueryCondition.Name">
+            <summary>
+            名称
+            </summary>
+        </member>
+        <member name="P:AbetAccount.Entity.Data.QueryCondition.ParameterName">
+            <summary>
+            参数名
+            </summary>
+        </member>
+        <member name="P:AbetAccount.Entity.Data.QueryCondition.OpearteLogic">
+            <summary>
+            操作符
+            </summary>
+        </member>
+        <member name="P:AbetAccount.Entity.Data.QueryCondition.Value">
+            <summary>
+            值
+            </summary>
+        </member>
+        <member name="P:AbetAccount.Entity.Data.QueryCondition.ConditionSql">
+            <summary>
+            条件sql
+            </summary>
+        </member>
+        <member name="P:AbetAccount.Entity.Data.QueryCondition.Parameters">
+            <summary>
+            参数
+            </summary>
+        </member>
+        <member name="M:AbetAccount.Entity.Data.QueryCondition.#ctor(System.String,System.Collections.Generic.Dictionary{System.String,System.Object})">
+            <summary>
+            查询条件
+            </summary>
+            <param name="conditionSql"></param>
+            <param name="parameters"></param>
+        </member>
+        <member name="M:AbetAccount.Entity.Data.QueryCondition.#ctor(System.String,System.String,System.Object,System.String)">
+            <summary>
+            查询条件
+            </summary>
+            <param name="name"></param>
+            <param name="operateLogic"></param>
+            <param name="value"></param>
+            <param name="parameterName"></param>
+        </member>
+        <member name="T:AbetAccount.Entity.Domain.DictionaryConfig">
+            <summary>
+            键值配置
+            </summary>
+        </member>
+        <member name="P:AbetAccount.Entity.Domain.DictionaryConfig.DictionaryConfigId">
+            <summary> 
+            主键
+            </summary> 
+        </member>
+        <member name="P:AbetAccount.Entity.Domain.DictionaryConfig.Name">
+            <summary> 
+            名称
+            </summary> 
+        </member>
+        <member name="P:AbetAccount.Entity.Domain.DictionaryConfig.Value">
+            <summary> 
+            值
+            </summary> 
+        </member>
+        <member name="P:AbetAccount.Entity.Domain.DictionaryConfig.TypeName">
+            <summary> 
+            类型名
+            </summary> 
+        </member>
+        <member name="T:AbetAccount.Entity.Service.IRequest">
+            <summary>
+            请求接口
+            </summary>
+        </member>
+        <member name="P:AbetAccount.Entity.Service.IRequest.AccessToken">
+            <summary>
+            获取到的凭证
+            </summary>
+        </member>
+        <member name="P:AbetAccount.Entity.Service.IRequest.Url">
+            <summary>
+            服务地址
+            </summary>
+        </member>
+        <member name="T:AbetAccount.Entity.Service.Request">
+            <summary>
+            请求基类
+            </summary>
+        </member>
+        <member name="P:AbetAccount.Entity.Service.Request.AccessToken">
+            <summary>
+            获取到的凭证
+            </summary>
+        </member>
+        <member name="P:AbetAccount.Entity.Service.Request.Url">
+            <summary>
+            服务地址
+            </summary>
+        </member>
+        <member name="T:AbetAccount.Entity.Service.IResponse">
+            <summary>
+            响应接口
+            </summary>
+        </member>
+        <member name="P:AbetAccount.Entity.Service.IResponse.ErrCode">
+            <summary>
+            返回码
+            </summary>
+        </member>
+        <member name="P:AbetAccount.Entity.Service.IResponse.ErrMsg">
+            <summary>
+            错误信息
+            </summary>
+        </member>
+        <member name="P:AbetAccount.Entity.Service.IResponse.result">
+            <summary>
+            结果
+            </summary>
+        </member>
+        <member name="P:AbetAccount.Entity.Service.IResponse.errMessage">
+            <summary>
+            错误信息
+            </summary>
+        </member>
+        <member name="T:AbetAccount.Entity.Service.Response">
+            <summary>
+            响应基类
+            </summary>
+        </member>
+        <member name="P:AbetAccount.Entity.Service.Response.ErrCode">
+            <summary>
+            返回码
+            </summary>
+        </member>
+        <member name="P:AbetAccount.Entity.Service.Response.ErrMsg">
+            <summary>
+            错误信息
+            </summary>
+        </member>
+        <member name="P:AbetAccount.Entity.Service.Response.result">
+            <summary>
+            结果
+            </summary>
+        </member>
+        <member name="P:AbetAccount.Entity.Service.Response.errMessage">
+            <summary>
+            错误信息
+            </summary>
+        </member>
+        <member name="M:AbetAccount.Entity.Service.Response.#ctor">
+            <summary>
+            构造函数
+            </summary>
+        </member>
+    </members>
+</doc>
