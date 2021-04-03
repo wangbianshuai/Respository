@@ -23,8 +23,8 @@ export default {
       },
     }],
   ],
-  publicPath: "/admin/",
-  base: "/admin/",
+  publicPath: "/abet/",
+  base: "/abet/",
   hash: true,
   runtimePublicPath: true,
   exportStatic: {
