@@ -18,7 +18,7 @@ function getAccountNavMenu() {
     var menuList = [];
 
     menuList.push(addMenu("accountBillList", "记账", false, "table", "/accountManage/accountBillList"));
-    menuList.push(addMenu("accountBillEdit", "新增", true, "form", "/accountManage/accountBillEdit", "", null, false, "记账", "/accountManage/accountTypeList", null, true));
+    menuList.push(addMenu("accountBillEdit", "新增", true, "form", "/accountManage/accountBillEdit", "", null, false, "记账", "/accountManage/accountBillList", null, true));
 
     menuList.push(addMenu("customerList", "客户", false, "table", "/accountManage/customerList"));
     menuList.push(addMenu("customerEdit", "新增", true, "form", "/accountManage/customerEdit", "", null, false, "客户", "/accountManage/customerList", null, true));

@@ -128,7 +128,7 @@ const setDataProperty = (p, property, pageAxis) => {
             if (p.isRender && !p.isRender(text, record, index)) return emptyRender();
             if (parseFloat(text) < 0) return <span style={{ color: "red" }}>{Common.toCurrency(text, p.isFixed2)}</span>
 
-            if (p.FontColor) return <span style={{ color: p.FontColor }}>{Common.toCurrency(text, p.isFixed2)}</span>
+            if (p.fontColor) return <span style={{ color: p.fontColor }}>{Common.toCurrency(text, p.isFixed2)}</span>
 
             return Common.toCurrency(text, p.isFixed2)
         };

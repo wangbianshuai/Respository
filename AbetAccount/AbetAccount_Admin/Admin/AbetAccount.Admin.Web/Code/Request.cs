@@ -48,6 +48,7 @@ namespace AbetAccount.Admin.Web.Code
             OpenDataAccessCore.Service.ComponentType.SetComponentType<Component.AccountType>();
             OpenDataAccessCore.Service.ComponentType.SetComponentType<Component.Customer>();
             OpenDataAccessCore.Service.ComponentType.SetComponentType<Component.AccountBill>();
+            OpenDataAccessCore.Service.ComponentType.SetComponentType<Component.ViewAccountBill>();
 
             _DirectRequestList = new List<string>()
             {

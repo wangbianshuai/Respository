@@ -1,8 +1,8 @@
 import React from "react";
-import DictionaryConfigList from './systemManage/dictionaryConfigList';
+import AccountBillList from './accountManage/accountBillList';
 
 export default (props) => {
   return (
-    <DictionaryConfigList {...props} />
+    <AccountBillList {...props} />
   )
 }

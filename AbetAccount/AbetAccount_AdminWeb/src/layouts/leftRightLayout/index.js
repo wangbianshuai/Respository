@@ -215,7 +215,7 @@ const init = () => {
         isOnOpenChange: false,
         token: Common.getStorage("token"),
         loginUser: getLoginUser(),
-        defaultPageName: "/systemManage/dictionaryConfigList",
+        defaultPageName: "/accountManage/accountBillList",
         navMenuList,
         menus
     }

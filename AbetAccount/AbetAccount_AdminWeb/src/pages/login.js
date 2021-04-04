@@ -31,7 +31,7 @@ function componentDidMount() {
 function loginSuccess({ data }) {
     Common.setStorage("loginUserInfo", JSON.stringify(data));
     Common.setStorage("loginUserId", data.UserId);
-    const url = "/systemManage/dictionaryConfigList";
+    const url = "/accountManage/accountBillList";
     PageCommon.toPage(url);
 }
 
