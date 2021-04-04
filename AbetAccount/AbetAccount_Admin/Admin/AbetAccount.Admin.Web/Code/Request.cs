@@ -35,11 +35,20 @@ namespace AbetAccount.Admin.Web.Code
             EntityType.SetEntityType<Entity.ViewDictionaryConfig>();
             EntityType.SetEntityType<Entity.OperationLog>();
             EntityType.SetEntityType<Entity.ViewOperationLog>();
+            EntityType.SetEntityType<Entity.AccountType>();
+            EntityType.SetEntityType<Entity.ViewAccountType>();
+            EntityType.SetEntityType<Entity.Customer>();
+            EntityType.SetEntityType<Entity.ViewCustomer>();
+            EntityType.SetEntityType<Entity.AccountBill>();
+            EntityType.SetEntityType<Entity.ViewAccountBill>();
 
 
             OpenDataAccessCore.Service.ComponentType.SetComponentType<Component.DictionaryConfig>();
             OpenDataAccessCore.Service.ComponentType.SetComponentType<Component.AdminUser>();
-          
+            OpenDataAccessCore.Service.ComponentType.SetComponentType<Component.AccountType>();
+            OpenDataAccessCore.Service.ComponentType.SetComponentType<Component.Customer>();
+            OpenDataAccessCore.Service.ComponentType.SetComponentType<Component.AccountBill>();
+
             _DirectRequestList = new List<string>()
             {
             };
@@ -58,7 +67,7 @@ namespace AbetAccount.Admin.Web.Code
             request.PathAndQuery = controller.Request.Path;
             request.QueryString = GetQueryString(controller);
             request.RawUrl = controller.Request.Path;
-            request.RootPath = webHostEnvironment.WebRootPath + "\\";
+            request.RootPath = webHostEnvironment.WebRootPath + "/";
             request.RequestType = requestType;
             request.OperationUser = useId;
             request.Sign = sign;

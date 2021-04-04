@@ -35,9 +35,17 @@ namespace AbetAccount.Admin.Entity
         /// </summary> 
         public DateTime LastLoginDate { get; set; }
         /// <summary> 
+        /// 是否管理员
+        /// </summary> 
+        public byte IsAdmin { get; set; }
+        /// <summary> 
         /// 是否删除
         /// </summary> 
         public byte IsDelete { get; set; }
+        /// <summary>
+        /// 账目类型集合，以逗号隔开
+        /// </summary>
+        public string AccountTypes { get; set; }
         /// <summary> 
         /// 创建人
         /// </summary> 
@@ -79,5 +87,6 @@ namespace AbetAccount.Admin.Entity
     [RequestMethod(IsDelete = false, IsPost = false, IsPut = false)]
     public class ViewAdminUser : AdminUser
     {
+        public string IsAdminName { get; set; }
     }
 }

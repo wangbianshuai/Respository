@@ -67,13 +67,6 @@ namespace AbetAccount.Admin.Web
 
             app.UseAuthorization();
 
-            app.UseCors(builder =>
-            {
-                builder.AllowAnyHeader();
-                builder.AllowAnyMethod();
-                builder.AllowAnyOrigin();
-            });
-
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();

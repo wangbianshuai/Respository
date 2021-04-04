@@ -104,8 +104,8 @@ namespace OpenDataAccessCore.Service
                 path += request.RequestType;
             }
             string logPath = path;
-           
-            path = request.RootPath + path.Replace("/", "\\");
+
+            path = request.RootPath + path;
            
             DirectoryInfo direct = new DirectoryInfo(path);
             if (!direct.Exists)

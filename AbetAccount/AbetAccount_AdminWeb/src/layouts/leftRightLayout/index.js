@@ -259,7 +259,6 @@ export default (props) => {
         <Layout style={{ minWidth: 1200 }}>
             <Header style={{ background: '#fff', padding: 0, margin: 0 }}>
                 <div className={styles.logo} >
-                    <img src={getImageUrl("logo.png")} height={42} alt="" />
                     <span>Abet-记账</span>
                 </div>
                 {loginName ? (

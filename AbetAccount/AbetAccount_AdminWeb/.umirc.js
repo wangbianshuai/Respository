@@ -9,7 +9,6 @@ export default {
       dva: true,
       dynamicImport: false,
       title: 'Abet-记账',
-      links: [{ rel: 'icon', type: "image/x-icon", href: '/admin/favicon.ico' }],
       dll: false,
 
       routes: {
