@@ -10,6 +10,7 @@ function getProperties() {
         getProperty("UserId", "UserId"),
         getProperty("UserName", "用户名"),
         getProperty("LoginName", "登录名"),
+        getProperty("IsAdminName", "是否管理员"),
         getProperty("LastLoginDate", "最近登录时间"),
         getProperty("CreateDate", "创建时间")
     ]

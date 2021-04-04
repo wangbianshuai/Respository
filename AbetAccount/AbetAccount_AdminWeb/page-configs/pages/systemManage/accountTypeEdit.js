@@ -1,27 +1,28 @@
-const adminUser = require("../../entities/adminUser");
+const accountType = require("../../entities/accountType");
 const { assignProporties, getTextBox, getButton } = require("../../Common");
 
-//配置管理/用户编辑 4400-4499
+//systemManage/accountTypeEdit 900-999
 const dataActionTypes = {
-    //获取实体数据
-    getEntityData: 4400,
-    //保存实体数据
-    saveEntityData: 4401
+    //get entity data
+    getEntityData: 900,
+    //Save entity data
+    saveEntityData: 901
 }
 
-const { name, primaryKey } = adminUser;
+const { name, primaryKey } = accountType;
 const entity = { name, primaryKey };
 
+
 module.exports = {
-    name: "adminUserEdit",
+    name: "accountTypeEdit",
     type: "View",
     eventActions: getEventActions(),
-    properties: assignProporties({ name: "adminUserEdit" }, [getEditView()])
+    properties: assignProporties({ name: "accountTypeEdit" }, [getEditView()])
 }
 
 function getEditView() {
     return {
-        name: "adminUserEdit2",
+        name: "accountTypeEdit2",
         type: "RowsColsView",
         entity: entity,
         isForm: true,
@@ -29,7 +30,7 @@ function getEditView() {
         isClear: true,
         saveEntityDataActionType: dataActionTypes.saveEntityData,
         getEntityDataActionType: dataActionTypes.getEntityData,
-        properties: assignProporties(adminUser, getProperties())
+        properties: assignProporties(accountType, getProperties())
     }
 }
 
@@ -45,11 +46,9 @@ function getButtonProperties() {
 
 function getProperties() {
     return [
-        getTextBox2("LoginName", "登录名", 1, 1, "", "请输入登录名", 50, false),
-        getTextBox2("UserName", "用户名", 2, 1, "", "请输入用户名", 50, false),
-        { ...getTextBox2("LoginPassword", "登录密码", 3, 1, "", "请输入登录密码", 50, true), isJudgeNullable: false, controlType: "password" },
-        { ...getTextBox2("LoginAgainPassword", "密码确认", 4, 1, "", "请输入密码确认", 50, true), isJudgeNullable: false, controlType: "password" },
-        getCheckbox('IsAdmin', '是否管理员', '管理员', 5, 1),
+        getTextBox2("Name", "名称", 1, 1, "", "请输入名称", 50, false),
+        getCheckbox('IsHaveCustomer', '是否关联客户', '关联客户', 2, 1),
+        getTextArea("Remark", "备注", 4, 1),
         getButtonView()
     ]
 }
@@ -65,21 +64,6 @@ function getCheckbox(name, label, text, x, y) {
         isEdit: true
     }
 }
-
-function getButtonView() {
-    return {
-        name: "buttonView",
-        type: "View",
-        className: "divCenterButton",
-        isDiv: true,
-        isFormItem: true,
-        colSpan: 24,
-        x: 7,
-        y: 1,
-        properties: assignProporties({ name: "adminUserEdit" }, getButtonProperties())
-    }
-}
-
 function getTextBox2(name, label, x, y, contorlType, placeHolder, maxLength, isNullable, isVisible, validateNames, validateTipMessage) {
     return {
         ...getTextBox(name, label, contorlType, x, y, placeHolder, maxLength || 50),
@@ -94,22 +78,50 @@ function getTextBox2(name, label, x, y, contorlType, placeHolder, maxLength, isN
     }
 }
 
+function getButtonView() {
+    return {
+        name: "buttonView",
+        type: "View",
+        className: "divCenterButton",
+        isDiv: true,
+        isFormItem: true,
+        colSpan: 24,
+        x: 5,
+        y: 1,
+        properties: assignProporties({ name: "accountTypeEdit" }, getButtonProperties())
+    }
+}
+
+function getTextArea(name, label, x, y, placeHolder) {
+    return {
+        ...getTextBox(name, label, "TextArea", x, y),
+        isFormItem: true,
+        isNullable: true,
+        isEdit: true,
+        colSpan: 24,
+        Rows: 3,
+        placeHolder,
+        labelCol: 8,
+        wrapperCol: 8
+    }
+}
+
 function getEventActions() {
     return [{
         name: "backToList",
         type: "page/toPage",
         propertyNames: [entity.primaryKey],
-        pageUrl: '/systemManage/adminUserList?selectedRowKey=#{' + entity.primaryKey + '}'
+        pageUrl: '/systemManage/accountTypeList?selectedRowKey=#{' + entity.primaryKey + '}'
     },
     {
         name: "saveEntityData",
         type: "entityEdit/saveEntityData",
-        editView: "adminUserEdit2",
-        expandSetEntityData: "expandSetAdminUserData"
+        editView: "accountTypeEdit2",
+        expandSetEntityData: "expandSetEntityData"
     },
     {
         name: "getEntityData",
         type: "entityEdit/getEntityData",
-        editView: "adminUserEdit2"
+        editView: "accountTypeEdit2"
     }]
 }

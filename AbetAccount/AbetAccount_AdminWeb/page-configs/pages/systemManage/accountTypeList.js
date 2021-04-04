@@ -1,24 +1,24 @@
-const adminUser = require("../../entities/adminUser");
+const accountType = require("../../entities/accountType");
 const { getButton, assignProporties, getTextBox } = require("../../Common");
 
-//配置管理/用户 4300-4399
+//systemManage/accountType 800-899
 const dataActionTypes = {
     //搜索查询
-    searchQuery: 4300,
+    searchQuery: 800,
     //删除实体数据
-    deleteEntityData: 4301,
+    deleteEntityData: 801,
     //Excel导出
-    excelExport: 4302
+    excelExport: 802
 };
 
-const { name, primaryKey, viewName } = adminUser;
+const { name, primaryKey, viewName } = accountType;
 const entity = { name, primaryKey, viewName };
 
 module.exports = {
-    name: "adminUserList",
+    name: "accountTypeList",
     type: "View",
     eventActions: getEventActions(),
-    properties: assignProporties({ name: "adminUserList" }, [getSearchOperationView(), getAlert(), getDataGridView()])
+    properties: assignProporties({ name: "accountTypeList" }, [getSearchOperationView(), getAlert(), getDataGridView()])
 }
 
 function getSearchOperationView() {
@@ -27,15 +27,15 @@ function getSearchOperationView() {
         entity: entity,
         type: "RowsColsView",
         className: "divLeftRightView",
-        properties: assignProporties({ name: "adminUserList" }, [{ eventActionName: "toEditPage", ...getButton("toEditPage", "新增", "primary", 1, 1) },
-        { eventActionName: "editAdminUser", colStyle: { paddingLeft: 0 }, ...getButton("editAdminUser", "修改", "default", 1, 2) },
+        properties: assignProporties({ name: "accountTypeList" }, [{ eventActionName: "toEditPage", ...getButton("toEditPage", "新增", "primary", 1, 1) },
+        { eventActionName: "editEntityData", colStyle: { paddingLeft: 0 }, ...getButton("editEntityData", "修改", "default", 1, 2) },
         {
-            eventActionName: "deleteAdminUser",
+            eventActionName: "deleteEntityData",
             colStyle: { paddingLeft: 0 },
             dataActionType: dataActionTypes.deleteEntityData,
             successTip: "删除成功！",
-            confirmTip: "请确认是否删除当前用户？",
-            ...getButton("deleteAdminUser", "删除", "default", 1, 4)
+            confirmTip: "请确认是否删除当前账目类型？",
+            ...getButton("deleteEntityData", "删除", "default", 1, 4)
         },
         getKeyword()
         ])
@@ -46,7 +46,7 @@ function getKeyword() {
     const p = getTextBox("keyword", "", "Search", 2, 3, "请输入关键字")
     p.colStyle = { paddingRight: 8, paddingLeft: 2 };
     p.isCondition = true;
-    p.propertyName = "LoginName,UserName";
+    p.propertyName = "Name,Remark";
     p.operateLogic = "like";
     p.eventActionName = "searchQuery";
     p.pressEnterEventActionName = "searchQuery";
@@ -72,10 +72,9 @@ function getDataGridView() {
         className: "divInfoView3",
         isRowSelection: true,
         isSingleSelection: true,
-        properties: assignProporties(adminUser, ["LoginName", "UserName", 'IsAdminName', "LastLoginDate", { name: "CreateDate", OrderByType: "desc" }, { name: "RowVersion", isVisible: false }])
+        properties: assignProporties(accountType, ["Name", "IsHaveCustomerName", "Remark", { name: "CreateDate", OrderByType: "desc" }, { name: "RowVersion", isVisible: false }])
     }
 }
-
 
 function getEventActions() {
     return [{
@@ -89,17 +88,17 @@ function getEventActions() {
     {
         name: "toEditPage",
         type: "page/toPage",
-        pageUrl: "/systemManage/adminUserEdit"
+        pageUrl: "/systemManage/accountTypeEdit"
     },
     {
-        name: "editAdminUser",
+        name: "editEntityData",
         type: "dataGridView/selectRowToPage",
         dataGridView: "dataGridView1",
         alertMessage: "alertMessage",
-        pageUrl: "/systemManage/adminUserEdit?UserId=#{UserId}&menuName=" + encodeURIComponent("修改")
+        pageUrl: "/systemManage/accountTypeEdit?TypeId=#{TypeId}&menuName=" + encodeURIComponent("修改")
     },
     {
-        name: "deleteAdminUser",
+        name: "deleteEntityData",
         type: "dataGrid/batchUpdateRowDataList",
         dataGridView: "dataGridView1",
         alertMessage: "alertMessage"
