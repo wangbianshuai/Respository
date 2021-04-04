@@ -1,8 +1,9 @@
-module.exports= {
+module.exports = {
     name: "AdminUser",
     viewName: 'ViewAdminUser',
     primaryKey: "UserId",
-    properties: getProperties()
+    properties: getProperties(),
+    accountTypesDataSource: getAccountTypesDataSource()
 }
 
 function getProperties() {
@@ -18,4 +19,16 @@ function getProperties() {
 
 function getProperty(name, label) {
     return { name, label }
+}
+
+function getAccountTypesDataSource() {
+    return {
+        valueName: "TypeId",
+        textName: "Name",
+        stateName: "getAccountTypes",
+        serviceName: "AccountTypeService",
+        actionName: "getAccountTypes",
+        isRefresh: true,
+        payload: {}
+    }
 }

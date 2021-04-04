@@ -50,9 +50,25 @@ function getProperties() {
         { ...getTextBox2("LoginPassword", "登录密码", 3, 1, "", "请输入登录密码", 50, true), isJudgeNullable: false, controlType: "password" },
         { ...getTextBox2("LoginAgainPassword", "密码确认", 4, 1, "", "请输入密码确认", 50, true), isJudgeNullable: false, controlType: "password" },
         getCheckbox('IsAdmin', '是否管理员', '管理员', 5, 1),
+        getCheckboxList('AccountTypes', '账目类型', adminUser.accountTypesDataSource, 6, 1),
         getButtonView()
     ]
 }
+
+function getCheckboxList(name, label, serviceDataSource, x, y) {
+    return {
+        name, label, x, y,
+        isFormItem: true,
+        type: 'CheckBoxGroup',
+        colSpan: 24,
+        labelCol: 8,
+        isString: true,
+        wrapperCol: 8,
+        serviceDataSource,
+        isEdit: true
+    }
+}
+
 
 function getCheckbox(name, label, text, x, y) {
     return {
