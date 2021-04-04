@@ -223,7 +223,7 @@ create table t_Customer
 (
 CustomerId uniqueidentifier not null primary key,                  --主键
 Name nvarchar(50) not null,                                    --名称
-Phone varchar(20),                                             --手机
+Phone varchar(50),                                             --手机
 CompanyName nvarchar(50),                                      --公司名称
 Address nvarchar(100),                                         --地址
 Remark nvarchar(200),                                          --备注 
@@ -309,7 +309,14 @@ as
 select a.*,
 case when a.IsIncome=1 then '收入' else '支出' end IncomeOutlay,
 case when a.IsIncome=1 then a.Amount else 0-a.Amount end Amount2,
-case when a.IsIncome=1 then 0-a.Tax else a.Tax end Tax2
-from t_AccountBill a where IsDelete=0
+case when a.IsIncome=1 then 0-a.Tax else a.Tax end Tax2,
+b.Name AccountTypeName,
+c.Name CustomerName,
+d.UserName CreateUserName
+from t_AccountBill a 
+left join t_AccountType b on a.AccountTypeId=b.TypeId
+left join t_Customer c on a.CustomerId= c.CustomerId
+left join t_AdminUser d on a.CreateUser=d.UserId
+where a.IsDelete=0
 go
 

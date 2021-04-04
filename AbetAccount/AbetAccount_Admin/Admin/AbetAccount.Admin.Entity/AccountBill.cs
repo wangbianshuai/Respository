@@ -83,5 +83,11 @@ namespace AbetAccount.Admin.Entity
         /// </summary>
         public float Tax2 { get; set; }
 
+        public string AccountTypeName { get; set; }
+
+        public string CustomerName { get; set; }
+
+        public string CreateUserName { get; set; }
+
     }
 }
