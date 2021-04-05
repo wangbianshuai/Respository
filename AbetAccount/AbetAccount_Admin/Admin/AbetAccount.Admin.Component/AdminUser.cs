@@ -89,7 +89,7 @@ namespace AbetAccount.Admin.Component
             parameterList.Add(this.InParameter("@LoginPassword", loginPassword));
 
             IQuery query = new Query(this.EntityType.TableName, this.EntityType.Name);
-            query.Select("LoginName,UserName,UserId,LastLoginDate");
+            query.Select("LoginName,UserName,UserId,LastLoginDate,IsAdmin");
             query.Where("where IsDelete=0 and LoginName=@LoginName and LoginPassword=@LoginPassword", parameterList);
 
             return this.SelectEntity(query);

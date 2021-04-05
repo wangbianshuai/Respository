@@ -207,16 +207,30 @@ const getCurrentMenuSelectedKeys = (props, obj, stateOpenKeys, queryString) => {
 
     return [keys, menuList, navSelectedKeys, breadcrumbList, openKeys, isRight];
 };
+const getnavMenuList = (navMenuList, isAdmin) => {
+    if (isAdmin) return navMenuList;
+
+    const navMenu0 = navMenuList[0];
+    const navMenu2 = navMenuList[2];
+
+    const item1 = navMenu0.menuList[0];
+    const item2 = navMenu0.menuList[1];
+    navMenu0.menuList = [item1, item2];
+
+    return [navMenu0, navMenu2];
+};
 
 const init = () => {
     const { navMenuList, menus } = MenuConfig();
 
+    const loginUser = getLoginUser();
+
     return {
         isOnOpenChange: false,
         token: Common.getStorage("token"),
-        loginUser: getLoginUser(),
+        loginUser,
         defaultPageName: "/accountManage/accountBillList",
-        navMenuList,
+        navMenuList: getnavMenuList(navMenuList, loginUser.IsAdmin),
         menus
     }
 }

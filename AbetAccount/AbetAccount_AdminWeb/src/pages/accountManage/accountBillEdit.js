@@ -10,5 +10,11 @@ export default EntityPageEdit("accountManage_accountBillEdit", "AccountBill", 13
         const visible = selectData != null && selectData.IsHaveCustomer === 1;
         this.CustomerId.setFormItemVisible && this.CustomerId.setFormItemVisible(visible);
         this.CustomerId.isVisible = visible;
+        this.CustomerId.isNullable = !visible;
+    },
+    expandSetEntityData({ entityData }) {
+        if (!this.CustomerId.isVisible) entityData.CustomerId = null;
+
+        return entityData;
     }
 }, ['CustomerService/getCustomers', 'AccountTypeService/getUserAccountTypes']);
