@@ -116,7 +116,9 @@ function getDataGridView() {
         setColumnsEventActionName: "setShowColumns",
         isPartPaging: true,
         isGroupByQuery: true,
-        properties: assignProporties(accountBill, [{ name: "BillDate", orderByType: "desc" }, "AccountItemName", "IncomeOutlayName", "AccountCategoryName", "BillUserName", getAmount('Amount2'), getAmount('Tax2')])
+        properties: assignProporties(accountBill, [
+            { name: "BillDate", orderByType: "desc", isVisible: false }, "BillYear", "BillMonth", "BillDay",
+            "AccountItemName", "IncomeOutlayName", "AccountCategoryName", "BillUserName", getAmount('Amount2'), getAmount('Tax2')])
     }
 }
 

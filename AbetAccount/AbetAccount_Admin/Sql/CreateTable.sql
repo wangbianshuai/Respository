@@ -309,6 +309,7 @@ go
 create view v_AccountBill
 as
 select a.*,
+year(BillDate) BillYear,DATENAME(MONTH,BillDate) BillMonth,day(BillDate) BillDay,
 case when a.IncomeOutlay=1 then '收入' else '支出' end IncomeOutlayName,
 case when a.IncomeOutlay=1 then a.Amount else 0-a.Amount end Amount2,
 case when a.IncomeOutlay=1 then 0-a.Tax else a.Tax end Tax2,

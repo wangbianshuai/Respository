@@ -99,5 +99,11 @@ namespace AbetAccount.Admin.Entity
 
         public string CreateUserName { get; set; }
 
+        public string BillYear { get; set; }
+
+        public string BillMonth { get; set; }
+
+        public string BillDay { get; set; }
+
     }
 }
