@@ -72,10 +72,11 @@ function setParamsHeader(data, headers) {
         for (let key in headers) data.headers[key] = headers[key];
     }
 
+    data.headers.clientTime = new Date().getTime();
     data.headers.token = Common.getStorage("token");
     if (!data.headers.token || data.headers.isNoToken) data.headers.token = "d56b699830e77ba53855679cb1d252da" + window.btoa(Common.createGuid());
 
-    data.headers.access_token = getAccessToken(data.headers.token);
+    data.headers.access_token = getAccessToken(data.headers.token, data.headers.clientTime);
 
     return data;
 }
@@ -92,20 +93,18 @@ var _ClientConfig = {
 function setApiServiceHeader(data, serviceName) {
     data = data || { headers: {}, method: "GET" };
 
-    let clientId = "A2-Digital-Solution-Web";
+    let clientId = "abet-account-web";
 
     if (_ClientConfig[serviceName]) clientId = _ClientConfig[serviceName];
 
     data.headers.clientId = clientId;
-    data.headers.clientTime = new Date().getTime();
     data.headers.requestId = Common.createGuid().replace(/-/g, "").toLowerCase();
 
     return data;
 }
 
-function getAccessToken(token) {
+function getAccessToken(token, time) {
     const appId = 'D5ADDC90-5AB2-4B3D-8C38-5025E4068CFA';
-    const time = new Date().getTime()
     const md5str = Md5(appId + time + token);
     return window.btoa(appId + '@' + time + "@" + md5str);
 }
