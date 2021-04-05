@@ -17,14 +17,12 @@ export default (mapStateToProps) => {
 function init(obj, dispatch) {
   if (!obj.isInit) obj.isInit = true; else return;
 
-  const token = Common.getStorage('token');
-
-  obj.dispatch = getDispatch(dispatch, token);
-  obj.dispatchAction = dispatchAction(dispatch, token);
+  obj.dispatch = getDispatch(dispatch);
+  obj.dispatchAction = dispatchAction(dispatch);
   obj.setActionState = setActionState(dispatch);
 }
 
-function getDispatch(dispatch, token) {
+function getDispatch(dispatch) {
   return (name, actionName, payload) => {
     let isloading = true;
     payload = payload || {};
@@ -35,15 +33,17 @@ function getDispatch(dispatch, token) {
     }
     else return Promise.reject({ isSuccess: false, message: `${name}/${actionName} the method doesn't exist!` });
 
+    const token = Common.getStorage('token');
+
     if (action.isToken && !payload.token) payload.token = token;
     if (action.isLoading === false) isloading = false;
     return dispatch({ type: name + '/' + actionName, payload, isloading });
   }
 }
 
-function dispatchAction(dispatch, token) {
+function dispatchAction(dispatch) {
   return (name, actionName, payload) => {
-    return getDispatch(dispatch, token)(name, actionName, payload).then(res => Promise.resolve(res), res => Promise.resolve(res));
+    return getDispatch(dispatch)(name, actionName, payload).then(res => Promise.resolve(res), res => Promise.resolve(res));
   }
 }
 
