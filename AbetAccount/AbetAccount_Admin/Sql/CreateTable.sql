@@ -41,7 +41,8 @@ LoginName nvarchar(50) not null,                               --登录名
 LoginPassword nvarchar(50) not null,                           --登录密码
 LastLoginDate datetime,                                        --最近登录时间 
 IsAdmin tinyint not null default(0),                           --是否管理员
-AccountTypes varchar(4000),                                    --账目类型集合，以逗号隔开
+DataRight tinyint not null default(0),                         --数据权限，0：个人，1：全部
+OperationRight tinyint not null default(0),                    --操作权限：0：只读，1：读写
 IsDelete tinyint not null default(0),                          --是否删除
 CreateUser uniqueidentifier not null,                          --创建人
 CreateDate datetime default(getdate()) not null,               --创建时间
@@ -57,7 +58,8 @@ exec proc_AddCellExplanation '登录名','t_AdminUser','LoginName'
 exec proc_AddCellExplanation '登录密码','t_AdminUser','LoginPassword'
 exec proc_AddCellExplanation '最近登录时间','t_AdminUser','LastLoginDate'
 exec proc_AddCellExplanation '是否管理员','t_AdminUser','IsAdmin'
-exec proc_AddCellExplanation '账目类型集合，以逗号隔开','t_AdminUser','AccountTypes'
+exec proc_AddCellExplanation '数据权限，0：个人，1：全部','t_AdminUser','DataRight'
+exec proc_AddCellExplanation '操作权限：0：只读，1：读写','t_AdminUser','OperationRight'
 exec proc_AddCellExplanation '是否删除','t_AdminUser','IsDelete'
 exec proc_AddCellExplanation '创建人','t_AdminUser','CreateUser'
 exec proc_AddCellExplanation '创建时间','t_AdminUser','CreateDate'
@@ -73,7 +75,9 @@ go
 create view v_AdminUser
 as
 select a.*,
-case when a.IsAdmin=1 then '管理员' else '' end IsAdminName 
+case when a.IsAdmin=1 then '管理员' else '' end IsAdminName,
+case when a.DataRight=1 then '全部' else '个人' end DataRigthName,
+case when a.OperationRight=1 then '读写' else '只读' end OperationRightName  
 from t_AdminUser a where IsDelete=0
 go
 
@@ -171,16 +175,15 @@ on a.OperationUser=b.UserId
 go
 
 
---4、账目类型（t_AccountType）
-if exists(select * from sysobjects where name='t_AccountType')
-drop table t_AccountType
+--4、账户项目（t_AccountItem）
+if exists(select * from sysobjects where name='t_AccountItem')
+drop table t_AccountItem
 go
 
-create table t_AccountType
+create table t_AccountItem
 (
-TypeId uniqueidentifier not null primary key,                  --主键
+ItemId uniqueidentifier not null primary key,                  --主键
 Name nvarchar(50) not null,                                    --名称
-IsHaveCustomer tinyint not null default(0),                    --是否有客户
 Remark nvarchar(200),                                          --备注 
 IsDelete tinyint not null default(0),                          --是否删除
 CreateUser uniqueidentifier not null,                          --创建人
@@ -191,73 +194,68 @@ RowVersion timestamp not null                                  --行版本
 )
 go
 
-exec proc_AddCellExplanation '主键','t_AccountType','TypeId'
-exec proc_AddCellExplanation '名称','t_AccountType','Name'
-exec proc_AddCellExplanation '是否有客户','t_AccountType','IsHaveCustomer'
-exec proc_AddCellExplanation '备注','t_AccountType','Remark'
-exec proc_AddCellExplanation '是否删除','t_AccountType','IsDelete'
-exec proc_AddCellExplanation '创建人','t_AccountType','CreateUser'
-exec proc_AddCellExplanation '创建时间','t_AccountType','CreateDate'
-exec proc_AddCellExplanation '更新人','t_AccountType','UpdateUser'
-exec proc_AddCellExplanation '更新时间','t_AccountType','UpdateDate'
-exec proc_AddCellExplanation '行版本','t_AccountType','RowVersion'
+exec proc_AddCellExplanation '主键','t_AccountItem','ItemId'
+exec proc_AddCellExplanation '名称','t_AccountItem','Name'
+exec proc_AddCellExplanation '备注','t_AccountItem','Remark'
+exec proc_AddCellExplanation '是否删除','t_AccountItem','IsDelete'
+exec proc_AddCellExplanation '创建人','t_AccountItem','CreateUser'
+exec proc_AddCellExplanation '创建时间','t_AccountItem','CreateDate'
+exec proc_AddCellExplanation '更新人','t_AccountItem','UpdateUser'
+exec proc_AddCellExplanation '更新时间','t_AccountItem','UpdateDate'
+exec proc_AddCellExplanation '行版本','t_AccountItem','RowVersion'
 go
 
-if exists(select * from sysobjects where name='v_AccountType')
-drop view v_AccountType
+if exists(select * from sysobjects where name='v_AccountItem')
+drop view v_AccountItem
 go
 
-create view v_AccountType
-as
-select a.*,
-case when a.IsHaveCustomer=1 then '关联客户' else '' end IsHaveCustomerName 
-from t_AccountType a where IsDelete=0
-go
-
---5、客户信息表（t_Customer）
-if exists(select * from sysobjects where name='t_Customer')
-drop table t_Customer
-go
-
-create table t_Customer
-(
-CustomerId uniqueidentifier not null primary key,                  --主键
-Name nvarchar(50) not null,                                    --名称
-Phone varchar(50),                                             --手机
-CompanyName nvarchar(50),                                      --公司名称
-Address nvarchar(100),                                         --地址
-Remark nvarchar(200),                                          --备注 
-IsDelete tinyint not null default(0),                          --是否删除
-CreateUser uniqueidentifier not null,                          --创建人
-CreateDate datetime default(getdate()) not null,               --创建时间
-UpdateUser uniqueidentifier,                                   --更新人
-UpdateDate datetime,                                           --更新时间
-RowVersion timestamp not null                                  --行版本
-)
-go
-
-exec proc_AddCellExplanation '主键','t_Customer','CustomerId'
-exec proc_AddCellExplanation '名称','t_Customer','Name'
-exec proc_AddCellExplanation '手机','t_Customer','Phone'
-exec proc_AddCellExplanation '公司名称','t_Customer','CompanyName'
-exec proc_AddCellExplanation '地址','t_Customer','Address'
-exec proc_AddCellExplanation '备注','t_Customer','Remark'
-exec proc_AddCellExplanation '是否删除','t_Customer','IsDelete'
-exec proc_AddCellExplanation '创建人','t_Customer','CreateUser'
-exec proc_AddCellExplanation '创建时间','t_Customer','CreateDate'
-exec proc_AddCellExplanation '更新人','t_Customer','UpdateUser'
-exec proc_AddCellExplanation '更新时间','t_Customer','UpdateDate'
-exec proc_AddCellExplanation '行版本','t_Customer','RowVersion'
-go
-
-if exists(select * from sysobjects where name='v_Customer')
-drop view v_Customer
-go
-
-create view v_Customer
+create view v_AccountItem
 as
 select a.*
-from t_Customer a where IsDelete=0
+from t_AccountItem a where IsDelete=0
+go
+
+--5、类别信息表（t_AccountCategory）
+if exists(select * from sysobjects where name='t_AccountCategory')
+drop table t_AccountCategory
+go
+
+create table t_AccountCategory
+(
+CategoryId uniqueidentifier not null primary key,              --主键
+Name nvarchar(50) not null,                                    --名称
+IncomeOutlay tinyint not null default(0),                      --收支,0:支出，1：收入
+Remark nvarchar(200),                                          --备注 
+IsDelete tinyint not null default(0),                          --是否删除
+CreateUser uniqueidentifier not null,                          --创建人
+CreateDate datetime default(getdate()) not null,               --创建时间
+UpdateUser uniqueidentifier,                                   --更新人
+UpdateDate datetime,                                           --更新时间
+RowVersion timestamp not null                                  --行版本
+)
+go
+
+exec proc_AddCellExplanation '主键','t_AccountCategory','CategoryId'
+exec proc_AddCellExplanation '名称','t_AccountCategory','Name'
+exec proc_AddCellExplanation '收支,0:支出，1：收入','t_AccountCategory','IncomeOutlay'
+exec proc_AddCellExplanation '备注','t_AccountCategory','Remark'
+exec proc_AddCellExplanation '是否删除','t_AccountCategory','IsDelete'
+exec proc_AddCellExplanation '创建人','t_AccountCategory','CreateUser'
+exec proc_AddCellExplanation '创建时间','t_AccountCategory','CreateDate'
+exec proc_AddCellExplanation '更新人','t_AccountCategory','UpdateUser'
+exec proc_AddCellExplanation '更新时间','t_AccountCategory','UpdateDate'
+exec proc_AddCellExplanation '行版本','t_AccountCategory','RowVersion'
+go
+
+if exists(select * from sysobjects where name='v_AccountCategory')
+drop view v_AccountCategory
+go
+
+create view v_AccountCategory
+as
+select a.*,
+case when a.IncomeOutlay=1 then '收入' else '支出' end IncomeOutlayName
+from t_AccountCategory a where IsDelete=0
 go
 
 --7、账目账单（t_AccountBill）
@@ -268,12 +266,14 @@ go
 create table t_AccountBill
 (
 BillId uniqueidentifier not null primary key,                  --主键
-CustomerId uniqueidentifier,                                    --客户Id
-AccountTypeId uniqueidentifier not null,                       --账目类型
-IsIncome tinyint not null default(0),                          --是否收入，默认支出
+CategoryId uniqueidentifier not null,                   --类别Id
+AccountItemId uniqueidentifier not null,                       --账户项目
+IncomeOutlay tinyint not null default(0),                      --收支,0:支出，1：收入
+AccountType tinyint not null default(0),                       --账户类型
 Amount money not null default(0),                              --金额
 Tax money not null default(0),                                 --税额
 BillDate datetime not null,                                    --日期
+BillUser uniqueidentifier not null,                            --经手人
 Remark nvarchar(200),                                          --备注 
 IsDelete tinyint not null default(0),                          --是否删除
 CreateUser uniqueidentifier not null,                          --创建人
@@ -285,12 +285,14 @@ RowVersion timestamp not null                                  --行版本
 go
 
 exec proc_AddCellExplanation '主键','t_AccountBill','BillId'
-exec proc_AddCellExplanation '客户Id','t_AccountBill','CustomerId'
-exec proc_AddCellExplanation '账目类型','t_AccountBill','AccountTypeId'
-exec proc_AddCellExplanation '是否收入，默认支出','t_AccountBill','IsIncome'
+exec proc_AddCellExplanation '类别Id','t_AccountBill','CategoryId'
+exec proc_AddCellExplanation '实体项目','t_AccountBill','AccountItemId'
+exec proc_AddCellExplanation '收支,0:支出，1：收入','t_AccountBill','IncomeOutlay'
+exec proc_AddCellExplanation '账户类型','t_AccountBill','AccountType'
 exec proc_AddCellExplanation '金额','t_AccountBill','Amount'
 exec proc_AddCellExplanation '税额','t_AccountBill','Tax'
 exec proc_AddCellExplanation '日期','t_AccountBill','BillDate'
+exec proc_AddCellExplanation '经手人','t_AccountBill','BillUser'
 exec proc_AddCellExplanation '备注','t_AccountBill','Remark'
 exec proc_AddCellExplanation '是否删除','t_AccountBill','IsDelete'
 exec proc_AddCellExplanation '创建人','t_AccountBill','CreateUser'
@@ -307,16 +309,19 @@ go
 create view v_AccountBill
 as
 select a.*,
-case when a.IsIncome=1 then '收入' else '支出' end IncomeOutlay,
-case when a.IsIncome=1 then a.Amount else 0-a.Amount end Amount2,
-case when a.IsIncome=1 then 0-a.Tax else a.Tax end Tax2,
-b.Name AccountTypeName,
-c.Name CustomerName,
-d.UserName CreateUserName
+case when a.IncomeOutlay=1 then '收入' else '支出' end IncomeOutlayName,
+case when a.IncomeOutlay=1 then a.Amount else 0-a.Amount end Amount2,
+case when a.IncomeOutlay=1 then 0-a.Tax else a.Tax end Tax2,
+case when a.AccountType=1 then '上海阿贝特实业有限公司' else 'ABET' end AccountTypeName,
+b.Name AccountItemName,
+c.Name AccountCategoryName,
+d.UserName BillUserName,
+e.UserName CreateUserName
 from t_AccountBill a 
-left join t_AccountType b on a.AccountTypeId=b.TypeId
-left join t_Customer c on a.CustomerId= c.CustomerId
-left join t_AdminUser d on a.CreateUser=d.UserId
+left join t_AccountItem b on a.AccountItemId=b.ItemId
+left join t_AccountCategory c on a.CategoryId= c.CategoryId
+left join t_AdminUser d on a.BillUser=d.UserId
+left join t_AdminUser e on a.CreateUser=e.UserId
 where a.IsDelete=0
 go
 

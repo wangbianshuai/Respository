@@ -3,8 +3,8 @@ module.exports = {
     viewName: 'ViewAccountBill',
     primaryKey: "BillId",
     properties: getProperties(),
-    accountTypesDataSource: getAccountTypesDataSource(),
-    customersDataSource: getCustomersDataSource(),
+    accountItemsDataSource: getAccountItemsDataSource(),
+    accountCategorysDataSource: getAccountCategorysDataSource(),
     usersDataSource:getUsersDataSource(),
     incomeOutlayDataSource:getIncomeOutlayDataSource()
 }
@@ -12,14 +12,15 @@ module.exports = {
 function getProperties() {
     return [
         getProperty("BillId", "BillId"),
-        getProperty("CustomerName", "客户"),
-        getProperty("AccountTypeName", "账目类型"),
+        getProperty("AccountCategoryName", "类型"),
+        getProperty("AccountItemName", "实体项目"),
         getProperty("BillDate", "日期"),
         getProperty("Amount2", "金额"),
         getProperty("Tax2", "税额"),
-        getProperty("IncomeOutlay", "收支"),
+        getProperty("IncomeOutlayName", "收支"),
+        getProperty("BillUserName", "经手人"),
         getProperty("CreateUserName", "记账人"),
-        getProperty("Remark", "备注"),
+        getProperty("Remark", "摘要"),
         getProperty("CreateDate", "记账时间")
     ]
 }
@@ -30,25 +31,25 @@ function getIncomeOutlayDataSource() {
 
 function getProperty(name, label) { return { name, label } }
 
-function getAccountTypesDataSource() {
+function getAccountItemsDataSource() {
     return {
-        valueName: "TypeId",
+        valueName: "ItemId",
         textName: "Name",
-        stateName: "getUserAccountTypes",
-        serviceName: "AccountTypeService",
-        actionName: "getUserAccountTypes",
+        stateName: "getAccountItems",
+        serviceName: "AccountItemService",
+        actionName: "getAccountItems",
         isRefresh: true,
         payload: {}
     }
 }
 
-function getCustomersDataSource() {
+function getAccountCategorysDataSource() {
     return {
-        valueName: "CustomerId",
+        valueName: "CategoryId",
         textName: "Name",
-        stateName: "getCustomers",
-        serviceName: "CustomerService",
-        actionName: "getCustomers",
+        stateName: "getAccountCategorys",
+        serviceName: "AccountCategoryService",
+        actionName: "getAccountCategorys",
         isRefresh: true,
         payload: {}
     }

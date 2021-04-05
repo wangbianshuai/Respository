@@ -35,18 +35,18 @@ namespace AbetAccount.Admin.Web.Code
             EntityType.SetEntityType<Entity.ViewDictionaryConfig>();
             EntityType.SetEntityType<Entity.OperationLog>();
             EntityType.SetEntityType<Entity.ViewOperationLog>();
-            EntityType.SetEntityType<Entity.AccountType>();
-            EntityType.SetEntityType<Entity.ViewAccountType>();
-            EntityType.SetEntityType<Entity.Customer>();
-            EntityType.SetEntityType<Entity.ViewCustomer>();
+            EntityType.SetEntityType<Entity.AccountItem>();
+            EntityType.SetEntityType<Entity.ViewAccountItem>();
+            EntityType.SetEntityType<Entity.AccountCategory>();
+            EntityType.SetEntityType<Entity.ViewAccountCategory>();
             EntityType.SetEntityType<Entity.AccountBill>();
             EntityType.SetEntityType<Entity.ViewAccountBill>();
 
 
             OpenDataAccessCore.Service.ComponentType.SetComponentType<Component.DictionaryConfig>();
             OpenDataAccessCore.Service.ComponentType.SetComponentType<Component.AdminUser>();
-            OpenDataAccessCore.Service.ComponentType.SetComponentType<Component.AccountType>();
-            OpenDataAccessCore.Service.ComponentType.SetComponentType<Component.Customer>();
+            OpenDataAccessCore.Service.ComponentType.SetComponentType<Component.AccountItem>();
+            OpenDataAccessCore.Service.ComponentType.SetComponentType<Component.AccountCategory>();
             OpenDataAccessCore.Service.ComponentType.SetComponentType<Component.AccountBill>();
             OpenDataAccessCore.Service.ComponentType.SetComponentType<Component.ViewAccountBill>();
 

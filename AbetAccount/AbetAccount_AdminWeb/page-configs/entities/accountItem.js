@@ -1,15 +1,14 @@
 module.exports= {
-    name: "AccountType",
-    viewName: 'ViewAccountType',
-    primaryKey: "TypeId",
+    name: "AccountItem",
+    viewName: 'ViewAccountItem',
+    primaryKey: "ItemId",
     properties: getProperties()
 }
 
 function getProperties() {
     return [
-        getProperty("TypeId", "TypeId"),
+        getProperty("ItemId", "ItemId"),
         getProperty("Name", "名称"),
-        getProperty("IsHaveCustomerName", "是否关联客户"),
         getProperty("Remark", "备注"),
         getProperty("CreateDate", "创建时间")
     ]

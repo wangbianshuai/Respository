@@ -1,5 +1,5 @@
 const adminUser = require("../../entities/adminUser");
-const { assignProporties, getTextBox, getButton } = require("../../Common");
+const { assignProporties, getTextBox, getButton, getRadio } = require("../../Common");
 
 //配置管理/用户编辑 4400-4499
 const dataActionTypes = {
@@ -50,21 +50,20 @@ function getProperties() {
         { ...getTextBox2("LoginPassword", "登录密码", 3, 1, "", "请输入登录密码", 50, true), isJudgeNullable: false, controlType: "password" },
         { ...getTextBox2("LoginAgainPassword", "密码确认", 4, 1, "", "请输入密码确认", 50, true), isJudgeNullable: false, controlType: "password" },
         getCheckbox('IsAdmin', '是否管理员', '管理员', 5, 1),
-        getCheckboxList('AccountTypes', '账目类型', adminUser.accountTypesDataSource, 6, 1),
+        getRadio2('DataRight', '数据权限', adminUser.dataRightDataSource, 6, 1, 0, 160),
+        getRadio2('OperationRight', '操作权限', adminUser.operationRightDataSource, 7, 1, 0, 160),
         getButtonView()
     ]
 }
 
-function getCheckboxList(name, label, serviceDataSource, x, y) {
+
+function getRadio2(name, label, dataSource, x, y, defaultValue, buttonWidth) {
     return {
-        name, label, x, y,
+        ...getRadio(name, label, dataSource, x, y, defaultValue, buttonWidth),
         isFormItem: true,
-        type: 'CheckBoxGroup',
         colSpan: 24,
         labelCol: 8,
-        isString: true,
         wrapperCol: 8,
-        serviceDataSource,
         isEdit: true
     }
 }

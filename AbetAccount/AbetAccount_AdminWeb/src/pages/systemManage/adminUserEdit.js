@@ -20,4 +20,4 @@ const adminUserEdit = {
     }
 };
 
-export default EntityPageEdit("systemManage_adminUserEdit", "AdminUser", 4400, adminUserEdit,null,['AccountTypeService/getAccountTypes']);
+export default EntityPageEdit("systemManage_adminUserEdit", "AdminUser", 4400, adminUserEdit,null,['AccountItemService/getAccountItems']);

@@ -3,7 +3,8 @@ module.exports = {
     viewName: 'ViewAdminUser',
     primaryKey: "UserId",
     properties: getProperties(),
-    accountTypesDataSource: getAccountTypesDataSource()
+    dataRightDataSource: getDataRightDataSource(),
+    operationRightDataSource: getOperationRightDataSource()
 }
 
 function getProperties() {
@@ -12,6 +13,8 @@ function getProperties() {
         getProperty("UserName", "用户名"),
         getProperty("LoginName", "登录名"),
         getProperty("IsAdminName", "是否管理员"),
+        getProperty("DataRight", "数据权限"),
+        getProperty("OperationRight", "操作权限"),
         getProperty("LastLoginDate", "最近登录时间"),
         getProperty("CreateDate", "创建时间")
     ]
@@ -21,14 +24,9 @@ function getProperty(name, label) {
     return { name, label }
 }
 
-function getAccountTypesDataSource() {
-    return {
-        valueName: "TypeId",
-        textName: "Name",
-        stateName: "getAccountTypes",
-        serviceName: "AccountTypeService",
-        actionName: "getAccountTypes",
-        isRefresh: true,
-        payload: {}
-    }
+function getDataRightDataSource() {
+    return [{ value: 0, text: "个人" }, { value: 1, text: "全部" }]
+}
+function getOperationRightDataSource() {
+    return [{ value: 0, text: "只读" }, { value: 1, text: "读写" }]
 }

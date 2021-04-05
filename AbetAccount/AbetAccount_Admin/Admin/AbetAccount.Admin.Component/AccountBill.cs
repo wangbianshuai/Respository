@@ -42,15 +42,15 @@ namespace AbetAccount.Admin.Component
             this.QueryGroupByInfo = (data, wherqSql, parameterList) => this.QueryBillGroupByInfo(data, wherqSql, parameterList);
         }
 
-        bool JudgeIsAdmin()
+        bool JudgeDataRight()
         {
             IQuery query = new Query(this._AdminUserEntity.TableName);
-            query.Select("IsAdmin");
+            query.Select("DataRight");
 
             List<IDbDataParameter> parameterList = new List<IDbDataParameter>();
             parameterList.Add(this.InParameter("@UserId", this._Request.OperationUser));
 
-            query.Where("where IsDelete=0 and IsAdmin=1 and UserId=@UserId", parameterList);
+            query.Where("where IsDelete=0 and DataRight=1 and UserId=@UserId", parameterList);
 
             return this.SelectEntity(query) != null;
         }
@@ -58,19 +58,19 @@ namespace AbetAccount.Admin.Component
         void QueryBillGroupByInfo(IEntityData data, string whereSql, List<IDbDataParameter> paramterList)
         {
             IQuery query = new Query(this.EntityType.TableName);
-            query.Select("IsIncome,sum(Amount) as Amount,sum(Tax) as Tax");
+            query.Select("IncomeOutlay,sum(Amount) as Amount,sum(Tax) as Tax");
 
-            if (!_IsAdmin)
+            if (!_IsAllData)
             {
                 whereSql = this._WhereSql;
                 paramterList.Add(this.InParameter("@CreateUser", _Request.OperationUser));
             }
             query.Where(whereSql, paramterList);
-            query.GroupBy("group by IsIncome");
+            query.GroupBy("group by IncomeOutlay");
 
             List<IEntityData> list = this.SelectEntities(query);
 
-            IEntityData incomeData = list.Where(w => w.GetValue<byte>("IsIncome") == 1).FirstOrDefault();
+            IEntityData incomeData = list.Where(w => w.GetValue<byte>("IncomeOutlay") == 1).FirstOrDefault();
             decimal income = 0;
             decimal outlayTax = 0;
 
@@ -80,7 +80,7 @@ namespace AbetAccount.Admin.Component
                 outlayTax = incomeData.GetValue<decimal>("Tax");
             }
 
-            IEntityData outlayData = list.Where(w => w.GetValue<byte>("IsIncome") == 0).FirstOrDefault();
+            IEntityData outlayData = list.Where(w => w.GetValue<byte>("IncomeOutlay") == 0).FirstOrDefault();
             decimal outlay = 0;
             decimal incomeTax = 0;
             if (outlayData != null)
@@ -103,14 +103,14 @@ namespace AbetAccount.Admin.Component
             data.SetValue("GroupByInfo", groupByInfo);
         }
 
-        public bool _IsAdmin { get; set; }
+        public bool _IsAllData { get; set; }
 
         public string _WhereSql { get; set; }
 
         public object Select2()
         {
-            this._IsAdmin = this.JudgeIsAdmin();
-            if (!this._IsAdmin)
+            this._IsAllData = this.JudgeDataRight();
+            if (!this._IsAllData)
             {
                 var whereSql = this._QueryRequest.QueryInfo.WhereSql;
                 if (string.IsNullOrEmpty(whereSql)) whereSql = "where CreateUser=@CreateUser";

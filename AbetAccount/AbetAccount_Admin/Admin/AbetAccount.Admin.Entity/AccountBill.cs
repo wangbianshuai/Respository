@@ -14,17 +14,17 @@ namespace AbetAccount.Admin.Entity
         /// </summary> 
         public Guid BillId { get; set; }
         /// <summary> 
-        /// 客户Id
+        /// 账户类别
         /// </summary> 
-        public Guid CustomerId { get; set; }
+        public Guid AccountCategoryId { get; set; }
         /// <summary> 
-        /// 账目类型
+        /// 账户项目
         /// </summary> 
-        public Guid AccountTypeId { get; set; }
+        public Guid AccountItemId { get; set; }
         /// <summary> 
-        /// 是否收入，默认支出
+        /// 收支
         /// </summary> 
-        public byte IsIncome { get; set; }
+        public byte  IncomeOutlay{ get; set; }
         /// <summary>
         /// 金额
         /// </summary>
@@ -37,6 +37,10 @@ namespace AbetAccount.Admin.Entity
         /// 日期
         /// </summary>
         public DateTime BillDate { get; set; }
+        /// <summary> 
+        /// 经手人
+        /// </summary> 
+        public Guid BillUser { get; set; }
         /// <summary> 
         /// 备注
         /// </summary> 
@@ -73,7 +77,7 @@ namespace AbetAccount.Admin.Entity
     public class ViewAccountBill : AccountBill
     {
 
-        public string IncomeOutlay { get; set; }
+        public string IncomeOutlayName { get; set; }
         /// <summary>
         /// 金额
         /// </summary>
@@ -84,6 +88,12 @@ namespace AbetAccount.Admin.Entity
         public float Tax2 { get; set; }
 
         public string AccountTypeName { get; set; }
+
+        public string AccountItemName { get; set; }
+
+        public string AccountCategoryName { get; set; }
+
+        public string BillUserName { get; set; }
 
         public string CustomerName { get; set; }
 

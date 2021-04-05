@@ -6,13 +6,13 @@ using System.Text;
 
 namespace AbetAccount.Admin.Component
 {
-    public class Customer : EntityRequest
+    public class AccountCategory : EntityRequest
     {
-        public Customer()
+        public AccountCategory()
         {
         }
 
-        public Customer(Request request)
+        public AccountCategory(Request request)
             : base(request)
         {
         }
@@ -20,7 +20,7 @@ namespace AbetAccount.Admin.Component
         [Log]
         public object Delete2()
         {
-            return CommonOperation.DeleteByLogic<Customer>(this);
+            return CommonOperation.DeleteByLogic<AccountCategory>(this);
         }
     }
 }

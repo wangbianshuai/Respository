@@ -5,22 +5,22 @@ using System.Text;
 
 namespace AbetAccount.Admin.Entity
 {
-    [TableProperty(Name = "t_AccountType", PrimaryKey = "TypeId", NoSelectNames = "IsDelete")]
+    [TableProperty(Name = "t_AccountCategory", PrimaryKey = "CategoryId", NoSelectNames = "IsDelete")]
     [RequestMethod(IsDelete = false)]
-    public class AccountType : EntityModel, IEntity
+    public class AccountCategory : EntityModel, IEntity
     {
         /// <summary> 
         /// 主键
         /// </summary> 
-        public Guid TypeId { get; set; }
+        public Guid CategoryId { get; set; }
         /// <summary> 
         /// 名称
         /// </summary> 
         public string Name { get; set; }
         /// <summary> 
-        /// 是否有客户
+        /// 收支
         /// </summary> 
-        public byte IsHaveCustomer { get; set; }
+        public byte IncomeOutlay { get; set; }
         /// <summary> 
         /// 备注
         /// </summary> 
@@ -52,21 +52,21 @@ namespace AbetAccount.Admin.Entity
 
         public override void InsertValidate(List<Func<IValidate, IEntityData, string>> validateList)
         {
-            validateList.Add(this.ValidateExists<AccountType>("IsDelete=0 and Name=@Name", "对不起，该名称已存在！"));
+            validateList.Add(this.ValidateExists<AccountCategory>("IsDelete=0 and Name=@Name", "对不起，该名称已存在！"));
         }
 
         public override void UpdateValidate(List<Func<IValidate, IEntityData, string>> validateList)
         {
-            validateList.Add(this.ValidateExists<AccountType>("TypeId=@TypeId and Name=@Name", "true"));
-            validateList.Add(this.ValidateExists<AccountType>("IsDelete=0 and Name=@Name", "对不起，该名称已存在！"));
+            validateList.Add(this.ValidateExists<AccountCategory>("CategoryId=@CategoryId and Name=@Name", "true"));
+            validateList.Add(this.ValidateExists<AccountCategory>("IsDelete=0 and Name=@Name", "对不起，该名称已存在！"));
 
         }
     }
 
-    [TableProperty(Name = "v_AccountType", PrimaryKey = "TypeId", NoSelectNames = "IsDelete")]
+    [TableProperty(Name = "v_AccountCategory", PrimaryKey = "CategoryId", NoSelectNames = "IsDelete")]
     [RequestMethod(IsDelete = false, IsPost = false, IsPut = false)]
-    public class ViewAccountType : AccountType
+    public class ViewAccountCategory : AccountCategory
     {
-        public string IsHaveCustomerName { get; set; }
+        public string IncomeOutlayName { get; set; }
     }
 }

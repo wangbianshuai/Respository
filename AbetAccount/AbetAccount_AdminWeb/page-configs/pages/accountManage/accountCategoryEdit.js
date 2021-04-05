@@ -1,7 +1,7 @@
-const customer = require("../../entities/customer");
-const { assignProporties, getTextBox, getButton } = require("../../Common");
+const accountCategory = require("../../entities/accountCategory");
+const { assignProporties, getTextBox, getButton, getRadio } = require("../../Common");
 
-//accountManage/customerEdit 1100-1199
+//accountManage/accountCategoryEdit 1100-1199
 const dataActionTypes = {
     //get entity data
     getEntityData: 1100,
@@ -9,20 +9,20 @@ const dataActionTypes = {
     saveEntityData: 1101
 }
 
-const { name, primaryKey } = customer;
+const { name, primaryKey } = accountCategory;
 const entity = { name, primaryKey };
 
 
 module.exports = {
-    name: "customerEdit",
+    name: "accountCategoryEdit",
     type: "View",
     eventActions: getEventActions(),
-    properties: assignProporties({ name: "customerEdit" }, [getEditView()])
+    properties: assignProporties({ name: "accountCategoryEdit" }, [getEditView()])
 }
 
 function getEditView() {
     return {
-        name: "customerEdit2",
+        name: "accountCategoryEdit2",
         type: "RowsColsView",
         entity: entity,
         isForm: true,
@@ -30,7 +30,7 @@ function getEditView() {
         isClear: true,
         saveEntityDataActionType: dataActionTypes.saveEntityData,
         getEntityDataActionType: dataActionTypes.getEntityData,
-        properties: assignProporties(customer, getProperties())
+        properties: assignProporties(accountCategory, getProperties())
     }
 }
 
@@ -47,12 +47,22 @@ function getButtonProperties() {
 function getProperties() {
     return [
         getTextBox2("Name", "名称", 1, 1, "", "请输入名称", 50, false),
-        getTextBox2("Phone", "手机", 2, 1, "", "", 50, true),
-        getTextBox2("CompanyName", "公司", 3, 1, "", "", 50, true),
-        getTextBox2("Address", "地址", 4, 1, "", "", 100, true),
+        getRadio2('IncomeOutlay', '收支', accountBill.incomeOutlayDataSource, 2, 1, 0, 160),
         getTextArea("Remark", "备注", 5, 1),
         getButtonView()
     ]
+}
+
+
+function getRadio2(name, label, dataSource, x, y, defaultValue, buttonWidth) {
+    return {
+        ...getRadio(name, label, dataSource, x, y, defaultValue, buttonWidth),
+        isFormItem: true,
+        colSpan: 24,
+        labelCol: 8,
+        wrapperCol: 8,
+        isEdit: true
+    }
 }
 
 function getTextBox2(name, label, x, y, contorlType, placeHolder, maxLength, isNullable, isVisible, validateNames, validateTipMessage) {
@@ -79,7 +89,7 @@ function getButtonView() {
         colSpan: 24,
         x: 6,
         y: 1,
-        properties: assignProporties({ name: "customerEdit" }, getButtonProperties())
+        properties: assignProporties({ name: "accountCategoryEdit" }, getButtonProperties())
     }
 }
 
@@ -102,17 +112,17 @@ function getEventActions() {
         name: "backToList",
         type: "page/toPage",
         propertyNames: [entity.primaryKey],
-        pageUrl: '/accountManage/customerList?selectedRowKey=#{' + entity.primaryKey + '}'
+        pageUrl: '/accountManage/accountCategoryList?selectedRowKey=#{' + entity.primaryKey + '}'
     },
     {
         name: "saveEntityData",
         type: "entityEdit/saveEntityData",
-        editView: "customerEdit2",
+        editView: "accountCategoryEdit2",
         expandSetEntityData: "expandSetEntityData"
     },
     {
         name: "getEntityData",
         type: "entityEdit/getEntityData",
-        editView: "customerEdit2"
+        editView: "accountCategoryEdit2"
     }]
 }

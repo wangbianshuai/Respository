@@ -1,7 +1,7 @@
-const accountType = require("../../entities/accountType");
+const accountItem = require("../../entities/accountItem");
 const { assignProporties, getTextBox, getButton } = require("../../Common");
 
-//systemManage/accountTypeEdit 900-999
+//accountManage/accountItemEdit 900-999
 const dataActionTypes = {
     //get entity data
     getEntityData: 900,
@@ -9,20 +9,20 @@ const dataActionTypes = {
     saveEntityData: 901
 }
 
-const { name, primaryKey } = accountType;
+const { name, primaryKey } = accountItem;
 const entity = { name, primaryKey };
 
 
 module.exports = {
-    name: "accountTypeEdit",
+    name: "accountItemEdit",
     type: "View",
     eventActions: getEventActions(),
-    properties: assignProporties({ name: "accountTypeEdit" }, [getEditView()])
+    properties: assignProporties({ name: "accountItemEdit" }, [getEditView()])
 }
 
 function getEditView() {
     return {
-        name: "accountTypeEdit2",
+        name: "accountItemEdit2",
         type: "RowsColsView",
         entity: entity,
         isForm: true,
@@ -30,7 +30,7 @@ function getEditView() {
         isClear: true,
         saveEntityDataActionType: dataActionTypes.saveEntityData,
         getEntityDataActionType: dataActionTypes.getEntityData,
-        properties: assignProporties(accountType, getProperties())
+        properties: assignProporties(accountItem, getProperties())
     }
 }
 
@@ -47,23 +47,11 @@ function getButtonProperties() {
 function getProperties() {
     return [
         getTextBox2("Name", "名称", 1, 1, "", "请输入名称", 50, false),
-        getCheckbox('IsHaveCustomer', '是否关联客户', '关联客户', 2, 1),
         getTextArea("Remark", "备注", 4, 1),
         getButtonView()
     ]
 }
 
-function getCheckbox(name, label, text, x, y) {
-    return {
-        name, label, text, x, y,
-        isFormItem: true,
-        type: 'CheckBox',
-        colSpan: 24,
-        labelCol: 8,
-        wrapperCol: 8,
-        isEdit: true
-    }
-}
 function getTextBox2(name, label, x, y, contorlType, placeHolder, maxLength, isNullable, isVisible, validateNames, validateTipMessage) {
     return {
         ...getTextBox(name, label, contorlType, x, y, placeHolder, maxLength || 50),
@@ -88,7 +76,7 @@ function getButtonView() {
         colSpan: 24,
         x: 5,
         y: 1,
-        properties: assignProporties({ name: "accountTypeEdit" }, getButtonProperties())
+        properties: assignProporties({ name: "accountItemEdit" }, getButtonProperties())
     }
 }
 
@@ -111,17 +99,17 @@ function getEventActions() {
         name: "backToList",
         type: "page/toPage",
         propertyNames: [entity.primaryKey],
-        pageUrl: '/systemManage/accountTypeList?selectedRowKey=#{' + entity.primaryKey + '}'
+        pageUrl: '/accountManage/accountItemList?selectedRowKey=#{' + entity.primaryKey + '}'
     },
     {
         name: "saveEntityData",
         type: "entityEdit/saveEntityData",
-        editView: "accountTypeEdit2",
+        editView: "accountItemEdit2",
         expandSetEntityData: "expandSetEntityData"
     },
     {
         name: "getEntityData",
         type: "entityEdit/getEntityData",
-        editView: "accountTypeEdit2"
+        editView: "accountItemEdit2"
     }]
 }

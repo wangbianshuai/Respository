@@ -28,10 +28,10 @@ function getSearchOperationView() {
         type: "RowsColsView",
         className: "divSerachView",
         properties: assignProporties({ name: "accountBillList" }, [
-            getEditSelect2("AccountTypeId", "账目类型", accountBill.accountTypesDataSource, 1, 1),
-            getEditSelect2("CustomerId", "客户", accountBill.customersDataSource, 1, 2),
+            getEditSelect2("AccountItemId", "实体项目", accountBill.accountItemsDataSource, 1, 1),
+            getEditSelect2("CategoryId", "类型", accountBill.accountCategorysDataSource, 1, 2),
             getEditSelect2("CreateUser", "记账人", accountBill.usersDataSource, 1, 3),
-            getEditSelect("IsIncome", "收支", accountBill.incomeOutlayDataSource, 1, 4),
+            getEditSelect("IncomeOutlay", "收支", accountBill.incomeOutlayDataSource, 1, 4),
             { ...getDatePicker2("StartDate", "开始日期", 2, 1, "大于或等于其值"), isMonthFirst: true, propertyName: "BillDate", operateLogic: ">=" },
             { ...getDatePicker2("EndDate", "至", 2, 2, "小于其值"), isCurrentDay: true, propertyName: "BillDate", operateLogic: "<" },
             {
@@ -112,7 +112,7 @@ function getDataGridView() {
         isDiv: true,
         className: "divInfoView3",
         groupByInfoHtml: getGroupByInfoHtml(),
-        properties: assignProporties(accountBill, ["BillDate", "AccountTypeName", "CustomerName", "IncomeOutlay", getAmount('Amount2'), getAmount('Tax2'), "Remark", "CreateUserName",
+        properties: assignProporties(accountBill, ["BillDate", "AccountItemName", "AccountCategoryName", "IncomeOutlayName", getAmount('Amount2'), getAmount('Tax2'), "Remark", "CreateUserName",
             { name: "CreateDate", OrderByType: "desc" }, { name: "CreateUser", isVisible: false }, getOperation(), { name: "RowVersion", isVisible: false }])
     }
 }

@@ -46,13 +46,14 @@ function getButtonProperties() {
 
 function getProperties() {
     return [
-        getRadio2('IsIncome', '收支', accountBill.incomeOutlayDataSource, 1, 1, 0, 160),
-        getEditSelect("AccountTypeId", "账目类型", accountBill.accountTypesDataSource, 2, 1, false, "请选择账目类型"),
-        { ...getEditSelect("CustomerId", "客户", accountBill.customersDataSource, 3, 1, true, ""), isVisible: false },
+        getRadio2('IncomeOutlay', '收支', accountBill.incomeOutlayDataSource, 1, 1, 0, 160),
+        getEditSelect("AccountItemId", "实体项目", accountBill.accountItemsDataSource, 2, 1, false, "请选择实体项目"),
+        getEditSelect("AccountCategoryId", "类别", accountBill.accountCategorysDataSource, 3, 1, false, "请选择类别"),
         { ...getDatePicker2('BillDate', '日期', 4, 1, false, '', '请选择日期'), isCurrentDay: true },
         { ...getTextBox2("Amount", "金额", 5, 1, "", "请输入金额", 20, false), dataType: 'float', scale: 2 },
         { ...getTextBox2("Tax", "税额", 6, 1, "", "", 20, true), dataType: 'float', scale: 2 },
-        getTextArea("Remark", "备注", 7, 1),
+        getEditSelect("BillUser", "经手人", accountBill.usersDataSource, 7, 1, false, "请选择经手人"),
+        getTextArea("Remark", "摘要", 8, 1),
         getButtonView()
     ]
 }
@@ -68,7 +69,6 @@ function getRadio2(name, label, dataSource, x, y, defaultValue, buttonWidth) {
     }
 }
 
-
 function getDatePicker2(name, label, x, y, isNullable, defaultValue, placeHolder) {
     return {
         ...getDatePicker(name, label, x, y, defaultValue),
@@ -81,7 +81,6 @@ function getDatePicker2(name, label, x, y, isNullable, defaultValue, placeHolder
         placeHolder
     }
 }
-
 
 function getEditSelect(name, label, serviceDataSource, x, y, isNullable, placeHolder, defaultValue) {
     return {
@@ -119,7 +118,7 @@ function getButtonView() {
         isDiv: true,
         isFormItem: true,
         colSpan: 24,
-        x: 8,
+        x: 9,
         y: 1,
         properties: assignProporties({ name: "accountBillEdit" }, getButtonProperties())
     }

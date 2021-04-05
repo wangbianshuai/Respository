@@ -1,24 +1,24 @@
-const customer = require("../../entities/customer");
+const accountItem = require("../../entities/accountItem");
 const { getButton, assignProporties, getTextBox } = require("../../Common");
 
-//accountManage/customer 1000-1099
+//accountManage/accountItem 800-899
 const dataActionTypes = {
     //搜索查询
-    searchQuery: 1000,
+    searchQuery: 800,
     //删除实体数据
-    deleteEntityData: 1001,
+    deleteEntityData: 801,
     //Excel导出
-    excelExport: 1002
+    excelExport: 802
 };
 
-const { name, primaryKey, viewName } = customer;
+const { name, primaryKey, viewName } = accountItem;
 const entity = { name, primaryKey, viewName };
 
 module.exports = {
-    name: "customerList",
+    name: "accountItemList",
     type: "View",
     eventActions: getEventActions(),
-    properties: assignProporties({ name: "customerList" }, [getSearchOperationView(), getAlert(), getDataGridView()])
+    properties: assignProporties({ name: "accountItemList" }, [getSearchOperationView(), getAlert(), getDataGridView()])
 }
 
 function getSearchOperationView() {
@@ -27,14 +27,14 @@ function getSearchOperationView() {
         entity: entity,
         type: "RowsColsView",
         className: "divLeftRightView",
-        properties: assignProporties({ name: "customerList" }, [{ eventActionName: "toEditPage", ...getButton("toEditPage", "新增", "primary", 1, 1) },
+        properties: assignProporties({ name: "accountItemList" }, [{ eventActionName: "toEditPage", ...getButton("toEditPage", "新增", "primary", 1, 1) },
         { eventActionName: "editEntityData", colStyle: { paddingLeft: 0 }, ...getButton("editEntityData", "修改", "default", 1, 2) },
         {
             eventActionName: "deleteEntityData",
             colStyle: { paddingLeft: 0 },
             dataActionType: dataActionTypes.deleteEntityData,
             successTip: "删除成功！",
-            confirmTip: "请确认是否删除当前客户？",
+            confirmTip: "请确认是否删除当前实体项目？",
             ...getButton("deleteEntityData", "删除", "default", 1, 4)
         },
         getKeyword()
@@ -46,7 +46,7 @@ function getKeyword() {
     const p = getTextBox("keyword", "", "Search", 2, 3, "请输入关键字")
     p.colStyle = { paddingRight: 8, paddingLeft: 2 };
     p.isCondition = true;
-    p.propertyName = "Name,Phone,CompanyName,Address,Remark";
+    p.propertyName = "Name,Remark";
     p.operateLogic = "like";
     p.eventActionName = "searchQuery";
     p.pressEnterEventActionName = "searchQuery";
@@ -72,7 +72,7 @@ function getDataGridView() {
         className: "divInfoView3",
         isRowSelection: true,
         isSingleSelection: true,
-        properties: assignProporties(customer, ["Name", "Phone", 'CompanyName', 'Address', "Remark", { name: "CreateDate", OrderByType: "desc" }, { name: "RowVersion", isVisible: false }])
+        properties: assignProporties(accountItem, ["Name", "Remark", { name: "CreateDate", OrderByType: "desc" }, { name: "RowVersion", isVisible: false }])
     }
 }
 
@@ -88,14 +88,14 @@ function getEventActions() {
     {
         name: "toEditPage",
         type: "page/toPage",
-        pageUrl: "/accountManage/customerEdit"
+        pageUrl: "/accountManage/accountItemEdit"
     },
     {
         name: "editEntityData",
         type: "dataGridView/selectRowToPage",
         dataGridView: "dataGridView1",
         alertMessage: "alertMessage",
-        pageUrl: "/accountManage/customerEdit?CustomerId=#{CustomerId}&menuName=" + encodeURIComponent("修改")
+        pageUrl: "/accountManage/accountItemEdit?ItemId=#{ItemId}&menuName=" + encodeURIComponent("修改")
     },
     {
         name: "deleteEntityData",

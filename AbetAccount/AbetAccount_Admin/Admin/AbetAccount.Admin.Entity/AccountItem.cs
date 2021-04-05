@@ -5,30 +5,18 @@ using System.Text;
 
 namespace AbetAccount.Admin.Entity
 {
-    [TableProperty(Name = "t_Customer", PrimaryKey = "CustomerId", NoSelectNames = "IsDelete")]
+    [TableProperty(Name = "t_AccountItem", PrimaryKey = "ItemId", NoSelectNames = "IsDelete")]
     [RequestMethod(IsDelete = false)]
-    public class Customer : EntityModel, IEntity
+    public class AccountItem : EntityModel, IEntity
     {
         /// <summary> 
         /// 主键
         /// </summary> 
-        public Guid CustomerId { get; set; }
+        public Guid ItemId { get; set; }
         /// <summary> 
         /// 名称
         /// </summary> 
         public string Name { get; set; }
-        /// <summary> 
-        /// 手机
-        /// </summary> 
-        public string Phone { get; set; }
-        /// <summary> 
-        /// 公司名称
-        /// </summary> 
-        public string CompanyName { get; set; }
-        /// <summary> 
-        /// 地址
-        /// </summary> 
-        public string Address { get; set; }
         /// <summary> 
         /// 备注
         /// </summary> 
@@ -60,20 +48,20 @@ namespace AbetAccount.Admin.Entity
 
         public override void InsertValidate(List<Func<IValidate, IEntityData, string>> validateList)
         {
-            validateList.Add(this.ValidateExists<Customer>("IsDelete=0 and Name=@Name", "对不起，该姓名已存在！"));
+            validateList.Add(this.ValidateExists<AccountItem>("IsDelete=0 and Name=@Name", "对不起，该名称已存在！"));
         }
 
         public override void UpdateValidate(List<Func<IValidate, IEntityData, string>> validateList)
         {
-            validateList.Add(this.ValidateExists<Customer>("CustomerId=@CustomerId and Name=@Name", "true"));
-            validateList.Add(this.ValidateExists<Customer>("IsDelete=0 and Name=@Name", "对不起，该姓名已存在！"));
+            validateList.Add(this.ValidateExists<AccountItem>("ItemId=@ItemId and Name=@Name", "true"));
+            validateList.Add(this.ValidateExists<AccountItem>("IsDelete=0 and Name=@Name", "对不起，该名称已存在！"));
 
         }
     }
 
-    [TableProperty(Name = "v_Customer", PrimaryKey = "CustomerId", NoSelectNames = "IsDelete")]
+    [TableProperty(Name = "v_AccountItem", PrimaryKey = "ItemId", NoSelectNames = "IsDelete")]
     [RequestMethod(IsDelete = false, IsPost = false, IsPut = false)]
-    public class ViewCustomer : Customer
+    public class ViewAccountItem : AccountItem
     {
     }
 }
