@@ -25,10 +25,11 @@ namespace AbetAccount.Admin.Web.Code
                 {
                     string access_token = Code.Request.GetHeadersValue(context.HttpContext.Request, "access_token");
                     string token = Code.Request.GetHeadersValue(context.HttpContext.Request, "token");
+                    string clientTime = Code.Request.GetHeadersValue(context.HttpContext.Request, "clientTime");
 
                     access_token = OpenDataAccessCore.Utility.Common.FromBase64String(access_token);
 
-                    blSucceed = ParseAccessToken(context, access_token, token);
+                    blSucceed = ParseAccessToken(context, access_token, token, clientTime);
                     if (blSucceed) blSucceed = ParseToken(context, token);
                 }
             }
@@ -97,7 +98,7 @@ namespace AbetAccount.Admin.Web.Code
             return true;
         }
 
-        bool ParseAccessToken(ActionExecutingContext context, string access_token, string token)
+        bool ParseAccessToken(ActionExecutingContext context, string access_token, string token, string clientTime)
         {
             string[] strs = access_token.Split('@');
             string appId = strs[0];
@@ -107,7 +108,10 @@ namespace AbetAccount.Admin.Web.Code
             string md52 = Common.ComputeStringMd5(appId + time + token);
 
             long time1 = long.Parse(time);
-            long time2 = Utility.Common.GetDateTotalMilliseconds(DateTime.Now);
+            long time2 = 0;
+
+            if (!long.TryParse(clientTime, out time2)) time2 = Utility.Common.GetDateTotalMilliseconds(DateTime.Now);
+
 
             long st = 10000;
 
