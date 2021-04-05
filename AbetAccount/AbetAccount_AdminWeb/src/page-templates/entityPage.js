@@ -15,7 +15,7 @@ export default (name, config) => (props) => {
 
   if (pageAxis === null) return null;
 
-  if (pageAxis.pageConfig.dialogViews) {
+  if (pageAxis.pageConfig.dialogViews || pageAxis.pageConfig.isDialogViews) {
     return (
       <React.Fragment>
         <Components.PropertyItem property={pageAxis.pageConfig} pageId={pageAxis.id} />

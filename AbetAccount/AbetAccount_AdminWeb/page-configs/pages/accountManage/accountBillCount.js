@@ -1,14 +1,14 @@
 const accountBill = require("../../entities/accountBill");
 const { getButton, assignProporties, getTextBox, getDatePicker, getSelect, getSelect2 } = require("../../Common");
 
-//accountManage/accountBillList 1200-1299
+//accountManage/accountBillCount 1400-1499
 const dataActionTypes = {
     //搜索查询
-    searchQuery: 1200,
+    searchQuery: 1400,
     //删除实体数据
-    deleteEntityData: 1201,
+    deleteEntityData: 1401,
     //Excel导出
-    excelExport: 1202
+    excelExport: 1402
 };
 
 const { name, primaryKey, viewName } = accountBill;
@@ -17,6 +17,7 @@ const entity = { name, primaryKey, viewName, isGroupByInfo: true };
 module.exports = {
     name: "accountBillList",
     type: "View",
+    isDialogViews: true,
     eventActions: getEventActions(),
     properties: assignProporties({ name: "accountBillList" }, [getSearchOperationView(), getDataGridView()])
 }
@@ -29,9 +30,12 @@ function getSearchOperationView() {
         className: "divSerachView",
         properties: assignProporties({ name: "accountBillList" }, [
             getEditSelect2("AccountItemId", "实体项目", accountBill.accountItemsDataSource, 1, 1),
-            getEditSelect2("CategoryId", "类型", accountBill.accountCategorysDataSource, 1, 2),
-            getEditSelect2("CreateUser", "记账人", accountBill.usersDataSource, 1, 3),
-            getEditSelect("IncomeOutlay", "收支", accountBill.incomeOutlayDataSource, 1, 4),
+            { ...getEditSelect("IncomeOutlay", "收支", accountBill.incomeOutlayDataSource, 1, 2), childNames: ['AccountCategoryId'] },
+            {
+                ...getEditSelect2("AccountCategoryId", "类别", accountBill.accountCategorysDataSource, 1, 3),
+                parentName: 'IncomeOutlay', parentPropertyName: 'IncomeOutlay'
+            },
+            getEditSelect2("BillUser", "经手人", accountBill.usersDataSource, 1, 4),
             { ...getDatePicker2("StartDate", "开始日期", 2, 1, "大于或等于其值"), isMonthFirst: true, propertyName: "BillDate", operateLogic: ">=" },
             { ...getDatePicker2("EndDate", "至", 2, 2, "小于其值"), isCurrentDay: true, propertyName: "BillDate", operateLogic: "<" },
             {
@@ -40,8 +44,7 @@ function getSearchOperationView() {
             },
             { ...getButton("search", "搜索", "primary", 2, 4), isFormItem: true, icon: "search", eventActionName: "searchQuery", pressEnterEventActionName: "searchQuery" },
             { ...getButton("clearQuery", "清空", "default", 2, 5), isFormItem: true, eventActionName: "clearQuery" },
-            { eventActionName: "toEditPage", ...getButton("toEditPage", "新增", "primary", 3, 1), style: { marginLeft: 16, marginBottom: 16 } },
-            { eventActionName: "excelExport", title: "记账记录", ...getButton("excelExport", "Excel导出", "default", 3, 5), icon: "download", colStyle: { paddingLeft: 0 } }
+            { eventActionName: "toEditPage", ...getButton("toEditPage", "新增", "primary", 3, 1), style: { marginLeft: 16, marginBottom: 16 } }
         ])
     }
 }
@@ -111,65 +114,22 @@ function getDataGridView() {
         eventActionName: "searchQuery",
         isDiv: true,
         className: "divInfoView3",
-        groupByInfoHtml: getGroupByInfoHtml(),
-        properties: assignProporties(accountBill, ["BillDate", "AccountItemName", "AccountCategoryName", "IncomeOutlayName", getAmount('Amount2'), getAmount('Tax2'), "Remark", "CreateUserName",
-            { name: "CreateDate", OrderByType: "desc" }, { name: "CreateUser", isVisible: false }, getOperation(), { name: "RowVersion", isVisible: false }])
+        setColumnsEventActionName: "setShowColumns",
+        isPartPaging: true,
+        isGroupByQuery: true,
+        properties: assignProporties(accountBill, [{ name: "BillDate", orderByType: "desc" }, "AccountItemName", "IncomeOutlayName", "AccountCategoryName", "BillUserName", getAmount('Amount2'), getAmount('Tax2')])
     }
 }
 
-function getGroupByInfoHtml() {
-    var html = [];
-
-    html.push("收入：<span style=\"color:#1890ff;\">{TotalIncome}</span>，");
-    html.push("支出：<span style=\"color:red;\">{TotalOutlay}</span>，");
-    html.push("结余：<span style=\"color:{TotalBalanceColor};\">{TotalBalance}</span>");
-
-    html.push("<span style=\"margin-left:16px;\">收入税额：</span><span style=\"color:#1890ff;\">{TotalIncomeTax}</span>，");
-    html.push("开出税额：<span style=\"color:red;\">{TotalOutlayTax}</span>，");
-    html.push("结余税额：<span style=\"color:{TotalBalanceTaxColor};\">{TotalBalanceTax}</span>");
-
-    return html.join("");
-}
 
 function getAmount(name) {
     return {
         name,
+        groupByExpression: `sum(${name})`,
         isFixed2: true, isCurrency: true, fontColor: "#1890ff"
     }
 }
 
-function getOperation() {
-    return {
-        name: "operation",
-        label: "操作",
-        isData: false,
-        selfPropertyName: 'CreateUser',
-        actionList: assignProporties(accountBill, [getUpdateAppAccountBillAction(),getDeleteAppAccountBillAction()])
-    }
-}
-
-function getDeleteAppAccountBillAction(){
-    return {
-        name: "deleteAppAccount",
-        label: '删除',
-        type: "AButton",
-        isSelfOperation: true,
-        dataActionType: dataActionTypes.deleteEntityData,
-        successTip: "删除成功！",
-        confirmTip: "请确认是否删除当前记账记录？",
-        eventActionName: "deleteAppAccount"
-    }
-}
-
-function getUpdateAppAccountBillAction() {
-    return {
-        name: "editAppAccount",
-        label: '修改',
-        type: "AButton",
-        isSelfOperation: true,
-        eventActionName: "editAppAccount"
-    }
-}
 
 function getEventActions() {
     return [{
@@ -188,24 +148,8 @@ function getEventActions() {
         isClearQuery: true
     },
     {
-        name: "excelExport",
-        type: "dataGridView/excelExport",
-        dataGridView: "dataGridView1"
-    },
-    {
-        name: "toEditPage",
-        type: "page/toPage",
-        pageUrl: "/accountManage/accountBillEdit"
-    },
-    {
-        name: "editAppAccount",
-        type: "dataGridView/selectRowToPage",
-        dataGridView: "dataGridView1",
-        pageUrl: "/accountManage/accountBillEdit?BillId=#{BillId}&menuName=" + encodeURIComponent("修改")
-    },
-    {
-        name: "deleteAppAccount",
-        type: "dataGrid/batchUpdateRowDataList",
+        name: "setShowColumns",
+        type: "dataGrid/setDataGridShowColumns",
         dataGridView: "dataGridView1"
     }]
 }

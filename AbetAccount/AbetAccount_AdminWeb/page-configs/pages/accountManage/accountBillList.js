@@ -114,8 +114,8 @@ function getDataGridView() {
         isDiv: true,
         className: "divInfoView3",
         groupByInfoHtml: getGroupByInfoHtml(),
-        properties: assignProporties(accountBill, ["BillDate", "AccountItemName", "AccountCategoryName", "IncomeOutlayName", getAmount('Amount2'), getAmount('Tax2'), "Remark", "BillUserName", "CreateUserName",
-            { name: "CreateDate", OrderByType: "desc" }, { name: "CreateUser", isVisible: false }, getOperation(), { name: "RowVersion", isVisible: false }])
+        properties: assignProporties(accountBill, [{ name: "BillDate", orderByType: "desc" }, "AccountItemName", "AccountCategoryName", "IncomeOutlayName", getAmount('Amount2'), getAmount('Tax2'), "Remark", "BillUserName", "CreateUserName",
+            'CreateDate', { name: "CreateUser", isVisible: false }, getOperation(), { name: "RowVersion", isVisible: false }])
     }
 }
 

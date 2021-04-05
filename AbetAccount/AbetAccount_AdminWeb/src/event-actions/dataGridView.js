@@ -169,23 +169,23 @@ export default class DataGridView extends BaseIndex {
 
             name = property.propertyName || property.name;
             if (name === primaryKey) hasPrimaryKey = true;
-            if (Common.isNullOrEmpty(property.GroupByExpression)) {
+            if (Common.isNullOrEmpty(property.groupByExpression)) {
                 selectFieldList.push(name);
-                if (!Common.isNullOrEmpty(property.OrderByType)) {
-                    orderByList.push(name + " " + property.OrderByType);
+                if (!Common.isNullOrEmpty(property.orderByType)) {
+                    orderByList.push(name + " " + property.orderByType);
                 }
                 groupByList.push(name);
 
-                if (!firstFieldOrderBy) firstFieldOrderBy = name + (property.OrderByType || " desc");
+                if (!firstFieldOrderBy) firstFieldOrderBy = name + (property.orderByType || " desc");
             }
             else {
                 isGroupBy = true;
-                groupByFieldList.push(property.GroupByExpression + " as " + name);
-                if (!Common.isNullOrEmpty(property.OrderByType)) {
-                    orderByList.push(property.GroupByExpression + " " + property.OrderByType);
+                groupByFieldList.push(property.groupByExpression + " as " + name);
+                if (!Common.isNullOrEmpty(property.orderByType)) {
+                    orderByList.push(property.groupByExpression + " " + property.orderByType);
                 }
 
-                if (!firstFieldOrderBy) firstFieldOrderBy = property.GroupByExpression + (property.OrderByType || " desc");
+                if (!firstFieldOrderBy) firstFieldOrderBy = property.groupByExpression + (property.orderByType || " desc");
             }
         }
 

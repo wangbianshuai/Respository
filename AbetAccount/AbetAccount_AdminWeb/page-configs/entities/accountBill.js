@@ -12,7 +12,7 @@ module.exports = {
 function getProperties() {
     return [
         getProperty("BillId", "BillId"),
-        getProperty("AccountCategoryName", "类型"),
+        getProperty("AccountCategoryName", "类别"),
         getProperty("AccountItemName", "实体项目"),
         getProperty("BillDate", "日期"),
         getProperty("Amount2", "金额"),

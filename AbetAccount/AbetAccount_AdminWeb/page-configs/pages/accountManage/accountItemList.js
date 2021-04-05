@@ -72,7 +72,7 @@ function getDataGridView() {
         className: "divInfoView3",
         isRowSelection: true,
         isSingleSelection: true,
-        properties: assignProporties(accountItem, ["Name", "Remark", { name: "CreateDate", OrderByType: "desc" }, { name: "RowVersion", isVisible: false }])
+        properties: assignProporties(accountItem, ["Name", "Remark", { name: "CreateDate", orderByType: "desc" }, { name: "RowVersion", isVisible: false }])
     }
 }
 

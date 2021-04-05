@@ -96,7 +96,7 @@ function getDataGridView() {
         isDiv: true,
         className: "divInfoView3",
         properties: assignProporties(operationLog, ["LogType", "RequestType", "EntityName", "MethodName", "IPAddress", "StartTime", "EndTime", "ElapsedMilliseconds", "UserName",
-            { name: "CreateDate", OrderByType: "desc" }, getLookDetail(), { name: "LogPath", isVisible: false }])
+            { name: "CreateDate", orderByType: "desc" }, getLookDetail(), { name: "LogPath", isVisible: false }])
     }
 }
 
