@@ -99,7 +99,7 @@ const renderItem = (property, view, pageId, isVisible, label) => {
     return getReactComponent(property, view, pageId);
 }
 
-export default (props) => {
+export default React.memo((props) => {
     const { property, view, pageId, pageAxis } = Base.getProps(props);
     const [isVisible, setIsVisible] = useState(getIsVisible(property, pageAxis));
     const [label, setLabel] = useState(property.label);
@@ -121,4 +121,4 @@ export default (props) => {
     if (!isVisible) { style = { ...style }; style.display = 'none'; }
 
     return <Col key={property.colId} span={property.colSpan} style={style}>{renderItem(property, view, pageId, isVisible, label)}</Col>
-}
+});

@@ -138,7 +138,7 @@ export default class BaseIndex {
             else {
                 name = p.propertyName || p.name;
                 v = data[name];
-                if ((v === null || v === undefined) && p.defaultValue && (isDefault || p.isDefault)) v = p.defaultValue;
+                if ((v === null || v === undefined) && !Common.isNullOrEmpty(p.defaultValue) && (isDefault || p.isDefault)) v = p.defaultValue;
                 if (p.setValue) p.setValue(v);
                 else p.value = v;
 
@@ -175,7 +175,7 @@ export default class BaseIndex {
         }
         else {
             action.modalDialog.title = title;
-            action.modalDialog.onOk= onOk;
+            action.modalDialog.onOk = onOk;
             setValue && setValue();
             action.modalDialog.setVisible(true);
         }

@@ -34,9 +34,9 @@ function getAccountTypesDataSource() {
     return {
         valueName: "TypeId",
         textName: "Name",
-        stateName: "getAccountTypes",
+        stateName: "getUserAccountTypes",
         serviceName: "AccountTypeService",
-        actionName: "getAccountTypes",
+        actionName: "getUserAccountTypes",
         isRefresh: true,
         payload: {}
     }

@@ -4,7 +4,7 @@ import { Card } from 'antd';
 import styles from '../styles/view.css';
 import Base from './base';
 
-export default (props) => {
+export default React.memo((props) => {
     const { property, view, pageId, pageAxis } = Base.getProps(props);
     const [isVisible, setIsVisible] = useState(property.isVisible !== false);
 
@@ -30,4 +30,4 @@ export default (props) => {
 
     if (property.isDiv) return <div className={className} style={property.style}>{Base.renderProperties(property, pageId)}</div>
     return Base.renderProperties(property, pageId);
-}
+});

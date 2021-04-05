@@ -48,7 +48,7 @@ function getProperties() {
     return [
         getRadio2('IsIncome', '收支', accountBill.incomeOutlayDataSource, 1, 1, 0, 160),
         getEditSelect("AccountTypeId", "账目类型", accountBill.accountTypesDataSource, 2, 1, false, "请选择账目类型"),
-        getEditSelect("CustomerId", "客户", accountBill.customersDataSource, 3, 1, true, ""),
+        { ...getEditSelect("CustomerId", "客户", accountBill.customersDataSource, 3, 1, true, ""), isVisible: false },
         { ...getDatePicker2('BillDate', '日期', 4, 1, false, '', '请选择日期'), isCurrentDay: true },
         { ...getTextBox2("Amount", "金额", 5, 1, "", "请输入金额", 20, false), dataType: 'float', scale: 2 },
         { ...getTextBox2("Tax", "税额", 6, 1, "", "", 20, true), dataType: 'float', scale: 2 },

@@ -32,7 +32,7 @@ const renderLookFooter = (onCancel) => {
     )
 }
 
-export default (props) => {
+export default React.memo((props) => {
     const { property } = props;
     const [visible, setVisible] = useState(property.visible);
 
@@ -68,4 +68,4 @@ export default (props) => {
             </Modal>
         )
     }
-};
+});

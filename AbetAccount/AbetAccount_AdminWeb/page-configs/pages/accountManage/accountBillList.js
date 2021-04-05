@@ -111,8 +111,6 @@ function getDataGridView() {
         eventActionName: "searchQuery",
         isDiv: true,
         className: "divInfoView3",
-        isRowSelection: true,
-        isSingleSelection: true,
         groupByInfoHtml: getGroupByInfoHtml(),
         properties: assignProporties(accountBill, ["BillDate", "AccountTypeName", "CustomerName", "IncomeOutlay", getAmount('Amount2'), getAmount('Tax2'), "Remark", "CreateUserName",
             { name: "CreateDate", OrderByType: "desc" }, { name: "CreateUser", isVisible: false }, getOperation(), { name: "RowVersion", isVisible: false }])

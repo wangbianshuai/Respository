@@ -57,7 +57,7 @@ export default (props) => {
     const { property, view, pageAxis } = Base.getProps(props);
 
     const [value, setValue] = useState(Base.getInitValue(property));
-    const [isVisible, setIsVisible] = useState(property.isVisible !== false);
+    const [isVisible, setIsVisible] = useState(property.isVisible !== false || property.isFormItem);
     const [disabled, setDisabled] = useState(!!property.disabled);
 
     const [options, setOptions] = useGetDataSourceOptions(property, view, pageAxis, getOptions);
