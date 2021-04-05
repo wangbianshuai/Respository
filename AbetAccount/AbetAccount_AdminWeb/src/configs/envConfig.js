@@ -32,11 +32,11 @@ function getEnv(h) {
 }
 
 function getApiSericeUrl() {
-    return "/api/";
+    return EnvConfig.isProd ? '/abet/api/' : "/api/";
 }
 
 function getWebServiceUrl() {
-    return "/admin/";
+    return "/abet/";
 }
 
 function getServiceUrl(serverName) {
