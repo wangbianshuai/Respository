@@ -43,9 +43,9 @@ const remove = (id, dataList, setDataList, primaryKey) => {
     setValue(dataList.filter(f => !Common.isEquals(f[primaryKey], id, true)), setDataList);
 };
 
-const setColumnsVisible = (hideColNames, dataProperties, dataProperties2, setRefreshId) => {
+const setColumnsVisible = (hideColNames, dataProperties, obj, setRefreshId) => {
     dataProperties.forEach(p => p.isVisible = !(hideColNames.indexOf(p.name) >= 0));
-    dataProperties2 = dataProperties.filter(f => f.isVisible !== false);
+    obj.dataProperties2 = dataProperties.filter(f => f.isVisible !== false);
 
     setRefreshId(Common.createGuid());
 };
@@ -66,9 +66,9 @@ const refresh = (pageInfo, property, pageAxis, setRefreshId) => {
     pageIndexChange(pageInfo.pageIndex, pageInfo.pageSize, false, pageInfo, property, pageAxis, setRefreshId);
 }
 
-const setColumnsVisible2 = (visibleColNames, dataProperties, dataProperties2, property, pageAxis, setRefreshId, pageInfo) => {
+const setColumnsVisible2 = (visibleColNames, dataProperties, obj, property, pageAxis, setRefreshId, pageInfo) => {
     dataProperties.forEach(p => p.isVisible = (visibleColNames.indexOf(p.name) >= 0));
-    dataProperties2 = dataProperties.filter(f => f.isVisible !== false);
+    obj.dataProperties2 = dataProperties.filter(f => f.isVisible !== false);
     if (property.isGroupByQuery) {
         pageInfo.pageIndex = 1;
         refresh(pageInfo, property, pageAxis, setRefreshId);
@@ -277,6 +277,8 @@ const renderDataView = (property, queryData, dataList, dataProperties2, isDataLo
         dataList = queryData.dataList;
     }
 
+    console.log(dataProperties2)
+
     const isPartPaging = !!property.isPartPaging
 
     return (<DataGrid pageAxis={pageAxis} primaryKey={primaryKey} dataList={dataList} isPartPaging={isPartPaging}
@@ -298,7 +300,9 @@ export default React.memo((props) => {
     const setRefreshId = useState(false)[1];
     const primaryKey = property.entity.primaryKey;
 
-    const { dataProperties, dataProperties2, queryData, receiveFunctions } = useMemo(() => init(property, pageAxis), [property, pageAxis])
+    const obj = useMemo(() => init(property, pageAxis), [property, pageAxis])
+
+    const { dataProperties, dataProperties2, queryData, receiveFunctions } = obj
 
     useEffect(() => {
         if (property.isSearchQuery !== false) pageAxis.invokeEventAction(property.eventActionName, { property, pageAxis });
@@ -321,8 +325,8 @@ export default React.memo((props) => {
     property.remove = (id) => remove(id, dataList, setDataList, primaryKey);
     property.setValue = (v) => setValue(v, setDataList);
     property.getValue = () => dataList;
-    property.setColumnsVisible = (hideColNames) => setColumnsVisible(hideColNames, dataProperties, dataProperties2, setRefreshId)
-    property.setColumnsVisible2 = (visibleColNames) => setColumnsVisible2(visibleColNames, dataProperties, dataProperties2, property, pageAxis, setRefreshId, queryData.pageInfo);
+    property.setColumnsVisible = (hideColNames) => setColumnsVisible(hideColNames, dataProperties, obj, setRefreshId)
+    property.setColumnsVisible2 = (visibleColNames) => setColumnsVisible2(visibleColNames, dataProperties, obj, property, pageAxis, setRefreshId, queryData.pageInfo);
     property.getPageRecord = () => queryData.pageInfo.pageRecord;
     property.getDataProperties2 = () => dataProperties2;
     property.getExcelExportProperties = () => getExcelExportProperties(dataProperties)
