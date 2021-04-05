@@ -46,9 +46,12 @@ function getButtonProperties() {
 
 function getProperties() {
     return [
-        getRadio2('IncomeOutlay', '收支', accountBill.incomeOutlayDataSource, 1, 1, 0, 160),
-        getEditSelect("AccountItemId", "实体项目", accountBill.accountItemsDataSource, 2, 1, false, "请选择实体项目"),
-        getEditSelect("AccountCategoryId", "类别", accountBill.accountCategorysDataSource, 3, 1, false, "请选择类别"),
+        { ...getRadio2('IncomeOutlay', '收支', accountBill.incomeOutlayDataSource, 1, 1, 0, 160), childNames: ['AccountCategoryId'] },
+        {
+            ...getEditSelect("AccountCategoryId", "类别", accountBill.accountCategorysDataSource, 2, 1, false, "请选择类别"),
+            parentName: 'IncomeOutlay', parentPropertyName: 'IncomeOutlay'
+        },
+        getEditSelect("AccountItemId", "实体项目", accountBill.accountItemsDataSource, 3, 1, false, "请选择实体项目"),
         { ...getDatePicker2('BillDate', '日期', 4, 1, false, '', '请选择日期'), isCurrentDay: true },
         { ...getTextBox2("Amount", "金额", 5, 1, "", "请输入金额", 20, false), dataType: 'float', scale: 2 },
         { ...getTextBox2("Tax", "税额", 6, 1, "", "", 20, true), dataType: 'float', scale: 2 },

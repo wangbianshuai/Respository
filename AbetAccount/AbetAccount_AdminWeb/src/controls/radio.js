@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import { Common } from 'UtilsCommon';
 import { useGetDataSourceOptions } from 'UseHooks';
 import { Radio, Input } from 'antd';
@@ -36,6 +36,14 @@ const getSelectText = (property, value) => {
   return d === null ? '' : d[textName]
 };
 
+const valueChange = (property, view, value) => {
+  Base.childPropertiesChanged(property, view, value);
+  if (property.valueChange) property.valueChange(value, Base.getSelectData(property, value));
+
+  if (property.valueVisibleProperties) Base.setValueVisibleProperties(property, view, value);
+  if (property.selectDataToProperties) Base.setSelectDataToProperties(property, view, Base.getSelectData(property, value));
+};
+
 export default (props) => {
   const { property, view, pageAxis } = Base.getProps(props);
 
@@ -47,8 +55,13 @@ export default (props) => {
   const [options, setOptions] = useGetDataSourceOptions(property, view, pageAxis, getOptions);
 
   const onChange = useCallback((e) => {
+    property.isChanged = true;
     setValue(e.target.value)
-  }, [setValue]);
+  }, [property, setValue]);
+
+  useEffect(() => {
+    valueChange(property, view, value);
+  }, [property, view, value]);
 
   property.setIsVisible = (v) => setIsVisible(v);
   property.setValue = (v) => setValue(v);

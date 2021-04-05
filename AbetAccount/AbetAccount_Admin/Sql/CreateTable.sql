@@ -266,7 +266,7 @@ go
 create table t_AccountBill
 (
 BillId uniqueidentifier not null primary key,                  --主键
-CategoryId uniqueidentifier not null,                   --类别Id
+AccountCategoryId uniqueidentifier not null,                   --类别Id
 AccountItemId uniqueidentifier not null,                       --账户项目
 IncomeOutlay tinyint not null default(0),                      --收支,0:支出，1：收入
 AccountType tinyint not null default(0),                       --账户类型
@@ -285,7 +285,7 @@ RowVersion timestamp not null                                  --行版本
 go
 
 exec proc_AddCellExplanation '主键','t_AccountBill','BillId'
-exec proc_AddCellExplanation '类别Id','t_AccountBill','CategoryId'
+exec proc_AddCellExplanation '类别Id','t_AccountBill','AccountCategoryId'
 exec proc_AddCellExplanation '实体项目','t_AccountBill','AccountItemId'
 exec proc_AddCellExplanation '收支,0:支出，1：收入','t_AccountBill','IncomeOutlay'
 exec proc_AddCellExplanation '账户类型','t_AccountBill','AccountType'
@@ -319,7 +319,7 @@ d.UserName BillUserName,
 e.UserName CreateUserName
 from t_AccountBill a 
 left join t_AccountItem b on a.AccountItemId=b.ItemId
-left join t_AccountCategory c on a.CategoryId= c.CategoryId
+left join t_AccountCategory c on a.AccountCategoryId= c.CategoryId
 left join t_AdminUser d on a.BillUser=d.UserId
 left join t_AdminUser e on a.CreateUser=e.UserId
 where a.IsDelete=0

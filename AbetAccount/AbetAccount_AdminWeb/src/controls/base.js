@@ -49,14 +49,39 @@ const getProperty = (name, view) => {
 }
 
 const judgePush = (d, parentValue, property, view) => {
-  if (parentValue === undefined && view && property.parentName && property.parentPropertyName) {
-    const parentProperty = getProperty(property.parentName, view);
-    if (parentProperty.getValue) parentValue = parentProperty.getValue();
-    else parentValue = parentProperty.value || (parentProperty.defaultValue || null);
+  if (view && property.parentName && property.parentPropertyName) {
+    const key = 'parent_' + property.parentName;
+    if (!property[key]) property[key] = getProperty(property.parentName, view);
+    const parentProperty = property[key];
+
+    if (parentValue === undefined) {
+      if (parentProperty.getValue) parentValue = parentProperty.getValue();
+      else parentValue = parentProperty.value || (parentProperty.defaultValue || null);
+    }
+
+    return Common.isEquals(parentValue, d[property.parentPropertyName], true);
   }
-  else if (parentValue === undefined) return Common.isEquals(parentValue, d[property.parentPropertyName], true);
 
   return true;
+};
+
+const childPropertiesChanged = (property, view, value) => {
+  if (Common.isArray(property.childNames)) {
+    let p = null, key = '';
+    property.childNames.forEach(n => {
+      key = 'child_' + n;
+      if (!property[key]) property[key] = getProperty(n, view);
+      p = property[key];
+      if (p != null && p.setParentValue) {
+        if (property.isChanged && !Common.isNullOrEmpty(p.parentValue) && p.parentValue !== value) {
+          p.setValue(null);
+          p.value = null;
+        }
+        p.parentValue = value;
+        p.setParentValue();
+      }
+    });
+  }
 };
 
 const renderPrefix = (property) => {
@@ -166,5 +191,6 @@ export default {
   getSelectData,
   setSelectDataToProperties,
   setValueVisibleProperties,
-  setPropertyValue
+  setPropertyValue,
+  childPropertiesChanged
 }

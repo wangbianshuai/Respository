@@ -29,9 +29,12 @@ function getSearchOperationView() {
         className: "divSerachView",
         properties: assignProporties({ name: "accountBillList" }, [
             getEditSelect2("AccountItemId", "实体项目", accountBill.accountItemsDataSource, 1, 1),
-            getEditSelect("IncomeOutlay", "收支", accountBill.incomeOutlayDataSource, 1, 2),
-            getEditSelect2("AccountCategoryId", "类别", accountBill.accountCategorysDataSource, 1, 3),
-            getEditSelect2("CreateUser", "记账人", accountBill.usersDataSource, 1, 4),
+            { ...getEditSelect("IncomeOutlay", "收支", accountBill.incomeOutlayDataSource, 1, 2), childNames: ['AccountCategoryId'] },
+            {
+                ...getEditSelect2("AccountCategoryId", "类别", accountBill.accountCategorysDataSource, 1, 3),
+                parentName: 'IncomeOutlay', parentPropertyName: 'IncomeOutlay'
+            },
+            getEditSelect2("BillUser", "经手人", accountBill.usersDataSource, 1, 4),
             { ...getDatePicker2("StartDate", "开始日期", 2, 1, "大于或等于其值"), isMonthFirst: true, propertyName: "BillDate", operateLogic: ">=" },
             { ...getDatePicker2("EndDate", "至", 2, 2, "小于其值"), isCurrentDay: true, propertyName: "BillDate", operateLogic: "<" },
             {
@@ -41,7 +44,7 @@ function getSearchOperationView() {
             { ...getButton("search", "搜索", "primary", 2, 4), isFormItem: true, icon: "search", eventActionName: "searchQuery", pressEnterEventActionName: "searchQuery" },
             { ...getButton("clearQuery", "清空", "default", 2, 5), isFormItem: true, eventActionName: "clearQuery" },
             { eventActionName: "toEditPage", ...getButton("toEditPage", "新增", "primary", 3, 1), style: { marginLeft: 16, marginBottom: 16 } }
-           ])
+        ])
     }
 }
 

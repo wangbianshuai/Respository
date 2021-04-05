@@ -47,6 +47,7 @@ const search = (property) => {
 };
 
 const valueChange = (property, view, value) => {
+    Base.childPropertiesChanged(property, view, value);
     if (property.valueChange) property.valueChange(value, Base.getSelectData(property, value));
 
     if (property.valueVisibleProperties) Base.setValueVisibleProperties(property, view, value);
@@ -65,6 +66,7 @@ export default (props) => {
     const obj = useMemo(() => ({}), [])
 
     const onChange = useCallback((v) => {
+        property.isChanged = true;
         setValue(v);
         Base.bindDataValue(property, v);
     }, [property, setValue]);

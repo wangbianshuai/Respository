@@ -22,7 +22,7 @@ function getAccountNavMenu() {
     menuList.push(addMenu("accountBillCount", "记账统计", false, "table", "/accountManage/accountBillCount"));
   
     menuList.push(addMenu("accountItemList", "实体项目", false, "table", "/accountManage/accountItemList"));
-    menuList.push(addMenu("accountItemEdit", "新增", true, "form", "/accountManage/accountItemEdit", "", null, false, "实体项目", "/accountManage/", null, true));
+    menuList.push(addMenu("accountItemEdit", "新增", true, "form", "/accountManage/accountItemEdit", "", null, false, "实体项目", "/accountManage/accountItemList", null, true));
 
     menuList.push(addMenu("accountCategoryList", "收支类别", false, "table", "/accountManage/accountCategoryList"));
     menuList.push(addMenu("accountCategoryEdit", "新增", true, "form", "/accountManage/accountCategoryEdit", "", null, false, "类别", "/accountManage/accountCategoryList", null, true));
