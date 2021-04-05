@@ -35,16 +35,17 @@ function getSearchOperationView() {
                 ...getEditSelect2("AccountCategoryId", "类别", accountBill.accountCategorysDataSource, 1, 3),
                 parentName: 'IncomeOutlay', parentPropertyName: 'IncomeOutlay'
             },
-            getEditSelect2("BillUser", "经手人", accountBill.usersDataSource, 1, 4),
             { ...getDatePicker2("StartDate", "开始日期", 2, 1, "大于或等于其值"), isMonthFirst: true, propertyName: "BillDate", operateLogic: ">=" },
             { ...getDatePicker2("EndDate", "至", 2, 2, "小于其值"), isCurrentDay: true, propertyName: "BillDate", operateLogic: "<" },
+            getEditSelect2("BillUser", "经手人", accountBill.usersDataSource, 2, 3),
+            getEditSelect("AccountType", "账户", accountBill.accountTypeDataSource, 3, 1),
             {
-                ...getTextBox2("keyword", "关键字", 2, 3, "", "备注"), propertyName: "Remark",
+                ...getTextBox2("keyword", "关键字", 3, 2, "", "备注"), propertyName: "Remark",
                 operateLogic: "like", pressEnterEventActionName: "searchQuery", pressEnterEventPropertyName: "search",
             },
-            { ...getButton("search", "搜索", "primary", 2, 4), isFormItem: true, icon: "search", eventActionName: "searchQuery", pressEnterEventActionName: "searchQuery" },
-            { ...getButton("clearQuery", "清空", "default", 2, 5), isFormItem: true, eventActionName: "clearQuery" },
-        ])
+            { ...getButton("search", "搜索", "primary", 3, 3), isFormItem: true, icon: "search", eventActionName: "searchQuery", pressEnterEventActionName: "searchQuery" },
+            { ...getButton("clearQuery", "清空", "default", 3, 4), isFormItem: true, eventActionName: "clearQuery" },
+         ])
     }
 }
 

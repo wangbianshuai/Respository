@@ -5,8 +5,9 @@ module.exports = {
     properties: getProperties(),
     accountItemsDataSource: getAccountItemsDataSource(),
     accountCategorysDataSource: getAccountCategorysDataSource(),
-    usersDataSource:getUsersDataSource(),
-    incomeOutlayDataSource:getIncomeOutlayDataSource()
+    usersDataSource: getUsersDataSource(),
+    incomeOutlayDataSource: getIncomeOutlayDataSource(),
+    accountTypeDataSource: getAccountTypeDataSource()
 }
 
 function getProperties() {
@@ -22,6 +23,7 @@ function getProperties() {
         getProperty("BillDay", "日"),
         getProperty("IncomeOutlayName", "收支"),
         getProperty("BillUserName", "经手人"),
+        getProperty("AccountTypeName", "账户"),
         getProperty("CreateUserName", "记账人"),
         getProperty("Remark", "摘要"),
         getProperty("CreateDate", "记账时间")
@@ -30,6 +32,10 @@ function getProperties() {
 
 function getIncomeOutlayDataSource() {
     return [{ value: 0, text: "支出" }, { value: 1, text: "收入" }]
+}
+
+function getAccountTypeDataSource() {
+    return [{ value: 0, text: "ABET" }, { value: 1, text: "上海阿贝特实业有限公司" }]
 }
 
 function getProperty(name, label) { return { name, label } }
@@ -58,7 +64,7 @@ function getAccountCategorysDataSource() {
     }
 }
 
-function getUsersDataSource(){
+function getUsersDataSource() {
     return {
         valueName: "UserId",
         textName: "UserName",

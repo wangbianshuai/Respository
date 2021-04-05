@@ -25,6 +25,10 @@ namespace AbetAccount.Admin.Entity
         /// 收支
         /// </summary> 
         public byte  IncomeOutlay{ get; set; }
+        /// <summary> 
+        /// 账户
+        /// </summary> 
+        public byte AccountType { get; set; }
         /// <summary>
         /// 金额
         /// </summary>

@@ -1,5 +1,5 @@
 const accountBill = require("../../entities/accountBill");
-const { assignProporties, getTextBox, getButton, getRadio, getDatePicker, getSelect2 } = require("../../Common");
+const { assignProporties, getTextBox, getButton, getRadio, getDatePicker, getSelect, getSelect2 } = require("../../Common");
 
 //accountManage/accountBillEdit 1300-1399
 const dataActionTypes = {
@@ -53,13 +53,28 @@ function getProperties() {
             parentName: 'IncomeOutlay', parentPropertyName: 'IncomeOutlay'
         },
         getEditSelect("AccountItemId", "实体项目", accountBill.accountItemsDataSource, 3, 1, false, "请选择实体项目"),
-        { ...getDatePicker2('BillDate', '日期', 4, 1, false, '', '请选择日期'), isCurrentDay: true },
-        { ...getTextBox2("Amount", "金额", 5, 1, "", "请输入金额", 20, false), dataType: 'float', scale: 2 },
-        { ...getTextBox2("Tax", "税额", 6, 1, "", "", 20, true), dataType: 'float', scale: 2 },
-        getEditSelect("BillUser", "经手人", accountBill.usersDataSource, 7, 1, false, "请选择经手人"),
-        getTextArea("Remark", "摘要", 8, 1),
+        getEditSelect2("AccountType", "账户", accountBill.accountTypeDataSource, 4, 1, false, "账户", 0),
+        { ...getDatePicker2('BillDate', '日期', 5, 1, false, '', '请选择日期'), isCurrentDay: true },
+        { ...getTextBox2("Amount", "金额", 6, 1, "", "请输入金额", 20, false), dataType: 'float', scale: 2 },
+        { ...getTextBox2("Tax", "税额", 7, 1, "", "", 20, true), dataType: 'float', scale: 2 },
+        getEditSelect("BillUser", "经手人", accountBill.usersDataSource, 8, 1, false, "请选择经手人"),
+        getTextArea("Remark", "摘要", 9, 1),
         getButtonView()
     ]
+}
+
+function getEditSelect2(name, label, serviceDataSource, x, y, isNullable, placeHolder, defaultValue) {
+    return {
+        ...getSelect(name, label, serviceDataSource, x, y, defaultValue),
+        isFormItem: true,
+        colSpan: 24,
+        labelCol: 8,
+        wrapperCol: 8,
+        isNullable,
+        isEdit: true,
+        allowClear: true, isSearch: true,
+        placeHolder
+    }
 }
 
 function getRadio2(name, label, dataSource, x, y, defaultValue, buttonWidth) {
@@ -122,7 +137,7 @@ function getButtonView() {
         isDiv: true,
         isFormItem: true,
         colSpan: 24,
-        x: 9,
+        x: 10,
         y: 1,
         properties: assignProporties({ name: "accountBillEdit" }, getButtonProperties())
     }
