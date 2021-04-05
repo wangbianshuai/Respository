@@ -16,6 +16,7 @@ const entity = { name, primaryKey };
 module.exports = {
     name: "accountCategoryEdit",
     type: "View",
+    noRightNames: ['saveEntityData'],
     eventActions: getEventActions(),
     properties: assignProporties({ name: "accountCategoryEdit" }, [getEditView()])
 }

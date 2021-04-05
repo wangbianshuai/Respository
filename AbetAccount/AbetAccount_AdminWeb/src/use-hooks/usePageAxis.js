@@ -104,7 +104,11 @@ class PageAxis {
     }
 
     getRight(name) {
-        return !!name;
+        if (!this.loginUser || !this.pageConfig.noRightNames) return true;
+        const isOperationRight = this.loginUser.OperationRight === 1;
+        if (isOperationRight) return true;
+
+        return !this.pageConfig.noRightNames.includes(name);
     }
 
     getFunction(name) {

@@ -17,6 +17,7 @@ const entity = { name, primaryKey, viewName };
 module.exports = {
     name: "accountCategoryList",
     type: "View",
+    noRightNames: ['toEditPage', 'editEntityData', 'deleteEntityData'],
     eventActions: getEventActions(),
     properties: assignProporties({ name: "accountCategoryList" }, [getSearchOperationView(), getDataGridView()])
 }

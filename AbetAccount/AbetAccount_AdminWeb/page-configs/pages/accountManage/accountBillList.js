@@ -17,6 +17,7 @@ const entity = { name, primaryKey, viewName, isGroupByInfo: true };
 module.exports = {
     name: "accountBillList",
     type: "View",
+    noRightNames: ['toEditPage'],
     eventActions: getEventActions(),
     properties: assignProporties({ name: "accountBillList" }, [getSearchOperationView(), getDataGridView()])
 }

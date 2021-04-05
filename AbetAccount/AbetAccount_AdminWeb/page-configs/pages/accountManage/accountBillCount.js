@@ -44,7 +44,6 @@ function getSearchOperationView() {
             },
             { ...getButton("search", "搜索", "primary", 2, 4), isFormItem: true, icon: "search", eventActionName: "searchQuery", pressEnterEventActionName: "searchQuery" },
             { ...getButton("clearQuery", "清空", "default", 2, 5), isFormItem: true, eventActionName: "clearQuery" },
-            { eventActionName: "toEditPage", ...getButton("toEditPage", "新增", "primary", 3, 1), style: { marginLeft: 16, marginBottom: 16 } }
         ])
     }
 }

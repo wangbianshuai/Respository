@@ -277,8 +277,6 @@ const renderDataView = (property, queryData, dataList, dataProperties2, isDataLo
         dataList = queryData.dataList;
     }
 
-    console.log(dataProperties2)
-
     const isPartPaging = !!property.isPartPaging
 
     return (<DataGrid pageAxis={pageAxis} primaryKey={primaryKey} dataList={dataList} isPartPaging={isPartPaging}
