@@ -13,8 +13,8 @@ function getProperties() {
         getProperty("UserName", "用户名"),
         getProperty("LoginName", "登录名"),
         getProperty("IsAdminName", "是否管理员"),
-        getProperty("DataRight", "数据权限"),
-        getProperty("OperationRight", "操作权限"),
+        getProperty("DataRightName", "数据权限"),
+        getProperty("OperationRightName", "操作权限"),
         getProperty("LastLoginDate", "最近登录时间"),
         getProperty("CreateDate", "创建时间")
     ]

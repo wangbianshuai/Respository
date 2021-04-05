@@ -1,3 +1,3 @@
 import { EntityPageEdit } from "PageTemplates";
 
-export default EntityPageEdit("systemManage_accountItemEdit", "AccountItem", 900);
+export default EntityPageEdit("accountManage_accountItemEdit", "AccountItem", 900);

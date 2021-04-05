@@ -52,13 +52,13 @@ namespace AbetAccount.Admin.Entity
 
         public override void InsertValidate(List<Func<IValidate, IEntityData, string>> validateList)
         {
-            validateList.Add(this.ValidateExists<AccountCategory>("IsDelete=0 and Name=@Name", "对不起，该名称已存在！"));
+            validateList.Add(this.ValidateExists<AccountCategory>("IsDelete=0 and IncomeOutlay=@IncomeOutlay and Name=@Name", "对不起，该名称已存在！"));
         }
 
         public override void UpdateValidate(List<Func<IValidate, IEntityData, string>> validateList)
         {
             validateList.Add(this.ValidateExists<AccountCategory>("CategoryId=@CategoryId and Name=@Name", "true"));
-            validateList.Add(this.ValidateExists<AccountCategory>("IsDelete=0 and Name=@Name", "对不起，该名称已存在！"));
+            validateList.Add(this.ValidateExists<AccountCategory>("IsDelete=0 and IncomeOutlay=@IncomeOutlay and Name=@Name", "对不起，该名称已存在！"));
 
         }
     }

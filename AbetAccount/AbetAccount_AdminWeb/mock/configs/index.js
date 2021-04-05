@@ -1,5 +1,5 @@
 export default {
-    "GET /admin/configs/getconfig": getconfig
+    "GET /abet/configs/getconfig": getconfig
 };
 
 function getconfig(req, res) {

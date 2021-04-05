@@ -15,10 +15,6 @@ namespace AbetAccount.Admin.Entity
         /// </summary> 
         public Guid UserId { get; set; }
         /// <summary> 
-        /// App账号ID
-        /// </summary> 
-        public Guid AppAccountId { get; set; }
-        /// <summary> 
         /// 用户名
         /// </summary> 
         public string UserName { get; set; }
@@ -39,13 +35,17 @@ namespace AbetAccount.Admin.Entity
         /// </summary> 
         public byte IsAdmin { get; set; }
         /// <summary> 
+        /// 数据权限
+        /// </summary> 
+        public byte DataRight { get; set; }
+        /// <summary> 
+        /// 操作权限
+        /// </summary> 
+        public byte OperationRight { get; set; }
+        /// <summary> 
         /// 是否删除
         /// </summary> 
         public byte IsDelete { get; set; }
-        /// <summary>
-        /// 账目类型集合，以逗号隔开
-        /// </summary>
-        public string AccountTypes { get; set; }
         /// <summary> 
         /// 创建人
         /// </summary> 
@@ -88,5 +88,9 @@ namespace AbetAccount.Admin.Entity
     public class ViewAdminUser : AdminUser
     {
         public string IsAdminName { get; set; }
+
+        public string DataRightName { get; set; }
+
+        public string OperationRightName { get; set; }
     }
 }

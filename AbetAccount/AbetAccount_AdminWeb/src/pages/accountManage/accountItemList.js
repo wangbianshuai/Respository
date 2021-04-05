@@ -1,3 +1,3 @@
 import { EntityPageList } from "PageTemplates";
 
-export default EntityPageList("systemManage_accountItemList", "AccountItem", 800);
+export default EntityPageList("accountManage_accountItemList", "AccountItem", 800);

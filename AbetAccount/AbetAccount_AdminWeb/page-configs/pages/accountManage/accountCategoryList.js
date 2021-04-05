@@ -1,5 +1,5 @@
 const accountCategory = require("../../entities/accountCategory");
-const { getButton, assignProporties, getTextBox } = require("../../Common");
+const { getButton, assignProporties, getSelect, getTextBox } = require("../../Common");
 
 //accountManage/accountCategory 1000-1099
 const dataActionTypes = {
@@ -18,7 +18,7 @@ module.exports = {
     name: "accountCategoryList",
     type: "View",
     eventActions: getEventActions(),
-    properties: assignProporties({ name: "accountCategoryList" }, [getSearchOperationView(), getAlert(), getDataGridView()])
+    properties: assignProporties({ name: "accountCategoryList" }, [getSearchOperationView(), getDataGridView()])
 }
 
 function getSearchOperationView() {
@@ -26,38 +26,53 @@ function getSearchOperationView() {
         name: "searchOperationView1",
         entity: entity,
         type: "RowsColsView",
-        className: "divLeftRightView",
-        properties: assignProporties({ name: "accountCategoryList" }, [{ eventActionName: "toEditPage", ...getButton("toEditPage", "新增", "primary", 1, 1) },
-        { eventActionName: "editEntityData", colStyle: { paddingLeft: 0 }, ...getButton("editEntityData", "修改", "default", 1, 2) },
-        {
-            eventActionName: "deleteEntityData",
-            colStyle: { paddingLeft: 0 },
-            dataActionType: dataActionTypes.deleteEntityData,
-            successTip: "删除成功！",
-            confirmTip: "请确认是否删除当前类别？",
-            ...getButton("deleteEntityData", "删除", "default", 1, 4)
-        },
-        getKeyword()
+        className: "divSerachView",
+        properties: assignProporties({ name: "accountCategoryList" }, [
+            getEditSelect("IncomeOutlay", "收支", accountCategory.incomeOutlayDataSource, 1, 1),
+            {
+                ...getTextBox2("keyword", "关键字", 1, 2, "", "名称,备注"), propertyName: "Name,Remark",
+                operateLogic: "like", pressEnterEventActionName: "searchQuery", pressEnterEventPropertyName: "search",
+            },
+            { ...getButton("search", "搜索", "primary", 1, 4), isFormItem: true, icon: "search", eventActionName: "searchQuery", pressEnterEventActionName: "searchQuery" },
+            { ...getButton("clearQuery", "清空", "default", 1, 5), isFormItem: true, eventActionName: "clearQuery" },
+            { ...{ eventActionName: "toEditPage", ...getButton("toEditPage", "新增", "primary", 2, 1) }, style: { marginLeft: 16, marginBottom: 16 } },
+            { eventActionName: "editEntityData", colStyle: { paddingLeft: 0 }, ...getButton("editEntityData", "修改", "default", 2, 2) },
+            {
+                eventActionName: "deleteEntityData",
+                colStyle: { paddingLeft: 0 },
+                dataActionType: dataActionTypes.deleteEntityData,
+                successTip: "删除成功！",
+                confirmTip: "请确认是否删除当前类别？",
+                ...getButton("deleteEntityData", "删除", "default", 2, 4)
+            }
         ])
     }
 }
 
-function getKeyword() {
-    const p = getTextBox("keyword", "", "Search", 2, 3, "请输入关键字")
-    p.colStyle = { paddingRight: 8, paddingLeft: 2 };
-    p.isCondition = true;
-    p.propertyName = "Name,Phone,CompanyName,Address,Remark";
-    p.operateLogic = "like";
-    p.eventActionName = "searchQuery";
-    p.pressEnterEventActionName = "searchQuery";
-    p.colStyle = { width: 240 }
-    return p;
+function getEditSelect(name, label, dataSource, x, y, defaultValue) {
+    return {
+        ...getSelect(name, label, dataSource, x, y, defaultValue),
+        isFormItem: true,
+        colSpan: 6,
+        labelCol: 8,
+        wrapperCol: 15,
+        operateLogic: "=",
+        isNullable: true,
+        allowClear: true,
+        isCondition: true
+    }
 }
 
-function getAlert() {
+
+function getTextBox2(name, label, x, y, contorlType, placeHolder, maxLength) {
     return {
-        name: "alertMessage",
-        type: "Alert"
+        ...getTextBox(name, label, contorlType, x, y, placeHolder, maxLength || 50),
+        isFormItem: true,
+        colSpan: 6,
+        labelCol: 8,
+        wrapperCol: 15,
+        isNullable: true,
+        isCondition: true
     }
 }
 
@@ -84,6 +99,14 @@ function getEventActions() {
         searchButton: "keyword",
         dataGridView: "dataGridView1",
         alertMessage: "alertMessage"
+    },
+    {
+        name: "clearQuery",
+        type: "dataGridView/searchQuery",
+        searchView: "searchOperationView1",
+        searchButton: "clearQuery",
+        dataGridView: "dataGridView1",
+        isClearQuery: true
     },
     {
         name: "toEditPage",

@@ -47,7 +47,7 @@ function getButtonProperties() {
 function getProperties() {
     return [
         getTextBox2("Name", "名称", 1, 1, "", "请输入名称", 50, false),
-        getRadio2('IncomeOutlay', '收支', accountBill.incomeOutlayDataSource, 2, 1, 0, 160),
+        getRadio2('IncomeOutlay', '收支', accountCategory.incomeOutlayDataSource, 2, 1, 0, 160),
         getTextArea("Remark", "备注", 5, 1),
         getButtonView()
     ]

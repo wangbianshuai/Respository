@@ -89,7 +89,7 @@ function getButtonView() {
         isDiv: true,
         isFormItem: true,
         colSpan: 24,
-        x: 7,
+        x: 9,
         y: 1,
         properties: assignProporties({ name: "adminUserEdit" }, getButtonProperties())
     }

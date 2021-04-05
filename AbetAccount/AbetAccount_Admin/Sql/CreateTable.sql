@@ -76,7 +76,7 @@ create view v_AdminUser
 as
 select a.*,
 case when a.IsAdmin=1 then '管理员' else '' end IsAdminName,
-case when a.DataRight=1 then '全部' else '个人' end DataRigthName,
+case when a.DataRight=1 then '全部' else '个人' end DataRightName,
 case when a.OperationRight=1 then '读写' else '只读' end OperationRightName  
 from t_AdminUser a where IsDelete=0
 go
