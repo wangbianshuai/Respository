@@ -112,8 +112,8 @@ function setApiServiceHeader(data, serviceName) {
 function getCurrentTime() {
     const url = EnvConfig.getServiceUrl('ApiService')() + "default/getCurrentTime";
 
-    if (window.timeDiff) return Promise.resolve(new Date.getTime() + window.timeDiff);
-    
+    if (window.timeDiff) return Promise.resolve(new Date().getTime() + window.timeDiff);
+
     const startTime = new Date().getTime();
     return post(url, {}).then(res => {
         if (res.Time) {
