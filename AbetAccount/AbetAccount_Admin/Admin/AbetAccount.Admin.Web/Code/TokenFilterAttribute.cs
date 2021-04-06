@@ -109,7 +109,7 @@ namespace AbetAccount.Admin.Web.Code
             long time1 = long.Parse(time);
             long time2 = Utility.Common.GetDateTotalMilliseconds(DateTime.Now);
 
-            long st = 10000;
+            long st = 60000;
 
             if (md5.ToLower().Equals(md52.ToLower()) && (time2 - st < time1 && time1 < time2 + st))
             {
