@@ -13,12 +13,7 @@ export default (serviceName, getServiceUrl) => (action) => async (payload) => {
     //isToken:The request must have a token, Hastoken: the request has a token plus。
     let headers = {};
     if (action.isToken && !payload.token) return Promise.resolve({ isSuccess: false, isReLogin: true, message: 'the token is null' });
-    if ((action.isToken || action.hasToken || action.isTokenAccess) && payload.token) {
-      headers = { token: payload.token };
-    }
-
-    //需token访问
-    if (action.isTokenAccess && !payload.token) return;
+    if (action.isNoToken) headers.isNoToken = action.isNoToken;
 
     if (payload.userAgent) { headers = headers || {}; headers["User-Agent"] = payload.userAgent; }
 
@@ -55,6 +50,5 @@ function requestData(action, url, data, dataKey, serviceName, headers) {
   else if (action.method === "PUT") return request.put(url, data, dataKey, serviceName, headers);
   else if (action.method === "DELETE") return request.delete2(url, data, dataKey, serviceName, headers);
   else if (action.isFormData) return request.postFormData(url, data.formData, dataKey, serviceName, headers);
-  else if (action.isUrlFormData) return request.postUrlFormData(url, data.formData, dataKey, serviceName, headers);
   else return request.post(url, data, dataKey, serviceName, headers);
 }

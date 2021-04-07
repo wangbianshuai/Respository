@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import { useSelector, useDispatch, } from 'dva';
+import { useSelector, useDispatch } from 'dva';
 import { Common } from 'UtilsCommon';
 import { EnvConfig } from 'Configs';
 
@@ -18,14 +18,12 @@ export default (app, mapStateToProps) => {
 function init(obj, dispatch, app) {
   if (!obj.isInit) obj.isInit = true; else return;
 
-  const token = Common.getStorage(EnvConfig.tokenKey);
-
-  obj.dispatch = getDispatch(dispatch, token, app);
-  obj.dispatchAction = dispatchAction(dispatch, token, app);
+  obj.dispatch = getDispatch(dispatch);
+  obj.dispatchAction = dispatchAction(dispatch);
   obj.setActionState = setActionState(dispatch);
 }
 
-function getDispatch(dispatch, token, app) {
+function getDispatch(dispatch, app) {
   return (name, actionName, payload) => {
     let isloading = true;
     payload = payload || {};
@@ -36,17 +34,17 @@ function getDispatch(dispatch, token, app) {
     }
     else return Promise.reject({ isSuccess: false, message: `${name}/${actionName} the method doesn't exist!` });
 
-    if ((action.isToken || action.hasToken || action.isTokenAccess) && !payload.token) {
-      payload.token = token;
-    }
+    const token = Common.getStorage(EnvConfig.tokenKey);
+
+    if (action.isToken && !payload.token) payload.token = token;
     if (action.isLoading === false) isloading = false;
     return dispatch({ type: name + '/' + actionName, payload, isloading });
   }
 }
 
-function dispatchAction(dispatch, token, app) {
+function dispatchAction(dispatch, app) {
   return (name, actionName, payload) => {
-    return getDispatch(dispatch, token, app)(name, actionName, payload).then(res => Promise.resolve(res), res => Promise.resolve(res));
+    return getDispatch(dispatch, app)(name, actionName, payload).then(res => Promise.resolve(res), res => Promise.resolve(res));
   }
 }
 

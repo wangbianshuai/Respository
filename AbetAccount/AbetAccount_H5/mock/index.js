@@ -1,6 +1,6 @@
 // eslint-disable-next-line import/no-commonjs
 module.exports = {
-  "GET /configs/getconfig": getConfig
+  "GET /abet/h5/configs/getconfig": getConfig
 };
 
 function getConfig(req, res) {
