@@ -18,8 +18,8 @@ export default (app, mapStateToProps) => {
 function init(obj, dispatch, app) {
   if (!obj.isInit) obj.isInit = true; else return;
 
-  obj.dispatch = getDispatch(dispatch);
-  obj.dispatchAction = dispatchAction(dispatch);
+  obj.dispatch = getDispatch(dispatch, app);
+  obj.dispatchAction = dispatchAction(dispatch, app);
   obj.setActionState = setActionState(dispatch);
 }
 

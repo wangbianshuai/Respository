@@ -41,7 +41,7 @@ export default (name, props, mapStateToProps, init, dataActionOptions) => {
     pageAxis && pageAxis.componentDidmount && pageAxis.componentDidmount();
   }, [pageAxis]);
 
-  if (pageAxis === null || userInfo == null) return null;
+  if (pageAxis === null) return null;
 
   return pageAxis;
 }

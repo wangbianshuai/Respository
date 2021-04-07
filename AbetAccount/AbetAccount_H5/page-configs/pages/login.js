@@ -1,4 +1,4 @@
-const {  getTextBox, getButton } =require("../Common");
+const { getTextBox, getButton } = require("../Common");
 
 //登录 100-199
 const dataActionTypes = {
@@ -17,16 +17,16 @@ module.exports = {
 function getProperties() {
     return [
         {
-            name: "LoginTitle", type: "SpanText", x: 1, y: 1, text: "账户登录", className: "loginHeader"
+            name: "LoginTitle", type: "SpanText", isDiv: true, x: 1, y: 1, text: "账户登录", className: "loginHeader"
         },
-        getTextBox2("LoginName", "", 1, 1, "", "请输入登录名", 50, false, "user"),
-        getTextBox2("LoginPassword", "", 2, 1, "Password", "请输入登录密码", 50, false, "lock"),
+        getTextBox2("LoginName", " 登录名", 1, 1, "", "请输入登录名", 50, false, "user"),
+        getTextBox2("LoginPassword", "登录密码", 2, 1, "Password", "请输入登录密码", 50, false, "lock"),
         getButton2("login", "登录", "primary", 3, 1)
     ]
 }
 
 function getTextBox2(name, label, x, y, contorlType, placeHolder, maxLength, isNullable, icon) {
-    maxLength=maxLength
+    maxLength = maxLength
     return {
         ...getTextBox(name, label, contorlType, x, y, placeHolder, maxLength || 50),
         isEdit: true,
@@ -42,6 +42,8 @@ function getButton2(name, label, buttonType, x, y) {
     return {
         ...getButton(name, label, buttonType, x, y),
         eventActionName: "login",
+        isDiv: true,
+        divClassName: 'divLoginButton'
     }
 }
 

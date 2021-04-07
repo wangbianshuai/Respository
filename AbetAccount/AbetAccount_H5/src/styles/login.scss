@@ -1,0 +1,55 @@
+@function toRem($px){
+    @return $px/32*1rem;
+}
+
+.divContainer{
+    width: 100%;
+    min-height: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+
+    .divLogin{
+        width: 100%;
+        height: toRem(360);
+        padding-left: toRem(32);
+        padding-right: toRem(32);
+        box-sizing: border-box;
+
+        :global {
+            .am-list-item, .am-input-item {
+                width: 100% !important;
+                height: toRem(100) !important;
+                padding: 0 !important;
+                margin: 0 !important;
+            }
+            
+            .am-list-line{
+                width: 100% !important;
+                height: 100% !important;
+                box-sizing: border-box !important;
+                border-bottom: 1px solid #ddd !important;
+            }
+           
+            .am-list-item .am-input-label.am-input-label-5 {
+                width: toRem(160) !important;
+                text-align: right !important;
+            }
+            .am-list-item .am-input-label {
+                font-size: toRem(32) !important;
+                margin-right: toRem(10) !important;
+                padding: toRem(4) 0 !important;
+            }
+
+            .am-list-item .am-input-control {
+                font-size: toRem(32) !important
+               
+            }
+
+            .am-list-item .am-input-control input{
+                font-size: toRem(32) !important
+            }
+        }
+   
+    }
+}

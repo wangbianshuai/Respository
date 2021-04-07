@@ -10,12 +10,13 @@ page:{
 props:父级页面props
 */
 
-import { useEffect } from "react";
+import {  useEffect } from "react";
 import { Common, PageCommon } from 'UtilsCommon';
 import EventActions from 'EventActions';
 import { EnvConfig } from 'Configs';
 
 const wetRootPath = EnvConfig.getServiceUrl('WebRootPath')();
+
 
 class PageAxis {
     constructor(id, parames) {
@@ -60,36 +61,39 @@ class PageAxis {
         obj.state = nextState;
     }
 
-    refreshPage() {
-        let url = this.props.location.pathname + this.props.location.search;
-        url = Common.addUrlRandom(url);
-        this.toPage(url);
+    judgeLogin() {
+        if (!this.token) this.toLogin();
     }
 
     initSet() {
         this.pageConfig = Common.clone(this.pageConfig);
-        this.token = this.getToken();
 
         this.modalDialog = {};
 
-        this.userInfo = this.getStateValue('getUserInfo');
+        this.loginUser = this.getLoginUser();
+        this.token = this.loginUser.token;
 
         this.receives = {};
         this.eventActionsConfig = Common.clone(this.pageConfig.eventActions);
         if (this.pageConfig.actionOptions) this.actionTypes = this.pageConfig.actionOptions.actionTypes;
 
         this.pageData = Common.getQueryString();
+        this.pageData.token = this.token;
 
         //将pageAxis id赋值到location pageData上
         if (this.props.location && this.props.location.pageData) this.props.location.pageData.pageId = this.id;
+
 
         this.eventActions = {};
         for (let key in EventActions) this.eventActions[key] = new EventActions[key]();
     }
 
-    getToken() {
-        return Common.getStorage(EnvConfig.tokenKey);
-    }
+    getLoginUser = () => {
+        var info = Common.getStorage("loginUserInfo");
+        if (!info) return {};
+
+        return JSON.parse(info);
+    };
 
     setModalDialog(p) {
         p.id = p.id || Common.createGuid();
@@ -105,7 +109,11 @@ class PageAxis {
     }
 
     getRight(name) {
-        return !!name;
+        if (!this.loginUser || !this.pageConfig.noRightNames) return true;
+        const isOperationRight = this.loginUser.OperationRight === 1;
+        if (isOperationRight) return true;
+
+        return !this.pageConfig.noRightNames.includes(name);
     }
 
     getFunction(name) {
@@ -156,6 +164,7 @@ class PageAxis {
         return null;
     }
 
+ 
     toPage(url) {
         if (url.match(/#{.*?}/)) url = Common.replaceDataContent(this.pageData, url, true);
         url = wetRootPath + url;
@@ -170,11 +179,7 @@ class PageAxis {
         this.props.history.goBack();
     }
 
-    toLoin() {
-
-    }
-
-    openPage(url) {
+      openPage(url) {
         window.open(url);
     }
 
@@ -193,6 +198,10 @@ class PageAxis {
     invokeEventAction(name, obj) {
         const e = this.getEventAction(name);
         if (e != null) e.invoke(obj, e);
+    }
+
+    getLoginUserId() {
+        return this.loginUser.UserId;
     }
 
     getEventAction(name) {

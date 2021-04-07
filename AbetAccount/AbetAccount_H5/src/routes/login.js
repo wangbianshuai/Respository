@@ -6,7 +6,6 @@ import { EnvConfig } from "Configs";
 import styles from "../styles/login.scss"
 
 export default (props) => {
-    debugger
     const pageAxis = usePage('login', props, mapStateToProps, init);
 
     if (pageAxis === null) return null;

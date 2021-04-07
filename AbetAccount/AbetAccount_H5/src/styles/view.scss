@@ -7,3 +7,33 @@
     min-height: 100%;
     height: 100%;
 }
+
+.loginHeader{
+    width: 100%;
+    height: toRem(100);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-bottom: 1px solid #ddd;
+    box-sizing: border-box;
+
+    span{
+        font-size: toRem(36);
+        font-weight: bold;
+    }
+}
+
+.divLoginButton{
+    width: 100%;
+    height: toRem(100);
+    margin-top: toRem(32);
+
+    :global {
+
+        .am-button{
+            font-size: toRem(36) !important;
+            height: toRem(100) !important;
+            line-height:  toRem(100) !important;
+        }
+    }
+}
