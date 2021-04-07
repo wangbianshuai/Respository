@@ -18,12 +18,4 @@ app.router(require('./router').default);
 // 5. Start
 app.start('#root');
 
-//接收postMessage 信息
-window.addEventListener('message', (e) => {
-    const { data } = e;
-    if (!data) return;
-    const { actionName, payload } = data;
-    if (actionName) app._store.dispatch({ type: `ReceiveMessage/${actionName}`, payload });
-});
-
 document.body.addEventListener('touchstart', function () { }, false);

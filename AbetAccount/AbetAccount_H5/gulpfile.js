@@ -28,7 +28,7 @@ function saveContent(fileUrl, content) {
     console.log(fileUrl);
     fs.writeFile(fileUrl, content, function () { })
 }
-var htmls = ['myGame', 'postDetail', 'postList', 'userCenter', 'userInfo'];
+var htmls = ['login.html'];
 var copyList = [];
 
 htmls.forEach(name => {

@@ -11,7 +11,7 @@ export default (pageId, state, props) => {
 
   if (!obj.getStateValue) obj.getStateValue = (name) => state[name];
   if (!obj.toLogin) obj.toLogin = () => {
-    window.location.reload();
+    pageAxis.toLogin();
   }
 
   useEffect(() => {

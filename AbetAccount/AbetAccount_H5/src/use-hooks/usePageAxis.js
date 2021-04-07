@@ -162,6 +162,10 @@ class PageAxis {
         this.props.history.push(url);
     }
 
+    toLogin(){
+       this.toPage('index.html')    
+    }
+
     toBack() {
         this.props.history.goBack();
     }

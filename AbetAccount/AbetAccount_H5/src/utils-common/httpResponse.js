@@ -1,4 +1,3 @@
-import { EnvConfig } from 'Configs';
 import { Common } from 'UtilsCommon';
 
 export function getResponseData(d, resKey) {
@@ -13,27 +12,27 @@ export function getResponseData(d, resKey) {
         if (d.IsReLogin) obj.isReLogin = true;
     }
     else if (d.Ack) {
-        if (d.Ack.IsSuccess) {
-            if (resKey && d.hasOwnProperty(resKey)) obj = d[resKey];
-            else obj = d;
-        }
+        if (d.Ack.IsSuccess) obj = d;
         else {
+            obj = { isSuccess: false, message: d.Ack.Message || '请求异常' };
             if (d.Ack.Code === -100) {
                 Common.removeStorage(EnvConfig.tokenKey);
-                window.location.reload();
-                return;
+                obj.isReLogin = true;
             }
-            obj = { isSuccess: false, message: d.Ack.Message || '请求异常' };
         }
     }
     else if (resKey) {
-        if (d && d.hasOwnProperty(resKey)) obj = d[resKey];
+        if (d && d[resKey]) obj = d[resKey];
         else obj = d
     }
     else if (d) obj = d
     else obj = { isSuccess: false, message: "请求异常！" }
 
-    if (d.Token) Common.setStorage(EnvConfig.tokenKey, d.Token, 120);
+    const token = Common.getCookie("token");
+    if (token) {
+        Common.setStorage("token", token, 120);
+        obj.token = token;
+    }
 
     return obj;
 }

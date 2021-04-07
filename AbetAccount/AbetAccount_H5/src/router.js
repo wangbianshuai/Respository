@@ -1,7 +1,7 @@
 import React from 'react';
 import { router } from 'dva';
 import { EnvConfig } from 'Configs';
-import Index from './routes/index';
+import Login from './routes/login';
 
 const { Router, Route, Switch } = router;
 const wetRootPath = EnvConfig.getServiceUrl('WebRootPath')();
@@ -12,7 +12,7 @@ function RouterConfig({ history, app }) {
   return (
     <Router history={history}>
       <Switch>
-        <Route path={[getPath("/"), getPath("/index.html")]} exact component={(props) => <Index {...props} app={app} />} />
+        <Route path={[getPath("/login.html")]} exact component={(props) => <Login {...props} app={app} />} />
        </Switch>
     </Router>
   );

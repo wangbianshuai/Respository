@@ -1,6 +1,7 @@
 const _ServiceConfig = {
     ApiService: getApiSericeUrl,
-    WebService: getWebServiceUrl
+    WebService: getWebServiceUrl,
+    WebRootPath: getWebRootPath
 };
 
 const EnvConfig = {
@@ -37,6 +38,10 @@ function getApiSericeUrl() {
 
 function getWebServiceUrl() {
     return "/abet/h5/";
+}
+
+function getWebRootPath() {
+    return EnvConfig.isProd ? '/abet/h5' : "";
 }
 
 function getServiceUrl(serverName) {
