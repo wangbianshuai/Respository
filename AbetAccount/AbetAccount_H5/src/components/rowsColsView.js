@@ -3,7 +3,7 @@ import { List } from 'antd-mobile'
 import Base from './base';
 import styles from '../styles/view.scss';
 
-export default (props) => {
+export default React.memo((props) => {
     const { property, view, pageId, pageAxis } = Base.getProps(props);
     const [isVisible, setIsVisible] = useState(property.isVisible !== false);
 
@@ -37,4 +37,4 @@ export default (props) => {
             {Base.renderView(property, pageId)}
         </div>
     )
-}
+});

@@ -217,19 +217,19 @@ class PageAxis {
 const _PageAxises = {};
 
 const usePageAxis = (id, name, pageConfig, invokeDataAction, actionTypes, dispatch, props,
-    dispatchAction, setActionState, getStateValue, init, wxUser) => {
+    dispatchAction, setActionState, getStateValue, init) => {
     useEffect(() => {
         return () => {
             if (_PageAxises[id]) delete _PageAxises[id];
         }
     }, [id]);
 
-    if (!pageConfig || wxUser == null) return null;
+    if (!pageConfig) return null;
 
     if (!_PageAxises[id]) {
         _PageAxises[id] = new PageAxis(id, {
             name, pageConfig, invokeDataAction, actionTypes, dispatch, props,
-            dispatchAction, setActionState, getStateValue, init, wxUser
+            dispatchAction, setActionState, getStateValue, init
         });
     }
 

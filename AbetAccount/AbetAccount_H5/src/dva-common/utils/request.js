@@ -107,15 +107,10 @@ async function setApiServiceHeader(data, serviceName) {
     data.headers.clientTime = new Date().getTime();
     data.headers.requestId = Common.createGuid().replace(/-/g, "").toLowerCase();
 
-    if (serviceName === "ImageService") {
-        data.headers.token = await getAccessToken(clientId, '3CE64FB1-215E-4A4E-B20E-0F7F4BDEA26A');
-    }
-    else {
-        data.headers.token = Common.getStorage(EnvConfig.tokenKey);
-        if (!data.headers.token) data.headers.token = "d56b699830e77ba53855679cb1d252db" + window.btoa('AEBA13EA-2340-4D76-9BCA-9804B4B9EA62');
-        const appId = 'a2-app2-miniSite';
-        data.headers.access_token = await getAccessToken(appId, data.headers.token);
-    }
+    data.headers.token = Common.getStorage(EnvConfig.tokenKey);
+    if (!data.headers.token) data.headers.token = "d56b699830e77ba53855679cb1d252db" + window.btoa('AEBA13EA-2340-4D76-9BCA-9804B4B9EA62');
+    const appId = 'a2-app2-miniSite';
+    data.headers.access_token = await getAccessToken(appId, data.headers.token);
 
     return data;
 }

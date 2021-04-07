@@ -7,7 +7,7 @@ import useGetPageConfig from './useGetPageConfig';
 import useGetLoginUser from './useGetLoginUser';
 import { Common } from 'UtilsCommon';
 
-export default (name, props, mapStateToProps, init, dataActionOptions, wxUser) => {
+export default (name, props, mapStateToProps, init, dataActionOptions) => {
   const id = useMemo(() => Common.createGuid(), []);
 
   const pageName = dataActionOptions && dataActionOptions.name ? dataActionOptions.name : name;
@@ -25,11 +25,8 @@ export default (name, props, mapStateToProps, init, dataActionOptions, wxUser) =
 
   //5、 使用页线，作用贯穿整个流程
   const pageAxis = usePageAxis(id, pageName, pageConfig, invokeDataAction, actionTypes, dispatch, props,
-    dispatchAction, setActionState, getStateValue, init, wxUser
+    dispatchAction, setActionState, getStateValue, init
   );
-
-  //6、 使用获取登录用户
-  const userInfo = useGetLoginUser(wxUser, pageAxis, dispatchAction);
 
   //7、 接收行为数据
   useEffect(() => {

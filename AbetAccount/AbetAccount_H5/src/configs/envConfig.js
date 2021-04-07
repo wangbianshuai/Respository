@@ -1,7 +1,6 @@
 const _ServiceConfig = {
     ApiService: getApiSericeUrl,
     WebService: getWebServiceUrl,
-    ImageService: getImageServiceUrl,
     WebRootPath: getWebRootPath,
 };
 
@@ -10,8 +9,7 @@ const EnvConfig = {
     setEnv,
     env: null,
     isProd: false,
-    tokenKey: '98EE4789-1502-43C4-84E6-7264A1410B16',
-    wxUserKey: 'userInfo_abetaccount'
+    tokenKey: '98EE4789-1502-43C4-84E6-7264A1410B16'
 }
 
 //ctx koa对象，ctx不为空表示是服务器
@@ -40,10 +38,6 @@ function getWebRootPath(){
 
 function getApiSericeUrl() {
     return EnvConfig.isProd ? '//www.lianliyuan.site/api/' : '/api/';
-}
-
-function getImageServiceUrl() {
-    return 'https://www.lianliyuan.site/res/api/'
 }
 
 function getServiceUrl(serverName) {

@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { usePage, useGetWxUser } from "UseHooks";
+import { usePage } from "UseHooks";
 import Components from "Components";
 
 function init(pageExpand) {
@@ -10,9 +10,8 @@ function init(pageExpand) {
 }
 
 export default (name, config) => (props) => {
-  const [wxUser, setWxUser] = useGetWxUser();
   const pageAxis = usePage(name, props, mapStateToProps(config.actionNames, config.entityName, config.stateNames),
-    init(config.pageExpand), config.dataActionOptions, wxUser);
+    init(config.pageExpand), config.dataActionOptions);
 
   useEffect(() => {
     if (config.title) document.title = config.title;

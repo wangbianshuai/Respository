@@ -7,11 +7,11 @@ const add = (item, list, setList) => {
     setList(list);
 }
 
-export default (props) => {
+export default React.memo((props) => {
     const [list, setList] = useState([]);
 
     const { property } = props;
     property.add = (c) => add(c, list, setList);
 
     return list.map(m => <ModalDialog key={m.id} property={m} />);
-};
+});
