@@ -37,3 +37,78 @@
         }
     }
 }
+
+.tabDetail{
+    width: 100%;
+    height: toRem(100);
+
+    :global{
+        .am-tabs{
+            height: auto !important;
+        }
+
+        .am-tabs-default-bar-tab{
+          height: 100% !important;
+          padding:0 !important;
+          box-sizing: border-box !important;
+          font-size: toRem(30) !important;
+          line-height: toRem(100) !important;
+        }
+    }
+ 
+}
+
+.divSearchView{
+    width: 100%;
+    height: toRem(88);
+
+    :global{
+    .am-search{
+        height: 100% !important;
+        padding: 0 toRem(16) !important;
+    }
+    .am-search-input{
+      height: toRem(56) !important;
+      border-radius:toRem(6) !important
+    }
+
+    .am-search-synthetic-ph{
+        padding-left: toRem(30) !important;
+        height: toRem(56) !important;
+        line-height: toRem(56) !important;
+    }
+    .am-search-input input[type="search"]{
+        padding: 0 toRem(56) 0 toRem(70) !important;
+        height: toRem(56) !important;
+        font-size: toRem(30) !important;
+    }
+
+    .am-search-cancel {
+        padding-left: toRem(16) !important;
+        height: toRem(88) !important;
+        line-height: toRem(88) !important;
+        font-size: toRem(32) !important;
+    }
+
+    .am-search-input .am-search-clear {
+        width: toRem(30) !important;
+        height: toRem(30) !important;
+        padding: toRem(13) !important;
+        background-size: toRem(30) toRem(30) !important;
+     }
+    
+     .am-search-input .am-search-synthetic-ph-placeholder {
+        font-size: toRem(30) !important;
+    }
+
+    .am-search-input .am-search-synthetic-ph-icon {
+          margin-right: toRem(10) !important;
+        width: toRem(30) !important;
+        height: toRem(30) !important;
+        vertical-align: toRem(-5);
+        background-size: toRem(30) auto !important;
+         }
+    
+    
+}
+}

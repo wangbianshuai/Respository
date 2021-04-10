@@ -8,6 +8,7 @@ import CheckBox from './checkbox';
 import CheckBoxGroup from './checkboxGroup';
 import UploadImage from './uploadImage';
 import DatePicker from './datePicker';
+import SearchBar from './searchBar';
 
 export default {
     SpanText,
@@ -19,5 +20,6 @@ export default {
     CheckBox,
     CheckBoxGroup,
     UploadImage,
-    DatePicker
+    DatePicker,
+    SearchBar
 }
