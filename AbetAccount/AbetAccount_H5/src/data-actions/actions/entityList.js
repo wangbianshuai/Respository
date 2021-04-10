@@ -18,19 +18,15 @@ export default class EntityList extends BaseIndex {
         }
     }
 
-    searchQuery(id, actionType, data, actionName) {
+    searchQuery(id, actionType, data) {
+        const { requestList } = data;
+
         const payload = { action: this.getAction(id, actionType, false) };
-        const { pageSize, pageIndex, conditions } = data;
-        const { WhereFields } = data.queryInfo
+        payload.action.dataName = data.entityName;
 
-        if (conditions) {
-            for (let key in conditions) payload[key] = conditions[key];
-        }
-        payload.WhereFields = WhereFields;
-        payload.pageSize = pageSize;
-        payload.pageIndex = pageIndex
+        payload.requestList = requestList;
 
-        this.dvaActions.dispatch(this.serviceName, actionName || 'searchQuery', payload);
+        this.dvaActions.dispatch(this.serviceName, 'searchQuery', payload);
     }
 
     setsearchQuery(id, actionType, data) {
@@ -42,9 +38,40 @@ export default class EntityList extends BaseIndex {
     }
 
     deleteEntityData(id, actionType, data) {
+        const { entity } = data;
+        const { expandMethods } = entity;
+        if (expandMethods && expandMethods.isBatchDelete) {
+            this.batchDeleteEntityData(id, actionType, data)
+            return;
+        }
         const primaryKey = data.selectRowKeys[0];
         const { RowVersion } = data.selectDataList[0];
         const pathQuery = `/Delete2(${primaryKey})?RowVersion=${RowVersion}`;
         this.dvaActions.dispatch(this.serviceName, 'delete', { pathQuery, action: this.getAction(id, actionType) });
+    }
+
+    batchDeleteEntityData(id, actionType, data) {
+        const { entity } = data;
+
+        const entityDataList = entity.isIds ? data.selectDataList.map(m => ({ [entity.primaryKey]: m[entity.primaryKey], RowVersion: m.RowVersion })) : data.selectDataList;
+        const pathQuery = '/' + entity.expandMethods.delete;
+
+        this.dvaActions.dispatch(this.serviceName, 'delete', { pathQuery, [entity.name]: entityDataList, action: this.getAction(id, actionType) });
+    }
+
+
+    excelExport(id, actionType, data) {
+        data.action = this.getAction(id, actionType, false);
+        data.action.dataGridViewExcelExport = data.dataGridViewExcelExport;
+
+        delete data.dataGridViewExcelExport;
+
+        this.dvaActions.dispatch(this.serviceName, 'excelExport', data);
+    }
+
+    setexcelExport(id, actionType, data) {
+        actionType = data.action.dataGridViewExcelExport;
+        this.dispatchAction(id, actionType, data);
+        return false;
     }
 }
