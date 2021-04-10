@@ -61,7 +61,14 @@ export default (props) => {
     if (isViewType) {
         property.onCancelClick = () => cancel(property, property.okProperty, setVisible);
         property.onOkClick = (p) => { property.okProperty = p; ok(property, p) }
-        if (visible) return property.component;
+        if (property.isVisibleType) {
+            return (
+                <div className={styles[property.className]} style={{ display: visible ? '' : 'none' }}>
+                    {property.component}
+                </div>
+            )
+        }
+        else if (visible) return property.component;
         return null;
     }
 

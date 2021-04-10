@@ -18,19 +18,20 @@ export default class DataGridView extends BaseIndex {
         const dataGridView = property.type === "DataGridView" ? property : pageAxis.getProperty(action.dataGridView);
         const searchButton = property.type === "DataGridView" ? pageAxis.getProperty(action.searchButton) : property;
         const searchView = pageAxis.getProperty(action.searchView);
+        const dialogView = pageAxis.getProperty(action.dialogView);
         const alertMessage = pageAxis.getProperty(action.alertMessage);
         const expandSearchQueryLoad = pageAxis.getFunction(action.expandSearchQueryLoad)
         const expandGetConditions = pageAxis.getFunction(action.expandGetConditions)
-        action.parameters = { dataGridView, searchButton, searchView, alertMessage, expandSearchQueryLoad, expandGetConditions }
+        action.parameters = { dataGridView, searchButton, searchView, dialogView, alertMessage, expandSearchQueryLoad, expandGetConditions }
     }
 
     searchData(props, parameters, pageIndex, pageSize, isClearQuery) {
-        const { dataGridView, searchButton, expandGetConditions } = parameters;
+        const { dataGridView, searchButton, expandGetConditions, dialogView } = parameters;
         const { actionTypes, invokeDataAction, entitySearchQuery } = dataGridView;
         const { searchQuery } = actionTypes;
         const { pageAxis, isData } = props;
 
-        const conditionList = this.getConditionList(parameters, isClearQuery);
+        const conditionList = this.getConditionList(parameters, isClearQuery, pageAxis);
         if (conditionList === false) return;
 
         const queryInfo = this.getQueryInfo(dataGridView);
@@ -48,6 +49,8 @@ export default class DataGridView extends BaseIndex {
         const data = { entitySearchQuery, conditions, actionName: dataGridView.actionName, entity: dataGridView.entity, isData, pageIndex, pageSize, queryInfo, pageData: pageAxis.pageData }
 
         invokeDataAction(searchQuery, data);
+
+        if (dialogView && dialogView.modalDialog) dialogView.modalDialog.setVisible(false);
     }
 
     receivesearchQuery(data, props) {
@@ -79,18 +82,41 @@ export default class DataGridView extends BaseIndex {
         if (expandSearchQueryLoad) expandSearchQueryLoad({ data, props })
     }
 
-    getConditionList(parameters, isClearQuery) {
-        const { searchView } = parameters;
+    getConditionList(parameters, isClearQuery, pageAxis) {
+        const { searchView, dataGridView } = parameters;
         if (!searchView) return [];
 
-        const conditionList = [];
+        const isQueryInfo = searchView.isKeywordView && dataGridView.queryInfo;
+        const conditionList = isQueryInfo ? dataGridView.queryInfo.WhereFields : [];
+
+        if (searchView.keywordName && !searchView.keywordProperty) {
+            searchView.keywordProperty = pageAxis.getProperty(searchView.keywordName);
+        }
+
         searchView.properties.forEach(p => {
             const name = p.propertyName || p.name;
-            if (p.isCondition && p.getValue) conditionList.push({
-                Name: name, Label: p.label, OperateLogic: p.operateLogic || "=",
-                DataType: p.dataType || "string", Value: this.getPropertyValues(p, isClearQuery),
-                Text: this.getPropertyValueText(p, isClearQuery),
-            });
+            if (p.isCondition && p.getValue) {
+                let whereField = null;
+                if (isQueryInfo) {
+                    whereField = Common.arrayFirst(dataGridView.queryInfo.WhereFields, f => f.Name === name);
+                }
+                if (whereField) {
+                    whereField.Value = this.getPropertyValues(p, isClearQuery);
+                    whereField.Text = this.getPropertyValueText(p, isClearQuery);
+                }
+                else {
+                    whereField = {
+                        Name: name, Label: p.label, OperateLogic: p.operateLogic || "=",
+                        DataType: p.dataType || "string", Value: this.getPropertyValues(p, isClearQuery),
+                        Text: this.getPropertyValueText(p, isClearQuery),
+                    };
+                    conditionList.push(whereField);
+                }
+                if (searchView.keywordProperty && p.propertyName === searchView.keywordProperty.propertyName) {
+                    searchView.keywordProperty.setValue && searchView.keywordProperty.setValue(whereField.Value);
+                    searchView.keywordProperty.value = whereField.Value;
+                }
+            }
         });
 
         if (Common.isArray(searchView.DefaultConditions)) {
@@ -122,7 +148,7 @@ export default class DataGridView extends BaseIndex {
             p.setValue(p.defaultValue);
             return p.defaultValueText || p.defaultValue;
         }
-        else if (p.getText) return g.getText();
+        else if (p.getText) return p.getText();
         return p.getValue();
     }
 

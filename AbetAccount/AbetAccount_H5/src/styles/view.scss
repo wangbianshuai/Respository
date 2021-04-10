@@ -77,7 +77,21 @@
     }
 }
 
-.divAddButton:active{
+
+.divCloseButton{
+    width: toRem(100);
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    img{
+        width: toRem(50);
+        height: toRem(50);
+    }
+}
+
+.divAddButton:active,.divCloseButton:active{
     background-color: #ddd;
 }
 
@@ -171,3 +185,126 @@
     justify-content: center;
 }
 
+.divSearchView{
+    width: 100%;
+    position:fixed;
+    height: 100%;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    overflow: hidden;
+    background-color: #ffffff;
+    z-index: 200;
+    box-sizing: border-box;
+
+    :global{
+        .am-navbar {
+            height: toRem(90) !important;
+        }
+
+        .am-navbar-left {
+            padding-left: toRem(30) !important;
+            font-size: toRem(32) !important;
+        }
+
+        .am-navbar-title {
+            font-size: toRem(36) !important;
+        }
+
+        .am-navbar-right {
+            font-size: toRem(32) !important;
+            margin-right: toRem(30) !important;
+        }
+
+        .am-list-item {
+            padding-left:  toRem(30) !important;
+            min-height: toRem(88) !important;
+        }
+
+        .am-list-item .am-list-line .am-list-content {
+            font-size: toRem(32) !important;
+            padding-top: toRem(14) !important;
+            padding-bottom: toRem(14) !important;
+        }
+
+        .am-list-item .am-list-line .am-list-extra {
+            font-size: toRem(32) !important;
+            padding-top: toRem(14) !important;
+            padding-bottom: toRem(14) !important;
+        }
+
+        .am-list-item .am-list-line .am-list-arrow {   
+            width: toRem(30) !important;
+            height: toRem(30) !important;
+            margin-left: toRem(16) !important;
+        }
+
+        .am-list-item.am-input-item {
+            height: toRem(88) !important;
+            padding-left: toRem(30) !important;
+        }
+
+        .am-list-item .am-list-line {
+            padding-right: toRem(30) !important;
+        }
+
+        .am-list-item .am-input-label.am-input-label-5 {
+            width: toRem(170) !important;
+        }
+        .am-list-item .am-input-label {   
+            font-size: toRem(32) !important;
+            margin-right: toRem(10) !important;
+            padding: toRem(4) 0 !important;
+        }
+
+        .am-list-item .am-input-control {
+            font-size: toRem(32) !important;
+        }
+
+        .am-list-item .am-input-control input {
+            font-size: toRem(32) !important;     
+            padding: toRem(4) 0;
+        }
+
+        .am-list-item .am-input-clear {
+            width: toRem(42) !important;
+            height: toRem(42) !important;
+            background-size: toRem(42) auto !important;
+            background-position: toRem(4) toRem(4) !important;
+        }
+    }
+}
+
+.divSearchConditionView{
+    width: 100%;
+}
+
+.divSearchButtonView{
+    width: 100%;
+    height: toRem(120);
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    :global{
+        .am-button-primary {
+            border-radius: toRem(10) !important;
+        }
+
+        .am-button {
+            font-size: toRem(36) !important;
+            height: toRem(80) !important;
+            line-height: toRem(80) !important;
+            border-radius: toRem(10) !important;
+            margin-left: toRem(32) !important;
+            margin-right: toRem(32) !important;
+            width: toRem(300) !important;
+        }
+
+        .am-icon-md {
+            width: toRem(44) !important;
+            height: toRem(44) !important;
+        }
+    }
+}

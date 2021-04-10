@@ -9,6 +9,7 @@ import DataGridView from './dataGridView';
 import WhiteSpace from './whiteSpace';
 import RowsColsView from './rowsColsView';
 import TabBar from './tabBar';
+import NavBar from './navBar';
 
 export default {
     Base,
@@ -22,5 +23,6 @@ export default {
     DataGridView,
     WhiteSpace,
     RowsColsView,
-    TabBar
+    TabBar,
+    NavBar
 }

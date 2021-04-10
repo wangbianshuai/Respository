@@ -175,6 +175,35 @@ export default class Dialog extends BaseIndex {
         action.parameters = { dialogView }
     }
 
+    showDialogSearchData(props, action) {
+        if (!action.parameters) this.initShowDialogSearchData(props, action);
+        const { pageAxis } = props;
+        const { dialogView } = action.parameters;
+
+        this.showdialog(action, pageAxis, dialogView);
+    }
+
+    initShowDialogSearchData(props, action) {
+        const { pageAxis } = props;
+        const dialogView = Common.arrayFirst(pageAxis.pageConfig.dialogViews, (f) => f.name === action.dialogView);
+
+        action.parameters = { dialogView };
+    }
+
+    closeDialogSearchData(props, action) {
+        if (!action.parameters) this.initCloseDialogSearchData(props, action);
+        const { dialogView } = action.parameters;
+
+        dialogView.modalDialog.setVisible(false);
+    }
+
+    initCloseDialogSearchData(props, action) {
+        const { pageAxis } = props;
+        const dialogView = Common.arrayFirst(pageAxis.pageConfig.dialogViews, (f) => f.name === action.dialogView);
+
+        action.parameters = { dialogView };
+    }
+
     //弹出层编辑
     showDialogEditEntityData(props, action) {
         if (!action.parameters) this.initShowDialogEditEntityData(props, action);

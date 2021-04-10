@@ -51,14 +51,39 @@ const getProperty = (name, view) => {
 }
 
 const judgePush = (d, parentValue, property, view) => {
-  if (parentValue === undefined && view && property.parentName && property.parentPropertyName) {
-    const parentProperty = getProperty(property.parentName, view);
-    if (parentProperty.getValue) parentValue = parentProperty.getValue();
-    else parentValue = parentProperty.value || (parentProperty.defaultValue || null);
+  if (view && property.parentName && property.parentPropertyName) {
+    const key = 'parent_' + property.parentName;
+    if (!property[key]) property[key] = getProperty(property.parentName, view);
+    const parentProperty = property[key];
+
+    if (parentValue === undefined) {
+      if (parentProperty.getValue) parentValue = parentProperty.getValue();
+      else parentValue = parentProperty.value || (parentProperty.defaultValue || null);
+    }
+
+    return Common.isEquals(parentValue, d[property.parentPropertyName], true);
   }
-  else if (parentValue === undefined) return Common.isEquals(parentValue, d[property.parentPropertyName], true);
 
   return true;
+};
+
+const childPropertiesChanged = (property, view, value) => {
+  if (Common.isArray(property.childNames)) {
+    let p = null, key = '';
+    property.childNames.forEach(n => {
+      key = 'child_' + n;
+      if (!property[key]) property[key] = getProperty(n, view);
+      p = property[key];
+      if (p != null && p.setParentValue) {
+        if (property.isChanged && !Common.isNullOrEmpty(p.parentValue) && p.parentValue !== value) {
+          p.setValue(null);
+          p.value = null;
+        }
+        p.parentValue = value;
+        p.setParentValue();
+      }
+    });
+  }
 };
 
 const renderPrefix = (property) => {
@@ -78,6 +103,7 @@ const getValue = (property, value) => {
   }
   return value;
 };
+
 
 const bindDataValue = (property, value) => {
   const { isBind, data, name, propertyName } = property;
@@ -101,8 +127,11 @@ const setValueTextName = (property) => {
 
 const setDefaultValue = (property) => {
   if (property.isCurrentDay) property.defaultValue = Common.getCurrentDate().substr(0, 10);
+  if (property.isYesterday) property.defaultValue = Common.getYesterdayDate().substr(0, 10);
 
   if (property.isMonthFirst) property.defaultValue = Common.getCurrentDate().substr(0, 8) + "01";
+
+  if (property.isCurrentUser) property.defaultValue = Common.getStorage("loginUserId");
 };
 
 const getSelectData = (property, value) => {
@@ -170,7 +199,8 @@ export default {
   getValue,
   getSelectData,
   setSelectDataToProperties,
-  setPropertyValue,
+  setValueVisibleProperties,
   setPropertiesVisible,
-  setValueVisibleProperties
+  setPropertyValue,
+  childPropertiesChanged
 }

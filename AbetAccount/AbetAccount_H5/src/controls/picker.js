@@ -30,6 +30,7 @@ const getOptions = (property, view, pageAxis, parentValue) => {
 };
 
 const valueChange = (property, view, pageAxis, value) => {
+  Base.childPropertiesChanged(property, view, value);
   if (property.valueChange) property.valueChange(value, Base.getSelectData(property, value));
 
   if (property.selectDataToProperties) Base.setSelectDataToProperties(property, view, Base.getSelectData(property, value));
@@ -63,6 +64,7 @@ export default (props) => {
   const [options, setOptions] = useGetDataSourceOptions(property, view, pageAxis, getOptions);
 
   const onChange = useCallback((vs) => {
+    property.isChanged = true;
     const v = vs[0];
     setValue(v);
     Base.bindDataValue(property, v);
@@ -79,6 +81,7 @@ export default (props) => {
   property.setParentValue = (v) => setOptions(getOptions(property, view, pageAxis, v));
   property.refreshOptions = () => setOptions(getOptions(property, view, pageAxis));
   property.setIsReadOnly = (v) => setIsReadOnly(v);
+  property.getText = () => getText(options, value);
 
   if (!isVisible) return null;
 

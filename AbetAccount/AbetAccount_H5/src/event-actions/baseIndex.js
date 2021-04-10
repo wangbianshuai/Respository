@@ -171,6 +171,7 @@ export default class BaseIndex {
                 wrapClassName: dialogView.wrapClassName,
                 okText: dialogView.okText,
                 isViewType: dialogView.isViewType,
+                isVisibleType: dialogView.isVisibleType,
                 component: pageAxis.getReactComponent(dialogView, {}, pageAxis.id),
                 isOk: !!onOk,
                 onOk: onOk
