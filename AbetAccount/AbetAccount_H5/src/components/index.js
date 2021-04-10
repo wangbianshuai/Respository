@@ -8,6 +8,7 @@ import Tabs from './tabs';
 import DataGridView from './dataGridView';
 import WhiteSpace from './whiteSpace';
 import RowsColsView from './rowsColsView';
+import TabBar from './tabBar';
 
 export default {
     Base,
@@ -21,4 +22,5 @@ export default {
     DataGridView,
     WhiteSpace,
     RowsColsView,
+    TabBar
 }

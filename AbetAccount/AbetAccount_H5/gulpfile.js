@@ -28,7 +28,7 @@ function saveContent(fileUrl, content) {
     console.log(fileUrl);
     fs.writeFile(fileUrl, content, function () { })
 }
-var htmls = ['login.html'];
+var htmls = ['login.html', 'accountBillList.html'];
 var copyList = [];
 
 htmls.forEach(name => {

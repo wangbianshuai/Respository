@@ -20,7 +20,7 @@ function getProperties() {
             name: "LoginTitle", type: "SpanText", isDiv: true, x: 1, y: 1, text: "账户登录", className: "loginHeader"
         },
         getTextBox2("LoginName", " 登录名", 1, 1, "", "请输入登录名", 50, false, "user"),
-        getTextBox2("LoginPassword", "登录密码", 2, 1, "Password", "请输入登录密码", 50, false, "lock"),
+        getTextBox2("LoginPassword", "登录密码", 2, 1, "password", "请输入登录密码", 50, false, "lock"),
         getButton2("login", "登录", "primary", 3, 1)
     ]
 }

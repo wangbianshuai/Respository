@@ -21,7 +21,7 @@ export default (props) => {
 
 function init() {
     this.componentDidMount = componentDidMount;
-    this.loginSuccess = loginSuccess;
+    this.loginSuccess = loginSuccess.bind(this);
 }
 
 function componentDidMount() {
@@ -33,7 +33,7 @@ function loginSuccess({ data }) {
     Common.setStorage("loginUserInfo", JSON.stringify(data));
     Common.setStorage("loginUserId", data.UserId);
     const url = "/accountBillList.html";
-    PageCommon.toPage(url);
+    this.toPage(url);
 }
 
 function mapStateToProps(state) {
