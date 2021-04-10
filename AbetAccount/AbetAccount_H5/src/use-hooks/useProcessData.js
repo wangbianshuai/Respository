@@ -2,32 +2,31 @@ import { useMemo, useEffect } from "react";
 import DataActions from "DataActions";
 import { Common, PageCommon } from "UtilsCommon";
 import { EnvConfig } from "Configs";
-import PageAxis from './usePageAxis';
+
+const wetRootPath = EnvConfig.getServiceUrl('WebRootPath')();
 
 export default (pageId, state, props) => {
   const obj = useMemo(() => ({}), []);
 
-  const pageAxis = PageAxis.getPageAxis(pageId);
-
   if (!obj.getStateValue) obj.getStateValue = (name) => state[name];
   if (!obj.toLogin) obj.toLogin = () => {
-    pageAxis.toLogin();
+    props.app._history.push(wetRootPath + '/login.html');
   }
 
   useEffect(() => {
     let blChanged = false;
     if (obj.state === undefined) { initState(state); blChanged = true; }
-    else blChanged = shouldComponentUpdate(state, obj.state, obj.toLogin, pageAxis);
+    else blChanged = shouldComponentUpdate(state, obj.state, obj.toLogin);
 
     blChanged && !EnvConfig.isProd && console.log(state);
 
     obj.state = state;
-  }, [state, obj, pageAxis])
+  }, [state, obj])
 
   return [obj.getStateValue]
 }
 
-function shouldComponentUpdate(nextState, state, toLogin, pageAxis) {
+function shouldComponentUpdate(nextState, state, toLogin) {
   //Show while loading
   if (nextState.loading !== state.loading) PageCommon.setLoading(nextState.loading);
 
@@ -37,7 +36,7 @@ function shouldComponentUpdate(nextState, state, toLogin, pageAxis) {
     if (nextState[key] !== undefined && !Common.isFunction(nextState[key]) && state[key] !== nextState[key]) {
       blChangedState = true;
 
-      if (setResponseMessage(nextState[key], toLogin, pageAxis)) blChangedState = false;
+      if (setResponseMessage(nextState[key], toLogin)) blChangedState = false;
 
       if (blChangedState) break;
     }
@@ -48,12 +47,11 @@ function shouldComponentUpdate(nextState, state, toLogin, pageAxis) {
   return blChangedState;
 }
 
-function setResponseMessage(d, toLogin, pageAxis) {
+function setResponseMessage(d, toLogin) {
   var data = d.data ? d.data : d;
   if (Common.isArray(data) && data.length > 0) data = data[0];
   if (data && data.isReLogin && data.isSuccess === false) {
-    if (pageAxis) pageAxis.refreshPage();
-    else PageCommon.showMessage(data.message, () => toLogin());
+    toLogin();
     return true;
   }
 

@@ -10,7 +10,18 @@ module.exports = {
     name: "index",
     type: "View",
     eventActions: getEventActions(),
-    properties: [getTabs(), getSearchView()]
+    properties: [getTopView(),getDataGridView()]
+}
+
+
+function getTopView(){
+    return {
+        name: 'topView1',
+        type: 'View',
+        isDiv: true,
+        className: 'divTopView',
+        properties: [getTabs(), getSearchView()]
+    }
 }
 
 function getTabs() {
@@ -29,7 +40,7 @@ function getEventActions() {
         {
             name: "searchQuery",
             type: "dataGridView/searchQuery",
-            dataGridView: "billDataGridView1"
+            dataGridView: "dataGridView1"
         }]
 }
 
@@ -38,8 +49,17 @@ function getSearchView() {
         name: 'searchView1',
         type: 'View',
         isDiv: true,
-        className: 'divSearchView',
-        properties: [getSearchBar()]
+        className: 'divSearchBarView',
+        properties: [getSearchBar(), getAdd()]
+    }
+}
+
+function getAdd() {
+    return {
+        name: 'add',
+        type: 'ImageButton',
+        imageName: 'add.png',
+        className: 'divAddButton',
     }
 }
 
@@ -55,18 +75,19 @@ function getSearchBar() {
     }
 }
 
-function getDataGridView(name, eventActionName, entitySearchQuery, conditions) {
+function getDataGridView() {
     return {
-        name,
+        name: 'dataGridView1',
         type: "DataGridView",
         properties: [],
         entity,
-        conditions,
-        entitySearchQuery,
-        eventActionName,
-        detailPageUrl: '/accountBillEdit',
-        actionName: eventActionName,
+        isShowRecord: false,
+        entitySearchQuery: dataActionTypes.searchQuery,
+        eventActionName: 'searchQuery',
+        detailPageUrl: '/accountBillEdit.html',
+        actionName: 'searchQuery',
         className: "divDataGridView",
-        itemType: 'AccountBillItem'
+        itemType: 'AccountBillItem',
+        headerItemType: 'DataInfoHeader'
     }
 }

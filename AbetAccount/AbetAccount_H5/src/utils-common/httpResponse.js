@@ -1,4 +1,5 @@
 import { Common } from 'UtilsCommon';
+import { EnvConfig } from 'Configs';
 
 export function getResponseData(d, resKey) {
     const blSuccess = d && d.isSuccess === false ? false : true;
@@ -30,7 +31,7 @@ export function getResponseData(d, resKey) {
 
     const token = Common.getCookie("token");
     if (token) {
-        Common.setStorage("token", token, 120);
+        Common.setStorage(EnvConfig.tokenKey, token, 120);
         obj.token = token;
     }
 

@@ -36,8 +36,8 @@ export function fetchByMethod(url, data, resKey, serviceName, headers, method, c
 
 async function fetchRequest(url, data, resKey, serviceName, headers, callback) {
     try {
-        data = await setServiceHeader(data, serviceName);
         data = setParamsHeader(data, headers);
+        data = await setServiceHeader(data, serviceName);
         url = getFullUrl(url);
         if (callback) return syncAjax(url, data, resKey, callback);
         return fetch(url, data).then(res => setResult(res)).then(d => HttpResponse.getResponse(d, resKey), res => HttpResponse.getErrorResponse(res));
@@ -50,6 +50,9 @@ async function fetchRequest(url, data, resKey, serviceName, headers, callback) {
 }
 
 function setParamsHeader(data, headers) {
+    data = data || {};
+    data.headers = data.headers || {};
+
     if (headers) {
         for (let key in headers) data.headers[key] = headers[key];
     }
@@ -62,12 +65,9 @@ async function setServiceHeader(data, serviceName) {
 
     if (serviceName === 'WebService') return data;
 
-    data = data || {};
-    data.headers = data.headers || {};
-
     const time = await getCurrentTime();
 
-    data.headers.token = Common.getStorage("token");
+    data.headers.token = Common.getStorage(EnvConfig.tokenKey);
     if (!data.headers.token || data.headers.isNoToken) data.headers.token = "d56b699830e77ba53855679cb1d252da" + window.btoa(Common.createGuid());
 
     data.headers.access_token = getAccessToken(data.headers.token, time);

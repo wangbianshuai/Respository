@@ -1,5 +1,6 @@
 import { Common, Md5 } from "UtilsCommon";
 import BaseIndex from "../baseIndex";
+import { EnvConfig } from 'Configs';
 
 export default class login extends BaseIndex {
   constructor(props) {
@@ -24,7 +25,7 @@ export default class login extends BaseIndex {
     data = this.setApiResponse(data);
 
     if (data.isSuccess === false) {
-      Common.removeStorage("token");
+      Common.removeStorage(EnvConfig.tokenkey);
 
       return { isSuccess: false, message: "登录名或密码错误！" }
     }

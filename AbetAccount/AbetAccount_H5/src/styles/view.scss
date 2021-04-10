@@ -23,6 +23,12 @@
     }
 }
 
+.divTopView{
+    width: 100%;
+    height: toRem(176);
+    margin-top: toRem(-176);
+}
+
 .divLoginButton{
     width: 100%;
     height: toRem(100);
@@ -40,7 +46,7 @@
 
 .tabDetail{
     width: 100%;
-    height: toRem(100);
+    height: toRem(88);
 
     :global{
         .am-tabs{
@@ -48,24 +54,47 @@
         }
 
         .am-tabs-default-bar-tab{
-          height: 100% !important;
+          height: toRem(88) !important;
           padding:0 !important;
           box-sizing: border-box !important;
           font-size: toRem(30) !important;
-          line-height: toRem(100) !important;
+          line-height: toRem(88) !important;
         }
     }
  
 }
 
-.divSearchView{
+.divAddButton{
+    width: toRem(100);
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    img{
+        width: toRem(50);
+        height: toRem(50);
+    }
+}
+
+.divAddButton:active{
+    background-color: #ddd;
+}
+
+.divSearchBarView{
     width: 100%;
     height: toRem(88);
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    background-color: #efeff4;
+  
 
     :global{
     .am-search{
         height: 100% !important;
         padding: 0 toRem(16) !important;
+        width: toRem(650) !important;
     }
     .am-search-input{
       height: toRem(56) !important;

@@ -172,14 +172,14 @@ class PageAxis {
     }
 
     toLogin(){
-       this.toPage('index.html')    
+       this.toPage('/login.html')    
     }
 
     toBack() {
         this.props.history.goBack();
     }
 
-      openPage(url) {
+    openPage(url) {
         window.open(url);
     }
 
