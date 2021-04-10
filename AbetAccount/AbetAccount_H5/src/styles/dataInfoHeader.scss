@@ -1,0 +1,46 @@
+@function toRem($px){
+    @return $px/32*1rem;
+}
+
+.divContainer{
+    width: 100%;
+    padding-left: toRem(24);
+    padding-right: toRem(24);
+    box-sizing: border-box;
+    border-bottom: 1px solid #ddd;
+    
+    .divGroupByInfo{
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        box-sizing: border-box;
+        border-bottom: 1px solid #ddd;
+
+        div{
+            width: 100%;
+            height: toRem(60);
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-between;
+
+            span{
+                font-size: toRem(28);
+            }
+        }
+    }
+
+    .divPageInfo{
+        width: 100%;
+        height: toRem(60);
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+
+        span{
+            font-size: toRem(28);
+        }
+
+    }
+}

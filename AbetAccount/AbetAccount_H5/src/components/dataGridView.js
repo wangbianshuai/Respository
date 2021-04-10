@@ -84,22 +84,22 @@ const renderRow = (property, pageId, data, id, pageRecord) => {
   return <div></div>;
 };
 
-const renderColumnHeader = (property, pageRecord) => {
+const renderColumnHeader = (property, itemCount, pageRecord, groupByInfo) => {
   if (!property.headerItemType) return null;
 
   const { headerItemType } = property;
 
-  if (DataItems[headerItemType]) return React.createElement(DataItems[headerItemType], { property, pageRecord });
+  if (DataItems[headerItemType]) return React.createElement(DataItems[headerItemType], { property, itemCount, pageRecord, groupByInfo });
 
   return null;
 };
 
-const renderHeader = (property, dataList, pageRecord) => {
+const renderHeader = (property, dataList, pageRecord, groupByInfo) => {
   return () => {
     return (
       <React.Fragment>
         {property.isShowRecord !== false && pageRecord > 0 && <div className={styles.divPageInfo}><span>当前显示：{dataList.length}条</span><span>总记录：{pageRecord}条</span></div>}
-        {renderColumnHeader(property, pageRecord)}
+        {renderColumnHeader(property, dataList.length, pageRecord, groupByInfo)}
       </React.Fragment>
     )
   }
@@ -109,7 +109,7 @@ const renderHeader = (property, dataList, pageRecord) => {
 //queryData：查询数据:数据列表、分页信息、分组信息
 const renderDataView = (property, pageId, queryData, primaryKey, actionData, actionTypes, pageIndexChange) => {
   setBindDataList(actionData, actionTypes, queryData, primaryKey);
-  const { dataList } = queryData;
+  const { dataList, groupByInfo } = queryData;
   const { pageIndex, pageRecord } = queryData.pageInfo;
 
   return (<React.Fragment>
@@ -119,7 +119,7 @@ const renderDataView = (property, pageId, queryData, primaryKey, actionData, act
       dataList={dataList}
       pageIndex={pageIndex}
       pageIndexChange={pageIndexChange}
-      renderHeader={renderHeader(property, dataList, pageRecord)}
+      renderHeader={renderHeader(property, dataList, pageRecord, groupByInfo)}
       renderRow={(rowData) => renderRow(property, pageId, rowData, rowData[primaryKey], pageRecord)} /></React.Fragment>)
 }
 

@@ -1,15 +1,26 @@
 import React from 'react';
-import styles from '../styles/view.scss';
+import styles from '../styles/dataInfoHeader.scss';
+
+const getGroupByInfoHtml = (groupByInfo, groupByInfoHtml) => {
+    let html = groupByInfoHtml;
+    for (let key in groupByInfo) {
+        html = html.replace(new RegExp('{' + key + '}', 'g'), groupByInfo[key]);
+    }
+
+    return html;
+};
+
 
 export default React.memo((props) => {
-  const { pageRecord } = props
+    const { property, itemCount, pageRecord, groupByInfo } = props
 
-  return (
-    <div className={styles.divContainer}>
-      <div className={styles.divTitle}>
-        <div className={styles.divLeft}><span>参赛者社区</span></div>
-        <div className={styles.divRight}> {pageRecord > 0 && <span>发帖数:{pageRecord}</span>}</div>
-      </div>
-    </div>
-  )
+    const { groupByInfoHtml } = property;
+
+    return (
+        <div className={styles.divContainer}>
+            {groupByInfoHtml && <div className={styles.divGroupByInfo} dangerouslySetInnerHTML={{ __html: getGroupByInfoHtml(groupByInfo, groupByInfoHtml) }}></div>}
+            <div className={styles.divPageInfo}><span>当前显示：{itemCount}条</span><span>总记录：{pageRecord}条</span></div>
+        </div>
+    )
 });
+

@@ -1,0 +1,65 @@
+@function toRem($px){
+    @return $px/32*1rem;
+}
+
+.divContainer{
+    width: 100%;
+    border-bottom:toRem(8) solid #efeff4;
+    box-sizing: border-box;
+
+    a{
+        color: rgba(0,0,0,.65);
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        padding-left: toRem(24);
+        padding-right: toRem(24);
+        padding-bottom: toRem(8);
+        padding-top: toRem(8);
+        box-sizing: border-box;
+
+        .divText1{
+            width: 100%;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-between;
+            padding-top: toRem(4);
+            padding-bottom: toRem(4);
+
+            span{
+                font-size: toRem(32);
+                line-height: toRem(40);
+            }
+        }
+
+        .divText2{
+            width: 100%;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-between;
+            padding-top: toRem(4);
+            padding-bottom: toRem(4);
+
+            span{
+                font-size: toRem(30);
+                line-height: toRem(40);
+            }
+        }
+        
+        .divText3{
+            width: 100%;
+            padding-top: toRem(4);
+            padding-bottom: toRem(4);
+            
+            span{
+                font-size: toRem(28);
+                line-height: toRem(40);
+            }
+        }
+    }
+    a:active{
+        background-color: #ddd;
+    }
+}

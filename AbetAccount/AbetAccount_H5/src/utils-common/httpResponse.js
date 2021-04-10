@@ -32,7 +32,6 @@ export function getResponseData(d, resKey) {
     const token = Common.getCookie("token");
     if (token) {
         Common.setStorage(EnvConfig.tokenKey, token, 120);
-        obj.token = token;
     }
 
     return obj;
