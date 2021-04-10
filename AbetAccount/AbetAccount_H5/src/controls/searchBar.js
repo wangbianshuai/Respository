@@ -18,6 +18,17 @@ export default (props) => {
         else if (pageAxis) pageAxis.invokeEventAction(property.eventActionName, { property, view, pageAxis });
     }, [property, view, pageAxis, props.onSubmit]);
 
+    const onClear = useCallback(() => {
+        window.setTimeout(() => {
+            if (props.onSubmit) props.onSubmit(v);
+            else if (pageAxis) pageAxis.invokeEventAction(property.eventActionName, { property, view, pageAxis });
+        }, 100)
+    }, [property, view, pageAxis, props.onSubmit]);
+    
+    const onCancel = useCallback(() => {
+        if (pageAxis) pageAxis.invokeEventAction(property.cancelEventActionName, { property, view, pageAxis });
+    }, [property, view, pageAxis]);
+
     property.setVisible = (v) => setIsVisible(v);
     property.setValue = (v) => !Common.isEquals(v, value) && setValue(v);
     property.getValue = () => Base.getValue(property, value);
@@ -32,6 +43,8 @@ export default (props) => {
             disabled={disabled}
             onSubmit={onSubmit}
             cancelText={property.cancelText}
+            onCancel={onCancel}
+            onClear={onClear}
             showCancelButton={property.showCancelButton}
             defaultValue={props.defaultValue || property.defaultValue}
             value={Common.isNullOrEmpty(value) ? props.value || '' : value} />

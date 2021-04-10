@@ -1,4 +1,5 @@
 import React from 'react';
+import { Common } from 'UtilsCommon';
 import styles from '../styles/dataInfoHeader.scss';
 
 const getGroupByInfoHtml = (groupByInfo, groupByInfoHtml) => {
@@ -10,14 +11,30 @@ const getGroupByInfoHtml = (groupByInfo, groupByInfoHtml) => {
     return html;
 };
 
+const getConditionTextList = (whereFields) => {
+    const textList = [];
+    whereFields.forEach(w => {
+        if (!Common.isNullOrEmpty(w.Text)) textList.push(`${w.Label}:${w.Text}`);
+    })
+    return textList;
+}
+
+const renderConditionTextList = (textList) => {
+    return <div className={styles.divConditionTexts}>
+        {textList.map((m, i) => (<span key={i}>{m}</span>))}
+    </div>
+};
 
 export default React.memo((props) => {
     const { property, itemCount, pageRecord, groupByInfo } = props
 
     const { groupByInfoHtml } = property;
 
+    const conditionTextList = getConditionTextList(property.queryInfo.WhereFields);
+
     return (
         <div className={styles.divContainer}>
+            {conditionTextList.length > 0 && renderConditionTextList(conditionTextList)}
             {groupByInfoHtml && <div className={styles.divGroupByInfo} dangerouslySetInnerHTML={{ __html: getGroupByInfoHtml(groupByInfo, groupByInfoHtml) }}></div>}
             <div className={styles.divPageInfo}><span>当前显示：{itemCount}条</span><span>总记录：{pageRecord}条</span></div>
         </div>

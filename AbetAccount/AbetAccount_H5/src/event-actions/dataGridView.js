@@ -88,7 +88,8 @@ export default class DataGridView extends BaseIndex {
             const name = p.propertyName || p.name;
             if (p.isCondition && p.getValue) conditionList.push({
                 Name: name, Label: p.label, OperateLogic: p.operateLogic || "=",
-                DataType: p.dataType || "string", Value: this.getPropertyValues(p, isClearQuery)
+                DataType: p.dataType || "string", Value: this.getPropertyValues(p, isClearQuery),
+                Text: this.getPropertyValueText(p, isClearQuery),
             });
         });
 
@@ -113,6 +114,15 @@ export default class DataGridView extends BaseIndex {
             p.setValue(p.defaultValue);
             return p.defaultValue;
         }
+        return p.getValue();
+    }
+
+    getPropertyValueText(p, isClearQuery) {
+        if (isClearQuery) {
+            p.setValue(p.defaultValue);
+            return p.defaultValueText || p.defaultValue;
+        }
+        else if (p.getText) return g.getText();
         return p.getValue();
     }
 

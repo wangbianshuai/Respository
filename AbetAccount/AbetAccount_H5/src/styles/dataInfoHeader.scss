@@ -43,4 +43,20 @@
         }
 
     }
+
+    .divConditionTexts{
+        width: 100%;
+        min-height: toRem(64);
+
+        span{
+            float: left;
+            font-size: toRem(28);
+            padding:toRem(8);
+            border: 1px solid #1890ff;
+            border-radius: toRem(8);
+            margin-right: toRem(8);
+            margin-top: toRem(8);
+             
+        }
+    }
 }

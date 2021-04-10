@@ -67,7 +67,7 @@ const setBindDataList = (actionData, actionTypes, queryData, primaryKey) => {
     if (data.pageRecord !== undefined) setPageInfo(data.pageRecord, queryData);
     else if (data.pageInfo) queryData.pageInfo = data.pageInfo;
 
-    if (queryData.pageInfo.pageIndex === 1) {
+    if (queryData.pageInfo.pageIndex <= 1) {
       queryData.dataList = data.dataList;
       queryData.id = Common.createGuid();
     }

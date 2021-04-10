@@ -40,7 +40,8 @@ function getEventActions() {
         {
             name: "searchQuery",
             type: "dataGridView/searchQuery",
-            dataGridView: "dataGridView1"
+            dataGridView: "dataGridView1",
+            searchView: "searchView1",
         }]
 }
 
@@ -67,9 +68,12 @@ function getSearchBar() {
     return {
         name: 'keyword',
         type: 'SearchBar',
-        propertyNames: ['Remark'],
+        label: '关键字',
+        propertyName: 'Remark',
         placeHolder: '摘要',
         cancelText: '筛选',
+        operateLogic: "like",
+        eventActionName: 'searchQuery',
         showCancelButton: true,
         isCondition: true
     }
@@ -100,7 +104,7 @@ function getGroupByInfoHtml() {
     html.push('<div>')
     html.push("<span>收入：<span style=\"color:#1890ff;\">{TotalIncome}</span></span>");
     html.push("<span>支出：<span style=\"color:red;\">{TotalOutlay}</span></span>");
-     html.push('</div>')
+    html.push('</div>')
 
     html.push('<div>')
     html.push("<span>收入税额：<span style=\"color:#1890ff;\">{TotalIncomeTax}</span></span>");

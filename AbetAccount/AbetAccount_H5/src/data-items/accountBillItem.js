@@ -9,7 +9,7 @@ export default React.memo((props) => {
     const { detailPageUrl } = property;
 
     let url = Common.addUrlParams(detailPageUrl, 'BillId', BillId);
-    console.log(props)
+  
     return (<div className={styles.divContainer}>
         <Link to={url}>
             <div className={styles.divText1}>
