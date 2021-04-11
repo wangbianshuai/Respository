@@ -62,7 +62,7 @@ function getEditView() {
 
 function getButtonProperties() {
     return [
-        { ...getButton("saveEntityData", "保存", "primary"), isVisible: false, eventActionName: "saveEntityData" },
+        { ...getButton("saveEntityData", "保存", "primary"), eventActionName: "saveEntityData" },
     ]
 }
 

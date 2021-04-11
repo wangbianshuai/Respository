@@ -21,7 +21,7 @@ const getItem = (pathName, pageName, title, styles, isLogin) => {
 const getMatchmakerTabBarProperty = (styles) => ({
     items: [
         getItem('accountBill', 'accountBillList', ' 记账', styles),
-        getItem('setting', 'accountCategory', '设置', styles, true),
+        getItem('setting', 'accountCategoryList', '设置', styles, true),
         getItem('mine', 'userInfo', '我的', styles, true)
     ]
 });

@@ -7,7 +7,7 @@ const dataActionTypes = {
 };
 
 const { name, primaryKey, viewName } = accountItem;
-const entity = { name, primaryKey, viewName};
+const entity = { name, primaryKey, viewName };
 
 module.exports = {
     name: "index",
@@ -83,8 +83,8 @@ function getSearchBar() {
         placeHolder: '名称,备注',
         operateLogic: "like",
         eventActionName: 'searchQuery',
-        showCancelButton: false,
-        isCondition: true
+        isCondition: true,
+        className: 'divSearchBar'
     }
 }
 

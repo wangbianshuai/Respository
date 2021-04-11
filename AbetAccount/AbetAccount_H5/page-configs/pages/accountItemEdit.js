@@ -1,5 +1,5 @@
 const accountItem = require("../entities/accountItem");
-const { getTextBox, getButton, getRadio } = require("../Common");
+const { getTextBox, getButton } = require("../Common");
 
 //accountItemEdit 900-999
 const dataActionTypes = {
@@ -62,7 +62,7 @@ function getEditView() {
 
 function getButtonProperties() {
     return [
-        { ...getButton("saveEntityData", "保存", "primary"), isVisible: false, eventActionName: "saveEntityData" },
+        { ...getButton("saveEntityData", "保存", "primary"), eventActionName: "saveEntityData" },
     ]
 }
 

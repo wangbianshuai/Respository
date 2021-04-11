@@ -5,7 +5,7 @@ export default class ChangePassword extends BaseIndex {
     constructor(props) {
         super(props);
 
-        this.name = 'personCenter_changePassword';
+        this.name = 'changePassword';
         this.minActionType = 4100;
         this.maxActionType = 4199;
 

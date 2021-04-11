@@ -2,6 +2,7 @@ import React, { useState, useCallback } from 'react';
 import { SearchBar } from 'antd-mobile';
 import { Common } from 'UtilsCommon';
 import Base from './base';
+import styles from '../styles/view.scss';
 
 export default (props) => {
     const { property, view, pageAxis } = Base.getProps(props);
@@ -24,7 +25,7 @@ export default (props) => {
             else if (pageAxis) pageAxis.invokeEventAction(property.eventActionName, { property, view, pageAxis });
         }, 100)
     }, [property, view, pageAxis, props.onSubmit]);
-    
+
     const onCancel = useCallback(() => {
         if (pageAxis) pageAxis.invokeEventAction(property.cancelEventActionName, { property, view, pageAxis });
     }, [property, view, pageAxis]);
@@ -33,6 +34,8 @@ export default (props) => {
     property.setValue = (v) => !Common.isEquals(v, value) && setValue(v);
     property.getValue = () => Base.getValue(property, value);
     property.setDisabled = (v) => setDisabled(v);
+
+    const className = Base.getClassName(property, styles);
 
     if (!isVisible) return null;
 
@@ -45,6 +48,7 @@ export default (props) => {
             cancelText={property.cancelText}
             onCancel={onCancel}
             onClear={onClear}
+            className={className}
             showCancelButton={property.showCancelButton}
             defaultValue={props.defaultValue || property.defaultValue}
             value={Common.isNullOrEmpty(value) ? props.value || '' : value} />
