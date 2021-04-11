@@ -33,6 +33,7 @@ const getInitValue = (property) => {
   let value = null;
   if (!Common.isNullOrEmpty(property.value)) value = property.value;
   else if (!Common.isNullOrEmpty(property.defaultValue)) value = property.defaultValue;
+  else if (property.isCurrentDay) value = Common.getCurrentDate().substr(0, 10);
 
   const { isBind, data, name, propertyName } = property;
   const name2 = propertyName || name;
@@ -40,6 +41,7 @@ const getInitValue = (property) => {
     if (data[name2] === undefined) data[name2] = value;
     else if (data[name2] !== value) value = data[name2];
   }
+
 
   property.initValue = value;
 

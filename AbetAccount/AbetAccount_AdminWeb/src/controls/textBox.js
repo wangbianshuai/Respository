@@ -70,6 +70,7 @@ export default (props) => {
     const [isReadOnly, setIsReadOnly] = useState(!!property.isReadOnly);
 
     const onChange = useCallback((e) => {
+        property.isChanged = true;
         change(e, property, setValue);
     }, [property, setValue]);
 

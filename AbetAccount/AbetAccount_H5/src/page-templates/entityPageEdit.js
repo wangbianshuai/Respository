@@ -5,7 +5,7 @@ export default (name, entityName, title, minActionType, pageExpand, expandAction
     name,
     title,
     entityName,
-    actionNames: ['getEntityData', 'saveEntityData'].concat(expandActionNames || []),
+    actionNames: ['getEntityData', 'saveEntityData', 'deleteEntityData'].concat(expandActionNames || []),
     stateNames: stateNames || {},
     dataActionOptions: getDataActionOptions(name, entityName, minActionType, expandActionNames),
     pageExpand,

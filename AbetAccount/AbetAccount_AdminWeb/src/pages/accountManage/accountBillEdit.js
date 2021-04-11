@@ -16,7 +16,9 @@ export default EntityPageEdit("accountManage_accountBillEdit", "AccountBill", 13
         if (accountType == null) accountType = this.accountType.getValue ? this.accountType.getValue() : 0;
         if (amount == null) amount = this.amount.getValue ? this.amount.getValue() : 0;
 
-        if (parseInt(accountType) === 1 && this.accountType.isChanged) {
+        const isChanged = this.accountType.isChanged || this.amount.isChanged;
+
+        if (parseInt(accountType) === 1 && isChanged) {
             amount = Common.getNumber(amount);
             const tax = amount > 0 ? (amount * 0.07).toFixed(2) : 0;
             this.tax.setValue(tax);

@@ -81,7 +81,6 @@ export default (props) => {
                 disabled={disabled}
                 minDate={getMinDate(minYear)}
                 mode={isShowTime ? "datetime" : "date"}
-                defaultValue={getDefaultValue(property)}
                 format={isShowTime ? "YYYY-MM-DD HH:mm:ss" : "YYYY-MM-DD"}
                 title={label}
                 extra={extra}

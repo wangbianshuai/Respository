@@ -28,6 +28,40 @@ function createGuid(name) {
     }
 }
 
+
+function assignProporties(entity, list) {
+    const pList = [];
+
+    let p2 = null;
+    list.forEach((p, i) => {
+        if (typeof p === "string") p2 = getEntityProperty(entity, p);
+        else {
+            p2 = getEntityProperty(entity, p.name)
+            if (p2 === null) p2 = p;
+            else p2 = { ...p2, ...p };
+        }
+        if (p2 !== null) {
+            p2.x = p2.x || i + 1;
+            p2.y = p2.y || 1;
+            p2.rowId = createGuid(entity.name);
+            p2.colId = createGuid(entity.name);
+            p2.id = createGuid(entity.name);
+            p2.isNullable = p2.isNullable === undefined ? true : p2.isNullable
+            if (p2.dataType === "float" && !p2.scale) p2.scale = 2;
+            pList.push(p2);
+        }
+    });
+
+    return pList;
+}
+
+function getEntityProperty(entity, name) {
+    if (isEmptyObject(entity) || !entity.properties) return null;
+    const list = entity.properties.filter(f => f.name === name);
+    if (list && list.length === 1) return Object.assign({}, list[0]);
+    return null;
+}
+
 function getRadio(name, label, dataSource, x, y, defaultValue, buttonWidth) {
     return { name, label, type: "Radio", className: 'my-radio', dataSource, x, y, isButton: true, defaultValue, buttonWidth }
 }
@@ -122,5 +156,6 @@ module.exports = {
     getHtmlContent,
     getIconText,
     getMoveSelect,
-    getMoveSelect2
+    getMoveSelect2,
+    assignProporties
 }

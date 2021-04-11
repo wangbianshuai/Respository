@@ -24,12 +24,12 @@ export default (props) => {
     if (!isH5) style = { minHeight: "100%", width: '480px', margin: "0 auto" }
 
     return (<div style={style}><Flex style={style} direction="column" className={styles.divLayout}>
-        <Flex.Item className={styles.divPage} >
+        <Flex.Item className={isDetail ? styles.divPage2 : styles.divPage} >
             {_isList && <div className={styles.divList} style={{ display: isDetail ? 'none' : '' }}><AccountBillList {...props} /></div>}
             {isDetail && <AccountBillEdit {...props} />}
         </Flex.Item>
-        <Flex.Item className={styles.divTabBar} style={{ flex: 0 }}>
+        {!isDetail && <Flex.Item className={styles.divTabBar} style={{ flex: 0 }}>
             <Components.TabBar property={_tabBarProperty} pathName='accountBill' history={history} />
-        </Flex.Item>
+        </Flex.Item>}
     </Flex></div>)
 };

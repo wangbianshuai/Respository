@@ -36,6 +36,7 @@ const renderOptions2 = (options, defaultValue, name, value, onChange) => {
 };
 
 const valueChange = (property, view, pageAxis, value) => {
+    Base.childPropertiesChanged(property, view, value);
     if (property.valueChange) property.valueChange(value, Base.getSelectData(property, value));
 
     if (property.valueVisibleProperties) Base.setValueVisibleProperties(property, view, value);
@@ -50,6 +51,7 @@ export default (props) => {
     const [options, setOptions] = useGetDataSourceOptions(property, view, pageAxis, getOptions);
 
     const onChange = useCallback((e, m) => {
+        property.isChanged = true;
         setValue(m.value)
     }, [setValue]);
 
@@ -69,6 +71,7 @@ export default (props) => {
 
     if (isListItem) {
         return (<List.Item className={className} style={property.style} >
+            {label && <span className={styles.spLabel}>{label}</span>}
             {renderOptions(options, defaultValue, name, value, onChange)}</List.Item>)
     }
 

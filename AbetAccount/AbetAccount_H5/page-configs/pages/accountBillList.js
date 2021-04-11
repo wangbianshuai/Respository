@@ -71,6 +71,11 @@ function getEventActions() {
             dialogView: "searchView2"
         },
         {
+            name: "toEditPage",
+            type: "page/toPage",
+            pageUrl: "/accountBillEdit.html"
+        },
+        {
             name: "closeConditionDialog",
             type: "dialog/closeDialogSearchData",
             dialogView: "searchView2",
@@ -95,6 +100,7 @@ function getAdd() {
         type: 'ImageButton',
         imageName: 'add.png',
         className: 'divAddButton',
+        eventActionName: 'toEditPage'
     }
 }
 

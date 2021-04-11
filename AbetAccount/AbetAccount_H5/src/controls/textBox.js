@@ -56,6 +56,7 @@ export default (props) => {
     const [isReadOnly, setIsReadOnly] = useState(!!property.isReadOnly);
 
     const onChange = useCallback((v) => {
+        property.isChanged = true;
         change(v, property, setValue);
     }, [property, setValue]);
 
@@ -129,7 +130,7 @@ export default (props) => {
     }
     else {
         if (property.controlType === 'textarea') {
-            return (<TextareaItem placeholder={property.placeHolder}
+            return (<TextareaItem placeholder={property.placeHolder || '选填'}
                 rows={rows || 4}
                 className={className}
                 style={style}
@@ -143,7 +144,7 @@ export default (props) => {
             );
         }
 
-        return (<InputItem placeholder={property.placeHolder}
+        return (<InputItem placeholder={property.placeHolder || '选填'}
             className={className} style={style}
             onChange={onChange}
             maxLength={property.maxLength}

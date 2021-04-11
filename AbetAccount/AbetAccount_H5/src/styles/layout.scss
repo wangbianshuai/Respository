@@ -49,3 +49,10 @@ top: 0;
     top: 0;
     bottom: toRem(100);
 }
+
+.divPage2{
+    width: 100%;
+    overflow: auto;
+    box-sizing: border-box;
+    background-color: #f5f5f9;
+}

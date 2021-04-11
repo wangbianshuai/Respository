@@ -78,7 +78,7 @@
 }
 
 
-.divCloseButton{
+.divCloseButton,.divDeleteButton{
     width: toRem(100);
     height: 100%;
     display: flex;
@@ -90,6 +90,11 @@
         height: toRem(50);
     }
 }
+
+.divDeleteButton:active{
+    background-color: #0e80d2;
+}
+
 
 .divAddButton:active,.divCloseButton:active{
     background-color: #ddd;
@@ -185,6 +190,101 @@
     justify-content: center;
 }
 
+.divEditPage{
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+
+    :global{
+        .am-navbar {
+            height: toRem(90) !important;
+        }
+
+        .am-icon-lg {
+            width: toRem(72) !important;
+            height: toRem(72) !important;
+        }
+
+        .am-navbar-left {
+            padding-left: toRem(30) !important;
+            font-size: toRem(32) !important;
+        }
+
+        .am-navbar-title {
+            font-size: toRem(36) !important;
+        }
+
+        .am-navbar-right {
+            font-size: toRem(32) !important;
+            margin-right: toRem(30) !important;
+        }
+
+        .am-list-item {
+            padding-left:  toRem(30) !important;
+            min-height: toRem(88) !important;
+        }
+
+        .am-list-item .am-list-line .am-list-content {
+            font-size: toRem(32) !important;
+            padding-top: toRem(14) !important;
+            padding-bottom: toRem(14) !important;
+        }
+
+        .am-list-item .am-list-line .am-list-extra {
+            font-size: toRem(32) !important;
+            padding-top: toRem(14) !important;
+            padding-bottom: toRem(14) !important;
+            -webkit-flex-basis: auto !important;
+            -ms-flex-preferred-size: auto !important;
+            flex-basis: auto !important;
+        }
+
+        .am-list-item .am-list-line .am-list-arrow {   
+            width: toRem(30) !important;
+            height: toRem(30) !important;
+            margin-left: toRem(16) !important;
+        }
+
+        .am-list-item.am-input-item {
+            height: toRem(88) !important;
+            padding-left: toRem(30) !important;
+        }
+
+        .am-list-item .am-list-line {
+            padding-right: toRem(30) !important;
+        }
+
+        .am-list-item .am-input-label.am-input-label-5 {
+            width: toRem(170) !important;
+        }
+        .am-list-item .am-input-label {   
+            font-size: toRem(32) !important;
+            margin-right: toRem(10) !important;
+            padding: toRem(4) 0 !important;
+        }
+
+        .am-list-item .am-input-control {
+            font-size: toRem(32) !important;
+        }
+
+        .am-list-item .am-input-control input {
+            font-size: toRem(32) !important;     
+            padding: toRem(4) 0;
+        }
+
+        .am-list-item .am-input-clear {
+            width: toRem(42) !important;
+            height: toRem(42) !important;
+            background-size: toRem(42) auto !important;
+            background-position: toRem(4) toRem(4) !important;
+        }
+    }
+}
+
+
+.divEditView{
+    width: 100%;
+}
 .divSearchView{
     width: 100%;
     position:fixed;
@@ -232,6 +332,9 @@
             font-size: toRem(32) !important;
             padding-top: toRem(14) !important;
             padding-bottom: toRem(14) !important;
+              -webkit-flex-basis: auto !important;
+    -ms-flex-preferred-size: auto !important;
+    flex-basis: auto !important;
         }
 
         .am-list-item .am-list-line .am-list-arrow {   
@@ -300,6 +403,68 @@
             margin-left: toRem(32) !important;
             margin-right: toRem(32) !important;
             width: toRem(300) !important;
+        }
+
+        .am-icon-md {
+            width: toRem(44) !important;
+            height: toRem(44) !important;
+        }
+    }
+}
+
+.my-radio{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #222222;
+
+    .spLabel{
+         padding-right: toRem(70);
+    }
+
+    label{
+        margin-left: toRem(30);
+        margin-right: toRem(30);
+        font-size: toRem(32) !important;
+    }
+
+    :global{
+        .am-radio{
+            padding: toRem(5) !important;
+            border: 1px solid #ccc !important;
+            border-radius: 50% !important;
+            margin-right: toRem(10) !important;
+            position: relative !important;
+            top: toRem(-4) !important;
+          }
+
+          .am-radio-inner {
+            width: toRem(30) !important;
+            height: toRem(30) !important;
+      
+        }
+    }
+ }
+
+.divEditPageButton{
+    width: 100%;
+    height: toRem(120);
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+
+    :global{
+        .am-button-primary {
+            border-radius: toRem(10) !important;
+        }
+
+        .am-button {
+            font-size: toRem(36) !important;
+            height: toRem(80) !important;
+            line-height: toRem(80) !important;
+            border-radius: toRem(10) !important;
+            width: toRem(650) !important;
         }
 
         .am-icon-md {
