@@ -134,6 +134,14 @@ const renderDataView = (property, pageId, queryData, primaryKey, actionData, act
       renderRow={(rowData) => renderRow(property, pageId, rowData, rowData[primaryKey], pageRecord)} /></React.Fragment>)
 }
 
+const setColumnsVisible2 = (visibleColNames, property, pageAxis, pageInfo) => {
+  property.properties.forEach(p => p.isVisible = (visibleColNames.indexOf(p.name) >= 0));
+  if (property.isGroupByQuery) {
+      pageInfo.pageIndex = 1;
+      refresh(pageInfo, property, pageAxis);
+  }
+};
+
 export default React.memo((props) => {
   const { property, pageAxis } = Base.getProps(props);
   const { dispatch, dispatchAction, setActionState } = pageAxis;
@@ -166,6 +174,7 @@ export default React.memo((props) => {
   property.getPageRecord = () => queryData.pageInfo.pageRecord;
   property.refresh = () => refresh(queryData.pageInfo, property, pageAxis)
   property.setDataLoading = (l) => { };
+  property.setColumnsVisible2 = (visibleColNames) => setColumnsVisible2(visibleColNames, property, pageAxis, queryData.pageInfo);
 
   window._DataGridView.refresh = () => refresh(queryData.pageInfo, property, pageAxis);
 

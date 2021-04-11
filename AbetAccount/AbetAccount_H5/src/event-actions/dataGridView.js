@@ -415,4 +415,95 @@ export default class DataGridView extends BaseIndex {
         action.parameters = { dataGridView };
     }
 
+    setDataGridShowColumns(props, action) {
+        if (!action.parameters) this.initSetDataGridShowColumnsAction(props, action);
+        const { pageAxis } = props;
+
+        const { dataGridView } = action.parameters;
+
+        if (!action.parameters.columnsView) action.parameters.columnsView = this.initColumnsView(dataGridView.name, dataGridView.properties);
+
+        const { columnsView } = action.parameters;
+
+        const value = dataGridView.properties.filter(f => f.isVisible !== false).map(m => m.name);
+        const allSelect = columnsView.properties[0];
+        allSelect.isChanged = false;
+        const colPropertery = columnsView.properties[1];
+        colPropertery.isChanged = false;
+        if (colPropertery.setValue) colPropertery.setValue(value);
+        colPropertery.value = value;
+
+        const allSelected = value.length === dataGridView.properties.length;
+        if (allSelect.setValue) allSelect.setValue(allSelected);
+        allSelect.value = allSelected;
+
+        var colSelected = false, allSelected2 = false;
+        const nameList = dataGridView.properties.map(m => m.name);
+        allSelect.valueChange = (v) => {
+            if (!allSelect.isChanged) return;
+            if (colSelected) { colSelected = false; return; }
+
+            allSelected2 = true;
+            colPropertery.setValue(v ? nameList : []);
+        };
+
+        colPropertery.valueChange = (v) => {
+            if (!colPropertery.isChanged) return;
+            if (allSelected2) { allSelected2 = false; return; }
+
+            colSelected = true;
+            allSelect.setValue(v.length === nameList.length);
+        };
+
+        const onOk = (e, p) => this.setSelectShowColumns(e, p, props, action);
+        this.showdialog(action, pageAxis, columnsView, onOk);
+    }
+
+    setSelectShowColumns(e, p, props, action) {
+        const { pageAxis } = props;
+        const { columnsView, dataGridView } = action.parameters;
+        const colPropertery = columnsView.properties[1];
+        const value = colPropertery.getValue();
+
+        if (value.length === 0) { this.alert("最少需选择一列！", pageAxis.alert); return; }
+        dataGridView.setColumnsVisible2(value);
+
+        action.modalDialog.setVisible(false);
+    }
+
+    initSetDataGridShowColumnsAction(props, action) {
+        const { pageAxis } = props;
+        const dataGridView = pageAxis.getProperty(action.dataGridView);
+
+        action.parameters = { dataGridView }
+    }
+
+    initColumnsView(name, properties) {
+        const dataSource = properties.map(m => { return { value: m.name, text: m.label } })
+        return {
+            name: name + "columnsView",
+            type: "View",
+            isList: true,
+            className: "divColumsView",
+            id: Common.createGuid(),
+            dialogId: Common.createGuid(),
+            dialogTitle: "自定义显示列",
+            properties: [{
+                id: Common.createGuid(),
+                name: name + "AllSelect",
+                type: "CheckBox",
+                checkedValue: true,
+                unCheckedValue: false,
+                text: "全选",
+                spanClassName: 'spanAllSelect',
+                isListItem: true,
+                style: { borderTop: "1px solid #e8e8e8", color: "#1890ff", background: "#fafafa" }
+            }, {
+                id: Common.createGuid(),
+                name: name + "Columns",
+                type: "CheckBoxGroup",
+                dataSource
+            }]
+        }
+    }
 }

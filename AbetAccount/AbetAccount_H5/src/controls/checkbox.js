@@ -19,8 +19,9 @@ export default (props) => {
     const [isReadOnly, setIsReadOnly] = useState(!!property.isReadOnly);
 
     const onChange = useCallback((e) => {
+        property.isChanged = true;
         !isReadOnly && setValue(e.target.checked ? 1 : 0)
-    }, [setValue, isReadOnly]);
+    }, [property, setValue, isReadOnly]);
 
     useEffect(() => {
         valueChange(property, view, pageAxis, value);
@@ -40,7 +41,7 @@ export default (props) => {
 
     if (property.isListItem) {
         return (<List.Item className={className} style={property.style} >
-            <Checkbox checked={checked} disabled={disabled} onChange={onChange}>{property.text}</Checkbox>
+            <Checkbox checked={checked} disabled={disabled} onChange={onChange}><span className={styles[property.spanClassName]}>{property.text}</span></Checkbox>
         </List.Item>)
     }
 

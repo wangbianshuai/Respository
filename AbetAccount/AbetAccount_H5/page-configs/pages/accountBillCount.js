@@ -72,9 +72,9 @@ function getEventActions() {
             dialogView: "searchView2"
         },
         {
-            name: 'showColumn',
-            type: 'dataGridView/showColumns',
-            dataGridView: "dataGridView1",
+            name: "setShowColumns",
+            type: "dataGridView/setDataGridShowColumns",
+            dataGridView: "dataGridView1"
         },
         {
             name: "closeConditionDialog",
@@ -101,7 +101,7 @@ function getShowColumn() {
         type: 'ImageButton',
         imageName: 'showColumn.png',
         className: 'divAddButton',
-        eventActionName: 'showColumn'
+        eventActionName: 'setShowColumns'
     }
 }
 
@@ -133,6 +133,7 @@ function getDataGridView() {
         entity,
         isShowRecord: false,
         isShowColumn: true,
+        isGroupByQuery: true,
         entitySearchQuery: dataActionTypes.searchQuery,
         eventActionName: 'searchQuery',
         detailPageUrl: '/accountBillEdit.html',

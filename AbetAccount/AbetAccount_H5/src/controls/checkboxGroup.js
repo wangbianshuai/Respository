@@ -23,7 +23,7 @@ const getOptions = (property, view, pageAxis, parentValue) => {
 
 const renderOptions = (options, value, onChange) => {
     return options.map((m, i) => <Checkbox.CheckboxItem key={i}
-        checked={value.includes(m.value)} onChange={(e) => onChange(e, m)}>{m.label}</Checkbox.CheckboxItem >)
+        checked={value.includes(m.value)} onClick={e => onChange(e, m)}>{m.label}</Checkbox.CheckboxItem>)
 };
 
 const getSelectValues = (options, value, isReadOnly) => {
@@ -42,6 +42,8 @@ const valueChange = (property, view, pageAxis, value) => {
 
 const getValue = (property, v) => {
     if (Common.isNullOrEmpty(v)) return [];
+
+    if (Common.isArray(v)) return v;
 
     if (property.isJson) return JSON.parse(v);
     return v.split(',');
@@ -74,6 +76,7 @@ export default (props) => {
     const [options, setOptions] = useGetDataSourceOptions(property, view, pageAxis, getOptions);
 
     const onChange = useCallback((e, m) => {
+        property.isChanged = true;
         let value2 = value;
         if (value2.includes(m.value)) value2 = value.filter(f => !Common.isEquals(f, m.value))
         else {
@@ -81,7 +84,7 @@ export default (props) => {
             value2.push(m.value);
         }
         setValue(value2);
-    }, [setValue, value]);
+    }, [property, setValue, value]);
 
     useEffect(() => {
         valueChange(property, view, pageAxis, value);
