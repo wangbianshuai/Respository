@@ -60,3 +60,15 @@
         }
     }
 }
+
+.divActivityIndicator{
+    width: 100%;
+    height: toRem(60);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    span{
+        font-size: toRem(28);
+    }
+}

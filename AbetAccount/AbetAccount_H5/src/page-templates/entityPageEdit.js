@@ -22,6 +22,8 @@ function getDataActionOptions(name, entityName, minActionType, expandActionNames
     getEntityData: getActionType(),
     //保存实体数据
     saveEntityData: getActionType(),
+    //删除实体数据
+    deleteEntityData: getActionType(),
   };
 
   if (expandActionNames) expandActionNames.forEach(a => actionTypes[getActionName(a)] = getActionType());

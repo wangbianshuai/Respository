@@ -71,7 +71,15 @@ const setBindDataList = (actionData, actionTypes, queryData, primaryKey) => {
       queryData.dataList = data.dataList;
       queryData.id = Common.createGuid();
     }
-    else queryData.dataList = queryData.dataList.concat(data.dataList);
+    else {
+      const dataList = [];
+      queryData.dataList.forEach(d => {
+        var item = Common.arrayFirst(data.dataList, f => Common.isEquals(f[primaryKey], d[primaryKey], true));
+        if (item == null) dataList.push(d);
+      });
+      data.dataList.forEach(d => dataList.push(d));
+      queryData.dataList = dataList;
+    }
   }
 
   queryData.dataList && queryData.dataList.forEach(d => d.key = d[primaryKey] || Common.createGuid());
@@ -84,22 +92,22 @@ const renderRow = (property, pageId, data, id, pageRecord) => {
   return <div></div>;
 };
 
-const renderColumnHeader = (property, itemCount, pageRecord, groupByInfo) => {
+const renderColumnHeader = (property, dataList, pageInfo, primaryKey, groupByInfo) => {
   if (!property.headerItemType) return null;
 
   const { headerItemType } = property;
 
-  if (DataItems[headerItemType]) return React.createElement(DataItems[headerItemType], { property, itemCount, pageRecord, groupByInfo });
+  if (DataItems[headerItemType]) return React.createElement(DataItems[headerItemType], { property, dataList, pageInfo, primaryKey, groupByInfo });
 
   return null;
 };
 
-const renderHeader = (property, dataList, pageRecord, groupByInfo) => {
+const renderHeader = (property, dataList, pageInfo, primaryKey, groupByInfo) => {
   return () => {
     return (
       <React.Fragment>
-        {property.isShowRecord !== false && pageRecord > 0 && <div className={styles.divPageInfo}><span>当前显示：{dataList.length}条</span><span>总记录：{pageRecord}条</span></div>}
-        {renderColumnHeader(property, dataList.length, pageRecord, groupByInfo)}
+        {property.isShowRecord !== false && pageInfo.pageRecord > 0 && <div className={styles.divPageInfo}><span>当前显示：{dataList.length}条</span><span>总记录：{pageInfo.pageRecord}条</span></div>}
+        {renderColumnHeader(property, dataList, pageInfo, primaryKey, groupByInfo)}
       </React.Fragment>
     )
   }
@@ -119,7 +127,7 @@ const renderDataView = (property, pageId, queryData, primaryKey, actionData, act
       dataList={dataList}
       pageIndex={pageIndex}
       pageIndexChange={pageIndexChange}
-      renderHeader={renderHeader(property, dataList, pageRecord, groupByInfo)}
+      renderHeader={renderHeader(property, dataList, queryData.pageInfo, primaryKey, groupByInfo)}
       renderRow={(rowData) => renderRow(property, pageId, rowData, rowData[primaryKey], pageRecord)} /></React.Fragment>)
 }
 

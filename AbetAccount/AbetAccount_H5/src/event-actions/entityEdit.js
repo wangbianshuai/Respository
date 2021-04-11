@@ -308,4 +308,49 @@ export default class EntityEdit extends BaseIndex {
 
         action.parameters = { editView };
     }
+
+    deleteEntityData(props, action) {
+        if (!action.parameters) this.initDeleteEntityData(props, action);
+
+        const { pageAxis, property } = props;
+        const { editView } = action.parameters;
+
+        const dataActionType = editView.deleteEntityDataActionType;
+        const { entityData } = editView;
+        if (!entityData) return;
+
+        //设置接收数据行数返回数据
+        pageAxis.receives[dataActionType] = (d) => this.receiveDeleteEntityData(d, props, action)
+
+        const onOk = () => {
+            property.setDisabled && property.setDisabled(true);
+
+            pageAxis.invokeDataAction(dataActionType, { entity: editView.entity, entityData })
+        };
+
+        if (property.confirmTip) pageAxis.confirm(property.confirmTip, onOk);
+        else onOk();
+    }
+
+    receiveDeleteEntityData(data, props, action) {
+        const { pageAxis, property } = props;
+        const { editView } = action.parameters;
+
+        property.setDisabled && property.setDisabled(false);
+
+        if (this.isSuccessNextsProps(data, pageAxis.alert)) {
+            const id = editView.entityData[editView.entity.primaryKey];
+            if (window._DataItems && window._DataItems[id]) window._DataItems[id].remove();
+            if (window._ListHeader) window._ListHeader.removeItem(id);
+            pageAxis.alertSuccess(property.successTip, () => pageAxis.toBack());
+        }
+        return false;
+    }
+
+    initDeleteEntityData(props, action) {
+        const { pageAxis } = props;
+        const editView = pageAxis.getProperty(action.editView);
+
+        action.parameters = { editView };
+    }
 }

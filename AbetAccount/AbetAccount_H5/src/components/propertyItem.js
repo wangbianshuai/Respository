@@ -25,6 +25,16 @@ const createComponent = (type, props) => {
     else return getPageComponent(type, props);
 };
 
+//设置显示权限
+const getIsVisible = (property, pageAxis) => {
+    let isVisible = property.isVisible !== false;
+
+    //判断是否有显示权限
+    if (isVisible)  isVisible = pageAxis.getRight(property.name);
+    
+    property.isVisible = isVisible;
+}
+
 const getReactComponent = (property, view, pageId) => {
     const props = { property: property, key: property.id, view: view || {}, pageId }
 
@@ -33,6 +43,8 @@ const getReactComponent = (property, view, pageId) => {
 
 export default (props) => {
     const { property, view, pageId, pageAxis } = Base.getProps(props);
+
+    getIsVisible(property, pageAxis)
 
     useEffect(() => {
         pageAxis.getReactComponent = getReactComponent;

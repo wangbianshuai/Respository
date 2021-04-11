@@ -36,7 +36,10 @@ function getNavBar() {
             type: 'ImageButton',
             imageName: 'delete.png',
             className: 'divDeleteButton',
-            eventActionName: 'deleteEntityData'
+            eventActionName: 'deleteEntityData',
+            isVisible: false,
+            successTip: "删除成功！",
+            confirmTip: "请确认是否删除当前记账记录？",
         }
     }
 }
@@ -59,7 +62,7 @@ function getEditView() {
 
 function getButtonProperties() {
     return [
-        { ...getButton("saveEntityData", "保存", "primary"), eventActionName: "saveEntityData" },
+        { ...getButton("saveEntityData", "保存", "primary"), isVisible: false, eventActionName: "saveEntityData" },
     ]
 }
 
@@ -151,13 +154,13 @@ function getEventActions() {
     return [{
         name: "saveEntityData",
         type: "entityEdit/saveEntityData",
-        editView: "accountBillEdit2",
-        expandSetEntityData: "expandSetEntityData"
+        editView: "accountBillEdit2"
     },
     {
         name: "getEntityData",
         type: "entityEdit/getEntityData",
-        editView: "accountBillEdit2"
+        editView: "accountBillEdit2",
+        setGetEntityDataLoad: "setGetEntityDataLoad"
     },
     {
         name: "deleteEntityData",

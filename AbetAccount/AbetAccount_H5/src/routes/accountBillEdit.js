@@ -11,6 +11,10 @@ export default EntityPageEdit("accountBillEdit", "AccountBill", 'Abet-记账-编
         this.amount = this.getProperty('Amount');
         this.amount.valueChange = (v) => this.setTax(null, v);
         this.tax = this.getProperty('Tax');
+
+        this.deleteProperty = this.getProperty('navTitle').rightProperty;
+        this.saveProperty = this.getProperty('saveEntityData');
+        this.saveProperty.isVisible = !this.pageData.BillId;
     },
     setTax(accountType, amount) {
         if (accountType == null) accountType = this.accountType.getValue ? this.accountType.getValue() : 0;
@@ -22,6 +26,12 @@ export default EntityPageEdit("accountBillEdit", "AccountBill", 'Abet-记账-编
             amount = Common.getNumber(amount);
             const tax = amount > 0 ? (amount * 0.07).toFixed(2) : 0;
             this.tax.setValue(tax);
+        }
+    },
+    setGetEntityDataLoad({ data }) {
+        if (Common.isEquals(data.CreateUser, this.loginUser.UserId, true)) {
+            this.deleteProperty.setVisible(true);
+            this.saveProperty.setVisible(true);
         }
     }
 }, ['AdminUserService/getUsers', 'AccountCategoryService/getAccountCategorys', 'AccountItemService/getAccountItems']);

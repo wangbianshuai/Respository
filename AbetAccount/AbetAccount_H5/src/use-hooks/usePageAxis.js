@@ -10,7 +10,7 @@ page:{
 props:父级页面props
 */
 
-import {  useEffect } from "react";
+import { useEffect } from "react";
 import { Common, PageCommon } from 'UtilsCommon';
 import EventActions from 'EventActions';
 import { EnvConfig } from 'Configs';
@@ -100,8 +100,8 @@ class PageAxis {
         this.modalDialog.add && this.modalDialog.add(p);
     }
 
-    showMessage(msg) {
-        PageCommon.showMessage(msg);
+    showMessage(msg, onClose) {
+        PageCommon.showMessage(msg, onClose);
     }
 
     getProperty(name) {
@@ -164,15 +164,15 @@ class PageAxis {
         return null;
     }
 
- 
+
     toPage(url) {
         if (url.match(/#{.*?}/)) url = Common.replaceDataContent(this.pageData, url, true);
         url = wetRootPath + url;
         this.props.history.push(url);
     }
 
-    toLogin(){
-       this.toPage('/login.html')    
+    toLogin() {
+        this.toPage('/login.html')
     }
 
     toBack() {
