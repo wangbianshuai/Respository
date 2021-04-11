@@ -5,6 +5,6 @@ export default EntityPageEdit("accountItemEdit", "AccountItem", 'Abet-实现项�
         this.deleteProperty = this.getProperty('navTitle').rightProperty;
     },
     setGetEntityDataLoad() {
-        this.deleteProperty.setVisible(true);
+        if (this.loginUser.OperationRight === 1) this.deleteProperty.setVisible(true);
     }
 });

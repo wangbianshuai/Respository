@@ -13,11 +13,11 @@ const entity = { name, primaryKey, viewName, isGroupByInfo: true };
 module.exports = {
     name: "index",
     type: "View",
+    noRightNames: ['add'],
     dialogViews: getDialogViews(),
     eventActions: getEventActions(),
     properties: [getTopView(), getDataGridView()]
 }
-
 
 function getTopView() {
     return {

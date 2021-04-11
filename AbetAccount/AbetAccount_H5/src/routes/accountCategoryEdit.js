@@ -5,6 +5,6 @@ export default EntityPageEdit("accountCategoryEdit", "AccountCategory", 'Abet-æ”
         this.deleteProperty = this.getProperty('navTitle').rightProperty;
     },
     setGetEntityDataLoad() {
-        this.deleteProperty.setVisible(true);
+        if (this.loginUser.OperationRight === 1) this.deleteProperty.setVisible(true);
     }
 });

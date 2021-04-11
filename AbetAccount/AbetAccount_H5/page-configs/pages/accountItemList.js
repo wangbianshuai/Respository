@@ -12,6 +12,7 @@ const entity = { name, primaryKey, viewName };
 module.exports = {
     name: "index",
     type: "View",
+    noRightNames: ['add'],
     eventActions: getEventActions(),
     properties: [getTopView(), getDataGridView()]
 }
