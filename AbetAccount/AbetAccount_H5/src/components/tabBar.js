@@ -1,6 +1,7 @@
 import React, { useCallback } from 'react';
 import { TabBar } from 'antd-mobile';
 import { Common } from 'UtilsCommon';
+import { EnvConfig } from 'Configs';
 
 const getImage = (url, className) => {
     return <img src={Common.getImageUrl(url)} alt="" className={className} />
@@ -12,8 +13,8 @@ const judgeSelected = (item, pathName) => {
 
 const press = (item, pathName, history) => {
     if (judgeSelected(item, pathName)) return;
-
-    let url = `/${item.pageName}.html`;
+    const wetRootPath = EnvConfig.getServiceUrl('WebRootPath')();
+    let url = wetRootPath + `/${item.pageName}.html`;
     history.push(url);
 };
 

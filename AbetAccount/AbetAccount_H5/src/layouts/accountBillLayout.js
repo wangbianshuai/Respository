@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 import AccountBillEdit from '../routes/accountBillEdit';
 import AccountBillList from '../routes/accountBillList';
-import AccountBillCount from '../routes/accountBillCount';
 import styles from '../styles/layout.scss';
 import { Flex } from 'antd-mobile';
 import Components from 'Components';
@@ -18,7 +17,6 @@ export default (props) => {
     const path = location.pathname.toLowerCase();
     const isDetail = path.indexOf('/accountbilledit.html') >= 0
     if (!_isList) _isList = path.indexOf('/accountbilllist.html') >= 0;
-    const isCount = path.indexOf('/accountbillcount.html') >= 0;
 
     useEffect(() => { return () => _isList = false }, []);
 
@@ -29,7 +27,6 @@ export default (props) => {
         <Flex.Item className={isDetail ? styles.divPage2 : styles.divPage} >
             {_isList && <div className={styles.divList} style={{ display: isDetail ? 'none' : '' }}><AccountBillList {...props} /></div>}
             {isDetail && <AccountBillEdit {...props} />}
-            {isCount && <div className={styles.divList}><AccountBillCount {...props} /></div>}
         </Flex.Item>
         {!isDetail && <Flex.Item className={styles.divTabBar} style={{ flex: 0 }}>
             <Components.TabBar property={_tabBarProperty} pathName='accountBill' history={history} />

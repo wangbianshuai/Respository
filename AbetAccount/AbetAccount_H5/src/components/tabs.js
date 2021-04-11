@@ -25,11 +25,13 @@ export default (props) => {
 
   const onTabClick = useCallback((tab) => {
     if (tab.url) pageAxis.toPage(tab.url);
-    if (property.isChangeClassName) {
-      if (tab.sub > property.subIndex) setCurrentClassName(property.className + tab.sub)
-      else setCurrentClassName(null)
+    else {
+      if (property.isChangeClassName) {
+        if (tab.sub > property.subIndex) setCurrentClassName(property.className + tab.sub)
+        else setCurrentClassName(null)
+      }
+      _TabsData[property.name].currentTabPage = tab.sub - 1;
     }
-    _TabsData[property.name].currentTabPage = tab.sub - 1;
   }, [pageAxis, property, setCurrentClassName])
 
   property.setVisible = (v) => setIsVisible(v);
@@ -48,7 +50,7 @@ export default (props) => {
   let className = Base.getClassName(property, styles);
   if (currentClassName) className = styles[currentClassName];
 
-  const { style, tabBarStyle, isDiv ,tabPage} = property;
+  const { style, tabBarStyle, isDiv, tabPage } = property;
   const swipeable = property.swipeable === undefined ? false : property.swipeable;
 
   if (isDiv) return (<div className={className} style={style}>
