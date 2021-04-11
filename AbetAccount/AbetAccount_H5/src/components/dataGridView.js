@@ -6,6 +6,8 @@ import ListView2 from "./listView2";
 import styles from "../styles/view.scss";
 import Base from './base';
 
+window._DataGridView = {};
+
 const pageIndexChange = (pageIndex, isData, pageInfo, property, pageAxis) => {
   isData = isData === undefined ? true : isData;
   if (pageIndex > 1 && pageIndex > pageInfo.pageCount) {
@@ -92,22 +94,22 @@ const renderRow = (property, pageId, data, id, pageRecord) => {
   return <div></div>;
 };
 
-const renderColumnHeader = (property, dataList, pageInfo, primaryKey, groupByInfo) => {
+const renderColumnHeader = (property, itemCount, pageRecord, groupByInfo) => {
   if (!property.headerItemType) return null;
 
   const { headerItemType } = property;
 
-  if (DataItems[headerItemType]) return React.createElement(DataItems[headerItemType], { property, dataList, pageInfo, primaryKey, groupByInfo });
+  if (DataItems[headerItemType]) return React.createElement(DataItems[headerItemType], { property, itemCount, pageRecord, groupByInfo });
 
   return null;
 };
 
-const renderHeader = (property, dataList, pageInfo, primaryKey, groupByInfo) => {
+const renderHeader = (property, itemCount, pageRecord, groupByInfo) => {
   return () => {
     return (
       <React.Fragment>
-        {property.isShowRecord !== false && pageInfo.pageRecord > 0 && <div className={styles.divPageInfo}><span>当前显示：{dataList.length}条</span><span>总记录：{pageInfo.pageRecord}条</span></div>}
-        {renderColumnHeader(property, dataList, pageInfo, primaryKey, groupByInfo)}
+        {property.isShowRecord !== false && pageRecord > 0 && <div className={styles.divPageInfo}><span>当前显示：{dataList.length}条</span><span>总记录：{pageRecord}条</span></div>}
+        {renderColumnHeader(property, itemCount, pageRecord, groupByInfo)}
       </React.Fragment>
     )
   }
@@ -119,6 +121,7 @@ const renderDataView = (property, pageId, queryData, primaryKey, actionData, act
   setBindDataList(actionData, actionTypes, queryData, primaryKey);
   const { dataList, groupByInfo } = queryData;
   const { pageIndex, pageRecord } = queryData.pageInfo;
+  const itemCount = dataList ? dataList.length : 0;
 
   return (<React.Fragment>
     <ListView2
@@ -127,7 +130,7 @@ const renderDataView = (property, pageId, queryData, primaryKey, actionData, act
       dataList={dataList}
       pageIndex={pageIndex}
       pageIndexChange={pageIndexChange}
-      renderHeader={renderHeader(property, dataList, queryData.pageInfo, primaryKey, groupByInfo)}
+      renderHeader={renderHeader(property, itemCount, pageRecord, groupByInfo)}
       renderRow={(rowData) => renderRow(property, pageId, rowData, rowData[primaryKey], pageRecord)} /></React.Fragment>)
 }
 
@@ -163,6 +166,8 @@ export default React.memo((props) => {
   property.getPageRecord = () => queryData.pageInfo.pageRecord;
   property.refresh = () => refresh(queryData.pageInfo, property, pageAxis)
   property.setDataLoading = (l) => { };
+
+  window._DataGridView.refresh = () => refresh(queryData.pageInfo, property, pageAxis);
 
   if (!isVisible) return null;
 

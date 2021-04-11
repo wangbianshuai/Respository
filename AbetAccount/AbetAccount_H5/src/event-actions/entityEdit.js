@@ -174,6 +174,8 @@ export default class EntityEdit extends BaseIndex {
                 else if (action.successCallback) action.successCallback({ data, props, action });
             };
 
+            window._DataGridView&& window._DataGridView.refresh();
+            
             if (successCallback) successCallback({ data, props, action });
             else pageAxis.alertSuccess(editView.successTip || "保存成功", onOk);
 
@@ -334,14 +336,10 @@ export default class EntityEdit extends BaseIndex {
 
     receiveDeleteEntityData(data, props, action) {
         const { pageAxis, property } = props;
-        const { editView } = action.parameters;
-
         property.setDisabled && property.setDisabled(false);
 
         if (this.isSuccessNextsProps(data, pageAxis.alert)) {
-            const id = editView.entityData[editView.entity.primaryKey];
-            if (window._DataItems && window._DataItems[id]) window._DataItems[id].remove();
-            if (window._ListHeader) window._ListHeader.removeItem(id);
+            window._DataGridView&& window._DataGridView.refresh();
             pageAxis.alertSuccess(property.successTip, () => pageAxis.toBack());
         }
         return false;
