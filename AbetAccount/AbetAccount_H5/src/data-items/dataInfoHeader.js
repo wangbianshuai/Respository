@@ -25,6 +25,14 @@ const renderConditionTextList = (textList) => {
     </div>
 };
 
+const renderColumns = (property) => {
+    const properties = property.properties.filter(f => f.isVisible !== false);
+
+    return <div className={styles.divColumns}>
+        {properties.map((m, i) => <span key={i}>【{m.label}】</span>)}
+    </div>
+};
+
 export default React.memo((props) => {
     const { property, itemCount, pageRecord, groupByInfo } = props;
     const { groupByInfoHtml } = property;
@@ -36,6 +44,7 @@ export default React.memo((props) => {
             {conditionTextList.length > 0 && renderConditionTextList(conditionTextList)}
             {groupByInfoHtml && <div className={styles.divGroupByInfo} dangerouslySetInnerHTML={{ __html: getGroupByInfoHtml(groupByInfo, groupByInfoHtml) }}></div>}
             <div className={styles.divPageInfo}><span>当前显示：{itemCount}条</span><span>总记录：{pageRecord}条</span></div>
+            {property.isShowColumn && renderColumns(property)}
         </div>
     )
 });

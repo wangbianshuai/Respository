@@ -72,3 +72,16 @@
         font-size: toRem(28);
     }
 }
+
+.divColumns{
+    width: 100%;
+    border-top:toRem(8) solid #efeff4;
+    padding-top: toRem(8);
+    padding-bottom: toRem(8);
+    
+    span{
+        font-size: toRem(32);
+        line-height: toRem(48);
+        color: #000000;
+    }
+}

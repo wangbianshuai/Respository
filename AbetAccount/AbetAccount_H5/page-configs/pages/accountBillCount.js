@@ -1,4 +1,4 @@
-const { getButton, getTextBox, getDatePicker, getSelect, getSelect2 } = require("../Common");
+const { getButton, assignProporties, getTextBox, getDatePicker, getSelect, getSelect2 } = require("../Common");
 const accountBill = require("../entities/accountBill");
 
 //accountBillCount 500-599
@@ -72,9 +72,9 @@ function getEventActions() {
             dialogView: "searchView2"
         },
         {
-            name: "toEditPage",
-            type: "page/toPage",
-            pageUrl: "/accountBillEdit.html"
+            name: 'showColumn',
+            type: 'dataGridView/showColumns',
+            dataGridView: "dataGridView1",
         },
         {
             name: "closeConditionDialog",
@@ -91,11 +91,11 @@ function getSearchView() {
         isKeywordView: true,
         keywordName: 'keyword2',
         className: 'divSearchBarView',
-        properties: [getSearchBar(), getAdd()]
+        properties: [getSearchBar(), getShowColumn()]
     }
 }
 
-function getAdd() {
+function getShowColumn() {
     return {
         name: 'showColumn',
         type: 'ImageButton',
@@ -125,16 +125,20 @@ function getDataGridView() {
     return {
         name: 'dataGridView1',
         type: "DataGridView",
-        properties: assignProporties([{ name: "BillDate", orderByType: "desc" }, "AccountItemName", "AccountCategoryName", "IncomeOutlayName", getAmount('Amount2'), getAmount('Tax2'), "Remark", "AccountTypeName", "BillUserName",
-        { name: "CreateDate", orderByType: "desc" }, { name: "CreateUser", isVisible: false }, { name: "RowVersion", isVisible: false }]),
+        properties: assignProporties(accountBill,
+            [
+                { name: "BillDate", orderByType: "desc", isVisible: false }, "BillYear", "BillMonth", "BillDay",
+                "AccountItemName", "IncomeOutlayName", "AccountCategoryName", "BillUserName", getAmount('Amount2'), getAmount('Tax2')]
+        ),
         entity,
         isShowRecord: false,
+        isShowColumn: true,
         entitySearchQuery: dataActionTypes.searchQuery,
         eventActionName: 'searchQuery',
         detailPageUrl: '/accountBillEdit.html',
         actionName: 'searchQuery',
         className: "divDataGridView",
-        itemType: 'AccountBillItem',
+        itemType: 'AccountBillCountItem',
         headerItemType: 'DataInfoHeader',
         groupByInfoHtml: getGroupByInfoHtml(),
     }
@@ -161,18 +165,10 @@ function getGroupByInfoHtml() {
     return html.join("");
 }
 
-function assignProporties(properties) {
-    const list = [];
-    properties.forEach(p => {
-        if (typeof p === 'string') return list.push({ name: p })
-        else list.push(p)
-    })
-    return list;
-}
-
 function getAmount(name) {
     return {
         name,
+        groupByExpression: `sum(${name})`,
         isFixed2: true, isCurrency: true, fontColor: "#1890ff"
     }
 }
@@ -246,7 +242,6 @@ function getButtonView() {
         properties: [
             { ...getButton("search", "搜索", "primary", 3, 3), icon: "search", eventActionName: "searchQuery2", pressEnterEventActionName: "searchQuery2" },
             { ...getButton("clearQuery", "清空", "default", 3, 4), eventActionName: "clearQuery" }
-
         ]
     }
 }

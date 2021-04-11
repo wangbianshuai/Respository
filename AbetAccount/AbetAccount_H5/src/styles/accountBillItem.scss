@@ -62,4 +62,23 @@
     a:active{
         background-color: #ddd;
     }
+
+   
+}
+
+.divContainer2{
+    width: 100%;
+    border-bottom:toRem(8) solid #efeff4;
+    box-sizing: border-box;
+    padding-left: toRem(24);
+    padding-right: toRem(24);
+    padding-top: toRem(16);
+    padding-bottom: toRem(16);
+
+    .spanText{
+            font-size: toRem(30);
+            line-height: toRem(50);
+            margin-right: toRem(16);
+        
+    }
 }
