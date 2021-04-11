@@ -9,25 +9,32 @@ const dataActionTypes = {
 module.exports = {
     name: "changePasswordView",
     type: "View",
+    isDiv: true,
+    className: 'divEditPage',
     eventActions: getEventActions(),
-    properties: assignProporties({ name: "changePassword" }, [getEditView()])
+    properties: assignProporties({ name: "changePassword" }, [getNavBar(), getEditView(),  getButtonView()])
+}
+
+function getNavBar() {
+    return {
+        name: 'navTitle',
+        type: 'NavBar',
+        text: '修改密码',
+        isBack: true
+    }
 }
 
 function getButtonProperties() {
-    return [{
-        name: "leftSpace1",
-        type: "WhiteSpace",
-        className: "ant-col ant-col-8 ant-form-item-label"
-    },
-    { ...getButton("saveEntityData", "保存", "primary"), eventActionName: "saveEntityData", style: { width: 84 } }]
+    return [{...getButton("saveEntityData", "保存", "primary"), eventActionName: "saveEntityData", }]
 }
 
 function getEditView() {
     return {
         name: "changePasswordView2",
-        type: "RowsColsView",
-        isForm: true,
+        type: "View",
+        isList: true,
         isClear: true,
+        className: "divEditView",
         successTip: "修改成功",
         saveEntityDataActionType: dataActionTypes.changePassword,
         properties: assignProporties({ name: "changePassword" }, getProperties())
@@ -39,7 +46,7 @@ function getProperties() {
         { ...getTextBox2("OldPassword", "原密码", 1, 1, "", "请输入原密码", 50, false), controlType: "password" },
         { ...getTextBox2("NewPassword", "新密码", 2, 1, "", "请输入新密码", 50, false), controlType: "password" },
         { ...getTextBox2("AgainNewPassword", "确认密码", 3, 1, "", "请输入确认密码", 50, false), controlType: "password" },
-        getButtonView()
+      
     ]
 }
 
@@ -47,12 +54,8 @@ function getButtonView() {
     return {
         name: "buttonView",
         type: "View",
-        className: "divCenterButton",
+        className: "divEditPageButton",
         isDiv: true,
-        isFormItem: true,
-        colSpan: 24,
-        x: 6,
-        y: 1,
         properties: assignProporties({ name: "changePassword" }, getButtonProperties())
     }
 }

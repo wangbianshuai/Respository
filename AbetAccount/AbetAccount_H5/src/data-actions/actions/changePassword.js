@@ -1,4 +1,4 @@
-import BaseIndex from '../../baseIndex';
+import BaseIndex from '../baseIndex';
 import { Common, Md5 } from 'UtilsCommon';
 
 export default class ChangePassword extends BaseIndex {

@@ -11,7 +11,7 @@ const htmlPageConfigs = {
         chunks: chunks1,
         //     htmls: ['index', 'login', 'accountBillList', 'accountBillEdit', 'accountBillCount', 'accountCategoryList', 'accountCategoryEdit',
         // 'accountItemList', 'accountItemEdit','userInfo','changePassword'],
-        htmls: ['index', 'userInfo']
+        htmls: ['index', 'changePassword']
     }
 };
 

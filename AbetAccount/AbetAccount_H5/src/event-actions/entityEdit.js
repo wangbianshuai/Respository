@@ -174,8 +174,8 @@ export default class EntityEdit extends BaseIndex {
                 else if (action.successCallback) action.successCallback({ data, props, action });
             };
 
-            window._DataGridView&& window._DataGridView.refresh();
-            
+            window._DataGridView && window._DataGridView.refresh && window._DataGridView.refresh();
+
             if (successCallback) successCallback({ data, props, action });
             else pageAxis.alertSuccess(editView.successTip || "保存成功", onOk);
 
@@ -339,7 +339,7 @@ export default class EntityEdit extends BaseIndex {
         property.setDisabled && property.setDisabled(false);
 
         if (this.isSuccessNextsProps(data, pageAxis.alert)) {
-            window._DataGridView&& window._DataGridView.refresh();
+            window._DataGridView && window._DataGridView.refresh();
             pageAxis.alertSuccess(property.successTip, () => pageAxis.toBack());
         }
         return false;

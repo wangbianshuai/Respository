@@ -10,6 +10,7 @@ import UploadImage from './uploadImage';
 import DatePicker from './datePicker';
 import SearchBar from './searchBar';
 import ImageButton from './imageButton';
+import ListMenu from './listMenu';
 
 export default {
     SpanText,
@@ -23,5 +24,6 @@ export default {
     UploadImage,
     DatePicker,
     SearchBar,
-    ImageButton
+    ImageButton,
+    ListMenu
 }

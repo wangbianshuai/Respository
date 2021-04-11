@@ -25,11 +25,11 @@ export default (props) => {
 
     return (<div style={style}><Flex style={style} direction="column" className={styles.divLayout}>
         <Flex.Item className={isDetail ? styles.divPage2 : styles.divPage} >
-            {_isList && <div className={styles.divList} style={{ display: isDetail ? 'none' : '' }}><UserInfo {...props} /></div>}
+            {_isList && <div className={styles.divList2} style={{ display: isDetail ? 'none' : '' }}><UserInfo {...props} /></div>}
             {isDetail && <ChangePassword {...props} />}
         </Flex.Item>
         {!isDetail && <Flex.Item className={styles.divTabBar} style={{ flex: 0 }}>
-            <Components.TabBar property={_tabBarProperty} pathName='setting' history={history} />
+            <Components.TabBar property={_tabBarProperty} pathName='mine' history={history} />
         </Flex.Item>}
     </Flex></div>)
 };

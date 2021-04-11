@@ -71,8 +71,8 @@ class PageAxis {
         this.modalDialog = {};
 
         this.loginUser = this.getLoginUser();
-        this.token = this.loginUser.token;
-
+        this.token = Common.getStorage(EnvConfig.tokenKey);
+        
         this.receives = {};
         this.eventActionsConfig = Common.clone(this.pageConfig.eventActions);
         if (this.pageConfig.actionOptions) this.actionTypes = this.pageConfig.actionOptions.actionTypes;
@@ -83,9 +83,13 @@ class PageAxis {
         //将pageAxis id赋值到location pageData上
         if (this.props.location && this.props.location.pageData) this.props.location.pageData.pageId = this.id;
 
-
         this.eventActions = {};
         for (let key in EventActions) this.eventActions[key] = new EventActions[key]();
+
+        if(!this.token){
+            this.toLogin();
+            return;
+        }
     }
 
     getLoginUser = () => {

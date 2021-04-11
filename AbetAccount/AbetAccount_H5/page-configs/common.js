@@ -55,6 +55,22 @@ function assignProporties(entity, list) {
     return pList;
 }
 
+function isObject(obj) {
+    if (obj === null || obj === undefined) return false
+    return typeof (obj) === "object" && Object.prototype.toString.call(obj).toLowerCase() === "[object object]" && !obj.length
+}
+
+function isEmptyObject(obj) {
+    if (!isObject(obj)) return true
+
+    if (Object.getOwnPropertyNames(obj).length > 0) return false
+
+    let blEmpty = true
+    for (let key in obj) if (key) { blEmpty = false; break; }
+
+    return blEmpty
+}
+
 function getEntityProperty(entity, name) {
     if (isEmptyObject(entity) || !entity.properties) return null;
     const list = entity.properties.filter(f => f.name === name);
