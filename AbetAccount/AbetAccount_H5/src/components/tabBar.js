@@ -13,7 +13,7 @@ const judgeSelected = (item, pathName) => {
 const press = (item, pathName, history) => {
     if (judgeSelected(item, pathName)) return;
 
-    let url = `/${item.pageName}`;
+    let url = `/${item.pageName}.html`;
     history.push(url);
 };
 

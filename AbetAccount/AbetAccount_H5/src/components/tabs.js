@@ -48,7 +48,7 @@ export default (props) => {
   let className = Base.getClassName(property, styles);
   if (currentClassName) className = styles[currentClassName];
 
-  const { style, tabBarStyle, isDiv } = property;
+  const { style, tabBarStyle, isDiv ,tabPage} = property;
   const swipeable = property.swipeable === undefined ? false : property.swipeable;
 
   if (isDiv) return (<div className={className} style={style}>

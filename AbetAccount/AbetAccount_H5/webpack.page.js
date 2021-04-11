@@ -7,7 +7,8 @@ const chunks1 = ["vendors", 'framework'];
 //*配置
 //html页配置
 const htmlPageConfigs = {
-    "index": { chunks: chunks1, htmls: ['index', 'login', 'accountBillList', 'accountBillEdit'] }
+    "index": { chunks: chunks1, htmls: ['index', 'login', 'accountBillList', 'accountBillEdit', 'accountBillCount', 'accountCategoryList', 'accountCategoryEdit',
+    'accountItemList', 'accountItemEdit'] }
 };
 
 //通用js配置,priority:优先级，值大优先打包，第三方需优先项目中通用js打包

@@ -117,12 +117,26 @@ function getDataGridView() {
         setColumnsEventActionName: "setShowColumns",
         isPartPaging: true,
         isGroupByQuery: true,
+        groupByInfoHtml: getGroupByInfoHtml(),
         properties: assignProporties(accountBill, [
             { name: "BillDate", orderByType: "desc", isVisible: false }, "BillYear", "BillMonth", "BillDay",
             "AccountItemName", "IncomeOutlayName", "AccountCategoryName", "BillUserName", getAmount('Amount2'), getAmount('Tax2')])
     }
 }
 
+function getGroupByInfoHtml() {
+    var html = [];
+
+    html.push("收入：<span style=\"color:#1890ff;\">{TotalIncome}</span>，");
+    html.push("支出：<span style=\"color:red;\">{TotalOutlay}</span>，");
+    html.push("结余：<span style=\"color:{TotalBalanceColor};\">{TotalBalance}</span>");
+
+    html.push("<span style=\"margin-left:16px;\">收入税额：</span><span style=\"color:#1890ff;\">{TotalIncomeTax}</span>，");
+    html.push("开出税额：<span style=\"color:red;\">{TotalOutlayTax}</span>，");
+    html.push("结余税额：<span style=\"color:{TotalBalanceTaxColor};\">{TotalBalanceTax}</span>");
+
+    return html.join("");
+}
 
 function getAmount(name) {
     return {
