@@ -28,8 +28,8 @@ function saveContent(fileUrl, content) {
     console.log(fileUrl);
     fs.writeFile(fileUrl, content, function () { })
 }
-var htmls = ['login.html', 'accountBillList.html', 'accountBillEdit.html', 'accountBillCount.html',
-    'accountCategoryList.html', 'accountCategoryEdit.html', 'accountItemList.html', 'accountItemEdit.html', 'userInfo.html', 'changePassword.html'];
+var htmls = ['login', 'accountBillList', 'accountBillEdit', 'accountBillCount',
+    'accountCategoryList', 'accountCategoryEdit', 'accountItemList', 'accountItemEdit', 'userInfo', 'changePassword'];
 var copyList = [];
 
 htmls.forEach(name => {
