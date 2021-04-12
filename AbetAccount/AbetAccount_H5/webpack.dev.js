@@ -12,7 +12,6 @@ module.exports = merge(common(true), {
 		before(app) {
 			apiMocker(app, path.resolve('./mock/index.js'))
 		},
-		contentBase: './dist',
 		hot: true,
 		proxy: {
 			'/api/': {
