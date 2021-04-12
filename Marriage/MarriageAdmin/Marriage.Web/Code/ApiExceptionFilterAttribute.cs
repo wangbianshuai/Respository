@@ -26,7 +26,7 @@ namespace Marriage.Web.Code
 
             context.HttpContext.Response.WriteAsync(Common.ToJson(response));
 
-            base.OnException(context);
+            context.ExceptionHandled = true;
         }
     }
 }
