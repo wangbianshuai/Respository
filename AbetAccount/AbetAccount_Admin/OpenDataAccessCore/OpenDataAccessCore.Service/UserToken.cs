@@ -25,7 +25,7 @@ namespace OpenDataAccessCore.Service
 
         public static string ParseToken(string token, string sign)
         {
-            if (string.IsNullOrEmpty(token)) return string.Empty;
+            if (string.IsNullOrEmpty(token)) throw new TokenException("Token解析异常！");
             string content = string.Empty;
             try
             {

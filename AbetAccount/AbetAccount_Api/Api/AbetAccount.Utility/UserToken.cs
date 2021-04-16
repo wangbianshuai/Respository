@@ -34,7 +34,7 @@ namespace AbetAccount.Utility
 
         public static string ParseToken(string token, string sign)
         {
-            if (string.IsNullOrEmpty(token)) return string.Empty;
+            if (string.IsNullOrEmpty(token)) throw new TokenException("Token不能为空！");
             string content = string.Empty;
             try
             {
