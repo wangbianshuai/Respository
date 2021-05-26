@@ -91,17 +91,7 @@ function getSearchView() {
         isKeywordView: true,
         keywordName: 'keyword2',
         className: 'divSearchBarView',
-        properties: [getSearchBar(), getShowColumn()]
-    }
-}
-
-function getShowColumn() {
-    return {
-        name: 'showColumn',
-        type: 'ImageButton',
-        imageName: 'showColumn.png',
-        className: 'divAddButton',
-        eventActionName: 'setShowColumns'
+        properties: [getSearchBar()]
     }
 }
 
@@ -110,8 +100,8 @@ function getSearchBar() {
         name: 'keyword',
         type: 'SearchBar',
         label: '关键字',
-        propertyName: 'Remark',
-        placeHolder: '摘要',
+        propertyName: 'AccountItemName',
+        placeHolder: '实体项目',
         cancelText: '筛选',
         operateLogic: "like",
         eventActionName: 'searchQuery',
@@ -127,8 +117,8 @@ function getDataGridView() {
         type: "DataGridView",
         properties: assignProporties(accountBill,
             [
-                { name: "BillDate", orderByType: "desc", isVisible: false }, "BillYear", "BillMonth", "BillDay",
-                "AccountItemName", "IncomeOutlayName", "AccountCategoryName", "BillUserName", getAmount('Amount2'), getAmount('Tax2')]
+                { name: "DisplayIndex", orderByType: "asc", isColumnVisible: false },
+                "AccountItemName", getAmount('Amount2'), getAmount('Tax2')]
         ),
         entity,
         isShowRecord: false,
@@ -216,18 +206,17 @@ function getSearchConditionView() {
         keywordName: 'keyword',
         className: "divSearchConditionView",
         properties: [
-            getEditSelect2("AccountItemId", "实体项目", accountBill.accountItemsDataSource, 1, 1),
-            { ...getEditSelect("IncomeOutlay", "收支", accountBill.incomeOutlayDataSource, 1, 2), childNames: ['AccountCategoryId'] },
+            { ...getEditSelect2("BillYear", "年份", accountBill.billYearDataSource, 1, 1), childNames: ['BillQuarter', 'BillMonth'] },
             {
-                ...getEditSelect2("AccountCategoryId", "类别", accountBill.accountCategorysDataSource, 1, 3),
-                parentName: 'IncomeOutlay', parentPropertyName: 'IncomeOutlay'
+                ...getEditSelect2("BillQuarter", "季度", accountBill.billQuarterDataSource, 1, 2),
+                parentName: 'BillYear', parentPropertyName: 'BillYear'
             },
-            { ...getDatePicker2("StartDate", "开始日期", 2, 1, "大于或等于其值"), isMonthFirst: true, propertyName: "BillDate", operateLogic: ">=" },
-            { ...getDatePicker2("EndDate", "结束日期", 2, 2, "小于其值"), isCurrentDay: true, propertyName: "BillDate", operateLogic: "<" },
-            getEditSelect2("BillUser", "经手人", accountBill.usersDataSource, 2, 3),
-            getEditSelect("AccountType", "账户", accountBill.accountTypeDataSource, 3, 1),
             {
-                ...getTextBox2("keyword2", "关键字", 3, 2, "", "摘要"), propertyName: "Remark",
+                ...getEditSelect2("BillMonth", "月份", accountBill.billMonthDataSource, 1, 3),
+                parentName: 'BillYear', parentPropertyName: 'BillYear'
+            },
+            {
+                ...getTextBox2("keyword2", "关键字", 3, 2, "", "实体项目"), propertyName: "AccountItemName",
                 operateLogic: "like", pressEnterEventActionName: "searchQuery", pressEnterEventPropertyName: "search",
             }
         ]
@@ -247,17 +236,6 @@ function getButtonView() {
     }
 }
 
-function getEditSelect(name, label, dataSource, x, y, defaultValue) {
-    return {
-        ...getSelect(name, label, dataSource, x, y, defaultValue),
-        operateLogic: "=",
-        isNullable: true,
-        allowClear: true,
-        isCondition: true
-    }
-}
-
-
 function getEditSelect2(name, label, dataSource, x, y, defaultValue) {
     return {
         ...getSelect2(name, label, dataSource, x, y, defaultValue),
@@ -267,18 +245,6 @@ function getEditSelect2(name, label, dataSource, x, y, defaultValue) {
         isCondition: true
     }
 }
-
-function getDatePicker2(name, label, x, y, placeHolder, defaultValue) {
-    return {
-        ...getDatePicker(name, label, x, y, defaultValue),
-        isNullable: true,
-        placeHolder: placeHolder,
-        maxLength: 20,
-        dataType: "DateTime",
-        isCondition: true
-    }
-}
-
 function getTextBox2(name, label, x, y, contorlType, placeHolder, maxLength) {
     return {
         ...getTextBox(name, label, contorlType, x, y, placeHolder, maxLength || 50),

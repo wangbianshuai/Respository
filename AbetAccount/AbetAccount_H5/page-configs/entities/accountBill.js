@@ -7,7 +7,10 @@ module.exports = {
     accountCategorysDataSource: getAccountCategorysDataSource(),
     usersDataSource: getUsersDataSource(),
     incomeOutlayDataSource: getIncomeOutlayDataSource(),
-    accountTypeDataSource: getAccountTypeDataSource()
+    accountTypeDataSource: getAccountTypeDataSource(),
+    billYearDataSource: getBillYearDataSource(),
+    billQuarterDataSource: getBillQuarterDataSource(),
+    billMonthDataSource: getBillMonthDataSource()
 }
 
 function getProperties() {
@@ -71,6 +74,43 @@ function getUsersDataSource() {
         stateName: "getUsers",
         serviceName: "AdminUserService",
         actionName: "getUsers",
+        isRefresh: true,
+        payload: {}
+    }
+}
+
+
+function getBillYearDataSource() {
+    return {
+        valueName: "BillYear",
+        textName: "BillYear",
+        stateName: "getBillYear",
+        serviceName: "AccountBillService",
+        actionName: "getBillYear",
+        isRefresh: true,
+        payload: {}
+    }
+}
+
+function getBillQuarterDataSource() {
+    return {
+        valueName: "BillQuarter",
+        textName: "BillQuarterName",
+        stateName: "getBillQuarter",
+        serviceName: "AccountBillService",
+        actionName: "getBillQuarter",
+        isRefresh: true,
+        payload: {}
+    }
+}
+
+function getBillMonthDataSource() {
+    return {
+        valueName: "BillMonth",
+        textName: "BillMonth",
+        stateName: "getBillMonth",
+        serviceName: "AccountBillService",
+        actionName: "getBillMonth",
         isRefresh: true,
         payload: {}
     }

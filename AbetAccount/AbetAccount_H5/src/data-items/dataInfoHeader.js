@@ -26,7 +26,7 @@ const renderConditionTextList = (textList) => {
 };
 
 const renderColumns = (property) => {
-    const properties = property.properties.filter(f => f.isVisible !== false);
+    const properties = property.properties.filter(f => f.isVisible !== false && f.isColumnVisible !== false);
 
     return <div className={styles.divColumns}>
         {properties.map((m, i) => <span key={i}>【{m.label}】</span>)}

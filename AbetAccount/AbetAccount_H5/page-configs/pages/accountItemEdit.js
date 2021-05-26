@@ -69,6 +69,7 @@ function getButtonProperties() {
 function getProperties() {
     return [
         getTextBox2("Name", "名称", 1, 1, "", "请输入名称", 50, false),
+        { ...getTextBox2("DisplayIndex", "序号", 2, 1, "", "请输入序号", 5, false), dataType: 'int' },
         getTextArea("Remark", "备注", 5, 1)
     ]
 }

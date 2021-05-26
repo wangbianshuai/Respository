@@ -6,7 +6,7 @@ import styles from '../styles/accountBillItem.scss';
 export default React.memo((props) => {
     const { property, data } = props;
     const { detailPageUrl } = property;
-    const { Remark, ItemId, CreateDate, Name } = data;
+    const { Remark, ItemId, DisplayIndex, CreateDate, Name } = data;
 
     let url = Common.addUrlParams(detailPageUrl, 'ItemId', ItemId);
     url = Common.addUrlParams(url, 'navTitle', '修改实体项目');
@@ -14,6 +14,7 @@ export default React.memo((props) => {
     return (<div className={styles.divContainer}>
         <Link to={url}>
             <div className={styles.divText1}>
+                <span>{DisplayIndex}</span>
                 <span>{Name}</span>
                 <span>{CreateDate}</span>
             </div>

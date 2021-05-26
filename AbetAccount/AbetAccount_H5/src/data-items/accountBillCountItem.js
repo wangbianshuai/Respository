@@ -18,7 +18,7 @@ const rendDataProperty = (property, index, data) => {
 export default React.memo((props) => {
     const { property, data } = props;
 
-    const properties = property.properties.filter(f => f.isVisible !== false);
+    const properties = property.properties.filter(f => f.isVisible !== false && f.isColumnVisible !== false);
 
     return (<div className={styles.divContainer2}>
         {properties.map((m, i) => rendDataProperty(m, i, data))}

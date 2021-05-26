@@ -94,7 +94,7 @@ function getDataGridView() {
         name: 'dataGridView1',
         type: "DataGridView",
         properties: assignProporties(
-            ["Name", "Remark", { name: "CreateDate", orderByType: "desc" }, { name: "RowVersion", isVisible: false }]
+            ["Name", { name: "DisplayIndex", orderByType: "asc" }, "Remark", "CreateDate", { name: "RowVersion", isVisible: false }]
         ),
         entity,
         isShowRecord: false,
