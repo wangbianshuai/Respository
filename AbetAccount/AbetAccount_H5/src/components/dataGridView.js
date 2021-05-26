@@ -76,6 +76,7 @@ const setBindDataList = (actionData, actionTypes, queryData, primaryKey) => {
     else {
       const dataList = [];
       queryData.dataList.forEach(d => {
+        if (!d[primaryKey]) { dataList.push(d); return; }
         var item = Common.arrayFirst(data.dataList, f => Common.isEquals(f[primaryKey], d[primaryKey], true));
         if (item == null) dataList.push(d);
       });
@@ -137,8 +138,8 @@ const renderDataView = (property, pageId, queryData, primaryKey, actionData, act
 const setColumnsVisible2 = (visibleColNames, property, pageAxis, pageInfo) => {
   property.properties.forEach(p => p.isVisible = (visibleColNames.indexOf(p.name) >= 0));
   if (property.isGroupByQuery) {
-      pageInfo.pageIndex = 1;
-      refresh(pageInfo, property, pageAxis);
+    pageInfo.pageIndex = 1;
+    refresh(pageInfo, property, pageAxis);
   }
 };
 
