@@ -18,6 +18,10 @@ namespace AbetAccount.Admin.Entity
         /// </summary> 
         public string Name { get; set; }
         /// <summary> 
+        /// 序号
+        /// </summary> 
+        public int DisplayIndex { get; set; }
+        /// <summary> 
         /// 备注
         /// </summary> 
         public string Remark { get; set; }

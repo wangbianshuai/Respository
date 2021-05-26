@@ -109,5 +109,9 @@ namespace AbetAccount.Admin.Entity
 
         public string BillDay { get; set; }
 
+        public string BillQuarter { get; set; }
+        public string BillQuarterName { get; set; }
+
+        public int DisplayIndex { get; set; }
     }
 }

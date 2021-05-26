@@ -206,7 +206,7 @@ const init = (property, pageAxis) => {
 
     const dataProperties = properties.map(p => setDataProperty(p, property, pageAxis));
 
-    const dataProperties2 = dataProperties.filter(f => f.isVisible !== false);
+    const dataProperties2 = dataProperties.filter(f => f.isVisible !== false && f.isColumnVisible !== false);
 
     const pageInfo = { pageSize: property.pageSize || 10, pageIndex: 1, pageCount: 0, pageRecord: 0 };
 
