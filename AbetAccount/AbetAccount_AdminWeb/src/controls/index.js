@@ -12,6 +12,7 @@ import CheckBoxGroup from "./checkBoxGroup";
 import Radio from "./radio";
 import Tree from "./tree";
 import Upload from "./upload";
+import File from "./file";
 
 export default {
     Button,
@@ -27,5 +28,6 @@ export default {
     CheckBoxGroup,
     Radio,
     Tree,
+    File,
     Upload
 }

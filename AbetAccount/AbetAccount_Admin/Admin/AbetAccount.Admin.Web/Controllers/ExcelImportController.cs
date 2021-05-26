@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using AbetAccount.Admin.Web.Code;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -12,15 +13,18 @@ namespace AbetAccount.Admin.Web.Controllers
 {
     [Produces("application/json")]
     [Consumes("application/json", "multipart/form-data")]
-    [Route("ExcelImportHandler.ashx")]
+    [Route("api/ExcelImportHandler")]
+    [ApiExceptionFilter]
+    [TokenFilter]
     public class ExcelImportController : Controller
     {
         public object ExcelUtility2 { get; private set; }
 
         [HttpPost]
-        public async Task<JsonResult> Post()
+        [ApiTokenParameter]
+        public async Task<JsonResult> Post(string loginUserId, string sign, string appId)
         {
-            return await Task.Run(() => Upload());
+            return await Task.Run(() => Upload(loginUserId, sign, appId));
         }
 
         private JsonResult GetMessage(string message)
@@ -31,14 +35,13 @@ namespace AbetAccount.Admin.Web.Controllers
             return this.Json(dict);
         }
 
-        JsonResult Upload()
+        JsonResult Upload(string loginUserId, string sign, string appId)
         {
             try
             {
                 var files = this.Request.Form.Files;
-                string entityName = Code.Request.GetParameterValue(this.Request, "EntityName");
-                string loginUserId = Code.Request.GetParameterValue(this.Request, "LoginUserId");
-
+                string entityName = this.Request.Form["Entityname"];
+               
                 if (files.Count > 0)
                 {
                     string ft = Path.GetExtension(files[0].FileName).ToLower();
@@ -77,31 +80,32 @@ namespace AbetAccount.Admin.Web.Controllers
         object ImportData(List<Dictionary<string, object>> dataList, string entityName, string loginUserId)
         {
             string message = string.Empty;
-            List<Dictionary<string, object>> messageList = null;
+            List<Dictionary<string, object>> messageList = new List<Dictionary<string, object>>();
 
-            //switch (entityName)
-            //{
-               
-            //}
-
-            if (messageList != null)
+            if (entityName == "AccountBill")
             {
-                Dictionary<string, object> dict = new Dictionary<string, object>();
-                if (!string.IsNullOrEmpty(message)) dict.Add("Message2", message);
-                dict.Add("MessageList", messageList);
-
-                return dict;
+                message = new Component.AccountBill().ExcelImport(dataList, loginUserId, messageList);
             }
 
-            return null;
+            Dictionary<string, object> dict = new Dictionary<string, object>();
+            if (!string.IsNullOrEmpty(message)) dict.Add("Message2", message);
+            if (messageList.Count > 0) dict.Add("MessageList", messageList);
+
+            return dict;
         }
 
         private string ValidateColumn(List<string> list, string entityName)
         {
             List<string> nameList = null;
             string message = string.Empty;
-           
+
             message += "导入格式：第一行为列名，数据从第二行开始；列名需与提示的列名一致，字母区分大小写。";
+
+            if (entityName == "AccountBill")
+            {
+                nameList = new List<string>() { "日期", "实体项目", "类别", "收支", "金额", "摘要", "账户", "经手人" };
+                message += "列名集合：" + string.Join("、", nameList);
+            }
 
             int iCount = (from a in list
                           from b in nameList
@@ -117,7 +121,13 @@ namespace AbetAccount.Admin.Web.Controllers
         {
             List<string> nameList = null;
             string message = string.Empty;
-            
+
+            if (entityName == "AccountBill")
+            {
+                nameList = new List<string>() { "日期", "实体项目", "类别", "收支", "金额" };
+                message += "字段集合：" + string.Join("、", nameList) + "，不能为空";
+            }
+
             bool blSucceed = true;
 
             foreach (string name in nameList)

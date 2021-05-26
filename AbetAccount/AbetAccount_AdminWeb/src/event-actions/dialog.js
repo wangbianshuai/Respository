@@ -33,7 +33,7 @@ export default class Dialog extends BaseIndex {
         const title = Common.replaceDataContent(selectDataList[0], dialogView.dialogTitle)
 
         const onOk = (e, p) => this.setSelectViewDataToList(e, p, props, action, selectRowKeys);
-        this.showdialog(action, pageAxis, dialogView, onOk, action.setValue,title);
+        this.showdialog(action, pageAxis, dialogView, onOk, action.setValue, title);
     }
 
     //弹出层确定事件行为
@@ -232,5 +232,56 @@ export default class Dialog extends BaseIndex {
         const expandSetEntityData = pageAxis.getFunction(action.expandSetEntityData);
 
         action.parameters = { dialogView, dataGridView, editView, successCallback, expandSetEntityData };
+    }
+
+    excelImport(props, action) {
+        if (!action.parameters) this.initExcelImport(props, action);
+        const { pageAxis } = props;
+        const { dialogView } = action.parameters;
+
+        const fileProeprty = dialogView.properties[0];
+        fileProeprty.setValue && fileProeprty.setValue('')
+
+        const onOk = (e, p) => this.setExcelImport(e, p, props, action);
+        this.showdialog(action, pageAxis, dialogView, onOk);
+    }
+
+    setExcelImport(e, p, props, action) {
+        const { pageAxis } = props;
+        const { dialogView } = action.parameters;
+        const file = dialogView.properties[0].getValue();
+        if (file === null) {
+            pageAxis.alert('请选择Excel文件');
+            return;
+        }
+
+        const reg = /\.(xlsx)$/i;
+        if (!reg.test(file.name)) { pageAxis.alert("请选择xlsx格式Excel文件"); return; }
+
+        // 大于 4MB
+        if (file && file.size > 1024 * 1024 * 4) { pageAxis.alert('请使用小于4MB的Excel'); return }
+
+        p.setDisabled && p.setDisabled(true);
+
+        var formData = new FormData();
+        formData.append('EntityName', dialogView.entity.name);
+        formData.append(file.name, file, file.name);
+
+        pageAxis.dispatchAction('ExcelService', 'excelImport', { formData: formData }).then(res => {
+            if (pageAxis.isSuccessProps(res)) {
+                if (res.Message2) pageAxis.alert(res.Message2);
+            }
+            else pageAxis.alert(res.message);
+            p.setDisabled && p.setDisabled(false);
+        })
+    }
+
+    initExcelImport(props, action) {
+        const { pageAxis } = props;
+        const dialogView = Common.arrayFirst(pageAxis.pageConfig.dialogViews, (f) => f.name === action.dialogView);
+
+        const dataGridView = pageAxis.getProperty(action.dataGridView);
+
+        action.parameters = { dialogView, dataGridView };
     }
 }

@@ -1,5 +1,5 @@
 const accountBill = require("../../entities/accountBill");
-const { getButton, assignProporties, getTextBox, getDatePicker, getSelect, getSelect2 } = require("../../Common");
+const { getButton, assignProporties, getTextBox, getDatePicker, getSelect, getSelect2, createGuid } = require("../../Common");
 
 //accountManage/accountBillList 1200-1299
 const dataActionTypes = {
@@ -8,7 +8,9 @@ const dataActionTypes = {
     //删除实体数据
     deleteEntityData: 1201,
     //Excel导出
-    excelExport: 1202
+    excelExport: 1202,
+    //Excel导入
+    exportImport: 1203
 };
 
 const { name, primaryKey, viewName } = accountBill;
@@ -17,8 +19,9 @@ const entity = { name, primaryKey, viewName, isGroupByInfo: true };
 module.exports = {
     name: "accountBillList",
     type: "View",
-    noRightNames: ['toEditPage'],
+    noRightNames: ['toEditPage', 'excelImport'],
     eventActions: getEventActions(),
+    dialogViews: getDialogViews(),
     properties: assignProporties({ name: "accountBillList" }, [getSearchOperationView(), getDataGridView()])
 }
 
@@ -45,7 +48,8 @@ function getSearchOperationView() {
             },
             { ...getButton("search", "搜索", "primary", 3, 3), isFormItem: true, icon: "search", eventActionName: "searchQuery", pressEnterEventActionName: "searchQuery" },
             { ...getButton("clearQuery", "清空", "default", 3, 4), isFormItem: true, eventActionName: "clearQuery" },
-            { eventActionName: "toEditPage", ...getButton("toEditPage", "新增", "primary", 4, 1), style: { marginLeft: 16, marginBottom: 16 } }
+            { eventActionName: "toEditPage", ...getButton("toEditPage", "新增", "primary", 4, 1), style: { marginLeft: 16, marginBottom: 16 } },
+            { eventActionName: "excelImport", ...getButton("excelImport", "Excel导入", "", 4, 2), icon: 'import' }
         ])
     }
 }
@@ -203,8 +207,50 @@ function getEventActions() {
         pageUrl: "/accountManage/accountBillEdit?BillId=#{BillId}&menuName=" + encodeURIComponent("修改")
     },
     {
+        name: "excelImport",
+        type: "dialog/excelImport",
+        dataGridView: "dataGridView1",
+        dialogView: "excelImportView",
+    },
+    {
         name: "deleteAppAccount",
         type: "dataGrid/batchUpdateRowDataList",
         dataGridView: "dataGridView1"
     }]
+}
+
+function getDialogViews() {
+    return [
+        getExcelImportView()
+    ]
+}
+
+function getExcelImportView() {
+    return {
+        id: createGuid(),
+        dialogId: createGuid(),
+        name: "excelImportView",
+        entity,
+        type: "RowsColsView",
+        dialogTitle: "Excel导入",
+        dialogWidth: 560,
+        successTip: "导入成功",
+        className: "divView2",
+        isClear: true,
+        setSelectValuesOkActionType: dataActionTypes.exportImport,
+        dialogStyle: { height: 80, overflow: "auto" },
+        properties: assignProporties(entity, [
+            {
+                name: 'excelFile',
+                type: 'File',
+                accept: ".xlsx",
+                label: 'Excel',
+                isFormItem: true,
+                colSpan: 22,
+                labelCol: 4,
+                wrapperCol: 20,
+                isEdit: true,
+            }
+        ])
+    }
 }
