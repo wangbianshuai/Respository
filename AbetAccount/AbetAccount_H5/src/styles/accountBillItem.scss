@@ -74,6 +74,9 @@
     padding-right: toRem(24);
     padding-top: toRem(16);
     padding-bottom: toRem(16);
+    flex-direction: row;
+    display: flex;
+    justify-content: space-between;
 
     .spanText{
             font-size: toRem(30);

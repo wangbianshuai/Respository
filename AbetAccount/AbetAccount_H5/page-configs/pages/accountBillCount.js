@@ -122,7 +122,7 @@ function getDataGridView() {
         ),
         entity,
         isShowRecord: false,
-        isShowColumn: true,
+        isShowColumn: false,
         isGroupByQuery: true,
         entitySearchQuery: dataActionTypes.searchQuery,
         eventActionName: 'searchQuery',
