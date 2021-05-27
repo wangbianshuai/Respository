@@ -69,7 +69,7 @@ function getButtonProperties() {
 function getProperties() {
     return [
         getTextBox2("Name", "名称", 1, 1, "", "请输入名称", 50, false),
-        getEditSelect("AccountItemId", "账目名称", accountBill.accountItemsDataSource, 3, 1, false, "请选择账目名称"),
+        getEditSelect("AccountItemId", "账目名称", accountCategory.accountItemsDataSource, 3, 1, false, "请选择账目名称"),
         getTextArea("Remark", "备注", 5, 1)
     ]
 }

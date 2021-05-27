@@ -35,7 +35,7 @@ function getTabs() {
         type: 'Tabs',
         isDiv: true,
         className: 'tabDetail',
-        tabs: [{ title: '收支类型', url: "/accountCategoryList.html?tabPage=0" },
+        tabs: [{ title: '类别', url: "/accountCategoryList.html?tabPage=0" },
         { title: '账目名称', url: "/accountItemList.html?tabPage=1" }]
     }
 }
