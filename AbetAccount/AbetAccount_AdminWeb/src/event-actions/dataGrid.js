@@ -11,14 +11,14 @@ export default class DataGrid extends BaseIndex {
         const { dataGridView, alertMessage, entityProperties } = action.parameters;
         const { dataActionType } = property;
 
-        if (!dataGridView.getSelectedRowKeys) return;
-
         var selectDataList = null, selectRowKeys = null;
         if (property.params) {
             selectDataList = [property.params];
             selectRowKeys = [property.params[dataGridView.entity.primaryKey]];
         }
         else {
+            if (!dataGridView.getSelectedRowKeys) return;
+            
             selectRowKeys = dataGridView.getSelectedRowKeys();
             if (selectRowKeys.length === 0 && !property.isNoRowsSelected) {
                 this.alert("请选择记录再操作！", pageAxis.showMessage, alertMessage)
