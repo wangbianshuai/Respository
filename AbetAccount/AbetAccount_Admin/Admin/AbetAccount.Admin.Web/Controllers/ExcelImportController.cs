@@ -73,7 +73,7 @@ namespace AbetAccount.Admin.Web.Controllers
             }
             catch (Exception ex)
             {
-                return this.GetMessage("上传失败，" + Common.GetInnerException(ex).Message);
+                return this.GetMessage("上传失败，" + ex.Message);
             }
         }
 

@@ -185,9 +185,8 @@ namespace AbetAccount.Admin.Component
 
                         item.Add("UserId", id);
                         item.Add("UserName", userName);
-                        item.Add("LoginUser", userName);
+                        item.Add("LoginName", userName);
                         item.Add("LoginPassword", "e10adc3949ba59abbe56e057f20f883e");
-                        item.Add("Remark", "Excel导入");
                         item.Add("CreateUser", loginUserId);
                         item.Add("CreateDate", now);
                         adminUserDataList.Add(item);
@@ -243,7 +242,11 @@ namespace AbetAccount.Admin.Component
             dt.Columns.Add(new DataColumn("UserName", typeof(string)));
             dt.Columns.Add(new DataColumn("LoginName", typeof(string)));
             dt.Columns.Add(new DataColumn("LoginPassword", typeof(string)));
-            dt.Columns.Add(new DataColumn("Remark", typeof(string)));
+            dt.Columns.Add(new DataColumn("LastLoginDate", typeof(DateTime)));
+            dt.Columns.Add(new DataColumn("IsAdmin", typeof(byte)));
+            dt.Columns.Add(new DataColumn("DataRight", typeof(byte)));
+            dt.Columns.Add(new DataColumn("OperationRight", typeof(byte)));
+            dt.Columns.Add(new DataColumn("IsDelete", typeof(byte)));
             dt.Columns.Add(new DataColumn("CreateUser", typeof(Guid)));
             dt.Columns.Add(new DataColumn("CreateDate", typeof(DateTime)));
 
@@ -251,6 +254,11 @@ namespace AbetAccount.Admin.Component
 
             dictList.ForEach(dict =>
             {
+                dict["IsAdmin"] = 0;
+                dict["DataRight"] = 0;
+                dict["OperationRight"] = 0;
+                dict["IsDelete"] = 0;
+                dict["LastLoginDate"] = DBNull.Value;
                 dr = dt.NewRow();
                 foreach (DataColumn column in dt.Columns)
                 {
@@ -282,6 +290,7 @@ namespace AbetAccount.Admin.Component
             dt.Columns.Add(new DataColumn("Name", typeof(string)));
             dt.Columns.Add(new DataColumn("AccountItemId", typeof(Guid)));
             dt.Columns.Add(new DataColumn("Remark", typeof(string)));
+            dt.Columns.Add(new DataColumn("IsDelete", typeof(byte)));
             dt.Columns.Add(new DataColumn("CreateUser", typeof(Guid)));
             dt.Columns.Add(new DataColumn("CreateDate", typeof(DateTime)));
 
@@ -289,6 +298,7 @@ namespace AbetAccount.Admin.Component
 
             dictList.ForEach(dict =>
             {
+                dict["IsDelete"] = 0;
                 dr = dt.NewRow();
                 foreach (DataColumn column in dt.Columns)
                 {
@@ -321,6 +331,7 @@ namespace AbetAccount.Admin.Component
             dt.Columns.Add(new DataColumn("Name", typeof(string)));
             dt.Columns.Add(new DataColumn("DisplayIndex", typeof(int)));
             dt.Columns.Add(new DataColumn("Remark", typeof(string)));
+            dt.Columns.Add(new DataColumn("IsDelete", typeof(byte)));
             dt.Columns.Add(new DataColumn("CreateUser", typeof(Guid)));
             dt.Columns.Add(new DataColumn("CreateDate", typeof(DateTime)));
 
@@ -328,6 +339,7 @@ namespace AbetAccount.Admin.Component
 
             dictList.ForEach(dict =>
             {
+                dict["IsDelete"] = 0;
                 dr = dt.NewRow();
                 foreach (DataColumn column in dt.Columns)
                 {
@@ -360,10 +372,11 @@ namespace AbetAccount.Admin.Component
             dt.Columns.Add(new DataColumn("AccountItemId", typeof(Guid)));
             dt.Columns.Add(new DataColumn("IncomeOutlay", typeof(byte)));
             dt.Columns.Add(new DataColumn("AccountType", typeof(byte)));
-            dt.Columns.Add(new DataColumn("Amount", typeof(decimal)));
+            dt.Columns.Add(new DataColumn("Amount", typeof(float)));
             dt.Columns.Add(new DataColumn("BillDate", typeof(DateTime)));
             dt.Columns.Add(new DataColumn("BillUser", typeof(Guid)));
             dt.Columns.Add(new DataColumn("Remark", typeof(string)));
+            dt.Columns.Add(new DataColumn("IsDelete", typeof(byte)));
             dt.Columns.Add(new DataColumn("CreateUser", typeof(Guid)));
             dt.Columns.Add(new DataColumn("CreateDate", typeof(DateTime)));
 
@@ -371,6 +384,7 @@ namespace AbetAccount.Admin.Component
 
             dictList.ForEach(dict =>
             {
+                dict["IsDelete"] = 0;
                 dr = dt.NewRow();
                 foreach (DataColumn column in dt.Columns)
                 {

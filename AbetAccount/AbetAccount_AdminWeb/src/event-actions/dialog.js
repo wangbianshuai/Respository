@@ -274,7 +274,10 @@ export default class Dialog extends BaseIndex {
                     pageAxis.alertMessageList(res.MessageList);
                 }
                 else {
-                    pageAxis.alertSuccess('导入成功', dataGridView.refresh());
+                    pageAxis.alertSuccess('导入成功', ()=>{
+                        dataGridView.refresh();
+                        action.modalDialog.setVisible(false);
+                    });
                 }
             }
             else pageAxis.alert(res.message);
