@@ -3,7 +3,7 @@ import { EntityModelConfig } from 'Configs';
 
 const config = EntityModelConfig('AccountItem');
 
-config.actionList.push(get("getAccountItems", "ViewAccountItem?$select=ItemId,Name&$orderby CreateDate", "getAccountItems", "ViewAccountItem"));
+config.actionList.push(get("getAccountItems", "ViewAccountItem?$select=ItemId,Name&$orderby DisplayIndex", "getAccountItems", "ViewAccountItem"));
 
 function get(actionName, url, stateName, dataKey, isToken, hasToken) {
   return { actionName, url, method: "GET", stateName, dataKey, isToken, hasToken }
