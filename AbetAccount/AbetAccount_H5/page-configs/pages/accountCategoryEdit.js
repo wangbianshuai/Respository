@@ -1,5 +1,5 @@
 const accountCategory = require("../entities/accountCategory");
-const { getTextBox, getButton, getRadio } = require("../Common");
+const { getTextBox, getButton, getSelect2 } = require("../Common");
 
 //accountCategoryEdit 700-799
 const dataActionTypes = {
@@ -29,7 +29,7 @@ function getNavBar() {
     return {
         name: 'navTitle',
         type: 'NavBar',
-        text: '新增收支类别',
+        text: '新增类别',
         isBack: true,
         rightProperty: {
             name: 'delete',
@@ -69,16 +69,18 @@ function getButtonProperties() {
 function getProperties() {
     return [
         getTextBox2("Name", "名称", 1, 1, "", "请输入名称", 50, false),
-        getRadio2('IncomeOutlay', '收支', accountCategory.incomeOutlayDataSource, 2, 1, 0, 160),
+        getEditSelect("AccountItemId", "账目名称", accountBill.accountItemsDataSource, 3, 1, false, "请选择账目名称"),
         getTextArea("Remark", "备注", 5, 1)
     ]
 }
 
-function getRadio2(name, label, dataSource, x, y, defaultValue, buttonWidth) {
+function getEditSelect(name, label, serviceDataSource, x, y, isNullable, placeHolder, defaultValue) {
     return {
-        ...getRadio(name, label, dataSource, x, y, defaultValue, buttonWidth),
+        ...getSelect2(name, label, serviceDataSource, x, y, defaultValue),
+        isNullable,
         isEdit: true,
-        isListItem: true
+        allowClear: true, isSearch: true,
+        placeHolder
     }
 }
 

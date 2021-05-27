@@ -21,10 +21,10 @@ function getAccountNavMenu() {
     menuList.push(addMenu("accountBillEdit", "新增", true, "form", "/accountManage/accountBillEdit", "", null, false, "记账", "/accountManage/accountBillList", null, true));
     menuList.push(addMenu("accountBillCount", "记账统计", false, "table", "/accountManage/accountBillCount"));
   
-    menuList.push(addMenu("accountItemList", "实体项目", false, "table", "/accountManage/accountItemList"));
-    menuList.push(addMenu("accountItemEdit", "新增", true, "form", "/accountManage/accountItemEdit", "", null, false, "实体项目", "/accountManage/accountItemList", null, true));
+    menuList.push(addMenu("accountItemList", "账目名称", false, "table", "/accountManage/accountItemList"));
+    menuList.push(addMenu("accountItemEdit", "新增", true, "form", "/accountManage/accountItemEdit", "", null, false, "账目名称", "/accountManage/accountItemList", null, true));
 
-    menuList.push(addMenu("accountCategoryList", "收支类别", false, "table", "/accountManage/accountCategoryList"));
+    menuList.push(addMenu("accountCategoryList", "类别", false, "table", "/accountManage/accountCategoryList"));
     menuList.push(addMenu("accountCategoryEdit", "新增", true, "form", "/accountManage/accountCategoryEdit", "", null, false, "类别", "/accountManage/accountCategoryList", null, true));
 
     return addNavMenu("accountManage", "记账管理", false, menuList, true, ["accountBillList",'accountBillCount','accountItemList', "accountCategoryList"]);

@@ -124,7 +124,7 @@ function getDataGridView() {
     return {
         name: 'dataGridView1',
         type: "DataGridView",
-        properties: assignProporties([{ name: "BillDate", orderByType: "desc" }, "AccountItemName", "AccountCategoryName", "IncomeOutlayName", getAmount('Amount2'), getAmount('Tax2'), "Remark", "AccountTypeName", "BillUserName",
+        properties: assignProporties([{ name: "BillDate", orderByType: "desc" }, "AccountItemName", "AccountCategoryName", "IncomeOutlayName", getAmount('Amount2'), "Remark", "AccountTypeName", "BillUserName",
         { name: "CreateDate", orderByType: "desc" }, { name: "CreateUser", isVisible: false }, { name: "RowVersion", isVisible: false }]),
         entity,
         isShowRecord: false,
@@ -148,13 +148,7 @@ function getGroupByInfoHtml() {
     html.push('</div>')
 
     html.push('<div>')
-    html.push("<span>收入税额：<span style=\"color:#1890ff;\">{TotalIncomeTax}</span></span>");
-    html.push("<span>开出税额：<span style=\"color:red;\">{TotalOutlayTax}</span></span>");
-    html.push('</div>')
-
-    html.push('<div>')
     html.push("<span>收支结余：<span style=\"color:{TotalBalanceColor};\">{TotalBalance}</span></span>");
-    html.push("<span>结余税额：<span style=\"color:{TotalBalanceTaxColor};\">{TotalBalanceTax}</span></span>");
     html.push('</div>')
 
     return html.join("");
@@ -218,11 +212,11 @@ function getSearchConditionView() {
         keywordName: 'keyword',
         className: "divSearchConditionView",
         properties: [
-            getEditSelect2("AccountItemId", "实体项目", accountBill.accountItemsDataSource, 1, 1),
-            { ...getEditSelect("IncomeOutlay", "收支", accountBill.incomeOutlayDataSource, 1, 2), childNames: ['AccountCategoryId'] },
+            { ...getEditSelect("IncomeOutlay", "收支", accountBill.incomeOutlayDataSource, 1, 1) },
+            { ...getEditSelect2("AccountItemId", "账目名称", accountBill.accountItemsDataSource, 1, 2), childNames: ['AccountCategoryId'] },
             {
                 ...getEditSelect2("AccountCategoryId", "类别", accountBill.accountCategorysDataSource, 1, 3),
-                parentName: 'IncomeOutlay', parentPropertyName: 'IncomeOutlay'
+                parentName: 'AccountItemId', parentPropertyName: 'AccountItemId'
             },
             { ...getDatePicker2("StartDate", "开始日期", 2, 1, "大于或等于其值"), isMonthFirst: true, propertyName: "BillDate", operateLogic: ">=" },
             { ...getDatePicker2("EndDate", "结束日期", 2, 2, "小于其值"), isCurrentDay: true, propertyName: "BillDate", operateLogic: "<" },

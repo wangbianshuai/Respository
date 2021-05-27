@@ -101,7 +101,7 @@ function getSearchBar() {
         type: 'SearchBar',
         label: '关键字',
         propertyName: 'AccountItemName',
-        placeHolder: '实体项目',
+        placeHolder: '账目名称',
         cancelText: '筛选',
         operateLogic: "like",
         eventActionName: 'searchQuery',
@@ -118,7 +118,7 @@ function getDataGridView() {
         properties: assignProporties(accountBill,
             [
                 { name: "DisplayIndex", orderByType: "asc", isColumnVisible: false },
-                "AccountItemName", getAmount('Amount2'), getAmount('Tax2')]
+                "AccountItemName", getAmount('Amount2')]
         ),
         entity,
         isShowRecord: false,
@@ -143,14 +143,9 @@ function getGroupByInfoHtml() {
     html.push("<span>支出：<span style=\"color:red;\">{TotalOutlay}</span></span>");
     html.push('</div>')
 
-    html.push('<div>')
-    html.push("<span>收入税额：<span style=\"color:#1890ff;\">{TotalIncomeTax}</span></span>");
-    html.push("<span>开出税额：<span style=\"color:red;\">{TotalOutlayTax}</span></span>");
-    html.push('</div>')
 
     html.push('<div>')
     html.push("<span>收支结余：<span style=\"color:{TotalBalanceColor};\">{TotalBalance}</span></span>");
-    html.push("<span>结余税额：<span style=\"color:{TotalBalanceTaxColor};\">{TotalBalanceTax}</span></span>");
     html.push('</div>')
 
     return html.join("");
@@ -216,7 +211,7 @@ function getSearchConditionView() {
                 parentName: 'BillYear', parentPropertyName: 'BillYear'
             },
             {
-                ...getTextBox2("keyword2", "关键字", 3, 2, "", "实体项目"), propertyName: "AccountItemName",
+                ...getTextBox2("keyword2", "关键字", 3, 2, "", "账目名称"), propertyName: "AccountItemName",
                 operateLogic: "like", pressEnterEventActionName: "searchQuery", pressEnterEventPropertyName: "search",
             }
         ]

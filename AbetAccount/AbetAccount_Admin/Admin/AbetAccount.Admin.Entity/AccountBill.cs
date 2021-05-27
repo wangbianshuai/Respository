@@ -34,10 +34,6 @@ namespace AbetAccount.Admin.Entity
         /// </summary>
         public float Amount { get; set; }
         /// <summary>
-        /// 税额
-        /// </summary>
-        public float Tax { get; set; }
-        /// <summary>
         /// 日期
         /// </summary>
         public DateTime BillDate { get; set; }
@@ -86,10 +82,6 @@ namespace AbetAccount.Admin.Entity
         /// 金额
         /// </summary>
         public float Amount2 { get; set; }
-        /// <summary>
-        /// 税额
-        /// </summary>
-        public float Tax2 { get; set; }
 
         public string AccountTypeName { get; set; }
 

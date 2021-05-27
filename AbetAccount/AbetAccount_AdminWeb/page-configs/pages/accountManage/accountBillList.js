@@ -32,11 +32,11 @@ function getSearchOperationView() {
         type: "RowsColsView",
         className: "divSerachView",
         properties: assignProporties({ name: "accountBillList" }, [
-            getEditSelect2("AccountItemId", "实体项目", accountBill.accountItemsDataSource, 1, 1),
-            { ...getEditSelect("IncomeOutlay", "收支", accountBill.incomeOutlayDataSource, 1, 2), childNames: ['AccountCategoryId'] },
+            { ...getEditSelect("IncomeOutlay", "收支", accountBill.incomeOutlayDataSource, 1, 1) },
+            { ...getEditSelect2("AccountItemId", "账目名称", accountBill.accountItemsDataSource, 1, 2), childNames: ['AccountCategoryId'] },
             {
                 ...getEditSelect2("AccountCategoryId", "类别", accountBill.accountCategorysDataSource, 1, 3),
-                parentName: 'IncomeOutlay', parentPropertyName: 'IncomeOutlay'
+                parentName: 'AccountItemId', parentPropertyName: 'AccountItemId'
             },
             { ...getDatePicker2("StartDate", "开始日期", 2, 1, "大于或等于其值"), isMonthFirst: true, propertyName: "BillDate", operateLogic: ">=" },
             { ...getDatePicker2("EndDate", "至", 2, 2, "小于其值"), isCurrentDay: true, propertyName: "BillDate", operateLogic: "<" },
@@ -120,7 +120,7 @@ function getDataGridView() {
         isDiv: true,
         className: "divInfoView3",
         groupByInfoHtml: getGroupByInfoHtml(),
-        properties: assignProporties(accountBill, [{ name: "BillDate", orderByType: "desc" }, "AccountItemName", "AccountCategoryName", "IncomeOutlayName", getAmount('Amount2'), getAmount('Tax2'), "Remark", "AccountTypeName", "BillUserName",
+        properties: assignProporties(accountBill, [{ name: "BillDate", orderByType: "desc" }, "AccountItemName", "AccountCategoryName", "IncomeOutlayName", getAmount('Amount2'), "Remark", "AccountTypeName", "BillUserName",
         { name: "CreateUser", isVisible: false }, getOperation(), { name: "RowVersion", isVisible: false }])
     }
 }
@@ -131,10 +131,6 @@ function getGroupByInfoHtml() {
     html.push("收入：<span style=\"color:#1890ff;\">{TotalIncome}</span>，");
     html.push("支出：<span style=\"color:red;\">{TotalOutlay}</span>，");
     html.push("结余：<span style=\"color:{TotalBalanceColor};\">{TotalBalance}</span>");
-
-    html.push("<span style=\"margin-left:16px;\">收入税额：</span><span style=\"color:#1890ff;\">{TotalIncomeTax}</span>，");
-    html.push("开出税额：<span style=\"color:red;\">{TotalOutlayTax}</span>，");
-    html.push("结余税额：<span style=\"color:{TotalBalanceTaxColor};\">{TotalBalanceTax}</span>");
 
     return html.join("");
 }

@@ -3,7 +3,7 @@ import { EntityModelConfig } from 'Configs';
 
 const config = EntityModelConfig('AccountCategory');
 
-config.actionList.push(get("getAccountCategorys", "ViewAccountCategory?$select=CategoryId,IncomeOutlay,Name&$orderby CreateDate", "getAccountCategorys", "ViewAccountCategory"));
+config.actionList.push(get("getAccountCategorys", "ViewAccountCategory?$select=CategoryId,AccountItemId,Name&$orderby CreateDate", "getAccountCategorys", "ViewAccountCategory"));
 
 function get(actionName, url, stateName, dataKey, isToken, hasToken) {
   return { actionName, url, method: "GET", stateName, dataKey, isToken, hasToken }

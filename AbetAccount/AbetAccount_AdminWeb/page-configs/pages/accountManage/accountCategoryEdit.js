@@ -1,5 +1,5 @@
 const accountCategory = require("../../entities/accountCategory");
-const { assignProporties, getTextBox, getButton, getRadio } = require("../../Common");
+const { assignProporties, getTextBox, getButton, getSelect2 } = require("../../Common");
 
 //accountManage/accountCategoryEdit 1100-1199
 const dataActionTypes = {
@@ -48,23 +48,27 @@ function getButtonProperties() {
 function getProperties() {
     return [
         getTextBox2("Name", "名称", 1, 1, "", "请输入名称", 50, false),
-        getRadio2('IncomeOutlay', '收支', accountCategory.incomeOutlayDataSource, 2, 1, 0, 160),
+        getEditSelect("AccountItemId", "账目名称", accountCategory.accountItemsDataSource, 2, 1, false, "请选择账目名称"),
         getTextArea("Remark", "备注", 5, 1),
         getButtonView()
     ]
 }
 
 
-function getRadio2(name, label, dataSource, x, y, defaultValue, buttonWidth) {
+function getEditSelect(name, label, serviceDataSource, x, y, isNullable, placeHolder, defaultValue) {
     return {
-        ...getRadio(name, label, dataSource, x, y, defaultValue, buttonWidth),
+        ...getSelect2(name, label, serviceDataSource, x, y, defaultValue),
         isFormItem: true,
         colSpan: 24,
         labelCol: 8,
         wrapperCol: 8,
-        isEdit: true
+        isNullable,
+        isEdit: true,
+        allowClear: true, isSearch: true,
+        placeHolder
     }
 }
+
 
 function getTextBox2(name, label, x, y, contorlType, placeHolder, maxLength, isNullable, isVisible, validateNames, validateTipMessage) {
     return {

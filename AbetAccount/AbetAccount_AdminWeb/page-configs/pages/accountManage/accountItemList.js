@@ -35,7 +35,7 @@ function getSearchOperationView() {
             colStyle: { paddingLeft: 0 },
             dataActionType: dataActionTypes.deleteEntityData,
             successTip: "删除成功！",
-            confirmTip: "请确认是否删除当前实体项目？",
+            confirmTip: "请确认是否删除当前账目名称？",
             ...getButton("deleteEntityData", "删除", "default", 1, 4)
         },
         getKeyword()

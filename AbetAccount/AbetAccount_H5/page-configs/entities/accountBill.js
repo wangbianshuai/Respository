@@ -17,10 +17,9 @@ function getProperties() {
     return [
         getProperty("BillId", "BillId"),
         getProperty("AccountCategoryName", "类别"),
-        getProperty("AccountItemName", "实体项目"),
+        getProperty("AccountItemName", "账目名称"),
         getProperty("BillDate", "日期"),
         getProperty("Amount2", "金额"),
-        getProperty("Tax2", "税额"),
         getProperty("BillYear", "年"),
         getProperty("BillMonth", "月"),
         getProperty("BillDay", "日"),

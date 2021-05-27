@@ -18,9 +18,9 @@ namespace AbetAccount.Admin.Entity
         /// </summary> 
         public string Name { get; set; }
         /// <summary> 
-        /// 收支
+        /// 账目名称
         /// </summary> 
-        public byte IncomeOutlay { get; set; }
+        public Guid AccountItemId { get; set; }
         /// <summary> 
         /// 备注
         /// </summary> 
@@ -52,13 +52,13 @@ namespace AbetAccount.Admin.Entity
 
         public override void InsertValidate(List<Func<IValidate, IEntityData, string>> validateList)
         {
-            validateList.Add(this.ValidateExists<AccountCategory>("IsDelete=0 and IncomeOutlay=@IncomeOutlay and Name=@Name", "对不起，该名称已存在！"));
+            validateList.Add(this.ValidateExists<AccountCategory>("IsDelete=0 and AccountItemId=@AccountItemId and Name=@Name", "对不起，该名称已存在！"));
         }
 
         public override void UpdateValidate(List<Func<IValidate, IEntityData, string>> validateList)
         {
             validateList.Add(this.ValidateExists<AccountCategory>("CategoryId=@CategoryId and Name=@Name", "true"));
-            validateList.Add(this.ValidateExists<AccountCategory>("IsDelete=0 and IncomeOutlay=@IncomeOutlay and Name=@Name", "对不起，该名称已存在！"));
+            validateList.Add(this.ValidateExists<AccountCategory>("IsDelete=0 and AccountItemId=@AccountItemId and Name=@Name", "对不起，该名称已存在！"));
 
         }
     }
@@ -67,6 +67,6 @@ namespace AbetAccount.Admin.Entity
     [RequestMethod(IsDelete = false, IsPost = false, IsPut = false)]
     public class ViewAccountCategory : AccountCategory
     {
-        public string IncomeOutlayName { get; set; }
+        public string AccountItemName { get; set; }
     }
 }

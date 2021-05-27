@@ -175,7 +175,7 @@ on a.OperationUser=b.UserId
 go
 
 
---4、账户项目（t_AccountItem）
+--4、账目名称（t_AccountItem）
 if exists(select * from sysobjects where name='t_AccountItem')
 drop table t_AccountItem
 go
@@ -184,7 +184,8 @@ create table t_AccountItem
 (
 ItemId uniqueidentifier not null primary key,                  --主键
 Name nvarchar(50) not null,                                    --名称
-Remark nvarchar(200),                                          --备注 
+DisplayIndex int not null,                                     --序号
+Remark nvarchar(200),                                          --备注
 IsDelete tinyint not null default(0),                          --是否删除
 CreateUser uniqueidentifier not null,                          --创建人
 CreateDate datetime default(getdate()) not null,               --创建时间
@@ -196,6 +197,7 @@ go
 
 exec proc_AddCellExplanation '主键','t_AccountItem','ItemId'
 exec proc_AddCellExplanation '名称','t_AccountItem','Name'
+exec proc_AddCellExplanation '序号','t_AccountItem','DisplayIndex'
 exec proc_AddCellExplanation '备注','t_AccountItem','Remark'
 exec proc_AddCellExplanation '是否删除','t_AccountItem','IsDelete'
 exec proc_AddCellExplanation '创建人','t_AccountItem','CreateUser'
@@ -224,7 +226,7 @@ create table t_AccountCategory
 (
 CategoryId uniqueidentifier not null primary key,              --主键
 Name nvarchar(50) not null,                                    --名称
-IncomeOutlay tinyint not null default(0),                      --收支,0:支出，1：收入
+AccountItemId uniqueidentifier not null,                       --账目名称
 Remark nvarchar(200),                                          --备注 
 IsDelete tinyint not null default(0),                          --是否删除
 CreateUser uniqueidentifier not null,                          --创建人
@@ -237,7 +239,7 @@ go
 
 exec proc_AddCellExplanation '主键','t_AccountCategory','CategoryId'
 exec proc_AddCellExplanation '名称','t_AccountCategory','Name'
-exec proc_AddCellExplanation '收支,0:支出，1：收入','t_AccountCategory','IncomeOutlay'
+exec proc_AddCellExplanation '账目名称','t_AccountCategory','AccountItemId'
 exec proc_AddCellExplanation '备注','t_AccountCategory','Remark'
 exec proc_AddCellExplanation '是否删除','t_AccountCategory','IsDelete'
 exec proc_AddCellExplanation '创建人','t_AccountCategory','CreateUser'
@@ -254,8 +256,10 @@ go
 create view v_AccountCategory
 as
 select a.*,
-case when a.IncomeOutlay=1 then '收入' else '支出' end IncomeOutlayName
-from t_AccountCategory a where IsDelete=0
+b.Name AccountItemName
+from t_AccountCategory a 
+left join t_AccountItem b on a.AccountItemId=b.ItemId
+where a.IsDelete=0
 go
 
 --7、账目账单（t_AccountBill）
@@ -271,7 +275,6 @@ AccountItemId uniqueidentifier not null,                       --账户项目
 IncomeOutlay tinyint not null default(0),                      --收支,0:支出，1：收入
 AccountType tinyint not null default(0),                       --账户类型
 Amount money not null default(0),                              --金额
-Tax money not null default(0),                                 --税额
 BillDate datetime not null,                                    --日期
 BillUser uniqueidentifier not null,                            --经手人
 Remark nvarchar(200),                                          --备注 
@@ -286,11 +289,10 @@ go
 
 exec proc_AddCellExplanation '主键','t_AccountBill','BillId'
 exec proc_AddCellExplanation '类别Id','t_AccountBill','AccountCategoryId'
-exec proc_AddCellExplanation '实体项目','t_AccountBill','AccountItemId'
+exec proc_AddCellExplanation '账目名称','t_AccountBill','AccountItemId'
 exec proc_AddCellExplanation '收支,0:支出，1：收入','t_AccountBill','IncomeOutlay'
 exec proc_AddCellExplanation '账户类型','t_AccountBill','AccountType'
 exec proc_AddCellExplanation '金额','t_AccountBill','Amount'
-exec proc_AddCellExplanation '税额','t_AccountBill','Tax'
 exec proc_AddCellExplanation '日期','t_AccountBill','BillDate'
 exec proc_AddCellExplanation '经手人','t_AccountBill','BillUser'
 exec proc_AddCellExplanation '备注','t_AccountBill','Remark'
@@ -312,7 +314,6 @@ select a.*,
 year(BillDate) BillYear,DATENAME(MONTH,BillDate) BillMonth,day(BillDate) BillDay,
 case when a.IncomeOutlay=1 then '收入' else '支出' end IncomeOutlayName,
 case when a.IncomeOutlay=1 then a.Amount else 0-a.Amount end Amount2,
-case when a.IncomeOutlay=1 then 0-a.Tax else a.Tax end Tax2,
 case when a.AccountType=1 then '上海阿贝特实业有限公司' else 'ABET' end AccountTypeName,
 b.Name AccountItemName,
 c.Name AccountCategoryName,

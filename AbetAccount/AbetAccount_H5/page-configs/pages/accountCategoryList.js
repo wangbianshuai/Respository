@@ -1,4 +1,4 @@
-const { getButton, getTextBox, getSelect } = require("../Common");
+const { getButton, getTextBox, getSelect2 } = require("../Common");
 const accountCategory = require("../entities/accountCategory");
 
 //accountCategoryList 600-699
@@ -36,7 +36,7 @@ function getTabs() {
         isDiv: true,
         className: 'tabDetail',
         tabs: [{ title: '收支类型', url: "/accountCategoryList.html?tabPage=0" },
-        { title: '实体项目', url: "/accountItemList.html?tabPage=1" }]
+        { title: '账目名称', url: "/accountItemList.html?tabPage=1" }]
     }
 }
 
@@ -125,7 +125,7 @@ function getDataGridView() {
         name: 'dataGridView1',
         type: "DataGridView",
         properties: assignProporties(
-            ["Name", "IncomeOutlayName", "Remark", { name: "CreateDate", orderByType: "desc" }, { name: "RowVersion", isVisible: false }]
+            ["Name", "AccountItemName", "Remark", { name: "CreateDate", orderByType: "desc" }, { name: "RowVersion", isVisible: false }]
         ),
         entity,
         isShowRecord: false,
@@ -164,7 +164,7 @@ function getSearchOperationView() {
             {
                 name: 'navTitle',
                 type: 'NavBar',
-                text: '收支类别筛选条件',
+                text: '类别筛选条件',
                 mode: 'light',
                 rightProperty: {
                     name: 'close',
@@ -190,7 +190,7 @@ function getSearchConditionView() {
         keywordName: 'keyword',
         className: "divSearchConditionView",
         properties: [
-            getEditSelect("IncomeOutlay", "收支", accountCategory.incomeOutlayDataSource, 1, 2),
+            getEditSelect("AccountItemId", "账目名称", accountCategory.accountItemsDataSource, 1, 2),
             {
                 ...getTextBox2("keyword2", "关键字", 3, 2, "", "名称,备注"), propertyName: "Name,Remark",
                 operateLogic: "like", pressEnterEventActionName: "searchQuery", pressEnterEventPropertyName: "search",
@@ -215,7 +215,7 @@ function getButtonView() {
 
 function getEditSelect(name, label, dataSource, x, y, defaultValue) {
     return {
-        ...getSelect(name, label, dataSource, x, y, defaultValue),
+        ...getSelect2(name, label, dataSource, x, y, defaultValue),
         operateLogic: "=",
         isNullable: true,
         allowClear: true,

@@ -1,5 +1,5 @@
 const accountCategory = require("../../entities/accountCategory");
-const { getButton, assignProporties, getSelect, getTextBox } = require("../../Common");
+const { getButton, assignProporties, getSelect2, getTextBox } = require("../../Common");
 
 //accountManage/accountCategory 1000-1099
 const dataActionTypes = {
@@ -29,7 +29,7 @@ function getSearchOperationView() {
         type: "RowsColsView",
         className: "divSerachView",
         properties: assignProporties({ name: "accountCategoryList" }, [
-            getEditSelect("IncomeOutlay", "收支", accountCategory.incomeOutlayDataSource, 1, 1),
+            getEditSelect("AccountItemId", "账目名称", accountCategory.accountItemsDataSource, 1, 1),
             {
                 ...getTextBox2("keyword", "关键字", 1, 2, "", "名称,备注"), propertyName: "Name,Remark",
                 operateLogic: "like", pressEnterEventActionName: "searchQuery", pressEnterEventPropertyName: "search",
@@ -52,7 +52,7 @@ function getSearchOperationView() {
 
 function getEditSelect(name, label, dataSource, x, y, defaultValue) {
     return {
-        ...getSelect(name, label, dataSource, x, y, defaultValue),
+        ...getSelect2(name, label, dataSource, x, y, defaultValue),
         isFormItem: true,
         colSpan: 6,
         labelCol: 8,
@@ -88,7 +88,7 @@ function getDataGridView() {
         className: "divInfoView3",
         isRowSelection: true,
         isSingleSelection: true,
-        properties: assignProporties(accountCategory, ["Name", "IncomeOutlayName", "Remark", { name: "CreateDate", orderByType: "desc" }, { name: "RowVersion", isVisible: false }])
+        properties: assignProporties(accountCategory, ["Name", "AccountItemName", "Remark", { name: "CreateDate", orderByType: "desc" }, { name: "RowVersion", isVisible: false }])
     }
 }
 

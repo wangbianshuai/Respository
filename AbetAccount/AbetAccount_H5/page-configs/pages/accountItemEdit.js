@@ -29,7 +29,7 @@ function getNavBar() {
     return {
         name: 'navTitle',
         type: 'NavBar',
-        text: '新增实体项目',
+        text: '新增账目名称',
         isBack: true,
         rightProperty: {
             name: 'delete',
@@ -39,7 +39,7 @@ function getNavBar() {
             eventActionName: 'deleteEntityData',
             isVisible: false,
             successTip: "删除成功！",
-            confirmTip: "请确认是否删除当前实体项目？",
+            confirmTip: "请确认是否删除当前账目名称？",
         }
     }
 }

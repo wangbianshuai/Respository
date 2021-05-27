@@ -9,7 +9,7 @@ export default React.memo((props) => {
     const { Remark, ItemId, DisplayIndex, CreateDate, Name } = data;
 
     let url = Common.addUrlParams(detailPageUrl, 'ItemId', ItemId);
-    url = Common.addUrlParams(url, 'navTitle', '修改实体项目');
+    url = Common.addUrlParams(url, 'navTitle', '修改账目名称');
 
     return (<div className={styles.divContainer}>
         <Link to={url}>

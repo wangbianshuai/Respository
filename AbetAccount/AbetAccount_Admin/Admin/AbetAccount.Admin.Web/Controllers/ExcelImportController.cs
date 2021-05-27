@@ -103,7 +103,7 @@ namespace AbetAccount.Admin.Web.Controllers
 
             if (entityName == "AccountBill")
             {
-                nameList = new List<string>() { "日期", "实体项目", "类别", "收支", "金额", "摘要", "账户", "经手人" };
+                nameList = new List<string>() { "日期", "账目名称", "类别", "收支", "金额", "摘要", "账户", "经手人" };
                 message += "列名集合：" + string.Join("、", nameList);
             }
 
@@ -124,7 +124,7 @@ namespace AbetAccount.Admin.Web.Controllers
 
             if (entityName == "AccountBill")
             {
-                nameList = new List<string>() { "日期", "实体项目", "类别", "收支", "金额" };
+                nameList = new List<string>() { "日期", "账目名称", "类别", "收支", "金额" };
                 message += "字段集合：" + string.Join("、", nameList) + "，不能为空";
             }
 

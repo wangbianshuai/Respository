@@ -6,7 +6,7 @@ const rendDataProperty = (property, index, data) => {
     const { name } = property;
     const value = data[name];
 
-    const isMoney = name === 'Amount2' || name === 'Tax2';
+    const isMoney = name === 'Amount2';
 
     return (<span className={styles.spanText} key={index}>[
         {isMoney && value >= 0 && <label style={{ color: '#1890ff' }}>{Common.toCurrency(value)}</label>}

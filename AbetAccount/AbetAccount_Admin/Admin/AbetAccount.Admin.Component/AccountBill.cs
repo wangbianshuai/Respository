@@ -14,13 +14,14 @@ namespace AbetAccount.Admin.Component
     {
         EntityType _AccountItemEntity { get; set; }
         EntityType _AccountCategoryEntity { get; set; }
-
+        EntityType _AdminUserEntity { get; set; }
 
         public AccountBill()
         {
             EntityType= EntityType.GetEntityType<Entity.AccountBill>();
             _AccountItemEntity = EntityType.GetEntityType<Entity.AccountItem>();
             _AccountCategoryEntity = EntityType.GetEntityType<Entity.AccountCategory>();
+            _AdminUserEntity = EntityType.GetEntityType<Entity.AdminUser>();
         }
 
         public AccountBill(Request request)
@@ -47,7 +48,17 @@ namespace AbetAccount.Admin.Component
         List<IEntityData> GetAccountCategoryList()
         {
             IQuery query = new Query(this._AccountCategoryEntity.TableName);
-            query.Select("CategoryId,IncomeOutlay,Name");
+            query.Select("CategoryId,AccountItemId,Name");
+
+            query.Where("where IsDelete=0");
+
+            return this.SelectEntities(query);
+        }
+
+        List<IEntityData> GetAdminUserList()
+        {
+            IQuery query = new Query(this._AdminUserEntity.TableName);
+            query.Select("UserId,UserName");
 
             query.Where("where IsDelete=0");
 
@@ -60,14 +71,21 @@ namespace AbetAccount.Admin.Component
             string message = string.Empty;
 
             List<Dictionary<string, object>> dataList = new List<Dictionary<string, object>>();
+            List<Dictionary<string, object>> accountItemDataList = new List<Dictionary<string, object>>();
+            List<Dictionary<string, object>> accountCategoryDataList = new List<Dictionary<string, object>>();
+            List<Dictionary<string, object>> adminUserDataList = new List<Dictionary<string, object>>();
 
             Dictionary<string, object> data = null;
             Dictionary<string, object> dict = null;
             Dictionary<string, object> msg = null;
+            Dictionary<string, object> item = null;
             List<string> msgList = null;
 
             List<IEntityData> accountItemList = GetAccountItemList();
             List<IEntityData> accountCategoryList = GetAccountCategoryList();
+            List<IEntityData> adminUserList = GetAdminUserList();
+
+            DateTime now = DateTime.Now;
 
             for (int i = 0; i < dictList.Count; i++)
             {
@@ -88,26 +106,49 @@ namespace AbetAccount.Admin.Component
                     msgList.Add(string.Format("日期:{0}格式不正确，请参与格式:2021-05-26", dateStr));
                 }
 
-                //实体项目
-                string itemName = dict.GetStringValue("实体项目");
+                //账目名称
+                string itemName = dict.GetStringValue("账目名称");
                 IEntityData entityData = accountItemList.Where(w => w.GetStringValue("Name") == itemName).FirstOrDefault();
                 if (entityData == null)
                 {
-                    msgList.Add(string.Format("实体项目:{0}不存在，请先在实体项目中添加", itemName));
+                    item = new Dictionary<string, object>();
+                    Guid id = Guid.NewGuid();
+
+                    item.Add("ItemId", id);
+                    item.Add("Name", itemName);
+                    item.Add("DisplayIndex", 1);
+                    item.Add("Remark", "Excel导入");
+                    item.Add("CreateDate", now);
+                    accountItemDataList.Add(item);
+
+                    accountItemList.Add(new EntityData(item));
+
+                    data.Add("AccountItemId", id);
                 }
                 else data.Add("AccountItemId", entityData.GetValue("ItemId"));
 
                 //收支
-                string incomeOutlayName = dict.GetStringValue("收支");
-                int incomeOutlay = dict.GetStringValue("收支") == "收入" ? 1 : 2;
-                data.Add("IncomeOutlay", incomeOutlay);
+                data.Add("IncomeOutlay", dict.GetStringValue("收支") == "收入" ? 1 : 2);
 
                 //类别
+                Guid accountItemId = data.GetValue<Guid>("accountItemId");
                 string categoryName = dict.GetStringValue("类别");
-                entityData = accountCategoryList.Where(w => w.GetValue<int>("IncomeOutlay") == incomeOutlay && w.GetStringValue("Name") == categoryName).FirstOrDefault();
+                entityData = accountCategoryList.Where(w => w.GetValue<Guid>("AccountItemId") == accountItemId && w.GetStringValue("Name") == categoryName).FirstOrDefault();
                 if (entityData == null)
                 {
-                    msgList.Add(string.Format("收支:{0},类别:{1}不存在，请先在类别中添加", incomeOutlayName, categoryName));
+                    item = new Dictionary<string, object>();
+                    Guid id = Guid.NewGuid();
+
+                    item.Add("CategoryId", id);
+                    item.Add("Name", categoryName);
+                    item.Add("AccountItemId", accountItemId);
+                    item.Add("Remark", "Excel导入");
+                    item.Add("CreateDate", now);
+                    accountCategoryDataList.Add(item);
+
+                    accountCategoryList.Add(new EntityData(item));
+
+                    data.Add("AccountCategoryId", id);
                 }
                 else data.Add("AccountCategoryId", entityData.GetValue("CategoryId"));
 
@@ -116,12 +157,45 @@ namespace AbetAccount.Admin.Component
                 string dStr = dict.GetStringValue("金额");
                 if (decimal.TryParse(dStr, out amount))
                 {
-
+                    data.Add("Amount", amount);
                 }
                 else
                 {
                     msgList.Add(string.Format("金额:{0}格式不正确，应为金额数值", dStr));
                 }
+
+                //摘要
+                data.Add("Remark", dict.GetValue("摘要"));
+
+                //账户
+                data.Add("AccountType", dict.GetStringValue("账户") == "上海阿贝特实业有限公司" ? 1 : 0);
+
+                //经手人
+                string userName = dict.GetStringValue("经手人");
+                Guid userId = Guid.Parse(loginUserId);
+                if (!string.IsNullOrEmpty(userName))
+                {
+                    entityData = adminUserList.Where(w => w.GetStringValue("UserName") == userName).FirstOrDefault();
+                    if (entityData == null)
+                    {
+                        item = new Dictionary<string, object>();
+                        Guid id = Guid.NewGuid();
+
+                        item.Add("UserId", id);
+                        item.Add("UserName", userName);
+                        item.Add("LoginUser", userName);
+                        item.Add("LoginPassword", "e10adc3949ba59abbe56e057f20f883e");
+                        item.Add("Remark", "Excel导入");
+                        item.Add("CreateDate", now);
+                        adminUserDataList.Add(item);
+
+                        adminUserList.Add(new EntityData(item));
+
+                        userId = id;
+                    }
+                    else userId = entityData.GetValue<Guid>("UserId");
+                }
+                data.Add("BillUser", userId);
 
                 if (msgList.Count > 0)
                 {
@@ -166,7 +240,7 @@ namespace AbetAccount.Admin.Component
         void QueryBillGroupByInfo(IEntityData data, string whereSql, List<IDbDataParameter> paramterList)
         {
             IQuery query = new Query(this.EntityType.TableName);
-            query.Select("IncomeOutlay,sum(Amount) as Amount,sum(Tax) as Tax");
+            query.Select("IncomeOutlay,sum(Amount) as Amount");
 
             if (!_IsAllData)
             {
@@ -180,21 +254,17 @@ namespace AbetAccount.Admin.Component
 
             IEntityData incomeData = list.Where(w => w.GetValue<byte>("IncomeOutlay") == 1).FirstOrDefault();
             decimal income = 0;
-            decimal outlayTax = 0;
 
             if (incomeData != null)
             {
                 income = incomeData.GetValue<decimal>("Amount");
-                outlayTax = incomeData.GetValue<decimal>("Tax");
             }
 
             IEntityData outlayData = list.Where(w => w.GetValue<byte>("IncomeOutlay") == 0).FirstOrDefault();
             decimal outlay = 0;
-            decimal incomeTax = 0;
             if (outlayData != null)
             {
                 outlay = outlayData.GetValue<decimal>("Amount");
-                incomeTax = outlayData.GetValue<decimal>("Tax");
             }
 
             IEntityData groupByInfo = new EntityData(string.Empty);
@@ -202,11 +272,6 @@ namespace AbetAccount.Admin.Component
             groupByInfo.SetValue("TotalOutlay", (0 - outlay).ToString("C"));
             groupByInfo.SetValue("TotalBalance", (income - outlay).ToString("C"));
             groupByInfo.SetValue("TotalBalanceColor", income - outlay >= 0 ? "#1890ff" : "red");
-
-            groupByInfo.SetValue("TotalIncomeTax", incomeTax.ToString("C"));
-            groupByInfo.SetValue("TotalOutlayTax", (0 - outlayTax).ToString("C"));
-            groupByInfo.SetValue("TotalBalanceTax", (incomeTax - outlayTax).ToString("C"));
-            groupByInfo.SetValue("TotalBalanceTaxColor", incomeTax - outlayTax >= 0 ? "#1890ff" : "red");
 
             data.SetValue("GroupByInfo", groupByInfo);
         }

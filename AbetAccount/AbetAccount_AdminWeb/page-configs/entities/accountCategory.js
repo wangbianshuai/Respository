@@ -3,14 +3,14 @@ module.exports = {
   viewName: 'ViewAccountCategory',
   primaryKey: "CategoryId",
   properties: getProperties(),
-  incomeOutlayDataSource: getIncomeOutlayDataSource()
+  accountItemsDataSource: getAccountItemsDataSource()
 }
 
 function getProperties() {
   return [
     getProperty("CategoryId", "CategoryId"),
     getProperty("Name", "名称"),
-    getProperty("IncomeOutlayName", "收支"),
+    getProperty("AccountItemName", "账目名称"),
     getProperty("Remark", "备注"),
     getProperty("CreateDate", "创建时间")
   ]
@@ -18,6 +18,14 @@ function getProperties() {
 
 function getProperty(name, label) { return { name, label } }
 
-function getIncomeOutlayDataSource() {
-  return [{ value: 0, text: "支出" }, { value: 1, text: "收入" }]
+function getAccountItemsDataSource() {
+  return {
+      valueName: "ItemId",
+      textName: "Name",
+      stateName: "getAccountItems",
+      serviceName: "AccountItemService",
+      actionName: "getAccountItems",
+      isRefresh: true,
+      payload: {}
+  }
 }
