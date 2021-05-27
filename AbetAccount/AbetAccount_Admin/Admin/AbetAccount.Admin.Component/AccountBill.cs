@@ -118,6 +118,7 @@ namespace AbetAccount.Admin.Component
                     item.Add("Name", itemName);
                     item.Add("DisplayIndex", 1);
                     item.Add("Remark", "Excel导入");
+                    item.Add("CreateUser", loginUserId);
                     item.Add("CreateDate", now);
                     accountItemDataList.Add(item);
 
@@ -143,6 +144,7 @@ namespace AbetAccount.Admin.Component
                     item.Add("Name", categoryName);
                     item.Add("AccountItemId", accountItemId);
                     item.Add("Remark", "Excel导入");
+                    item.Add("CreateUser", loginUserId);
                     item.Add("CreateDate", now);
                     accountCategoryDataList.Add(item);
 
@@ -186,6 +188,7 @@ namespace AbetAccount.Admin.Component
                         item.Add("LoginUser", userName);
                         item.Add("LoginPassword", "e10adc3949ba59abbe56e057f20f883e");
                         item.Add("Remark", "Excel导入");
+                        item.Add("CreateUser", loginUserId);
                         item.Add("CreateDate", now);
                         adminUserDataList.Add(item);
 
@@ -197,15 +200,186 @@ namespace AbetAccount.Admin.Component
                 }
                 data.Add("BillUser", userId);
 
+                data.Add("CreateDate", now);
+                data.Add("BillId", Guid.NewGuid());
+                data.Add("CreateUser", loginUserId);
+                dataList.Add(data);
+
                 if (msgList.Count > 0)
                 {
                     msg.Add("RowNum", i + 1);
-                    msg.Add("MessageList", string.Join("；", msgList));
+                    msg.Add("Message", string.Join("；", msgList));
                     messageList.Add(msg);
                 }
             }
 
+            if (messageList.Count > 0) return message;
+
+            BulkCopyInsert(dataList);
+            if (accountItemDataList.Count > 0) AccountItemBulkCopyInsert(accountItemDataList);
+            if (accountCategoryDataList.Count > 0) AccountCategoryBulkCopyInsert(accountCategoryDataList);
+            if (adminUserDataList.Count > 0) AdminUserBulkCopyInsert(adminUserDataList);
+
             return message;
+        }
+
+        /// <summary>
+        /// 批量插入
+        /// </summary>
+        /// <param name="dictList"></param>
+        /// <returns></returns>
+        public void AdminUserBulkCopyInsert(List<Dictionary<string, object>> dictList)
+        {
+            ((ISqlDataBase)this.CurrentDataBase).SqlBulkCopyInsert(AdminUserDictionaryListToDataTable(dictList), this._AdminUserEntity.TableName);
+        }
+
+        private DataTable AdminUserDictionaryListToDataTable(List<Dictionary<string, object>> dictList)
+        {
+            DateTime createDate = DateTime.Now;
+
+            DataTable dt = new DataTable();
+
+            dt.Columns.Add(new DataColumn("UserId", typeof(Guid)));
+            dt.Columns.Add(new DataColumn("UserName", typeof(string)));
+            dt.Columns.Add(new DataColumn("LoginName", typeof(string)));
+            dt.Columns.Add(new DataColumn("LoginPassword", typeof(string)));
+            dt.Columns.Add(new DataColumn("Remark", typeof(string)));
+            dt.Columns.Add(new DataColumn("CreateUser", typeof(Guid)));
+            dt.Columns.Add(new DataColumn("CreateDate", typeof(DateTime)));
+
+            DataRow dr = null;
+
+            dictList.ForEach(dict =>
+            {
+                dr = dt.NewRow();
+                foreach (DataColumn column in dt.Columns)
+                {
+                    dr[column.ColumnName] = dict[column.ColumnName];
+                }
+
+                dt.Rows.Add(dr);
+            });
+            return dt;
+        }
+
+        /// <summary>
+        /// 批量插入
+        /// </summary>
+        /// <param name="dictList"></param>
+        /// <returns></returns>
+        public void AccountCategoryBulkCopyInsert(List<Dictionary<string, object>> dictList)
+        {
+            ((ISqlDataBase)this.CurrentDataBase).SqlBulkCopyInsert(AccountCategoryDictionaryListToDataTable(dictList), this._AccountCategoryEntity.TableName);
+        }
+
+        private DataTable AccountCategoryDictionaryListToDataTable(List<Dictionary<string, object>> dictList)
+        {
+            DateTime createDate = DateTime.Now;
+
+            DataTable dt = new DataTable();
+
+            dt.Columns.Add(new DataColumn("CategoryId", typeof(Guid)));
+            dt.Columns.Add(new DataColumn("Name", typeof(string)));
+            dt.Columns.Add(new DataColumn("AccountItemId", typeof(Guid)));
+            dt.Columns.Add(new DataColumn("Remark", typeof(string)));
+            dt.Columns.Add(new DataColumn("CreateUser", typeof(Guid)));
+            dt.Columns.Add(new DataColumn("CreateDate", typeof(DateTime)));
+
+            DataRow dr = null;
+
+            dictList.ForEach(dict =>
+            {
+                dr = dt.NewRow();
+                foreach (DataColumn column in dt.Columns)
+                {
+                    dr[column.ColumnName] = dict[column.ColumnName];
+                }
+
+                dt.Rows.Add(dr);
+            });
+            return dt;
+        }
+
+
+        /// <summary>
+        /// 批量插入
+        /// </summary>
+        /// <param name="dictList"></param>
+        /// <returns></returns>
+        public void AccountItemBulkCopyInsert(List<Dictionary<string, object>> dictList)
+        {
+            ((ISqlDataBase)this.CurrentDataBase).SqlBulkCopyInsert(AccountItemDictionaryListToDataTable(dictList), this._AccountItemEntity.TableName);
+        }
+
+        private DataTable AccountItemDictionaryListToDataTable(List<Dictionary<string, object>> dictList)
+        {
+            DateTime createDate = DateTime.Now;
+
+            DataTable dt = new DataTable();
+
+            dt.Columns.Add(new DataColumn("ItemId", typeof(Guid)));
+            dt.Columns.Add(new DataColumn("Name", typeof(string)));
+            dt.Columns.Add(new DataColumn("DisplayIndex", typeof(int)));
+            dt.Columns.Add(new DataColumn("Remark", typeof(string)));
+            dt.Columns.Add(new DataColumn("CreateUser", typeof(Guid)));
+            dt.Columns.Add(new DataColumn("CreateDate", typeof(DateTime)));
+
+            DataRow dr = null;
+
+            dictList.ForEach(dict =>
+            {
+                dr = dt.NewRow();
+                foreach (DataColumn column in dt.Columns)
+                {
+                    dr[column.ColumnName] = dict[column.ColumnName];
+                }
+
+                dt.Rows.Add(dr);
+            });
+            return dt;
+        }
+
+        /// <summary>
+        /// 批量插入
+        /// </summary>
+        /// <param name="dictList"></param>
+        /// <returns></returns>
+        public void BulkCopyInsert(List<Dictionary<string, object>> dictList)
+        {
+            ((ISqlDataBase)this.CurrentDataBase).SqlBulkCopyInsert(DictionaryListToDataTable(dictList), this.EntityType.TableName);
+        }
+
+        private DataTable DictionaryListToDataTable(List<Dictionary<string, object>> dictList)
+        {
+            DateTime createDate = DateTime.Now;
+
+            DataTable dt = new DataTable();
+
+            dt.Columns.Add(new DataColumn("BillId", typeof(Guid)));
+            dt.Columns.Add(new DataColumn("AccountCategoryId", typeof(Guid)));
+            dt.Columns.Add(new DataColumn("AccountItemId", typeof(Guid)));
+            dt.Columns.Add(new DataColumn("IncomeOutlay", typeof(byte)));
+            dt.Columns.Add(new DataColumn("AccountType", typeof(byte)));
+            dt.Columns.Add(new DataColumn("Amount", typeof(decimal)));
+            dt.Columns.Add(new DataColumn("BillDate", typeof(DateTime)));
+            dt.Columns.Add(new DataColumn("BillUser", typeof(Guid)));
+            dt.Columns.Add(new DataColumn("Remark", typeof(string)));
+            dt.Columns.Add(new DataColumn("CreateUser", typeof(Guid)));
+            dt.Columns.Add(new DataColumn("CreateDate", typeof(DateTime)));
+
+            DataRow dr = null;
+
+            dictList.ForEach(dict =>
+            {
+                dr = dt.NewRow();
+                foreach (DataColumn column in dt.Columns)
+                {
+                    dr[column.ColumnName] = dict[column.ColumnName];
+                }
+
+                dt.Rows.Add(dr);
+            });
+            return dt;
         }
     }
 

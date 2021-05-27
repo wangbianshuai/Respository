@@ -10,6 +10,7 @@ import ComplexDataGrid from "./complexDataGrid";
 import ModalDialog from './modalDialog';
 import ModalDialogList from './modalDialogList';
 import Base from './base';
+import MessageList from './messageList';
 
 export default {
     View,
@@ -23,5 +24,6 @@ export default {
     Tabs,
     ComplexDataGrid,
     ModalDialog,
-    ModalDialogList
+    ModalDialogList,
+    MessageList
 }

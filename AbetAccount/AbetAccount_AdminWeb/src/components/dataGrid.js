@@ -102,7 +102,6 @@ export default React.memo((props) => {
         pageInfo, isPaging, pageIndexChange, groupByInfo, groupByInfoHtml } = props;
     const pageAxis = usePageAxis.getPageAxis(pageId);
 
-
     const [selectedRowKeys, setSelectedRowKeys] = useState([]);
     const [sorter, setSorter] = useState({});
     const [selectedRowKey, setSelectedRowKey] = useState(pageAxis.pageData.selectedRowKey && !property.isRowSelection || '');

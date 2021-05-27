@@ -215,6 +215,26 @@ class PageAxis {
     isSuccessProps(res) {
         return res && res.isSuccess !== false;
     }
+
+    alertMessageList(messageList) {
+        messageList.forEach(m => m.key = m.RowNum)
+        const messageListViewProperty = {
+            dataList: messageList,
+            primaryKey: 'RowNum',
+            dataProperties: [{ name: "RowNum", label: "行号", columnWidth: 80 },
+            { name: "Message", label: '错误信息', columnWidth: 750 }],
+            type: 'MessageList', name: 'messageList1', id: Common.createGuid()
+        }
+
+        this.messageListDialog = {
+            id: Common.createGuid(), title: "提示信息列表", visible: true,
+            width: 900,
+            style: { height: 400, overflow: "auto" },
+            component: this.getReactComponent(messageListViewProperty, {}, this.id),
+            isOk: false
+        };
+        this.setModalDialog(this.messageListDialog)
+    }
 }
 
 const _PageAxises = {};

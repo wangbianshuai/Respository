@@ -248,7 +248,7 @@ export default class Dialog extends BaseIndex {
 
     setExcelImport(e, p, props, action) {
         const { pageAxis } = props;
-        const { dialogView } = action.parameters;
+        const { dialogView, dataGridView } = action.parameters;
         const file = dialogView.properties[0].getValue();
         if (file === null) {
             pageAxis.alert('请选择Excel文件');
@@ -270,6 +270,12 @@ export default class Dialog extends BaseIndex {
         pageAxis.dispatchAction('ExcelService', 'excelImport', { formData: formData }).then(res => {
             if (pageAxis.isSuccessProps(res)) {
                 if (res.Message2) pageAxis.alert(res.Message2);
+                else if (res.MessageList) {
+                    pageAxis.alertMessageList(res.MessageList);
+                }
+                else {
+                    pageAxis.alertSuccess('导入成功', dataGridView.refresh());
+                }
             }
             else pageAxis.alert(res.message);
             p.setDisabled && p.setDisabled(false);

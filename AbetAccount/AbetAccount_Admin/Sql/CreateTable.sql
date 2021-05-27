@@ -318,7 +318,8 @@ case when a.AccountType=1 then '上海阿贝特实业有限公司' else 'ABET' e
 b.Name AccountItemName,
 c.Name AccountCategoryName,
 d.UserName BillUserName,
-e.UserName CreateUserName
+e.UserName CreateUserName,
+b.DisplayIndex
 from t_AccountBill a 
 left join t_AccountItem b on a.AccountItemId=b.ItemId
 left join t_AccountCategory c on a.AccountCategoryId= c.CategoryId
