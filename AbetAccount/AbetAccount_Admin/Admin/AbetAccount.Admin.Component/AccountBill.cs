@@ -129,10 +129,10 @@ namespace AbetAccount.Admin.Component
                 else data.Add("AccountItemId", entityData.GetValue("ItemId"));
 
                 //收支
-                data.Add("IncomeOutlay", dict.GetStringValue("收支") == "收入" ? 1 : 2);
+                data.Add("IncomeOutlay", dict.GetStringValue("收支") == "收入" ? 1 : 0);
 
                 //类别
-                Guid accountItemId = data.GetValue<Guid>("accountItemId");
+                Guid accountItemId = data.GetValue<Guid>("AccountItemId");
                 string categoryName = dict.GetStringValue("类别");
                 entityData = accountCategoryList.Where(w => w.GetValue<Guid>("AccountItemId") == accountItemId && w.GetStringValue("Name") == categoryName).FirstOrDefault();
                 if (entityData == null)
