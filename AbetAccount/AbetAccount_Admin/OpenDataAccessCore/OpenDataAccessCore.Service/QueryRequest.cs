@@ -448,6 +448,10 @@ namespace OpenDataAccessCore.Service
                 }
             });
             this.QueryInfo.WhereSql = sb.ToString();
+            if (this.IsGroupByInfo)
+            {
+                this.GroupByInfoParameterList = new List<IDbDataParameter>();
+            }
             if (!string.IsNullOrEmpty(this.QueryInfo.WhereSql.Trim()))
             {
                 this.QueryInfo.WhereSql = " where " + this.QueryInfo.WhereSql.TrimStart().TrimStart(new char[] { 'a', 'n', 'd' }) + " ";
@@ -455,7 +459,6 @@ namespace OpenDataAccessCore.Service
                 if (this.IsGroupByInfo)
                 {
                     this.GroupByInfoWhereSql = this.QueryInfo.WhereSql;
-                    this.GroupByInfoParameterList = new List<IDbDataParameter>();
 
                     this.QueryInfo.ParameterList.ForEach(p =>
                     {
